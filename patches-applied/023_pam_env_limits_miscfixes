@@ -1,0 +1,37 @@
+  * Note that HOME may not be useful in pam_environment, closes: #109281
+  * Don't smash case domains (groups/users) in pam_limits, closes: #119893
+
+Index: Linux-PAM/modules/pam_env/pam_env.conf-example
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_env/pam_env.conf-example,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 pam_env.conf-example
+--- Linux-PAM/modules/pam_env/pam_env.conf-example	29 Apr 2001 04:17:19 -0000	1.1.1.1
++++ Linux-PAM/modules/pam_env/pam_env.conf-example	25 May 2002 22:39:49 -0000
+@@ -43,6 +43,10 @@
+ # be used in values using the @{string} syntax. Both the $ and @
+ # characters can be backslash escaped to be used as literal values
+ # values can be delimited with "", escaped " not supported.
++# Note that many environment variables that you would like to use
++# may not be set by the time the module is called.
++# for example, HOME is used below several times, but
++# many PAM applications don't make it available by the time you need it.
+ #
+ #
+ # First, some special variables
+Index: Linux-PAM/modules/pam_limits/pam_limits.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_limits/pam_limits.c,v
+retrieving revision 1.3
+diff -u -r1.3 pam_limits.c
+--- Linux-PAM/modules/pam_limits/pam_limits.c	25 May 2002 18:58:21 -0000	1.3
++++ Linux-PAM/modules/pam_limits/pam_limits.c	25 May 2002 22:42:39 -0000
+@@ -468,8 +468,6 @@
+ 	D(("scanned line[%d]: domain[%s], ltype[%s], item[%s], value[%s]",
+ 	   i, domain, ltype, item, value));
+ 
+-        for(j=0; j < strlen(domain); j++)
+-            domain[j]=tolower(domain[j]);
+         for(j=0; j < strlen(ltype); j++)
+             ltype[j]=tolower(ltype[j]);
+         for(j=0; j < strlen(item); j++)
