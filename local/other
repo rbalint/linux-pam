@@ -7,12 +7,10 @@
 #used.  If you really want nothing to happen then use pam_permit.so or
 #pam_deny.so as appropriate.
 
-# We fall back to the pam_unix modules. If this is not secure
-# enough for your purpose, consider specifying pam_deny.so
-# instead.
+# We fall back to the system default in /etc/pam.d/common-*
 # 
 
-auth     required       pam_unix.so
-account  required       pam_unix.so
-password required       pam_unix.so
-session  required       pam_unix.so
+@include common-auth
+@include common-account
+@include common-password
+@include common-session
