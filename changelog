@@ -14,7 +14,7 @@ pam (0.76-15) unstable; urgency=low
     contains locking fixes, but just NIS cleanup in general.  See
     049_pam_unix_sane_locking for the locking changes,  Closes: #220158
 
- --
+ -- Sam Hartman <hartmans@debian.org>  Mon, 12 Jan 2004 02:23:59 -0500
 
 pam (0.76-14) unstable; urgency=low
 
