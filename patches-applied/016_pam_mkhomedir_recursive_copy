@@ -1,6 +1,13 @@
---- Linux-PAM-0.72.orig/modules/pam_mkhomedir/pam_mkhomedir.c	Mon Nov  8 06:45:36 1999
-+++ Linux-PAM-0.72/modules/pam_mkhomedir/pam_mkhomedir.c	Wed Feb  7 15:24:27 2001
-@@ -171,57 +171,24 @@
+Indications suggest this patch is by Ben Collins <bcollins@debian.org>.
+
+Index: Linux-PAM/modules/pam_mkhomedir//pam_mkhomedir.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_mkhomedir/pam_mkhomedir.c,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 pam_mkhomedir.c
+--- Linux-PAM/modules/pam_mkhomedir//pam_mkhomedir.c	29 Apr 2001 04:17:25 -0000	1.1.1.1
++++ Linux-PAM/modules/pam_mkhomedir//pam_mkhomedir.c	25 May 2002 19:07:07 -0000
+@@ -171,57 +171,29 @@
     return retval;
  }
  
@@ -17,16 +24,17 @@
     /* Some scratch space */
     remark = malloc(BUFSIZ);
 -   if (remark == NULL)
--   {
--      D(("no memory for last login remark"));
--      return PAM_BUF_ERR;
--   }
--
++      if (remark == NULL)
+    {
+       D(("no memory for last login remark"));
+       return PAM_BUF_ERR;
+    }
+ 
 -   /* Mention what is happening, if the notification fails that is OK */
 -   if (snprintf(remark,BUFSIZ,"Creating home directory '%s'.",
 -	    pwd->pw_dir) == -1)
 -      return PAM_PERM_DENIED;
-    
+-   
 -   make_remark(pamh, ctrl, remark);
 -
 -   /* Crete the home directory */
@@ -63,7 +71,7 @@
        return PAM_PERM_DENIED;
     }
     
-@@ -238,39 +205,45 @@
+@@ -238,39 +210,45 @@
  	 continue;
        
        /* Check if it is a directory */
@@ -115,7 +123,7 @@
  	 return PAM_PERM_DENIED;
        }
  
-@@ -280,8 +253,8 @@
+@@ -280,8 +258,8 @@
        if (fchmod(DestFd,(St.st_mode | 0222) & (~UMask)) != 0 ||
  	  fchown(DestFd,pwd->pw_uid,pwd->pw_gid) != 0)
        {
@@ -125,7 +133,7 @@
  	 return PAM_PERM_DENIED;
        }   
        
-@@ -302,9 +275,55 @@
+@@ -302,9 +280,55 @@
        close(SrcFd);
        close(DestFd);
     }
