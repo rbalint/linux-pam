@@ -7,7 +7,7 @@ pam (0.76-1) experimental; urgency=low
 
  -- Sam Hartman <hartmans@debian.org>  Sun, 22 Sep 2002 16:11:35 -0400
 
-    pam (0.75-3) experimental; urgency=low
+pam (0.75-3) experimental; urgency=low
 
       * Apply patch 007  pam_limits so that we initialize to wide open not
     current limits.
@@ -18,7 +18,7 @@ pam (0.76-1) experimental; urgency=low
     Closes: #132545
       * Update mini policy to reflect confusion on debian-devel
 
-       -- Sam Hartman <hartmans@debian.org>  Tue, 16 Jul 2002 09:30:50 -0400
+ -- Sam Hartman <hartmans@debian.org>  Tue, 16 Jul 2002 09:30:50 -0400
 
        pam (0.75-2) experimental; urgency=low
 
