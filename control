@@ -35,7 +35,7 @@ Description: Pluggable Authentication Modules for PAM
 
 Package: libpam-runtime
 Priority: required
-Architecture: any
+Architecture: all
 Replaces: libpam0g-util, libpam0g-dev
 Conflicts: libpam0g-util, libpam0g (<< 0.66-0)
 Description: Runtime support for the PAM library

@@ -72,8 +72,14 @@ binary-indep: build $(dh_mak_deps)
 		$(i) txts/*.txt $(d)/$(pdoc)/usr/share/doc/$(pdoc)/txt ; \
 		$(i) modules/*.sgml $(d)/$(pdoc)/usr/share/doc/$(pdoc)/sgml/modules )
 
+	mkdir -p debian/tmp/etc/pam.d
+	$(i) $(dl)/pam.conf $(d)/tmp/etc
+	$(i) $(dl)/other $(d)/tmp/etc/pam.d
 	$(i) $(dl)/pam-*-guide $(d)/$(pdoc)/usr/share/doc-base/
 
+	dh_movefiles -i
+	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
+	rm -f debian/libpam-runtime/usr/share/man/man8/{pam.8.gz,pam.conf.8}
 	dh_installdocs -i
 	dh_installchangelogs -i $(BUILD_TREE)/CHANGELOG
 	dh_compress -i -X.html
@@ -98,11 +104,9 @@ binary-arch: build module_check $(dh_mak_deps)
 	$(i) $(dl)/unix_chkpwd.8 $(d)/libpam-modules/usr/share/man/man8
 	mkdir -p debian/tmp/usr/lib
 	mv debian/tmp/lib/*.a debian/tmp/usr/lib
-	dh_movefiles -plibpam-runtime -plibpam0g-dev -plibpam-cracklib -plibpam0g
+	dh_movefiles  -plibpam0g-dev -plibpam-cracklib -plibpam0g
 	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*`
 	dh_link -A
-	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
-	rm -f debian/libpam-runtime/usr/share/man/man8/{pam.8.gz,pam.conf.8}
 	dh_installman -plibpam0g-dev $(BUILD_TREE)/doc/man/*.3
 	dh_installman -plibpam-runtime $(dl)/pam-undocumented.7
 

@@ -35,7 +35,7 @@ Changes Since Debian 3.0
 
 The pam_securetty module used to prompt for a password when it was
 going to fail access.   This Debian-specific patch defeats one of the
-key uses of this module: ot deny access to privileged accounts soon
+key uses of this module: to  deny access to privileged accounts soon
 enough in the PAM stack that  the password is never requested and is
 not compromised over insecure network links.  If you want to ask for
 the password use required not requisite in your PAM config.
