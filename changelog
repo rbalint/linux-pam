@@ -1,3 +1,15 @@
+pam (0.76-11) unstable; urgency=low
+
+  * Don't allow db4 to satisfy build-depends because it doesn't actually
+    work, and sometimes building with it would be wrong. 
+  * Don't depend on libpcap-dev on Debian BSD
+  * Conflict with old libpam-modules, Closes: #191906
+  * Incorrect username should not be logged at alert (patch 43),
+  Closes: #175900
+  * Patch to support FreeBSD (patch 44, thanks Robert), Closes: #191906
+
+ -- Sam Hartman <hartmans@debian.org>  Sat, 31 May 2003 19:55:26 -0400
+
 pam (0.76-10) unstable; urgency=low
 
   * Don't double list conffiles, Closes: #190954
