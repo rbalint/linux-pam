@@ -11,6 +11,10 @@ Application Developers' Guide" and "The Linux-PAM Module Writers' Guide".
 
 The Debian default configuration is to emulate the old UNIX authentication.
 
+The Debian PAM packages live at svn://svn.debian.org/pkg-pam/.  The
+current version is in the trunk directory; previous versions live in
+the tags directory.
+
 Changes Since Debian 3.0
 ------------------------
 
