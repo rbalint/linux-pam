@@ -115,7 +115,7 @@ diff -u -r1.4 pam_rhosts_auth.c
      FILE *hostf;
      uid_t uid;
      int answer;
-+#ifndef MAXPATHELN
++#ifndef MAXPATHLEN
 +    char *pbuf=NULL;
 +    int pblen;
 +#else
