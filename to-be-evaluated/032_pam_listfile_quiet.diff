@@ -1,0 +1,86 @@
+--- Linux-PAM-0.72/modules/pam_listfile/pam_listfile.c~	Mon Mar 26 08:37:45 2001
++++ Linux-PAM-0.72/modules/pam_listfile/pam_listfile.c	Mon Mar 26 08:43:40 2001
+@@ -37,6 +37,8 @@
+ #include <security/pam_modules.h>
+ #include <security/_pam_macros.h>
+ 
++static int quiet = 0;
++
+ /* some syslogging */
+ 
+ #define LOCAL_LOG_PREFIX "PAM-listfile: "
+@@ -200,7 +202,9 @@
+ 		    apply_type=APPLY_TYPE_USER;
+ 		    strncpy(apply_val,myval,sizeof(apply_val)-1);
+ 		}
+-	    } else {
++	    } else if(!strcmp(mybuf,"quiet")) {
++		quiet = 1;
++    	    } else {
+ 		_pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Unknown option: %s",mybuf);
+ 		return onerr;
+ 	    }
+@@ -331,7 +335,8 @@
+ 	     ifname, citem, citemp, sense);
+ #endif
+     if(stat(ifname,&fileinfo)) {
+-	_pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Couldn't open %s",ifname);
++	if (!quiet)
++	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Couldn't open %s",ifname);
+ 	return onerr;
+     }
+ 
+@@ -339,15 +344,16 @@
+        || !S_ISREG(fileinfo.st_mode)) {
+ 	/* If the file is world writable or is not a
+ 	   normal file, return error */
+-	_pam_log(LOG_ERR,LOCAL_LOG_PREFIX 
+-		 "%s is either world writable or not a normal file",
+-		 ifname);
++	if (!quiet)
++	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX 
++		     "%s is either world writable or not a normal file",
++		     ifname);
+ 	return PAM_AUTH_ERR;
+     }
+ 
+     inf = fopen(ifname,"r");
+     if(inf == NULL) { /* Check that we opened it successfully */
+-	if (onerr == PAM_SERVICE_ERR) {
++	if (onerr == PAM_SERVICE_ERR && !quiet) {
+ 	    /* Only report if it's an error... */
+ 	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX  "Error opening %s", ifname);
+ 	}
+@@ -398,8 +404,9 @@
+ #endif
+ 	(void) pam_get_item(pamh, PAM_SERVICE, (const void **)&service);
+ 	(void) pam_get_user(pamh, &user_name, NULL);
+-	_pam_log(LOG_ALERT,LOCAL_LOG_PREFIX "Refused user %s for service %s",
+-		 user_name, service);
++	if (!quiet)
++	    _pam_log(LOG_ALERT,LOCAL_LOG_PREFIX "Refused user %s for service %s",
++		     user_name, service);
+ 	return PAM_AUTH_ERR;
+     }
+ }
+--- Linux-PAM-0.72/doc/modules/pam_listfile.sgml~	Mon Mar 26 08:45:57 2001
++++ Linux-PAM-0.72/doc/modules/pam_listfile.sgml	Mon Mar 26 08:47:00 2001
+@@ -56,6 +56,7 @@
+ <tt>file=</tt><it>filename</it>;
+ <tt>item=user|tty|rhost|ruser|group|shell</tt>
+ <tt>apply=user|@group</tt>
++<tt>quiet</tt>
+ 
+ <tag><bf>Description:</bf></tag>
+ 
+@@ -89,7 +90,9 @@
+ 
+ <p>
+ Besides this last one, all arguments should be specified; do not count
+-on any default behavior, as it is subject to change.
++on any default behavior, as it is subject to change. The one exception is
++the <tt>quiet</tt> options, which reduces the amount of logging for
++non-fatal errors.
+ 
+ <p>
+ No credentials are awarded by this module.

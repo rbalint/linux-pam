@@ -1,0 +1,315 @@
+diff -urN Linux-PAM-0.72.orig/modules/pam_filter/pam_filter.c Linux-PAM-0.72/modules/pam_filter/pam_filter.c
+--- Linux-PAM-0.72.orig/modules/pam_filter/pam_filter.c	Sun Dec 31 05:06:58 2000
++++ Linux-PAM-0.72/modules/pam_filter/pam_filter.c	Sun Dec 31 05:11:05 2000
+@@ -19,7 +19,7 @@
+ #include <sys/stat.h>
+ #include <sys/socket.h>
+ #include <sys/ioctl.h>
+-#include <termio.h>
++#include <termios.h>
+ 
+ #include <signal.h>
+ 
+@@ -276,7 +276,7 @@
+ {
+     int status=-1;
+     char terminal[TERMINAL_LEN];
+-    struct termio stored_mode;           /* initial terminal mode settings */
++    struct termios stored_mode;           /* initial terminal mode settings */
+     int fd[2], child=0, child2=0, aterminal;
+ 
+     if (filtername == NULL || *filtername != '/') {
+@@ -305,13 +305,13 @@
+ 
+ 	/* this is termio terminal handling... */
+ 
+-	if (ioctl(STDIN_FILENO, TCGETA, (char *) &stored_mode ) < 0) {
++	if (tcgetattr(STDIN_FILENO, &stored_mode) < 0) {
+ 	    /* in trouble, so close down */
+ 	    close(fd[0]);
+ 	    _pam_log(LOG_CRIT, "couldn't copy terminal mode");
+ 	    return PAM_ABORT;
+ 	} else {
+-	    struct termio t_mode = stored_mode;
++	    struct termios t_mode = stored_mode;
+ 
+ 	    t_mode.c_iflag = 0;            /* no input control */
+ 	    t_mode.c_oflag &= ~OPOST;      /* no ouput post processing */
+@@ -324,7 +324,7 @@
+ 	    t_mode.c_cc[VMIN] = 1; /* number of chars to satisfy a read */
+ 	    t_mode.c_cc[VTIME] = 0;          /* 0/10th second for chars */
+ 
+-	    if (ioctl(STDIN_FILENO, TCSETA, (char *) &t_mode) < 0) {
++	    if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &t_mode) < 0) {
+ 		close(fd[0]);
+ 		_pam_log(LOG_WARNING, "couldn't put terminal in RAW mode");
+ 		return PAM_ABORT;
+@@ -354,7 +354,7 @@
+ 
+ 	_pam_log(LOG_WARNING,"first fork failed");
+ 	if (aterminal) {
+-	    (void) ioctl(STDIN_FILENO, TCSETA, (char *) &stored_mode);
++	    (void) tcsetattr(STDIN_FILENO, TCSAFLUSH, &stored_mode);
+ 	}
+ 
+ 	return PAM_AUTH_ERR;
+@@ -396,7 +396,7 @@
+ 	    /* initialize the child's terminal to be the way the
+ 	       parent's was before we set it into RAW mode */
+ 
+-	    if (ioctl(fd[1], TCSETA, (char *) &stored_mode) < 0) {
++	    if (tcsetattr(fd[1], TCSANOW, &stored_mode) < 0) {
+ 		_pam_log(LOG_WARNING,"cannot set slave terminal mode; %s"
+ 			 ,terminal);
+ 		close(fd[1]);
+@@ -570,7 +570,7 @@
+ 
+     if (aterminal) {
+ 	/* reset to initial terminal mode */
+-	(void) ioctl(STDIN_FILENO, TCSETA, (char *) &stored_mode);
++	(void) tcsetattr(STDIN_FILENO, TCSANOW, &stored_mode);
+     }
+ 
+     if (ctrl & FILTER_DEBUG) {
+diff -urN Linux-PAM-0.72.orig/modules/pam_limits/pam_limits.c Linux-PAM-0.72/modules/pam_limits/pam_limits.c
+--- Linux-PAM-0.72.orig/modules/pam_limits/pam_limits.c	Sun Dec 31 05:06:58 2000
++++ Linux-PAM-0.72/modules/pam_limits/pam_limits.c	Sun Dec 31 05:12:25 2000
+@@ -289,8 +289,10 @@
+ 	limit_item = RLIMIT_NOFILE;
+     else if (strcmp(lim_item, "memlock") == 0)
+ 	limit_item = RLIMIT_MEMLOCK;
++#ifdef RLIMIT_AS
+     else if (strcmp(lim_item, "as") == 0)
+ 	limit_item = RLIMIT_AS;
++#endif
+     else if (strcmp(lim_item, "maxlogins") == 0) {
+ 	limit_item = LIMIT_LOGIN;
+ 	flag_numsyslogins = 0;
+@@ -343,7 +345,9 @@
+         case RLIMIT_CORE:
+         case RLIMIT_RSS:
+         case RLIMIT_MEMLOCK:
++#ifdef RLIMIT_AS
+         case RLIMIT_AS:
++#endif
+             limit_value *= 1024;
+             break;
+     }
+diff -urN Linux-PAM-0.72.orig/modules/pam_rhosts/Makefile Linux-PAM-0.72/modules/pam_rhosts/Makefile
+--- Linux-PAM-0.72.orig/modules/pam_rhosts/Makefile	Sun Dec 31 05:06:59 2000
++++ Linux-PAM-0.72/modules/pam_rhosts/Makefile	Sun Dec 31 05:09:14 2000
+@@ -26,11 +26,14 @@
+ ifeq ($(shell if [ -f /usr/include/fsuid.h ]; then echo yes ; fi),yes)
+  CFLAGS += -DHAVE_FSUID_H
+ endif
+-ifeq ($(shell if [ -f /usr/include/sys/fsuid.h ]; then echo yes ; fi),yes)
+- CFLAGS += -DHAVE_SYS_FSUID_H -D_GNU_SOURCE
+-endif
++#ifeq ($(shell if [ -f /usr/include/sys/fsuid.h ]; then echo yes ; fi),yes)
++ #CFLAGS += -DHAVE_SYS_FSUID_H -D_GNU_SOURCE
++#endif
+ ifeq ($(shell if [ -f /usr/include/endian.h ]; then echo yes ; fi),yes)
+  CFLAGS += -DHAVE_ENDIAN_H
++endif
++ifeq ($(shell if [ -f /usr/include/net/if.h ]; then echo yes ; fi),yes)
++ CFLAGS += -DHAVE_NET_IF_H
+ endif
+ 
+ ####################### don't edit below #######################
+diff -urN Linux-PAM-0.72.orig/modules/pam_rhosts/pam_rhosts_auth.c Linux-PAM-0.72/modules/pam_rhosts/pam_rhosts_auth.c
+--- Linux-PAM-0.72.orig/modules/pam_rhosts/pam_rhosts_auth.c	Sun Dec 31 05:06:59 2000
++++ Linux-PAM-0.72/modules/pam_rhosts/pam_rhosts_auth.c	Sun Dec 31 05:09:14 2000
+@@ -48,6 +48,10 @@
+ #include <sys/fsuid.h>
+ #endif
+ 
++#ifdef HAVE_NET_IF_H
++#include <net/if.h>
++#endif
++
+ #include <sys/types.h>
+ #include <sys/uio.h>
+ #include <string.h>
+@@ -64,18 +68,9 @@
+ #include <sys/time.h>
+ #include <arpa/inet.h>
+ 
+-#ifndef MAXDNAME
+-#define MAXDNAME  256
+-#endif
+-
+ #include <stdarg.h>
+ #include <ctype.h>
+ 
+-#include <net/if.h>
+-#ifdef HAVE_SYS_FSUID_H
+-#include <sys/fsuid.h>
+-#endif
+-
+ #include <pwd.h>
+ #include <grp.h>
+ #include <sys/file.h>
+@@ -91,8 +86,13 @@
+ #include <security/pam_modules.h>
+ #include <security/_pam_macros.h>
+ 
++#ifdef _ISOC9X_SOURCE
++#include <inttypes.h>
++#define U32 uint32_t
++#else
+ /* to the best of my knowledge, all modern UNIX boxes have 32 bit integers */
+ #define U32 unsigned int
++#endif /* _ISOC9X_SOURCE */
+ 
+ 
+ /*
+@@ -359,11 +359,27 @@
+     register const char *user;
+     register char *p;
+     int hcheck, ucheck;
++#ifdef MAXHOSTNAMELEN
+     char buf[MAXHOSTNAMELEN + 128];                       /* host + login */
++#else
++		char *buf = NULL, *old_buf = 0;
++		size_t buf_len = 0;
++#endif
+ 
++#ifdef MAXHOSTNAMELEN
+     buf[sizeof (buf)-1] = '\0';                 	/* terminate line */
+ 
+-    while (fgets(buf, sizeof(buf), hostf) != NULL) {   /* hostf file line */
++    while (fgets(buf, sizeof(buf), hostf) != NULL)   /* hostf file line */
++#else
++    while (getline(&buf, &buf_len, hostf) > 0)
++#endif
++    {
++#ifndef MAXHOSTNAMELEN
++        if (old_buf)
++          free(old_buf);
++        old_buf = buf;
++        buf_len = 0;
++#endif
+         p = buf;                              /* from beginning of file.. */
+ 
+ 	/* Skip empty or comment lines */
+@@ -371,6 +386,7 @@
+ 	    continue;
+ 	}
+ 
++#ifdef MAXHOSTNAMELEN
+ 	/* Skip lines that are too long. */
+ 	if (strchr(p, '\n') == NULL) {
+ 	    int ch = getc(hostf);
+@@ -379,6 +395,7 @@
+ 		ch = getc(hostf);
+ 	    continue;
+ 	}
++#endif
+ 
+ 	/*
+ 	 * If there is a hostname at the start of the line.  Set it to
+@@ -432,6 +449,10 @@
+ 	    /* Neither, go on looking for match */
+ 	}
+     }
++#ifndef MAXHOSTNAMELEN
++    free(buf);
++    buf = NULL;
++#endif
+ 
+     return (1);
+ }
+@@ -457,7 +477,11 @@
+     FILE *hostf;
+     uid_t uid;
+     int answer;
++#ifdef MAXPATHLEN
+     char pbuf[MAXPATHLEN];               /* potential buffer overrun */
++#else
++    char *pbuf = 0;
++#endif
+ 
+     if ((!superuser||opts->opt_hosts_equiv_rootok) && !opts->opt_no_hosts_equiv ) {
+ 
+@@ -491,6 +515,7 @@
+ 	return(1);
+     }
+ 
++#ifdef MAXPATHLEN
+     /* check for buffer overrun */
+     if (strlen(pwd->pw_dir) + sizeof(USER_RHOSTS_FILE) + 2 >= MAXPATHLEN) {
+ 	if (opts->opt_debug)
+@@ -500,6 +525,26 @@
+ 
+     (void) strcpy(pbuf, pwd->pw_dir);
+     (void) strcat(pbuf, USER_RHOSTS_FILE);
++#else
++    {
++        long int pbuf_len = strlen(pwd->pw_dir) + sizeof(USER_RHOSTS_FILE);
++        long int path_max;
++        pbuf = (char *)malloc(pbuf_len + 1);
++        if (!pbuf) {
++           if (opts->opt_debug)
++               _pam_log(LOG_DEBUG,
++                   "not enough memory to store home directory for `%s'", luser);
++            return 1;
++        }
++        snprintf(pbuf, pbuf_len, "%s%s", pwd->pw_dir, USER_RHOSTS_FILE);
++        path_max = pathconf(pbuf, _PC_PATH_MAX);
++        if(!(path_max == -1 && !errno) && pbuf_len >= path_max)  {
++	    if (opts->opt_debug)
++		_pam_log(LOG_DEBUG,"home directory for `%s' is too long",luser);
++	    return 1;                               /* to dangerous to try */
++	}
++    }
++#endif
+ 
+     /*
+      * Change effective uid while _reading_ .rhosts. (not just
+@@ -593,6 +638,9 @@
+ 
+     if (hostf != NULL)
+         (void) fclose(hostf);
++#ifndef MAXPATHLEN
++    free(pbuf);
++#endif
+ 
+     return answer;
+ }
+diff -urN Linux-PAM-0.72.orig/modules/pam_unix/unix_chkpwd.c Linux-PAM-0.72/modules/pam_unix/unix_chkpwd.c
+--- Linux-PAM-0.72.orig/modules/pam_unix/unix_chkpwd.c	Sun Dec 31 05:06:59 2000
++++ Linux-PAM-0.72/modules/pam_unix/unix_chkpwd.c	Sun Dec 31 05:09:14 2000
+@@ -51,6 +51,11 @@
+ 
+ static void su_sighandler(int sig)
+ {
++#ifndef SA_RESETHAND
++	/* emulate the behavior of the SA_RESETHAND flag */
++	if (sig == SIGILL || sig == SIGTRAP || sig == SIGBUS || sig == SIGSEGV)
++		signal(sig, SIG_DFL);
++#endif
+ 	if (sig > 0) {
+ 		_log_err(LOG_NOTICE, "caught signal %d.", sig);
+ 		exit(sig);
+@@ -66,7 +71,9 @@
+ 	 */
+ 	(void) memset((void *) &action, 0, sizeof(action));
+ 	action.sa_handler = su_sighandler;
++#ifdef SA_RESETHAND
+ 	action.sa_flags = SA_RESETHAND;
++#endif
+ 	(void) sigaction(SIGILL, &action, NULL);
+ 	(void) sigaction(SIGTRAP, &action, NULL);
+ 	(void) sigaction(SIGBUS, &action, NULL);
+@@ -130,9 +137,9 @@
+ 
+ 	/* Hack off SysVR4 password aging */
+ 	{
+-	    char tmp;
++	    char *tmp;
+ 
+-	    if (tmp == strrchr(p, ',') != NULL) tmp = '\0';
++	    if ((tmp = strrchr(p, ',')) != NULL) *tmp = '\0';
+ 	}
+ 
+ 	/* the moment of truth -- do we agree with the password? */

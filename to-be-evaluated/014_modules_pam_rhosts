@@ -1,0 +1,57 @@
+diff -urN Linux-PAM-0.72.bak/modules/pam_rhosts/Makefile Linux-PAM-0.72/modules/pam_rhosts/Makefile
+--- Linux-PAM-0.72.bak/modules/pam_rhosts/Makefile	Tue Dec 14 16:13:59 1999
++++ Linux-PAM-0.72/modules/pam_rhosts/Makefile	Tue Dec 14 16:20:47 1999
+@@ -24,7 +24,13 @@
+ endif
+ 
+ ifeq ($(shell if [ -f /usr/include/fsuid.h ]; then echo yes ; fi),yes)
+- CFLAGS += -DNEED_FSUID_H
++ CFLAGS += -DHAVE_FSUID_H
++endif
++ifeq ($(shell if [ -f /usr/include/sys/fsuid.h ]; then echo yes ; fi),yes)
++ CFLAGS += -DHAVE_SYS_FSUID_H -D_GNU_SOURCE
++endif
++ifeq ($(shell if [ -f /usr/include/endian.h ]; then echo yes ; fi),yes)
++ CFLAGS += -DHAVE_ENDIAN_H
+ endif
+ 
+ ####################### don't edit below #######################
+diff -urN Linux-PAM-0.72.bak/modules/pam_rhosts/pam_rhosts_auth.c Linux-PAM-0.72/modules/pam_rhosts/pam_rhosts_auth.c
+--- Linux-PAM-0.72.bak/modules/pam_rhosts/pam_rhosts_auth.c	Tue Dec 14 16:18:39 1999
++++ Linux-PAM-0.72/modules/pam_rhosts/pam_rhosts_auth.c	Tue Dec 14 16:24:56 1999
+@@ -38,17 +38,15 @@
+  * SUCH DAMAGE.
+  */
+ 
+-#define _BSD_SOURCE
+-
+ #define USER_RHOSTS_FILE "/.rhosts"     /* prefixed by user's home dir */
+ 
+-#ifdef linux
++#ifdef HAVE_ENDIAN_H
+ #include <endian.h>
+ #endif
+ 
+-#ifdef NEED_FSUID_H
++#ifdef HAVE_FSUID_H
+ #include <sys/fsuid.h>
+-#endif /* NEED_FSUID_H */
++#endif
+ 
+ #include <sys/types.h>
+ #include <sys/uio.h>
+@@ -74,12 +72,8 @@
+ #include <ctype.h>
+ 
+ #include <net/if.h>
+-#ifdef linux
+-# include <linux/sockios.h>
+-# ifndef __USE_MISC
+-#  define __USE_MISC
+-#  include <sys/fsuid.h>
+-# endif /* __USE_MISC */
++#ifdef HAVE_SYS_FSUID_H
++#include <sys/fsuid.h>
+ #endif
+ 
+ #include <pwd.h>

@@ -1,0 +1,216 @@
+--- Linux-PAM-0.72.orig/modules/pam_limits/pam_limits.c	Fri Apr 28 17:51:46 2000
++++ Linux-PAM-0.72/modules/pam_limits/pam_limits.c	Fri Apr 28 17:52:17 2000
+@@ -221,49 +221,34 @@
+     
+ static int init_limits(void)
+ {
++    int i;
+     int retval = PAM_SUCCESS;
+ 
+     D(("called."));
+ 
+-    retval |= getrlimit(RLIMIT_CPU,     &limits[RLIMIT_CPU].limit);
+-    limits[RLIMIT_CPU].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_CPU].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_FSIZE,   &limits[RLIMIT_FSIZE].limit);
+-    limits[RLIMIT_FSIZE].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_FSIZE].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_DATA,    &limits[RLIMIT_DATA].limit);
+-    limits[RLIMIT_DATA].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_DATA].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_STACK,   &limits[RLIMIT_STACK].limit);
+-    limits[RLIMIT_STACK].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_STACK].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_CORE,    &limits[RLIMIT_CORE].limit);
+-    limits[RLIMIT_CORE].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_CORE].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_RSS,     &limits[RLIMIT_RSS].limit);
+-    limits[RLIMIT_RSS].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_RSS].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_NPROC,   &limits[RLIMIT_NPROC].limit);
+-    limits[RLIMIT_NPROC].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_NPROC].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_NOFILE,  &limits[RLIMIT_NOFILE].limit);
+-    limits[RLIMIT_NOFILE].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_NOFILE].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_MEMLOCK, &limits[RLIMIT_MEMLOCK].limit);
+-    limits[RLIMIT_MEMLOCK].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_MEMLOCK].src_hard = LIMITS_DEF_NONE;
+-
+-    retval |= getrlimit(RLIMIT_AS,      &limits[RLIMIT_AS].limit);
+-    limits[RLIMIT_AS].src_soft = LIMITS_DEF_NONE;
+-    limits[RLIMIT_AS].src_hard = LIMITS_DEF_NONE;
++    for (i=0; i<RLIM_NLIMITS; i++) {
++    limits[i].src_soft = LIMITS_DEF_NONE;
++    limits[i].src_hard = LIMITS_DEF_NONE;
++
++    limits[i].limit.rlim_cur = RLIM_INFINITY;
++    limits[i].limit.rlim_max = RLIM_INFINITY;
++    }
++
++    /* Some limits are better set to some reasonable values instead
++     * of directly setting them to unlimited... - PeterP */
++
++    limits[RLIMIT_CORE].limit.rlim_cur = 0;
++    limits[RLIMIT_STACK].limit.rlim_cur = 8192*1024;
++    limits[RLIMIT_NPROC].limit.rlim_cur = 256;
++
++    /* Unfortunately there is no (simple) way to find out what is
++     * the kernel maximum number of open files per process - so let's hope
++     * no one tampered with the kernel sources and let's use a standard
++     * maximum - PeterP */
++
++    limits[RLIMIT_NOFILE].limit.rlim_cur = 1024;
++    limits[RLIMIT_NOFILE].limit.rlim_max = 1024;
++
+     priority = 0;
+     login_limit = -2;
+     login_limit_def = LIMITS_DEF_NONE;
+@@ -328,7 +313,7 @@
+         return;
+     }
+     
+-    limit_value = strtol(lim_value, endptr, 10);
++    limit_value = strtol(lim_value, (char **)endptr, 10);
+     if (limit_value == 0 && value_orig == *endptr) { /* no chars read */
+         if (strcmp(lim_value,"-") != 0) {
+             _pam_log(LOG_DEBUG,"wrong limit value '%s'", lim_value);
+@@ -538,13 +523,12 @@
+         return PAM_SESSION_ERR;
+     }
+                      
+-    /* do not impose limits on UID 0 accounts */
+-    if (!pwd->pw_uid) {
+-        if (ctrl & PAM_DEBUG_ARG)
+-            _pam_log(LOG_DEBUG, "user '%s' have UID 0 - no limits imposed",
+-                                user_name);
+-        return PAM_SUCCESS;
+-    }
++    /* do not impose limits on UID 0 accounts
++     *
++     * bah! we also have to make sure this isn't a user
++     * su'ing to the root account, in which we need to
++     * remove limits - Ben
++     */
+         
+     retval = init_limits();
+     if (retval != PAM_SUCCESS) {
+@@ -552,14 +536,23 @@
+         return PAM_IGNORE;
+     }
+ 
+-    retval = parse_config_file(pwd->pw_name,ctrl);
+-    if (retval != PAM_SUCCESS) {
+-        _pam_log(LOG_WARNING, "error parsing the configuration file");
+-        return PAM_IGNORE;
++    if (!pwd->pw_uid) {
++        if (ctrl & PAM_DEBUG_ARG)
++            _pam_log(LOG_DEBUG, "user '%s' have UID 0 - no limits imposed",
++                                user_name);
++    } else {
++	retval = parse_config_file(pwd->pw_name,ctrl);
++	if (retval == PAM_IGNORE)
++	    return retval;
++	if (retval != PAM_SUCCESS) {
++	    _pam_log(LOG_WARNING, "error parsing the configuration file");
++	    return PAM_IGNORE;
++	}
+     }
+     
+     retval = setup_limits(pwd->pw_name, ctrl);
+-    if (retval & LOGIN_ERR) {
++    /* no login limits on root */
++    if ((retval & LOGIN_ERR) && pwd->pw_uid) {
+         printf("\nToo many logins for '%s'\n",pwd->pw_name);
+         sleep(2);
+         return PAM_PERM_DENIED;
+diff -urN Linux-PAM-0.72.orig/modules/pam_limits/pam_limits.c Linux-PAM-0.72/modules/pam_limits/pam_limits.c
+--- Linux-PAM-0.72.orig/modules/pam_limits/pam_limits.c	Wed Aug 30 17:29:26 2000
++++ Linux-PAM-0.72/modules/pam_limits/pam_limits.c	Wed Aug 30 18:10:36 2000
+@@ -385,7 +385,7 @@
+     return;    
+ }
+ 
+-static int parse_config_file(const char *uname, int ctrl)
++static int parse_config_file(const char *uname, int ctrl, int root)
+ {
+     FILE *fil;
+     char buf[LINE_LENGTH];
+@@ -451,10 +451,16 @@
+             if (strcmp(uname, domain) == 0) /* this user have a limit */
+                 process_limit(LIMITS_DEF_USER, ltype, item, value, ctrl);
+             else if (domain[0]=='@') {
+-                if (is_on_group(uname, domain+1))
++		if (root)
++		    _pam_log(LOG_DEBUG, "group limits skipped for '%s'", uname);
++                else if (is_on_group(uname, domain+1))
+                     process_limit(LIMITS_DEF_GROUP, ltype, item, value, ctrl);
+-            } else if (strcmp(domain, "*") == 0)
+-                process_limit(LIMITS_DEF_DEFAULT, ltype, item, value, ctrl);
++            } else if (strcmp(domain, "*") == 0) {
++		if (root)
++		    _pam_log(LOG_DEBUG, "default limits skipped for '%s'", uname);
++		else
++                    process_limit(LIMITS_DEF_DEFAULT, ltype, item, value, ctrl);
++	    }
+ 	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
+ 	    if (strcmp(uname, domain) == 0) {
+ 		_pam_log(LOG_DEBUG, "no limits for '%s'", uname);
+@@ -516,7 +522,7 @@
+     int retval;
+     char *user_name;
+     struct passwd *pwd;
+-    int ctrl;
++    int ctrl, root;
+     
+     D(("called."));
+ 
+@@ -539,7 +545,7 @@
+         return PAM_SESSION_ERR;
+     }
+                      
+-    /* do not impose limits on UID 0 accounts
++    /* do not impose limits on UID 0 accounts, unless explicit
+      *
+      * bah! we also have to make sure this isn't a user
+      * su'ing to the root account, in which we need to
+@@ -552,23 +558,21 @@
+         return PAM_IGNORE;
+     }
+ 
+-    if (!pwd->pw_uid) {
++    root = (pwd->pw_uid == 0);
++    if (root) {
+         if (ctrl & PAM_DEBUG_ARG)
+             _pam_log(LOG_DEBUG, "user '%s' have UID 0 - no limits imposed",
+                                 user_name);
+-    } else {
+-	retval = parse_config_file(pwd->pw_name,ctrl);
+-	if (retval == PAM_IGNORE)
+-	    return retval;
+-	if (retval != PAM_SUCCESS) {
++    }
++    retval = parse_config_file(pwd->pw_name,ctrl,root);
++    if (retval != PAM_SUCCESS) {
++	if (retval != PAM_IGNORE)
+ 	    _pam_log(LOG_WARNING, "error parsing the configuration file");
+-	    return PAM_IGNORE;
+-	}
++	return PAM_IGNORE;
+     }
+     
+     retval = setup_limits(pwd->pw_name, ctrl);
+-    /* no login limits on root */
+-    if ((retval & LOGIN_ERR) && pwd->pw_uid) {
++    if (retval & LOGIN_ERR) {
+         printf("\nToo many logins for '%s'\n",pwd->pw_name);
+         sleep(2);
+         return PAM_PERM_DENIED;

@@ -1,0 +1,35 @@
+diff -urN Linux-PAM-0.72.orig/modules/pam_time/time.conf Linux-PAM-0.72/modules/pam_time/time.conf
+--- Linux-PAM-0.72.orig/modules/pam_time/time.conf	Sun Jul 12 01:17:16 1998
++++ Linux-PAM-0.72/modules/pam_time/time.conf	Fri Apr 28 19:51:29 2000
+@@ -1,7 +1,14 @@
+ # this is an example configuration file for the pam_time module. Its syntax 
+ # was initially based heavily on that of the shadow package (shadow-960129).
+ #
+-# the syntax of the lines is as follows:
++# This configuration file is still used by the logoutd(8) program, so adding
++# valid lines here will enable that daemon. If this is the first time
++# editing this file, then you will probably want to start logoutd by
++# doing:
++#
++#	/etc/init.d/logoutd start
++#
++# The syntax of the lines is as follows:
+ #
+ #       services;ttys;users;times
+ #
+@@ -15,6 +22,8 @@
+ #
+ # services
+ #	is a logic list of PAM service names that the rule applies to.
++#	Note, this field is ignored by the logoutd program in the login
++#	package.
+ #
+ # ttys
+ #	is a logic list of terminal names that this rule applies to.
+@@ -61,4 +70,4 @@
+ 
+ #
+ # End of example file.
+-#
+\ No newline at end of file
++#

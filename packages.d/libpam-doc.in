@@ -1,0 +1,39 @@
+%dirs%
+usr/share/doc/libpam-doc/sgml/modules
+usr/share/doc/libpam-doc/html
+usr/share/doc/libpam-doc/txt
+usr/share/doc/libpam-doc/ps
+usr/share/doc-base
+%postinst%
+#!/bin/sh -e
+
+case "$1" in
+    configure)
+	if command -v install-docs >/dev/null 2>&1; then
+	    echo -n "Registering PAM documentation..."
+	    install-docs -i /usr/share/doc-base/pam-admin-guide
+	    install-docs -i /usr/share/doc-base/pam-applications-guide
+	    install-docs -i /usr/share/doc-base/pam-modules-guide
+	    echo "done."
+	fi
+    ;;
+esac
+
+#DEBHELPER#
+
+%prerm%
+#!/bin/sh -e
+
+case "$1" in
+    remove|deconfigure|upgrade)
+	if command -v install-docs >/dev/null 2>&1; then
+	    echo -n "Unregistering PAM documentation..."
+	    install-docs -r pam-admin-guide || true
+	    install-docs -r pam-applications-guide || true
+	    install-docs -r pam-modules-guide || true
+	    echo "done."
+	fi
+    ;;
+esac
+
+#DEBHELPER#

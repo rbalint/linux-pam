@@ -1,0 +1,40 @@
+diff -urN Linux-PAM-0.72.orig/modules/pam_group/pam_group.c Linux-PAM-0.72/modules/pam_group/pam_group.c
+--- Linux-PAM-0.72.orig/modules/pam_group/pam_group.c	Sun Dec 31 05:37:12 2000
++++ Linux-PAM-0.72/modules/pam_group/pam_group.c	Sun Dec 31 05:37:49 2000
+@@ -130,9 +130,8 @@
+ 	D(("buffer=<%s>",*buf));
+ #endif
+ 	while (i < *to) {
++	    int j, c = 0;
+ 	    if ((*buf)[i] == ',') {
+-		int j;
+-
+ 		for (j=++i; j<*to && (*buf)[j] == ','; ++j);
+ 		if (j!=i) {
+ 		    shift_bytes(i + (*buf), j-i, (*to) - j);
+@@ -140,7 +139,6 @@
+ 		}
+ 	    }
+ 	    switch ((*buf)[i]) {
+-		int j,c;
+ 	    case '#':
+ 		for (j=i; j < *to && (c = (*buf)[j]) != '\n'; ++j);
+ 		if (j >= *to) {
+@@ -239,7 +237,7 @@
+ 
+ 	  default:
+ 	       if (isalpha(c) || c == '*' || isdigit(c) || c == '_'
+-		    || c == '-' || c == '.') {
++		    || c == '-' || c == '.' || c == '/') {
+ 		    token = 1;
+ 	       } else if (token) {
+ 		    --to;
+@@ -270,7 +268,7 @@
+ 	  if (next == VAL) {
+ 	       if (c == '!')
+ 		    not = !not;
+-	       else if (isalpha(c) || c == '*') {
++	       else if (isalnum(c) || c == '*' || c == ':' || c == '/') {
+ 		    right = not ^ agrees(me, x+at, l, rule);
+ 		    if (oper == AND)
+ 			 left &= right;

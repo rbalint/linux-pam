@@ -1,0 +1,326 @@
+diff -urN Linux-PAM-0.72.orig/Makefile Linux-PAM-0.72/Makefile
+--- Linux-PAM-0.72.orig/Makefile	Sun Nov 21 22:02:36 1999
++++ Linux-PAM-0.72/Makefile	Sat Apr 29 11:33:43 2000
+@@ -28,11 +28,11 @@
+ # Comment out either line to disable that type of linking for *modules only*
+ # Both at once is a legal configuration!
+ DYNAMIC=-DPAM_DYNAMIC
+-#STATIC=-DPAM_STATIC
++STATIC=-DPAM_STATIC
+ 
+ # Comment out these lines to disable building dynamic/static libpam.*
+ DYNAMIC_LIBPAM=yes
+-#STATIC_LIBPAM=yes
++STATIC_LIBPAM=yes
+ 
+ # All combinations of the above four variable definitions are legal,
+ # however, not defining either dynamic or static modules and yet
+@@ -43,8 +43,8 @@
+ # they control the building of some modules in this distribution
+ # Note, these definitions are all "export"ed below...
+ 
+-HAVE_PWDBLIB=yes
+-HAVE_CRACKLIB=yes
++HAVE_PWDBLIB=no
++HAVE_CRACKLIB=no
+ HAVE_AFSLIBS=no
+ HAVE_KRBLIBS=no
+ 
+@@ -209,12 +209,14 @@
+ ## the rules
+ ##
+ 
+-all: .freezemake headers
+-
++all: headers
+ 	@for i in $(DIRS) ; do \
+-		$(MAKE) -C $$i all ; \
+-		if [ $$? -ne 0 ]; then break ; fi ; \
++		$(MAKE) -C $$i all || exit 1; \
+ 	done
++
++# Let's get a dynamic libpam.so first
++bootstrap-libpam: headers
++	$(MAKE) -C libpam bootstrap-libpam
+ 
+ .freezemake: Makefile
+ 	@touch .freezemake
+diff -urN Linux-PAM-0.72.orig/libpam/Makefile Linux-PAM-0.72/libpam/Makefile
+--- Linux-PAM-0.72.orig/libpam/Makefile	Sun Nov 21 21:08:56 1999
++++ Linux-PAM-0.72/libpam/Makefile	Sat Apr 29 11:33:43 2000
+@@ -4,7 +4,7 @@
+ #
+ 
+ # need to tell libpam about the default directory for PAMs
+-MOREFLAGS=-D"DEFAULT_MODULE_PATH=\"$(SECUREDIR)/\""
++CFLAGS+=-D"DEFAULT_MODULE_PATH=\"$(SECUREDIR)/\""
+ 
+ # you may uncomment the following to build libpam in modified ways
+ 
+@@ -26,6 +26,8 @@
+ 
+ ifeq ($(DEBUG_REL),yes)
+  LIBNAME=libpamd
++ CFLAGS += -D"DEBUG"
++ CFLAGS += -g
+ else
+  LIBNAME=libpam
+ endif
+@@ -39,8 +41,6 @@
+ 
+ # ---------------------------------------------
+ 
+-CFLAGS += $(DYNAMIC) $(STATIC) $(MOREFLAGS)
+-
+ # dynamic library names
+ 
+ LIBPAM = $(LIBNAME).$(DYNTYPE)
+@@ -66,18 +66,14 @@
+ 		pam_env.o pam_log.o $(EXTRAS)
+ 
+ ifdef DYNAMIC_LIBPAM
+-DLIBOBJECTS = $(addprefix dynamic/,$(LIBOBJECTS) $(STATICOBJ))
+-ifdef STATICOBJ
+-dynamic/pam_static.o: pam_static.c ../modules/_static_module_objects
+-	$(CC) $(CFLAGS) -c pam_static.c -o $@
+-endif
++DLIBOBJECTS = $(addprefix dynamic/,$(LIBOBJECTS))
+ endif
+ 
+ ifdef STATIC_LIBPAM
+ SLIBOBJECTS = $(addprefix static/,$(LIBOBJECTS) $(STATICOBJ))
+ ifdef STATICOBJ
+ static/pam_static.o: pam_static.c ../modules/_static_module_objects
+-	$(CC) $(CFLAGS) -c pam_static.c -o $@
++	$(CC) $(CFLAGS) $(STATIC) $(DYMANIC) -c pam_static.c -o $@
+ endif
+ endif
+ 
+@@ -98,12 +94,16 @@
+ 	$(CC) $(CFLAGS) $(DYNAMIC) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
+ 
+ static/%.o : %.c
+-	$(CC) $(CFLAGS) $(STATIC) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
++	$(CC) $(CFLAGS) $(STATIC) $(DYNAMIC) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
++
++bootstrap-libpam: bootdir $(LIBPAM)
++bootdir:
++	test -d dynamic || mkdir dynamic
+ 
+ $(LIBPAM): $(DLIBOBJECTS)
+ ifdef DYNAMIC_LIBPAM
+     ifeq ($(USESONAME),yes)
+-	$(LD_L) $(SOSWITCH) $(LIBPAMNAME) -o $@ $(DLIBOBJECTS) $(MODULES) $(LINKLIBS)
++	$(LD_L) $(SOSWITCH) $(LIBPAMNAME) -o $@ $(DLIBOBJECTS) $(LINKLIBS) -ldl -lcrypt
+     else
+ 	$(LD_L) -o $@ $(DLIBOBJECTS) $(MODULES)
+     endif
+@@ -132,14 +132,16 @@
+ 	$(INSTALL) -m 644 include/security/pam_malloc.h $(FAKEROOT)$(INCLUDED)
+ endif
+ ifdef DYNAMIC_LIBPAM
++	$(MKDIR) $(FAKEROOT)$(LIBDIR)
++	$(MKDIR) $(FAKEROOT)/usr/lib/
+ 	$(INSTALL) -m $(SHLIBMODE) $(LIBPAM) $(FAKEROOT)$(LIBDIR)/$(LIBPAMFULL)
+-	$(LDCONFIG)
+   ifneq ($(DYNTYPE),"sl")
+-	( cd $(FAKEROOT)$(LIBDIR) ; rm -f $(LIBPAM) ; ln -s $(LIBPAMNAME) $(LIBPAM) )
++	( ln -sf $(LIBDIR)/$(LIBPAMFULL) $(FAKEROOT)/usr/lib/$(LIBPAM) )
++	( ln -sf $(LIBPAMFULL) $(FAKEROOT)$(LIBDIR)/$(LIBPAMNAME) )
+   endif
+ endif
+ ifdef STATIC_LIBPAM
+-	$(INSTALL) -m 644 $(LIBPAMSTATIC) $(FAKEROOT)$(LIBDIR)
++	$(INSTALL) -m 644 $(LIBPAMSTATIC) $(FAKEROOT)/usr/lib/$(LIBPAMSTATIC)
+ endif
+ 
+ remove:
+diff -urN Linux-PAM-0.72.orig/libpam/include/security/_pam_macros.h Linux-PAM-0.72/libpam/include/security/_pam_macros.h
+--- Linux-PAM-0.72.orig/libpam/include/security/_pam_macros.h	Mon Nov  8 00:41:23 1999
++++ Linux-PAM-0.72/libpam/include/security/_pam_macros.h	Sat Apr 29 11:33:44 2000
+@@ -64,6 +64,9 @@
+ #include <sys/types.h>
+ #include <stdarg.h>
+ #include <errno.h>
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <unistd.h>
+ 
+ /*
+  * This is for debugging purposes ONLY. DO NOT use on live systems !!!
+@@ -81,37 +84,55 @@
+ 				   , const int line)
+ {
+     FILE *logfile;
+-    int must_close = 1;
+-    
+-    if (!(logfile = fopen(_PAM_LOGFILE,"a"))) {
++    int must_close = 1, fd;
++   
++#ifdef O_NOFOLLOW
++    if ((fd = open(_PAM_LOGFILE, O_WRONLY|O_NOFOLLOW|O_APPEND)) != -1) {
++#else
++    if ((fd = open(_PAM_LOGFILE, O_WRONLY|O_APPEND)) != -1) {
++#endif
++	if (!(logfile = fdopen(fd,"a"))) {
++	    logfile = stderr;
++	    must_close = 0;
++	    close(fd);
++	}
++    } else {
+         logfile = stderr;
+-        must_close = 0;
++	must_close = 0;
+     }
+     fprintf(logfile,"[%s:%s(%d)] ",file, fn, line);
+-    if (must_close) {
+-        fflush(logfile);
++    fflush(logfile);
++    if (must_close)
+         fclose(logfile);
+-    }
+ }
+ 
+ static void _pam_output_debug(const char *format, ...)
+ {
+     va_list args;
+     FILE *logfile;
+-    int must_close = 1;
++    int must_close = 1, fd;
+     
+     va_start(args, format);
+ 
+-    if (!(logfile = fopen(_PAM_LOGFILE,"a"))) {
+-        logfile = stderr;
+-        must_close = 0;
++#ifdef O_NOFOLLOW
++    if ((fd = open(_PAM_LOGFILE, O_WRONLY|O_NOFOLLOW|O_APPEND)) != -1) {
++#else
++    if ((fd = open(_PAM_LOGFILE, O_WRONLY|O_APPEND)) != -1) {
++#endif
++	if (!(logfile = fdopen(fd,"a"))) {
++	    logfile = stderr;
++	    must_close = 0;
++	    close(fd);
++	}
++    } else {
++	logfile = stderr;
++	must_close = 0;
+     }
+     vfprintf(logfile, format, args);
+     fprintf(logfile, "\n");
+-    if (must_close) {
+-        fflush(logfile);
++    fflush(logfile);
++    if (must_close)
+         fclose(logfile);
+-    }
+ 
+     va_end(args);
+ }
+diff -urN Linux-PAM-0.72.orig/libpam/pam_malloc.c Linux-PAM-0.72/libpam/pam_malloc.c
+--- Linux-PAM-0.72.orig/libpam/pam_malloc.c	Sat Dec 26 23:34:23 1998
++++ Linux-PAM-0.72/libpam/pam_malloc.c	Sat Apr 29 11:33:44 2000
+@@ -87,18 +87,27 @@
+ static void _pam_output_xdebug_info(void)
+ {
+     FILE *logfile;
+-    int must_close = 1;
+-    
+-    if (!(logfile = fopen(_PAM_LOGFILE,"a"))) {
+-        logfile = stderr;
+-        must_close = 0;
++    int must_close = 1, fd;
++
++#ifdef O_NOFOLLOW
++    if ((fd = open(_PAM_LOGFILE, O_WRONLY|O_NOFOLLOW|O_APPEND)) != -1) {
++#else
++    if ((fd = open(_PAM_LOGFILE, O_WRONLY|O_APPEND)) != -1) {
++#endif
++	if (!(logfile = fdopen(fd,"a"))) {
++	    logfile = stderr;
++	    must_close = 0;
++	    close(fd);
++	}
++    } else {
++	logfile = stderr;
++	must_close = 0;
+     }
+     fprintf(logfile, "[%s:%s(%d)->%s()] ",
+            last_file, last_call, last_line, last_fn);
+-    if (must_close) {
+-        fflush(logfile);
++    fflush(logfile);
++    if (must_close)
+         fclose(logfile);
+-    }
+ }
+ 
+ static void hinder(void)
+diff -urN Linux-PAM-0.72.orig/libpam/pam_tokens.h Linux-PAM-0.72/libpam/pam_tokens.h
+--- Linux-PAM-0.72.orig/libpam/pam_tokens.h	Sun Jul 12 01:17:15 1998
++++ Linux-PAM-0.72/libpam/pam_tokens.h	Sat Apr 29 11:36:02 2000
+@@ -63,6 +63,8 @@
+     "authtok_expired",   /* 27 */
+     "module_unknown",    /* 28 */
+     "bad_item",          /* 29 */
++    "conv_again",        /* 30 */
++    "incomplete",        /* 31 */
+ /* add new return codes here */
+     "default"            /* this is _PAM_RETURN_VALUES and indicates
+ 			    the default return action */
+diff -urN Linux-PAM-0.72.orig/libpam_misc/Makefile Linux-PAM-0.72/libpam_misc/Makefile
+--- Linux-PAM-0.72.orig/libpam_misc/Makefile	Sun Nov 21 21:13:26 1999
++++ Linux-PAM-0.72/libpam_misc/Makefile	Sat Apr 29 11:33:44 2000
+@@ -69,12 +69,12 @@
+ 	$(INSTALL) -m 644 ./pam_misc.h $(FAKEROOT)$(INCLUDED)
+ ifdef MAKE_DYNAMIC
+ 	$(INSTALL) -m $(SHLIBMODE) $(LIBDYNAMIC) $(FAKEROOT)$(LIBDIR)/$(LIBDYNMIN)
+-	$(LDCONFIG)
+   ifneq ($(DYNTYPE),"sl")
+-	( cd $(FAKEROOT)$(LIBDIR) ; ln -sf $(LIBDYNMAJ) $(LIBDYNAMIC) )
++	ln -sf $(LIBDIR)/$(LIBDYNMIN) $(FAKEROOT)/usr/lib/$(LIBDYNAMIC)
++	ln -sf $(LIBDYNMIN) $(FAKEROOT)$(LIBDIR)/$(LIBDYNMAJ)
+   endif
+ endif
+-	$(INSTALL) -m 644 $(LIBSTATIC) $(FAKEROOT)$(LIBDIR)
++	$(INSTALL) -m 644 $(LIBSTATIC) $(FAKEROOT)/usr/lib/$(LIBSTATIC)
+ 
+ clean:
+ 	rm -f *.so *.a core a.out *~
+diff -urN Linux-PAM-0.72.orig/libpamc/Makefile Linux-PAM-0.72/libpamc/Makefile
+--- Linux-PAM-0.72.orig/libpamc/Makefile	Sat Oct  9 01:03:57 1999
++++ Linux-PAM-0.72/libpamc/Makefile	Sat Apr 29 11:33:44 2000
+@@ -64,9 +64,9 @@
+ $(LIBPAMC): $(DLIBOBJECTS)
+ ifdef DYNAMIC_LIBPAM
+     ifeq ($(USESONAME),yes)
+-	$(LD_L) $(SOSWITCH) $(LIBPAMCNAME) -o $@ $(DLIBOBJECTS) $(MODULES) $(LINKLIBS)
++	$(LD_L) $(SOSWITCH) $(LIBPAMCNAME) -o $@ $(DLIBOBJECTS) $(LINKLIBS) -ldl -lcrypt
+     else
+-	$(LD_L) -o $@ $(DLIBOBJECTS) $(MODULES)
++	$(LD_L) -o $@ $(DLIBOBJECTS)
+     endif
+     ifeq ($(NEEDSONAME),yes)
+ 	rm -f $(LIBPAMCFULL)
+@@ -86,14 +86,17 @@
+ 	$(MKDIR) $(FAKEROOT)$(INCLUDED)
+ 	$(INSTALL) -m 644 include/security/pam_client.h $(FAKEROOT)$(INCLUDED)
+ ifdef DYNAMIC_LIBPAM
++	$(MKDIR) $(FAKEROOT)$(LIBDIR)
++	$(MKDIR) $(FAKEROOT)/usr/lib/
+ 	$(INSTALL) -m $(SHLIBMODE) $(LIBPAMC) $(FAKEROOT)$(LIBDIR)/$(LIBPAMCFULL)
+-	$(LDCONFIG)
+   ifneq ($(DYNTYPE),"sl")
+-	( cd $(FAKEROOT)$(LIBDIR) ; rm -f $(LIBPAMC) ; ln -s $(LIBPAMCNAME) $(LIBPAMC) )
++	( ln -sf $(LIBDIR)/$(LIBPAMCFULL) $(FAKEROOT)/usr/lib/$(LIBPAMC) )
++	( ln -sf $(LIBPAMCFULL) $(FAKEROOT)$(LIBDIR)/$(LIBPAMCNAME) )
+   endif
+ endif
++
+ ifdef STATIC_LIBPAM
+-	$(INSTALL) -m 644 $(LIBPAMCSTATIC) $(FAKEROOT)$(LIBDIR)
++	$(INSTALL) -m 644 $(LIBPAMCSTATIC) $(FAKEROOT)/usr/lib/$(LIBPAMCSTATIC)
+ endif
+ 
+ remove:

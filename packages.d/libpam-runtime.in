@@ -1,0 +1,17 @@
+%conffiles%
+/etc/pam.conf
+/etc/pam.d/other
+%dirs%
+lib/security
+etc/security
+%files%
+etc/pam.d/other
+etc/pam.conf
+%postinst%
+#!/bin/sh -e
+
+#DEBHELPER#
+%prerm%
+#!/bin/sh -e
+
+#DEBHELPER#

@@ -1,0 +1,14 @@
+--- Linux-PAM-0.71.orig/modules/pam_rhosts/pam_rhosts_auth.c	Mon Nov  8 00:46:58 1999
++++ Linux-PAM-0.71/modules/pam_rhosts/pam_rhosts_auth.c	Mon Nov  8 21:04:20 1999
+@@ -537,8 +534,9 @@
+      */
+ 
+     cp = NULL;
+-    if (lstat(pbuf, &sbuf) < 0 || !S_ISREG(sbuf.st_mode))
+-	cp = ".rhosts not regular file";
++    /* it's ok to have a symlink, since we verify fstat and owner below */
++    if (lstat(pbuf, &sbuf) < 0 || !(S_ISREG(sbuf.st_mode) || S_ISLNK(sbuf.st_mode)))
++	cp = ".rhosts not regular file or link";
+     else if (fstat(fileno(hostf), &sbuf) < 0)
+ 	cp = ".rhosts fstat failed";
+     else if (sbuf.st_uid && sbuf.st_uid != pwd->pw_uid)

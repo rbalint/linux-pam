@@ -1,0 +1,117 @@
+diff -urN Linux-PAM-0.72.orig/doc/man/pam.8 Linux-PAM-0.72/doc/man/pam.8
+--- Linux-PAM-0.72.orig/doc/man/pam.8	Sun Jul 12 01:17:14 1998
++++ Linux-PAM-0.72/doc/man/pam.8	Sun Mar  4 22:59:28 2001
+@@ -3,9 +3,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1996-7 <morgan@linux.kernel.org>
+ .TH PAM 8 "1997 Feb 9" "Linux-PAM 0.56" "Linux-PAM Manual"
+ .SH NAME
+-
+ Linux-PAM \- Pluggable Authentication Modules for Linux
+-
+ .SH SYNOPSIS
+ .B /etc/pam.conf
+ .sp 2
+diff -urN Linux-PAM-0.72.orig/doc/man/pam_authenticate.3 Linux-PAM-0.72/doc/man/pam_authenticate.3
+--- Linux-PAM-0.72.orig/doc/man/pam_authenticate.3	Sun Jul 12 01:17:14 1998
++++ Linux-PAM-0.72/doc/man/pam_authenticate.3	Sun Mar  4 22:59:38 2001
+@@ -3,9 +3,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1996-7 <morgan@parc.power.net>
+ .TH PAM_AUTHENTICATE 3 "1996 Dec 9" "Linux-PAM 0.55" "App. Programmers' Manual"
+ .SH NAME
+-
+ pam_authenticate \- authenticate a user
+-
+ .SH SYNOPSIS
+ .B #include <security/pam_appl.h>
+ .sp
+diff -urN Linux-PAM-0.72.orig/doc/man/pam_chauthtok.3 Linux-PAM-0.72/doc/man/pam_chauthtok.3
+--- Linux-PAM-0.72.orig/doc/man/pam_chauthtok.3	Sun Mar  4 22:58:55 2001
++++ Linux-PAM-0.72/doc/man/pam_chauthtok.3	Sun Mar  4 22:59:42 2001
+@@ -3,9 +3,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1997 <morgan@parc.power.net>
+ .TH PAM_CHAUTHTOK 3 "1997 Jan 4" "Linux-PAM 0.55" "App. Programmers' Manual"
+ .SH NAME
+-
+ pam_chauthtok \- updating authentication tokens
+-
+ .SH SYNOPSIS
+ .B #include <security/pam_appl.h>
+ .sp
+diff -urN Linux-PAM-0.72.orig/doc/man/pam_fail_delay.3 Linux-PAM-0.72/doc/man/pam_fail_delay.3
+--- Linux-PAM-0.72.orig/doc/man/pam_fail_delay.3	Sun Jul 12 01:17:14 1998
++++ Linux-PAM-0.72/doc/man/pam_fail_delay.3	Sun Mar  4 22:59:50 2001
+@@ -3,9 +3,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1997 <morgan@parc.power.net>
+ .TH PAM_FAIL_DELAY 3 "1997 Jan 12" "Linux-PAM 0.56" "Programmers' Manual"
+ .SH NAME
+-
+ pam_fail_delay \- request a delay on failure
+-
+ .SH SYNOPSIS
+ .B #include <security/pam_appl.h>
+ .br
+diff -urN Linux-PAM-0.72.orig/doc/man/pam_open_session.3 Linux-PAM-0.72/doc/man/pam_open_session.3
+--- Linux-PAM-0.72.orig/doc/man/pam_open_session.3	Sun Jul 12 01:17:14 1998
++++ Linux-PAM-0.72/doc/man/pam_open_session.3	Sun Mar  4 22:59:53 2001
+@@ -3,9 +3,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1997 <morgan@parc.power.net>
+ .TH PAM_OPEN_SESSION 3 "1997 Jan 4" "Linux-PAM 0.55" "App. Programmers' Manual"
+ .SH NAME
+-
+ pam_open/close_session \- PAM session management
+-
+ .SH SYNOPSIS
+ .B #include <security/pam_appl.h>
+ .sp
+diff -urN Linux-PAM-0.72.orig/doc/man/pam_setcred.3 Linux-PAM-0.72/doc/man/pam_setcred.3
+--- Linux-PAM-0.72.orig/doc/man/pam_setcred.3	Sun Jul 12 01:17:14 1998
++++ Linux-PAM-0.72/doc/man/pam_setcred.3	Sun Mar  4 22:59:57 2001
+@@ -3,9 +3,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1996,1997 <morgan@parc.power.net>
+ .TH PAM_SETCRED 3 "1997 July 6" "Linux-PAM 0.58" "App. Programmers' Manual"
+ .SH NAME
+-
+ pam_setcred \- set the credentials for the user
+-
+ .SH SYNOPSIS
+ .B #include <security/pam_appl.h>
+ .sp
+diff -urN Linux-PAM-0.72.orig/doc/man/pam_start.3 Linux-PAM-0.72/doc/man/pam_start.3
+--- Linux-PAM-0.72.orig/doc/man/pam_start.3	Sun Jul 12 01:17:14 1998
++++ Linux-PAM-0.72/doc/man/pam_start.3	Sun Mar  4 23:00:01 2001
+@@ -3,9 +3,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1996-7 <morgan@parc.power.net>
+ .TH PAM_START 3 "1997 Feb 15" "Linux-PAM 0.56" "Application Programmers' Manual"
+ .SH NAME
+-
+ pam_start, pam_end \- activating Linux-PAM
+-
+ .SH SYNOPSIS
+ .B #include <security/pam_appl.h>
+ .sp
+diff -urN Linux-PAM-0.72.orig/doc/man/pam_strerror.3 Linux-PAM-0.72/doc/man/pam_strerror.3
+--- Linux-PAM-0.72.orig/doc/man/pam_strerror.3	Sat Oct  9 00:15:56 1999
++++ Linux-PAM-0.72/doc/man/pam_strerror.3	Sun Mar  4 23:00:04 2001
+@@ -4,9 +4,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1996-7 <morgan@linux.kernel.org>
+ .TH PAM_STRERROR 3 "1999 Oct 4" "Linux-PAM 0.70" "Programmers' Manual"
+ .SH NAME
+-
+ pam_strerror \- return a textual description of a Linux-PAM error
+-
+ .SH SYNOPSIS
+ .B #include <security/pam_appl.h>
+ .br
+diff -urN Linux-PAM-0.72.orig/doc/man/template-man Linux-PAM-0.72/doc/man/template-man
+--- Linux-PAM-0.72.orig/doc/man/template-man	Sun Jul 12 01:17:14 1998
++++ Linux-PAM-0.72/doc/man/template-man	Sun Mar  4 23:00:11 2001
+@@ -3,9 +3,7 @@
+ .\" Copyright (c) Andrew G. Morgan 1997 <morgan@parc.power.net>
+ .TH PAM_???? 2 "1997 Jan 4" "Linux-PAM 0.55" "Application Programmers' Manual"
+ .SH NAME
+-
+ function names \- brief summary of function
+-
+ .SH SYNOPSIS
+ .B #include <security/pam_????.h>
+ .sp

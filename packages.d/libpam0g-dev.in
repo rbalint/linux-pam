@@ -1,0 +1,26 @@
+%dirs%
+usr/lib
+%examples%
+build-tree/Linux-PAM-0.72/examples/Makefile
+build-tree/Linux-PAM-0.72/examples/blank.c
+build-tree/Linux-PAM-0.72/examples/check_user.c
+build-tree/Linux-PAM-0.72/examples/test.c
+build-tree/Linux-PAM-0.72/examples/vpass.c
+build-tree/Linux-PAM-0.72/examples/xsh.c
+build-tree/Linux-PAM-0.72/libpamc/test
+%files%
+usr/include/security/*
+usr/lib/libpam.a
+usr/lib/libpamc.a
+usr/lib/libpam_misc.a
+usr/lib/libpam.so
+usr/lib/libpamc.so
+usr/lib/libpam_misc.so
+%postinst%
+#!/bin/sh -e
+
+#DEBHELPER#
+%prerm%
+#!/bin/sh -e
+
+#DEBHELPER#

@@ -1,0 +1,72 @@
+--- Linux-PAM-0.72.orig/libpam/pam_handlers.c	Sun Dec 27 05:34:22 1998
++++ Linux-PAM-0.72/libpam/pam_handlers.c	Sat Oct 14 16:13:35 2000
+@@ -110,6 +110,61 @@
+ 		module_type = PAM_T_ACCT;
+ 	    } else if (!_pam_strCMP("password", tok)) {
+ 		module_type = PAM_T_PASS;
++	    } else if (!_pam_strCMP("@include", tok)) {
++		/* include a file here
++		 * most of the code adapted from _pam_init_handlers */
++		FILE *inc_f;
++		int retval;
++		int drop_f = 1;
++
++		tok = _pam_StrTok(NULL, " \n\t", &nexttok);
++		if (tok == NULL) {
++			D(("_pam_parse_conf_file: included file name not given"));
++			_pam_system_log(LOG_ERR,
++				"(%s) included file name not given",
++				this_service);
++		} else {
++			char *filename;
++			struct stat test_d;
++
++			if (!_pam_strCMP("/", tok)) {
++				filename = tok;
++				drop_f = 0;
++			} else if ( stat(PAM_CONFIG_D, &test_d) == 0 && S_ISDIR(test_d.st_mode) ) {
++				D(("searching " PAM_CONFIG_D " for included file"));
++				filename = malloc(sizeof(PAM_CONFIG_DF)
++						+strlen(tok));
++				if (filename == NULL) {
++					_pam_system_log(LOG_ERR,
++						"_pam_parse_conf_file: no memory; service %s",
++						this_service);
++					return PAM_BUF_ERR;
++				}
++				sprintf(filename, PAM_CONFIG_DF, tok);
++			}
++			D(("opening %s", filename));
++			inc_f = fopen(filename, "r");
++	    		if (inc_f != NULL) {
++				retval = _pam_parse_conf_file(pamh, inc_f, known_service
++#ifdef PAM_READ_BOTH_CONFS
++							      , not_other
++#endif /* PAM_READ_BOTH_CONFS */
++					 );
++				fclose(inc_f);
++				if (retval != PAM_SUCCESS) {
++				    _pam_system_log(LOG_ERR,
++					    "_pam_parse_conf_file: error reading %s",
++					    filename);
++				    _pam_system_log(LOG_ERR, "_pam_parse_conf_file: [%s]",
++					    pam_strerror(pamh, retval));
++				    return retval;
++				}
++			}
++			if (drop_f)
++				_pam_drop(filename);
++	    	}
++		/* skip dealing with the module; and go to the next line */
++		goto end;
+ 	    } else {
+ 		/* Illegal module type */
+ 		D(("_pam_init_handlers: bad module type: %s", tok));
+@@ -212,6 +267,7 @@
+ 		return PAM_ABORT;
+ 	    }
+ 	}
++end:
+     }
+ 
+     return ( (x < 0) ? PAM_ABORT:PAM_SUCCESS );

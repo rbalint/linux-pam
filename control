@@ -1,0 +1,80 @@
+Source: pam
+Section: base
+Priority: optional
+Maintainer: Sam Hartman <hartmans@debian.org>
+Standards-Version: 3.2.1.0
+Build-Depends: cracklib2-dev, bzip2, debhelper, patch, libdb3-dev, libcap-dev [!hurd-i386]
+Build-Depends-Indep: sgml-tools, latex2html, tetex-extra, groff
+
+Package: libpam0g
+Priority: required
+Architecture: any
+Conflicts: libpam0 (<= 0.56-2), libpam
+Replaces: libpam0g-util
+Depends: ${shlibs:Depends}, libpam-runtime
+Suggests: libpam-doc
+Description: Pluggable Authentication Modules library
+ Contains the C shared library for Linux-PAM, a suite of shared
+ libraries that enable the local system administrator to choose how
+ applications authenticate users.  In other words, without rewriting
+ or recompiling a PAM-aware application, it is possible to switch
+ between the authentication mechanism(s) it uses.  One may entirely
+ upgrade the local authentication system without touching the
+ applications themselves.
+
+Package: libpam-modules
+Priority: required
+Architecture: any
+Depends: ${shlibs:Depends}
+Conflicts: libpam0g-modules (= 0.66-1), libpam-motd, libpam-mkhomedir, suidmanager (<< 0.50)
+Replaces: libpam0g-util
+Provides: libpam-motd, libpam-mkhomedir
+Description: Pluggable Authentication Modules for PAM
+ This package completes the set of modules for PAM. It includes the
+ the pam_unix_*.so module as well as some specialty modules.
+
+Package: libpam-runtime
+Priority: required
+Architecture: any
+Replaces: libpam0g-util, libpam0g-dev
+Conflicts: libpam0g-util, libpam0g (<< 0.66-0)
+Description: Runtime support for the PAM library
+ Contains the base setup for libpam
+
+Package: libpam0g-dev
+Section: devel
+Priority: optional
+Architecture: any
+Depends: libpam0g (= ${Source-Version}), libc6-dev
+Conflicts: libpam-dev, libpam-dbg
+Replaces: libpam0g (<= 0.65)
+Provides: libpam-dev
+Description: Development files for PAM
+ Contains C header files and development shared libraries libraries for
+ libpam, the pluggable authentication modules, a suite of shared libraries
+ that enable the local system administrator to choose how applications
+ authenticate users.
+ .
+ PAM decouples applications from the authentication mechanism, making it
+ possible to upgrade the authentication system without recompiling or
+ rewriting the applications.
+
+Package: libpam-cracklib
+Section: libs
+Priority: optional
+Architecture: any
+Replaces: libpam0g-cracklib
+Depends: ${shlibs:Depends}, cracklib-runtime
+Description: PAM module to enable cracklib support.
+ This module allows the use of cracklib in the authentication model.
+
+Package: libpam-doc
+Provides: pam-doc
+Section: doc
+Priority: optional
+Architecture: all
+Description: Documentation of PAM
+ Contains documentation (in HTML, ASCII, and PostScript format) for
+ libpam, the Pluggable Authentication Modules library, a suite of shared
+ libraries that enable the local system administrator to choose how
+ applications authenticate users.

@@ -1,0 +1,14 @@
+--- Linux-PAM-0.72/modules/pam_securetty/pam_securetty.c~	Sun Mar 25 21:38:52 2001
++++ Linux-PAM-0.72/modules/pam_securetty/pam_securetty.c	Sun Mar 25 21:39:33 2001
+@@ -155,9 +155,8 @@
+ 	struct pam_response *resp = NULL;
+ 	struct pam_conv *conv;
+ 
+-	if (ctrl & PAM_DEBUG_ARG)
+-	    _pam_log(LOG_WARNING, "access denied: tty '%s' is not secure !",
+-		     uttyname);
++	_pam_log(LOG_WARNING, "access denied: tty '%s' is not secure!",
++		 uttyname);
+ 	/* whoa!, let's try faking a password request first, so as not
+ 	   to let on why we are denying access. We fail no matter what */
+ 

@@ -1,0 +1,29 @@
+%undocumented%
+pam_tally.8
+%conffiles%
+/etc/security/access.conf
+/etc/security/group.conf
+/etc/security/limits.conf
+/etc/security/pam_env.conf
+/etc/security/time.conf
+%conffiles.hurd-i386%
+/etc/security/access.conf
+/etc/security/group.conf
+/etc/security/pam_env.conf
+/etc/security/time.conf
+%dirs%
+usr/share/man/man8
+%examples%
+build-tree/Linux-PAM-0.72/modules/pam_filter/upperLOWER
+%files%
+etc/security/
+sbin/unix_chkpwd
+usr/sbin/pam_tally
+%postinst%
+#!/bin/sh -e
+
+#DEBHELPER#
+%prerm%
+#!/bin/sh -e
+
+#DEBHELPER#

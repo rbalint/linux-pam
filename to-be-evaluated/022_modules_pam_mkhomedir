@@ -1,0 +1,184 @@
+--- Linux-PAM-0.72.orig/modules/pam_mkhomedir/pam_mkhomedir.c	Mon Nov  8 06:45:36 1999
++++ Linux-PAM-0.72/modules/pam_mkhomedir/pam_mkhomedir.c	Wed Feb  7 15:24:27 2001
+@@ -171,57 +171,24 @@
+    return retval;
+ }
+ 
+-/* Do the actual work of creating a home dir */
+-static int create_homedir(pam_handle_t * pamh, int ctrl,
+-			 const struct passwd *pwd)
++int copy_skel(char *SkelDir, char *SubPath, const struct passwd *pwd)
+ {
++   int ret;
+    char *remark;
+    DIR *D;
+    struct dirent *Dir;
+    
+    /* Some scratch space */
+    remark = malloc(BUFSIZ);
+-   if (remark == NULL)
+-   {
+-      D(("no memory for last login remark"));
+-      return PAM_BUF_ERR;
+-   }
+-
+-   /* Mention what is happening, if the notification fails that is OK */
+-   if (snprintf(remark,BUFSIZ,"Creating home directory '%s'.",
+-	    pwd->pw_dir) == -1)
+-      return PAM_PERM_DENIED;
+    
+-   make_remark(pamh, ctrl, remark);
+-
+-   /* Crete the home directory */
+-   if (mkdir(pwd->pw_dir,0700) != 0)
+-   {
+-      free(remark);
+-      _log_err(LOG_DEBUG, "unable to create home directory %s",pwd->pw_dir);
+-      return PAM_PERM_DENIED;
+-   }   
+-   if (chmod(pwd->pw_dir,0777 & (~UMask)) != 0 ||
+-       chown(pwd->pw_dir,pwd->pw_uid,pwd->pw_gid) != 0)
+-   {
+-      free(remark);
+-      _log_err(LOG_DEBUG, "unable to chance perms on home directory %s",pwd->pw_dir);
+-      return PAM_PERM_DENIED;
+-   }   
++   snprintf(remark,BUFSIZ,"%s%s",SkelDir,SubPath);
+    
+-   /* See if we need to copy the skel dir over. */
+-   if (SkelDir[0] == 0)
+-   {
+-      free(remark);
+-      return PAM_SUCCESS;
+-   }
+-
+    /* Scan the directory */
+-   D = opendir(SkelDir);
++   D = opendir(remark);
+    if (D == 0)
+    {
++      _log_err(LOG_DEBUG, "unable to read directory %s",remark);
+       free(remark);
+-      _log_err(LOG_DEBUG, "unable to read directory %s",SkelDir);
+       return PAM_PERM_DENIED;
+    }
+    
+@@ -238,39 +205,45 @@
+ 	 continue;
+       
+       /* Check if it is a directory */
+-      snprintf(remark,BUFSIZ,"%s/%s",SkelDir,Dir->d_name);
++      snprintf(remark,BUFSIZ,"%s%s/%s",SkelDir,SubPath,Dir->d_name);
+       if (stat(remark,&St) != 0)
+         continue;
+       if (S_ISDIR(St.st_mode))
+       {
+-	snprintf(remark,BUFSIZ,"%s/%s",pwd->pw_dir,Dir->d_name);
++	snprintf(remark,BUFSIZ,"%s%s/%s",pwd->pw_dir,SubPath,Dir->d_name);
+ 	if (mkdir(remark,(St.st_mode | 0222) & (~UMask)) != 0 ||
+ 	    chmod(remark,(St.st_mode | 0222) & (~UMask)) != 0 ||
+ 	    chown(remark,pwd->pw_uid,pwd->pw_gid) != 0)
+ 	{
+-	   free(remark);
+ 	   _log_err(LOG_DEBUG, "unable to change perms on copy %s",remark);
++	   free(remark);
+ 	   return PAM_PERM_DENIED;
+ 	}
++	snprintf(remark,BUFSIZ,"%s/%s",SubPath,Dir->d_name);
++	ret=copy_skel(SkelDir,remark,pwd);
++	if (ret!=PAM_SUCCESS) {
++	  free(remark);
++	  return ret;
++	}
+ 	continue;
+       }
+ 
+       /* Open the source file */
+       if ((SrcFd = open(remark,O_RDONLY)) < 0 || fstat(SrcFd,&St) != 0)
+       {
+-	 free(remark);
+ 	 _log_err(LOG_DEBUG, "unable to open src file %s",remark);
++	 free(remark);
+ 	 return PAM_PERM_DENIED;
+       }
+       stat(remark,&St);
+       
+       /* Open the dest file */
+-      snprintf(remark,BUFSIZ,"%s/%s",pwd->pw_dir,Dir->d_name);
++      snprintf(remark,BUFSIZ,"%s%s/%s",pwd->pw_dir,SubPath,Dir->d_name);
+       if ((DestFd = open(remark,O_WRONLY | O_TRUNC | O_CREAT,0600)) < 0)
+       {
+ 	 close(SrcFd);
+-	 free(remark);
+ 	 _log_err(LOG_DEBUG, "unable to open dest file %s",remark);
++	 free(remark);
+ 	 return PAM_PERM_DENIED;
+       }
+ 
+@@ -280,8 +253,8 @@
+       if (fchmod(DestFd,(St.st_mode | 0222) & (~UMask)) != 0 ||
+ 	  fchown(DestFd,pwd->pw_uid,pwd->pw_gid) != 0)
+       {
+-	 free(remark);
+ 	 _log_err(LOG_DEBUG, "unable to chang perms on copy %s",remark);
++	 free(remark);
+ 	 return PAM_PERM_DENIED;
+       }   
+       
+@@ -302,9 +275,55 @@
+       close(SrcFd);
+       close(DestFd);
+    }
+-   
+    free(remark);
+    return PAM_SUCCESS;
++}
++
++/* Do the actual work of creating a home dir */
++static int create_homedir(pam_handle_t * pamh, int ctrl,
++			 const struct passwd *pwd)
++{
++   char *remark;
++   
++   /* Some scratch space */
++   remark = malloc(BUFSIZ);
++   if (remark == NULL)
++   {
++      D(("no memory for last login remark"));
++      return PAM_BUF_ERR;
++   }
++
++   /* Mention what is happening, if the notification fails that is OK */
++   if (snprintf(remark,BUFSIZ,"Creating home directory '%s'.",
++	    pwd->pw_dir) == -1)
++      return PAM_PERM_DENIED;
++   
++   make_remark(pamh, ctrl, remark);
++
++   /* Crete the home directory */
++   if (mkdir(pwd->pw_dir,0700) != 0)
++   {
++      free(remark);
++      _log_err(LOG_DEBUG, "unable to create home directory %s",pwd->pw_dir);
++      return PAM_PERM_DENIED;
++   }   
++   if (chmod(pwd->pw_dir,0777 & (~UMask)) != 0 ||
++       chown(pwd->pw_dir,pwd->pw_uid,pwd->pw_gid) != 0)
++   {
++      free(remark);
++      _log_err(LOG_DEBUG, "unable to chance perms on home directory %s",pwd->pw_dir);
++      return PAM_PERM_DENIED;
++   }   
++   
++   /* See if we need to copy the skel dir over. */
++   if (SkelDir[0] == 0)
++   {
++      free(remark);
++      return PAM_SUCCESS;
++   }
++   free(remark);
++   
++   return copy_skel(SkelDir,"",pwd);
+ }
+ 
+ /* --- authentication management functions (only) --- */

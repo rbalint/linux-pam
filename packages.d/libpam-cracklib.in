@@ -1,0 +1,2 @@
+%files%
+lib/security/pam_cracklib.so

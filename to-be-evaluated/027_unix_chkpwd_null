@@ -1,0 +1,11 @@
+--- Linux-PAM-0.72/modules/pam_unix/unix_chkpwd.c~	Thu Feb  8 11:16:00 2001
++++ Linux-PAM-0.72/modules/pam_unix/unix_chkpwd.c	Thu Feb  8 11:56:04 2001
+@@ -134,6 +134,8 @@
+ 
+ 	if (strlen(salt) == 0)
+ 		return (opt == 0) ? UNIX_FAILED : UNIX_PASSED;
++	else if (p == NULL || strlen(p) == 0)
++		return UNIX_FAILED;
+ 
+ 	/* Hack off SysVR4 password aging */
+ 	{
