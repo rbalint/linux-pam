@@ -1,3 +1,9 @@
+pam (0.75-0) unstable; urgency=low
+
+  * Preliminary test packages
+
+ -- Sam Hartman <hartmans@mit.edu>  Sat, 18 May 2002 20:48:04 -0400
+
 pam (0.72-35) unstable; urgency=medium
 
   * Fix like_auth to make libpam-krb5 and libpam-heimdal actually useful,
