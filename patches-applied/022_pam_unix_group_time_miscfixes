@@ -1,3 +1,7 @@
+I think this also contains a patch to 
+  * Block SIGCHLD when calling unix password verification program, patch from mdz@debian.org, fixes pam part of #97977
+
+
   * Patch from Volker Stolz to fix bug in previous pam_group patch,
     closes: #111854 
   * Add support for credential reinitialization in pam_group, closes: #108697
