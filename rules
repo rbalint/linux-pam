@@ -5,11 +5,10 @@
 # architecture-dependant package, as well as an architecture-independant
 # package.
 
-# DBS rules
-TAR_DIR := Linux-PAM
-include debian/scripts/dbs-build.mk
+DH_COMPAT = 3
+export DH_COMPAT
 
-pdoc=libpam-doc
+BUILD_TREE=Linux-PAM
 
 d = $(shell pwd)/debian
 dl = $(d)/local
@@ -19,23 +18,30 @@ ie = install -p -m 0755
 #version=${shell expr `pwd` : '.*-\([0-9.]*\)'}
 #version_major=${shell expr `pwd` : '.*-\([0-9]*\).[0-9.]*'}
 
-build: $(STAMP_DIR)/build-stamp
-$(STAMP_DIR)/build-stamp: 
+build:   build-stamp
+build-stamp: configure-stamp
 	dh_testdir
 
-	cd $(BUILD_TREE) && \
-		  touch .freezemake )
 	# Make libpam.so for linking the modules
 	$(MAKE) -C $(BUILD_TREE) bootstrap-libpam
 	# Compile everything else
 	$(MAKE) -C $(BUILD_TREE) \
 
-	touch $(STAMP_DIR)/build-stamp
+	touch build-stamp
+
+configure: configure-stamp
+
+configure-stamp:
+	(cd $(BUILD_TREE) && \
+	sh configure --sysconfdir=/etc --prefix=/usr --enable-static-libpam)
+	touch configure-stamp
+
 
 clean:
 	dh_testdir
-	rm -rf $(STAMP_DIR) $(SOURCE_DIR)
-	perl debian/scripts/dh_split clean
+	dh_testroot
+	-$(MAKE) -C $(BUILD_TREE) distclean
+	rm -f build-stamp configure-stamp
 	dh_clean
 
 # Build architecture-independent files here.
