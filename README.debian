@@ -11,4 +11,16 @@ Application Developers' Guide" and "The Linux-PAM Module Writers' Guide".
 
 The Debian default configuration is to emulate the old UNIX authentication.
 
+Changes Since Debian 3.0
+------------------------
+
+The pam_securetty module used to prompt for a password when it was
+going to fail access.   This Debian-specific patch defeats one of the
+key uses of this module: ot deny access to privileged accounts soon
+enough in the PAM stack that  the password is never requested and is
+not compromised over insecure network links.  If you want to ask for
+the password use required not requisite in your PAM config.
+
+
+
 J.H.M. Dassen (Ray) <jdassen@debian.org>, Wed, 23 Sep 1998 22:53:15 +0200
