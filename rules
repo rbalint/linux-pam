@@ -80,7 +80,7 @@ binary-indep: build $(dh_mak_deps)
 	dh_movefiles -i
 	dh_installman -plibpam-runtime $(dl)/pam-undocumented.7
 	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
-	rm  debian/libpam-runtime/usr/share/man/man8/{pam.8,pam.d.8}
+	rm  debian/libpam-runtime/usr/share/man/man8/{pam.8,pam.d.8,pam.conf.8}
 	dh_installdocs -i
 	dh_installchangelogs -i $(BUILD_TREE)/CHANGELOG
 	dh_compress -i -X.html
@@ -109,6 +109,9 @@ binary-arch: build module_check $(dh_mak_deps)
 	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*.so`
 	dh_link -A
 	dh_installman -plibpam0g-dev $(BUILD_TREE)/doc/man/*.3
+	for manpage in pam_end pam_close_session pam_get_item; do \
+	rm debian/libpam0g-dev/usr/share/man/man3/$$manpage.3; done
+
 
 	dh_installdocs -a $(BUILD_TREE)/README
 	$(i) $(dl)/Debian-PAM-MiniPolicy $(d)/tmp/usr/share/doc/libpam0g

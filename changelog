@@ -1,3 +1,17 @@
+pam (0.76-6) unstable; urgency=low
+
+      * The "No, I don't think I actually want any of what upstream is
+    smoking" release
+  * If this were already in testing, this would be an severity emergency
+    upload 
+  * pam_unix currently treats * in shadow file as no password not
+    disabled; major security issue; fixed in upstream CVS, (patch 035) Closes: #164659
+  * OK, I think this actually fixes the rest of the manpage symlinks,
+    Closes: #163839, #164298
+  * You don't want to use getlogin for pam_wheel because utmp may be wrong or for xterm have no entry, pull forward patch from the 0.72 packages (patch 036), Closes: #163787
+
+ -- Sam Hartman <hartmans@debian.org>  Tue, 15 Oct 2002 10:44:56 -0400
+
 pam (0.76-5) unstable; urgency=low
 
   * Fix library links from 0.75 to 0.76
