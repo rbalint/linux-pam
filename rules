@@ -8,10 +8,10 @@
 DH_COMPAT = 3
 export DH_COMPAT
 
-OS_CFLAGS	:= -O2 -D_GNU_SOURCE -D_REENTRANT -fPIC
+OS_CFLAGS	:= -g -D_GNU_SOURCE -D_REENTRANT -fPIC
 
-ifneq (,$(findstring debug, ${DEB_BUILD_OPTIONS}))
-OS_CFLAGS += -g
+ifeq (,$(findstring noopt, ${DEB_BUILD_OPTIONS}))
+OS_CFLAGS += -O2
 endif
 
 

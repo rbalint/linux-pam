@@ -6,8 +6,10 @@ pam (0.76-10) unstable; urgency=low
     042 thanks to Akira TAGOH, Closes: #165240 
   * Don't log  EPERM when setting NOFILE limit as Linux doesn't let you
     set that to -1, Closes: #180310 
+  * Add newline to end of distributed time.conf, Closes: #172229
+  * Up our standards version  and support noopt in DEB_BUILD_OPTIONS
 
- --
+ -- Sam Hartman <hartmans@debian.org>  Sat,  3 May 2003 22:28:37 -0400
 
 pam (0.76-9) unstable; urgency=low
 
