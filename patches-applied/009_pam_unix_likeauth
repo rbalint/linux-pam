@@ -1,3 +1,4 @@
+This patch was pulled from upstream CVS
 Index: Linux-PAM/modules/pam_unix/pam_unix_auth.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_auth.c,v
