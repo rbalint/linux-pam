@@ -20,7 +20,7 @@ pam (0.75-3) experimental; urgency=low
 
  -- Sam Hartman <hartmans@debian.org>  Tue, 16 Jul 2002 09:30:50 -0400
 
-       pam (0.75-2) experimental; urgency=low
+pam (0.75-2) experimental; urgency=low
 
   * Fix pam_userdb to build and to build against db3, fixes patch 020 
   * Fix upstream makefile so pam_group has valid configuration, closes: #148657
