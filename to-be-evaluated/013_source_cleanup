@@ -1,3 +1,4 @@
+I'm mostly assuming this is unnecessary.
 diff -urN Linux-PAM-0.72.bak/defs/linux.defs Linux-PAM-0.72/defs/linux.defs
 --- Linux-PAM-0.72.bak/defs/linux.defs	Sat Jun 19 16:44:09 1999
 +++ Linux-PAM-0.72/defs/linux.defs	Tue Dec 14 14:03:14 1999
