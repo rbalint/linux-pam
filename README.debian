@@ -1,22 +1,3 @@
-			 EXPERIMENTAL WARNING
-
-This is an experimental release of PAM for debian.  Please test it,
-submit patches for your architecture, all that great stuff.  But don't
-be surprised when it all breaks and don't complain if there are
-critical problems--just let me know what they are and I'll get around
-to fixing them eventually.
-
-The following are known issues:
-
-* If you build binary only packages, the docs are still built, so the
-build-depends are wrong.
-
-* pam_limits is in a fairly broken state.  It has several patches that
-have not yet been evaluated/applied.
-
-* There is one patch that has not been dealt with for pam_wheel.
-
-
 PAM for DEBIAN
 --------------
 

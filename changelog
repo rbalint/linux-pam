@@ -1,3 +1,12 @@
+pam (0.76-4) unstable; urgency=low
+
+  * Upstream correctly states that one should  use gcc not ld when
+    linking and then hapilly proceeds to actually use ld, fixed, Closes: #163711
+   
+  * Remove experimental warning from readme, Closes: 163742
+
+ -- Sam Hartman <hartmans@debian.org>  Mon,  7 Oct 2002 23:45:53 -0400
+
 pam (0.76-3) unstable; urgency=low
 
   * Oops, let's try building -fpic.  This currently builds everything
