@@ -23,7 +23,7 @@ diff -u -r1.11 pam_limits.c
  	}
 -	status |= setrlimit(i, &pl->limits[i].limit);
 +	retval = setrlimit(i, &pl->limits[i].limit);
-+	if (retval == EPERM)
++	if (retval == -1 && errno==EPERM)
 +	  continue;
 +	status |= retval;
      }
