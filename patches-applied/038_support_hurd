@@ -156,3 +156,41 @@ diff -u -r1.4 pam_rhosts_auth.c
  
  #ifdef linux
      setfsuid(uid);
+Index: Linux-PAM/modules/pam_limits/Makefile
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_limits/Makefile,v
+retrieving revision 1.2
+diff -u -r1.2 Makefile
+--- Linux-PAM/modules/pam_limits/Makefile	30 Sep 2002 03:29:36 -0000	1.2
++++ Linux-PAM/modules/pam_limits/Makefile	25 Nov 2002 03:02:10 -0000
+@@ -10,7 +10,14 @@
+ 
+ TITLE=pam_limits
+ 
++TRY_BUILD=no
+ ifeq ($(OS),linux)
++TRY_BUILD=yes
++endif
++ifeq ($(OS),gnu)
++TRY_BUILD=yes
++endif
++ifeq ($(TRY_BUILD),yes)
+ 
+ LOCAL_CONFILE=./limits.skel
+ INSTALLED_CONFILE=$(SCONFIGD)/limits.conf
+Index: Linux-PAM/modules/pam_limits/pam_limits.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_limits/pam_limits.c,v
+retrieving revision 1.14
+diff -u -r1.14 pam_limits.c
+--- Linux-PAM/modules/pam_limits/pam_limits.c	25 Nov 2002 03:01:28 -0000	1.14
++++ Linux-PAM/modules/pam_limits/pam_limits.c	25 Nov 2002 03:02:10 -0000
+@@ -14,7 +14,7 @@
+  */
+ 
+ #if !(defined(linux))
+-#error THIS CODE IS KNOWN TO WORK ONLY ON LINUX !!!
++#warning THIS CODE IS KNOWN TO WORK ONLY ON LINUX !!!
+ #endif 
+ 
+ #include <security/_pam_aconf.h>
