@@ -8,9 +8,7 @@ pam (0.76-12) unstable; urgency=low
     This creates a circular dependency between libpam0g and
     libpam-modules.  James says this works fine; we hope he's right.
     Closes: #196949
-
-
- --
+ -- Sam Hartman <hartmans@debian.org>  Sat, 21 Jun 2003 17:19:29 -0400
 
 pam (0.76-11) unstable; urgency=low
 
