@@ -1,0 +1,108 @@
+Index: Linux-PAM/doc/modules/pam_limits.sgml
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/modules/pam_limits.sgml,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 pam_limits.sgml
+--- Linux-PAM/doc/modules/pam_limits.sgml	29 Apr 2001 04:16:56 -0000	1.1.1.1
++++ Linux-PAM/doc/modules/pam_limits.sgml	5 May 2002 18:35:58 -0000
+@@ -142,6 +142,7 @@
+ <item><tt/as/ - address space limit
+ <item><tt/maxlogins/ - max number of logins for this user.
+ <item><tt/priority/ - the priority to run user process with
++<item><tt/chroot/ - directory to chroot user to
+ </itemize>
+ 
+ <p>
+@@ -184,6 +185,7 @@
+ @faculty        soft    nproc           20
+ @faculty        hard    nproc           50
+ ftp             hard    nproc           0
++ftp		-	chroot		/ftp
+ @student        -       maxlogins       4
+ </verb>
+ </tscreen>
+Index: Linux-PAM/modules/pam_limits/pam_limits.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_limits/pam_limits.c,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 pam_limits.c
+--- Linux-PAM/modules/pam_limits/pam_limits.c	29 Apr 2001 04:17:23 -0000	1.1.1.1
++++ Linux-PAM/modules/pam_limits/pam_limits.c	5 May 2002 18:50:32 -0000
+@@ -61,12 +61,14 @@
+     int priority;	 /* the priority to run user process with */
+     struct user_limits_struct limits[RLIM_NLIMITS];
+     char conf_file[BUFSIZ];
++  char chroot_dir[8092] ;	/* directory to chroot into */
+ };
+ 
+ #define LIMIT_LOGIN RLIM_NLIMITS+1
+ #define LIMIT_NUMSYSLOGINS RLIM_NLIMITS+2
+ 
+ #define LIMIT_PRI RLIM_NLIMITS+3
++#define LIMIT_CHROOT RLIM_NLIMITS+4
+ 
+ #define LIMIT_SOFT  1
+ #define LIMIT_HARD  2
+@@ -273,6 +275,8 @@
+     pl->login_limit = -2;
+     pl->login_limit_def = LIMITS_DEF_NONE;
+ 
++    pl->chroot_dir[0] = '\0';
++    
+     return retval;
+ }    
+ 
+@@ -318,6 +322,8 @@
+ 	pl->flag_numsyslogins = 1;
+     } else if (strcmp(lim_item, "priority") == 0) {
+ 	limit_item = LIMIT_PRI;
++    } else if (strcmp(lim_item, "chroot") == 0) {
++	limit_item = LIMIT_CHROOT;
+     } else {
+         _pam_log(LOG_DEBUG,"unknown limit item '%s'", lim_item);
+         return;
+@@ -365,7 +371,7 @@
+     }
+     
+     if (limit_item != LIMIT_LOGIN && limit_item != LIMIT_NUMSYSLOGINS 
+-		    && limit_item != LIMIT_PRI
++		    && limit_item != LIMIT_PRI && limit_item != LIMIT_CHROOT
+ 		    ) {
+         if (limit_type & LIMIT_SOFT) {
+ 	    if (pl->limits[limit_item].src_soft < source) {
+@@ -387,15 +393,18 @@
+ 	if (limit_item == LIMIT_PRI) {
+ 		/* additional check */
+ 		pl->priority = ((limit_value>0)?limit_value:0);
+-	} else {
++	} else if (limit_item == LIMIT_LOGIN ||
++		   limit_item == LIMIT_NUMSYSLOGINS) {
+ 	        if (pl->login_limit_def < source) {
+ 	            return;
+ 	        } else {
+ 	            pl->login_limit = limit_value;
+ 	            pl->login_limit_def = source;
+         	}
++	} else if (limit_item == LIMIT_CHROOT) {
++	  strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir));
+ 	}
+-    return;
++        return;
+ }
+ 
+ static int parse_config_file(const char *uname, int ctrl,
+@@ -517,6 +526,14 @@
+             retval |= LOGIN_ERR;
+     } else if (pl->login_limit == 0)
+         retval |= LOGIN_ERR;
++
++    if (!retval && pl->chroot_dir[0]) {
++	i = chdir(pl->chroot_dir);
++	if (i == 0)
++	    i = chroot(pl->chroot_dir);
++	if (i != 0)
++	    retval = LIMIT_ERR;
++    }
+     return retval;
+ }
+             
