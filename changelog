@@ -1,3 +1,12 @@
+pam (0.76-9) unstable; urgency=low
+
+  * Fix pam_rhosts hurd patch so it actually works, Closes: #172914
+  * Fix patch 040 not to clobber errno when logging the error fails,
+    Closes: #172186 
+  * Fix dependency for linuxdoc-tools, Closes: #173097
+
+ -- Sam Hartman <hartmans@debian.org>  Sun, 15 Dec 2002 17:10:58 -0500
+
 pam (0.76-8) unstable; urgency=low
 
   * Have makefile appropriately depend on bootstrap-libpam
