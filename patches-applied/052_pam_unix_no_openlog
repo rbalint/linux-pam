@@ -26,7 +26,7 @@ diff -u -r1.8 support.c
 +	mod_format = malloc( 1 + sizeof(tag) + strlen(format));
 +	if(mod_format == NULL) {
 +	  free_mod_format = 0;
-+	  mod_format = format;
++	  mod_format = (char *) format;
  	} else {
 -		strncpy(logname, "pam_unix", sizeof(logname) - 1);
 +	  strcpy(mod_format, tag);
