@@ -100,6 +100,7 @@ binary-arch: build module_check $(dh_mak_deps)
 	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*`
 	dh_link -A
 	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
+	rm -f debian/libpam-runtime/usr/share/man/man8/{pam.8.gz,pam.conf.8}
 	dh_installman -plibpam0g-dev $(BUILD_TREE)/doc/man/*.3
 	dh_installman -plibpam-runtime $(dl)/pam-undocumented.7
 
