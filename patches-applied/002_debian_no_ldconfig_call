@@ -1,0 +1,18 @@
+For Debian, we don't want to call ldconfig
+in the install rule; this will happen when the package is installed not built.
+Index: Linux-PAM/configure.in
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/configure.in,v
+retrieving revision 1.2
+diff -u -r1.2 configure.in
+--- Linux-PAM/configure.in	2001/04/29 17:53:57	1.2
++++ Linux-PAM/configure.in	2001/04/29 17:56:47
+@@ -40,7 +40,7 @@
+ USESONAME=yes			; AC_SUBST(USESONAME)
+ SOSWITCH=-soname		; AC_SUBST(SOSWITCH)
+ NEEDSONAME=no			; AC_SUBST(NEEDSONAME)
+-LDCONFIG=/sbin/ldconfig		; AC_SUBST(LDCONFIG)
++LDCONFIG=true		; AC_SUBST(LDCONFIG)
+ 
+ dnl ### Should enable this INSTALL detection.
+ dnl ### Would need to distribute GNU's config.guess and config.sub
