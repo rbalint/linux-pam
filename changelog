@@ -1,5 +1,6 @@
 pam (0.76-8) unstable; urgency=low
 
+  * Have makefile appropriately depend on bootstrap-libpam
   * Install pam minipolicy, Closes: #167798
   * Don't segfault if ttyname is null; this avoids the segfault but does
     not actually make pam_issue useful for ssh.  I believe the way

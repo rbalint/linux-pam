@@ -30,8 +30,6 @@ build:   build-stamp
 build-stamp: configure-stamp
 	dh_testdir
 
-	# Make libpam.so for linking the modules
-	$(MAKE) -C $(BUILD_TREE) bootstrap-libpam OS_CFLAGS="$(OS_CFLAGS)"
 	# Compile everything else
 	$(MAKE) -C $(BUILD_TREE) OS_CFLAGS="$(OS_CFLAGS)"
 
