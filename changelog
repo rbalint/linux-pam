@@ -1,9 +1,23 @@
-pam (0.76-2) experimental; urgency=low
+pam (0.76-2) unstable; urgency=low
 
   * Link against appropriate libraries so we find  the symbols we need,
     Closes: #162175
+  * The if everyone's going to complain when I upload broken software to
+    experimental release, I might as well upload to unstable and give them
+    something worth actually complaining about release.
+  * Also the remove the scourge of dbs release
+  * Include patch 034 from the 0.72 packages, meaning that we've included
+    all the patches we need before release
+  * Reject the patch to pam_wheel as I cannot find out what reasonable
+    thing it was trying to do and it seemed broken
+  * libpam-cracklib should depend on wordlist  so it actually works;
+    thanks Olaf Meeuwissen,
+    Closes: #112965
+  * Merge build-depends and build-depends-indep because I'm a bad person
+    and was too lazy to make docs build in a separate pass.  I'll deal in
+    a few versions.
 
- --
+ -- Sam Hartman <hartmans@debian.org>  Sun,  6 Oct 2002 18:52:13 -0400
 
 pam (0.76-1) experimental; urgency=low
 

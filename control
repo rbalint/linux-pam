@@ -3,8 +3,7 @@ Section: base
 Priority: optional
 Maintainer: Sam Hartman <hartmans@debian.org>
 Standards-Version: 3.2.1.0
-Build-Depends: cracklib2-dev, bzip2, debhelper, patch, libdb3-dev, libcap-dev [!hurd-i386]
-Build-Depends-Indep: sgml-tools, latex2html, tetex-extra, groff, opensp
+Build-Depends: cracklib2-dev, bzip2, debhelper, patch, libdb3-dev, libcap-dev [!hurd-i386], sgml-tools, latex2html, tetex-extra, groff, opensp
 
 Package: libpam0g
 Priority: required
@@ -64,7 +63,7 @@ Section: libs
 Priority: optional
 Architecture: any
 Replaces: libpam0g-cracklib
-Depends: ${shlibs:Depends}, cracklib-runtime
+Depends: ${shlibs:Depends}, cracklib-runtime,  wordlist
 Description: PAM module to enable cracklib support.
  This module allows the use of cracklib in the authentication model.
 
