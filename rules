@@ -52,7 +52,7 @@ clean:
 	dh_testroot
 	-$(MAKE) -C $(BUILD_TREE) distclean
 	rm -f build-stamp configure-stamp
-	rm-f  Linux-PAM/bin/[a-z]*
+	rm -f  Linux-PAM/bin/[a-z]*
 	dh_clean
 
 # Build architecture-independent files here.
