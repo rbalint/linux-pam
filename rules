@@ -40,6 +40,7 @@ build-stamp: configure-stamp
 configure: configure-stamp
 
 configure-stamp:
+	touch $(BUILD_TREE)/configure
 	(cd $(BUILD_TREE) && \
 	sh configure --sysconfdir=/etc --prefix=/usr --enable-static-libpam \
 	--mandir=/usr/share/man --infodir=/usr/share/info --libdir=/lib \
