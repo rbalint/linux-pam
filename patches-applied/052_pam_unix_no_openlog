@@ -36,7 +36,7 @@ diff -u -r1.8 support.c
  	va_start(args, format);
 -	openlog(logname, LOG_CONS | LOG_PID, LOG_AUTH);
 -	vsyslog(err, format, args);
-+	vsyslog(err | LOG_AUTH, format, args);
++	vsyslog(err | LOG_AUTH, mod_format, args);
  	va_end(args);
 -	closelog();
 +
