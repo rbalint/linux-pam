@@ -85,3 +85,19 @@ diff -u -r1.1.1.1 pam_access.c
      }
  
      if ((user_pw=getpwnam(user))==NULL) return (PAM_USER_UNKNOWN);
+Index: Linux-PAM/modules/pam_access/pam_access.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_access/pam_access.c,v
+retrieving revision 1.2
+diff -u -r1.2 pam_access.c
+--- Linux-PAM/modules/pam_access/pam_access.c	19 May 2002 01:49:29 -0000	1.2
++++ Linux-PAM/modules/pam_access/pam_access.c	19 May 2002 02:56:54 -0000
+@@ -30,8 +30,6 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+-/* man page says above file includes this... */
+-extern int gethostname(char *name, size_t len);
+ 
+ #include <stdarg.h>
+ #include <syslog.h>
