@@ -1,28 +1,27 @@
 Index: Linux-PAM/configure.in
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/configure.in,v
-retrieving revision 1.4
-diff -u -r1.4 configure.in
---- Linux-PAM/configure.in	25 May 2002 18:58:20 -0000	1.4
-+++ Linux-PAM/configure.in	25 May 2002 21:23:47 -0000
+retrieving revision 1.7
+diff -u -r1.7 configure.in
+--- Linux-PAM/configure.in	1 Jun 2002 21:05:17 -0000	1.7
++++ Linux-PAM/configure.in	1 Jun 2002 21:06:29 -0000
 @@ -184,7 +184,7 @@
  AC_CHECK_LIB(ndbm, dbm_store, HAVE_LIBNDBM=yes ; AC_DEFINE(HAVE_LIBNDBM),
  	HAVE_LIBNDBM=no)
  AC_SUBST(HAVE_LIBNDBM)
 -AC_CHECK_LIB(db, dbm_store, HAVE_LIBDB=yes ; AC_DEFINE(HAVE_LIBDB),
-+AC_CHECK_LIB(db3, dbm_store, HAVE_LIBDB=yes ; AC_DEFINE(HAVE_LIBDB),
++AC_CHECK_LIB(db3, main, HAVE_LIBDB=yes ; AC_DEFINE(HAVE_LIBDB),
  	HAVE_LIBDB=no)
  AC_SUBST(HAVE_LIBDB)
  AC_CHECK_LIB(fl, yylex, yyterminate, HAVE_LIBFL=yes ; AC_DEFINE(HAVE_LIBFL),
 Index: Linux-PAM/modules/pam_userdb/Makefile
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_userdb/Makefile,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 Makefile
---- Linux-PAM/modules/pam_userdb/Makefile	29 Apr 2001 04:17:42 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_userdb/Makefile	25 May 2002 21:22:27 -0000
-@@ -15,7 +15,7 @@
-  MODULE_SIMPLE_EXTRALIBS = -lndbm
+retrieving revision 1.4
+diff -u -r1.4 Makefile
+--- Linux-PAM/modules/pam_userdb/Makefile	1 Jun 2002 21:05:18 -0000	1.4
++++ Linux-PAM/modules/pam_userdb/Makefile	1 Jun 2002 21:05:48 -0000
+@@ -16,7 +16,7 @@
  else
  ifeq ($(HAVE_LIBDB),yes)
   WHICH_DB=db
@@ -30,3 +29,4 @@ diff -u -r1.1.1.1 Makefile
 + MODULE_SIMPLE_EXTRALIBS = -ldb3
  else
   WHICH_DB=none
+ endif
