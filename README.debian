@@ -21,9 +21,12 @@ enough in the PAM stack that  the password is never requested and is
 not compromised over insecure network links.  If you want to ask for
 the password use required not requisite in your PAM config.
 
-
-
 Previously, pam_rhosts allowed the .rhosts file to be a symlink.  This
 was a debian specific change that has been dropped because it is not
-the upstream behavior nor is it the document behavior of ruserok(3).
+the upstream behavior nor is it the documented behavior of ruserok(3).
+
+Similarly, pam_listfile used to allow the user file to be a symlink.
+This is no longer allowed because upstream seems to be against the
+change.  Please see discussion started by Sam Hartman on
+pam-list@redhat.com during the May 2002 time frame.
 
