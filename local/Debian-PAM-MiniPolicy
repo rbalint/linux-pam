@@ -1,4 +1,5 @@
 Author: Ben Collins <bcollins@debian.org>
+Modified by: Sam Hartman <hartmans@debian.org>
 
 Objective: To document a base set of policies regarding PAM (Pluggable
 Authentication Modules) usage in Debian packages.
@@ -11,7 +12,8 @@ be usable as a cross reference for FAQ's.
 
 This document will not go into the details of how to add PAM usage to
 existing code, please read the documentation in the libpam-doc package for
-info on this.
+info on this, however it does specify behavior needed to make sure PAM
+modules in Debian will work with your application. 
 
 ==================
  PAM Applications
@@ -61,6 +63,16 @@ UPDATE: libpwdb and this libpam-pwdb have been removed from Debian as of
 Woody. So even if you decided to use pam_pwdb, it will be broken, so HAHA
 :)
 
+You should also not use the pam_stack module in the pam config file.
+It's not currently in Debian so it won't work.  While I cannot stop
+someone from packaging pam_stack for Debian, I will try to convince
+them that it is not the direction we want.  Pam_stack (among other
+faults) uses different pam handles for each step in the process--the
+handle used for session management is not the same as the handle used
+for authentication.  This breaks several modules.  We will have an
+alternate solution for shared PAM configuration across modules.
+
+
 Currently libpam-modules is in the base setup, so it's dependency is not
 needed (since the library depends on the correct version). However, if any
 modules other than the base set in libpam-modules are used, that package
@@ -75,6 +87,32 @@ affects programs like apache from being able to use PAM with much success
 since it runs as www-data which has no priviledges and cannot use pam_unix.so
 to auth against other users. On the other hand is does allow program like
 vlock to auth (but not auth the root password).
+
+The application needs to follow the following rules to make sure PAM
+modules work:
+
+1) Use the same PAM handle for all operations.  This means it is not OK
+to call pam_start once for authentication and then later for session
+management.  Modules need to be able to store pam_data between entry
+points.
+
+2) The pam_open_session and pam_setcred calls must be made in a parent
+process  of the eventual session.  They need to be able to enfluence
+the environment of the session.
+
+3) If you are started as root or have root privs for some other
+reason, pam_open_session and pam_setcred should be called while still
+root.
+
+4) Implied by 1, make sure that pam_close_session and pam_end are
+called in the same process or a process decended from the execution
+context as pam_open_session and pam_setcred.  The pam_close_session
+call may need state stored in the handle  by the open session entry
+point to clean up properly.  The pam_finish call may need to free data
+(thus influencing system state in some cases) allocated in the earlier
+calls.
+
+
 
 =============
  PAM Modules
