@@ -42,7 +42,7 @@ Description: Runtime support for the PAM library
  Contains the base setup for libpam
 
 Package: libpam0g-dev
-Section: devel
+Section: libdevel
 Priority: optional
 Architecture: any
 Depends: libpam0g (= ${Source-Version}), libc6-dev
