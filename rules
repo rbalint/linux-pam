@@ -6,7 +6,7 @@
 # package.
 
 # DBS rules
-TAR_DIR := Linux-PAM-0.72
+TAR_DIR := Linux-PAM
 include debian/scripts/dbs-build.mk
 
 pdoc=libpam-doc
@@ -16,21 +16,19 @@ dl = $(d)/local
 i = install -p -m 0644
 ie = install -p -m 0755
 
-version=${shell expr `pwd` : '.*-\([0-9.]*\)'}
-version_major=${shell expr `pwd` : '.*-\([0-9]*\).[0-9.]*'}
+#version=${shell expr `pwd` : '.*-\([0-9.]*\)'}
+#version_major=${shell expr `pwd` : '.*-\([0-9]*\).[0-9.]*'}
 
 build: $(STAMP_DIR)/build-stamp
-$(STAMP_DIR)/build-stamp: $(patched)
+$(STAMP_DIR)/build-stamp: 
 	dh_testdir
 
 	cd $(BUILD_TREE) && \
-		( ln -sf defs/debian.defs default.defs; \
 		  touch .freezemake )
 	# Make libpam.so for linking the modules
 	$(MAKE) -C $(BUILD_TREE) bootstrap-libpam
 	# Compile everything else
 	$(MAKE) -C $(BUILD_TREE) \
-		DIRS="libpam_misc modules libpam libpamc"
 
 	touch $(STAMP_DIR)/build-stamp
 
