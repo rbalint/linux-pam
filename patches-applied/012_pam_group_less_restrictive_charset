@@ -1,0 +1,35 @@
+Index: Linux-PAM/modules/pam_group//pam_group.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_group/pam_group.c,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 pam_group.c
+--- Linux-PAM/modules/pam_group//pam_group.c	29 Apr 2001 04:17:21 -0000	1.1.1.1
++++ Linux-PAM/modules/pam_group//pam_group.c	19 May 2002 02:18:19 -0000
+@@ -136,9 +136,8 @@
+ 	D(("buffer=<%s>",*buf));
+ #endif
+ 	while (i < *to) {
++	    int j, c = 0;
+ 	    if ((*buf)[i] == ',') {
+-		int j;
+-
+ 		for (j=++i; j<*to && (*buf)[j] == ','; ++j);
+ 		if (j!=i) {
+ 		    shift_bytes(i + (*buf), j-i, (*to) - j);
+@@ -146,7 +145,6 @@
+ 		}
+ 	    }
+ 	    switch ((*buf)[i]) {
+-		int j,c;
+ 	    case '#':
+ 		for (j=i; j < *to && (c = (*buf)[j]) != '\n'; ++j);
+ 		if (j >= *to) {
+@@ -278,7 +276,7 @@
+ 	  if (next == VAL) {
+ 	       if (c == '!')
+ 		    not = !not;
+-	       else if (isalpha(c) || c == '*') {
++	       else if (isalnum(c) || c == '*' || c == ':' || c == '/') {
+ 		    right = not ^ agrees(me, x+at, l, rule);
+ 		    if (oper == AND)
+ 			 left &= right;
