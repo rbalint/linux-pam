@@ -1,3 +1,10 @@
+pam (0.76-16.1) unstable; urgency=low
+
+  * common-password now includes length restrictions and cracklib
+    examples, Closes: #227681, #237537
+
+ -- Sam Hartman <hartmans@debian.org>  Sun,  4 Apr 2004 17:04:49 -0400
+
 pam (0.76-16) unstable; urgency=low
 
   * Patch 51 from the x86-64 folks to support 32-bit ll_time in

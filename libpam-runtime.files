@@ -1,7 +1,3 @@
 etc/pam.conf
 etc/pam.d/other
-usr/share/pam/common-auth
-usr/share/pam/common-account
-usr/share/pam/common-password
-usr/share/pam/common-session
-
+usr/share/pam
