@@ -1,3 +1,10 @@
+pam (0.76-2) experimental; urgency=low
+
+  * Link against appropriate libraries so we find  the symbols we need,
+    Closes: #162175
+
+ --
+
 pam (0.76-1) experimental; urgency=low
 
   * New upstream version

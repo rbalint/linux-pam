@@ -1,6 +1,11 @@
---- Linux-PAM-0.72.orig/libpam/pam_handlers.c	Sun Dec 27 05:34:22 1998
-+++ Linux-PAM-0.72/libpam/pam_handlers.c	Sat Oct 14 16:13:35 2000
-@@ -110,6 +110,61 @@
+Index: Linux-PAM/libpam/pam_handlers.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/libpam/pam_handlers.c,v
+retrieving revision 1.1.1.2
+diff -u -r1.1.1.2 pam_handlers.c
+--- Linux-PAM/libpam/pam_handlers.c	15 Sep 2002 20:08:37 -0000	1.1.1.2
++++ Linux-PAM/libpam/pam_handlers.c	6 Oct 2002 21:48:24 -0000
+@@ -106,6 +106,61 @@
  		module_type = PAM_T_ACCT;
  	    } else if (!_pam_strCMP("password", tok)) {
  		module_type = PAM_T_PASS;
@@ -62,7 +67,7 @@
  	    } else {
  		/* Illegal module type */
  		D(("_pam_init_handlers: bad module type: %s", tok));
-@@ -212,6 +267,7 @@
+@@ -208,6 +263,7 @@
  		return PAM_ABORT;
  	    }
  	}
@@ -70,3 +75,21 @@
      }
  
      return ( (x < 0) ? PAM_ABORT:PAM_SUCCESS );
+Index: debian/changelog
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/debian/changelog,v
+retrieving revision 1.9
+diff -u -r1.9 changelog
+--- debian/changelog	22 Sep 2002 21:25:27 -0000	1.9
++++ debian/changelog	30 Sep 2002 03:39:24 -0000
+@@ -1,3 +1,10 @@
++pam (0.76-2) experimental; urgency=low
++
++  * Link against appropriate libraries so we find  the symbols we need,
++    Closes: #162175
++
++ --
++
+ pam (0.76-1) experimental; urgency=low
+ 
+   * New upstream version
