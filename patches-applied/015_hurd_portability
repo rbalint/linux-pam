@@ -1,41 +1,57 @@
 Patch from  Igor Khavkine <i_khavki@alcor.concordia.ca>Patch from
 Debian bug #76119
 
+Index: Linux-PAM/_pam_aconf.h.in
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/_pam_aconf.h.in,v
+retrieving revision 1.1.1.2
+diff -u -r1.1.1.2 _pam_aconf.h.in
+--- Linux-PAM/_pam_aconf.h.in	15 Sep 2002 20:08:20 -0000	1.1.1.2
++++ Linux-PAM/_pam_aconf.h.in	21 Sep 2002 18:01:40 -0000
+@@ -15,6 +15,8 @@
+ 
+ /* provide a global locking facility within libpam */
+ #undef PAM_LOCKING
++#undef HAVE_TERMIOS_H
++#undef HAVE_NET_IF_H
+ 
+ /* GNU systems as a class, all have the feature.h file */
+ #undef HAVE_FEATURES_H
 Index: Linux-PAM/configure.in
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/configure.in,v
-retrieving revision 1.3
-diff -u -r1.3 configure.in
---- Linux-PAM/configure.in	29 Apr 2001 17:59:01 -0000	1.3
-+++ Linux-PAM/configure.in	25 May 2002 18:53:52 -0000
-@@ -201,7 +201,7 @@
+retrieving revision 1.10
+diff -u -r1.10 configure.in
+--- Linux-PAM/configure.in	15 Sep 2002 20:28:46 -0000	1.10
++++ Linux-PAM/configure.in	21 Sep 2002 18:01:40 -0000
+@@ -235,7 +235,7 @@
  AC_HEADER_DIRENT
  AC_HEADER_STDC
  AC_HEADER_SYS_WAIT
--AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h termio.h unistd.h)
-+AC_CHECK_HEADERS(fcntl.h limits.h malloc.h net/if.h sys/file.h sys/ioctl.h sys/time.h syslog.h termio.h unistd.h)
+-AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h termio.h unistd.h sys/fsuid.h)
++AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h net/if.h termios.h unistd.h sys/fsuid.h)
  
  dnl Linux wants features.h in some of the source files.
  AC_CHECK_HEADERS(features.h)
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_limits/pam_limits.c,v
-retrieving revision 1.2
-diff -u -r1.2 pam_limits.c
---- Linux-PAM/modules/pam_limits/pam_limits.c	19 May 2002 01:39:26 -0000	1.2
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	25 May 2002 18:46:59 -0000
-@@ -312,8 +312,10 @@
+retrieving revision 1.7
+diff -u -r1.7 pam_limits.c
+--- Linux-PAM/modules/pam_limits/pam_limits.c	15 Sep 2002 21:19:55 -0000	1.7
++++ Linux-PAM/modules/pam_limits/pam_limits.c	21 Sep 2002 18:04:21 -0000
+@@ -339,8 +339,10 @@
  	limit_item = RLIMIT_NOFILE;
      else if (strcmp(lim_item, "memlock") == 0)
  	limit_item = RLIMIT_MEMLOCK;
 +#ifdef RLIMIT_AS
      else if (strcmp(lim_item, "as") == 0)
  	limit_item = RLIMIT_AS;
-+#endif
-     else if (strcmp(lim_item, "maxlogins") == 0) {
- 	limit_item = LIMIT_LOGIN;
- 	pl->flag_numsyslogins = 0;
-@@ -365,7 +367,9 @@
++#endif /*RLIMIT_AS*/
+ #ifdef RLIMIT_LOCKS
+     else if (strcmp(lim_item, "locks") == 0)
+ 	limit_item = RLIMIT_LOCKS;
+@@ -411,7 +413,9 @@
          case RLIMIT_CORE:
          case RLIMIT_RSS:
          case RLIMIT_MEMLOCK:
@@ -48,27 +64,24 @@ diff -u -r1.2 pam_limits.c
 Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 pam_rhosts_auth.c
---- Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	29 Apr 2001 04:17:32 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	25 May 2002 18:50:19 -0000
-@@ -46,9 +46,10 @@
- #include <endian.h>
- #endif
+retrieving revision 1.3
+diff -u -r1.3 pam_rhosts_auth.c
+--- Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	15 Sep 2002 20:18:00 -0000	1.3
++++ Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	21 Sep 2002 18:05:22 -0000
+@@ -50,6 +50,10 @@
+ #include <sys/fsuid.h>
+ #endif /* HAVE_SYS_FSUID_H */
  
--#ifdef NEED_FSUID_H
--#include <sys/fsuid.h>
--#endif /* NEED_FSUID_H */
++ #ifdef HAVE_NET_IF_H
++ #include <net/if.h>
++ #endif
 +
-+#ifdef HAVE_NET_IF_H
-+#include <net/if.h>
-+#endif
- 
  #include <sys/types.h>
  #include <sys/uio.h>
-@@ -97,8 +98,13 @@
- #include <security/pam_modules.h>
+ #include <string.h>
+@@ -98,8 +102,13 @@
  #include <security/_pam_macros.h>
+ #include <security/_pam_modutil.h>
  
 +#ifdef _ISOC9X_SOURCE
 +#include <inttypes.h>
@@ -83,11 +96,11 @@ diff -u -r1.1.1.1 pam_rhosts_auth.c
 Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/unix_chkpwd.c,v
-retrieving revision 1.2
-diff -u -r1.2 unix_chkpwd.c
---- Linux-PAM/modules/pam_unix/unix_chkpwd.c	5 May 2002 18:17:58 -0000	1.2
-+++ Linux-PAM/modules/pam_unix/unix_chkpwd.c	25 May 2002 18:46:59 -0000
-@@ -53,6 +53,11 @@
+retrieving revision 1.7
+diff -u -r1.7 unix_chkpwd.c
+--- Linux-PAM/modules/pam_unix/unix_chkpwd.c	15 Sep 2002 20:51:53 -0000	1.7
++++ Linux-PAM/modules/pam_unix/unix_chkpwd.c	21 Sep 2002 17:58:53 -0000
+@@ -59,6 +59,11 @@
  
  static void su_sighandler(int sig)
  {
@@ -99,7 +112,7 @@ diff -u -r1.2 unix_chkpwd.c
  	if (sig > 0) {
  		_log_err(LOG_NOTICE, "caught signal %d.", sig);
  		exit(sig);
-@@ -68,7 +73,9 @@
+@@ -74,7 +79,9 @@
  	 */
  	(void) memset((void *) &action, 0, sizeof(action));
  	action.sa_handler = su_sighandler;
@@ -109,7 +122,7 @@ diff -u -r1.2 unix_chkpwd.c
  	(void) sigaction(SIGILL, &action, NULL);
  	(void) sigaction(SIGTRAP, &action, NULL);
  	(void) sigaction(SIGBUS, &action, NULL);
-@@ -132,9 +139,9 @@
+@@ -138,9 +145,9 @@
  
  	/* Hack off SysVR4 password aging */
  	{
