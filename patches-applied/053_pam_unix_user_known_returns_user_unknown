@@ -12,7 +12,7 @@ diff -u -r1.9 support.c
  	char *pp = NULL;
  	char *data_name;
 -	int retval;
-+	int retval, user_notfound;
++	int retval, user_notfound = 0;
  
  	D(("called"));
  
