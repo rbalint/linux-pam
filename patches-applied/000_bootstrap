@@ -1,0 +1,43 @@
+Index: Linux-PAM/Makefile
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/Makefile,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 Makefile
+--- Linux-PAM/Makefile	2001/04/29 04:16:21	1.1.1.1
++++ Linux-PAM/Makefile	2001/04/29 14:12:29
+@@ -18,6 +18,9 @@
+ THINGSTOMAKE = modules libpam libpamc libpam_misc doc examples
+ 
+ all: $(THINGSTOMAKE)
++ # Let's get a dynamic libpam.so first
++ bootstrap-libpam: _pam_aconf.h prep
++	$(MAKE) -C libpam bootstrap-libpam
+ 
+ prep:
+ 	rm -f security
+Index: Linux-PAM/libpam/Makefile
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/libpam/Makefile,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 Makefile
+--- Linux-PAM/libpam/Makefile	2001/04/29 04:17:04	1.1.1.1
++++ Linux-PAM/libpam/Makefile	2001/04/29 14:15:11
+@@ -10,6 +10,8 @@
+ 
+ ifeq ($(WITH_LIBDEBUG),yes)
+  LIBNAME=libpamd
++ CFLAGS += -D"DEBUG"
++ CFLAGS += -g
+ else
+  LIBNAME=libpam
+ endif
+@@ -88,6 +90,9 @@
+ 
+ static/%.o : %.c
+ 	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
++bootstrap-libpam: bootdir $(LIBPAM)
++bootdir:
++	test -d dynamic || mkdir dynamic
+ 
+ $(LIBPAM): $(DLIBOBJECTS)
+ ifeq ($(DYNAMIC_LIBPAM),yes)
