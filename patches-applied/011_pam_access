@@ -1,6 +1,10 @@
-diff -urN Linux-PAM-0.72.orig/modules/pam_access/access.conf Linux-PAM-0.72/modules/pam_access/access.conf
---- Linux-PAM-0.72.orig/modules/pam_access/access.conf	Sun Jul 12 01:17:17 1998
-+++ Linux-PAM-0.72/modules/pam_access/access.conf	Wed Aug 30 18:37:39 2000
+Index: Linux-PAM/modules/pam_access//access.conf
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_access/access.conf,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 access.conf
+--- Linux-PAM/modules/pam_access//access.conf	29 Apr 2001 04:17:16 -0000	1.1.1.1
++++ Linux-PAM/modules/pam_access//access.conf	19 May 2002 01:43:35 -0000
 @@ -34,8 +34,15 @@
  # logged-in user. Both the user's primary group is matched, as well as
  # groups in which users are explicitly listed.
@@ -18,24 +22,28 @@ diff -urN Linux-PAM-0.72.orig/modules/pam_access/access.conf Linux-PAM-0.72/modu
  # Disallow console logins to all but a few accounts.
  #
  #-:ALL EXCEPT wheel shutdown sync:console
-diff -urN Linux-PAM-0.72.orig/modules/pam_access/pam_access.c Linux-PAM-0.72/modules/pam_access/pam_access.c
---- Linux-PAM-0.72.orig/modules/pam_access/pam_access.c	Wed Aug 30 18:38:37 2000
-+++ Linux-PAM-0.72/modules/pam_access/pam_access.c	Wed Aug 30 18:38:00 2000
-@@ -144,10 +144,11 @@
+Index: Linux-PAM/modules/pam_access//pam_access.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_access/pam_access.c,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 pam_access.c
+--- Linux-PAM/modules/pam_access//pam_access.c	29 Apr 2001 04:17:16 -0000	1.1.1.1
++++ Linux-PAM/modules/pam_access//pam_access.c	19 May 2002 01:48:10 -0000
+@@ -190,10 +190,10 @@
  	    line[end] = 0;			/* strip trailing whitespace */
  	    if (line[0] == 0)			/* skip blank lines */
  		continue;
-+	    /* We only check for 3 fields (two seperators) since there may
-+	     * be need for a ':' in the last field */
- 	    if (!(perm = strtok(line, fs))
+-	    if (!(perm = strtok(line, fs))
++	    /* Allow trailing : in last field for froms */
++	    	    if (!(perm = strtok(line, fs))
  		|| !(users = strtok((char *) 0, fs))
 -		|| !(froms = strtok((char *) 0, fs))
 -		|| strtok((char *) 0, fs)) {
 +		|| !(froms = strtok((char *) 0, fs))) {
- 		_log_err("%s: line %d: bad field count", PAM_ACCESS_CONFIG, lineno);
+ 		_log_err("%s: line %d: bad field count",
+ 			 item->config_file, lineno);
  		continue;
- 	    }
-@@ -211,16 +212,11 @@
+@@ -259,16 +259,11 @@
  
  static int netgroup_match(char *group, char *machine, char *user)
  {
@@ -52,7 +60,7 @@ diff -urN Linux-PAM-0.72.orig/modules/pam_access/pam_access.c Linux-PAM-0.72/mod
  }
  
  /* user_match - match a username against one token */
-@@ -371,7 +367,7 @@
+@@ -426,7 +421,7 @@
  	return PAM_ABORT;
      }
  
@@ -61,7 +69,7 @@ diff -urN Linux-PAM-0.72.orig/modules/pam_access/pam_access.c Linux-PAM-0.72/mod
  
          /* local login, set tty name */
  
-@@ -388,10 +384,11 @@
+@@ -443,10 +438,11 @@
  	        return PAM_ABORT;
  	     }
          }
@@ -75,5 +83,5 @@ diff -urN Linux-PAM-0.72.orig/modules/pam_access/pam_access.c Linux-PAM-0.72/mod
 +	    from++;
 +	}
      }
+ 
      if ((user_pw=getpwnam(user))==NULL) return (PAM_USER_UNKNOWN);
-     if (login_access(user_pw,from)) return (PAM_SUCCESS); else {
