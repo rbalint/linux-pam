@@ -1,3 +1,11 @@
+pam (0.76-15) unstable; urgency=low
+
+  * Fix description of libpam-runtime, Closes: #209755
+  * Fix description of libpam-cracklib, Closes: #210014
+  * Depend on libc6-dev|libc-dev not libc6-dev, Closes: #212354
+
+ --
+
 pam (0.76-14) unstable; urgency=low
 
   * Pull in NMU diff from 13.1, Closes: #186011
