@@ -1,4 +1,26 @@
-pam (0.75-2) experimental; urgency=low
+pam (0.76-1) experimental; urgency=low
+
+  * New upstream version
+  * Upstream includes fix to not break cron, Closes: 160566
+  * New Upstream correctly handles priority < 0 for pam_limits, Closes: #126251
+  * .cvsignores removed, Closes: #159961
+
+ -- Sam Hartman <hartmans@debian.org>  Sun, 22 Sep 2002 16:11:35 -0400
+
+    pam (0.75-3) experimental; urgency=low
+
+      * Apply patch 007  pam_limits so that we initialize to wide open not
+    current limits.
+      * In pam_mail, don't complain about deleting environment variable if
+    we never set it, Closes: #58429
+      * Don't set default max procs limit in pam_limits, Closes: #116874
+        * libpam-runtime now arch all since it has no arch-specific files,
+    Closes: #132545
+      * Update mini policy to reflect confusion on debian-devel
+
+       -- Sam Hartman <hartmans@debian.org>  Tue, 16 Jul 2002 09:30:50 -0400
+
+       pam (0.75-2) experimental; urgency=low
 
   * Fix pam_userdb to build and to build against db3, fixes patch 020 
   * Fix upstream makefile so pam_group has valid configuration, closes: #148657
