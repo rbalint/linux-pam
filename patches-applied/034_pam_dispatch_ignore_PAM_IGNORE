@@ -1,0 +1,28 @@
+Index: Linux-PAM/libpam/pam_dispatch.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/libpam/pam_dispatch.c,v
+retrieving revision 1.1.1.2
+diff -u -r1.1.1.2 pam_dispatch.c
+--- Linux-PAM/libpam/pam_dispatch.c	15 Sep 2002 20:08:36 -0000	1.1.1.2
++++ Linux-PAM/libpam/pam_dispatch.c	11 Oct 2002 04:25:20 -0000
+@@ -182,8 +182,18 @@
+ 	case _PAM_ACTION_OK:
+ 	case _PAM_ACTION_DONE:
+ 
+-	    if ( impression == _PAM_UNDEF
+-		 || (impression == _PAM_POSITIVE && status == PAM_SUCCESS) ) {
++	  /*
++	   * Normally  we want to pick up the first non-successful
++	   * retval  and return it as our status.  However we want to
++	   * ignore PAM_IGNORE.  If we get PAM_IGNORE for all modules
++	   * that have an action of OK or DONE then we will never get a
++	   * positive impression and will end up returning
++	   * PAM_MUST_FAIL_CODE as that's what status is initialized
++	  to.
++	  */
++	    if ( retval != PAM_IGNORE
++		 && (impression == _PAM_UNDEF
++		 || (impression == _PAM_POSITIVE && status == PAM_SUCCESS) )) {
+ 		impression = _PAM_POSITIVE;
+ 		status = retval;
+ 	    }
