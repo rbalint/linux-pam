@@ -1,3 +1,17 @@
+pam (0.76-12) unstable; urgency=low
+
+  * Fix group.conf example, (patch 046) Closes: #197080
+  * Ignore module return value in jumps, (patch 045) Closes: #176693
+  * Accept string value for chroot limit, thanks Andrei Pelinescu-Onciul,
+    Patch (047), Closes: #196903
+  * Depend on libpam-modules instead of conflicting with older versions.
+    This creates a circular dependency between libpam0g and
+    libpam-modules.  James says this works fine; we hope he's right.
+    Closes: #196949
+
+
+ --
+
 pam (0.76-11) unstable; urgency=low
 
   * Don't allow db4 to satisfy build-depends because it doesn't actually
