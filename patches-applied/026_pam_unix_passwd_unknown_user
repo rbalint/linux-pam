@@ -1,0 +1,110 @@
+Patch from Martin Schwenke <martin@meltin.net>
+
+Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_passwd.c,v
+retrieving revision 1.3
+diff -u -r1.3 pam_unix_passwd.c
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	25 May 2002 22:02:09 -0000	1.3
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	8 Jun 2002 21:50:57 -0000
+@@ -112,6 +112,7 @@
+ #define _UNIX_NEW_AUTHTOK	"-UN*X-NEW-PASS"
+ 
+ #define MAX_PASSWD_TRIES	3
++#define PW_FILE			"/etc/passwd"
+ #define PW_TMPFILE		"/etc/npasswd"
+ #define SH_TMPFILE		"/etc/nshadow"
+ #define CRACKLIB_DICTS		"/usr/share/dict/cracklib_dict"
+@@ -211,6 +212,21 @@
+ 	return master;
+ }
+ 
++static struct passwd *_unix_getpwnam(const char *name)
++{
++	struct passwd *ent = NULL;
++	FILE *pwfile;
++
++	pwfile = fopen(PW_FILE, "r");
++	if (pwfile != NULL) {
++		ent = fgetpwent(pwfile);
++		while (ent && (strcmp(ent->pw_name, name) != 0))
++			ent = fgetpwent(pwfile);
++		fclose(pwfile);
++	}
++	return ent;
++}
++
+ static int check_old_password(const char *forwho, const char *newpass)
+ {
+ 	static char buf[16384];
+@@ -304,7 +320,7 @@
+ 	}
+ 	fclose(opwfile);
+ 	if (!found) {
+-		pwd = getpwnam(forwho);
++		pwd = _unix_getpwnam(forwho);
+ 		if (pwd == NULL) {
+ 			retval = PAM_AUTHTOK_ERR;
+ 			err = 1;
+@@ -335,14 +351,14 @@
+ {
+ 	struct passwd *tmpent = NULL;
+ 	FILE *pwfile, *opwfile;
+-	int retval = 0;
++	int retval = PAM_USER_UNKNOWN;
+ 	int err = 0;
+ 	int oldmask;
+ 
+ 	oldmask = umask(077);
+ 	pwfile = fopen(PW_TMPFILE, "w");
+ 	umask(oldmask);
+-	opwfile = fopen("/etc/passwd", "r");
++	opwfile = fopen(PW_FILE, "r");
+ 	if (pwfile == NULL || opwfile == NULL)
+ 		return PAM_AUTHTOK_ERR;
+ 	chown(PW_TMPFILE, 0, 0);
+@@ -351,6 +367,7 @@
+ 	while (tmpent) {
+ 		if (!strcmp(tmpent->pw_name, forwho)) {
+ 			tmpent->pw_passwd = towhat;
++			retval = PAM_SUCCESS;
+ 		}
+ 		if (putpwent(tmpent, pwfile)) {
+ 			fprintf(stderr, "error writing entry to password file: %s\n",
+@@ -370,7 +387,7 @@
+ 		err = 1;
+ 	}
+ 	if (!err)
+-		rename(PW_TMPFILE, "/etc/passwd");
++		rename(PW_TMPFILE, PW_FILE);
+ 	else
+ 		unlink(PW_TMPFILE);
+ 
+@@ -381,7 +398,7 @@
+ {
+ 	struct spwd *spwdent = NULL, *stmpent = NULL;
+ 	FILE *pwfile, *opwfile;
+-	int retval = 0;
++	int retval = PAM_USER_UNKNOWN;
+ 	int err = 0;
+ 	int oldmask;
+ 
+@@ -403,6 +420,7 @@
+ 		if (!strcmp(stmpent->sp_namp, forwho)) {
+ 			stmpent->sp_pwdp = towhat;
+ 			stmpent->sp_lstchg = time(NULL) / (60 * 60 * 24);
++			retval = PAM_SUCCESS;
+ 
+ 			D(("Set password %s for %s", stmpent->sp_pwdp, forwho));
+ 		}
+@@ -534,9 +552,7 @@
+ 	int retval = PAM_SUCCESS;
+ 
+ 	/* UNIX passwords area */
+-	setpwent();
+-	pwd = getpwnam(user);	/* Get password file entry... */
+-	endpwent();
++	pwd = _unix_getpwnam(user);	/* Get password *file* entry... */
+ 	if (pwd == NULL)
+ 		return PAM_AUTHINFO_UNAVAIL;	/* We don't need to do the rest... */
+ 

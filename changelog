@@ -1,3 +1,25 @@
+pam (0.75-2) experimental; urgency=low
+
+  * Fix pam_userdb to build and to build against db3, fixes patch 020 
+  * Fix upstream makefile so pam_group has valid configuration, closes: #148657
+  * time.conf reference to logoutd removed, closes: #143801
+  * The static library contains all the appropriate symbols in this
+    version. You may find the complete lack of PAM modules somewhat
+    frustrating; currently the static pam library is only useful if you
+    register your own modules.  Fixing this would require annoying hacking
+    on the upstream build system, closes: #103495
+  * unix_chkpwd.8 typo fixes thanks to dancer@anthill.echidna.id.au,
+    Closes: #139949
+  * Since we're working on the new upstream version, we also have the new docs, closes: #147763
+  * Patch from Martin Schwenke <martin@meltin.net> to only change
+    passwords in pam_unix when they exist in the password file; hopefully
+    does not break NIS, closes: #135990
+  * Another patch from Martin to return PAM_USER_UNKNOWN if we ever
+    actually do get into the password changing routine only to find that
+    we have no password to change, closes: #135604
+
+ --
+
 pam (0.75-1) experimental; urgency=low
 
   * Preliminary test packages
