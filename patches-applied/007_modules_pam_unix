@@ -1,10 +1,10 @@
 Index: Linux-PAM/doc/modules/pam_unix.sgml
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/modules/pam_unix.sgml,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 pam_unix.sgml
---- Linux-PAM/doc/modules/pam_unix.sgml	29 Apr 2001 04:16:57 -0000	1.1.1.1
-+++ Linux-PAM/doc/modules/pam_unix.sgml	5 May 2002 18:03:26 -0000
+retrieving revision 1.3
+diff -u -r1.3 pam_unix.sgml
+--- Linux-PAM/doc/modules/pam_unix.sgml	15 Sep 2002 20:17:58 -0000	1.3
++++ Linux-PAM/doc/modules/pam_unix.sgml	15 Sep 2002 20:45:25 -0000
 @@ -174,6 +174,9 @@
  <tt/bigcrypt/;
  <tt/shadow/;
@@ -64,10 +64,10 @@ diff -u -r1.1.1.1 pam_unix.sgml
 Index: Linux-PAM/modules/pam_unix/Makefile
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/Makefile,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 Makefile
---- Linux-PAM/modules/pam_unix/Makefile	29 Apr 2001 04:17:36 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_unix/Makefile	5 May 2002 18:03:26 -0000
+retrieving revision 1.3
+diff -u -r1.3 Makefile
+--- Linux-PAM/modules/pam_unix/Makefile	15 Sep 2002 20:18:00 -0000	1.3
++++ Linux-PAM/modules/pam_unix/Makefile	15 Sep 2002 20:45:25 -0000
 @@ -57,7 +57,7 @@
  LIBOBJS = $(addprefix static/,$(LIBOBJ))
  
@@ -80,10 +80,10 @@ diff -u -r1.1.1.1 Makefile
 Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_acct.c,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 pam_unix_acct.c
---- Linux-PAM/modules/pam_unix/pam_unix_acct.c	29 Apr 2001 04:17:37 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_unix/pam_unix_acct.c	5 May 2002 18:10:17 -0000
+retrieving revision 1.3
+diff -u -r1.3 pam_unix_acct.c
+--- Linux-PAM/modules/pam_unix/pam_unix_acct.c	15 Sep 2002 20:18:01 -0000	1.3
++++ Linux-PAM/modules/pam_unix/pam_unix_acct.c	15 Sep 2002 20:45:25 -0000
 @@ -124,7 +124,7 @@
  
  	} else if (!strcmp( pwent->pw_passwd, "x" )) {
@@ -136,10 +136,10 @@ diff -u -r1.1.1.1 pam_unix_acct.c
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_passwd.c,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 pam_unix_passwd.c
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	29 Apr 2001 04:17:37 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	5 May 2002 18:15:31 -0000
+retrieving revision 1.5
+diff -u -r1.5 pam_unix_passwd.c
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	15 Sep 2002 20:18:01 -0000	1.5
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	15 Sep 2002 20:50:41 -0000
 @@ -118,6 +118,9 @@
  #define OPW_TMPFILE		"/etc/security/nopasswd"
  #define OLD_PASSWORDS_FILE	"/etc/security/opasswd"
@@ -150,20 +150,20 @@ diff -u -r1.1.1.1 pam_unix_passwd.c
  /*
   * i64c - convert an integer to a radix 64 character
   */
-@@ -391,8 +394,10 @@
- 	opwfile = fopen("/etc/shadow", "r");
- 	if (pwfile == NULL || opwfile == NULL)
- 		return PAM_AUTHTOK_ERR;
--	chown(SH_TMPFILE, 0, 0);
--	chmod(SH_TMPFILE, 0600);
+@@ -427,8 +430,10 @@
+ 	return PAM_AUTHTOK_ERR;
+     }
+ 
+-    chown(SH_TMPFILE, 0, 0);
+-    chmod(SH_TMPFILE, 0600);
 +	/* Debian's shadow file is group shadow, and readable by group,
 +	   shouldn't all of them be this way? */
 +	chown(SH_TMPFILE, 0, 42);
 +	chmod(SH_TMPFILE, 0640);
- 	stmpent = fgetspent(opwfile);
- 	while (stmpent) {
- 		if (!strcmp(stmpent->sp_namp, forwho)) {
-@@ -499,6 +504,8 @@
+     stmpent = fgetspent(opwfile);
+     while (stmpent) {
+ 
+@@ -538,6 +543,8 @@
  #ifdef DEBUG
  		sleep(5);
  #endif
@@ -172,8 +172,8 @@ diff -u -r1.1.1.1 pam_unix_passwd.c
  		return retval;
  	}
  	/* first, save old password */
-@@ -513,6 +520,9 @@
- 		retval = _update_passwd(forwho, towhat);
+@@ -552,6 +559,9 @@
+ 		retval = _update_passwd(pamh, forwho, towhat);
  	}
  
 +	if (retval == PAM_SUCCESS)
@@ -182,7 +182,7 @@ diff -u -r1.1.1.1 pam_unix_passwd.c
  	return retval;
  }
  
-@@ -615,18 +625,21 @@
+@@ -654,18 +664,21 @@
  			return PAM_AUTHTOK_ERR;
  		}
  	}
@@ -209,23 +209,14 @@ diff -u -r1.1.1.1 pam_unix_passwd.c
  	}
  	if (remark) {
  		_make_remark(pamh, ctrl, PAM_ERROR_MSG, remark);
-@@ -970,8 +983,6 @@
- 
- 		retval = _do_setpass(pamh, user, pass_old, tpass, ctrl,
- 		                     remember);
--		_pam_overwrite(pass_new);
--		_pam_overwrite(pass_old);
- 		_pam_delete(tpass);
- 		pass_old = pass_new = NULL;
- 	} else {		/* something has broken with the module */
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.c,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 support.c
---- Linux-PAM/modules/pam_unix/support.c	29 Apr 2001 04:17:40 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_unix/support.c	5 May 2002 18:03:26 -0000
-@@ -25,6 +25,9 @@
+retrieving revision 1.4
+diff -u -r1.4 support.c
+--- Linux-PAM/modules/pam_unix/support.c	15 Sep 2002 20:18:01 -0000	1.4
++++ Linux-PAM/modules/pam_unix/support.c	15 Sep 2002 20:45:25 -0000
+@@ -26,6 +26,9 @@
  extern char *crypt(const char *key, const char *salt);
  extern char *bigcrypt(const char *key, const char *salt);
  
@@ -235,7 +226,7 @@ diff -u -r1.1.1.1 support.c
  /* syslogging function for errors and other information */
  
  void _log_err(int err, pam_handle_t *pamh, const char *format,...)
-@@ -169,6 +172,7 @@
+@@ -171,6 +174,7 @@
  		D(("SILENT"));
  		set(UNIX__QUIET, ctrl);
  	}
@@ -243,7 +234,7 @@ diff -u -r1.1.1.1 support.c
  	/* now parse the arguments to this module */
  
  	while (argc-- > 0) {
-@@ -177,10 +181,9 @@
+@@ -179,10 +183,9 @@
  		D(("pam_unix arg: %s", *argv));
  
  		for (j = 0; j < UNIX_CTRLS_; ++j) {
@@ -256,7 +247,7 @@ diff -u -r1.1.1.1 support.c
  		}
  
  		if (j >= UNIX_CTRLS_) {
-@@ -190,16 +193,21 @@
+@@ -192,16 +195,21 @@
  			ctrl &= unix_args[j].mask;	/* for turning things off */
  			ctrl |= unix_args[j].flag;	/* for turning things on  */
  
@@ -286,7 +277,7 @@ diff -u -r1.1.1.1 support.c
  
  		++argv;		/* step to next argument */
  	}
-@@ -567,6 +575,8 @@
+@@ -603,6 +611,8 @@
  		} else if (!p) {
  				retval = PAM_AUTH_ERR;
  		} else {
@@ -298,10 +289,10 @@ diff -u -r1.1.1.1 support.c
 Index: Linux-PAM/modules/pam_unix/support.h
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.h,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 support.h
---- Linux-PAM/modules/pam_unix/support.h	29 Apr 2001 04:17:41 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_unix/support.h	5 May 2002 18:03:26 -0000
+retrieving revision 1.3
+diff -u -r1.3 support.h
+--- Linux-PAM/modules/pam_unix/support.h	15 Sep 2002 20:18:01 -0000	1.3
++++ Linux-PAM/modules/pam_unix/support.h	15 Sep 2002 20:45:25 -0000
 @@ -80,8 +80,12 @@
  #define UNIX_BIGCRYPT            18	/* use DEC-C2 crypt()^x function */
  #define UNIX_LIKE_AUTH           19	/* need to auth for setcred to work */
@@ -386,11 +377,11 @@ diff -u -r1.1.1.1 support.h
 Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/unix_chkpwd.c,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 unix_chkpwd.c
---- Linux-PAM/modules/pam_unix/unix_chkpwd.c	29 Apr 2001 04:17:41 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_unix/unix_chkpwd.c	5 May 2002 18:03:26 -0000
-@@ -130,6 +130,13 @@
+retrieving revision 1.6
+diff -u -r1.6 unix_chkpwd.c
+--- Linux-PAM/modules/pam_unix/unix_chkpwd.c	15 Sep 2002 20:18:01 -0000	1.6
++++ Linux-PAM/modules/pam_unix/unix_chkpwd.c	15 Sep 2002 20:45:25 -0000
+@@ -136,6 +136,13 @@
  	if (strlen(salt) == 0)
  		return (opt == 0) ? UNIX_FAILED : UNIX_PASSED;
  
@@ -404,7 +395,7 @@ diff -u -r1.1.1.1 unix_chkpwd.c
  	/* the moment of truth -- do we agree with the password? */
  	retval = UNIX_FAILED;
  	if (!strncmp(salt, "$1$", 3)) {
-@@ -229,7 +236,7 @@
+@@ -244,7 +251,7 @@
  
  	npass = read(STDIN_FILENO, option, 8);
  
@@ -413,7 +404,7 @@ diff -u -r1.1.1.1 unix_chkpwd.c
  		_log_err(LOG_DEBUG, "no option supplied");
  		return UNIX_FAILED;
  	} else {
-@@ -244,7 +251,7 @@
+@@ -259,7 +266,7 @@
  
  	npass = read(STDIN_FILENO, pass, MAXPASS);
  
@@ -421,24 +412,4 @@ diff -u -r1.1.1.1 unix_chkpwd.c
 +	if (npass < 0 || pass == NULL || pass[0] == '\0') {	/* is it a valid password? */
  
  		_log_err(LOG_DEBUG, "no password supplied");
- 
-Index: Linux-PAM/modules/pam_unix/obscure.c
-===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/obscure.c,v
-retrieving revision 1.1
-diff -u -u -r1.1 obscure.c
---- Linux-PAM/modules/pam_unix/obscure.c	26 May 2002 03:24:38 -0000	1.1
-+++ Linux-PAM/modules/pam_unix/obscure.c	9 Jun 2002 00:22:21 -0000
-@@ -31,8 +31,11 @@
- #include <stdio.h>
- #include <unistd.h>
- #include <string.h>
-+#include <stdlib.h>
- #include <pwd.h>
--#include <security/pam_misc.h>
-+#include<security/pam_modules.h>
-+#include <security/_pam_macros.h>
-+
- 
- #include "support.h"
  
