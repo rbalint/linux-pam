@@ -130,7 +130,7 @@ binary-arch: build module_check $(dh_mak_deps)
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -Xunix_chkpwd -a
-	dh_makeshlibs -plibpam0g -V "libpam0g (>= 0.75)"
+	dh_makeshlibs -plibpam0g -V "libpam0g (>= 0.76)"
 	dh_installdeb -a
 	dh_shlibdeps -a
 	dh_gencontrol -a
