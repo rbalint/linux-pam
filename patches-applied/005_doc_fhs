@@ -1,3 +1,5 @@
+Upstream has already applied a better solution to this.
+
 Index: Linux-PAM/doc/Makefile
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/Makefile,v
