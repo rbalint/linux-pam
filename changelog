@@ -1,3 +1,9 @@
+pam (0.76-13) unstable; urgency=low
+
+  * Nope, that dependency didn't work, so let's remove it.  If we run into other module versioning issues, I now have an arm build environment to debug with.  Closes: #198618
+
+ -- Sam Hartman <hartmans@debian.org>  Mon,  7 Jul 2003 00:22:34 -0400
+
 pam (0.76-12) unstable; urgency=low
 
   * Fix group.conf example, (patch 046) Closes: #197080
