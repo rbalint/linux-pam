@@ -1,3 +1,12 @@
+pam (0.76-16) unstable; urgency=low
+
+  * Patch 51 from the x86-64 folks to support 32-bit ll_time in
+    pam_lastlog even if time_t is 64-bits 
+  * Don't call openlog in pam_unix (patch 52), Closes: #213566 
+  * Return PAM_USER_UNKNOWN for unknown users in pam_unix (patch 53), Closes: #204506
+
+ -- Sam Hartman <hartmans@debian.org>  Tue, 23 Mar 2004 22:26:04 -0500
+
 pam (0.76-15) unstable; urgency=low
 
   * Fix description of libpam-runtime, Closes: #209755
