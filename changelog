@@ -2,6 +2,10 @@ pam (0.76-10) unstable; urgency=low
 
   * Don't double list conffiles, Closes: #190954
   * Only install example sources not executables,  Closes: #185286
+  * Display correct directory in error message for  pam_mkhomedir, patch
+    042 thanks to Akira TAGOH, Closes: #165240 
+  * Don't log  EPERM when setting NOFILE limit as Linux doesn't let you
+    set that to -1, Closes: #180310 
 
  --
 
