@@ -3,8 +3,11 @@ pam (0.76-14) unstable; urgency=low
   * Pull in NMU diff from 13.1, Closes: #186011
   * Split out common-password into its own file, Closes: #207497
   * Make other a conffile again and update to @include stuff
+  * Add missing symlink, Closes: #196605
+  * Remove undocumented manpages
+  * Update PAM mini-policy
 
- --
+ -- Sam Hartman <hartmans@debian.org>  Mon,  1 Sep 2003 18:08:54 -0400
 
 pam (0.76-13.1) unstable; urgency=low
 

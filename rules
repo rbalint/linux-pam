@@ -78,7 +78,7 @@ binary-indep: build $(dh_mak_deps)
 	$(i) $(dl)/pam-*-guide $(d)/$(pdoc)/usr/share/doc-base/
 
 	dh_movefiles -i
-	dh_installman -plibpam-runtime $(dl)/pam-undocumented.7
+
 	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
 	rm  debian/libpam-runtime/usr/share/man/man8/{pam.8,pam.d.8,pam.conf.8}
 	dh_installdocs -i
@@ -117,15 +117,8 @@ binary-arch: build module_check $(dh_mak_deps)
 	$(i) $(dl)/Debian-PAM-MiniPolicy $(d)/libpam0g/usr/share/doc/libpam0g
 	dh_installexamples -a
 	dh_installcron -a
-	for func in  pam_acct_mgmt \
-	    pam_putenv pam_getenv misc_conv pam_misc_paste_env \
-	    pam_misc_copy_env pam_misc_drop_env pam_misc_setenv ; do \
-		ln -s ../man7/pam-undocumented.7.gz \
-		      $(d)/libpam0g-dev/usr/share/man/man3/$$func.3.gz ; \
-	done
 
 	dh_installchangelogs -a $(BUILD_TREE)/CHANGELOG
-	dh_undocumented -a
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -Xunix_chkpwd -a
