@@ -5,7 +5,7 @@ pam (0.76-3) unstable; urgency=low
     significant build system hacking (touch every makefile for dynamic
     objects), so it will wait, Closes: #163600
 
- -- Sam Hartman <hartmansdebian.org>  Sun,  6 Oct 2002 23:33:12 -0400
+ -- Sam Hartman <hartmans@debian.org>  Sun,  6 Oct 2002 23:33:12 -0400
 
 pam (0.76-2) unstable; urgency=low
 
