@@ -57,7 +57,7 @@ sub parse_line($) {
   my $var;
   my (%x, @x);
   local $_ = shift;
-  return undef unless s/(\S+)\s//;
+  return undef unless defined $_ and s/(\S+)\s//;
   $var->{Name} = $1;
   s/^\s*//;
   @x = split(/=([^"\s]\S*|"[^"]*")\s*/, $_);
