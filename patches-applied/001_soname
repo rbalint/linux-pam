@@ -1,0 +1,21 @@
+Patch origin is upstream.
+Index: Linux-PAM/Make.Rules.in
+===================================================================
+RCS file: /cvsroot/pam/Linux-PAM/Make.Rules.in,v
+retrieving revision 1.6
+retrieving revision 1.7
+diff -u -r1.6 -r1.7
+--- Linux-PAM/Make.Rules.in	2001/02/10 22:33:09	1.6
++++ Linux-PAM/Make.Rules.in	2001/04/08 08:14:57	1.7
+@@ -83,7 +83,11 @@
+ LD=@LD@
+ LD_D=@LD_D@
+ LD_L=@LD_L@
++LDCONFIG=@LDCONFIG@
+ DYNTYPE=@DYNTYPE@
++USESONAME=@USESONAME@
++NEEDSONAME=@NEEDSONAME@
++SOSWITCH=@SOSWITCH@
+ LIBDL=@LIBDL@
+ MKDIR=@MKDIR@
+ INSTALL=@INSTALL@
