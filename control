@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Sam Hartman <hartmans@debian.org>
 Standards-Version: 3.2.1.0
 Build-Depends: cracklib2-dev, bzip2, debhelper, patch, libdb3-dev, libcap-dev [!hurd-i386]
-Build-Depends-Indep: sgml-tools, latex2html, tetex-extra, groff
+Build-Depends-Indep: sgml-tools, latex2html, tetex-extra, groff, opensp
 
 Package: libpam0g
 Priority: required
@@ -31,7 +31,7 @@ Replaces: libpam0g-util
 Provides: libpam-motd, libpam-mkhomedir
 Description: Pluggable Authentication Modules for PAM
  This package completes the set of modules for PAM. It includes the
- the pam_unix_*.so module as well as some specialty modules.
+  pam_unix_*.so module as well as some specialty modules.
 
 Package: libpam-runtime
 Priority: required

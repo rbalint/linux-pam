@@ -1,3 +1,100 @@
+pam (0.72-35) unstable; urgency=medium
+
+  * Fix like_auth to make libpam-krb5 and libpam-heimdal actually useful,
+    patch from RISKO   Gergely , closes: #126251
+
+ -- Sam Hartman <hartmans@debian.org>  Mon, 21 Jan 2002 15:20:22 -0500
+
+pam (0.72-34) unstable; urgency=medium
+
+  * Note that HOME may not be useful in pam_environment, closes: #109281
+  * Don't smash case domains (groups/users) in pam_limits, closes: #119893
+  * Remove double the from description, closes: #107705
+  * Fix typo on mail message, closes: #119689
+  * Medium since these are small fixes that should go into woody
+
+ -- Sam Hartman <hartmans@debian.org>  Fri, 23 Nov 2001 21:24:20 -0500
+
+pam (0.72-33) unstable; urgency=low
+
+  * Fix pam_mail to look in /var/mail not /var/spool/mail, thanks mjb.
+
+ -- Sam Hartman <hartmans@debian.org>  Thu, 11 Oct 2001 15:44:32 -0400
+
+pam (0.72-32) unstable; urgency=medium
+
+  * This should probably get into testing before freeze; medium.
+  * Patch from Volker Stolz to fix bug in previous pam_group patch,
+    closes: #111854 
+
+ -- Sam Hartman <hartmans@debian.org>  Sat, 22 Sep 2001 06:32:29 -0400
+
+pam (0.72-31) unstable; urgency=low
+
+  * Add support for credential reinitialization in pam_group, closes: #108697
+
+ -- Sam Hartman <hartmans@debian.org>  Fri, 31 Aug 2001 13:16:39 -0400
+
+pam (0.72-30) unstable; urgency=low
+
+  * Include patch from  robbe@orcus.priv.at to build pam_limits on hurd,
+    closes: #103556 
+  * Start installing limits.conf for hurd (may not work quite right)
+
+ -- Sam Hartman <hartmans@debian.org>  Mon, 16 Jul 2001 09:35:51 -0400
+
+pam (0.72-29) unstable; urgency=low
+
+  * Correctly declare uint32 type for ia64, closes: #104584
+
+ -- Sam Hartman <hartmans@debian.org>  Sat, 14 Jul 2001 01:30:39 -0400
+
+pam (0.72-28) unstable; urgency=low
+
+  * Fix scanf string so pam_limits chroot works, closes: #100812
+  * Only log unknown user at warning, not alert, closes: #95220
+  * By default do complete matches not substring matches for pam_time.
+    You can include explicit wildcard for substring, closes: #66152 
+
+ -- Sam Hartman <hartmans@debian.org>  Tue,  3 Jul 2001 17:31:45 -0400
+
+pam (0.72-27) unstable; urgency=low
+
+  * Fix  typo in last patch
+
+ -- Sam Hartman <hartmans@debian.org>  Mon, 25 Jun 2001 18:27:42 -0400
+
+pam (0.72-26) unstable; urgency=low
+
+  * Block SIGCHLD when calling unix password verification program, patch from mdz@debian.org, fixes pam part of #97977
+
+ -- Sam Hartman <hartmans@debian.org>  Mon, 25 Jun 2001 08:47:12 -0400
+
+pam (0.72-25) unstable; urgency=medium
+
+  * Depend on opensp, working around #89063, closes: #100125
+  * This is urgency medium to get docs back into testing.
+
+ -- Sam Hartman <hartmans@debian.org>  Fri,  8 Jun 2001 11:44:12 -0400
+
+pam (0.72-24) unstable; urgency=low
+
+  * New NIS double locking and root password patch from  Philippe Troin
+    <phil@fifi.org>, fixes bug in unreleased patch submitted for
+    0.72-23.  Also improves changing root password so it does something;
+    ongoing discussion on whether this is right.
+
+ -- Sam Hartman <hartmans@debian.org>  Mon, 21 May 2001 08:06:05 -0400
+
+pam (0.72-23) unstable; urgency=low
+
+  * Patch from Benoit Gaussen <ben@trez42.net> , Don't trim from , to end
+  of string in user input, only trim from salt 
+    grabbed from passwd file, closes: #96779 
+  * Fix NIS double locking, closes: #96736
+
+ -- Sam Hartman <hartmans@debian.org>  Wed, 16 May 2001 15:46:34 -0400
+
 pam (0.72-22) unstable; urgency=low
 
   * Fix pam.8 to be pam.7, closes: #92874
@@ -839,6 +936,4 @@ pam (0.50-1) unstable; urgency=low
 
  -- Patrick Weemeeuw <patrick.weemeeuw@kulnet.kuleuven.ac.be>
 
-Local variables:
-mode: debian-changelog
-End:
+
