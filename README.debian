@@ -23,4 +23,7 @@ the password use required not requisite in your PAM config.
 
 
 
-J.H.M. Dassen (Ray) <jdassen@debian.org>, Wed, 23 Sep 1998 22:53:15 +0200
+Previously, pam_rhosts allowed the .rhosts file to be a symlink.  This
+was a debian specific change that has been dropped because it is not
+the upstream behavior nor is it the document behavior of ruserok(3).
+

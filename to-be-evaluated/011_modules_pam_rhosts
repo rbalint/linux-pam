@@ -1,3 +1,5 @@
+Rejected: ruserok does not do this;
+it seems gratuitous.
 --- Linux-PAM-0.71.orig/modules/pam_rhosts/pam_rhosts_auth.c	Mon Nov  8 00:46:58 1999
 +++ Linux-PAM-0.71/modules/pam_rhosts/pam_rhosts_auth.c	Mon Nov  8 21:04:20 1999
 @@ -537,8 +534,9 @@
