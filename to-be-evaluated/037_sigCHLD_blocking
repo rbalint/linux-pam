@@ -1,0 +1,33 @@
+diff -urN Linux-PAM-0.72/modules/pam_unix/support.c Linux-PAM-0.72.new/modules/pam_unix/support.c
+--- Linux-PAM-0.72/modules/pam_unix/support.c	Mon Jun 25 08:42:57 2001
++++ Linux-PAM-0.72.new/modules/pam_unix/support.c	Mon Jun 25 08:41:24 2001
+@@ -375,6 +375,7 @@
+ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd, unsigned int ctrl)
+ {
+     int retval, child, fds[2];
++    sigset_t sigset;
+ 
+     D(("called."));
+     /* create a pipe for the password */
+@@ -383,6 +384,11 @@
+ 	return PAM_AUTH_ERR;
+     }
+ 
++    /* Block SIGCHLD */
++    sigemptyset(&sigset);
++    sigaddset(&sigset, SIGCHLD);
++    sigprocmask(SIG_BLOCK, &sigset, 0);
++
+     /* fork */
+     child = fork();
+     if (child == 0) {
+@@ -424,6 +430,9 @@
+ 	D(("fork failed"));
+ 	retval = PAM_AUTH_ERR;
+     }
++
++    /* Unblock SIGCHLD */
++    sigprocmask(SIG_BLOCK, &sigset, 0);
+ 
+     D(("returning %d", retval));
+     return retval;

@@ -1,0 +1,17 @@
+
+--- Linux-PAM-0.72/modules/pam_group/pam_group.c.orig	Mon Sep 10 11:43:38 2001
++++ Linux-PAM-0.72/modules/pam_group/pam_group.c	Mon Sep 10 11:43:38 2001
+@@ -752,9 +752,12 @@
+     unsigned setting;
+ 
+     /* only interested in establishing credentials */
++    /* PAM docs say that an empty flag is to be treated as PAM_ESTABLISH_CRED.
++       Some people just pass PAM_SILENT, so cope with it, too. */
+ 
+     setting = flags;
+-    if (!(setting & PAM_ESTABLISH_CRED)) {
++    if (!((setting & PAM_ESTABLISH_CRED) || (setting & PAM_REINITIALIZE_CRED)
++	  || (setting == 0) || (setting == PAM_SILENT) )) {
+ 	D(("ignoring call - not for establishing credentials"));
+ 	return PAM_SUCCESS;            /* don't fail because of this */
+     }

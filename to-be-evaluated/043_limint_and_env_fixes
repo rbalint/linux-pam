@@ -1,0 +1,26 @@
+diff -urN Linux-PAM-0.72/modules/pam_env/pam_env.conf-example Linux-PAM-0.72.new/modules/pam_env/pam_env.conf-example
+--- Linux-PAM-0.72/modules/pam_env/pam_env.conf-example	Sun Jul 12 01:17:16 1998
++++ Linux-PAM-0.72.new/modules/pam_env/pam_env.conf-example	Fri Nov 23 21:08:42 2001
+@@ -43,6 +43,10 @@
+ # be used in values using the @{string} syntax. Both the $ and @
+ # characters can be backslash escaped to be used as literal values
+ # values can be delimited with "", escaped " not supported.
++# Note that many environment variables that you would like to use
++# may not be set by the time the module is called.
++# for example, HOME is used below several times, but
++# many PAM applications don't make it available by the time you need it.
+ #
+ #
+ # First, some special variables
+diff -urN Linux-PAM-0.72/modules/pam_limits/pam_limits.c Linux-PAM-0.72.new/modules/pam_limits/pam_limits.c
+--- Linux-PAM-0.72/modules/pam_limits/pam_limits.c	Fri Nov 23 21:09:06 2001
++++ Linux-PAM-0.72.new/modules/pam_limits/pam_limits.c	Fri Nov 23 21:01:46 2001
+@@ -467,8 +467,6 @@
+         memset(value, 0, sizeof(value));
+         
+         i = sscanf(buf,"%s%s%s %1023c", domain, ltype, item, value);
+-        for(j=0; j < strlen(domain); j++)
+-            domain[j]=tolower(domain[j]);
+         for(j=0; j < strlen(ltype); j++)
+             ltype[j]=tolower(ltype[j]);
+         for(j=0; j < strlen(item); j++)

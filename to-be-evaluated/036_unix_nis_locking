@@ -1,0 +1,175 @@
+--- Linux-PAM-0.72.orig/modules/pam_unix/pam_unix_passwd.c	Wed May 16 16:43:22 2001
++++ Linux-PAM-0.72/modules/pam_unix/pam_unix_passwd.c	Wed May 16 16:41:53 2001
+@@ -462,7 +462,7 @@
+ 		yppwd.newpw.pw_gecos = pwd->pw_gecos;
+ 		yppwd.newpw.pw_dir = pwd->pw_dir;
+ 		yppwd.newpw.pw_shell = pwd->pw_shell;
+-		yppwd.oldpass = fromwhat;
++		yppwd.oldpass = fromwhat ? fromwhat : "";
+ 		yppwd.newpw.pw_passwd = towhat;
+ 
+ 		D(("Set password %s for %s", yppwd.newpw.pw_passwd, forwho));
+@@ -651,6 +651,7 @@
+ 	unsigned int ctrl, lctrl;
+ 	int retval;
+ 	int remember = -1;
++	int pwlocked = 0;
+ 
+ 	/* <DO NOT free() THESE> */
+ 	const char *user;
+@@ -659,13 +660,18 @@
+ 
+ 	D(("called."));
+ 
++	ctrl = _set_ctrl(flags, &remember, argc, argv);
++
+ #ifdef USE_LCKPWDF
+ 	/* our current locking system requires that we lock the
+ 	   entire password database.  This avoids both livelock
+ 	   and deadlock. */
+-	lckpwdf();
++	if (off(UNIX_NIS, ctrl))
++	  {
++	    pwlocked = 1;
++	    lckpwdf();
++	  }
+ #endif
+-	ctrl = _set_ctrl(flags, &remember, argc, argv);
+ 
+ 	/*
+ 	 * First get the name of a user
+@@ -681,7 +687,7 @@
+ 		if (user == NULL || !isalnum(*user)) {
+ 			_log_err(LOG_ERR, "bad username [%s]", user);
+ #ifdef USE_LCKPWDF
+-			ulckpwdf();
++			if (pwlocked) ulckpwdf();
+ #endif
+ 			return PAM_USER_UNKNOWN;
+ 		}
+@@ -691,7 +697,7 @@
+ 		if (on(UNIX_DEBUG, ctrl))
+ 			_log_err(LOG_DEBUG, "password - could not identify user");
+ #ifdef USE_LCKPWDF
+-		ulckpwdf();
++		if (pwlocked) ulckpwdf();
+ #endif
+ 		return retval;
+ 	}
+@@ -715,10 +721,10 @@
+ 
+ 		if (_unix_blankpasswd(ctrl, user)) {
+ #ifdef USE_LCKPWDF
+-			ulckpwdf();
++			if (pwlocked) ulckpwdf();
+ #endif
+ 			return PAM_SUCCESS;
+-		} else if (off(UNIX__IAMROOT, ctrl)) {
++		} else if (off(UNIX__IAMROOT, ctrl) || on(UNIX_NIS, ctrl)) {
+ 
+ 			/* instruct user what is happening */
+ #define greeting "Changing password for "
+@@ -726,7 +732,7 @@
+ 			if (Announce == NULL) {
+ 				_log_err(LOG_CRIT, "password - out of memory");
+ #ifdef USE_LCKPWDF
+-				ulckpwdf();
++				if (pwlocked) ulckpwdf();
+ #endif
+ 				return PAM_BUF_ERR;
+ 			}
+@@ -738,7 +744,9 @@
+ 			set(UNIX__OLD_PASSWD, lctrl);
+ 			retval = _unix_read_password(pamh, lctrl
+ 						     ,Announce
+-					     ,"(current) UNIX password: "
++					     ,(on(UNIX__IAMROOT, ctrl) 
++					       ? "NIS server root password: " 
++					       : "(current) UNIX password: ")
+ 						     ,NULL
+ 						     ,_UNIX_OLD_AUTHTOK
+ 					     ,(const char **) &pass_old);
+@@ -748,13 +756,16 @@
+ 				_log_err(LOG_NOTICE
+ 				 ,"password - (old) token not obtained");
+ #ifdef USE_LCKPWDF
+-				ulckpwdf();
++				if (pwlocked) ulckpwdf();
+ #endif
+ 				return retval;
+ 			}
+-			/* verify that this is the password for this user */
++			/* verify that this is the password for this user
++			 * if we're not using NIS */
+ 
+-			retval = _unix_verify_password(pamh, user, pass_old, ctrl);
++			if (off(UNIX_NIS, ctrl)) {
++				retval = _unix_verify_password(pamh, user, pass_old, ctrl);
++			}
+ 		} else {
+ 			D(("process run by root so do nothing this time around"));
+ 			pass_old = NULL;
+@@ -765,7 +776,7 @@
+ 			D(("Authentication failed"));
+ 			pass_old = NULL;
+ #ifdef USE_LCKPWDF
+-			ulckpwdf();
++			if (pwlocked) ulckpwdf();
+ #endif
+ 			return retval;
+ 		}
+@@ -819,7 +830,7 @@
+ 		if (retval != PAM_SUCCESS) {
+ 			_log_err(LOG_NOTICE, "user not authenticated");
+ #ifdef USE_LCKPWDF
+-			ulckpwdf();
++			if (pwlocked) ulckpwdf();
+ #endif
+ 			return retval;
+ 		}
+@@ -827,7 +838,7 @@
+ 		if (retval != PAM_SUCCESS) {
+ 			_log_err(LOG_NOTICE, "user not authenticated 2");
+ #ifdef USE_LCKPWDF
+-			ulckpwdf();
++			if (pwlocked) ulckpwdf();
+ #endif
+ 			return retval;
+ 		}
+@@ -860,7 +871,7 @@
+ 				}
+ 				pass_old = NULL;	/* tidy up */
+ #ifdef USE_LCKPWDF
+-				ulckpwdf();
++				if (pwlocked) ulckpwdf();
+ #endif
+ 				return retval;
+ 			}
+@@ -884,7 +895,7 @@
+ 			_pam_overwrite(pass_old);
+ 			pass_new = pass_old = NULL;	/* tidy up */
+ #ifdef USE_LCKPWDF
+-			ulckpwdf();
++			if (pwlocked) ulckpwdf();
+ #endif
+ 			return retval;
+ 		}
+@@ -927,7 +938,7 @@
+ 					_pam_overwrite(pass_old);
+ 					pass_new = pass_old = NULL;	/* tidy up */
+ #ifdef USE_LCKPWDF
+-					ulckpwdf();
++					if (pwlocked) ulckpwdf();
+ #endif
+ 					return PAM_BUF_ERR;
+ 				}
+@@ -969,7 +980,7 @@
+ 	D(("retval was %d", retval));
+ 
+ #ifdef USE_LCKPWDF
+-	ulckpwdf();
++	if (pwlocked) ulckpwdf();
+ #endif
+ 	return retval;
+ }
+
