@@ -5,6 +5,14 @@ pam (0.76-15) unstable; urgency=low
   * Depend on libc6-dev|libc-dev not libc6-dev, Closes: #212354
   *  Clean up binaries, Thanks Russell, Closes: #212158
   * Depend on sufficiently new cracklib2-dev, Closes: #214092
+  * Treate GNU/* as GNU for OS variable to make pam_limits compile,
+    (patch 050) Closes: #220980 
+  * No longer build-depend on latex2html, Closes: #221318 
+  * Allow : in tty specification for pam_group, (patch 048) Closes: #220439
+  * Pull in locking patch from Linux-PAM CVS; this ended up causing
+    021_pam_nis_locking to be reworked and that patch now no longer
+    contains locking fixes, but just NIS cleanup in general.  See
+    049_pam_unix_sane_locking for the locking changes,  Closes: #220158
 
  --
 
