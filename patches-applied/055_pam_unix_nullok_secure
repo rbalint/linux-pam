@@ -1,10 +1,10 @@
 Index: Linux-PAM/modules/pam_unix/Makefile
 ===================================================================
 RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/Makefile,v
-retrieving revision 1.5
-diff -u -r1.5 Makefile
---- Linux-PAM/modules/pam_unix/Makefile	30 Sep 2002 03:29:40 -0000	1.5
-+++ Linux-PAM/modules/pam_unix/Makefile	5 Apr 2004 01:43:37 -0000
+retrieving revision 1.7
+diff -u -r1.7 Makefile
+--- Linux-PAM/modules/pam_unix/Makefile	25 Apr 2004 19:43:59 -0000	1.7
++++ Linux-PAM/modules/pam_unix/Makefile	25 Apr 2004 19:48:38 -0000
 @@ -38,11 +38,12 @@
  CHKPWD=unix_chkpwd
  
@@ -22,10 +22,10 @@ diff -u -r1.5 Makefile
 Index: Linux-PAM/modules/pam_unix/pam_unix_auth.c
 ===================================================================
 RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_auth.c,v
-retrieving revision 1.3
-diff -u -r1.3 pam_unix_auth.c
---- Linux-PAM/modules/pam_unix/pam_unix_auth.c	15 Sep 2002 20:18:01 -0000	1.3
-+++ Linux-PAM/modules/pam_unix/pam_unix_auth.c	5 Apr 2004 01:43:37 -0000
+retrieving revision 1.5
+diff -u -r1.5 pam_unix_auth.c
+--- Linux-PAM/modules/pam_unix/pam_unix_auth.c	25 Apr 2004 19:44:00 -0000	1.5
++++ Linux-PAM/modules/pam_unix/pam_unix_auth.c	25 Apr 2004 19:48:38 -0000
 @@ -148,7 +148,7 @@
  
  	/* if this user does not have a password... */
@@ -38,10 +38,10 @@ diff -u -r1.3 pam_unix_auth.c
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_passwd.c,v
-retrieving revision 1.11
-diff -u -r1.11 pam_unix_passwd.c
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	12 Jan 2004 06:46:10 -0000	1.11
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	5 Apr 2004 01:43:37 -0000
+retrieving revision 1.13
+diff -u -r1.13 pam_unix_passwd.c
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	25 Apr 2004 19:44:00 -0000	1.13
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	25 Apr 2004 19:48:38 -0000
 @@ -781,7 +781,7 @@
  
  		D(("prelim check"));
@@ -54,10 +54,17 @@ diff -u -r1.11 pam_unix_passwd.c
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
 RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.c,v
-retrieving revision 1.13
-diff -u -r1.13 support.c
---- Linux-PAM/modules/pam_unix/support.c	24 Mar 2004 03:45:59 -0000	1.13
-+++ Linux-PAM/modules/pam_unix/support.c	5 Apr 2004 01:43:37 -0000
+retrieving revision 1.15
+diff -u -r1.15 support.c
+--- Linux-PAM/modules/pam_unix/support.c	25 Apr 2004 19:44:00 -0000	1.15
++++ Linux-PAM/modules/pam_unix/support.c	25 Apr 2004 19:48:38 -0000
+@@ -1,5 +1,5 @@
+ /* 
+- * $Id: 055_pam_unix_nullok_secure,v 1.2 2004/04/25 19:48:57 hartmans Exp $
++ * $Id: 055_pam_unix_nullok_secure,v 1.2 2004/04/25 19:48:57 hartmans Exp $
+  *
+  * Copyright information at end of file.
+  */
 @@ -23,6 +23,7 @@
  #include "md5.h"
  #include "support.h"
@@ -91,11 +98,18 @@ diff -u -r1.13 support.c
  {
  	struct passwd *pwd = NULL;
  	struct spwd *spwdent = NULL;
-@@ -343,7 +346,15 @@
+@@ -343,7 +346,6 @@
  
  	if (on(UNIX__NONULL, ctrl))
  		return 0;	/* will fail but don't let on yet */
 -
+ 	/* UNIX passwords area */
+ 
+ 	/* Get password file entry... */
+@@ -429,6 +431,15 @@
+ 		free(buf);
+ #endif
+ 
 +	if (on(UNIX_NULLOK_SECURE, ctrl)) {
 +		const char *uttyname;
 +		retval = pam_get_item(pamh, PAM_TTY, (const void **)&uttyname);
@@ -105,16 +119,16 @@ diff -u -r1.13 support.c
 +		if (_pammodutil_tty_secure(uttyname) !=  PAM_SUCCESS)
 +		  return 0;
 +	}
- 	/* UNIX passwords area */
+ 	return retval;
+ }
  
- 	/* Get password file entry... */
 Index: Linux-PAM/modules/pam_unix/support.h
 ===================================================================
 RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.h,v
-retrieving revision 1.4
-diff -u -r1.4 support.h
---- Linux-PAM/modules/pam_unix/support.h	15 Sep 2002 20:51:53 -0000	1.4
-+++ Linux-PAM/modules/pam_unix/support.h	5 Apr 2004 01:43:37 -0000
+retrieving revision 1.6
+diff -u -r1.6 support.h
+--- Linux-PAM/modules/pam_unix/support.h	25 Apr 2004 19:44:00 -0000	1.6
++++ Linux-PAM/modules/pam_unix/support.h	25 Apr 2004 19:48:38 -0000
 @@ -84,8 +84,9 @@
  #define UNIX_MIN_PASS_LEN        22	/* Min length for password */
  #define UNIX_NOOBSCURE_CHECKS    23     /* internal */
