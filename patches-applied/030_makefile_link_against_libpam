@@ -1,3 +1,6 @@
+Also included in this patch is code to link pam_access against libnsl;
+same sort of shared library dependency issue as pam_limits, et al
+
 Index: Linux-PAM/Make.Rules.in
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/Make.Rules.in,v
@@ -95,3 +98,20 @@ diff -u -r1.4 Makefile
  endif
  
  ifdef STATIC
+Index: Linux-PAM/modules/pam_access/Makefile
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_access/Makefile,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 Makefile
+--- Linux-PAM/modules/pam_access/Makefile	29 Apr 2001 04:17:16 -0000	1.1.1.1
++++ Linux-PAM/modules/pam_access/Makefile	7 Oct 2002 04:30:40 -0000
+@@ -10,6 +10,9 @@
+ TITLE=pam_access
+ LOCAL_CONFILE=./access.conf
+ INSTALLED_CONFILE=$(SCONFIGD)/access.conf
++ifeq ($(HAVE_LIBNSL),yes)
++MODULE_SIMPLE_EXTRALIBS=-lnsl
++endif
+ 
+ DEFS=-DDEFAULT_CONF_FILE=\"$(INSTALLED_CONFILE)\"
+ CFLAGS += $(DEFS)
