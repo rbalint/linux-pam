@@ -1,0 +1,145 @@
+Index: Linux-PAM/modules/pam_unix/Makefile
+===================================================================
+RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/Makefile,v
+retrieving revision 1.5
+diff -u -r1.5 Makefile
+--- Linux-PAM/modules/pam_unix/Makefile	30 Sep 2002 03:29:40 -0000	1.5
++++ Linux-PAM/modules/pam_unix/Makefile	5 Apr 2004 01:43:37 -0000
+@@ -38,11 +38,12 @@
+ CHKPWD=unix_chkpwd
+ 
+ EXTRAS += -DCHKPWD_HELPER=\"$(SUPLEMENTED)/$(CHKPWD)\"
++EXTRAS += -I../pammodutil/include
+ 
+ ########################################################################
+ 
+ CFLAGS += $(USE_CRACKLIB) $(USE_LCKPWDF) $(NEED_LCKPWDF) $(EXTRAS)
+-LDLIBS = $(EXTRALS)
++LDLIBS = $(EXTRALS) -L../pammodutil -lpammodutil
+ 
+ ifdef USE_CRACKLIB
+ CRACKLIB = -lcrack
+Index: Linux-PAM/modules/pam_unix/pam_unix_auth.c
+===================================================================
+RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_auth.c,v
+retrieving revision 1.3
+diff -u -r1.3 pam_unix_auth.c
+--- Linux-PAM/modules/pam_unix/pam_unix_auth.c	15 Sep 2002 20:18:01 -0000	1.3
++++ Linux-PAM/modules/pam_unix/pam_unix_auth.c	5 Apr 2004 01:43:37 -0000
+@@ -148,7 +148,7 @@
+ 
+ 	/* if this user does not have a password... */
+ 
+-	if (_unix_blankpasswd(ctrl, name)) {
++	if (_unix_blankpasswd(ctrl, pamh, name)) {
+ 		D(("user '%s' has blank passwd", name));
+ 		name = NULL;
+ 		retval = PAM_SUCCESS;
+Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
+===================================================================
+RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_passwd.c,v
+retrieving revision 1.11
+diff -u -r1.11 pam_unix_passwd.c
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	12 Jan 2004 06:46:10 -0000	1.11
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	5 Apr 2004 01:43:37 -0000
+@@ -781,7 +781,7 @@
+ 
+ 		D(("prelim check"));
+ 
+-		if (_unix_blankpasswd(ctrl, user)) {
++		if (_unix_blankpasswd(ctrl, pamh, user)) {
+ 			return PAM_SUCCESS;
+ 		} else if (off(UNIX__IAMROOT, ctrl) || on(UNIX_NIS, ctrl)) {
+ 
+Index: Linux-PAM/modules/pam_unix/support.c
+===================================================================
+RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.c,v
+retrieving revision 1.13
+diff -u -r1.13 support.c
+--- Linux-PAM/modules/pam_unix/support.c	24 Mar 2004 03:45:59 -0000	1.13
++++ Linux-PAM/modules/pam_unix/support.c	5 Apr 2004 01:43:37 -0000
+@@ -23,6 +23,7 @@
+ #include "md5.h"
+ #include "support.h"
+ 
++#include <security/_pam_modutil.h>
+ extern char *crypt(const char *key, const char *salt);
+ extern char *bigcrypt(const char *key, const char *salt);
+ 
+@@ -179,12 +180,14 @@
+ 	/* now parse the arguments to this module */
+ 
+ 	while (argc-- > 0) {
+-		int j;
++		int j, sl;
+ 
+ 		D(("pam_unix arg: %s", *argv));
+ 
++		sl = strlen(*argv);
+ 		for (j = 0; j < UNIX_CTRLS_; ++j) {
+ 			if (unix_args[j].token &&
++			    strlen(unix_args[j].token) == sl &&
+ 			    !strncmp(*argv, unix_args[j].token, strlen(unix_args[j].token)))
+ 				break;
+ 		}
+@@ -319,7 +322,7 @@
+  * - to avoid prompting for one in such cases (CG)
+  */
+ 
+-int _unix_blankpasswd(unsigned int ctrl, const char *name)
++int _unix_blankpasswd(unsigned int ctrl, pam_handle_t *pamh, const char *name)
+ {
+ 	struct passwd *pwd = NULL;
+ 	struct spwd *spwdent = NULL;
+@@ -343,7 +346,15 @@
+ 
+ 	if (on(UNIX__NONULL, ctrl))
+ 		return 0;	/* will fail but don't let on yet */
+-
++	if (on(UNIX_NULLOK_SECURE, ctrl)) {
++		const char *uttyname;
++		retval = pam_get_item(pamh, PAM_TTY, (const void **)&uttyname);
++		if (retval != PAM_SUCCESS || uttyname == NULL)
++			return 0;
++		
++		if (_pammodutil_tty_secure(uttyname) !=  PAM_SUCCESS)
++		  return 0;
++	}
+ 	/* UNIX passwords area */
+ 
+ 	/* Get password file entry... */
+Index: Linux-PAM/modules/pam_unix/support.h
+===================================================================
+RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.h,v
+retrieving revision 1.4
+diff -u -r1.4 support.h
+--- Linux-PAM/modules/pam_unix/support.h	15 Sep 2002 20:51:53 -0000	1.4
++++ Linux-PAM/modules/pam_unix/support.h	5 Apr 2004 01:43:37 -0000
+@@ -84,8 +84,9 @@
+ #define UNIX_MIN_PASS_LEN        22	/* Min length for password */
+ #define UNIX_NOOBSCURE_CHECKS    23     /* internal */
+ #define UNIX_OBSCURE_CHECKS      24	/* enable obscure checks on passwords */
++#define UNIX_NULLOK_SECURE       25
+ /* -------------- */
+-#define UNIX_CTRLS_              25	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              26	/* number of ctrl arguments defined */
+ 
+ 
+ static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
+@@ -118,6 +119,7 @@
+ /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,           0x10000000},
+ /* UNIX_NOOBSCURE_CHECKS */{NULL,              _ALL_ON_,           0x20000000},
+ /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_^(0x20000000),       0},
++/* UNIX__NULLOK_Secure */  {"nullok_secure",   _ALL_ON_^(0x1000),         0x40000000},
+ };
+ 
+ #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag | unix_args[UNIX_NOOBSCURE_CHECKS].flag)
+@@ -137,7 +139,7 @@
+ 		       ,int type, const char *text);
+ extern int _set_ctrl(pam_handle_t * pamh, int flags, int *remember, int argc,
+ 		     const char **argv);
+-extern int _unix_blankpasswd(unsigned int ctrl, const char *name);
++extern int _unix_blankpasswd(unsigned int ctrl, pam_handle_t *pamh, const char *name);
+ extern int _unix_verify_password(pam_handle_t * pamh, const char *name
+ 			  ,const char *p, unsigned int ctrl);
+ extern int _unix_read_password(pam_handle_t * pamh
