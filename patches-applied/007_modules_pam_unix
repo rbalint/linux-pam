@@ -422,3 +422,22 @@ diff -u -r1.1.1.1 unix_chkpwd.c
  
  		_log_err(LOG_DEBUG, "no password supplied");
  
+Index: Linux-PAM/modules/pam_unix/obscure.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/obscure.c,v
+retrieving revision 1.1
+diff -u -r1.1 obscure.c
+--- Linux-PAM/modules/pam_unix/obscure.c	26 May 2002 03:24:38 -0000	1.1
++++ Linux-PAM/modules/pam_unix/obscure.c	8 Jun 2002 23:54:11 -0000
+@@ -31,8 +31,10 @@
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <string.h>
++#include <stdlib.h>
+ #include <pwd.h>
+-#include <security/pam_misc.h>
++#include<security/pam_modules.h>
++
+ 
+ #include "support.h"
+ 
