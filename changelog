@@ -1,8 +1,12 @@
-pam (0.75-0) unstable; urgency=low
+pam (0.75-1) experimental; urgency=low
 
   * Preliminary test packages
+  * New upstream version
+  * Hopefully works mostly the same as  0.72 except for  upstream bug
+    fixes and for the fact that pam_limits is fairly broken right now.
+  * If it breaks you are lucky if you get to keep both pieces release.
 
- -- Sam Hartman <hartmans@mit.edu>  Sat, 18 May 2002 20:48:04 -0400
+ -- Sam Hartman <hartmans@debian.org>  Sat, 25 May 2002 22:57:57 -0400
 
 pam (0.72-35) unstable; urgency=medium
 
