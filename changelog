@@ -1,3 +1,10 @@
+pam (0.76-18) unstable; urgency=low
+
+  * Manipulate conffiles to avoid unnecessary prompt in woody to sarge
+    upgrade, Closes: #218318 
+
+ -- Sam Hartman <hartmans@debian.org>  Sat, 10 Apr 2004 18:10:35 -0400
+
 pam (0.76-17) unstable; urgency=low
 
   * common-password now includes length restrictions and cracklib

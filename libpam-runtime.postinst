@@ -15,6 +15,7 @@ then
 			cp /usr/share/pam/$configfile /etc/pam.d/
 		fi
 	done
+	test -r /etc/pam.d/other.pre-upgrade &&rm -f /etc/pam.d/other.pre-upgrade
 fi
 
 #DEBHELPER#

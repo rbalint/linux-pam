@@ -5,4 +5,12 @@ if [ "$1" = "purge" ]; then
 	      /etc/pam.d/common-session /etc/pam.d/common-password
 fi
 
+case $1 in
+    abort-upgrade|abort-install)
+        mv /etc/pam.d/other.pre-upgrade /etc/pam.d/other 2>/dev/null ||true
+	;;
+	esac
+	
+
+
 #DEBHELPER#
