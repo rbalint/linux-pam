@@ -10,6 +10,7 @@ export DH_COMPAT
 
 BUILD_TREE=Linux-PAM
 
+pdoc=libpam-doc
 d = $(shell pwd)/debian
 dl = $(d)/local
 i = install -p -m 0644
@@ -34,7 +35,7 @@ configure: configure-stamp
 configure-stamp:
 	(cd $(BUILD_TREE) && \
 	sh configure --sysconfdir=/etc --prefix=/usr --enable-static-libpam \
-	--mandir=/usr/share/man --infodir=/usr/share/info --enable-securedir=/lib/security \
+	--mandir=/usr/share/man --infodir=/usr/share/info --libdir=/lib \
 	--sbindir=/sbin)
 	touch configure-stamp
 
@@ -81,12 +82,16 @@ binary-arch: build module_check $(dh_mak_deps)
 
 	$(MAKE) install -C $(BUILD_TREE) FAKEROOT=$(d)/tmp \
 		DIRS="libpam libpam_misc modules libpamc"
+	mkdir -p debian/tmp/etc/pam.d
 	$(i) $(dl)/pam.conf $(d)/tmp/etc
 	$(i) $(dl)/other $(d)/tmp/etc/pam.d
+	$(ie) -D  $(BUILD_TREE)/modules/pam_tally/pam_tally $(d)/tmp/usr/sbin/pam_tally
 	$(i) $(dl)/unix_chkpwd.8 $(d)/libpam-modules/usr/share/man/man8
-	dh_movefiles -plibpam-runtime -plibpam0g-dev -plibpam-cracklib
+	mkdir -p debian/tmp/usr/lib
+	mv debian/tmp/lib/*.a debian/tmp/usr/lib
+	dh_movefiles -plibpam-runtime -plibpam0g-dev -plibpam-cracklib -plibpam0g
 	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*`
-
+	dh_link -A
 	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
 	dh_installman -plibpam0g-dev $(BUILD_TREE)/doc/man/*.3
 	dh_installman -plibpam-runtime $(dl)/pam-undocumented.7
@@ -111,8 +116,8 @@ binary-arch: build module_check $(dh_mak_deps)
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -Xunix_chkpwd -a
+	dh_makeshlibs -plibpam0g -V "libpam0g (>= 0.75)"
 	dh_installdeb -a
-	dh_makeshlibs -plibpam0g -V "libpam0g (>= 0.72-1)"
 	dh_shlibdeps -a
 	dh_gencontrol -a
 	dh_md5sums -a

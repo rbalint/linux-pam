@@ -1,7 +1,7 @@
-build-tree/Linux-PAM-0.72/examples/Makefile
-build-tree/Linux-PAM-0.72/examples/blank.c
-build-tree/Linux-PAM-0.72/examples/check_user.c
-build-tree/Linux-PAM-0.72/examples/test.c
-build-tree/Linux-PAM-0.72/examples/vpass.c
-build-tree/Linux-PAM-0.72/examples/xsh.c
-build-tree/Linux-PAM-0.72/libpamc/test
+Linux-PAM/examples/Makefile
+Linux-PAM/examples/blank.c
+Linux-PAM/examples/check_user.c
+Linux-PAM/examples/test.c
+Linux-PAM/examples/vpass.c
+Linux-PAM/examples/xsh.c
+Linux-PAM/libpamc/test

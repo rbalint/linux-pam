@@ -2,6 +2,3 @@ usr/include/security/*
 usr/lib/libpam.a
 usr/lib/libpamc.a
 usr/lib/libpam_misc.a
-usr/lib/libpam.so
-usr/lib/libpamc.so
-usr/lib/libpam_misc.so
