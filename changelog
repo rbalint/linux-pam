@@ -3,6 +3,8 @@ pam (0.76-15) unstable; urgency=low
   * Fix description of libpam-runtime, Closes: #209755
   * Fix description of libpam-cracklib, Closes: #210014
   * Depend on libc6-dev|libc-dev not libc6-dev, Closes: #212354
+  *  Clean up binaries, Thanks Russell, Closes: #212158
+  * Depend on sufficiently new cracklib2-dev, Closes: #214092
 
  --
 

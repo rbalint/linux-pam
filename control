@@ -3,7 +3,7 @@ Section: base
 Priority: optional
 Maintainer: Sam Hartman <hartmans@debian.org>
 Standards-Version: 3.5.8
-Build-Depends: cracklib2-dev, bzip2, debhelper, patch, libdb3-dev, libcap-dev [!hurd-i386 !freebsd-i386 !netbsd-i386]
+Build-Depends: cracklib2-dev (>= 2.7-9), bzip2, debhelper, patch, libdb3-dev, libcap-dev [!hurd-i386 !freebsd-i386 !netbsd-i386]
 Build-Depends-Indep: linuxdoc-tools, linuxdoc-tools-latex, latex2html, tetex-extra, groff, opensp
 
 Package: libpam0g
