@@ -1,0 +1,18 @@
+Index: doc/Makefile
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/Makefile,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 Makefile
+--- doc/Makefile	29 Apr 2001 04:16:27 -0000	1.1.1.1
++++ doc/Makefile	5 May 2002 03:54:10 -0000
+@@ -4,8 +4,8 @@
+ include ../Make.Rules
+ 
+ # These two should probably be moved into autoconf...
+-DOCDIR=/usr/doc/Linux-PAM
+-MANDIR=/usr/man
++DOCDIR=/usr/share/doc/Linux-PAM
++
+ 
+ #######################################################
+ 
