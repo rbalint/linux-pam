@@ -1,6 +1,11 @@
---- Linux-PAM-0.72/modules/pam_listfile/pam_listfile.c~	Mon Mar 26 08:37:45 2001
-+++ Linux-PAM-0.72/modules/pam_listfile/pam_listfile.c	Mon Mar 26 08:43:40 2001
-@@ -37,6 +37,8 @@
+Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_listfile/pam_listfile.c,v
+retrieving revision 1.2
+diff -u -r1.2 pam_listfile.c
+--- Linux-PAM/modules/pam_listfile/pam_listfile.c	25 May 2002 19:35:22 -0000	1.2
++++ Linux-PAM/modules/pam_listfile/pam_listfile.c	25 May 2002 21:19:19 -0000
+@@ -39,6 +39,8 @@
  #include <security/pam_modules.h>
  #include <security/_pam_macros.h>
  
@@ -9,7 +14,7 @@
  /* some syslogging */
  
  #define LOCAL_LOG_PREFIX "PAM-listfile: "
-@@ -200,7 +202,9 @@
+@@ -202,7 +204,9 @@
  		    apply_type=APPLY_TYPE_USER;
  		    strncpy(apply_val,myval,sizeof(apply_val)-1);
  		}
@@ -20,17 +25,17 @@
  		_pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Unknown option: %s",mybuf);
  		return onerr;
  	    }
-@@ -331,7 +335,8 @@
+@@ -333,7 +337,8 @@
  	     ifname, citem, citemp, sense);
  #endif
-     if(stat(ifname,&fileinfo)) {
+     if(lstat(ifname,&fileinfo)) {
 -	_pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Couldn't open %s",ifname);
 +	if (!quiet)
 +	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Couldn't open %s",ifname);
  	return onerr;
      }
  
-@@ -339,15 +344,16 @@
+@@ -341,15 +346,16 @@
         || !S_ISREG(fileinfo.st_mode)) {
  	/* If the file is world writable or is not a
  	   normal file, return error */
@@ -51,7 +56,7 @@
  	    /* Only report if it's an error... */
  	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX  "Error opening %s", ifname);
  	}
-@@ -398,8 +404,9 @@
+@@ -400,8 +406,9 @@
  #endif
  	(void) pam_get_item(pamh, PAM_SERVICE, (const void **)&service);
  	(void) pam_get_user(pamh, &user_name, NULL);
@@ -63,24 +68,3 @@
  	return PAM_AUTH_ERR;
      }
  }
---- Linux-PAM-0.72/doc/modules/pam_listfile.sgml~	Mon Mar 26 08:45:57 2001
-+++ Linux-PAM-0.72/doc/modules/pam_listfile.sgml	Mon Mar 26 08:47:00 2001
-@@ -56,6 +56,7 @@
- <tt>file=</tt><it>filename</it>;
- <tt>item=user|tty|rhost|ruser|group|shell</tt>
- <tt>apply=user|@group</tt>
-+<tt>quiet</tt>
- 
- <tag><bf>Description:</bf></tag>
- 
-@@ -89,7 +90,9 @@
- 
- <p>
- Besides this last one, all arguments should be specified; do not count
--on any default behavior, as it is subject to change.
-+on any default behavior, as it is subject to change. The one exception is
-+the <tt>quiet</tt> options, which reduces the amount of logging for
-+non-fatal errors.
- 
- <p>
- No credentials are awarded by this module.
