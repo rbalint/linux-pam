@@ -1,10 +1,7 @@
-Index: Linux-PAM/modules/pam_unix/Makefile
-===================================================================
-RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/Makefile,v
-retrieving revision 1.11
-diff -u -r1.11 Makefile
---- Linux-PAM/modules/pam_unix/Makefile	5 May 2004 02:19:37 -0000	1.11
-+++ Linux-PAM/modules/pam_unix/Makefile	5 May 2004 02:55:44 -0000
+=== pam_unix/Makefile
+==================================================================
+--- pam_unix/Makefile  (revision 247)
++++ pam_unix/Makefile  (local)
 @@ -38,11 +38,12 @@
  CHKPWD=unix_chkpwd
  
@@ -19,13 +16,10 @@ diff -u -r1.11 Makefile
  
  ifdef USE_CRACKLIB
  CRACKLIB = -lcrack
-Index: Linux-PAM/modules/pam_unix/pam_unix_auth.c
-===================================================================
-RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_auth.c,v
-retrieving revision 1.9
-diff -u -r1.9 pam_unix_auth.c
---- Linux-PAM/modules/pam_unix/pam_unix_auth.c	5 May 2004 02:19:37 -0000	1.9
-+++ Linux-PAM/modules/pam_unix/pam_unix_auth.c	5 May 2004 02:55:44 -0000
+=== pam_unix/pam_unix_auth.c
+==================================================================
+--- pam_unix/pam_unix_auth.c  (revision 247)
++++ pam_unix/pam_unix_auth.c  (local)
 @@ -148,7 +148,7 @@
  
  	/* if this user does not have a password... */
@@ -35,13 +29,10 @@ diff -u -r1.9 pam_unix_auth.c
  		D(("user '%s' has blank passwd", name));
  		name = NULL;
  		retval = PAM_SUCCESS;
-Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
-===================================================================
-RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_passwd.c,v
-retrieving revision 1.17
-diff -u -r1.17 pam_unix_passwd.c
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	5 May 2004 02:19:37 -0000	1.17
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	5 May 2004 02:55:44 -0000
+=== pam_unix/pam_unix_passwd.c
+==================================================================
+--- pam_unix/pam_unix_passwd.c  (revision 247)
++++ pam_unix/pam_unix_passwd.c  (local)
 @@ -781,7 +781,7 @@
  
  		D(("prelim check"));
@@ -51,13 +42,10 @@ diff -u -r1.17 pam_unix_passwd.c
  			return PAM_SUCCESS;
  		} else if (off(UNIX__IAMROOT, ctrl) || on(UNIX_NIS, ctrl)) {
  
-Index: Linux-PAM/modules/pam_unix/support.c
-===================================================================
-RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.c,v
-retrieving revision 1.19
-diff -u -r1.19 support.c
---- Linux-PAM/modules/pam_unix/support.c	5 May 2004 02:19:37 -0000	1.19
-+++ Linux-PAM/modules/pam_unix/support.c	5 May 2004 02:55:44 -0000
+=== pam_unix/support.c
+==================================================================
+--- pam_unix/support.c  (revision 247)
++++ pam_unix/support.c  (local)
 @@ -23,6 +23,7 @@
  #include "md5.h"
  #include "support.h"
@@ -66,7 +54,7 @@ diff -u -r1.19 support.c
  extern char *crypt(const char *key, const char *salt);
  extern char *bigcrypt(const char *key, const char *salt);
  
-@@ -179,12 +180,14 @@
+@@ -179,14 +180,23 @@
  	/* now parse the arguments to this module */
  
  	while (argc-- > 0) {
@@ -75,14 +63,26 @@ diff -u -r1.19 support.c
  
  		D(("pam_unix arg: %s", *argv));
  
-+		sl = strlen(*argv);
  		for (j = 0; j < UNIX_CTRLS_; ++j) {
- 			if (unix_args[j].token &&
-+			    strlen(unix_args[j].token) == sl &&
- 			    !strncmp(*argv, unix_args[j].token, strlen(unix_args[j].token)))
- 				break;
+-			if (unix_args[j].token &&
+-			    !strncmp(*argv, unix_args[j].token, strlen(unix_args[j].token)))
+-				break;
++			if (unix_args[j].token) {
++                            sl = strlen(unix_args[j].token);
++                            if (unix_args[j].token[sl-1] == '=') {
++                                /* exclude argument from comparation */
++                                if (!strncmp(*argv, unix_args[j].token, sl))
++                                    break;
++                            } else {
++                                /* compare full strings */
++			        if (!strcmp(*argv, unix_args[j].token))
++				    break;
++                            }
++                        }
  		}
-@@ -319,7 +322,7 @@
+ 
+ 		if (j >= UNIX_CTRLS_) {
+@@ -319,7 +329,7 @@
   * - to avoid prompting for one in such cases (CG)
   */
  
@@ -91,7 +91,7 @@ diff -u -r1.19 support.c
  {
  	struct passwd *pwd = NULL;
  	struct spwd *spwdent = NULL;
-@@ -343,7 +346,6 @@
+@@ -343,7 +353,6 @@
  
  	if (on(UNIX__NONULL, ctrl))
  		return 0;	/* will fail but don't let on yet */
@@ -99,7 +99,7 @@ diff -u -r1.19 support.c
  	/* UNIX passwords area */
  
  	/* Get password file entry... */
-@@ -429,6 +431,16 @@
+@@ -429,6 +438,16 @@
  		free(buf);
  #endif
  
@@ -116,7 +116,7 @@ diff -u -r1.19 support.c
  	return retval;
  }
  
-@@ -614,7 +626,7 @@
+@@ -614,7 +633,7 @@
  	    int salt_len = strlen(salt);
  	    if (!salt_len) {
  		/* the stored password is NULL */
@@ -125,13 +125,10 @@ diff -u -r1.19 support.c
  		    D(("user has empty password - access granted"));
  		    retval = PAM_SUCCESS;
  		} else {
-Index: Linux-PAM/modules/pam_unix/support.h
-===================================================================
-RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.h,v
-retrieving revision 1.10
-diff -u -r1.10 support.h
---- Linux-PAM/modules/pam_unix/support.h	5 May 2004 02:19:37 -0000	1.10
-+++ Linux-PAM/modules/pam_unix/support.h	5 May 2004 02:55:44 -0000
+=== pam_unix/support.h
+==================================================================
+--- pam_unix/support.h  (revision 247)
++++ pam_unix/support.h  (local)
 @@ -84,8 +84,9 @@
  #define UNIX_MIN_PASS_LEN        22	/* Min length for password */
  #define UNIX_NOOBSCURE_CHECKS    23     /* internal */
