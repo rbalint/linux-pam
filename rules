@@ -43,8 +43,8 @@ configure-stamp:
 	(cd $(BUILD_TREE) && \
 	sh configure --sysconfdir=/etc --prefix=/usr --enable-static-libpam \
 	--mandir=/usr/share/man --infodir=/usr/share/info --libdir=/lib \
-	--sbindir=/sbin) \
-	--with-mailspool=/var/mail
+	--sbindir=/sbin \
+	--with-mailspool=/var/mail)
 	touch configure-stamp
 
 
