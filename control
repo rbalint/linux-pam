@@ -9,9 +9,9 @@ Build-Depends-Indep: linuxdoc-tools, linuxdoc-tools-latex, latex2html, tetex-ext
 Package: libpam0g
 Priority: required
 Architecture: any
-Conflicts: libpam0 (<= 0.56-2), libpam, libpam-modules (<=0.76-10)
+Conflicts: libpam0 (<= 0.56-2), libpam
 Replaces: libpam0g-util
-Depends: ${shlibs:Depends}, libpam-runtime
+Depends: ${shlibs:Depends}, libpam-runtime, libpam-modules (>= 0.76-11)
 Suggests: libpam-doc
 Description: Pluggable Authentication Modules library
  Contains the C shared library for Linux-PAM, a suite of shared
