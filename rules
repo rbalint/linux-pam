@@ -114,7 +114,7 @@ binary-arch: build module_check $(dh_mak_deps)
 
 
 	dh_installdocs -a $(BUILD_TREE)/README
-	$(i) $(dl)/Debian-PAM-MiniPolicy $(d)/tmp/usr/share/doc/libpam0g
+	$(i) $(dl)/Debian-PAM-MiniPolicy $(d)/libpam0g/usr/share/doc/libpam0g
 	dh_installexamples -a
 	dh_installcron -a
 	for func in  pam_acct_mgmt \

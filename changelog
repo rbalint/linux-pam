@@ -1,3 +1,23 @@
+pam (0.76-8) unstable; urgency=low
+
+  * Install pam minipolicy, Closes: #167798
+  * Don't segfault if ttyname is null; this avoids the segfault but does
+    not actually make pam_issue useful for ssh.  I believe the way
+    pam_issue works is fundamentally incompatible with what sshd expects
+    from PAM (patch 037), Closes: #153152
+  * We actually fixed passwords containing , in  0.76-6, but failed to
+    document it.  They do work, Closes: #164713
+  * Note that /etc/pam.d/other is a fall back  for each service
+  * Patches from Michal 'hramrach' Suchanek" <hramrach_l@centrum.cz> to
+    make HURD work, Closes: #165066 (patch 038 and 039)
+  * Don't depend on gs and other doc prep tools for build-depends, just
+    build-depends-indep, Closes: #165065
+  * Patch from Eric Anderson <anderse@hpl.hp.com> to log failures of
+    setrlimit (patch 040), Closes: #169836
+  * Build pam_limits on hurd, Closes: #165190
+
+ -- Sam Hartman <hartmans@debian.org>  Sun, 24 Nov 2002 22:04:28 -0500
+
 pam (0.76-7) unstable; urgency=low
 
   * Fix handling of pam_ignore  in case where we're skipping modules;
