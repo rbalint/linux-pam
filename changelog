@@ -1,4 +1,4 @@
-pam (0.76-16.1) unstable; urgency=low
+pam (0.76-17) unstable; urgency=low
 
   * common-password now includes length restrictions and cracklib
     examples, Closes: #227681, #237537
@@ -6,8 +6,10 @@ pam (0.76-16.1) unstable; urgency=low
     tty is in /etc/securetty into a library function 
   * Patch 55: Add nullok_secure option to pam_unix.  If set,  then null
     passwords are accepted from terminals in /etc/securetty. 
+  * common-auth now includes nullok_secure, Closes: #228114
 
- --
+
+ -- Sam Hartman <hartmans@debian.org>  Sun,  4 Apr 2004 23:10:11 -0400
 
 pam (0.76-16) unstable; urgency=low
 
