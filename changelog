@@ -17,8 +17,10 @@ pam (0.75-2) experimental; urgency=low
   * Another patch from Martin to return PAM_USER_UNKNOWN if we ever
     actually do get into the password changing routine only to find that
     we have no password to change, closes: #135604
+  * .cvsignore no longer installed, closes: #120795
+  * We're using debhelper 3, just in time to be obselete, Closes: #93414
 
- --
+ -- Sam Hartman <hartmans@debian.org>  Sat,  8 Jun 2002 18:04:40 -0400
 
 pam (0.75-1) experimental; urgency=low
 
