@@ -1,3 +1,9 @@
+pam (0.76-23) UNRELEASED; urgency=low
+
+  * Fix Gcc 3.4 compilation, Closes: #259634
+
+ -- Sam Hartman <hartmans@debian.org>  Fri, 16 Jul 2004 17:30:48 -0400
+
 pam (0.76-22) unstable; urgency=medium
 
   * Add uploaders
