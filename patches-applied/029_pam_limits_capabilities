@@ -1,0 +1,175 @@
+Index: Linux-PAM/_pam_aconf.h.in
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/_pam_aconf.h.in,v
+retrieving revision 1.1.1.1
+diff -u -r1.1.1.1 _pam_aconf.h.in
+--- Linux-PAM/_pam_aconf.h.in	29 Apr 2001 04:16:21 -0000	1.1.1.1
++++ Linux-PAM/_pam_aconf.h.in	16 Jul 2002 13:22:05 -0000
+@@ -54,11 +54,14 @@
+ /* read both confs - read /etc/pam.d and /etc/pam.conf in serial */
+ #undef PAM_READ_BOTH_CONFS
+ 
++#undef HAVE_SYS_CAPABILITY_H
++
+ #undef HAVE_PATHS_H
+ #ifdef HAVE_PATHS_H
+ #include <paths.h>
+ #endif
+ /* location of the mail spool directory */
+ #undef PAM_PATH_MAILDIR
++
+ 
+ #endif /* PAM_ACONF_H */
+Index: Linux-PAM/configure.in
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/configure.in,v
+retrieving revision 1.8
+diff -u -r1.8 configure.in
+--- Linux-PAM/configure.in	1 Jun 2002 21:14:53 -0000	1.8
++++ Linux-PAM/configure.in	16 Jul 2002 12:37:18 -0000
+@@ -201,7 +201,7 @@
+ AC_HEADER_DIRENT
+ AC_HEADER_STDC
+ AC_HEADER_SYS_WAIT
+-AC_CHECK_HEADERS(fcntl.h limits.h malloc.h net/if.h sys/file.h sys/ioctl.h sys/time.h syslog.h termio.h unistd.h)
++AC_CHECK_HEADERS(fcntl.h limits.h malloc.h net/if.h sys/capability.h sys/file.h sys/ioctl.h sys/time.h syslog.h termio.h unistd.h)
+ 
+ dnl Linux wants features.h in some of the source files.
+ AC_CHECK_HEADERS(features.h)
+@@ -308,7 +308,7 @@
+ AC_FUNC_MEMCMP
+ AC_FUNC_VPRINTF
+ AC_CHECK_FUNCS(gethostname gettimeofday mkdir select strcspn strdup strerror strspn strstr strtol uname)
+-
++AC_CHECK_LIB(cap, cap_init)
+ dnl Checks for programs/utilities
+ AC_CHECK_PROG(HAVE_SGML2TXT, sgml2txt, yes, no)
+ AC_CHECK_PROG(HAVE_SGML2HTML, sgml2html, yes, no)
+Index: Linux-PAM/Make.Rules.in
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/Make.Rules.in,v
+retrieving revision 1.2
+diff -u -r1.2 Make.Rules.in
+--- Linux-PAM/Make.Rules.in	29 Apr 2001 15:10:33 -0000	1.2
++++ Linux-PAM/Make.Rules.in	16 Jul 2002 12:53:57 -0000
+@@ -94,5 +94,5 @@
+ RANLIB=@RANLIB@
+ STRIP=@STRIP@
+ CC_STATIC=@CC_STATIC@
+-
+-LINKLIBS = $(NEED_LINK_LIB_C) $(LIBDL)
++LIBS=@LIBS@
++LINKLIBS = $(NEED_LINK_LIB_C) $(LIBDL) 
+Index: Linux-PAM/modules/Simple.Rules
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/Simple.Rules,v
+retrieving revision 1.2
+diff -u -r1.2 Simple.Rules
+--- Linux-PAM/modules/Simple.Rules	3 May 2002 04:02:04 -0000	1.2
++++ Linux-PAM/modules/Simple.Rules	16 Jul 2002 12:53:57 -0000
+@@ -56,7 +56,7 @@
+ 
+ ifdef DYNAMIC
+ $(LIBSHARED):	$(LIBOBJD)
+-	$(LD_D) -o $@ $(LIBOBJD) $(MODULE_SIMPLE_EXTRALIBS) $(NEED_LINK_LIB_C) -L../../libpam -lpam -lnsl
++	$(LD_D) -o $@ $(LIBOBJD) $(MODULE_SIMPLE_EXTRALIBS) $(LIBS) $(NEED_LINK_LIB_C) -L../../libpam -lpam -lnsl
+ 
+ endif
+ 
+Index: Linux-PAM/modules/pam_limits/pam_limits.c
+===================================================================
+RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_limits/pam_limits.c,v
+retrieving revision 1.5
+diff -u -r1.5 pam_limits.c
+--- Linux-PAM/modules/pam_limits/pam_limits.c	15 Jul 2002 02:15:06 -0000	1.5
++++ Linux-PAM/modules/pam_limits/pam_limits.c	16 Jul 2002 12:49:25 -0000
+@@ -19,6 +19,10 @@
+ 
+ #include <security/_pam_aconf.h>
+ 
++#ifdef HAVE_SYS_CAPABILITY_H
++#include <sys/capability.h>
++#include <sys/prctl.h>
++#endif /* HAVE_SYS_CAPABILITY_H */
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <string.h>
+@@ -63,6 +67,10 @@
+     struct user_limits_struct limits[RLIM_NLIMITS];
+     char conf_file[BUFSIZ];
+   char chroot_dir[8092] ;	/* directory to chroot into */
++#ifdef HAVE_SYS_CAPABILITY_H
++  cap_t capabilities; /*capability handle*/
++  int caps_set;
++#endif /* HAVE_SYS_CAPABILITY_H */
+ };
+ 
+ #define LIMIT_LOGIN RLIM_NLIMITS+1
+@@ -70,6 +78,7 @@
+ 
+ #define LIMIT_PRI RLIM_NLIMITS+3
+ #define LIMIT_CHROOT RLIM_NLIMITS+4
++#define LIMIT_CAPS RLIM_NLIMITS+5
+ 
+ #define LIMIT_SOFT  1
+ #define LIMIT_HARD  2
+@@ -258,6 +267,10 @@
+     pl->login_limit = -2;
+     pl->login_limit_def = LIMITS_DEF_NONE;
+ 
++#ifdef HAVE_SYS_CAPABILITY_H
++    pl->capabilities = cap_init();
++    pl->caps_set = 0;
++#endif /* HAVE_SYS_CAPABILITY_H */
+     pl->chroot_dir[0] = '\0';
+     
+     return retval;
+@@ -309,6 +322,10 @@
+ 	limit_item = LIMIT_PRI;
+     } else if (strcmp(lim_item, "chroot") == 0) {
+ 	limit_item = LIMIT_CHROOT;
++#ifdef HAVE_SYS_CAPABILITY_H
++    } else if (strcmp(lim_item, "capabilities") == 0) {
++	limit_item = LIMIT_CAPS;
++#endif /* HAVE_SYS_CAPABILITY_H */
+     } else {
+         _pam_log(LOG_DEBUG,"unknown limit item '%s'", lim_item);
+         return;
+@@ -359,7 +376,7 @@
+     
+     if (limit_item != LIMIT_LOGIN && limit_item != LIMIT_NUMSYSLOGINS 
+ 		    && limit_item != LIMIT_PRI && limit_item != LIMIT_CHROOT
+-		    ) {
++		    && limit_item != LIMIT_CAPS) {
+         if (limit_type & LIMIT_SOFT) {
+ 	    if (pl->limits[limit_item].src_soft < source) {
+                 return;
+@@ -390,7 +407,15 @@
+         	}
+ 	} else if (limit_item == LIMIT_CHROOT) {
+ 	  strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir));
++#ifndef HAVE_SYS_CAPABILITY_H
+ 	}
++#else /* HAVE_SYS_CAPABILITY_H */
++	} else if (limit_item == LIMIT_CAPS) {
++	  pl->capabilities = cap_from_text(value_orig);
++		prctl(PR_SET_KEEPCAPS, 1);
++		pl->caps_set = 1;
++ 	}
++#endif /* HAVE_SYS_CAPABILITY_H */
+         return;
+ }
+ 
+@@ -520,6 +545,12 @@
+ 	if (i != 0)
+ 	    retval = LIMIT_ERR;
+     }
++#ifdef HAVE_SYS_CAPABILITY_H
++    if (!retval && pl->caps_set) {
++	retval = cap_set_proc(pl->capabilities) ? LIMIT_ERR : 0;
++	cap_free(pl->capabilities);
++    }
++#endif /* HAVE_SYS_CAPABILITY_H */
+     return retval;
+ }
+             
