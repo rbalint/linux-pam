@@ -1,0 +1,9 @@
+etc/pam.d
+sbin
+lib
+usr/lib
+usr/include
+usr/share/man/man3
+usr/share/man/man7
+usr/share/man/man8
+usr/share/doc
