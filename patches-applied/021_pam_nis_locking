@@ -2,11 +2,11 @@ Patch from Philippe Troin    <phil@fifi.org>
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/pam_unix_passwd.c,v
-retrieving revision 1.2
-diff -u -r1.2 pam_unix_passwd.c
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	5 May 2002 18:17:54 -0000	1.2
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	25 May 2002 21:59:09 -0000
-@@ -466,7 +466,7 @@
+retrieving revision 1.6
+diff -u -r1.6 pam_unix_passwd.c
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	15 Sep 2002 20:51:53 -0000	1.6
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	21 Sep 2002 18:26:21 -0000
+@@ -503,7 +503,7 @@
  		yppwd.newpw.pw_gecos = pwd->pw_gecos;
  		yppwd.newpw.pw_dir = pwd->pw_dir;
  		yppwd.newpw.pw_shell = pwd->pw_shell;
@@ -15,7 +15,7 @@ diff -u -r1.2 pam_unix_passwd.c
  		yppwd.newpw.pw_passwd = towhat;
  
  		D(("Set password %s for %s", yppwd.newpw.pw_passwd, forwho));
-@@ -504,7 +504,7 @@
+@@ -543,7 +543,7 @@
  #ifdef DEBUG
  		sleep(5);
  #endif
@@ -24,7 +24,7 @@ diff -u -r1.2 pam_unix_passwd.c
  
  		return retval;
  	}
-@@ -521,7 +521,7 @@
+@@ -560,7 +560,7 @@
  	}
  
  	if (retval == PAM_SUCCESS)
@@ -33,7 +33,7 @@ diff -u -r1.2 pam_unix_passwd.c
  
  	return retval;
  }
-@@ -655,6 +655,7 @@
+@@ -694,6 +694,7 @@
  	unsigned int ctrl, lctrl;
  	int retval, i;
  	int remember = -1;
@@ -41,7 +41,7 @@ diff -u -r1.2 pam_unix_passwd.c
  
  	/* <DO NOT free() THESE> */
  	const char *user;
-@@ -662,6 +663,7 @@
+@@ -701,6 +702,7 @@
  	/* </DO NOT free() THESE> */
  
  	D(("called."));
@@ -49,7 +49,7 @@ diff -u -r1.2 pam_unix_passwd.c
  
  #ifdef USE_LCKPWDF
  	/* our current locking system requires that we lock the
-@@ -676,15 +678,17 @@
+@@ -715,15 +717,17 @@
  	   The other possibility is to call lckpwdf() on the first
  	   pam_chauthtok() pass, and hold the lock until released in the
  	   second pass--but is this guaranteed to work? -SRL */
@@ -75,7 +75,7 @@ diff -u -r1.2 pam_unix_passwd.c
  
  	/*
  	 * First get the name of a user
-@@ -700,7 +704,7 @@
+@@ -739,7 +743,7 @@
  		if (user == NULL || !isalnum(*user)) {
  			_log_err(LOG_ERR, pamh, "bad username [%s]", user);
  #ifdef USE_LCKPWDF
@@ -84,7 +84,7 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  			return PAM_USER_UNKNOWN;
  		}
-@@ -712,7 +716,7 @@
+@@ -751,7 +755,7 @@
  			_log_err(LOG_DEBUG, pamh,
  			         "password - could not identify user");
  #ifdef USE_LCKPWDF
@@ -93,7 +93,7 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  		return retval;
  	}
-@@ -736,10 +740,10 @@
+@@ -775,10 +779,10 @@
  
  		if (_unix_blankpasswd(ctrl, user)) {
  #ifdef USE_LCKPWDF
@@ -106,7 +106,7 @@ diff -u -r1.2 pam_unix_passwd.c
  
  			/* instruct user what is happening */
  #define greeting "Changing password for "
-@@ -748,7 +752,7 @@
+@@ -787,7 +791,7 @@
  				_log_err(LOG_CRIT, pamh,
  				         "password - out of memory");
  #ifdef USE_LCKPWDF
@@ -115,7 +115,7 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  				return PAM_BUF_ERR;
  			}
-@@ -760,7 +764,9 @@
+@@ -799,7 +803,9 @@
  			set(UNIX__OLD_PASSWD, lctrl);
  			retval = _unix_read_password(pamh, lctrl
  						     ,Announce
@@ -126,7 +126,7 @@ diff -u -r1.2 pam_unix_passwd.c
  						     ,NULL
  						     ,_UNIX_OLD_AUTHTOK
  					     ,(const char **) &pass_old);
-@@ -770,13 +776,16 @@
+@@ -809,13 +815,16 @@
  				_log_err(LOG_NOTICE, pamh
  				 ,"password - (old) token not obtained");
  #ifdef USE_LCKPWDF
@@ -146,7 +146,7 @@ diff -u -r1.2 pam_unix_passwd.c
  		} else {
  			D(("process run by root so do nothing this time around"));
  			pass_old = NULL;
-@@ -787,7 +796,7 @@
+@@ -826,7 +835,7 @@
  			D(("Authentication failed"));
  			pass_old = NULL;
  #ifdef USE_LCKPWDF
@@ -155,7 +155,7 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  			return retval;
  		}
-@@ -842,7 +851,7 @@
+@@ -881,7 +890,7 @@
  		if (retval != PAM_SUCCESS) {
  			_log_err(LOG_NOTICE, pamh, "user not authenticated");
  #ifdef USE_LCKPWDF
@@ -164,7 +164,7 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  			return retval;
  		}
-@@ -850,7 +859,7 @@
+@@ -889,7 +898,7 @@
  		if (retval != PAM_SUCCESS) {
  			_log_err(LOG_NOTICE, pamh, "user not authenticated 2");
  #ifdef USE_LCKPWDF
@@ -173,7 +173,7 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  			return retval;
  		}
-@@ -883,7 +892,7 @@
+@@ -922,7 +931,7 @@
  				}
  				pass_old = NULL;	/* tidy up */
  #ifdef USE_LCKPWDF
@@ -182,8 +182,8 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  				return retval;
  			}
-@@ -908,7 +917,7 @@
- 			_pam_overwrite(pass_old);
+@@ -945,7 +954,7 @@
+ 			         "new password not acceptable");
  			pass_new = pass_old = NULL;	/* tidy up */
  #ifdef USE_LCKPWDF
 -			ulckpwdf();
@@ -191,8 +191,8 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  			return retval;
  		}
-@@ -952,7 +961,7 @@
- 					_pam_overwrite(pass_old);
+@@ -988,7 +997,7 @@
+ 					         "out of memory for password");
  					pass_new = pass_old = NULL;	/* tidy up */
  #ifdef USE_LCKPWDF
 -					ulckpwdf();
@@ -200,7 +200,7 @@ diff -u -r1.2 pam_unix_passwd.c
  #endif
  					return PAM_BUF_ERR;
  				}
-@@ -994,7 +1003,7 @@
+@@ -1022,7 +1031,7 @@
  	D(("retval was %d", retval));
  
  #ifdef USE_LCKPWDF
