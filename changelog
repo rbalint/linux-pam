@@ -1,3 +1,10 @@
+pam (0.76-10) unstable; urgency=low
+
+  * Don't double list conffiles, Closes: #190954
+  * Only install example sources not executables,  Closes: #185286
+
+ --
+
 pam (0.76-9) unstable; urgency=low
 
   * Fix pam_rhosts hurd patch so it actually works, Closes: #172914

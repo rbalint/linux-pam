@@ -1,1 +1,2 @@
-Linux-PAM/modules/pam_filter/upperLOWER
+Linux-PAM/modules/pam_filter/upperLOWER/*.c
+
