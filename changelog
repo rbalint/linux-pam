@@ -1,3 +1,11 @@
+pam (0.76-5) unstable; urgency=low
+
+  * Fix library links from 0.75 to 0.76
+  * Ignore PAM_IGNORE in _pam_dispatch_aux (patch 34), Closes: #163841
+  * Fix man page symlinks, Closes: #163839
+
+ -- Sam Hartman <hartmans@debian.org>  Fri, 11 Oct 2002 01:08:06 -0400
+
 pam (0.76-4) unstable; urgency=low
 
   * Upstream correctly states that one should  use gcc not ld when
