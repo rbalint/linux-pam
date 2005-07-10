@@ -1,10 +1,10 @@
-pam (0.76-23) UNRELEASED; urgency=low
+pam (0.76-23) unstable; urgency=low
 
   * Fix Gcc 3.4 compilation, Closes: #259634
   * Note that pam.conf is not read if /etc/pam.d exists, Closes: #248928
   * Fix typo in pam_env.conf, Closes: #277633
 
- -- Sam Hartman <hartmans@debian.org>  Thu, 21 Oct 2004 17:29:24 -0400
+ -- Sam Hartman <hartmans@debian.org>  Sun, 10 Jul 2005 16:42:25 -0400
 
 pam (0.76-22) unstable; urgency=medium
 
