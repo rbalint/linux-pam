@@ -1,11 +1,8 @@
 Index: Linux-PAM/modules/pam_group/pam_group.c
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_group/pam_group.c,v
-retrieving revision 1.4
-diff -u -r1.4 pam_group.c
---- Linux-PAM/modules/pam_group/pam_group.c	15 Sep 2002 20:18:00 -0000	1.4
-+++ Linux-PAM/modules/pam_group/pam_group.c	15 Sep 2002 21:41:24 -0000
-@@ -143,9 +143,8 @@
+--- Linux-PAM/modules/pam_group/pam_group.c	(revision 281)
++++ Linux-PAM/modules/pam_group/pam_group.c	(working copy)
+@@ -151,9 +151,8 @@
  	D(("buffer=<%s>",*buf));
  #endif
  	while (i < *to) {
@@ -16,7 +13,7 @@ diff -u -r1.4 pam_group.c
  		for (j=++i; j<*to && (*buf)[j] == ','; ++j);
  		if (j!=i) {
  		    shift_bytes(i + (*buf), j-i, (*to) - j);
-@@ -153,7 +152,6 @@
+@@ -161,7 +160,6 @@
  		}
  	    }
  	    switch ((*buf)[i]) {
@@ -24,7 +21,7 @@ diff -u -r1.4 pam_group.c
  	    case '#':
  		for (j=i; j < *to && (c = (*buf)[j]) != '\n'; ++j);
  		if (j >= *to) {
-@@ -285,7 +283,7 @@
+@@ -294,7 +292,7 @@
  	  if (next == VAL) {
  	       if (c == '!')
  		    not = !not;
