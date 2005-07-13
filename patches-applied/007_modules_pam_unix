@@ -332,9 +332,9 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
  
 +	/* Hack off SysVR4 password aging */
 +	{
-+	    char tmp;
++	    char *tmp;
 +
-+	    if (tmp == strrchr(p, ',') != NULL) tmp = '\0';
++	    if (*tmp == strrchr(p, ',') != NULL) *tmp = '\0';
 +	}
 +
  	/* the moment of truth -- do we agree with the password? */
