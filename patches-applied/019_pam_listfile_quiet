@@ -1,20 +1,17 @@
 Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_listfile/pam_listfile.c,v
-retrieving revision 1.4
-diff -u -r1.4 pam_listfile.c
---- Linux-PAM/modules/pam_listfile/pam_listfile.c	15 Sep 2002 20:18:00 -0000	1.4
-+++ Linux-PAM/modules/pam_listfile/pam_listfile.c	21 Sep 2002 18:19:35 -0000
-@@ -39,6 +39,8 @@
- #include <security/pam_modules.h>
+--- Linux-PAM/modules/pam_listfile/pam_listfile.c	(revision 281)
++++ Linux-PAM/modules/pam_listfile/pam_listfile.c	(working copy)
+@@ -41,6 +41,8 @@
  #include <security/_pam_macros.h>
+ #include <security/_pam_modutil.h>
  
 +static int quiet = 0;
 +
  /* some syslogging */
  
  #define LOCAL_LOG_PREFIX "PAM-listfile: "
-@@ -199,7 +201,9 @@
+@@ -160,7 +162,9 @@
  		    apply_type=APPLY_TYPE_USER;
  		    strncpy(apply_val,myval,sizeof(apply_val)-1);
  		}
@@ -25,7 +22,7 @@ diff -u -r1.4 pam_listfile.c
  		_pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Unknown option: %s",mybuf);
  		return onerr;
  	    }
-@@ -340,7 +344,8 @@
+@@ -307,7 +311,8 @@
  	     ifname, citem, citemp, sense);
  #endif
      if(lstat(ifname,&fileinfo)) {
@@ -35,7 +32,7 @@ diff -u -r1.4 pam_listfile.c
  	return onerr;
      }
  
-@@ -348,15 +353,16 @@
+@@ -315,15 +320,16 @@
         || !S_ISREG(fileinfo.st_mode)) {
  	/* If the file is world writable or is not a
  	   normal file, return error */
@@ -56,7 +53,7 @@ diff -u -r1.4 pam_listfile.c
  	    /* Only report if it's an error... */
  	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX  "Error opening %s", ifname);
  	}
-@@ -407,8 +413,9 @@
+@@ -386,8 +392,9 @@
  #endif
  	(void) pam_get_item(pamh, PAM_SERVICE, (const void **)&service);
  	(void) pam_get_user(pamh, &user_name, NULL);
