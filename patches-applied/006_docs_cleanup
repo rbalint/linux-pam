@@ -1,26 +1,7 @@
-Index: Linux-PAM/doc/pam_appl.sgml
-===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/pam_appl.sgml,v
-retrieving revision 1.3
-diff -u -r1.3 pam_appl.sgml
---- Linux-PAM/doc/pam_appl.sgml	15 Sep 2002 20:17:57 -0000	1.3
-+++ Linux-PAM/doc/pam_appl.sgml	15 Sep 2002 20:41:05 -0000
-@@ -729,7 +729,7 @@
- <tag><tt/PAM_AUTHTOK_ERR/</tag>
- 	A module was unable to obtain the new authentication token.
- 	
--<tag><tt/PAM_AUTHTOK_RECOVERY_ERR/</tag>
-+<tag><tt/PAM_AUTHTOK_RECOVER_ERR/</tag>
- 	A module was unable to obtain the old authentication token.
- 
- <tag><tt/PAM_AUTHTOK_LOCK_BUSY/</tag>
 Index: Linux-PAM/doc/pam_modules.sgml
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/pam_modules.sgml,v
-retrieving revision 1.3
-diff -u -r1.3 pam_modules.sgml
---- Linux-PAM/doc/pam_modules.sgml	15 Sep 2002 20:17:57 -0000	1.3
-+++ Linux-PAM/doc/pam_modules.sgml	15 Sep 2002 20:41:05 -0000
+--- Linux-PAM/doc/pam_modules.sgml	(revision 274)
++++ Linux-PAM/doc/pam_modules.sgml	(working copy)
 @@ -925,7 +925,7 @@
  <tag><tt/PAM_AUTHTOK_ERR/</tag>
  	The module was unable to obtain the new authentication token.
@@ -30,43 +11,10 @@ diff -u -r1.3 pam_modules.sgml
  	The module was unable to obtain the old authentication token.
  
  <tag><tt/PAM_AUTHTOK_LOCK_BUSY/</tag>
-Index: Linux-PAM/doc/pam_source.sgml
-===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/pam_source.sgml,v
-retrieving revision 1.3
-diff -u -r1.3 pam_source.sgml
---- Linux-PAM/doc/pam_source.sgml	15 Sep 2002 20:17:57 -0000	1.3
-+++ Linux-PAM/doc/pam_source.sgml	15 Sep 2002 20:41:05 -0000
-@@ -314,7 +314,7 @@
- the program is named "pamprog" and the name of the configuration file
- is /etc/pam.d/pamprog.
- 
--In the /etc/pam.d/pamprog but the following two lines:
-+In the /etc/pam.d/pamprog put the following two lines:
- 
- auth    required  pam_permit.so
- auth    required  pam_warn.so
-@@ -504,9 +504,10 @@
- <tt/no_module_data/; <tt/conv_err/; <tt/authtok_err/;
- <tt/authtok_recover_err/; <tt/authtok_lock_busy/;
- <tt/authtok_disable_aging/; <tt/try_again/; <tt/ignore/; <tt/abort/;
--<tt/authtok_expired/; <tt/module_unknown/; <tt/bad_item/; and
--<tt/default/.  The last of these (<tt/default/) can be used to set the
--action for those return values that are not explicitly defined.
-+<tt/authtok_expired/; <tt/module_unknown/; <tt/bad_item/; <tt/conv_again/;
-+<tt/incomplete/; and <tt/default/. The last of these (<tt/default/) can
-+be used to set the action for those return values that are not explicitly
-+defined.
- 
- <p>
- The <tt/actionI/ can be a positive integer or one of the following
 Index: Linux-PAM/doc/modules/pam_cracklib.sgml
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/modules/pam_cracklib.sgml,v
-retrieving revision 1.3
-diff -u -r1.3 pam_cracklib.sgml
---- Linux-PAM/doc/modules/pam_cracklib.sgml	15 Sep 2002 20:17:58 -0000	1.3
-+++ Linux-PAM/doc/modules/pam_cracklib.sgml	15 Sep 2002 20:41:05 -0000
+--- Linux-PAM/doc/modules/pam_cracklib.sgml	(revision 274)
++++ Linux-PAM/doc/modules/pam_cracklib.sgml	(working copy)
 @@ -37,7 +37,7 @@
  <tag><bf>System dependencies:</bf></tag> 
  
@@ -109,21 +57,18 @@ diff -u -r1.3 pam_cracklib.sgml
  
 Index: Linux-PAM/doc/modules/pam_userdb.sgml
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/modules/pam_userdb.sgml,v
-retrieving revision 1.3
-diff -u -r1.3 pam_userdb.sgml
---- Linux-PAM/doc/modules/pam_userdb.sgml	15 Sep 2002 20:17:58 -0000	1.3
-+++ Linux-PAM/doc/modules/pam_userdb.sgml	15 Sep 2002 20:41:05 -0000
-@@ -59,7 +59,7 @@
+--- Linux-PAM/doc/modules/pam_userdb.sgml	(revision 274)
++++ Linux-PAM/doc/modules/pam_userdb.sgml	(working copy)
+@@ -61,7 +61,7 @@
  so caution must be exercised over the access rights to the DB database itself..
  
  The module will read the password from the user using the conversation mechanism. If
--you are using this module on top of another authetication module (like <tt/pam_pwdb/;)
-+you are using this module on top of another authetication module (like <tt/pam_unix/;)
+-you are using this module on top of another authentication module (like <tt/pam_pwdb/;)
++you are using this module on top of another authentication module (like <tt/pam_unix/;)
  then you should tell that module to read the entered password from the PAM_AUTHTOK field, which is set by this module.
  
  <p>
-@@ -98,10 +98,10 @@
+@@ -112,10 +112,10 @@
  #%PAM-1.0
  auth       required     pam_listfile.so item=user sense=deny file=/etc/ftpusers onerr=succeed
  auth       sufficient   pam_userdb.so icase db=/tmp/dbtest
@@ -137,18 +82,43 @@ diff -u -r1.3 pam_userdb.sgml
  </verb>
  </tscreen>
  
-Index: Linux-PAM/doc/modules/pam_wheel.sgml
+Index: Linux-PAM/doc/pam_appl.sgml
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/modules/pam_wheel.sgml,v
-retrieving revision 1.3
-diff -u -r1.3 pam_wheel.sgml
---- Linux-PAM/doc/modules/pam_wheel.sgml	15 Sep 2002 20:17:58 -0000	1.3
-+++ Linux-PAM/doc/modules/pam_wheel.sgml	15 Sep 2002 20:41:05 -0000
-@@ -31,7 +31,6 @@
- <tag><bf>Clean code base:</bf></tag>
+--- Linux-PAM/doc/pam_appl.sgml	(revision 274)
++++ Linux-PAM/doc/pam_appl.sgml	(working copy)
+@@ -724,7 +724,7 @@
+ <tag><tt/PAM_AUTHTOK_ERR/</tag>
+ 	A module was unable to obtain the new authentication token.
+ 	
+-<tag><tt/PAM_AUTHTOK_RECOVERY_ERR/</tag>
++<tag><tt/PAM_AUTHTOK_RECOVER_ERR/</tag>
+ 	A module was unable to obtain the old authentication token.
  
- <tag><bf>System dependencies:</bf></tag>
--Requires libpwdb.
+ <tag><tt/PAM_AUTHTOK_LOCK_BUSY/</tag>
+Index: Linux-PAM/doc/pam_source.sgml
+===================================================================
+--- Linux-PAM/doc/pam_source.sgml	(revision 274)
++++ Linux-PAM/doc/pam_source.sgml	(working copy)
+@@ -314,7 +314,7 @@
+ the program is named "pamprog" and the name of the configuration file
+ is /etc/pam.d/pamprog.
  
- <tag><bf>Network aware:</bf></tag>
+-In the /etc/pam.d/pamprog but the following two lines:
++In the /etc/pam.d/pamprog put the following two lines:
  
+ auth    required  pam_permit.so
+ auth    required  pam_warn.so
+@@ -510,9 +510,10 @@
+ <tt/no_module_data/; <tt/conv_err/; <tt/authtok_err/;
+ <tt/authtok_recover_err/; <tt/authtok_lock_busy/;
+ <tt/authtok_disable_aging/; <tt/try_again/; <tt/ignore/; <tt/abort/;
+-<tt/authtok_expired/; <tt/module_unknown/; <tt/bad_item/; and
+-<tt/default/.  The last of these (<tt/default/) can be used to set the
+-action for those return values that are not explicitly defined.
++<tt/authtok_expired/; <tt/module_unknown/; <tt/bad_item/; <tt/conv_again/;
++<tt/incomplete/; and <tt/default/. The last of these (<tt/default/) can
++be used to set the action for those return values that are not explicitly
++defined.
+ 
+ <p>
+ The <tt/actionI/ can be a positive integer or one of the following
