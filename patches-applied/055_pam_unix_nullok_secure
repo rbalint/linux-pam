@@ -1,7 +1,7 @@
-=== pam_unix/Makefile
+=== modules/pam_unix/Makefile
 ==================================================================
---- pam_unix/Makefile  (revision 247)
-+++ pam_unix/Makefile  (local)
+--- modules/pam_unix/Makefile  (revision 247)
++++ modules/pam_unix/Makefile  (local)
 @@ -38,11 +38,12 @@
  CHKPWD=unix_chkpwd
  
@@ -16,10 +16,10 @@
  
  ifdef USE_CRACKLIB
  CRACKLIB = -lcrack
-=== pam_unix/pam_unix_auth.c
+=== modules/pam_unix/pam_unix_auth.c
 ==================================================================
---- pam_unix/pam_unix_auth.c  (revision 247)
-+++ pam_unix/pam_unix_auth.c  (local)
+--- modules/pam_unix/pam_unix_auth.c  (revision 247)
++++ modules/pam_unix/pam_unix_auth.c  (local)
 @@ -148,7 +148,7 @@
  
  	/* if this user does not have a password... */
@@ -29,10 +29,10 @@
  		D(("user '%s' has blank passwd", name));
  		name = NULL;
  		retval = PAM_SUCCESS;
-=== pam_unix/pam_unix_passwd.c
+=== modules/pam_unix/pam_unix_passwd.c
 ==================================================================
---- pam_unix/pam_unix_passwd.c  (revision 247)
-+++ pam_unix/pam_unix_passwd.c  (local)
+--- modules/pam_unix/pam_unix_passwd.c  (revision 247)
++++ modules/pam_unix/pam_unix_passwd.c  (local)
 @@ -781,7 +781,7 @@
  
  		D(("prelim check"));
@@ -42,10 +42,10 @@
  			return PAM_SUCCESS;
  		} else if (off(UNIX__IAMROOT, ctrl) || on(UNIX_NIS, ctrl)) {
  
-=== pam_unix/support.c
+=== modules/pam_unix/support.c
 ==================================================================
---- pam_unix/support.c  (revision 247)
-+++ pam_unix/support.c  (local)
+--- modules/pam_unix/support.c  (revision 247)
++++ modules/pam_unix/support.c  (local)
 @@ -23,6 +23,7 @@
  #include "md5.h"
  #include "support.h"
@@ -125,10 +125,10 @@
  		    D(("user has empty password - access granted"));
  		    retval = PAM_SUCCESS;
  		} else {
-=== pam_unix/support.h
+=== modules/pam_unix/support.h
 ==================================================================
---- pam_unix/support.h  (revision 247)
-+++ pam_unix/support.h  (local)
+--- modules/pam_unix/support.h  (revision 247)
++++ modules/pam_unix/support.h  (local)
 @@ -84,8 +84,9 @@
  #define UNIX_MIN_PASS_LEN        22	/* Min length for password */
  #define UNIX_NOOBSCURE_CHECKS    23     /* internal */
