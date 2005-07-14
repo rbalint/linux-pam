@@ -41,7 +41,7 @@ Index: Linux-PAM/libpam/pam_handlers.c
 +			D(("opening %s", filename));
 +			inc_f = fopen(filename, "r");
 +	    		if (inc_f != NULL) {
-+				retval = _pam_parse_conf_file(pamh, inc_f, known_service
++				retval = _pam_parse_conf_file(pamh, inc_f, known_service, requested_module_type
 +#ifdef PAM_READ_BOTH_CONFS
 +							      , not_other
 +#endif /* PAM_READ_BOTH_CONFS */
