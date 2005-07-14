@@ -2,7 +2,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 319)
 +++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
-@@ -590,6 +590,14 @@
+@@ -589,6 +589,14 @@
  	    continue;
  	}
  	retval = setrlimit(i, &pl->limits[i].limit);
@@ -17,7 +17,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  	if (retval == -1 && errno==EPERM)
  	  continue;
  	status |= retval;
-@@ -631,14 +639,6 @@
+@@ -630,14 +638,6 @@
      return retval;
  }
  
