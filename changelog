@@ -4,9 +4,10 @@ pam (0.79-1) UNRELEASED; urgency=low
   * Drop patches 000_bootstrap, 004_libpam_makefile_static_works,
     011_pam_access, 013_pam_filter_termio_to_termios, 017_misc_fixes,
     025_pam_group_conffile_name, 028_pam_mail_delete_only_when_set,
-    033_use_gcc_not_ld, 039_pam_mkhomedir_no_maxpathlen_required,
-    041_call_bootstrap, and 042_pam_mkhomedir_dest_not_source_for_errors
-    which have been integrated upstream.
+    033_use_gcc_not_ld, 034_pam_dispatch_ignore_PAM_IGNORE,
+    039_pam_mkhomedir_no_maxpathlen_required, 041_call_bootstrap, and
+    042_pam_mkhomedir_dest_not_source_for_errors which have been 
+    integrated upstream.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 13 Jul 2005 03:37:12 -0700
 
