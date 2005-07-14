@@ -1,13 +1,10 @@
 Index: Linux-PAM/configure.in
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/configure.in,v
-retrieving revision 1.5
-diff -u -r1.5 configure.in
---- Linux-PAM/configure.in	25 May 2002 21:25:30 -0000	1.5
-+++ Linux-PAM/configure.in	26 May 2002 02:52:39 -0000
-@@ -226,18 +226,7 @@
+--- Linux-PAM/configure.in	(revision 287)
++++ Linux-PAM/configure.in	(working copy)
+@@ -271,18 +271,7 @@
  DICT_DIR_CANDIDATES="/usr/lib /usr/share/dict /usr/share/lib \
-   /usr/local/lib /usr/local/share/lib"
+   /usr/local/lib /usr/local/share/lib /usr/share/cracklib"
  DICT_FILE_CANDIDATES="pw_dict cracklib_dict"
 -CRACKLIB_DICTPATH=""
 -for d in $DICT_DIR_CANDIDATES ; do
@@ -23,5 +20,5 @@ diff -u -r1.5 configure.in
 -done
 +CRACKLIB_DICTPATH=/var/cache/cracklib/cracklib_dict""
  if test -z "$CRACKLIB_DICTPATH" ; then
-       AC_MSG_RESULT(none found)
+       AC_MSG_WARN([none found - pam_cracklib will not be built])
  else
