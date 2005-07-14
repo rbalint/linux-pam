@@ -77,7 +77,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
              pl->priority = 0;
  	}
      }
-@@ -632,6 +636,8 @@
+@@ -624,6 +628,8 @@
          return PAM_IGNORE;
      }
  
