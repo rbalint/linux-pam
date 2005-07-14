@@ -2,12 +2,9 @@ Allow explicit limits for root.
 Also, remove limits on su.
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_limits/pam_limits.c,v
-retrieving revision 1.9
-diff -u -r1.9 pam_limits.c
---- Linux-PAM/modules/pam_limits/pam_limits.c	21 Sep 2002 18:37:34 -0000	1.9
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	21 Sep 2002 23:53:14 -0000
-@@ -65,6 +65,7 @@
+--- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 291)
++++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
+@@ -67,6 +67,7 @@
  
  /* internal data */
  struct pam_limit_s {
@@ -15,7 +12,7 @@ diff -u -r1.9 pam_limits.c
      int login_limit;     /* the max logins limit */
      int login_limit_def; /* which entry set the login limit */
      int flag_numsyslogins; /* whether to limit logins only for a
-@@ -282,6 +283,7 @@
+@@ -234,6 +235,7 @@
  
      D(("called."));
  
@@ -23,12 +20,12 @@ diff -u -r1.9 pam_limits.c
      for(i = 0; i < RLIM_NLIMITS; i++) {
  	int r = getrlimit(i, &pl->limits[i].limit);
  	if (r == -1) {
-@@ -294,9 +296,14 @@
+@@ -246,9 +248,14 @@
  	    pl->supported[i] = 1;
  	    pl->limits[i].src_soft = LIMITS_DEF_NONE;
  	    pl->limits[i].src_hard = LIMITS_DEF_NONE;
 +	    pl->limits[i].limit.rlim_cur = RLIM_INFINITY;
-+ pl->limits[i].limit.rlim_max = RLIM_INFINITY;
++	    pl->limits[i].limit.rlim_max = RLIM_INFINITY;
  	}
      }
  
@@ -38,16 +35,7 @@ diff -u -r1.9 pam_limits.c
      pl->priority = 0;
      pl->login_limit = -2;
      pl->login_limit_def = LIMITS_DEF_NONE;
-@@ -377,7 +384,7 @@
-      * there is a warning here because the library prototype for this
-      * function is incorrect.
-      */
--    limit_value = strtol(lim_value, endptr, 10);
-+    limit_value = strtol(lim_value, (char **) endptr, 10);
- 
-     /* special case value when limiting logins */
-     if (limit_value == 0 && value_orig == *endptr) { /* no chars read */
-@@ -527,7 +534,8 @@
+@@ -483,7 +490,8 @@
          if (i == 4) { /* a complete line */
              if (strcmp(uname, domain) == 0) /* this user have a limit */
                  process_limit(LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
@@ -57,8 +45,8 @@ diff -u -r1.9 pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			_pam_log(LOG_DEBUG, "checking if %s is in group %s",
  			 	uname, domain + 1);
-@@ -535,7 +543,7 @@
-                 if (is_in_group(uname, domain+1))
+@@ -491,7 +499,7 @@
+                 if (_pammodutil_user_in_group_nam_nam(pamh, uname, domain+1))
                      process_limit(LIMITS_DEF_GROUP, ltype, item, value, ctrl,
  				  pl);
 -            } else if (domain[0]=='%') {
@@ -66,16 +54,16 @@ diff -u -r1.9 pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			_pam_log(LOG_DEBUG, "checking if %s is in group %s",
  			 	uname, domain + 1);
-@@ -546,7 +554,7 @@
- 		else if (is_in_group(uname, domain+1))
+@@ -504,7 +512,7 @@
                      process_limit(LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
  				  pl);
+ 		}
 -            } else if (strcmp(domain, "*") == 0)
 +            } else if (!(pl->root) && strcmp(domain, "*") == 0)
                  process_limit(LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -580,12 +588,8 @@
+@@ -539,12 +547,8 @@
      int retval = LIMITED_OK;
  
      if (uid == 0) {
@@ -89,12 +77,12 @@ diff -u -r1.9 pam_limits.c
              pl->priority = 0;
  	}
      }
-@@ -665,6 +669,8 @@
+@@ -624,6 +628,8 @@
          return PAM_IGNORE;
      }
  
 +    if (pwd->pw_uid == 0)
 +      pl.root = 1;
-     retval = parse_config_file(pwd->pw_name, ctrl, &pl);
+     retval = parse_config_file(pamh, pwd->pw_name, ctrl, &pl);
      if (retval == PAM_IGNORE) {
  	D(("the configuration file has an applicable '<domain> -' entry"));
