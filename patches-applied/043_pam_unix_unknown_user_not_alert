@@ -7,7 +7,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
  				name = NULL;
  				if (on(UNIX_DEBUG, ctrl) || pwd == NULL) {
 -				    _log_err(LOG_ALERT, pamh,
-+				    _log_err(LOG_ERR, pamh,
++				    _log_err(LOG_WARNING, pamh,
  				            "check pass; user unknown");
  				} else {
  				    /* don't log failure as another pam module can succeed */
