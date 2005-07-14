@@ -7,8 +7,9 @@ pam (0.79-1) UNRELEASED; urgency=low
     033_use_gcc_not_ld, 034_pam_dispatch_ignore_PAM_IGNORE,
     035_pam_unix_security, 039_pam_mkhomedir_no_maxpathlen_required,
     041_call_bootstrap, 042_pam_mkhomedir_dest_not_source_for_errors,
-    and 051_32_bit_pam_lastlog_ll_time which have been integrated
-    upstream.
+    051_32_bit_pam_lastlog_ll_time, and
+    053_pam_unix_user_known_returns_user_unknown which have been
+    integrated upstream.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 13 Jul 2005 03:37:12 -0700
 
