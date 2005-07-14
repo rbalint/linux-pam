@@ -1,10 +1,7 @@
 Index: Linux-PAM/doc/modules/pam_wheel.sgml
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/doc/modules/pam_wheel.sgml,v
-retrieving revision 1.4
-diff -u -r1.4 pam_wheel.sgml
---- Linux-PAM/doc/modules/pam_wheel.sgml	15 Sep 2002 20:44:05 -0000	1.4
-+++ Linux-PAM/doc/modules/pam_wheel.sgml	15 Oct 2002 14:39:24 -0000
+--- Linux-PAM/doc/modules/pam_wheel.sgml	(revision 295)
++++ Linux-PAM/doc/modules/pam_wheel.sgml	(working copy)
 @@ -48,7 +48,6 @@
  
  <tag><bf>Recognized arguments:</bf></tag>
@@ -13,40 +10,37 @@ diff -u -r1.4 pam_wheel.sgml
  <tt/trust/;
  <tt/deny/;
  <tt/group=XXXX/
-@@ -68,13 +67,6 @@
- <item>
- <tt/debug/ -
+@@ -74,13 +73,6 @@
  Supply more debugging information to <tt/syslog(3)/.
--
--<item>
+ 
+ <item>
 -<tt/use_uid/ -
 -This option modifies the behavior of the module by using the current
 -<tt/uid/ of the process and not the <tt/getlogin(3)/ name of the user.
 -This option is useful for being able to jump from one account to
 -another, for example with 'su'.
- 
- <item>
+-
+-<item>
  <tt/trust/ -
+ This option instructs the module to return <tt/PAM_SUCCESS/ should it
+ find the user applying for root privilege is a member of the wheel
 Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_wheel/pam_wheel.c,v
-retrieving revision 1.1.1.2
-diff -u -r1.1.1.2 pam_wheel.c
---- Linux-PAM/modules/pam_wheel/pam_wheel.c	15 Sep 2002 20:09:04 -0000	1.1.1.2
-+++ Linux-PAM/modules/pam_wheel/pam_wheel.c	15 Oct 2002 14:39:24 -0000
-@@ -71,9 +71,8 @@
+--- Linux-PAM/modules/pam_wheel/pam_wheel.c	(revision 295)
++++ Linux-PAM/modules/pam_wheel/pam_wheel.c	(working copy)
+@@ -73,9 +73,8 @@
  /* argument parsing */
  
  #define PAM_DEBUG_ARG       0x0001
 -#define PAM_USE_UID_ARG     0x0002
 -#define PAM_TRUST_ARG       0x0004
--#define PAM_DENY_ARG        0x0010  
+-#define PAM_DENY_ARG        0x0010
 +#define PAM_TRUST_ARG       0x0002
 +#define PAM_DENY_ARG        0x0004
+ #define PAM_ROOT_ONLY_ARG   0x0020
  
  static int _pam_parse(int argc, const char **argv, char *use_group,
- 		      size_t group_length)
-@@ -89,8 +88,7 @@
+@@ -92,8 +91,7 @@
  
            if (!strcmp(*argv,"debug"))
                 ctrl |= PAM_DEBUG_ARG;
@@ -56,32 +50,37 @@ diff -u -r1.1.1.2 pam_wheel.c
            else if (!strcmp(*argv,"trust"))
                 ctrl |= PAM_TRUST_ARG;
            else if (!strcmp(*argv,"deny"))
-@@ -151,22 +149,13 @@
-         return PAM_IGNORE;
-      }
+@@ -141,27 +139,14 @@
+         }
+     }
       
--     if (ctrl & PAM_USE_UID_ARG) {
--         tpwd = getpwuid(getuid());
--         if (!tpwd) {
--            if (ctrl & PAM_DEBUG_ARG)
--                _pam_log(LOG_NOTICE,"who is running me ?!");
--            return PAM_SERVICE_ERR;
--         }
--         fromsu = tpwd->pw_name;
--     } else {
--         fromsu = getlogin();
--         if (!fromsu) {
--             if (ctrl & PAM_DEBUG_ARG)
--                _pam_log(LOG_NOTICE,"who is running me ?!");
--             return PAM_SERVICE_ERR;
--         }
-+     tpwd = getpwuid(getuid());
-+     if (!tpwd) {
-+        if (ctrl & PAM_DEBUG_ARG)
-+            _pam_log(LOG_NOTICE,"who is running me ?!");
-+        return PAM_SERVICE_ERR;
-      }
-+     fromsu = tpwd->pw_name;
-      
-      if (!use_group[0]) {
- 	 if ((grp = getgrnam("wheel")) == NULL) {
+-    if (ctrl & PAM_USE_UID_ARG) {
+-	tpwd = _pammodutil_getpwuid (pamh, getuid());
+-	if (!tpwd) {
+-	    if (ctrl & PAM_DEBUG_ARG) {
+-                _pam_log(LOG_NOTICE, "who is running me ?!");
+-	    }
+-	    return PAM_SERVICE_ERR;
++    tpwd = _pammodutil_getpwuid (pamh, getuid());
++    if (!tpwd) {
++	if (ctrl & PAM_DEBUG_ARG) {
++            _pam_log(LOG_NOTICE, "who is running me ?!");
+ 	}
+-	fromsu = tpwd->pw_name;
+-    } else {
+-	fromsu = _pammodutil_getlogin(pamh);
+-	if (fromsu) {
+-	    tpwd = _pammodutil_getpwnam (pamh, fromsu);
+-	}
+-	if (!fromsu || !tpwd) {
+-	    if (ctrl & PAM_DEBUG_ARG) {
+-		_pam_log(LOG_NOTICE, "who is running me ?!");
+-	    }
+-	    return PAM_SERVICE_ERR;
+-	}
++	return PAM_SERVICE_ERR;
+     }
++    fromsu = tpwd->pw_name;
+ 
+     /*
+      * At this point fromsu = username-of-invoker; tpwd = pwd ptr for fromsu
