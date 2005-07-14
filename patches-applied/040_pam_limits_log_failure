@@ -17,18 +17,3 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  	if (retval == -1 && errno==EPERM)
  	  continue;
  	status |= retval;
-@@ -630,14 +638,6 @@
-     return retval;
- }
- 
--	if (retval != 0&& !(i == RLIMIT_NOFILE &&
--			   pl->limits[i].limit.rlim_cur == RLIM_INFINITY)) {
--	 int save_errno = errno;
--	            _pam_log(LOG_DEBUG, "setrlimit limit #%d to soft=%d, hard=%d failed: %s; uid=%d euid=%d",
--                    i,pl->limits[i].limit.rlim_cur, pl->limits[i].limit.rlim_max,
--                    strerror(errno), getuid(), geteuid());
--		    errno = save_errno;
--       }
- /* now the session stuff */
- PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
-                                    int argc, const char **argv)
