@@ -334,7 +334,7 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 +	{
 +	    char *tmp;
 +
-+	    if ((tmp = strrchr(salt, ',') != NULL) *tmp = '\0';
++	    if ((tmp = strrchr(salt, ',')) != NULL) *tmp = '\0';
 +	}
 +
  	/* the moment of truth -- do we agree with the password? */
