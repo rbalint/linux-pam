@@ -1,13 +1,8 @@
-? Linux-PAM/modules/pam_unix/dynamic
-? Linux-PAM/modules/pam_unix/unix_chkpwd
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
-RCS file: /afs/sipb.mit.edu/project/debian/cvs/pam/Linux-PAM/modules/pam_unix/support.c,v
-retrieving revision 1.8
-diff -u -r1.8 support.c
---- Linux-PAM/modules/pam_unix/support.c	31 May 2003 23:46:17 -0000	1.8
-+++ Linux-PAM/modules/pam_unix/support.c	24 Mar 2004 00:51:35 -0000
-@@ -33,24 +33,25 @@
+--- Linux-PAM/modules/pam_unix/support.c	(revision 305)
++++ Linux-PAM/modules/pam_unix/support.c	(working copy)
+@@ -38,24 +38,25 @@
  
  void _log_err(int err, pam_handle_t *pamh, const char *format,...)
  {
