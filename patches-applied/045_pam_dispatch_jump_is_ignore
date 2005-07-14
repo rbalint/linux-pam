@@ -6,27 +6,27 @@ to be consistent.
 
 Index: Linux-PAM/libpam/pam_dispatch.c
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/libpam/pam_dispatch.c,v
-retrieving revision 1.4
-diff -u -r1.4 pam_dispatch.c
---- Linux-PAM/libpam/pam_dispatch.c	21 Oct 2002 01:26:28 -0000	1.4
-+++ Linux-PAM/libpam/pam_dispatch.c	21 Jun 2003 20:23:32 -0000
-@@ -230,17 +230,9 @@
+--- Linux-PAM/libpam/pam_dispatch.c	(revision 295)
++++ Linux-PAM/libpam/pam_dispatch.c	(working copy)
+@@ -224,20 +224,8 @@
  	    if ( _PAM_ACTION_IS_JUMP(action) ) {
  
  		/* If we are evaluating a cached chain, we treat this
 -		   module as required (aka _PAM_ACTION_OK) as well as
-+		   module asignored as well as
- 		   executing the jump. */
+-		   executing the jump. */
++		   module as ignored as well as executing the jump. */
  
 -		if (use_cached_chain) {
--		    if ( retval != PAM_IGNORE
--			 && (impression == _PAM_UNDEF
--			     || (impression == _PAM_POSITIVE && status == PAM_SUCCESS) )) {
--			impression = _PAM_POSITIVE;
--			status = retval;
+-		    if (impression == _PAM_UNDEF
+-			|| (impression == _PAM_POSITIVE
+-			    && status == PAM_SUCCESS) ) {
+-                	if ( retval != PAM_IGNORE || cached_retval == retval ) {
+-			    impression = _PAM_POSITIVE;
+-                    	    status = retval;
+-                	}
 -		    }
 -		}
- 		
+-		
  		/* this means that we need to skip #action stacked modules */
  		do {
+  		    h = h->next;
