@@ -12,16 +12,3 @@ Index: Linux-PAM/configure.in
  
  AC_CHECK_FUNCS(getpwnam_r getpwuid_r getgrnam_r getgrgid_r getspnam_r getgrouplist)
  
-Index: Linux-PAM/modules/pam_tally/Makefile
-===================================================================
---- Linux-PAM/modules/pam_tally/Makefile	(revision 295)
-+++ Linux-PAM/modules/pam_tally/Makefile	(working copy)
-@@ -71,7 +71,7 @@
- $(LIBOBJD): $(LIBSRC)
- 
- $(LIBSHARED):   $(LIBOBJD)
--	$(LD_D) -o $@ $(LIBOBJD) $(LDFLAGS)
-+	$(LD_D) -o $@ $(LIBOBJD) $(LDFLAGS) -L../../libpam -lpam $(NEED_LINK_LIB_C)
- 
- $(APPLICATION): $(APPOBJD) $(TITLE).c
- 	$(CC) $(CFLAGS) -o $@ $(APPOBJD) $(LDFLAGS) $(LOADLIBES)
