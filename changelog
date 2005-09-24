@@ -13,6 +13,19 @@ pam (0.79-1) UNRELEASED; urgency=low
     integrated upstream.
   * Merge one last bit of patch 053 into patch 043, where it should have
     been in the first place
+  * Patch 057: SELinux support:
+    - add support to pam_unix for copying SELinux security contexts when
+      writing out new passwd/shadow files and creating lockfiles
+    - support calling unix_chkpwd if opening /etc/shadow fails due to
+      SELinux permissions
+    - allow unix_chkpwd to authenticate for any user when in an SELinux
+      context (hurray!); we depend on SELinux policies to prevent the
+      helper's use as a brute force tool
+    - misc cleanup: clean up file descriptors when invoking unix_chkpwd
+      (closes: #248310)
+    - make pam_rootok check the SELinux passwd class permissions, not just
+      the uid
+    closes: #249499.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 13 Jul 2005 03:37:12 -0700
 
