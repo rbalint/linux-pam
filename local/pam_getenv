@@ -30,12 +30,13 @@ a stable interface even in that environment.
 # version 2, or at your option any later version.
 
 use strict;
-use vars qw(*ENVFILE);
+use vars qw(*CONFIGFILE *ENVFILE);
 
-sub read_line() {
+sub read_line($) {
+  my $fh = shift;
   my $line;
   local $_;
-  line: while (<ENVFILE>) {
+  line: while (<$fh>) {
     chomp;
     s/^\s+//;
 s/\#.*$//;
@@ -78,24 +79,45 @@ return undef unless $val;
   return $val;
 }
 
-  
-
-open (ENVFILE, "/etc/environment")
-  or die "Cannot open environment file: $!\n";
+my $lookup;
 
 while ($_ = shift) {
   next if $_ eq "-s";
   next if $_ eq "-l";
-my $var;
-  variable: while ($var = parse_line(read_line())) {
-    my $val;
-    next variable unless $var->{Name}  eq $_;
-unless  ($val = expand_val($var->{Override})) {
-  $val = expand_val($var->{Default});
+  $lookup = $_;
+  last;
 }
-    print ($val, "\n");
-    exit(0);
+unless (defined $lookup) {
+  die "Usage: pam_getenv [-l] [-s] env_var\n";
+}
+
+my %allvars;
+
+open (CONFIGFILE, "/etc/security/pam_env.conf")
+  or die "Cannot open environment file: $!\n";
+
+while (my $var = parse_line(read_line(\*CONFIGFILE))) {
+  my $val;
+  unless ($val = expand_val($var->{Override})) {
+    $val = expand_val($var->{Default});
+  }
+  $allvars{$var->{Name}} = $val;
+}
+
+if (open (ENVFILE, "/etc/environment")) {
+  while (my $line = read_line(\*ENVFILE)) {
+    $line =~ s/^export //;
+    $line =~ /(.*?)=(.+)/ or next;
+    my ($var, $val) = ($1, $2);
+    # This is bizarre logic (" and ' match each other, quotes are only
+    # significant at the start and end of the string, and the trailing quote
+    # may be omitted), but it's what pam_env does.
+    $val =~ s/^["'](.*?)["']?$/$1/;
+    $allvars{$var} = $val;
   }
 }
 
-      
+if (exists $allvars{$lookup}) {
+  print $allvars{$lookup}, "\n";
+  exit(0);
+}
