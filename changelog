@@ -21,6 +21,7 @@ pam (0.79-1) UNRELEASED; urgency=low
     - allow unix_chkpwd to authenticate for any user when in an SELinux
       context (hurray!); we depend on SELinux policies to prevent the
       helper's use as a brute force tool
+    - also support querying user expiration info via unix_chkpwd
     - misc cleanup: clean up file descriptors when invoking unix_chkpwd
       (closes: #248310)
     - make pam_rootok check the SELinux passwd class permissions, not just
