@@ -26,7 +26,7 @@ pam (0.79-1) UNRELEASED; urgency=low
       (closes: #248310)
     - make pam_rootok check the SELinux passwd class permissions, not just
       the uid
-    closes: #249499.
+    - add new pam_selinux module (closes: #249499)
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 13 Jul 2005 03:37:12 -0700
 
