@@ -2,6 +2,7 @@ pam (0.79-1) UNRELEASED; urgency=low
 
   * New upstream version (closes: #284954, #300775).
     - includes some fixes for typos (closes: #319026).
+    - pam_unix should now be LSB 3.0-compliant.  Closes: #323982.
   * Drop patches 000_bootstrap, 004_libpam_makefile_static_works,
     011_pam_access, 013_pam_filter_termio_to_termios, 017_misc_fixes,
     025_pam_group_conffile_name, 028_pam_mail_delete_only_when_set,
@@ -32,7 +33,7 @@ pam (0.79-1) UNRELEASED; urgency=low
     /etc/security/pam_env.conf; thanks to Colin Watson for the patch.
     Closes: #327876.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 24 Sep 2005 19:20:26 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sat, 24 Sep 2005 19:59:47 -0700
 
 pam (0.76-23) unstable; urgency=low
 
