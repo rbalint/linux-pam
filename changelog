@@ -38,6 +38,7 @@ pam (0.79-1) unstable; urgency=low
   * Set LC_COLLATE=C when using alphabetic range expressions in
     debian/rules; bah, so *that's* what kept happening to my README file
     when trying to build out of svn!  Closes: #295296.
+  * Add a reference to the text of the GPL to debian/copyright.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 25 Sep 2005 22:08:20 -0700
 
