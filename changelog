@@ -28,12 +28,13 @@ pam (0.79-1) UNRELEASED; urgency=low
     - make pam_rootok check the SELinux passwd class permissions, not just
       the uid
     - add new pam_selinux module (closes: #249499)
+  * Build-depend on libselinux1-dev.
   * Fix pam_getenv, so that it can read the actual format of /etc/environment
     instead of trying to read it using the syntax of
     /etc/security/pam_env.conf; thanks to Colin Watson for the patch.
     Closes: #327876.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 24 Sep 2005 19:59:47 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 25 Sep 2005 22:08:20 -0700
 
 pam (0.76-23) unstable; urgency=low
 
