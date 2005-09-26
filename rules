@@ -14,6 +14,8 @@ ifeq (,$(findstring noopt, ${DEB_BUILD_OPTIONS}))
 OS_CFLAGS += -O2
 endif
 
+LC_COLLATE=C
+export LC_COLLATE
 
 BUILD_TREE=Linux-PAM
 
@@ -52,7 +54,7 @@ clean:
 	dh_testroot
 	-$(MAKE) -C $(BUILD_TREE) distclean
 	rm -f build-stamp configure-stamp
-	LC_COLLATE=C rm -f Linux-PAM/bin/[a-z]*
+	rm -f Linux-PAM/bin/[a-z]*
 	dh_clean
 
 # Build architecture-independent files here.
