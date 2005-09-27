@@ -1,5 +1,6 @@
 pam (0.79-2) unstable; urgency=low
 
+  The ".c.o: rm -rf $@" release
   * Fix debian/rules so that make clean doesn't remove ./configure when the
     timestamp on configure.in is newer (!).
 
