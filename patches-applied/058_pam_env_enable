@@ -1,0 +1,13 @@
+Index: Linux-PAM/modules/pam_env/pam_env.c
+===================================================================
+--- Linux-PAM/modules/pam_env/pam_env.c	(revision 348)
++++ Linux-PAM/modules/pam_env/pam_env.c	(working copy)
+@@ -13,7 +13,7 @@
+ #endif
+ 
+ #define DEFAULT_ETC_ENVFILE     "/etc/environment"
+-#define DEFAULT_READ_ENVFILE    0
++#define DEFAULT_READ_ENVFILE    1
+ 
+ #include <security/_pam_aconf.h>
+ 

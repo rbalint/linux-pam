@@ -6,6 +6,9 @@ pam (0.79-2) unstable; urgency=low
   * Switch pam_userdb from db3 to db4.2, which according to the libdb
     maintainers should require no manual intervention for upgrading on-disk
     database formats.  Closes: #165068.
+  * Yes, of course we want to read /etc/environment by default.  Grr!  Revert
+    upstream change which disables this for no apparent reason
+    (closes: #330458).
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 27 Sep 2005 02:44:36 -0700
 
