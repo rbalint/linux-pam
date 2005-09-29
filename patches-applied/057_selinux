@@ -987,7 +987,7 @@ Index: Linux-PAM/modules/pam_rootok/pam_rootok.c
 -    if (getuid() == 0)
 +    if (getuid() == 0) 
 +#ifdef WITH_SELINUX
-+      if (is_selinux_enabled()<1 || checkPasswdAccess(PASSWD__ROOTOK)==0)
++      if (is_selinux_enabled()<1 || selinux_check_passwd_access(PASSWD__ROOTOK)==0)
 +#endif
  	retval = PAM_SUCCESS;
  
