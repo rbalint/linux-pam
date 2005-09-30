@@ -1,3 +1,13 @@
+pam (0.79-3) unstable; urgency=low
+
+  * Patch 059
+    - Fix a segfault in pam_userdb when the new "crypt=" option
+      is unset, as will be the case for all existing users; already fixed
+      upstream.  Closes: #330829.
+    - Fix a memory leak in the same code due to gratuitous strdup()s.
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 30 Sep 2005 01:17:53 -0700
+
 pam (0.79-2) unstable; urgency=low
 
   The ".c.o: rm -rf $@" release

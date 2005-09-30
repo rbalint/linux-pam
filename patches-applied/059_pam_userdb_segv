@@ -1,0 +1,53 @@
+Index: Linux-PAM/modules/pam_userdb/pam_userdb.c
+===================================================================
+--- Linux-PAM/modules/pam_userdb/pam_userdb.c	(revision 363)
++++ Linux-PAM/modules/pam_userdb/pam_userdb.c	(working copy)
+@@ -83,7 +83,7 @@
+ 	ctrl |= PAM_KEY_ONLY_ARG;
+       else if (!strncasecmp(*argv,"db=", 3))
+ 	{
+-	  *database = strdup((*argv) + 3);
++	  *database = (*argv) + 3;
+ 	  if ((*database == NULL) || (strlen (*database) == 0))
+ 	    _pam_log(LOG_ERR,
+ 		     "pam_parse: could not parse argument \"%s\"",
+@@ -91,7 +91,7 @@
+ 	}
+       else if (!strncasecmp(*argv,"crypt=", 6))
+ 	{
+-	  *cryptmode = strdup((*argv) + 6);
++	  *cryptmode = (*argv) + 6;
+ 	  if ((*cryptmode == NULL) || (strlen (*cryptmode) == 0))
+ 	    _pam_log(LOG_ERR,
+ 		     "pam_parse: could not parse argument \"%s\"",
+@@ -174,7 +174,7 @@
+ 	    return 0; /* found it, data contents don't matter */
+ 	}
+ 
+-	if (strncasecmp(cryptmode, "crypt", 5) == 0) {
++	if (cryptmode && !strncasecmp(cryptmode, "crypt", 5)) {
+ 
+ 	  /* crypt(3) password storage */
+ 
+@@ -208,15 +208,15 @@
+ 	   * default to plaintext password storage
+ 	   */
+ 
+-	if (strlen(pass) != data.dsize) {
+-	  compare = 1; /* wrong password len -> wrong password */
+-	} else if (ctrl & PAM_ICASE_ARG) {
++	  if (strlen(pass) != data.dsize) {
++	    compare = 1; /* wrong password len -> wrong password */
++	  } else if (ctrl & PAM_ICASE_ARG) {
+ 	    compare = strncasecmp(data.dptr, pass, data.dsize);
+-	} else {
++	  } else {
+ 	    compare = strncmp(data.dptr, pass, data.dsize);
+-	}
++	  }
+ 
+-	  if (strncasecmp(cryptmode, "none", 4) && ctrl & PAM_DEBUG_ARG) {
++	  if (cryptmode && strncasecmp(cryptmode, "none", 4) && ctrl & PAM_DEBUG_ARG) {
+ 	    _pam_log(LOG_INFO, "invalid value for crypt parameter: %s",
+ 		     cryptmode);
+ 	    _pam_log(LOG_INFO, "defaulting to plaintext password mode");
