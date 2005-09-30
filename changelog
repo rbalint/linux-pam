@@ -5,6 +5,8 @@ pam (0.79-3) unstable; urgency=low
       is unset, as will be the case for all existing users; already fixed
       upstream.  Closes: #330829.
     - Fix a memory leak in the same code due to gratuitous strdup()s.
+  * Further regression in pam_env: don't treat a missing /etc/environment
+    as a fatal error, either.  Amend patch 058 accordingly.  Closes: #330852.
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 30 Sep 2005 01:17:53 -0700
 
