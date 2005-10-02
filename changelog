@@ -2,6 +2,10 @@ pam (0.79-4) UNRELEASED; urgency=low
 
   * Move libpam-modules and libpam0g to Section: libs and libpam-runtime
     to section: admin, to match the overrides in the archive
+  * Move old changelog entries (well, entry) that don't follow the current
+    format to debian/changelog.old, since there's no way to figure out a
+    timestamp for an 8-year-old upload, and this is the most effective
+    way to clear a glut of lintian warnings
 
  -- Steve Langasek <vorlon@debian.org>  Sat,  1 Oct 2005 23:45:26 -0700
 
@@ -1311,17 +1315,3 @@ pam (0.56-1) unstable; urgency=low
   * Reorganization of package structure (-dev, -dbg, etc).
 
  -- Klee Dienes <klee@debian.org>  Sat, 8 Mar 1997 01:21:17 -0500
-
-pam (0.50-1) unstable; urgency=low
-
-  * added Debian GNU/Linux package maintenance system files.
-  * changes to the installation procedure to fit the Debian packaging
-    system ($PREFIX handling, unconditionally install configuration files,
-    don't run ldconfig after installing the shared libraries).
-  * added documentation in the extradoc directory
-  * commented out all unused entries in etc/pam.conf, etc/secure/group.conf
-    and etc/secure/time.conf
-
- -- Patrick Weemeeuw <patrick.weemeeuw@kulnet.kuleuven.ac.be>
-
-
