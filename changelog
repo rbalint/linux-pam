@@ -1,13 +1,14 @@
 pam (0.79-4) UNRELEASED; urgency=low
 
   * Move libpam-modules and libpam0g to Section: libs and libpam-runtime
-    to section: admin, to match the overrides in the archive
+    to section: admin, to match the overrides in the archive.
   * Move old changelog entries (well, entry) that don't follow the current
     format to debian/changelog.old, since there's no way to figure out a
     timestamp for an 8-year-old upload, and this is the most effective
-    way to clear a glut of lintian warnings
+    way to clear a glut of lintian warnings.
+  * Fix the formatting of the libpam-cracklib package description.
 
- -- Steve Langasek <vorlon@debian.org>  Sat,  1 Oct 2005 23:45:26 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun,  2 Oct 2005 02:29:44 -0700
 
 pam (0.79-3) unstable; urgency=low
 
