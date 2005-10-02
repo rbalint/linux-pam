@@ -1,3 +1,10 @@
+pam (0.79-4) UNRELEASED; urgency=low
+
+  * Move libpam-modules and libpam0g to Section: libs and libpam-runtime
+    to section: admin, to match the overrides in the archive
+
+ -- Steve Langasek <vorlon@debian.org>  Sat,  1 Oct 2005 23:45:26 -0700
+
 pam (0.79-3) unstable; urgency=low
 
   * Patch 059
