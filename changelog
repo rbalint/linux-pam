@@ -9,8 +9,10 @@ pam (0.79-4) UNRELEASED; urgency=low
   * Fix the formatting of the libpam-cracklib package description.
   * Patch 010: remove parts of the patch that aren't necessary for C++
     compatibility.
+  * Patch 060: fix a segfault in pam_tally caused by misuse of
+    pam_get_data(); already fixed upstream.  Closes: #335273.
 
- -- Steve Langasek <vorlon@debian.org>  Mon,  3 Oct 2005 01:57:54 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 23 Oct 2005 23:17:24 -0700
 
 pam (0.79-3) unstable; urgency=low
 

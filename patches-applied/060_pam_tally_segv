@@ -1,0 +1,13 @@
+Index: Linux-PAM/modules/pam_tally/pam_tally.c
+===================================================================
+--- Linux-PAM/modules/pam_tally/pam_tally.c	(revision 363)
++++ Linux-PAM/modules/pam_tally/pam_tally.c	(working copy)
+@@ -268,7 +268,7 @@
+     const void *data;
+ 
+     rv = pam_get_data(pamh, MODULE_NAME, &data);
+-    if ( rv == PAM_SUCCESS && oldtime != NULL ) {
++    if ( rv == PAM_SUCCESS && data != NULL && oldtime != NULL ) {
+       *oldtime = *(const time_t *)data;
+       pam_set_data(pamh, MODULE_NAME, NULL, NULL);
+     }
