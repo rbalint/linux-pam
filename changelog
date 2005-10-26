@@ -11,6 +11,9 @@ pam (0.79-4) UNRELEASED; urgency=low
     compatibility.
   * Patch 060: fix a segfault in pam_tally caused by misuse of
     pam_get_data(); already fixed upstream.  Closes: #335273.
+  * Patch 061: fix a double free in pam_issue, caused by overuse (and misuse)
+    of strdup (similar to patch 059).  Already fixed upstream.
+    Closes: #327272.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 23 Oct 2005 23:17:24 -0700
 
