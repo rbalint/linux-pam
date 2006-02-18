@@ -14,6 +14,8 @@ pam (0.79-4) UNRELEASED; urgency=low
   * Patch 061: fix a double free in pam_issue, caused by overuse (and misuse)
     of strdup (similar to patch 059).  Already fixed upstream.
     Closes: #327272.
+  * Don't build-depend on libselinux1-dev and libcap-dev on kfreebsd archs.
+    Closes: #352329.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 23 Oct 2005 23:17:24 -0700
 
