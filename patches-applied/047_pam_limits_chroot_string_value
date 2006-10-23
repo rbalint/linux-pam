@@ -1,14 +1,16 @@
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 304)
+--- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 388)
 +++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
-@@ -360,7 +360,8 @@
-     limit_value = strtol (lim_value, &endptr, 10);
- 
-     /* special case value when limiting logins */
--    if (limit_value == 0 && value_orig == endptr) { /* no chars read */
-+    if ((limit_item != LIMIT_CHROOT)
-+        && (limit_value == 0 && value_orig == endptr)) { /* no chars read */
-         if (strcmp(lim_value,"-") != 0) {
-             _pam_log(LOG_DEBUG,"wrong limit value '%s'", lim_value);
-             return;
+@@ -418,9 +418,9 @@
+ 		if (int_value == 0 && value_orig == endptr) {
+ 			_pam_log(LOG_DEBUG, "wrong limit value '%s' for limit type '%s'",
+ 				lim_value, lim_type);
+-            return;
++			return;
+ 		}
+-	} else {
++	} else if (limit_item != LIMIT_CHROOT && limit_item != LIMIT_CAPS) {
+ 		rlimit_value = strtoul (lim_value, &endptr, 10);
+ 		if (rlimit_value == 0 && value_orig == endptr) {
+ 			_pam_log(LOG_DEBUG, "wrong limit value '%s' for limit type '%s'",
