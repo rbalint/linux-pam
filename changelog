@@ -35,6 +35,8 @@ pam (0.79-4) UNRELEASED; urgency=low
     limits doesn't create a security hole -- as happened with RLIMIT_NICE and
     RLIMIT_RTPRIO!  Thanks to Ville Hallik for the initial patch.
     Closes: #388431.
+  * Patch 029: Fix up the broken pam_limits capabilities patch so it actually
+    works -- which may well be a first...  Closes: #318452.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 23 Oct 2006 02:09:51 -0700
 

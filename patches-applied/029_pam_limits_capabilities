@@ -1,6 +1,6 @@
 Index: Linux-PAM/configure.in
 ===================================================================
---- Linux-PAM/configure.in	(revision 292)
+--- Linux-PAM/configure.in	(revision 384)
 +++ Linux-PAM/configure.in	(working copy)
 @@ -246,7 +246,7 @@
  AC_HEADER_DIRENT
@@ -21,7 +21,7 @@ Index: Linux-PAM/configure.in
  
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 294)
+--- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 385)
 +++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
 @@ -19,6 +19,10 @@
  
@@ -34,10 +34,10 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  #include <stdio.h>
  #include <unistd.h>
  #include <string.h>
-@@ -74,6 +78,10 @@
+@@ -75,6 +79,10 @@
  			      specific user or to count all logins */
      int priority;	 /* the priority to run user process with */
-   char chroot_dir[8092] ;	/* directory to chroot into */
+     char chroot_dir[8092]; /* directory to chroot into */
 +#ifdef HAVE_SYS_CAPABILITY_H
 +  cap_t capabilities; /*capability handle*/
 +  int caps_set;
@@ -45,7 +45,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      int supported[RLIM_NLIMITS];
      struct user_limits_struct limits[RLIM_NLIMITS];
      char conf_file[BUFSIZ];
-@@ -86,6 +94,7 @@
+@@ -87,6 +95,7 @@
  
  #define LIMIT_PRI RLIM_NLIMITS+3
  #define LIMIT_CHROOT RLIM_NLIMITS+4
@@ -53,7 +53,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  
  #define LIMIT_SOFT  1
  #define LIMIT_HARD  2
-@@ -260,6 +269,10 @@
+@@ -292,6 +301,10 @@
      pl->login_limit = -2;
      pl->login_limit_def = LIMITS_DEF_NONE;
  
@@ -64,7 +64,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      pl->chroot_dir[0] = '\0';
      
      return retval;
-@@ -324,6 +337,10 @@
+@@ -365,6 +378,10 @@
  	limit_item = LIMIT_PRI;
      } else if (strcmp(lim_item, "chroot") == 0) {
  	limit_item = LIMIT_CHROOT;
@@ -75,35 +75,21 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      } else {
          _pam_log(LOG_DEBUG,"unknown limit item '%s'", lim_item);
          return;
-@@ -386,7 +403,9 @@
-     if ( (limit_item != LIMIT_LOGIN)
- 	 && (limit_item != LIMIT_NUMSYSLOGINS)
- 	 && (limit_item != LIMIT_PRI)
--	 && (limit_item != LIMIT_CHROOT)) {
-+	 && (limit_item != LIMIT_CHROOT)
-+	 && (limit_item != LIMIT_CAPS)
-+	 ) {
-         if (limit_type & LIMIT_SOFT) {
- 	    if (pl->limits[limit_item].src_soft < source) {
-                 return;
-@@ -410,7 +429,15 @@
- 		pl->priority = limit_value;
- 	} else if (limit_item == LIMIT_CHROOT) {
- 	  strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir));
--	} else {
-+	}
+@@ -449,6 +466,13 @@
+ 
+     if (limit_item == LIMIT_CHROOT)
+ 	strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir));
 +#ifdef HAVE_SYS_CAPABILITY_H
-+	else if (limit_item == LIMIT_CAPS) {
-+	  pl->capabilities = cap_from_text(value_orig);
-+	  prctl(PR_SET_KEEPCAPS, 1);
-+	  pl->caps_set = 1;
-+ 	}
-+#endif /*HAVE_SYS_CAPABILITY_H*/
-+	else {
- 	        if (pl->login_limit_def < source) {
- 	            return;
- 	        } else {
-@@ -590,6 +617,12 @@
++    else if (limit_item == LIMIT_CAPS) {
++	pl->capabilities = cap_from_text(value_orig);
++	prctl(PR_SET_KEEPCAPS, 1);
++	pl->caps_set = 1;
++    }
++#endif
+     else if ( (limit_item != LIMIT_LOGIN)
+ 	 && (limit_item != LIMIT_NUMSYSLOGINS)
+ 	 && (limit_item != LIMIT_PRI) ) {
+@@ -662,6 +686,12 @@
  	if (i != 0)
  	    retval = LIMIT_ERR;
      }
@@ -118,7 +104,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  
 Index: Linux-PAM/Make.Rules.in
 ===================================================================
---- Linux-PAM/Make.Rules.in	(revision 281)
+--- Linux-PAM/Make.Rules.in	(revision 378)
 +++ Linux-PAM/Make.Rules.in	(working copy)
 @@ -113,7 +113,7 @@
  RANLIB=@RANLIB@
@@ -131,7 +117,7 @@ Index: Linux-PAM/Make.Rules.in
  USESONAME=@USESONAME@
 Index: Linux-PAM/_pam_aconf.h.in
 ===================================================================
---- Linux-PAM/_pam_aconf.h.in	(revision 284)
+--- Linux-PAM/_pam_aconf.h.in	(revision 383)
 +++ Linux-PAM/_pam_aconf.h.in	(working copy)
 @@ -75,6 +75,8 @@
  /* read both confs - read /etc/pam.d and /etc/pam.conf in serial */
