@@ -40,6 +40,16 @@ pam (0.79-4) UNRELEASED; urgency=low
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 23 Oct 2006 02:09:51 -0700
 
+pam (0.79-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Linux-PAM/libpamc/include/security/pam_client.h,
+    Linux-PAM/libpamc/pamc_converse.c: Apply patch from
+    latest upstream version to remove redefinition of internal
+    glibc/libstdc++ types.  Closes: #344447.
+
+ -- Roger Leigh <rleigh@debian.org>  Sun,  5 Feb 2006 21:46:59 +0000
+
 pam (0.79-3) unstable; urgency=low
 
   * Patch 059
