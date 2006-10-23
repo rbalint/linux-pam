@@ -1,0 +1,210 @@
+Index: Linux-PAM/modules/pam_limits/pam_limits.c
+===================================================================
+--- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 380)
++++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
+@@ -30,6 +30,7 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <sys/resource.h>
++#include <limits.h>
+ 
+ #include <utmp.h>
+ #ifndef UT_USER  /* some systems have ut_name instead of ut_user */
+@@ -247,7 +248,10 @@
+ 	}
+     }
+ 
+-    pl->priority = 0;
++    errno = 0;
++    pl->priority = getpriority (PRIO_PROCESS, 0);
++    if (pl->priority == -1 && errno != 0)
++      retval = !PAM_SUCCESS;
+     pl->login_limit = -2;
+     pl->login_limit_def = LIMITS_DEF_NONE;
+ 
+@@ -260,7 +264,8 @@
+ {
+     int limit_item;
+     int limit_type = 0;
+-    long limit_value;
++    int int_value = 0;
++    unsigned long rlimit_value = 0;
+     char *endptr;
+     const char *value_orig = lim_value;
+ 
+@@ -301,6 +306,14 @@
+     else if (strcmp(lim_item, "msgqueue") == 0)
+ 	limit_item = RLIMIT_MSGQUEUE;
+ #endif
++#ifdef RLIMIT_NICE
++    else if (strcmp(lim_item, "nice") == 0)
++	limit_item = RLIMIT_NICE;
++#endif
++#ifdef RLIMIT_RTPRIO
++    else if (strcmp(lim_item, "rtprio") == 0)
++	limit_item = RLIMIT_RTPRIO;
++#endif
+     else if (strcmp(lim_item, "maxlogins") == 0) {
+ 	limit_item = LIMIT_LOGIN;
+ 	pl->flag_numsyslogins = 0;
+@@ -324,23 +337,37 @@
+         _pam_log(LOG_DEBUG,"unknown limit type '%s'", lim_type);
+         return;
+     }
+-
+-    limit_value = strtol (lim_value, &endptr, 10);
+-
+-    /* special case value when limiting logins */
+-    if (limit_value == 0 && value_orig == endptr) { /* no chars read */
+-        if (strcmp(lim_value,"-") != 0) {
+-            _pam_log(LOG_DEBUG,"wrong limit value '%s'", lim_value);
++	if (limit_item != LIMIT_PRI
++#ifdef RLIMIT_NICE
++	    && limit_item != RLIMIT_NICE
++#endif
++	    && (strcmp(lim_value, "-1") == 0
++		|| strcmp(lim_value, "-") == 0 || strcmp(lim_value, "unlimited") == 0
++		|| strcmp(lim_value, "infinity") == 0)) {
++		int_value = -1;
++		rlimit_value = RLIM_INFINITY;
++	} else if (limit_item == LIMIT_PRI || limit_item == LIMIT_LOGIN ||
++#ifdef RLIMIT_NICE
++		limit_item == RLIMIT_NICE ||
++#endif
++		limit_item == LIMIT_NUMSYSLOGINS) {
++		long temp;
++		temp = strtol (lim_value, &endptr, 10);
++		temp = temp < INT_MAX ? temp : INT_MAX;
++		int_value = temp > INT_MIN ? temp : INT_MIN;
++		if (int_value == 0 && value_orig == endptr) {
++			_pam_log(LOG_DEBUG, "wrong limit value '%s' for limit type '%s'",
++				lim_value, lim_type);
+             return;
+-        } else
+-            if (limit_item != LIMIT_LOGIN) {
+-                if (ctrl & PAM_DEBUG_ARG)
+-                    _pam_log(LOG_DEBUG,
+-                            "'-' limit value valid for maxlogins type only");
+-                return;
+-            } else
+-                limit_value = -1;
+-    }
++		}
++	} else {
++		rlimit_value = strtoul (lim_value, &endptr, 10);
++		if (rlimit_value == 0 && value_orig == endptr) {
++			_pam_log(LOG_DEBUG, "wrong limit value '%s' for limit type '%s'",
++				lim_value, lim_type);
++			return;
++		}
++	}
+ 
+     /* one more special case when limiting logins */
+     if ((source == LIMITS_DEF_ALL || source == LIMITS_DEF_ALLGROUP)
+@@ -353,8 +380,9 @@
+ 
+     switch(limit_item) {
+         case RLIMIT_CPU:
+-            limit_value *= 60;
+-            break;
++         if (rlimit_value != RLIM_INFINITY)
++            rlimit_value *= 60;
++         break;
+         case RLIMIT_FSIZE:
+         case RLIMIT_DATA:
+         case RLIMIT_STACK:
+@@ -362,8 +390,16 @@
+         case RLIMIT_RSS:
+         case RLIMIT_MEMLOCK:
+         case RLIMIT_AS:
+-            limit_value *= 1024;
+-            break;
++         if (rlimit_value != RLIM_INFINITY)
++            rlimit_value *= 1024;
++    	 break;
++#ifdef RLIMIT_NICE
++	case RLIMIT_NICE:
++	 if (int_value > 19)
++	    int_value = 19;
++	 rlimit_value = 19 - int_value;
++#endif
++         break;
+     }
+ 
+     if ( (limit_item != LIMIT_LOGIN)
+@@ -373,7 +409,7 @@
+ 	    if (pl->limits[limit_item].src_soft < source) {
+                 return;
+ 	    } else {
+-                pl->limits[limit_item].limit.rlim_cur = limit_value;
++                pl->limits[limit_item].limit.rlim_cur = rlimit_value;
+                 pl->limits[limit_item].src_soft = source;
+             }
+ 	}
+@@ -381,7 +417,7 @@
+ 	    if (pl->limits[limit_item].src_hard < source) {
+                 return;
+             } else {
+-                pl->limits[limit_item].limit.rlim_max = limit_value;
++                pl->limits[limit_item].limit.rlim_max = rlimit_value;
+                 pl->limits[limit_item].src_hard = source;
+             }
+ 	}
+@@ -389,12 +425,12 @@
+ 	/* recent kernels support negative priority limits (=raise priority) */
+ 
+ 	if (limit_item == LIMIT_PRI) {
+-		pl->priority = limit_value;
++		pl->priority = int_value;
+ 	} else {
+ 	        if (pl->login_limit_def < source) {
+ 	            return;
+ 	        } else {
+-	            pl->login_limit = limit_value;
++	            pl->login_limit = int_value;
+ 	            pl->login_limit_def = source;
+         	}
+ 	}
+Index: Linux-PAM/modules/pam_limits/README
+===================================================================
+--- Linux-PAM/modules/pam_limits/README	(revision 377)
++++ Linux-PAM/modules/pam_limits/README	(working copy)
+@@ -6,8 +6,8 @@
+ 
+ First, make a root-only-readable file (/etc/security/limits.conf by
+ default or INSTALLED_CONFILE defined Makefile) that describes the
+-resource limits you wish to impose. No limits are imposed on UID 0
+-accounts.
++resource limits you wish to impose. No priority changes and login 
++limit checks are done on UID 0 accounts.
+ 
+ Each line describes a limit for a user in the form:
+ 
+@@ -42,6 +42,9 @@
+ 	- sigpending - max number of pending signals (Linux 2.6 and higher)
+ 	- msgqueue - max memory used by POSIX message queues (bytes) 
+ 	  (Linux 2.6 and higher)
++	- nice - max nice priority allowed to raise to (Linux 2.6.12 and higher)
++	- rtprio - max realtime priority allowed for non-priviledged
++          processes (Linux 2.6.12 and higher)
+ 
+ Note, if you specify a type of '-' but neglect to supply the item and
+ value fields then the module will never enforce any limits on the
+Index: Linux-PAM/modules/pam_limits/limits.skel
+===================================================================
+--- Linux-PAM/modules/pam_limits/limits.skel	(revision 377)
++++ Linux-PAM/modules/pam_limits/limits.skel	(working copy)
+@@ -28,10 +28,13 @@
+ #        - nproc - max number of processes
+ #        - as - address space limit
+ #        - maxlogins - max number of logins for this user
++#        - maxsyslogins - max number of logins on the system
+ #        - priority - the priority to run user process with
+ #        - locks - max number of file locks the user can hold
+ #        - sigpending - max number of pending signals
+ #        - msgqueue - max memory used by POSIX message queues (bytes)
++#        - nice - max nice priority allowed to raise to
++#        - rtprio - max realtime priority
+ #
+ #<domain>      <type>  <item>         <value>
+ #

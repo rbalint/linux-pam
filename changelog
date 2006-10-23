@@ -16,8 +16,23 @@ pam (0.79-4) UNRELEASED; urgency=low
     Closes: #327272.
   * Don't build-depend on libselinux1-dev and libcap-dev on kfreebsd archs.
     Closes: #352329.
+  * Patch 005: sync pam_limits with upstream:
+    - include <limits.h> properly.
+    - support "-" (unlimited) for all limit types except process priority.
+    - support the additional aliases "-1", "unlimited", and "infinity" for
+      clearing the limits; closes: #122400, #149027.
+    - restrict the range of process priority, login count, and system login
+      count settings to (INT_MIN,INT_MAX) (heh).
+    - special-case RLIM_INFINITY when applying multipliers to values from
+      the config.
+    - document maxsyslogins in the default limits.conf; closes: #149883.
+    - use the current process priority as a default instead of resetting to
+      0; closes: #241663.
+    - add support for (and document) new RLIMIT_NICE and RLIMIT_RTPRIO
+      settings in Linux 2.6.12 and above; closes: #313542, #313588.
+    - allow imposing limits on uid=0.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 23 Oct 2005 23:17:24 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 23 Oct 2006 02:09:51 -0700
 
 pam (0.79-3) unstable; urgency=low
 
