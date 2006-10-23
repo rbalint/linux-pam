@@ -3,7 +3,7 @@ Debian bug #76119
 
 Index: Linux-PAM/configure.in
 ===================================================================
---- Linux-PAM/configure.in	(revision 281)
+--- Linux-PAM/configure.in	(revision 378)
 +++ Linux-PAM/configure.in	(working copy)
 @@ -246,7 +246,7 @@
  AC_HEADER_DIRENT
@@ -16,7 +16,7 @@ Index: Linux-PAM/configure.in
  AC_CHECK_HEADERS(features.h)
 Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 ===================================================================
---- Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	(revision 281)
+--- Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	(revision 378)
 +++ Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	(working copy)
 @@ -51,7 +51,7 @@
  #endif /* HAVE_SYS_FSUID_H */
@@ -38,9 +38,9 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
  #include <sys/file.h>
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 281)
+--- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 382)
 +++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
-@@ -291,8 +291,10 @@
+@@ -296,8 +296,10 @@
  	limit_item = RLIMIT_NOFILE;
      else if (strcmp(lim_item, "memlock") == 0)
  	limit_item = RLIMIT_MEMLOCK;
@@ -51,19 +51,19 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  #ifdef RLIMIT_LOCKS
      else if (strcmp(lim_item, "locks") == 0)
  	limit_item = RLIMIT_LOCKS;
-@@ -367,7 +369,9 @@
+@@ -395,7 +397,9 @@
          case RLIMIT_CORE:
          case RLIMIT_RSS:
          case RLIMIT_MEMLOCK:
 +#ifdef RLIMIT_AS
          case RLIMIT_AS:
 +#endif
-             limit_value *= 1024;
-             break;
-     }
+          if (rlimit_value != RLIM_INFINITY)
+             rlimit_value *= 1024;
+     	 break;
 Index: Linux-PAM/_pam_aconf.h.in
 ===================================================================
---- Linux-PAM/_pam_aconf.h.in	(revision 281)
+--- Linux-PAM/_pam_aconf.h.in	(revision 378)
 +++ Linux-PAM/_pam_aconf.h.in	(working copy)
 @@ -15,6 +15,8 @@
  
