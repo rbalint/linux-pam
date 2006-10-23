@@ -40,6 +40,14 @@ pam (0.79-4) UNRELEASED; urgency=low
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 23 Oct 2006 02:09:51 -0700
 
+pam (0.79-3.2) unstable; urgency=low
+
+  * Non-maintainer upload to fix important bug, that makes passwd segfault
+    when CTRL-D is pressed at the password prompt.  Applied the patch 
+    provided by Dann Frazier.  (Closes: #360657)
+
+ -- Margarita Manterola <marga@debian.org>  Sat,  5 Aug 2006 02:11:22 -0300
+
 pam (0.79-3.1) unstable; urgency=low
 
   * Non-maintainer upload.
