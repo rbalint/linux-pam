@@ -20,7 +20,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      for(i = 0; i < RLIM_NLIMITS; i++) {
  	int r = getrlimit(i, &pl->limits[i].limit);
  	if (r == -1) {
-@@ -247,6 +249,39 @@
+@@ -247,6 +249,38 @@
  	    pl->supported[i] = 1;
  	    pl->limits[i].src_soft = LIMITS_DEF_NONE;
  	    pl->limits[i].src_hard = LIMITS_DEF_NONE;
@@ -28,7 +28,6 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 +		case RLIMIT_CPU:
 +		case RLIMIT_FSIZE:
 +		case RLIMIT_DATA:
-+		case RLIMIT_STACK:
 +		case RLIMIT_RSS:
 +		case RLIMIT_NPROC:
 +		case RLIMIT_NOFILE:
@@ -60,7 +59,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  	}
      }
  
-@@ -518,7 +553,7 @@
+@@ -518,7 +552,7 @@
          if (i == 4) { /* a complete line */
              if (strcmp(uname, domain) == 0) /* this user have a limit */
                  process_limit(LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
@@ -69,7 +68,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			_pam_log(LOG_DEBUG, "checking if %s is in group %s",
  			 	uname, domain + 1);
-@@ -526,7 +561,7 @@
+@@ -526,7 +560,7 @@
                  if (_pammodutil_user_in_group_nam_nam(pamh, uname, domain+1))
                      process_limit(LIMITS_DEF_GROUP, ltype, item, value, ctrl,
  				  pl);
@@ -78,7 +77,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			_pam_log(LOG_DEBUG, "checking if %s is in group %s",
  			 	uname, domain + 1);
-@@ -539,7 +574,7 @@
+@@ -539,7 +573,7 @@
                      process_limit(LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
  				  pl);
  		}
@@ -87,7 +86,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
                  process_limit(LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -573,6 +608,12 @@
+@@ -573,6 +607,12 @@
      int status;
      int retval = LIMITED_OK;
  
@@ -100,7 +99,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
        int retval;
          if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
-@@ -659,6 +700,8 @@
+@@ -659,6 +699,8 @@
          return PAM_IGNORE;
      }
  
