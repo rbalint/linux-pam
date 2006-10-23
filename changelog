@@ -17,7 +17,6 @@ pam (0.79-4) UNRELEASED; urgency=low
   * Don't build-depend on libselinux1-dev and libcap-dev on kfreebsd archs.
     Closes: #352329.
   * Patch 005: sync pam_limits with upstream:
-    - include <limits.h> properly.
     - support "-" (unlimited) for all limit types except process priority.
     - support the additional aliases "-1", "unlimited", and "infinity" for
       clearing the limits; closes: #122400, #149027.
@@ -31,6 +30,11 @@ pam (0.79-4) UNRELEASED; urgency=low
     - add support for (and document) new RLIMIT_NICE and RLIMIT_RTPRIO
       settings in Linux 2.6.12 and above; closes: #313542, #313588.
     - allow imposing limits on uid=0.
+  * Patch 027: only set RLIM_INFINITY as the default for the limits where
+    we know this is sensible, so that recompiling in an environment with new
+    limits doesn't create a security hole -- as happened with RLIMIT_NICE and
+    RLIMIT_RTPRIO!  Thanks to Ville Hallik for the initial patch.
+    Closes: #388431.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 23 Oct 2006 02:09:51 -0700
 
@@ -370,7 +374,7 @@ pam (0.76-1) experimental; urgency=low
 
 pam (0.75-3) experimental; urgency=low
 
-      * Apply patch 007  pam_limits so that we initialize to wide open not
+      * Apply patch 027  pam_limits so that we initialize to wide open not
     current limits.
       * In pam_mail, don't complain about deleting environment variable if
     we never set it, Closes: #58429
