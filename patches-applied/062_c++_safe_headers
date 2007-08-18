@@ -1,7 +1,7 @@
 Index: Linux-PAM/libpamc/include/security/pam_client.h
 ===================================================================
---- Linux-PAM/libpamc/include/security/pam_client.h	(revision 392)
-+++ Linux-PAM/libpamc/include/security/pam_client.h	(working copy)
+--- Linux-PAM/libpamc/include/security/pam_client.h.orig
++++ Linux-PAM/libpamc/include/security/pam_client.h
 @@ -16,19 +16,14 @@
  #include <unistd.h>
  #include <string.h>
@@ -85,8 +85,8 @@ Index: Linux-PAM/libpamc/include/security/pam_client.h
  	|| ((length) < 0)) {                                               \
 Index: Linux-PAM/libpamc/pamc_converse.c
 ===================================================================
---- Linux-PAM/libpamc/pamc_converse.c	(revision 392)
-+++ Linux-PAM/libpamc/pamc_converse.c	(working copy)
+--- Linux-PAM/libpamc/pamc_converse.c.orig
++++ Linux-PAM/libpamc/pamc_converse.c
 @@ -34,8 +34,8 @@
  
  int pamc_converse(pamc_handle_t pch, pamc_bp_t *prompt_p)

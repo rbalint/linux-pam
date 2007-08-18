@@ -8,8 +8,8 @@ However hurd is basically the only modern os without maxhostnamelen
 
 Index: Linux-PAM/configure.in
 ===================================================================
---- Linux-PAM/configure.in	(revision 296)
-+++ Linux-PAM/configure.in	(working copy)
+--- Linux-PAM/configure.in.orig
++++ Linux-PAM/configure.in
 @@ -301,7 +301,7 @@
  ### May need per-OS attention
  ### Example: -D_POSIX_SOURCE: needed on Linux but harms Solaris.
@@ -21,8 +21,8 @@ Index: Linux-PAM/configure.in
  		WARNINGS="$GCC_WARNINGS"
 Index: Linux-PAM/modules/pam_filter/pam_filter.c
 ===================================================================
---- Linux-PAM/modules/pam_filter/pam_filter.c	(revision 295)
-+++ Linux-PAM/modules/pam_filter/pam_filter.c	(working copy)
+--- Linux-PAM/modules/pam_filter/pam_filter.c.orig
++++ Linux-PAM/modules/pam_filter/pam_filter.c
 @@ -328,7 +328,10 @@
  	    t_mode.c_oflag &= ~OPOST;      /* no ouput post processing */
  
@@ -37,8 +37,8 @@ Index: Linux-PAM/modules/pam_filter/pam_filter.c
  
 Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 ===================================================================
---- Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	(revision 295)
-+++ Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c	(working copy)
+--- Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c.orig
++++ Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 @@ -376,11 +376,18 @@
      register const char *user;
      register char *p;
@@ -149,8 +149,8 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
      setfsuid(uid);
 Index: Linux-PAM/modules/pam_limits/Makefile
 ===================================================================
---- Linux-PAM/modules/pam_limits/Makefile	(revision 295)
-+++ Linux-PAM/modules/pam_limits/Makefile	(working copy)
+--- Linux-PAM/modules/pam_limits/Makefile.orig
++++ Linux-PAM/modules/pam_limits/Makefile
 @@ -10,7 +10,14 @@
  
  TITLE=pam_limits
@@ -168,8 +168,8 @@ Index: Linux-PAM/modules/pam_limits/Makefile
  INSTALLED_CONFILE=$(SCONFIGD)/limits.conf
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 298)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
 @@ -14,7 +14,7 @@
   */
  

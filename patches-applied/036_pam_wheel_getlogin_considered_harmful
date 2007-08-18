@@ -1,7 +1,7 @@
 Index: Linux-PAM/doc/modules/pam_wheel.sgml
 ===================================================================
---- Linux-PAM/doc/modules/pam_wheel.sgml	(revision 295)
-+++ Linux-PAM/doc/modules/pam_wheel.sgml	(working copy)
+--- Linux-PAM/doc/modules/pam_wheel.sgml.orig
++++ Linux-PAM/doc/modules/pam_wheel.sgml
 @@ -48,7 +48,6 @@
  
  <tag><bf>Recognized arguments:</bf></tag>
@@ -26,8 +26,8 @@ Index: Linux-PAM/doc/modules/pam_wheel.sgml
  find the user applying for root privilege is a member of the wheel
 Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
 ===================================================================
---- Linux-PAM/modules/pam_wheel/pam_wheel.c	(revision 295)
-+++ Linux-PAM/modules/pam_wheel/pam_wheel.c	(working copy)
+--- Linux-PAM/modules/pam_wheel/pam_wheel.c.orig
++++ Linux-PAM/modules/pam_wheel/pam_wheel.c
 @@ -73,9 +73,8 @@
  /* argument parsing */
  
@@ -61,11 +61,7 @@ Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
 -                _pam_log(LOG_NOTICE, "who is running me ?!");
 -	    }
 -	    return PAM_SERVICE_ERR;
-+    tpwd = _pammodutil_getpwuid (pamh, getuid());
-+    if (!tpwd) {
-+	if (ctrl & PAM_DEBUG_ARG) {
-+            _pam_log(LOG_NOTICE, "who is running me ?!");
- 	}
+-	}
 -	fromsu = tpwd->pw_name;
 -    } else {
 -	fromsu = _pammodutil_getlogin(pamh);
@@ -77,7 +73,11 @@ Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
 -		_pam_log(LOG_NOTICE, "who is running me ?!");
 -	    }
 -	    return PAM_SERVICE_ERR;
--	}
++    tpwd = _pammodutil_getpwuid (pamh, getuid());
++    if (!tpwd) {
++	if (ctrl & PAM_DEBUG_ARG) {
++            _pam_log(LOG_NOTICE, "who is running me ?!");
+ 	}
 +	return PAM_SERVICE_ERR;
      }
 +    fromsu = tpwd->pw_name;

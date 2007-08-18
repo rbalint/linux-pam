@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 380)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
 @@ -30,6 +30,7 @@
  #include <sys/types.h>
  #include <sys/stat.h>
@@ -167,8 +167,8 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  	}
 Index: Linux-PAM/modules/pam_limits/README
 ===================================================================
---- Linux-PAM/modules/pam_limits/README	(revision 377)
-+++ Linux-PAM/modules/pam_limits/README	(working copy)
+--- Linux-PAM/modules/pam_limits/README.orig
++++ Linux-PAM/modules/pam_limits/README
 @@ -6,8 +6,8 @@
  
  First, make a root-only-readable file (/etc/security/limits.conf by
@@ -192,8 +192,8 @@ Index: Linux-PAM/modules/pam_limits/README
  value fields then the module will never enforce any limits on the
 Index: Linux-PAM/modules/pam_limits/limits.skel
 ===================================================================
---- Linux-PAM/modules/pam_limits/limits.skel	(revision 377)
-+++ Linux-PAM/modules/pam_limits/limits.skel	(working copy)
+--- Linux-PAM/modules/pam_limits/limits.skel.orig
++++ Linux-PAM/modules/pam_limits/limits.skel
 @@ -28,10 +28,13 @@
  #        - nproc - max number of processes
  #        - as - address space limit

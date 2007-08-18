@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/support.c	(revision 316)
-+++ Linux-PAM/modules/pam_unix/support.c	(working copy)
+--- Linux-PAM/modules/pam_unix/support.c.orig
++++ Linux-PAM/modules/pam_unix/support.c
 @@ -150,14 +150,23 @@
  	/* now parse the arguments to this module */
  
@@ -59,8 +59,8 @@ Index: Linux-PAM/modules/pam_unix/support.c
  		} else {
 Index: Linux-PAM/modules/pam_unix/support.h
 ===================================================================
---- Linux-PAM/modules/pam_unix/support.h	(revision 295)
-+++ Linux-PAM/modules/pam_unix/support.h	(working copy)
+--- Linux-PAM/modules/pam_unix/support.h.orig
++++ Linux-PAM/modules/pam_unix/support.h
 @@ -88,8 +88,9 @@
  #define UNIX_MIN_PASS_LEN        24     /* Min length for password */
  #define UNIX_NOOBSCURE_CHECKS    25	/* internal */

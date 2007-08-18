@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_tally/pam_tally.c
 ===================================================================
---- Linux-PAM/modules/pam_tally/pam_tally.c	(revision 363)
-+++ Linux-PAM/modules/pam_tally/pam_tally.c	(working copy)
+--- Linux-PAM/modules/pam_tally/pam_tally.c.orig
++++ Linux-PAM/modules/pam_tally/pam_tally.c
 @@ -268,7 +268,7 @@
      const void *data;
  

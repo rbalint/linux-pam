@@ -5,8 +5,8 @@ recent code pulled from Linux_pam CVS seems to fix that issue.
 
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(revision 281)
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(working copy)
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 @@ -854,7 +854,7 @@
  
  		if (_unix_blankpasswd(pamh, ctrl, user)) {

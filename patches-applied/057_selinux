@@ -1,7 +1,7 @@
 Index: Linux-PAM/configure.in
 ===================================================================
---- Linux-PAM/configure.in	(revision 337)
-+++ Linux-PAM/configure.in	(working copy)
+--- Linux-PAM/configure.in.orig
++++ Linux-PAM/configure.in
 @@ -231,6 +231,13 @@
  if test $HAVE_LIBNSL = yes ; then
  	pwdblibs="$pwdblibs -lnsl"
@@ -18,8 +18,8 @@ Index: Linux-PAM/configure.in
  AC_SUBST(HAVE_LIBPWDB)
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(revision 337)
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(working copy)
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 @@ -57,6 +57,19 @@
  #include <rpcsvc/yp_prot.h>
  #include <rpcsvc/ypclnt.h>
@@ -130,10 +130,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 -	}
 +	if (rename(OPW_TMPFILE, OLD_PASSWORDS_FILE))
 +	    err = 1;
-     }
--
--    unlink(OPW_TMPFILE);
--    return PAM_AUTHTOK_ERR;
++    }
 +#ifdef WITH_SELINUX
 +    if (SELINUX_ENABLED) {
 +      if (setfscreatecon(prev_context)) {
@@ -149,7 +146,10 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 +    } else {
 +	unlink(OPW_TMPFILE);
 +	return PAM_AUTHTOK_ERR;
-+    }
+     }
+-
+-    unlink(OPW_TMPFILE);
+-    return PAM_AUTHTOK_ERR;
  }
  
  static int _update_passwd(pam_handle_t *pamh,
@@ -254,17 +254,17 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 +	if (prev_context)
 +	    freecon(prev_context);
 +	prev_context = NULL;
-     }
--
--    unlink(PW_TMPFILE);
--    return found ? PAM_AUTHTOK_ERR : PAM_USER_UNKNOWN;
++    }
 +#endif
 +    if (!err) {
 +	return PAM_SUCCESS;
 +    } else {
 +	unlink(PW_TMPFILE);
 +	return found ? PAM_AUTHTOK_ERR : PAM_USER_UNKNOWN;
-+    }
+     }
+-
+-    unlink(PW_TMPFILE);
+-    return found ? PAM_AUTHTOK_ERR : PAM_USER_UNKNOWN;
  }
  
  static int _update_shadow(pam_handle_t *pamh, const char *forwho, char *towhat)
@@ -411,8 +411,8 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  		/* update the password database(s) -- race conditions..? */
 Index: Linux-PAM/modules/pam_unix/lckpwdf.-c
 ===================================================================
---- Linux-PAM/modules/pam_unix/lckpwdf.-c	(revision 337)
-+++ Linux-PAM/modules/pam_unix/lckpwdf.-c	(working copy)
+--- Linux-PAM/modules/pam_unix/lckpwdf.-c.orig
++++ Linux-PAM/modules/pam_unix/lckpwdf.-c
 @@ -26,6 +26,9 @@
  
  #include <fcntl.h>
@@ -454,8 +454,8 @@ Index: Linux-PAM/modules/pam_unix/lckpwdf.-c
  		return -1;
 Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_acct.c	(revision 337)
-+++ Linux-PAM/modules/pam_unix/pam_unix_acct.c	(working copy)
+--- Linux-PAM/modules/pam_unix/pam_unix_acct.c.orig
++++ Linux-PAM/modules/pam_unix/pam_unix_acct.c
 @@ -45,6 +45,15 @@
  #include <pwd.h>
  #include <shadow.h>
@@ -597,8 +597,8 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
  			return PAM_SUCCESS;
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/support.c	(revision 337)
-+++ Linux-PAM/modules/pam_unix/support.c	(working copy)
+--- Linux-PAM/modules/pam_unix/support.c.orig
++++ Linux-PAM/modules/pam_unix/support.c
 @@ -15,6 +15,7 @@
  #include <pwd.h>
  #include <shadow.h>
@@ -661,32 +661,32 @@ Index: Linux-PAM/modules/pam_unix/support.c
  	/* if the stored password is NULL */
 -	if (off(UNIX__NONULL, ctrl)) {	/* this means we've succeeded */
 -	    write(fds[1], "nullok\0\0", 8);
-+        int rc=0;
-+	if (passwd)
-+	    _pammodutil_write(fds[1], passwd, strlen(passwd)+1);
-+	else
-+	    _pammodutil_write(fds[1], "", 1);	/* blank password */
-+
-+	close(fds[0]);       /* close here to avoid possible SIGPIPE above */
-+	close(fds[1]);
-+	rc=waitpid(child, &retval, 0);  /* wait for helper to complete */
-+	if (rc<0) {
-+	  _log_err(LOG_ERR, pamh, "unix_chkpwd waitpid returned %d: %s", rc, strerror(errno));
-+	  retval = PAM_AUTH_ERR;
- 	} else {
+-	} else {
 -	    write(fds[1], "nonull\0\0", 8);
-+	  retval = WEXITSTATUS(retval);
- 	}
+-	}
 -	if (passwd != NULL) {            /* send the password to the child */
 -	    write(fds[1], passwd, strlen(passwd)+1);
 -	    passwd = NULL;
 -	} else {
 -	    write(fds[1], "", 1);                        /* blank password */
 -	}
--	close(fds[0]);       /* close here to avoid possible SIGPIPE above */
--	close(fds[1]);
++        int rc=0;
++	if (passwd)
++	    _pammodutil_write(fds[1], passwd, strlen(passwd)+1);
++	else
++	    _pammodutil_write(fds[1], "", 1);	/* blank password */
++
+ 	close(fds[0]);       /* close here to avoid possible SIGPIPE above */
+ 	close(fds[1]);
 -	(void) waitpid(child, &retval, 0);  /* wait for helper to complete */
 -	retval = (retval == 0) ? PAM_SUCCESS:PAM_AUTH_ERR;
++	rc=waitpid(child, &retval, 0);  /* wait for helper to complete */
++	if (rc<0) {
++	  _log_err(LOG_ERR, pamh, "unix_chkpwd waitpid returned %d: %s", rc, strerror(errno));
++	  retval = PAM_AUTH_ERR;
++	} else {
++	  retval = WEXITSTATUS(retval);
++	}
      } else {
  	D(("fork failed"));
 +	close(fds[0]);
@@ -714,8 +714,8 @@ Index: Linux-PAM/modules/pam_unix/support.c
  			retval = _unix_run_helper_binary(pamh, p, ctrl, name);
 Index: Linux-PAM/modules/pam_unix/support.h
 ===================================================================
---- Linux-PAM/modules/pam_unix/support.h	(revision 337)
-+++ Linux-PAM/modules/pam_unix/support.h	(working copy)
+--- Linux-PAM/modules/pam_unix/support.h.orig
++++ Linux-PAM/modules/pam_unix/support.h
 @@ -165,4 +165,5 @@
  extern unsigned int pass_min_len;
  extern unsigned int pass_max_len;
@@ -724,8 +724,8 @@ Index: Linux-PAM/modules/pam_unix/support.h
  #endif /* _PAM_UNIX_SUPPORT_H */
 Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/unix_chkpwd.c	(revision 337)
-+++ Linux-PAM/modules/pam_unix/unix_chkpwd.c	(working copy)
+--- Linux-PAM/modules/pam_unix/unix_chkpwd.c.orig
++++ Linux-PAM/modules/pam_unix/unix_chkpwd.c
 @@ -28,12 +28,25 @@
  #include <syslog.h>
  #include <unistd.h>
@@ -735,7 +735,7 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
  #include <shadow.h>
  #include <signal.h>
 +#include <time.h>
- 
++
 +static int selinux_enabled = -1;
 +
 +#ifdef WITH_SELINUX
@@ -745,7 +745,7 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 +#else
 +#define SELINUX_ENABLED 0
 +#endif
-+
+ 
  #define MAXPASS		200	/* the maximum length of a password */
  
 +#include <security/_pam_types.h>
@@ -950,8 +950,8 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
  
 Index: Linux-PAM/modules/pam_unix/Makefile
 ===================================================================
---- Linux-PAM/modules/pam_unix/Makefile	(revision 337)
-+++ Linux-PAM/modules/pam_unix/Makefile	(working copy)
+--- Linux-PAM/modules/pam_unix/Makefile.orig
++++ Linux-PAM/modules/pam_unix/Makefile
 @@ -60,9 +60,9 @@
  ########################################################################
  
@@ -966,8 +966,8 @@ Index: Linux-PAM/modules/pam_unix/Makefile
  CRACKLIB = -lcrack
 Index: Linux-PAM/modules/pam_rootok/pam_rootok.c
 ===================================================================
---- Linux-PAM/modules/pam_rootok/pam_rootok.c	(revision 337)
-+++ Linux-PAM/modules/pam_rootok/pam_rootok.c	(working copy)
+--- Linux-PAM/modules/pam_rootok/pam_rootok.c.orig
++++ Linux-PAM/modules/pam_rootok/pam_rootok.c
 @@ -39,6 +39,11 @@
  }
  
@@ -994,8 +994,8 @@ Index: Linux-PAM/modules/pam_rootok/pam_rootok.c
      if (ctrl & PAM_DEBUG_ARG) {
 Index: Linux-PAM/modules/pam_rootok/Makefile
 ===================================================================
---- Linux-PAM/modules/pam_rootok/Makefile	(revision 337)
-+++ Linux-PAM/modules/pam_rootok/Makefile	(working copy)
+--- Linux-PAM/modules/pam_rootok/Makefile.orig
++++ Linux-PAM/modules/pam_rootok/Makefile
 @@ -13,3 +13,6 @@
  TITLE=pam_rootok
  
@@ -1005,8 +1005,8 @@ Index: Linux-PAM/modules/pam_rootok/Makefile
 +LINK_PAMMODUTILS += -lselinux 
 Index: Linux-PAM/modules/pam_selinux/pam_selinux_check.c
 ===================================================================
---- Linux-PAM/modules/pam_selinux/pam_selinux_check.c	(revision 0)
-+++ Linux-PAM/modules/pam_selinux/pam_selinux_check.c	(revision 0)
+--- /dev/null
++++ Linux-PAM/modules/pam_selinux/pam_selinux_check.c
 @@ -0,0 +1,43 @@
 +/******************************************************************************
 + * A module for Linux-PAM that will set the default security context after login 
@@ -1053,8 +1053,8 @@ Index: Linux-PAM/modules/pam_selinux/pam_selinux_check.c
 +
 Index: Linux-PAM/modules/pam_selinux/pam_selinux.c
 ===================================================================
---- Linux-PAM/modules/pam_selinux/pam_selinux.c	(revision 0)
-+++ Linux-PAM/modules/pam_selinux/pam_selinux.c	(revision 0)
+--- /dev/null
++++ Linux-PAM/modules/pam_selinux/pam_selinux.c
 @@ -0,0 +1,644 @@
 +/******************************************************************************
 + * A module for Linux-PAM that will set the default security context after login 
@@ -1702,8 +1702,8 @@ Index: Linux-PAM/modules/pam_selinux/pam_selinux.c
 +#endif
 Index: Linux-PAM/modules/pam_selinux/pam_selinux_check.8
 ===================================================================
---- Linux-PAM/modules/pam_selinux/pam_selinux_check.8	(revision 0)
-+++ Linux-PAM/modules/pam_selinux/pam_selinux_check.8	(revision 0)
+--- /dev/null
++++ Linux-PAM/modules/pam_selinux/pam_selinux_check.8
 @@ -0,0 +1,35 @@
 +.TH pam_selinux_check 8 2002/05/23 "Red Hat Linux" "System Administrator's Manual"
 +.SH NAME
@@ -1742,8 +1742,8 @@ Index: Linux-PAM/modules/pam_selinux/pam_selinux_check.8
 +Dan Walsh <dwalsh@redhat.com>
 Index: Linux-PAM/modules/pam_selinux/pam_selinux.8
 ===================================================================
---- Linux-PAM/modules/pam_selinux/pam_selinux.8	(revision 0)
-+++ Linux-PAM/modules/pam_selinux/pam_selinux.8	(revision 0)
+--- /dev/null
++++ Linux-PAM/modules/pam_selinux/pam_selinux.8
 @@ -0,0 +1,63 @@
 +.TH pam_selinux 8 2003/08/26 "Red Hat Linux" "System Administrator's Manual"
 +.SH NAME
@@ -1810,8 +1810,8 @@ Index: Linux-PAM/modules/pam_selinux/pam_selinux.8
 +Dan Walsh <dwalsh@redhat.com>
 Index: Linux-PAM/modules/pam_selinux/Makefile
 ===================================================================
---- Linux-PAM/modules/pam_selinux/Makefile	(revision 0)
-+++ Linux-PAM/modules/pam_selinux/Makefile	(revision 0)
+--- /dev/null
++++ Linux-PAM/modules/pam_selinux/Makefile
 @@ -0,0 +1,19 @@
 +#
 +# $Id: Makefile,v 1.5 2003/07/08 03:16:28 nalin Exp $
@@ -1834,8 +1834,8 @@ Index: Linux-PAM/modules/pam_selinux/Makefile
 +
 Index: Linux-PAM/modules/pam_selinux/README
 ===================================================================
---- Linux-PAM/modules/pam_selinux/README	(revision 0)
-+++ Linux-PAM/modules/pam_selinux/README	(revision 0)
+--- /dev/null
++++ Linux-PAM/modules/pam_selinux/README
 @@ -0,0 +1,17 @@
 +This is pam_selinux, a module for setting the default security context after 
 +login via PAM.

@@ -2,8 +2,8 @@ Allow explicit limits for root.
 Also, remove limits on su.
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 383)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
 @@ -68,6 +68,7 @@
  
  /* internal data */
@@ -97,9 +97,9 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 +    }
 +
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
-       int retval;
          if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
-@@ -659,6 +699,8 @@
+             pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
+@@ -647,6 +687,8 @@
          return PAM_IGNORE;
      }
  

@@ -1,11 +1,8 @@
 Index: Linux-PAM/modules/pam_group/group.conf
 ===================================================================
-RCS file: /afs/sipb/project/debian/cvs/pam/Linux-PAM/modules/pam_group/group.conf,v
-retrieving revision 1.1.1.1
-diff -u -r1.1.1.1 group.conf
---- Linux-PAM/modules/pam_group/group.conf	29 Apr 2001 04:17:21 -0000	1.1.1.1
-+++ Linux-PAM/modules/pam_group/group.conf	21 Jun 2003 20:34:58 -0000
-@@ -45,15 +45,16 @@
+--- Linux-PAM/modules/pam_group/group.conf.orig
++++ Linux-PAM/modules/pam_group/group.conf
+@@ -45,16 +45,17 @@
  #
  
  #xsh;tty*&!ttyp*;us;Al0000-2400;floppy
@@ -21,8 +18,9 @@ diff -u -r1.1.1.1 group.conf
 -#xsh; tty* ;sword;!Wk0900-1800;games, sound
 +#xsh; tty* ;sword;!Wk0900-1800;sound, play
  #xsh; tty* ;*;Al0900-1800;floppy
-+
-+
  
++
++
  #
  # End of group.conf file
+ #

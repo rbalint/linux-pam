@@ -1,7 +1,7 @@
 Index: Linux-PAM/libpam/pam_handlers.c
 ===================================================================
---- Linux-PAM/libpam/pam_handlers.c	(revision 297)
-+++ Linux-PAM/libpam/pam_handlers.c	(working copy)
+--- Linux-PAM/libpam/pam_handlers.c.orig
++++ Linux-PAM/libpam/pam_handlers.c
 @@ -314,6 +314,7 @@
  	    }
  	}

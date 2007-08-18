@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
 ===================================================================
---- Linux-PAM/modules/pam_listfile/pam_listfile.c	(revision 281)
-+++ Linux-PAM/modules/pam_listfile/pam_listfile.c	(working copy)
+--- Linux-PAM/modules/pam_listfile/pam_listfile.c.orig
++++ Linux-PAM/modules/pam_listfile/pam_listfile.c
 @@ -41,6 +41,8 @@
  #include <security/_pam_macros.h>
  #include <security/_pam_modutil.h>

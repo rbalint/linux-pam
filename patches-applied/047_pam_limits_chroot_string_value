@@ -1,8 +1,8 @@
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 388)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
-@@ -418,9 +418,9 @@
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
+@@ -417,9 +417,9 @@
  		if (int_value == 0 && value_orig == endptr) {
  			_pam_log(LOG_DEBUG, "wrong limit value '%s' for limit type '%s'",
  				lim_value, lim_type);

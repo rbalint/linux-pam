@@ -1,7 +1,7 @@
 Index: Linux-PAM/doc/pam_modules.sgml
 ===================================================================
---- Linux-PAM/doc/pam_modules.sgml	(revision 274)
-+++ Linux-PAM/doc/pam_modules.sgml	(working copy)
+--- Linux-PAM/doc/pam_modules.sgml.orig
++++ Linux-PAM/doc/pam_modules.sgml
 @@ -925,7 +925,7 @@
  <tag><tt/PAM_AUTHTOK_ERR/</tag>
  	The module was unable to obtain the new authentication token.
@@ -13,8 +13,8 @@ Index: Linux-PAM/doc/pam_modules.sgml
  <tag><tt/PAM_AUTHTOK_LOCK_BUSY/</tag>
 Index: Linux-PAM/doc/modules/pam_cracklib.sgml
 ===================================================================
---- Linux-PAM/doc/modules/pam_cracklib.sgml	(revision 274)
-+++ Linux-PAM/doc/modules/pam_cracklib.sgml	(working copy)
+--- Linux-PAM/doc/modules/pam_cracklib.sgml.orig
++++ Linux-PAM/doc/modules/pam_cracklib.sgml
 @@ -37,7 +37,7 @@
  <tag><bf>System dependencies:</bf></tag> 
  
@@ -57,8 +57,8 @@ Index: Linux-PAM/doc/modules/pam_cracklib.sgml
  
 Index: Linux-PAM/doc/modules/pam_userdb.sgml
 ===================================================================
---- Linux-PAM/doc/modules/pam_userdb.sgml	(revision 274)
-+++ Linux-PAM/doc/modules/pam_userdb.sgml	(working copy)
+--- Linux-PAM/doc/modules/pam_userdb.sgml.orig
++++ Linux-PAM/doc/modules/pam_userdb.sgml
 @@ -61,7 +61,7 @@
  so caution must be exercised over the access rights to the DB database itself..
  
@@ -84,8 +84,8 @@ Index: Linux-PAM/doc/modules/pam_userdb.sgml
  
 Index: Linux-PAM/doc/pam_appl.sgml
 ===================================================================
---- Linux-PAM/doc/pam_appl.sgml	(revision 274)
-+++ Linux-PAM/doc/pam_appl.sgml	(working copy)
+--- Linux-PAM/doc/pam_appl.sgml.orig
++++ Linux-PAM/doc/pam_appl.sgml
 @@ -724,7 +724,7 @@
  <tag><tt/PAM_AUTHTOK_ERR/</tag>
  	A module was unable to obtain the new authentication token.
@@ -97,8 +97,8 @@ Index: Linux-PAM/doc/pam_appl.sgml
  <tag><tt/PAM_AUTHTOK_LOCK_BUSY/</tag>
 Index: Linux-PAM/doc/pam_source.sgml
 ===================================================================
---- Linux-PAM/doc/pam_source.sgml	(revision 274)
-+++ Linux-PAM/doc/pam_source.sgml	(working copy)
+--- Linux-PAM/doc/pam_source.sgml.orig
++++ Linux-PAM/doc/pam_source.sgml
 @@ -314,7 +314,7 @@
  the program is named "pamprog" and the name of the configuration file
  is /etc/pam.d/pamprog.

@@ -1,8 +1,8 @@
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 319)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
-@@ -589,6 +589,14 @@
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
+@@ -646,6 +646,14 @@
  	    continue;
  	}
  	retval = setrlimit(i, &pl->limits[i].limit);

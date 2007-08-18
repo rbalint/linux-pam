@@ -4,8 +4,8 @@ other changes seem to have been made upstream.
 
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(revision 295)
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(working copy)
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 @@ -553,6 +553,15 @@
  			retval = PAM_AUTHTOK_ERR;
  			goto done;

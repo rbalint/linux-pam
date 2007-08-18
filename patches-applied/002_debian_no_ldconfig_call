@@ -1,7 +1,7 @@
 Index: Linux-PAM/configure.in
 ===================================================================
---- Linux-PAM/configure.in	(revision 274)
-+++ Linux-PAM/configure.in	(working copy)
+--- Linux-PAM/configure.in.orig
++++ Linux-PAM/configure.in
 @@ -45,7 +45,7 @@
  USESONAME=yes			; AC_SUBST(USESONAME)
  SOSWITCH="-Wl,-soname -Wl,"	; AC_SUBST(SOSWITCH)

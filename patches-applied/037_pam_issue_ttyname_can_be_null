@@ -3,8 +3,8 @@ segfault if ttyname is null
 
 Index: Linux-PAM/modules/pam_issue/pam_issue.c
 ===================================================================
---- Linux-PAM/modules/pam_issue/pam_issue.c	(revision 295)
-+++ Linux-PAM/modules/pam_issue/pam_issue.c	(working copy)
+--- Linux-PAM/modules/pam_issue/pam_issue.c.orig
++++ Linux-PAM/modules/pam_issue/pam_issue.c
 @@ -254,9 +254,13 @@
  	      case 'l':
  		{

@@ -1,7 +1,7 @@
 Index: Linux-PAM/configure.in
 ===================================================================
---- Linux-PAM/configure.in	(revision 303)
-+++ Linux-PAM/configure.in	(working copy)
+--- Linux-PAM/configure.in.orig
++++ Linux-PAM/configure.in
 @@ -301,7 +301,7 @@
  ### May need per-OS attention
  ### Example: -D_POSIX_SOURCE: needed on Linux but harms Solaris.

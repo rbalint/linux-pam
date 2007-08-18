@@ -1,7 +1,7 @@
 Index: Linux-PAM/configure.in
 ===================================================================
---- Linux-PAM/configure.in	(revision 384)
-+++ Linux-PAM/configure.in	(working copy)
+--- Linux-PAM/configure.in.orig
++++ Linux-PAM/configure.in
 @@ -246,7 +246,7 @@
  AC_HEADER_DIRENT
  AC_HEADER_STDC
@@ -21,8 +21,8 @@ Index: Linux-PAM/configure.in
  
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 385)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
 @@ -19,6 +19,10 @@
  
  #include <security/_pam_aconf.h>
@@ -53,7 +53,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  
  #define LIMIT_SOFT  1
  #define LIMIT_HARD  2
-@@ -292,6 +301,10 @@
+@@ -291,6 +300,10 @@
      pl->login_limit = -2;
      pl->login_limit_def = LIMITS_DEF_NONE;
  
@@ -64,7 +64,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      pl->chroot_dir[0] = '\0';
      
      return retval;
-@@ -365,6 +378,10 @@
+@@ -364,6 +377,10 @@
  	limit_item = LIMIT_PRI;
      } else if (strcmp(lim_item, "chroot") == 0) {
  	limit_item = LIMIT_CHROOT;
@@ -75,7 +75,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      } else {
          _pam_log(LOG_DEBUG,"unknown limit item '%s'", lim_item);
          return;
-@@ -449,6 +466,13 @@
+@@ -448,6 +465,13 @@
  
      if (limit_item == LIMIT_CHROOT)
  	strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir));
@@ -89,7 +89,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      else if ( (limit_item != LIMIT_LOGIN)
  	 && (limit_item != LIMIT_NUMSYSLOGINS)
  	 && (limit_item != LIMIT_PRI) ) {
-@@ -662,6 +686,12 @@
+@@ -649,6 +673,12 @@
  	if (i != 0)
  	    retval = LIMIT_ERR;
      }
@@ -104,8 +104,8 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  
 Index: Linux-PAM/Make.Rules.in
 ===================================================================
---- Linux-PAM/Make.Rules.in	(revision 378)
-+++ Linux-PAM/Make.Rules.in	(working copy)
+--- Linux-PAM/Make.Rules.in.orig
++++ Linux-PAM/Make.Rules.in
 @@ -113,7 +113,7 @@
  RANLIB=@RANLIB@
  STRIP=@STRIP@
@@ -117,8 +117,8 @@ Index: Linux-PAM/Make.Rules.in
  USESONAME=@USESONAME@
 Index: Linux-PAM/_pam_aconf.h.in
 ===================================================================
---- Linux-PAM/_pam_aconf.h.in	(revision 383)
-+++ Linux-PAM/_pam_aconf.h.in	(working copy)
+--- Linux-PAM/_pam_aconf.h.in.orig
++++ Linux-PAM/_pam_aconf.h.in
 @@ -75,6 +75,8 @@
  /* read both confs - read /etc/pam.d and /etc/pam.conf in serial */
  #undef PAM_READ_BOTH_CONFS

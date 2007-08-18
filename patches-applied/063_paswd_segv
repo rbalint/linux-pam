@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(revision 392)
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(working copy)
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 @@ -1121,7 +1121,7 @@
  			 * password is acceptable.
  			 */

@@ -5,9 +5,9 @@ try to decrease a limit.  Running PAM as non-root is not so great.
 
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 295)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
-@@ -581,13 +581,17 @@
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
+@@ -638,13 +638,17 @@
      }
  
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {

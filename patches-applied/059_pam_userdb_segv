@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_userdb/pam_userdb.c
 ===================================================================
---- Linux-PAM/modules/pam_userdb/pam_userdb.c	(revision 363)
-+++ Linux-PAM/modules/pam_userdb/pam_userdb.c	(working copy)
+--- Linux-PAM/modules/pam_userdb/pam_userdb.c.orig
++++ Linux-PAM/modules/pam_userdb/pam_userdb.c
 @@ -83,7 +83,7 @@
  	ctrl |= PAM_KEY_ONLY_ARG;
        else if (!strncasecmp(*argv,"db=", 3))

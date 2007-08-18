@@ -5,8 +5,8 @@
 
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/support.c	(revision 281)
-+++ Linux-PAM/modules/pam_unix/support.c	(working copy)
+--- Linux-PAM/modules/pam_unix/support.c.orig
++++ Linux-PAM/modules/pam_unix/support.c
 @@ -714,7 +714,7 @@
  			if (on(UNIX_AUDIT, ctrl)) {
  				/* this might be a typo and the user has given a password
@@ -18,8 +18,8 @@ Index: Linux-PAM/modules/pam_unix/support.c
  				name = NULL;
 Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/unix_chkpwd.c	(revision 283)
-+++ Linux-PAM/modules/pam_unix/unix_chkpwd.c	(working copy)
+--- Linux-PAM/modules/pam_unix/unix_chkpwd.c.orig
++++ Linux-PAM/modules/pam_unix/unix_chkpwd.c
 @@ -154,7 +154,7 @@
  		}
  	}
@@ -31,8 +31,8 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
  	}
 Index: Linux-PAM/modules/pam_time/pam_time.c
 ===================================================================
---- Linux-PAM/modules/pam_time/pam_time.c	(revision 281)
-+++ Linux-PAM/modules/pam_time/pam_time.c	(working copy)
+--- Linux-PAM/modules/pam_time/pam_time.c.orig
++++ Linux-PAM/modules/pam_time/pam_time.c
 @@ -336,7 +336,11 @@
  		    return FALSE;
  	  }
@@ -48,8 +48,8 @@ Index: Linux-PAM/modules/pam_time/pam_time.c
  typedef struct {
 Index: Linux-PAM/modules/pam_group/pam_group.c
 ===================================================================
---- Linux-PAM/modules/pam_group/pam_group.c	(revision 282)
-+++ Linux-PAM/modules/pam_group/pam_group.c	(working copy)
+--- Linux-PAM/modules/pam_group/pam_group.c.orig
++++ Linux-PAM/modules/pam_group/pam_group.c
 @@ -776,9 +776,12 @@
      unsigned setting;
  

@@ -6,8 +6,8 @@ to be consistent.
 
 Index: Linux-PAM/libpam/pam_dispatch.c
 ===================================================================
---- Linux-PAM/libpam/pam_dispatch.c	(revision 295)
-+++ Linux-PAM/libpam/pam_dispatch.c	(working copy)
+--- Linux-PAM/libpam/pam_dispatch.c.orig
++++ Linux-PAM/libpam/pam_dispatch.c
 @@ -224,20 +224,8 @@
  	    if ( _PAM_ACTION_IS_JUMP(action) ) {
  

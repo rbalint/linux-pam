@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_group/pam_group.c
 ===================================================================
---- Linux-PAM/modules/pam_group/pam_group.c	(revision 281)
-+++ Linux-PAM/modules/pam_group/pam_group.c	(working copy)
+--- Linux-PAM/modules/pam_group/pam_group.c.orig
++++ Linux-PAM/modules/pam_group/pam_group.c
 @@ -151,9 +151,8 @@
  	D(("buffer=<%s>",*buf));
  #endif

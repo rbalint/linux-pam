@@ -2,8 +2,8 @@ Patch from Martin Schwenke <martin@meltin.net>
 
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(revision 289)
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c	(working copy)
+--- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
++++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 @@ -376,7 +376,7 @@
      struct passwd *tmpent = NULL;
      struct stat st;

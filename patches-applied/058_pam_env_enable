@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_env/pam_env.c
 ===================================================================
---- Linux-PAM/modules/pam_env/pam_env.c	(revision 348)
-+++ Linux-PAM/modules/pam_env/pam_env.c	(working copy)
+--- Linux-PAM/modules/pam_env/pam_env.c.orig
++++ Linux-PAM/modules/pam_env/pam_env.c
 @@ -13,7 +13,7 @@
  #endif
  

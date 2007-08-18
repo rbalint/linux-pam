@@ -1,7 +1,7 @@
 Index: Linux-PAM/doc/modules/pam_limits.sgml
 ===================================================================
---- Linux-PAM/doc/modules/pam_limits.sgml	(revision 379)
-+++ Linux-PAM/doc/modules/pam_limits.sgml	(working copy)
+--- Linux-PAM/doc/modules/pam_limits.sgml.orig
++++ Linux-PAM/doc/modules/pam_limits.sgml
 @@ -155,6 +155,7 @@
  <item><tt/priority/ - the priority to run user process with (negative
  values boost process priority)
@@ -20,8 +20,8 @@ Index: Linux-PAM/doc/modules/pam_limits.sgml
  </tscreen>
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 381)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
 @@ -73,6 +73,7 @@
      int flag_numsyslogins; /* whether to limit logins only for a
  			      specific user or to count all logins */
@@ -67,7 +67,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  	 && (limit_item != LIMIT_NUMSYSLOGINS)
  	 && (limit_item != LIMIT_PRI) ) {
          if (limit_type & LIMIT_SOFT) {
-@@ -602,6 +610,13 @@
+@@ -592,6 +600,13 @@
          retval |= LOGIN_ERR;
      }
  

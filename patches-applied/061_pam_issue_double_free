@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_issue/pam_issue.c
 ===================================================================
---- Linux-PAM/modules/pam_issue/pam_issue.c	(revision 363)
-+++ Linux-PAM/modules/pam_issue/pam_issue.c	(working copy)
+--- Linux-PAM/modules/pam_issue/pam_issue.c.orig
++++ Linux-PAM/modules/pam_issue/pam_issue.c
 @@ -64,11 +64,11 @@
  
      for ( ; argc-- > 0 ; ++argv ) {

@@ -2,9 +2,9 @@
 
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
---- Linux-PAM/modules/pam_limits/pam_limits.c	(revision 284)
-+++ Linux-PAM/modules/pam_limits/pam_limits.c	(working copy)
-@@ -473,8 +473,6 @@
+--- Linux-PAM/modules/pam_limits/pam_limits.c.orig
++++ Linux-PAM/modules/pam_limits/pam_limits.c
+@@ -508,8 +508,6 @@
  	D(("scanned line[%d]: domain[%s], ltype[%s], item[%s], value[%s]",
  	   i, domain, ltype, item, value));
  

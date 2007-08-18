@@ -1,7 +1,7 @@
 Index: Linux-PAM/modules/pam_securetty/pam_securetty.c
 ===================================================================
---- Linux-PAM/modules/pam_securetty/pam_securetty.c	(revision 295)
-+++ Linux-PAM/modules/pam_securetty/pam_securetty.c	(working copy)
+--- Linux-PAM/modules/pam_securetty/pam_securetty.c.orig
++++ Linux-PAM/modules/pam_securetty/pam_securetty.c
 @@ -78,11 +78,7 @@
      int retval = PAM_AUTH_ERR;
      const char *username;
@@ -14,19 +14,15 @@ Index: Linux-PAM/modules/pam_securetty/pam_securetty.c
  
      /* log a trail for debugging */
      if (ctrl & PAM_DEBUG_ARG) {
-@@ -115,65 +111,12 @@
+@@ -115,63 +111,10 @@
  	return PAM_SERVICE_ERR;
      }
  
 -    /* The PAM_TTY item may be prefixed with "/dev/" - skip that */
 -    if (strncmp(TTY_PREFIX, uttyname, sizeof(TTY_PREFIX)-1) == 0) {
 -	uttyname += sizeof(TTY_PREFIX)-1;
-+    retval = _pammodutil_tty_secure(uttyname);
-+    if ((retval == PAM_SUCCESS) && (ctrl & PAM_DEBUG_ARG)) {
-+	_pam_log(LOG_DEBUG, "access allowed for '%s' on '%s'",
-+	         username, uttyname);
-     }
- 
+-    }
+-
 -    if (stat(SECURETTY_FILE, &ttyfileinfo)) {
 -	_pam_log(LOG_NOTICE, "Couldn't open " SECURETTY_FILE);
 -	return PAM_SUCCESS; /* for compatibility with old securetty handling,
@@ -79,15 +75,17 @@ Index: Linux-PAM/modules/pam_securetty/pam_securetty.c
 -	}
 -	retval = PAM_SUCCESS;
 -
--    }
--
-     return retval;
- }
++    retval = _pammodutil_tty_secure(uttyname);
++    if ((retval == PAM_SUCCESS) && (ctrl & PAM_DEBUG_ARG)) {
++	_pam_log(LOG_DEBUG, "access allowed for '%s' on '%s'",
++	         username, uttyname);
+     }
  
+     return retval;
 Index: Linux-PAM/modules/pammodutil/include/security/_pam_modutil.h
 ===================================================================
---- Linux-PAM/modules/pammodutil/include/security/_pam_modutil.h	(revision 295)
-+++ Linux-PAM/modules/pammodutil/include/security/_pam_modutil.h	(working copy)
+--- Linux-PAM/modules/pammodutil/include/security/_pam_modutil.h.orig
++++ Linux-PAM/modules/pammodutil/include/security/_pam_modutil.h
 @@ -63,4 +63,6 @@
  
  extern int _pammodutil_write(int fd, const char *buffer, int count);
@@ -97,8 +95,8 @@ Index: Linux-PAM/modules/pammodutil/include/security/_pam_modutil.h
  #endif /* _PAM_MODUTIL_H */
 Index: Linux-PAM/modules/pammodutil/Makefile
 ===================================================================
---- Linux-PAM/modules/pammodutil/Makefile	(revision 295)
-+++ Linux-PAM/modules/pammodutil/Makefile	(working copy)
+--- Linux-PAM/modules/pammodutil/Makefile.orig
++++ Linux-PAM/modules/pammodutil/Makefile
 @@ -20,7 +20,8 @@
  # all the object files we care about
  LIBOBJECTS = modutil_cleanup.o modutil_getpwnam.o modutil_getpwuid.o \
@@ -109,8 +107,10 @@ Index: Linux-PAM/modules/pammodutil/Makefile
  
  # static library name
  LIBSTATIC = $(LIBNAME).a
---- /dev/null	1969-12-31 16:00:00.000000000 -0800
-+++ Linux-PAM/modules/pammodutil/tty_secure.c	2005-07-14 01:04:29.000000000 -0700
+Index: Linux-PAM/modules/pammodutil/tty_secure.c
+===================================================================
+--- /dev/null
++++ Linux-PAM/modules/pammodutil/tty_secure.c
 @@ -0,0 +1,108 @@
 +/* A function to determine if a particular line is in /etc/securietty*/
 +

@@ -1,7 +1,7 @@
 Index: Linux-PAM/configure.in
 ===================================================================
---- Linux-PAM/configure.in	(revision 287)
-+++ Linux-PAM/configure.in	(working copy)
+--- Linux-PAM/configure.in.orig
++++ Linux-PAM/configure.in
 @@ -271,18 +271,7 @@
  DICT_DIR_CANDIDATES="/usr/lib /usr/share/dict /usr/share/lib \
    /usr/local/lib /usr/local/share/lib /usr/share/cracklib"
