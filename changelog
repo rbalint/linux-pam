@@ -1,3 +1,11 @@
+pam (0.79-5) UNRELEASED; urgency=low
+
+  * Refactor to use quilt.
+  * Drop unnecessary build-dependency on patch, which is
+    build-essential.
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 17 Aug 2007 21:04:00 -0700
+
 pam (0.79-4) unstable; urgency=medium
 
   * Medium-urgency upload; at least one RC bugfix, but also a

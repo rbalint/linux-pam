@@ -17,6 +17,9 @@ endif
 LC_COLLATE=C
 export LC_COLLATE
 
+QUILT_PATCH_DIR = debian/patches-applied
+include /usr/share/quilt/quilt.make
+
 BUILD_TREE=Linux-PAM
 
 pdoc=libpam-doc
