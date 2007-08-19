@@ -1,39 +1,84 @@
 Delta from 1.12 to 1.13 from Linux-PAM pam_unix_passwd.c
 made to work with our changes.  Not sure this is actually relevant, as
-other changes seem to have been made upstream.
+other changes seem to have been made upstream.  This patch was
+specifically reverted in upstream CVS revision 1.18 as introducing a
+"race".
 
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
-@@ -553,6 +553,15 @@
- 			retval = PAM_AUTHTOK_ERR;
- 			goto done;
- 		}
-+
-+#ifdef USE_LCKPWDF
-+		retval = lckpwdf();
-+		if (retval != 0) {
-+			retval = PAM_AUTHTOK_LOCK_BUSY;
-+			goto done;
-+		}
-+#endif /* def USE_LCKPWDF */
-+
- 		if (on(UNIX_SHADOW, ctrl) || _unix_shadowed(pwd)) {
- 			retval = _update_shadow(pamh, forwho, towhat);
- 			if (retval == PAM_SUCCESS)
-@@ -569,10 +578,6 @@
+@@ -749,8 +749,7 @@
+ 		       char *towhat, unsigned int ctrl, int remember)
+ {
+ 	struct passwd *pwd = NULL;
+-	int retval = 0;
+-	int unlocked = 0;
++	int retval = 0, i = 0;
+ 	char *master = NULL;
+ 
+ 	D(("called"));
+@@ -770,12 +769,6 @@
  		int status;
- 		int err = 0;
+ 		enum clnt_stat err;
  
 -		/* Unlock passwd file to avoid deadlock */
 -#ifdef USE_LCKPWDF
 -		ulckpwdf();
 -#endif
- 		/* Make RPC call to NIS server */
- 		if ((master = getNISserver(pamh)) == NULL)
- 			return PAM_TRY_AGAIN;
-@@ -770,7 +775,7 @@
+-		unlocked = 1;
+-
+ 		/* Initialize password information */
+ 		yppwd.newpw.pw_passwd = pwd->pw_passwd;
+ 		yppwd.newpw.pw_name = pwd->pw_name;
+@@ -833,29 +826,28 @@
+ 	}
+ 
+ 	if (_unix_comesfromsource(pamh, forwho, 1, 0)) {
+-#ifdef USE_LCKPWDF
+-		if(unlocked) {
+-			int i = 0;
+-			/* These values for the number of attempts and the sleep time
+-			   are, of course, completely arbitrary.
+-			   My reading of the PAM docs is that, once pam_chauthtok() has been
+-			   called with PAM_UPDATE_AUTHTOK, we are obliged to take any
+-			   reasonable steps to make sure the token is updated; so retrying
+-			   for 1/10 sec. isn't overdoing it. */
+-			while((retval = lckpwdf()) != 0 && i < 100) {
+-				usleep(1000);
+-				i++;
+-			}
+-			if(retval != 0) {
+-				return PAM_AUTHTOK_LOCK_BUSY;
+-			}
+-		}
+-#endif
+ 		/* first, save old password */
+ 		if (save_old_password(pamh, forwho, fromwhat, remember)) {
+ 			retval = PAM_AUTHTOK_ERR;
+ 			goto done;
+ 		}
++
++#ifdef USE_LCKPWDF
++		/* These values for the number of attempts and the sleep time
++		   are, of course, completely arbitrary.
++		   My reading of the PAM docs is that, once pam_chauthtok() has been
++		   called with PAM_UPDATE_AUTHTOK, we are obliged to take any
++		   reasonable steps to make sure the token is updated; so retrying
++		   for 1/10 sec. isn't overdoing it. */
++		while((retval = lckpwdf()) != 0 && i < 100) {
++			usleep(1000);
++			i++;
++		}
++		if(retval != 0) {
++			retval PAM_AUTHTOK_LOCK_BUSY;
++			goto done;
++		}
++#endif
+ 		if (on(UNIX_SHADOW, ctrl) || _unix_shadowed(pwd)) {
+ 			retval = _update_shadow(pamh, forwho, towhat);
+ #ifdef WITH_SELINUX
+@@ -1024,7 +1016,7 @@
  				int argc, const char **argv)
  {
  	unsigned int ctrl, lctrl;
@@ -42,7 +87,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  	int remember = -1;
  
  	/* <DO NOT free() THESE> */
-@@ -1007,30 +1012,11 @@
+@@ -1255,30 +1247,11 @@
  			pass_new = pass_old = NULL;	/* tidy up */
  			return retval;
  		}
@@ -66,25 +111,25 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  		if (pass_old) {
  			retval = _unix_verify_password(pamh, user, pass_old, ctrl);
  			if (retval != PAM_SUCCESS) {
- 				_log_err(LOG_NOTICE, pamh, "user password changed by another process");
+ 				pam_syslog(pamh, LOG_NOTICE, "user password changed by another process");
 -#ifdef USE_LCKPWDF
 -				ulckpwdf();
 -#endif
  				return retval;
  			}
  		}
-@@ -1038,9 +1024,6 @@
+@@ -1286,9 +1259,6 @@
  		retval = _unix_verify_shadow(pamh, user, ctrl);
  		if (retval != PAM_SUCCESS) {
- 			_log_err(LOG_NOTICE, pamh, "user not authenticated 2");
+ 			pam_syslog(pamh, LOG_NOTICE, "user not authenticated 2");
 -#ifdef USE_LCKPWDF
 -			ulckpwdf();
 -#endif
  			return retval;
  		}
  
-@@ -1049,9 +1032,6 @@
- 			_log_err(LOG_NOTICE, pamh,
+@@ -1297,9 +1267,6 @@
+ 			pam_syslog(pamh, LOG_NOTICE,
  			         "new password not acceptable 2");
  			pass_new = pass_old = NULL;	/* tidy up */
 -#ifdef USE_LCKPWDF
@@ -93,8 +138,8 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  			return retval;
  		}
  
-@@ -1093,9 +1073,6 @@
- 					_log_err(LOG_CRIT, pamh,
+@@ -1341,9 +1308,6 @@
+ 					pam_syslog(pamh, LOG_CRIT,
  					         "out of memory for password");
  					pass_new = pass_old = NULL;	/* tidy up */
 -#ifdef USE_LCKPWDF
