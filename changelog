@@ -1,10 +1,14 @@
-pam (0.79-5) UNRELEASED; urgency=low
+pam (0.99.7.1-2) UNRELEASED; urgency=low
 
+  * New upstream release; thanks to Roger Leigh and Jan Christoph Nordholz
+    for their extensive work in helping to prepare for this update in Debian.
   * Refactor to use quilt.
   * Drop unnecessary build-dependency on patch, which is
     build-essential.
+  * Drop patch 002_debian_no_ldconfig_call, which has been superseded
+    upstream.
 
- -- Steve Langasek <vorlon@debian.org>  Fri, 17 Aug 2007 21:04:00 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sat, 18 Aug 2007 22:20:09 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
