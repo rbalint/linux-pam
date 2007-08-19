@@ -49,7 +49,7 @@ Package: libpam0g-dev
 Section: libdevel
 Priority: optional
 Architecture: any
-Depends: libpam0g (= ${Source-Version}), libc6-dev|libc-dev
+Depends: libpam0g (= ${binary:Version}), libc6-dev|libc-dev
 Conflicts: libpam-dev, libpam-dbg
 Replaces: libpam0g (<= 0.65)
 Provides: libpam-dev

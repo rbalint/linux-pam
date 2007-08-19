@@ -30,6 +30,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     from crack.h.
   * Patch 038: partially merged/superseded upstream
   * Patch 061: partially merged upstream
+  * Use ${binary:Version} instead of ${Source-Version} in
+    debian/control.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 15:40:42 -0700
 
