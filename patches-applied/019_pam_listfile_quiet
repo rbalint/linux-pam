@@ -2,47 +2,46 @@ Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
 ===================================================================
 --- Linux-PAM/modules/pam_listfile/pam_listfile.c.orig
 +++ Linux-PAM/modules/pam_listfile/pam_listfile.c
-@@ -41,6 +41,8 @@
- #include <security/_pam_macros.h>
- #include <security/_pam_modutil.h>
+@@ -39,6 +39,8 @@
+ #include <security/pam_modutil.h>
+ #include <security/pam_ext.h>
  
 +static int quiet = 0;
 +
- /* some syslogging */
- 
- #define LOCAL_LOG_PREFIX "PAM-listfile: "
-@@ -160,7 +162,9 @@
+ /* checks if a user is on a list of members */
+ static int is_on_list(char * const *list, const char *member)
+ {
+@@ -155,6 +157,8 @@
  		    apply_type=APPLY_TYPE_USER;
  		    strncpy(apply_val,myval,sizeof(apply_val)-1);
  		}
--	    } else {
-+	    } else if(!strcmp(mybuf,"quiet")) {
++	    } else if (!strcmp(mybuf,"quiet")) {
 +		quiet = 1;
-+    	    } else {
- 		_pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Unknown option: %s",mybuf);
- 		return onerr;
- 	    }
-@@ -307,7 +311,8 @@
+ 	    } else {
+ 		free(ifname);
+ 		pam_syslog(pamh,LOG_ERR, "Unknown option: %s",mybuf);
+@@ -316,7 +320,8 @@
  	     ifname, citem, citemp, sense);
  #endif
      if(lstat(ifname,&fileinfo)) {
--	_pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Couldn't open %s",ifname);
+-	pam_syslog(pamh,LOG_ERR, "Couldn't open %s",ifname);
 +	if (!quiet)
-+	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX "Couldn't open %s",ifname);
++	    pam_syslog(pamh,LOG_ERR, "Couldn't open %s",ifname);
+ 	free(ifname);
  	return onerr;
      }
- 
-@@ -315,15 +320,16 @@
+@@ -325,16 +330,17 @@
         || !S_ISREG(fileinfo.st_mode)) {
  	/* If the file is world writable or is not a
  	   normal file, return error */
--	_pam_log(LOG_ERR,LOCAL_LOG_PREFIX 
+-	pam_syslog(pamh,LOG_ERR,
 -		 "%s is either world writable or not a normal file",
 -		 ifname);
 +	if (!quiet)
-+	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX 
-+		     "%s is either world writable or not a normal file",
-+		     ifname);
++	    pam_syslog(pamh,LOG_ERR,
++	               "%s is either world writable or not a normal file",
++	               ifname);
+ 	free(ifname);
  	return PAM_AUTH_ERR;
      }
  
@@ -51,17 +50,17 @@ Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
 -	if (onerr == PAM_SERVICE_ERR) {
 +	if (onerr == PAM_SERVICE_ERR && !quiet) {
  	    /* Only report if it's an error... */
- 	    _pam_log(LOG_ERR,LOCAL_LOG_PREFIX  "Error opening %s", ifname);
+ 	    pam_syslog(pamh,LOG_ERR,  "Error opening %s", ifname);
  	}
-@@ -386,8 +392,9 @@
+@@ -399,8 +405,9 @@
  #endif
- 	(void) pam_get_item(pamh, PAM_SERVICE, (const void **)&service);
+ 	(void) pam_get_item(pamh, PAM_SERVICE, &service);
  	(void) pam_get_user(pamh, &user_name, NULL);
--	_pam_log(LOG_ALERT,LOCAL_LOG_PREFIX "Refused user %s for service %s",
--		 user_name, service);
+-	pam_syslog (pamh, LOG_ALERT, "Refused user %s for service %s",
+-		    user_name, (const char *)service);
 +	if (!quiet)
-+	    _pam_log(LOG_ALERT,LOCAL_LOG_PREFIX "Refused user %s for service %s",
-+		     user_name, service);
++	    pam_syslog (pamh, LOG_ALERT, "Refused user %s for service %s",
++	                user_name, (const char *)service);
  	return PAM_AUTH_ERR;
      }
  }
