@@ -17,7 +17,6 @@
 038_support_hurd -p0
 040_pam_limits_log_failure -p0
 043_pam_unix_unknown_user_not_alert -p0
-044_configure_supports_bsd -p0
 045_pam_dispatch_jump_is_ignore -p0
 046_pam_group_example -p0
 047_pam_limits_chroot_string_value -p0

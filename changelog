@@ -5,13 +5,14 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Refactor to use quilt.
   * Drop unnecessary build-dependency on patch, which is
     build-essential.
-  * Drop patches 002_debian_no_ldconfig_call, 010_pam_cplusplus and
-    018_man_fixes, which have been superseded upstream.
+  * Drop patches 002_debian_no_ldconfig_call, 010_pam_cplusplus,
+    018_man_fixes and 044_configure_supports_bsd, which have been superseded
+    upstream.
   * Drop patches 005_pam_limits_099_6,
     012_pam_group_less_restrictive_charset and 023_pam_env_limits_miscfixes,
     which have been integrated upstream.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 18 Aug 2007 23:41:03 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sat, 18 Aug 2007 23:48:24 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
