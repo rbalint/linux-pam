@@ -1,24 +1,13 @@
-Index: Linux-PAM/configure.in
+Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
 ===================================================================
---- Linux-PAM/configure.in.orig
-+++ Linux-PAM/configure.in
-@@ -271,18 +271,7 @@
- DICT_DIR_CANDIDATES="/usr/lib /usr/share/dict /usr/share/lib \
-   /usr/local/lib /usr/local/share/lib /usr/share/cracklib"
- DICT_FILE_CANDIDATES="pw_dict cracklib_dict"
--CRACKLIB_DICTPATH=""
--for d in $DICT_DIR_CANDIDATES ; do
--      for f in $DICT_FILE_CANDIDATES ; do
--              if test -r $d/$f.hwm ; then
--                      CRACKLIB_DICTPATH=$d/$f
--                      break 2
--              elif test -r $d/dict/$f.hwm ; then
--                      CRACKLIB_DICTPATH=$d/dict/$f
--                      break 2
--              fi
--      done
--done
-+CRACKLIB_DICTPATH=/var/cache/cracklib/cracklib_dict""
- if test -z "$CRACKLIB_DICTPATH" ; then
-       AC_MSG_WARN([none found - pam_cracklib will not be built])
- else
+--- Linux-PAM/modules/pam_cracklib/pam_cracklib.c.orig
++++ Linux-PAM/modules/pam_cracklib/pam_cracklib.c
+@@ -609,7 +609,7 @@
+             const char *crack_msg;
+ 
+ 	    D(("against cracklib"));
+-            if ((crack_msg = FascistCheck(token1,options.cracklib_dictpath[0] == '\0'?NULL:options.cracklib_dictpath))) {
++            if ((crack_msg = FascistCheck(token1,options.cracklib_dictpath[0] == '\0'?CRACKLIB_DICTPATH:options.cracklib_dictpath))) {
+                 if (ctrl & PAM_DEBUG_ARG)
+                     pam_syslog(pamh,LOG_DEBUG,"bad password: %s",crack_msg);
+                 pam_error(pamh, _("BAD PASSWORD: %s"), crack_msg);

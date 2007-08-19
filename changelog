@@ -21,8 +21,11 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     messages that were already added upstream; update for the pam_modutil
     changes; tighten the flag handling of the 'obscure' option; drop bogus
     check in unix_chkpwd for null passwords.
+  * Patch 024: CRACKLIB_DICTPATH is no longer set in configure.in, so patch
+    pam_cracklib.c instead to use the default dictpath already available
+    from crack.h.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 03:08:57 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 04:19:30 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
