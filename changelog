@@ -10,13 +10,14 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     052_pam_unix_no_openlog, which have been superseded upstream.
   * Drop patches 005_pam_limits_099_6,
     012_pam_group_less_restrictive_charset, 023_pam_env_limits_miscfixes,
-    048_pam_group_colon_valid_char, 058_pam_env_enable, 059_pam_userdb_segv
-    and 060_pam_tally_segv, which have been integrated upstream.
+    048_pam_group_colon_valid_char, 058_pam_env_enable, 059_pam_userdb_segv,
+    060_pam_tally_segv and 062_c++_safe_headers, which have been integrated
+    upstream.
   * Patch 057: SELinux support is merged upstream, leaving only an
     unrelated OOM check for pam_unix_passwd.  Rename as
     057_pam_unix_passwd_OOM_check.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 01:19:10 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 01:22:25 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
