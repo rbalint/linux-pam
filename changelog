@@ -6,13 +6,13 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Drop unnecessary build-dependency on patch, which is
     build-essential.
   * Drop patches 002_debian_no_ldconfig_call, 010_pam_cplusplus,
-    018_man_fixes, 044_configure_supports_bsd and 050_configure_in_gnu, which
-    have been superseded upstream.
+    018_man_fixes, 044_configure_supports_bsd, 050_configure_in_gnu and
+    052_pam_unix_no_openlog, which have been superseded upstream.
   * Drop patches 005_pam_limits_099_6,
     012_pam_group_less_restrictive_charset, 023_pam_env_limits_miscfixes and
     048_pam_group_colon_valid_char, which have been integrated upstream.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 18 Aug 2007 23:51:59 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sat, 18 Aug 2007 23:54:09 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
