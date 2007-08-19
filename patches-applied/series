@@ -5,7 +5,6 @@
 019_pam_listfile_quiet -p0
 021_nis_cleanup -p0
 022_pam_unix_group_time_miscfixes -p0
-023_pam_env_limits_miscfixes -p0
 024_debian_cracklib_dict_path -p0
 026_pam_unix_passwd_unknown_user -p0
 027_pam_limits_better_init_allow_explicit_root -p0
