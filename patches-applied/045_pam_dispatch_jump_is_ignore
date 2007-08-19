@@ -8,14 +8,13 @@ Index: Linux-PAM/libpam/pam_dispatch.c
 ===================================================================
 --- Linux-PAM/libpam/pam_dispatch.c.orig
 +++ Linux-PAM/libpam/pam_dispatch.c
-@@ -224,20 +224,8 @@
+@@ -229,19 +229,7 @@
  	    if ( _PAM_ACTION_IS_JUMP(action) ) {
  
  		/* If we are evaluating a cached chain, we treat this
 -		   module as required (aka _PAM_ACTION_OK) as well as
 -		   executing the jump. */
-+		   module as ignored as well as executing the jump. */
- 
+-
 -		if (use_cached_chain) {
 -		    if (impression == _PAM_UNDEF
 -			|| (impression == _PAM_POSITIVE
@@ -26,7 +25,7 @@ Index: Linux-PAM/libpam/pam_dispatch.c
 -                	}
 -		    }
 -		}
--		
++		   module as ignored as well as executing the jump. */
+ 
  		/* this means that we need to skip #action stacked modules */
  		do {
-  		    h = h->next;
