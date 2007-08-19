@@ -4,7 +4,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
-@@ -376,7 +376,7 @@
+@@ -516,7 +516,7 @@
      struct passwd *tmpent = NULL;
      struct stat st;
      FILE *pwfile, *opwfile;
@@ -13,24 +13,24 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
      int oldmask;
  
      oldmask = umask(077);
-@@ -423,6 +423,7 @@
+@@ -584,6 +584,7 @@
  
  	    tmpent->pw_passwd = assigned_passwd.charp;
  	    err = 0;
 +	    found = 1;
  	}
  	if (putpwent(tmpent, pwfile)) {
- 	    D(("error writing entry to password file: %s\n", strerror(errno)));
-@@ -446,7 +447,7 @@
+ 	    D(("error writing entry to password file: %m"));
+@@ -620,7 +621,7 @@
+ 	return PAM_SUCCESS;
+     } else {
+ 	unlink(PW_TMPFILE);
+-	return PAM_AUTHTOK_ERR;
++	return found ? PAM_AUTHTOK_ERR : PAM_USER_UNKNOWN;
      }
- 
-     unlink(PW_TMPFILE);
--    return PAM_AUTHTOK_ERR;
-+    return found ? PAM_AUTHTOK_ERR : PAM_USER_UNKNOWN;
  }
  
- static int _update_shadow(pam_handle_t *pamh, const char *forwho, char *towhat)
-@@ -454,7 +455,7 @@
+@@ -629,7 +630,7 @@
      struct spwd *spwdent = NULL, *stmpent = NULL;
      struct stat st;
      FILE *pwfile, *opwfile;
@@ -39,7 +39,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
      int oldmask;
  
      spwdent = getspnam(forwho);
-@@ -501,6 +502,7 @@
+@@ -697,6 +698,7 @@
  	    stmpent->sp_pwdp = towhat;
  	    stmpent->sp_lstchg = time(NULL) / (60 * 60 * 24);
  	    err = 0;
@@ -47,25 +47,16 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  	    D(("Set password %s for %s", stmpent->sp_pwdp, forwho));
  	}
  
-@@ -527,7 +529,7 @@
+@@ -738,7 +740,7 @@
+ 	return PAM_SUCCESS;
+     } else {
+ 	unlink(SH_TMPFILE);
+-	return PAM_AUTHTOK_ERR;
++	return found ? PAM_AUTHTOK_ERR : PAM_USER_UNKNOWN;
      }
- 
-     unlink(SH_TMPFILE);
--    return PAM_AUTHTOK_ERR;
-+    return found ? PAM_AUTHTOK_ERR : PAM_USER_UNKNOWN;
  }
  
- static int _do_setpass(pam_handle_t* pamh, const char *forwho, char *fromwhat,
-@@ -639,7 +641,7 @@
- 	return retval;
- }
- 
--static int _unix_verify_shadow(const char *user, unsigned int ctrl)
-+static int _unix_verify_shadow(pam_handle_t *pamh, const char *user, unsigned int ctrl)
- {
- 	struct passwd *pwd = NULL;	/* Password and shadow password */
- 	struct spwd *spwdent = NULL;	/* file entries for the user */
-@@ -647,7 +649,7 @@
+@@ -885,7 +887,7 @@
  	int retval = PAM_SUCCESS;
  
  	/* UNIX passwords area */
@@ -74,21 +65,3 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  	if (pwd == NULL)
  		return PAM_AUTHINFO_UNAVAIL;	/* We don't need to do the rest... */
  
-@@ -908,7 +910,7 @@
- 			_log_err(LOG_CRIT, pamh,
- 			         "failed to set PAM_OLDAUTHTOK");
- 		}
--		retval = _unix_verify_shadow(user, ctrl);
-+		retval = _unix_verify_shadow(pamh, user, ctrl);
- 		if (retval == PAM_AUTHTOK_ERR) {
- 			if (off(UNIX__IAMROOT, ctrl))
- 				_make_remark(pamh, ctrl, PAM_ERROR_MSG,
-@@ -1033,7 +1035,7 @@
- 			}
- 		}
- 
--		retval = _unix_verify_shadow(user, ctrl);
-+		retval = _unix_verify_shadow(pamh, user, ctrl);
- 		if (retval != PAM_SUCCESS) {
- 			_log_err(LOG_NOTICE, pamh, "user not authenticated 2");
- #ifdef USE_LCKPWDF
