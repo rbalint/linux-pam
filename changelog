@@ -32,8 +32,12 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Patch 061: partially merged upstream
   * Use ${binary:Version} instead of ${Source-Version} in
     debian/control.
+  * Remove empty maintainer scripts debian/libpam0g-dev.{postinst,prerm},
+    debian/libpam0g.{postinst,prerm}, and
+    debian/libpam-modules.{postinst,prerm}; debhelper can autogenerate these
+    just fine without our help.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 15:40:42 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 15:48:33 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
