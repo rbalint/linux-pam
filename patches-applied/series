@@ -1,7 +1,6 @@
 006_docs_cleanup -p0
 007_modules_pam_unix -p0
 008_modules_pam_limits_chroot -p0
-010_pam_cplusplus -p0
 012_pam_group_less_restrictive_charset -p0
 015_hurd_portability -p0
 018_man_fixes -p0
