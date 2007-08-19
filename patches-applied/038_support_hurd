@@ -6,40 +6,11 @@ not portable.
 However hurd is basically the only modern os without maxhostnamelen
 
 
-Index: Linux-PAM/configure.in
-===================================================================
---- Linux-PAM/configure.in.orig
-+++ Linux-PAM/configure.in
-@@ -301,7 +301,7 @@
- ### May need per-OS attention
- ### Example: -D_POSIX_SOURCE: needed on Linux but harms Solaris.
- 	case $OS in
--	linux)
-+	linux|gnu)
- 		OS_CFLAGS=
- 		LD_D="$CC -shared $LDFLAGS"
- 		WARNINGS="$GCC_WARNINGS"
-Index: Linux-PAM/modules/pam_filter/pam_filter.c
-===================================================================
---- Linux-PAM/modules/pam_filter/pam_filter.c.orig
-+++ Linux-PAM/modules/pam_filter/pam_filter.c
-@@ -328,7 +328,10 @@
- 	    t_mode.c_oflag &= ~OPOST;      /* no ouput post processing */
- 
- 	    /* no signals, canonical input, echoing, upper/lower output */
--	    t_mode.c_lflag &= ~(ISIG|ICANON|ECHO|XCASE);
-+#ifdef XCASE
-+	    t_mode.c_lflag &= ~(XCASE);
-+#endif
-+	    t_mode.c_lflag &= ~(ISIG|ICANON|ECHO);
- 	    t_mode.c_cflag &= ~(CSIZE|PARENB);  /* no parity */
- 	    t_mode.c_cflag |= CS8;              /* 8 bit chars */
- 
 Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 ===================================================================
 --- Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c.orig
 +++ Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
-@@ -376,11 +376,18 @@
+@@ -348,11 +348,18 @@
      register const char *user;
      register char *p;
      int hcheck, ucheck;
@@ -58,12 +29,12 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
          p = buf;                              /* from beginning of file.. */
  
  	/* Skip empty or comment lines */
-@@ -428,8 +435,12 @@
+@@ -400,8 +407,12 @@
  	/* First check host part */
  	hcheck=__icheckhost(pamh, opts, raddr, buf, rhost);
  
 -	if (hcheck<0)
-+	if (hcheck<0){
++	if (hcheck<0) {
 +#ifndef MAXHOSTNAMELEN
 +	    free(buf);
 +#endif
@@ -72,23 +43,23 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
  
  	if (hcheck) {
  	    /* Then check user part */
-@@ -439,16 +450,27 @@
- 	    ucheck=__icheckuser(pamh, opts, user, ruser, rhost);
+@@ -411,16 +422,27 @@
+ 	    ucheck=__icheckuser(pamh, opts, user, ruser);
  
  	    /* Positive 'host user' match? */
 -	    if (ucheck>0)
-+	    if (ucheck>0){
++	    if (ucheck>0) {
 +#ifndef MAXHOSTNAMELEN
-+	        free(buf);
++		free(buf);
 +#endif
  		return(0);
 +	    }
  
  	    /* Negative 'host -user' match? */
 -	    if (ucheck<0)
-+	    if (ucheck<0){
++	    if (ucheck<0) {
 +#ifndef MAXHOSTNAMELEN
-+	        free(buf);
++		free(buf);
 +#endif
  		return(1);
 +	    }
@@ -102,42 +73,7 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
  
      return (1);
  }
-@@ -474,7 +496,12 @@
-     FILE *hostf;
-     uid_t uid;
-     int answer;
-+#ifndef MAXPATHLEN
-+    char *pbuf=NULL;
-+    int pblen;
-+#else
-     char pbuf[MAXPATHLEN];               /* potential buffer overrun */
-+#endif
- 
-     if ((!superuser||opts->opt_hosts_equiv_rootok) && !opts->opt_no_hosts_equiv ) {
- 
-@@ -508,12 +535,21 @@
- 	return(1);
-     }
- 
-+#ifndef MAXPATHLEN
-+   pblen=strlen(pwd->pw_dir) + sizeof(USER_RHOSTS_FILE) + 2;
-+   if(!(pbuf=malloc(pblen))){
-+     answer=PAM_BUF_ERR;
-+     opts->last_error="Memory allocation failed.";
-+     goto exit_function;
-+   }
-+#else
-     /* check for buffer overrun */
-     if (strlen(pwd->pw_dir) + sizeof(USER_RHOSTS_FILE) + 2 >= MAXPATHLEN) {
- 	if (opts->opt_debug)
- 	    _pam_log(LOG_DEBUG,"home directory for `%s' is too long", luser);
- 	return 1;                               /* to dangerous to try */
-     }
-+#endif
- 
-     (void) strcpy(pbuf, pwd->pw_dir);
-     (void) strcat(pbuf, USER_RHOSTS_FILE);
-@@ -600,6 +636,9 @@
+@@ -567,6 +589,9 @@
       * Go here to exit after the fsuid/euid has been adjusted so that
       * they are reset before we exit.
       */
@@ -147,25 +83,6 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
  
  #ifdef __linux__
      setfsuid(uid);
-Index: Linux-PAM/modules/pam_limits/Makefile
-===================================================================
---- Linux-PAM/modules/pam_limits/Makefile.orig
-+++ Linux-PAM/modules/pam_limits/Makefile
-@@ -10,7 +10,14 @@
- 
- TITLE=pam_limits
- 
-+TRY_BUILD=no
- ifeq ($(OS),linux)
-+TRY_BUILD=yes
-+endif
-+ifeq ($(OS),gnu)
-+TRY_BUILD=yes
-+endif
-+ifeq ($(TRY_BUILD),yes)
- 
- LOCAL_CONFILE=./limits.skel
- INSTALLED_CONFILE=$(SCONFIGD)/limits.conf
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
@@ -173,9 +90,9 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 @@ -14,7 +14,7 @@
   */
  
- #if !(defined(linux))
+ #if !defined(linux) && !defined(__linux)
 -#error THIS CODE IS KNOWN TO WORK ONLY ON LINUX !!!
 +#warning THIS CODE IS KNOWN TO WORK ONLY ON LINUX !!!
  #endif
  
- #include <security/_pam_aconf.h>
+ #include "config.h"
