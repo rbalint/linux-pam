@@ -36,8 +36,11 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     debian/libpam0g.{postinst,prerm}, and
     debian/libpam-modules.{postinst,prerm}; debhelper can autogenerate these
     just fine without our help.
+  * Build-Depend on xsltproc, libxml2-utils, docbook-xml, and docbook-xsl
+    instead of on linuxdoc-tools, linuxdoc-tools-latex, tetex-extra, groff,
+    and opensp.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 15:48:33 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 15:53:00 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
