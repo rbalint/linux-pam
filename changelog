@@ -16,13 +16,13 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Patch 057: SELinux support is merged upstream, leaving only an
     unrelated OOM check for pam_unix_passwd.  Rename as
     057_pam_unix_passwd_OOM_check.
-  * Patch 006: update for the switch from SGML to XML.
+  * Patches 006, 008: update for the switch from SGML to XML.
   * Patch 007: update for the switch from SGML to XML; drop some log
     messages that were already added upstream; update for the pam_modutil
     changes; tighten the flag handling of the 'obscure' option; drop bogus
     check in unix_chkpwd for null passwords.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 02:57:46 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 03:08:57 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
