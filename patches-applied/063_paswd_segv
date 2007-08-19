@@ -2,12 +2,12 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
-@@ -1121,7 +1121,7 @@
+@@ -1235,7 +1235,7 @@
  			 * password is acceptable.
  			 */
  
--			if (pass_new[0] == '\0') {	/* "\0" password = NULL */
-+			if (pass_new && pass_new[0] == '\0') {	/* "\0" password = NULL */
+-			if (*(const char *)pass_new == '\0') {	/* "\0" password = NULL */
++			if (pass_new && *(const char *)pass_new == '\0') {	/* "\0" password = NULL */
  				pass_new = NULL;
  			}
  			retval = _pam_unix_approve_pass(pamh, ctrl, pass_old, pass_new);
