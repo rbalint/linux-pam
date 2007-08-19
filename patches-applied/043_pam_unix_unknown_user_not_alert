@@ -2,12 +2,12 @@ Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/support.c.orig
 +++ Linux-PAM/modules/pam_unix/support.c
-@@ -719,7 +719,7 @@
+@@ -681,7 +681,7 @@
  			} else {
  				name = NULL;
  				if (on(UNIX_DEBUG, ctrl) || pwd == NULL) {
--				    _log_err(LOG_ALERT, pamh,
-+				    _log_err(LOG_WARNING, pamh,
+-				    pam_syslog(pamh, LOG_ALERT,
++				    pam_syslog(pamh, LOG_WARNING,
  				            "check pass; user unknown");
  				} else {
  				    /* don't log failure as another pam module can succeed */
