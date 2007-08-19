@@ -1,34 +1,8 @@
-Index: Linux-PAM/doc/modules/pam_wheel.sgml
-===================================================================
---- Linux-PAM/doc/modules/pam_wheel.sgml.orig
-+++ Linux-PAM/doc/modules/pam_wheel.sgml
-@@ -48,7 +48,6 @@
- 
- <tag><bf>Recognized arguments:</bf></tag>
- <tt/debug/;
--<tt/use_uid/;
- <tt/trust/;
- <tt/deny/;
- <tt/group=XXXX/
-@@ -74,13 +73,6 @@
- Supply more debugging information to <tt/syslog(3)/.
- 
- <item>
--<tt/use_uid/ -
--This option modifies the behavior of the module by using the current
--<tt/uid/ of the process and not the <tt/getlogin(3)/ name of the user.
--This option is useful for being able to jump from one account to
--another, for example with 'su'.
--
--<item>
- <tt/trust/ -
- This option instructs the module to return <tt/PAM_SUCCESS/ should it
- find the user applying for root privilege is a member of the wheel
 Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
 ===================================================================
 --- Linux-PAM/modules/pam_wheel/pam_wheel.c.orig
 +++ Linux-PAM/modules/pam_wheel/pam_wheel.c
-@@ -73,9 +73,8 @@
+@@ -60,9 +60,8 @@
  /* argument parsing */
  
  #define PAM_DEBUG_ARG       0x0001
@@ -39,8 +13,8 @@ Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
 +#define PAM_DENY_ARG        0x0004
  #define PAM_ROOT_ONLY_ARG   0x0020
  
- static int _pam_parse(int argc, const char **argv, char *use_group,
-@@ -92,8 +91,7 @@
+ static int
+@@ -80,8 +79,7 @@
  
            if (!strcmp(*argv,"debug"))
                 ctrl |= PAM_DEBUG_ARG;
@@ -50,33 +24,33 @@ Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
            else if (!strcmp(*argv,"trust"))
                 ctrl |= PAM_TRUST_ARG;
            else if (!strcmp(*argv,"deny"))
-@@ -141,27 +139,14 @@
+@@ -129,27 +127,14 @@
          }
      }
-      
+ 
 -    if (ctrl & PAM_USE_UID_ARG) {
--	tpwd = _pammodutil_getpwuid (pamh, getuid());
+-	tpwd = pam_modutil_getpwuid (pamh, getuid());
 -	if (!tpwd) {
 -	    if (ctrl & PAM_DEBUG_ARG) {
--                _pam_log(LOG_NOTICE, "who is running me ?!");
+-                pam_syslog(pamh, LOG_NOTICE, "who is running me ?!");
 -	    }
 -	    return PAM_SERVICE_ERR;
 -	}
 -	fromsu = tpwd->pw_name;
 -    } else {
--	fromsu = _pammodutil_getlogin(pamh);
+-	fromsu = pam_modutil_getlogin(pamh);
 -	if (fromsu) {
--	    tpwd = _pammodutil_getpwnam (pamh, fromsu);
+-	    tpwd = pam_modutil_getpwnam (pamh, fromsu);
 -	}
 -	if (!fromsu || !tpwd) {
 -	    if (ctrl & PAM_DEBUG_ARG) {
--		_pam_log(LOG_NOTICE, "who is running me ?!");
+-		pam_syslog(pamh, LOG_NOTICE, "who is running me ?!");
 -	    }
 -	    return PAM_SERVICE_ERR;
-+    tpwd = _pammodutil_getpwuid (pamh, getuid());
++    tpwd = pam_modutil_getpwuid (pamh, getuid());
 +    if (!tpwd) {
 +	if (ctrl & PAM_DEBUG_ARG) {
-+            _pam_log(LOG_NOTICE, "who is running me ?!");
++	    pam_syslog(pamh, LOG_NOTICE, "who is running me ?!");
  	}
 +	return PAM_SERVICE_ERR;
      }
@@ -84,3 +58,36 @@ Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
  
      /*
       * At this point fromsu = username-of-invoker; tpwd = pwd ptr for fromsu
+Index: Linux-PAM/modules/pam_wheel/pam_wheel.8.xml
+===================================================================
+--- Linux-PAM/modules/pam_wheel/pam_wheel.8.xml.orig
++++ Linux-PAM/modules/pam_wheel/pam_wheel.8.xml
+@@ -33,9 +33,6 @@
+       <arg choice="opt">
+ 	trust
+       </arg>
+-      <arg choice="opt">
+-	use_uid
+-      </arg>
+     </cmdsynopsis>
+   </refsynopsisdiv>
+ 
+@@ -115,18 +112,6 @@
+           </para>
+         </listitem>
+       </varlistentry>
+-      <varlistentry>
+-        <term>
+-          <option>use_uid</option>
+-        </term>
+-        <listitem>
+-          <para>
+-            The check for wheel membership will be done against
+-            the current uid instead of the original one (useful when
+-            jumping with su from one account to another for example).
+-          </para>
+-        </listitem>
+-      </varlistentry>
+     </variablelist>
+   </refsect1>
+ 
