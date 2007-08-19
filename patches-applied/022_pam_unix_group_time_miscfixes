@@ -7,12 +7,12 @@ Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/support.c.orig
 +++ Linux-PAM/modules/pam_unix/support.c
-@@ -714,7 +714,7 @@
+@@ -676,7 +676,7 @@
  			if (on(UNIX_AUDIT, ctrl)) {
  				/* this might be a typo and the user has given a password
  				   instead of a username. Careful with this. */
--				_log_err(LOG_ALERT, pamh,
-+				_log_err(LOG_WARNING, pamh,
+-				pam_syslog(pamh, LOG_ALERT,
++				pam_syslog(pamh, LOG_WARNING,
  				         "check pass; user (%s) unknown", name);
  			} else {
  				name = NULL;
@@ -20,20 +20,20 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/unix_chkpwd.c.orig
 +++ Linux-PAM/modules/pam_unix/unix_chkpwd.c
-@@ -154,7 +154,7 @@
+@@ -179,7 +179,7 @@
  		}
  	}
  	if (pwd == NULL || salt == NULL) {
 -		_log_err(LOG_ALERT, "check pass; user unknown");
 +		_log_err(LOG_WARNING, "check pass; user unknown");
  		p = NULL;
- 		return retval;
+ 		return PAM_USER_UNKNOWN;
  	}
 Index: Linux-PAM/modules/pam_time/pam_time.c
 ===================================================================
 --- Linux-PAM/modules/pam_time/pam_time.c.orig
 +++ Linux-PAM/modules/pam_time/pam_time.c
-@@ -336,7 +336,11 @@
+@@ -324,7 +324,11 @@
  		    return FALSE;
  	  }
       }
@@ -50,7 +50,7 @@ Index: Linux-PAM/modules/pam_group/pam_group.c
 ===================================================================
 --- Linux-PAM/modules/pam_group/pam_group.c.orig
 +++ Linux-PAM/modules/pam_group/pam_group.c
-@@ -776,9 +776,12 @@
+@@ -758,9 +758,12 @@
      unsigned setting;
  
      /* only interested in establishing credentials */
