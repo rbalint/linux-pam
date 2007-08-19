@@ -9,7 +9,6 @@
 026_pam_unix_passwd_unknown_user -p0
 027_pam_limits_better_init_allow_explicit_root -p0
 029_pam_limits_capabilities -p0
-030_makefile_link_against_libpam -p0
 031_pam_include -p0
 032_pam_limits_EPERM_NOT_FATAL -p0
 036_pam_wheel_getlogin_considered_harmful -p0
