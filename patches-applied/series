@@ -2,7 +2,6 @@
 007_modules_pam_unix -p0
 008_modules_pam_limits_chroot -p0
 015_hurd_portability -p0
-018_man_fixes -p0
 019_pam_listfile_quiet -p0
 021_nis_cleanup -p0
 022_pam_unix_group_time_miscfixes -p0
