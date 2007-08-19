@@ -2,7 +2,7 @@ Index: Linux-PAM/modules/pam_group/group.conf
 ===================================================================
 --- Linux-PAM/modules/pam_group/group.conf.orig
 +++ Linux-PAM/modules/pam_group/group.conf
-@@ -45,16 +45,17 @@
+@@ -84,16 +84,17 @@
  #
  
  #xsh;tty*&!ttyp*;us;Al0000-2400;floppy

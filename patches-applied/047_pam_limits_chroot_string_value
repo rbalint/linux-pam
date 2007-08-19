@@ -2,15 +2,15 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
 +++ Linux-PAM/modules/pam_limits/pam_limits.c
-@@ -417,9 +417,9 @@
- 		if (int_value == 0 && value_orig == endptr) {
- 			_pam_log(LOG_DEBUG, "wrong limit value '%s' for limit type '%s'",
- 				lim_value, lim_type);
+@@ -402,9 +402,9 @@
+ 			pam_syslog(pamh, LOG_DEBUG,
+ 				   "wrong limit value '%s' for limit type '%s'",
+ 				   lim_value, lim_type);
 -            return;
-+			return;
++        		return;
  		}
 -	} else {
 +	} else if (limit_item != LIMIT_CHROOT && limit_item != LIMIT_CAPS) {
- 		rlimit_value = strtoul (lim_value, &endptr, 10);
- 		if (rlimit_value == 0 && value_orig == endptr) {
- 			_pam_log(LOG_DEBUG, "wrong limit value '%s' for limit type '%s'",
+ #ifdef __USE_FILE_OFFSET64
+ 		rlimit_value = strtoull (lim_value, &endptr, 10);
+ #else
