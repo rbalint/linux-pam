@@ -7,21 +7,22 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
 +++ Linux-PAM/modules/pam_limits/pam_limits.c
-@@ -638,13 +638,17 @@
+@@ -633,6 +633,7 @@
      }
  
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
-+      int retval;
-         if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
-             pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
- 	if (!pl->supported[i]) {
++	int retval;
+ 	if (!pl->limits[i].supported) {
  	    /* skip it if its not known to the system */
  	    continue;
+@@ -644,7 +645,10 @@
  	}
+         if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
+             pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
 -	status |= setrlimit(i, &pl->limits[i].limit);
 +	retval = setrlimit(i, &pl->limits[i].limit);
-+	if (retval == -1 && errno==EPERM)
-+	  continue;
++        if (retval == -1 && errno==EPERM)
++	    continue;
 +	status |= retval;
      }
  
