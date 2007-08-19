@@ -7,11 +7,8 @@ Abstract: This manual documents what a system administrator needs to know
 Section: Apps/System
 
 Format: HTML
-Index: /usr/share/doc/libpam-doc/html/pam.html
-Files: /usr/share/doc/libpam-doc/html/pam-*.html
+Index: /usr/share/doc/libpam-doc/html/Linux-PAM_SAG.html
+Files: /usr/share/doc/libpam-doc/html/Linux-PAM_SAG.html /usr/share/doc/libpam-doc/html/sag-*.html
 
 Format: text
-Files: /usr/share/doc/libpam-doc/txt/pam.txt.gz
-
-Format: postscript
-Files: /usr/share/doc/libpam-doc/ps/pam.ps.gz
+Files: /usr/share/doc/libpam-doc/txt/Linux-PAM_SAG.txt.gz

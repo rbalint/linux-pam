@@ -61,21 +61,22 @@ clean:
 	rm -f Linux-PAM/bin/[a-z]*
 	dh_clean
 
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	$(MAKE) -C $(BUILD_TREE) DESTDIR=$(CURDIR)/debian/tmp install
+
+	# Provided in libpam-cracklib
+	rm -f $(CURDIR)/debian/libpam-modules/lib/security/pam_cracklib.so
+
 # Build architecture-independent files here.
-binary-indep: build $(dh_mak_deps)
+binary-indep: install
 	dh_testdir -i
 	dh_testroot -i
-	dh_clean -i -k
-	dh_installdirs -i
-
-	$(MAKE) -C $(BUILD_TREE) DIRS=doc
-
-	cd $(BUILD_TREE)/doc && ( \
-		$(i) *.sgml $(d)/$(pdoc)/usr/share/doc/$(pdoc)/sgml ; \
-		$(i) ps/*.ps $(d)/$(pdoc)/usr/share/doc/$(pdoc)/ps ; \
-		$(i) html/*.html $(d)/$(pdoc)/usr/share/doc/$(pdoc)/html ; \
-		$(i) txts/*.txt $(d)/$(pdoc)/usr/share/doc/$(pdoc)/txt ; \
-		$(i) modules/*.sgml $(d)/$(pdoc)/usr/share/doc/$(pdoc)/sgml/modules )
+	dh_installdocs -i
 
 	mkdir -p debian/tmp/etc/pam.d
 	mkdir -p debian/tmp/usr/share/pam
@@ -85,7 +86,6 @@ binary-indep: build $(dh_mak_deps)
 	pod2man --section 8 --release="Debian GNU/Linux" $(dl)/pam_getenv >$(d)/tmp/usr/share/man/man8/pam_getenv.8
 	$(i) $(dl)/other $(d)/tmp/etc/pam.d
 	$(i) $(dl)/common-* $(d)/tmp/usr/share/pam/
-	$(i) $(dl)/pam-*-guide $(d)/$(pdoc)/usr/share/doc-base/
 
 	dh_movefiles -i
 
