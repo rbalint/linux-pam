@@ -2,6 +2,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
 
   * New upstream release; thanks to Roger Leigh and Jan Christoph Nordholz
     for their extensive work in helping to prepare for this update in Debian.
+  * Mark myself as primary maintainer as previously discussed with Sam, and
+    add Roger as an uploader.
   * Refactor to use quilt.
   * Drop unnecessary build-dependency on patch, which is
     build-essential.
@@ -29,7 +31,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Patch 038: partially merged/superseded upstream
   * Patch 061: partially merged upstream
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 15:30:12 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 15:40:42 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
