@@ -2,19 +2,21 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
 +++ Linux-PAM/modules/pam_limits/pam_limits.c
-@@ -646,6 +646,17 @@
+@@ -646,6 +646,19 @@
          if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
              pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
  	retval = setrlimit(i, &pl->limits[i].limit);
-+	if (retval != 0 && !(i == RLIMIT_NOFILE
-+	                     && pl->limits[i].limit.rlim_cur == RLIM_INFINITY))
++	if (retval != 0 && (i != RLIMIT_NOFILE
++	                    || pl->limits[i].limit.rlim_cur != RLIM_INFINITY))
 +	{
 +		int save_errno = errno;
 +		pam_syslog(pamh, LOG_DEBUG,
 +		           "setrlimit limit #%d to soft=%d, hard=%d failed:"
 +		           " %m; uid=%lu,euid=%lu", i,
 +		           pl->limits[i].limit.rlim_cur,
-+		           pl->limits[i].limit.rlim_max, getuid(), geteuid());
++		           pl->limits[i].limit.rlim_max,
++		           (unsigned long) getuid(),
++		           (unsigned long) geteuid());
 +		errno = save_errno;
 +	}
          if (retval == -1 && errno==EPERM)
