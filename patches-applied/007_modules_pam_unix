@@ -1,68 +1,8 @@
-Index: Linux-PAM/doc/modules/pam_unix.sgml
-===================================================================
---- Linux-PAM/doc/modules/pam_unix.sgml.orig
-+++ Linux-PAM/doc/modules/pam_unix.sgml
-@@ -182,6 +182,9 @@
- <tt/bigcrypt/;
- <tt/shadow/;
- <tt/nis/;
-+<tt/min/;
-+<tt/max/;
-+<tt/obscure/;
- <tt/remember/
- 
- <tag><bf>Description:</bf></tag>
-@@ -236,6 +239,45 @@
- <tt>/etc/security/opasswd</tt> in order to force password change history
- and keep the user from alternating between the same password too frequently.
- 
-+<p>
-+The <tt/min/ and <tt/max/ options allow control over the length of the
-+password. These have a hard coded default of 1 and 8. The values are
-+inclusive.
-+
-+<p>
-+The <tt/obscure/ option enables some extra checks on the password. These
-+is taken after the same obscure checks enabled in the original shadow
-+package. This works very similar to the pam_cracklib module and implements
-+these checks (it does not implement dictionary checks):
-+
-+<itemize>
-+
-+<item> <bf/Palindrome/ -
-+
-+Is the new password a palindrome of the old one? A palindrome is where the
-+words read the same backwards and forwards (eg. madam and radar).
-+
-+<item> <bf/Case Change Only/ -
-+
-+Is the new password the the old one with only a change of case?
-+
-+<item> <bf/Similar/ -
-+
-+Is the new password too much like the old one?
-+
-+<item> <bf/Simple/ -
-+
-+Is the new password too small? This is based on the length of the
-+password and the number of different types of characters used (ie.alpha,
-+numeric...).
-+
-+<item> <bf/Rotated/ -
-+
-+Is the new password a rotated version of the old password (eg. "billy" and
-+"illyb")?
-+
-+</itemize>
-+
- <tag><bf>Examples/suggested usage:</bf></tag>
- 
- Standard usage:
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
-@@ -122,6 +122,9 @@
+@@ -127,6 +127,9 @@
  #define OPW_TMPFILE		"/etc/security/nopasswd"
  #define OLD_PASSWORDS_FILE	"/etc/security/opasswd"
  
@@ -72,46 +12,27 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  /*
   * i64c - convert an integer to a radix 64 character
   */
-@@ -620,6 +623,8 @@
- #ifdef DEBUG
- 		sleep(5);
- #endif
-+		_log_err(LOG_NOTICE, pamh, "NIS Password for %s was changed on %s", forwho, master);
-+
- 		return retval;
- 	}
- 
-@@ -628,6 +633,9 @@
- 	ulckpwdf();
- #endif
- 
-+	if (retval == PAM_SUCCESS)
-+	    _log_err(LOG_NOTICE, pamh, "Password for %s was changed", forwho);
-+
- 	return retval;
- }
- 
-@@ -732,12 +740,8 @@
+@@ -991,12 +994,8 @@
  #ifdef USE_CRACKLIB
- 		remark = FascistCheck(pass_new, CRACKLIB_DICTS);
+ 		remark = FascistCheck (pass_new, CRACKLIB_DICTS);
  		D(("called cracklib [%s]", remark));
 -#else
 -		if (strlen(pass_new) < 6)
--			remark = "You must choose a longer password";
+-		  remark = _("You must choose a longer password");
 -		D(("length check [%s]", remark));
  #endif
 -		if (on(UNIX_REMEMBER_PASSWD, ctrl)) {
 +		if (!remark && on(UNIX_REMEMBER_PASSWD, ctrl)) {
  			if ((retval = check_old_password(user, pass_new)) == PAM_AUTHTOK_ERR)
- 				remark = "Password has been already used. Choose another.";
+ 			  remark = _("Password has been already used. Choose another.");
  			if (retval == PAM_ABORT) {
-@@ -746,6 +750,11 @@
+@@ -1005,6 +1004,11 @@
  				return retval;
  			}
  		}
 +		if (!remark && pass_old != NULL) { /* only check if we don't already have a failure */
 +			struct passwd *pwd;
-+			pwd = _pammodutil_getpwnam(pamh, user);
++			pwd = pam_modutil_getpwnam(pamh, user);
 +			remark = (char *)obscure_msg(pass_old,pass_new,pwd,ctrl); /* do obscure checks */
 +		}
  	}
@@ -121,61 +42,65 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix_acct.c.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix_acct.c
-@@ -137,7 +137,8 @@
+@@ -267,7 +267,9 @@
  
  	curdays = time(NULL) / (60 * 60 * 24);
  	D(("today is %d, last change %d", curdays, spent->sp_lstchg));
 -	if ((curdays > spent->sp_expire) && (spent->sp_expire != -1)) {
 +	if ((curdays > spent->sp_expire) && (spent->sp_expire != -1)
-+            && (spent->sp_expire != 0)) {
- 		_log_err(LOG_NOTICE, pamh
- 			 ,"account %s has expired (account expired)"
- 			 ,uname);
-@@ -164,7 +165,8 @@
++	    && (spent->sp_expire != 0))
++	{
+ 		pam_syslog(pamh, LOG_NOTICE,
+ 			 "account %s has expired (account expired)",
+ 			 uname);
+@@ -294,7 +296,9 @@
  	if ((curdays - spent->sp_lstchg > spent->sp_max)
  	    && (curdays - spent->sp_lstchg > spent->sp_inact)
  	    && (curdays - spent->sp_lstchg > spent->sp_max + spent->sp_inact)
 -	    && (spent->sp_max != -1) && (spent->sp_inact != -1)) {
-+	    && (spent->sp_max != -1) && (spent->sp_max != 0) && (spent->sp_inact != -1)
-+	    && (spent->sp_inact != 0)) {
- 		_log_err(LOG_NOTICE, pamh
- 		    ,"account %s has expired (failed to change password)"
- 			 ,uname);
-@@ -173,7 +175,8 @@
++	    && (spent->sp_max != -1) && (spent->sp_max != 0)
++	    && (spent->sp_inact != -1) && (spent->sp_inact != 0))
++	{
+ 		pam_syslog(pamh, LOG_NOTICE,
+ 		    "account %s has expired (failed to change password)",
+ 		    uname);
+@@ -303,7 +307,9 @@
  		D(("account expired 2"));
  		return PAM_ACCT_EXPIRED;
  	}
 -	if ((curdays - spent->sp_lstchg > spent->sp_max) && (spent->sp_max != -1)) {
-+	if ((curdays - spent->sp_lstchg > spent->sp_max) && (spent->sp_max != -1)
-+	    && (spent->sp_max != 0)) {
- 		_log_err(LOG_DEBUG, pamh
- 			 ,"expired password for user %s (password aged)"
- 			 ,uname);
-@@ -183,7 +186,8 @@
++	if ((curdays - spent->sp_lstchg > spent->sp_max)
++	    && (spent->sp_max != -1) && (spent->sp_max != 0))
++	{
+ 		pam_syslog(pamh, LOG_DEBUG,
+ 			 "expired password for user %s (password aged)",
+ 			 uname);
+@@ -313,7 +319,9 @@
  		return PAM_NEW_AUTHTOK_REQD;
  	}
  	if ((curdays - spent->sp_lstchg > spent->sp_max - spent->sp_warn)
 -	    && (spent->sp_max != -1) && (spent->sp_warn != -1)) {
 +	    && (spent->sp_max != -1) && (spent->sp_warn != -1)
-+	    && (spent->sp_max != 0) && (spent->sp_warn != 0)) {
++	    && (spent->sp_max != 0) && (spent->sp_warn != 0))
++	{
  		daysleft = (spent->sp_lstchg + spent->sp_max) - curdays;
- 		_log_err(LOG_DEBUG, pamh
- 			 ,"password for user %s will expire in %d days"
+ 		pam_syslog(pamh, LOG_DEBUG,
+ 			 "password for user %s will expire in %d days",
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/support.c.orig
 +++ Linux-PAM/modules/pam_unix/support.c
-@@ -31,6 +31,9 @@
- extern char *crypt(const char *key, const char *salt);
- extern char *bigcrypt(const char *key, const char *salt);
+@@ -36,6 +36,9 @@
+ #define SELINUX_ENABLED 0
+ #endif
  
 +unsigned int pass_min_len = 1;
 +unsigned int pass_max_len = 8;
 +
- /* syslogging function for errors and other information */
+ /* this is a front-end for module-application conversations */
  
- void _log_err(int err, pam_handle_t *pamh, const char *format,...)
-@@ -142,6 +145,7 @@
+ int _make_remark(pam_handle_t * pamh, unsigned int ctrl,
+@@ -80,6 +83,7 @@
  		D(("SILENT"));
  		set(UNIX__QUIET, ctrl);
  	}
@@ -183,20 +108,17 @@ Index: Linux-PAM/modules/pam_unix/support.c
  	/* now parse the arguments to this module */
  
  	while (argc-- > 0) {
-@@ -150,10 +154,9 @@
- 		D(("pam_unix arg: %s", *argv));
+@@ -89,7 +93,8 @@
  
  		for (j = 0; j < UNIX_CTRLS_; ++j) {
--			if (unix_args[j].token
+ 			if (unix_args[j].token
 -			    && !strncmp(*argv, unix_args[j].token, strlen(unix_args[j].token))) {
-+			if (unix_args[j].token &&
-+			    !strncmp(*argv, unix_args[j].token, strlen(unix_args[j].token)))
++			    && !strncmp(*argv, unix_args[j].token, strlen(unix_args[j].token)))
++			{
  				break;
--			}
+ 			}
  		}
- 
- 		if (j >= UNIX_CTRLS_) {
-@@ -163,16 +166,21 @@
+@@ -101,16 +106,21 @@
  			ctrl &= unix_args[j].mask;	/* for turning things off */
  			ctrl |= unix_args[j].flag;	/* for turning things on  */
  
@@ -226,8 +148,8 @@ Index: Linux-PAM/modules/pam_unix/support.c
  
  		++argv;		/* step to next argument */
  	}
-@@ -733,6 +741,8 @@
- 	    } else if (!p || (*salt == '*') || (salt_len < 13)) {
+@@ -693,6 +703,8 @@
+ 	    } else if (!p || (*salt == '*')) {
  		retval = PAM_AUTH_ERR;
  	    } else {
 +		/* Hack off sysv pw aging foo */
@@ -274,7 +196,7 @@ Index: Linux-PAM/modules/pam_unix/support.h
 -/* UNIX__NULLOK */         {"nullok",          _ALL_ON_^(01000),           0},
 -/* UNIX_DEBUG */           {"debug",           _ALL_ON_,              040000},
 -/* UNIX_NODELAY */         {"nodelay",         _ALL_ON_,             0100000},
--/* UNIX_NIS */             {"nis",             _ALL_ON_^(010000),    0200000},
+-/* UNIX_NIS */             {"nis",             _ALL_ON_,             0200000},
 -/* UNIX_BIGCRYPT */        {"bigcrypt",        _ALL_ON_^(020000),    0400000},
 -/* UNIX_LIKE_AUTH */       {"likeauth",        _ALL_ON_,            01000000},
 -/* UNIX_REMEMBER_PASSWD */ {"remember=",       _ALL_ON_,            02000000},
@@ -297,7 +219,7 @@ Index: Linux-PAM/modules/pam_unix/support.h
 +/* UNIX__NULLOK */         {"nullok",          _ALL_ON_^(0x200),            0},
 +/* UNIX_DEBUG */           {"debug",           _ALL_ON_,               0x4000},
 +/* UNIX_NODELAY */         {"nodelay",         _ALL_ON_,               0x8000},
-+/* UNIX_NIS */             {"nis",             _ALL_ON_^(0x1000),     0x10000},
++/* UNIX_NIS */             {"nis",             _ALL_ON_,              0x10000},
 +/* UNIX_BIGCRYPT */        {"bigcrypt",        _ALL_ON_^(0x2000),     0x20000},
 +/* UNIX_LIKE_AUTH */       {"likeauth",        _ALL_ON_,              0x40000},
 +/* UNIX_REMEMBER_PASSWD */ {"remember=",       _ALL_ON_,              0x80000},
@@ -306,7 +228,7 @@ Index: Linux-PAM/modules/pam_unix/support.h
 +/* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,             0x400000},
 +/* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x800000},
 +/* UNIX_NOOBSCURE_CHECKS */{NULL,              _ALL_ON_,            0x1000000},
-+/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x2000000},
++/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_^(0x1000000),        0},
  };
  
 -#define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
@@ -314,10 +236,11 @@ Index: Linux-PAM/modules/pam_unix/support.h
  
  
  /* use this to free strings. ESPECIALLY password strings */
-@@ -152,4 +160,7 @@
- 			,const char **pass);
+@@ -152,4 +160,8 @@
  extern int _unix_shadowed(const struct passwd *pwd);
  
+ extern struct spwd *_unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl, const char *user);
++
 +extern unsigned int pass_min_len;
 +extern unsigned int pass_max_len;
 +
@@ -326,9 +249,9 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/unix_chkpwd.c.orig
 +++ Linux-PAM/modules/pam_unix/unix_chkpwd.c
-@@ -165,6 +165,13 @@
- 	else if (p == NULL || strlen(p) == 0)
- 		return UNIX_FAILED;
+@@ -192,6 +192,13 @@
+ 		return PAM_AUTHTOK_ERR;
+ 	}
  
 +	/* Hack off SysVR4 password aging */
 +	{
@@ -338,39 +261,114 @@ Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
 +	}
 +
  	/* the moment of truth -- do we agree with the password? */
- 	retval = UNIX_FAILED;
+ 	retval = PAM_AUTH_ERR;
  	if (!strncmp(salt, "$1$", 3)) {
-@@ -275,7 +282,7 @@
- 
- 	npass = read(STDIN_FILENO, option, 8);
- 
--	if (npass < 0) {
-+	if (npass < 0 || option == NULL || option[0] == '\0') {
- 		_log_err(LOG_DEBUG, "no option supplied");
- 		return UNIX_FAILED;
- 	} else {
-@@ -290,7 +297,7 @@
- 
- 	npass = read(STDIN_FILENO, pass, MAXPASS);
- 
--	if (npass < 0) {	/* is it a valid password? */
-+	if (npass < 0 || pass == NULL || pass[0] == '\0') {	/* is it a valid password? */
- 
- 		_log_err(LOG_DEBUG, "no password supplied");
- 
-Index: Linux-PAM/modules/pam_unix/Makefile
+Index: Linux-PAM/modules/pam_unix/pam_unix.8.xml
 ===================================================================
---- Linux-PAM/modules/pam_unix/Makefile.orig
-+++ Linux-PAM/modules/pam_unix/Makefile
-@@ -77,7 +77,7 @@
- LIBOBJS = $(addprefix static/,$(LIBOBJ))
- 
- PLUS = md5_good.o md5_broken.o md5_crypt_good.o md5_crypt_broken.o \
--		yppasswd_xdr.o bigcrypt.o
-+		yppasswd_xdr.o bigcrypt.o obscure.o
- 
- ifdef DYNAMIC
- LIBSHARED = pam_unix.so
+--- Linux-PAM/modules/pam_unix/pam_unix.8.xml.orig
++++ Linux-PAM/modules/pam_unix/pam_unix.8.xml
+@@ -269,6 +269,101 @@
+           </para>
+         </listitem>
+       </varlistentry>
++      <varlistentry>
++        <term>
++          <option>min=<replaceable>n</replaceable></option>
++        </term>
++        <listitem>
++          <para>
++            Set a minimum password length of <replaceable>n</replaceable>
++            characters.  The default value is 1.
++          </para>
++        </listitem>
++      </varlistentry>
++      <varlistentry>
++        <term>
++          <option>max=<replaceable>n</replaceable></option>
++        </term>
++        <listitem>
++          <para>
++            Set a maximum password length of <replaceable>n</replaceable>
++            characters.  The default value is 8.
++          </para>
++        </listitem>
++      </varlistentry>
++      <varlistentry>
++        <term>
++          <option>obscure</option>
++        </term>
++        <listitem>
++          <para>
++            Enable some extra checks on password strength.  These checks
++            are based on the "obscure" checks in the original shadow
++            package.  The behavior is similar to the pam_cracklib
++            module, but for non-dictionary-based checks.  The following
++            checks are implemented:
++            <variablelist>
++              <varlistentry>
++                <term>
++                  <option>Palindrome</option>
++                </term>
++                <listitem>
++                  <para>
++                    Verifies that the new password is not a palindrome
++                    of (i.e., the reverse of) the previous one.
++                  </para>
++                </listitem>
++              </varlistentry>
++              <varlistentry>
++                <term>
++                  <option>Case Change Only</option>
++                </term>
++                <listitem>
++                  <para>
++                    Verifies that the new password isn't the same as the
++                    old one with a change of case.
++                  </para>
++                </listitem>
++              </varlistentry>
++              <varlistentry>
++                <term>
++                  <option>Similar</option>
++                </term>
++                <listitem>
++                  <para>
++                    Verifies that the new password isn't too much like
++                    the previous one.
++                  </para>
++                </listitem>
++              </varlistentry>
++              <varlistentry>
++                <term>
++                  <option>Simple</option>
++                </term>
++                <listitem>
++                  <para>
++                    Is the new password too simple?  This is based on
++                    the length of the password and the number of
++                    different types of characters (alpha, numeric, etc.)
++                    used.
++                  </para>
++                </listitem>
++              </varlistentry>
++              <varlistentry>
++                <term>
++                  <option>Rotated</option>
++                </term>
++                <listitem>
++                  <para>
++                    Is the new password a rotated version of the old
++                    password?  (E.g., "billy" and "illyb")
++                  </para>
++                </listitem>
++              </varlistentry>
++            </variablelist>
++          </para>
++        </listitem>
++      </varlistentry>
+     </variablelist>
+     <para>
+       Invalid arguments are logged with  <citerefentry>
 Index: Linux-PAM/modules/pam_unix/obscure.c
 ===================================================================
 --- /dev/null
