@@ -4,7 +4,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
 +++ Linux-PAM/modules/pam_limits/pam_limits.c
-@@ -68,6 +68,7 @@
+@@ -69,6 +69,7 @@
  
  /* internal data */
  struct pam_limit_s {
@@ -12,7 +12,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      int login_limit;     /* the max logins limit */
      int login_limit_def; /* which entry set the login limit */
      int flag_numsyslogins; /* whether to limit logins only for a
-@@ -235,6 +236,7 @@
+@@ -219,6 +220,7 @@
  
      D(("called."));
  
@@ -20,8 +20,8 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      for(i = 0; i < RLIM_NLIMITS; i++) {
  	int r = getrlimit(i, &pl->limits[i].limit);
  	if (r == -1) {
-@@ -247,6 +249,38 @@
- 	    pl->supported[i] = 1;
+@@ -230,6 +232,38 @@
+ 	    pl->limits[i].supported = 1;
  	    pl->limits[i].src_soft = LIMITS_DEF_NONE;
  	    pl->limits[i].src_hard = LIMITS_DEF_NONE;
 +	    switch(i) {
@@ -59,34 +59,34 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  	}
      }
  
-@@ -518,7 +552,7 @@
+@@ -510,7 +544,7 @@
          if (i == 4) { /* a complete line */
              if (strcmp(uname, domain) == 0) /* this user have a limit */
-                 process_limit(LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
+                 process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
 -            else if (domain[0]=='@') {
 +            else if (domain[0]=='@' && !pl->root) {
  		    if (ctrl & PAM_DEBUG_ARG) {
- 			_pam_log(LOG_DEBUG, "checking if %s is in group %s",
- 			 	uname, domain + 1);
-@@ -526,7 +560,7 @@
-                 if (_pammodutil_user_in_group_nam_nam(pamh, uname, domain+1))
-                     process_limit(LIMITS_DEF_GROUP, ltype, item, value, ctrl,
+ 			pam_syslog(pamh, LOG_DEBUG,
+ 				   "checking if %s is in group %s",
+@@ -519,7 +553,7 @@
+                 if (pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1))
+                     process_limit(pamh, LIMITS_DEF_GROUP, ltype, item, value, ctrl,
  				  pl);
 -            } else if (domain[0]=='%') {
 +            } else if (domain[0]=='%' && !pl->root) {
  		    if (ctrl & PAM_DEBUG_ARG) {
- 			_pam_log(LOG_DEBUG, "checking if %s is in group %s",
- 			 	uname, domain + 1);
-@@ -539,7 +573,7 @@
-                     process_limit(LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
+ 			pam_syslog(pamh, LOG_DEBUG,
+ 				   "checking if %s is in group %s",
+@@ -533,7 +567,7 @@
+                     process_limit(pamh, LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
  				  pl);
  		}
 -            } else if (strcmp(domain, "*") == 0)
 +            } else if (strcmp(domain, "*") == 0 && !pl->root)
-                 process_limit(LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
+                 process_limit(pamh, LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -573,6 +607,12 @@
+@@ -568,6 +602,12 @@
      int status;
      int retval = LIMITED_OK;
  
@@ -97,10 +97,10 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 +    }
 +
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
-         if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
-             pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
-@@ -647,6 +687,8 @@
-         return PAM_IGNORE;
+ 	if (!pl->limits[i].supported) {
+ 	    /* skip it if its not known to the system */
+@@ -648,6 +688,8 @@
+         return PAM_ABORT;
      }
  
 +    if (pwd->pw_uid == 0)
