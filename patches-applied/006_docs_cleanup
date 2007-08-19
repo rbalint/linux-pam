@@ -12,3 +12,18 @@ Index: Linux-PAM/doc/man/pam.conf-syntax.xml
        and <emphasis>default</emphasis>.
      </para>
      <para>
+Index: Linux-PAM/doc/man/pam.conf.5
+===================================================================
+--- Linux-PAM/doc/man/pam.conf.5.orig
++++ Linux-PAM/doc/man/pam.conf.5
+@@ -175,7 +175,9 @@
+ \fIabort\fR,
+ \fIauthtok_expired\fR,
+ \fImodule_unknown\fR,
+-\fIbad_item\fR
++\fIbad_item\fR,
++\fIconv_again\fR,
++\fIincomplete\fR,
+ and
+ \fIdefault\fR.
+ .PP
