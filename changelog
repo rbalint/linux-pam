@@ -7,6 +7,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     build-essential.
   * Drop patch 002_debian_no_ldconfig_call, which has been superseded
     upstream.
+  * Drop patch 005_pam_limits_099_6, which has been integrated upstream.
 
  -- Steve Langasek <vorlon@debian.org>  Sat, 18 Aug 2007 22:20:09 -0700
 
