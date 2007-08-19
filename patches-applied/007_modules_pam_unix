@@ -577,3 +577,194 @@ Index: Linux-PAM/modules/pam_unix/obscure.c
 +
 +	return msg;
 +}
+Index: Linux-PAM/modules/pam_unix/pam_unix.8
+===================================================================
+--- Linux-PAM/modules/pam_unix/pam_unix.8.orig
++++ Linux-PAM/modules/pam_unix/pam_unix.8
+@@ -1,11 +1,11 @@
+ .\"     Title: pam_unix
+ .\"    Author: 
+-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
+-.\"      Date: 09/20/2006
+-.\"    Manual: Linux\-PAM Manual
+-.\"    Source: Linux\-PAM Manual
++.\" Generator: DocBook XSL Stylesheets v1.72.0 <http://docbook.sf.net/>
++.\"      Date: 08/19/2007
++.\"    Manual: Linux-PAM Manual
++.\"    Source: Linux-PAM Manual
+ .\"
+-.TH "PAM_UNIX" "8" "09/20/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_UNIX" "8" "08/19/2007" "Linux\-PAM Manual" "Linux\-PAM Manual"
+ .\" disable hyphenation
+ .nh
+ .\" disable justification (adjust text to left margin only)
+@@ -46,61 +46,134 @@
+ Remaining arguments, supported by others functions of this module, are silently ignored. Other arguments are logged as errors through
+ \fBsyslog\fR(3).
+ .SH "OPTIONS"
+-.TP 3n
++.PP
+ \fBdebug\fR
++.RS 4
+ Turns on debugging via
+ \fBsyslog\fR(3).
+-.TP 3n
++.RE
++.PP
+ \fBaudit\fR
++.RS 4
+ A little more extreme than debug.
+-.TP 3n
++.RE
++.PP
+ \fBnullok\fR
++.RS 4
+ The default action of this module is to not permit the user access to a service if their official password is blank. The
+ \fBnullok\fR
+ argument overrides this default.
+-.TP 3n
++.RE
++.PP
+ \fBtry_first_pass\fR
++.RS 4
+ Before prompting the user for their password, the module first tries the previous stacked module's password in case that satisfies this module as well.
+-.TP 3n
++.RE
++.PP
+ \fBuse_first_pass\fR
++.RS 4
+ The argument
+ \fBuse_first_pass\fR
+ forces the module to use a previous stacked modules password and will never prompt the user \- if no password is available or the password is not appropriate, the user will be denied access.
+-.TP 3n
++.RE
++.PP
+ \fBnodelay\fR
++.RS 4
+ This argument can be used to discourage the authentication component from requesting a delay should the authentication as a whole fail. The default action is for the module to request a delay\-on\-failure of the order of two second.
+-.TP 3n
++.RE
++.PP
+ \fBuse_authtok\fR
++.RS 4
+ When password changing enforce the module to set the new password to the one provided by a previously stacked
+ \fBpassword\fR
+ module (this is used in the example of the stacking of the
+ \fBpam_cracklib\fR
+ module documented above).
+-.TP 3n
++.RE
++.PP
+ \fBnot_set_pass\fR
++.RS 4
+ This argument is used to inform the module that it is not to pay attention to/make available the old or new passwords from/to other (stacked) password modules.
+-.TP 3n
++.RE
++.PP
+ \fBnis\fR
++.RS 4
+ NIS RPC is used for setting new passwords.
+-.TP 3n
++.RE
++.PP
+ \fBremember=\fR\fB\fIn\fR\fR
++.RS 4
+ The last
+ \fIn\fR
+ passwords for each user are saved in
+ \fI/etc/security/opasswd\fR
+ in order to force password change history and keep the user from alternating between the same password too frequently.
+-.TP 3n
++.RE
++.PP
+ \fBshadow\fR
++.RS 4
+ Try to maintain a shadow based system.
+-.TP 3n
++.RE
++.PP
+ \fBmd5\fR
++.RS 4
+ When a user changes their password next, encrypt it with the MD5 algorithm.
+-.TP 3n
++.RE
++.PP
+ \fBbigcrypt\fR
++.RS 4
+ When a user changes their password next, encrypt it with the DEC C2 algorithm.
+-.TP 3n
++.RE
++.PP
+ \fBbroken_shadow\fR
++.RS 4
+ Ignore errors reading shadow inforation for users in the account management module.
++.RE
++.PP
++\fBmin=\fR\fB\fIn\fR\fR
++.RS 4
++Set a minimum password length of
++\fIn\fR
++characters. The default value is 1.
++.RE
++.PP
++\fBmax=\fR\fB\fIn\fR\fR
++.RS 4
++Set a maximum password length of
++\fIn\fR
++characters. The default value is 8.
++.RE
++.PP
++\fBobscure\fR
++.RS 4
++Enable some extra checks on password strength. These checks are based on the "obscure" checks in the original shadow package. The behavior is similar to the pam_cracklib module, but for non\-dictionary\-based checks. The following checks are implemented:
++.PP
++\fBPalindrome\fR
++.RS 4
++Verifies that the new password is not a palindrome of (i.e., the reverse of) the previous one.
++.RE
++.PP
++\fBCase Change Only\fR
++.RS 4
++Verifies that the new password isn't the same as the old one with a change of case.
++.RE
++.PP
++\fBSimilar\fR
++.RS 4
++Verifies that the new password isn't too much like the previous one.
++.RE
++.PP
++\fBSimple\fR
++.RS 4
++Is the new password too simple? This is based on the length of the password and the number of different types of characters (alpha, numeric, etc.) used.
++.RE
++.PP
++\fBRotated\fR
++.RS 4
++Is the new password a rotated version of the old password? (E.g., "billy" and "illyb")
++.RE
++.sp
++.RE
+ .PP
+ Invalid arguments are logged with
+ \fBsyslog\fR(3).
+@@ -108,16 +181,18 @@
+ .PP
+ All service are supported.
+ .SH "RETURN VALUES"
+-.TP 3n
++.PP
+ PAM_IGNORE
++.RS 4
+ Ignore this module.
++.RE
+ .SH "EXAMPLES"
+ .PP
+ An example usage for
+ \fI/etc/pam.d/login\fR
+ would be:
+ .sp
+-.RS 3n
++.RS 4
+ .nf
+ # Authenticate the user
+ auth       required   pam_unix.so
