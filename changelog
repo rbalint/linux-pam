@@ -27,8 +27,9 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     pam_cracklib.c instead to use the default dictpath already available
     from crack.h.
   * Patch 038: partially merged/superseded upstream
+  * Patch 061: partially merged upstream
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 05:14:38 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 15:30:12 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
