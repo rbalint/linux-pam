@@ -24,7 +24,7 @@
 054_pam_security_abstract_securetty_handling -p0
 055_pam_unix_nullok_secure -p0
 056_no_label_at_end -p0
-057_selinux -p0
+057_pam_unix_passwd_OOM_check -p0
 058_pam_env_enable -p0
 059_pam_userdb_segv -p0
 060_pam_tally_segv -p0
