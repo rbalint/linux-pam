@@ -91,3 +91,134 @@ Index: Linux-PAM/modules/pam_wheel/pam_wheel.8.xml
      </variablelist>
    </refsect1>
  
+Index: Linux-PAM/modules/pam_wheel/pam_wheel.8
+===================================================================
+--- Linux-PAM/modules/pam_wheel/pam_wheel.8.orig
++++ Linux-PAM/modules/pam_wheel/pam_wheel.8
+@@ -1,11 +1,11 @@
+ .\"     Title: pam_wheel
+ .\"    Author: 
+-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
+-.\"      Date: 06/09/2006
+-.\"    Manual: Linux\-PAM Manual
+-.\"    Source: Linux\-PAM Manual
++.\" Generator: DocBook XSL Stylesheets v1.72.0 <http://docbook.sf.net/>
++.\"      Date: 08/19/2007
++.\"    Manual: Linux-PAM Manual
++.\"    Source: Linux-PAM Manual
+ .\"
+-.TH "PAM_WHEEL" "8" "06/09/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_WHEEL" "8" "08/19/2007" "Linux\-PAM Manual" "Linux\-PAM Manual"
+ .\" disable hyphenation
+ .nh
+ .\" disable justification (adjust text to left margin only)
+@@ -14,7 +14,7 @@
+ pam_wheel \- Only permit root access to members of group wheel
+ .SH "SYNOPSIS"
+ .HP 13
+-\fBpam_wheel.so\fR [debug] [deny] [group=\fIname\fR] [root_only] [trust] [use_uid]
++\fBpam_wheel.so\fR [debug] [deny] [group=\fIname\fR] [root_only] [trust]
+ .SH "DESCRIPTION"
+ .PP
+ The pam_wheel PAM module is used to enforce the so\-called
+@@ -24,30 +24,37 @@
+ group. If no group with this name exist, the module is using the group with the group\-ID
+ \fB0\fR.
+ .SH "OPTIONS"
+-.TP 3n
++.PP
+ \fBdebug\fR
++.RS 4
+ Print debug information.
+-.TP 3n
++.RE
++.PP
+ \fBdeny\fR
++.RS 4
+ Reverse the sense of the auth operation: if the user is trying to get UID 0 access and is a member of the wheel group (or the group of the
+ \fBgroup\fR
+ option), deny access. Conversely, if the user is not in the group, return PAM_IGNORE (unless
+ \fBtrust\fR
+ was also specified, in which case we return PAM_SUCCESS).
+-.TP 3n
++.RE
++.PP
+ \fBgroup=\fR\fB\fIname\fR\fR
++.RS 4
+ Instead of checking the wheel or GID 0 groups, use the
+ \fB\fIname\fR\fR
+ group to perform the authentication.
+-.TP 3n
++.RE
++.PP
+ \fBroot_only\fR
++.RS 4
+ The check for wheel membership is done only.
+-.TP 3n
++.RE
++.PP
+ \fBtrust\fR
++.RS 4
+ The pam_wheel module will return PAM_SUCCESS instead of PAM_IGNORE if the user is a member of the wheel group (thus with a little play stacking the modules the wheel members may be able to su to root without being prompted for a passwd).
+-.TP 3n
+-\fBuse_uid\fR
+-The check for wheel membership will be done against the current uid instead of the original one (useful when jumping with su from one account to another for example).
++.RE
+ .SH "MODULE SERVICES PROVIDED"
+ .PP
+ The
+@@ -56,32 +63,46 @@
+ \fBaccount\fR
+ services are supported.
+ .SH "RETURN VALUES"
+-.TP 3n
++.PP
+ PAM_AUTH_ERR
++.RS 4
+ Authentication failure.
+-.TP 3n
++.RE
++.PP
+ PAM_BUF_ERR
++.RS 4
+ Memory buffer error.
+-.TP 3n
++.RE
++.PP
+ PAM_IGNORE
++.RS 4
+ The return value should be ignored by PAM dispatch.
+-.TP 3n
++.RE
++.PP
+ PAM_PERM_DENY
++.RS 4
+ Permission denied.
+-.TP 3n
++.RE
++.PP
+ PAM_SERVICE_ERR
++.RS 4
+ Cannot determine the user name.
+-.TP 3n
++.RE
++.PP
+ PAM_SUCCESS
++.RS 4
+ Success.
+-.TP 3n
++.RE
++.PP
+ PAM_USER_UNKNOWN
++.RS 4
+ User not known.
++.RE
+ .SH "EXAMPLES"
+ .PP
+ The root account gains access by default (rootok), only wheel members can become root (wheel) but Unix authenticate non\-root applicants.
+ .sp
+-.RS 3n
++.RS 4
+ .nf
+ su      auth     sufficient     pam_rootok.so
+ su      auth     required       pam_wheel.so
