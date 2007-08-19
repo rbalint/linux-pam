@@ -2,7 +2,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/support.c.orig
 +++ Linux-PAM/modules/pam_unix/support.c
-@@ -150,14 +150,23 @@
+@@ -87,15 +87,22 @@
  	/* now parse the arguments to this module */
  
  	while (argc-- > 0) {
@@ -12,8 +12,9 @@ Index: Linux-PAM/modules/pam_unix/support.c
  		D(("pam_unix arg: %s", *argv));
  
  		for (j = 0; j < UNIX_CTRLS_; ++j) {
--			if (unix_args[j].token &&
--			    !strncmp(*argv, unix_args[j].token, strlen(unix_args[j].token)))
+-			if (unix_args[j].token
+-			    && !strncmp(*argv, unix_args[j].token, strlen(unix_args[j].token)))
+-			{
 -				break;
 +			if (unix_args[j].token) {
 +			    sl = strlen(unix_args[j].token);
@@ -26,11 +27,10 @@ Index: Linux-PAM/modules/pam_unix/support.c
 +				if (!strcmp(*argv, unix_args[j].token))
 +				    break;
 +			    }
-+			}
+ 			}
  		}
  
- 		if (j >= UNIX_CTRLS_) {
-@@ -533,6 +542,17 @@
+@@ -472,6 +479,17 @@
  	if (salt)
  		_pam_delete(salt);
  
@@ -41,14 +41,14 @@ Index: Linux-PAM/modules/pam_unix/support.c
 +		if (retval2 != PAM_SUCCESS || uttyname == NULL)
 +			return 0;
 +
-+		if (_pammodutil_tty_secure(uttyname) != PAM_SUCCESS)
++		if (pam_modutil_tty_secure(uttyname) != PAM_SUCCESS)
 +			return 0;
 +	}
 +
  	return retval;
  }
  
-@@ -732,7 +752,7 @@
+@@ -693,7 +711,7 @@
  	    int salt_len = strlen(salt);
  	    if (!salt_len) {
  		/* the stored password is NULL */
@@ -72,11 +72,20 @@ Index: Linux-PAM/modules/pam_unix/support.h
  
  
  static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
+@@ -106,7 +107,7 @@
+ /* UNIX_NOT_SET_PASS */    {"not_set_pass",    _ALL_ON_,                 0x40},
+ /* UNIX__PRELIM */         {NULL,              _ALL_ON_^(0x180),         0x80},
+ /* UNIX__UPDATE */         {NULL,              _ALL_ON_^(0x180),        0x100},
+-/* UNIX__NONULL */         {NULL,              _ALL_ON_,                0x200},
++/* UNIX__NONULL */         {NULL,              _ALL_ON_^(0x2000000),    0x200},
+ /* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
+ /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
+ /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
 @@ -124,6 +125,7 @@
  /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x800000},
  /* UNIX_NOOBSCURE_CHECKS */{NULL,              _ALL_ON_,            0x1000000},
- /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x2000000},
-+/* UNIX_NULLOK_SECURE */   {"nullok_secure",   _ALL_ON_^(0x200),    0x4000000},
+ /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_^(0x1000000),        0},
++/* UNIX_NULLOK_SECURE */   {"nullok_secure",   _ALL_ON_^(0x200),    0x2000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag | unix_args[UNIX_NOOBSCURE_CHECKS].flag)
