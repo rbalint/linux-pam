@@ -2,22 +2,21 @@ Index: Linux-PAM/configure.in
 ===================================================================
 --- Linux-PAM/configure.in.orig
 +++ Linux-PAM/configure.in
-@@ -246,7 +246,7 @@
+@@ -385,11 +385,14 @@
+     AC_DEFINE([WITH_SELINUX], 1, [Defined if SE Linux support is compiled in])
+ fi
+ 
++AC_CHECK_LIB([cap], [cap_init], LIBCAP="-lcap", LIBCAP="")
++AC_SUBST(LIBCAP)
++
+ dnl Checks for header files.
  AC_HEADER_DIRENT
  AC_HEADER_STDC
  AC_HEADER_SYS_WAIT
--AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h net/if.h termios.h unistd.h sys/fsuid.h)
-+AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h net/if.h termios.h unistd.h sys/fsuid.h sys/capability.h )
+-AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h net/if.h termio.h unistd.h sys/fsuid.h inittypes.h)
++AC_CHECK_HEADERS(fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h net/if.h termio.h unistd.h sys/fsuid.h inittypes.h sys/capability.h)
  
- dnl Linux wants features.h in some of the source files.
- AC_CHECK_HEADERS(features.h)
-@@ -410,6 +410,7 @@
- AC_FUNC_MEMCMP
- AC_FUNC_VPRINTF
- AC_CHECK_FUNCS(gethostname gettimeofday mkdir select strcspn strdup strerror strspn strstr strtol uname)
-+AC_CHECK_LIB(cap, cap_init)
- 
- AC_CHECK_FUNCS(getpwnam_r getpwuid_r getgrnam_r getgrgid_r getspnam_r getgrouplist)
+ AC_CHECK_HEADERS(crypt.h)
  
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
@@ -25,7 +24,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 +++ Linux-PAM/modules/pam_limits/pam_limits.c
 @@ -19,6 +19,10 @@
  
- #include <security/_pam_aconf.h>
+ #include "config.h"
  
 +#ifdef HAVE_SYS_CAPABILITY_H
 +#include <sys/capability.h>
@@ -34,17 +33,17 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  #include <stdio.h>
  #include <unistd.h>
  #include <string.h>
-@@ -75,6 +79,10 @@
+@@ -76,6 +80,10 @@
  			      specific user or to count all logins */
      int priority;	 /* the priority to run user process with */
      char chroot_dir[8092]; /* directory to chroot into */
 +#ifdef HAVE_SYS_CAPABILITY_H
-+  cap_t capabilities; /*capability handle*/
-+  int caps_set;
++    cap_t capabilities; /*capability handle*/
++    int caps_set;
 +#endif /* HAVE_SYS_CAPABILITY_H */
-     int supported[RLIM_NLIMITS];
      struct user_limits_struct limits[RLIM_NLIMITS];
      char conf_file[BUFSIZ];
+     int utmp_after_pam_call;
 @@ -87,6 +95,7 @@
  
  #define LIMIT_PRI RLIM_NLIMITS+3
@@ -53,7 +52,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  
  #define LIMIT_SOFT  1
  #define LIMIT_HARD  2
-@@ -291,6 +300,10 @@
+@@ -274,6 +283,10 @@
      pl->login_limit = -2;
      pl->login_limit_def = LIMITS_DEF_NONE;
  
@@ -64,7 +63,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      pl->chroot_dir[0] = '\0';
      
      return retval;
-@@ -364,6 +377,10 @@
+@@ -348,6 +361,10 @@
  	limit_item = LIMIT_PRI;
      } else if (strcmp(lim_item, "chroot") == 0) {
  	limit_item = LIMIT_CHROOT;
@@ -73,9 +72,9 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 +	limit_item = LIMIT_CAPS;
 +#endif /* HAVE_SYS_CAPABILITY_H */
      } else {
-         _pam_log(LOG_DEBUG,"unknown limit item '%s'", lim_item);
+         pam_syslog(pamh, LOG_DEBUG, "unknown limit item '%s'", lim_item);
          return;
-@@ -448,6 +465,13 @@
+@@ -438,6 +455,13 @@
  
      if (limit_item == LIMIT_CHROOT)
  	strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir));
@@ -102,37 +101,33 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      return retval;
  }
  
-Index: Linux-PAM/Make.Rules.in
+Index: Linux-PAM/config.h.in
 ===================================================================
---- Linux-PAM/Make.Rules.in.orig
-+++ Linux-PAM/Make.Rules.in
-@@ -113,7 +113,7 @@
- RANLIB=@RANLIB@
- STRIP=@STRIP@
- CC_STATIC=@CC_STATIC@
--
-+LIBS=@LIBS@
- LINKLIBS = $(NEED_LINK_LIB_C) $(LIBDL)
+--- Linux-PAM/config.h.in.orig
++++ Linux-PAM/config.h.in
+@@ -168,6 +168,9 @@
+ /* Define to 1 if you have the <syslog.h> header file. */
+ #undef HAVE_SYSLOG_H
  
- USESONAME=@USESONAME@
-Index: Linux-PAM/_pam_aconf.h.in
-===================================================================
---- Linux-PAM/_pam_aconf.h.in.orig
-+++ Linux-PAM/_pam_aconf.h.in
-@@ -75,6 +75,8 @@
- /* read both confs - read /etc/pam.d and /etc/pam.conf in serial */
- #undef PAM_READ_BOTH_CONFS
- 
++/* Define to 1 if you have the <sys/capability.h> header file. */
 +#undef HAVE_SYS_CAPABILITY_H
 +
- #undef HAVE_PATHS_H
- #ifdef HAVE_PATHS_H
- #include <paths.h>
-@@ -82,6 +84,7 @@
- /* location of the mail spool directory */
- #undef PAM_PATH_MAILDIR
+ /* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
+    */
+ #undef HAVE_SYS_DIR_H
+Index: Linux-PAM/modules/pam_limits/Makefile.am
+===================================================================
+--- Linux-PAM/modules/pam_limits/Makefile.am.orig
++++ Linux-PAM/modules/pam_limits/Makefile.am
+@@ -26,9 +26,10 @@
  
+ secureconf_DATA = limits.conf
+ 
++pam_limits_la_LIBADD = @LIBCAP@
 +
- /* where should we include setfsuid's prototype from? If this is not
-    defined, we get it from unistd.h */
- #undef HAVE_SYS_FSUID_H
+ if ENABLE_REGENERATE_MAN
+ noinst_DATA = README
+ README: pam_limits.8.xml limits.conf.5.xml
+ -include $(top_srcdir)/Make.xml.rules
+ endif
+-
