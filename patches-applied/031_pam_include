@@ -2,9 +2,9 @@ Index: Linux-PAM/libpam/pam_handlers.c
 ===================================================================
 --- Linux-PAM/libpam/pam_handlers.c.orig
 +++ Linux-PAM/libpam/pam_handlers.c
-@@ -128,6 +128,61 @@
+@@ -114,6 +114,61 @@
  		module_type = PAM_T_ACCT;
- 	    } else if (!_pam_strCMP("password", tok)) {
+ 	    } else if (!strcasecmp("password", tok)) {
  		module_type = PAM_T_PASS;
 +	    } else if (!_pam_strCMP("@include", tok)) {
 +		/* include a file here
@@ -64,7 +64,7 @@ Index: Linux-PAM/libpam/pam_handlers.c
  	    } else {
  		/* Illegal module type */
  		D(("_pam_init_handlers: bad module type: %s", tok));
-@@ -258,6 +313,7 @@
+@@ -244,6 +299,7 @@
  		return PAM_ABORT;
  	    }
  	}
