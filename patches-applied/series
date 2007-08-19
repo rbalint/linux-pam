@@ -20,7 +20,6 @@
 045_pam_dispatch_jump_is_ignore -p0
 046_pam_group_example -p0
 047_pam_limits_chroot_string_value -p0
-048_pam_group_colon_valid_char -p0
 049_pam_unix_sane_locking -p0
 050_configure_in_gnu -p0
 052_pam_unix_no_openlog -p0
