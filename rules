@@ -22,14 +22,10 @@ include /usr/share/quilt/quilt.make
 
 BUILD_TREE=Linux-PAM
 
-pdoc=libpam-doc
-d = $(shell pwd)/debian
+d = $(CURDIR)/debian
 dl = $(d)/local
 i = install -p -m 0644
 ie = install -p -m 0755
-
-#version=${shell expr `pwd` : '.*-\([0-9.]*\)'}
-#version_major=${shell expr `pwd` : '.*-\([0-9]*\).[0-9.]*'}
 
 build:   build-stamp
 build-stamp: configure-stamp
