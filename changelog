@@ -4,6 +4,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     for their extensive work in helping to prepare for this update in Debian.
     - now uses autoconf for library detection, so SELinux should not be
       unconditionally enabled on non-Linux archs.  Closes: #333141.
+    - pam_mail notice handling has been completely reworked, so there should
+      no longer be missing spaces in the messages.  Closes: #119689.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
@@ -93,7 +95,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Drop libpam{0g,0g-dev,-modules,-runtime}.dirs, not needed for anything
     because we aren't trying to ship empty directories in the packages
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 02:55:49 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 04:26:46 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
