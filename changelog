@@ -62,6 +62,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Actually ship the pam, pam.conf, and pam.d manpages in libpam-runtime.
   * debian/patches-applied/autoconf.patch: move all changes to autotools
     generated files into a single patch at the end of the stack.
+    - don't touch configure in debian/rules, the quilt patch takes care
+      of this for us.
   * New patch 064_pam_unix_cracklib_dictpath: correctly define
     CRACKLIB_DICTS, since this is not defined by configure.  Thanks to Jan
     Christoph Nordholz.

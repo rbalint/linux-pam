@@ -39,7 +39,6 @@ build-stamp: configure-stamp
 configure: configure-stamp
 
 configure-stamp: patch
-	touch $(BUILD_TREE)/configure
 	cd $(BUILD_TREE) && \
 	./configure --sysconfdir=/etc --prefix=/usr --enable-static \
 	--enable-shared \
