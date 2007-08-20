@@ -58,8 +58,11 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Actually ship the pam, pam.conf, and pam.d manpages in libpam-runtime.
   * debian/patches-applied/autoconf.patch: move all changes to autotools
     generated files into a single patch at the end of the stack.
+  * New patch 064_pam_unix_cracklib_dictpath: correctly define
+    CRACKLIB_DICTS, since this is not defined by configure.  Thanks to Jan
+    Christoph Nordholz.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 17:51:54 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 22:21:16 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
