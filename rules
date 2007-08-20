@@ -74,7 +74,6 @@ install: build
 binary-indep: install
 	dh_testdir -i
 	dh_testroot -i
-	dh_installdocs -i
 
 	mkdir -p debian/tmp/etc/pam.d
 	mkdir -p debian/tmp/usr/share/pam
