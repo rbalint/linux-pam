@@ -11,7 +11,17 @@ Index: Linux-PAM/modules/pam_securetty/pam_securetty.c
  /*
   * by Elliot Lee <sopwith@redhat.com>, Red Hat Software.
   * July 25, 1996.
-@@ -67,11 +64,7 @@
+@@ -37,6 +34,9 @@
+ #include <security/pam_modutil.h>
+ #include <security/pam_ext.h>
+ 
++extern int _pammodutil_tty_secure(const pam_handle_t *pamh,
++                                  const char *uttyname);
++
+ #define PAM_DEBUG_ARG       0x0001
+ 
+ static int
+@@ -67,11 +67,7 @@
      const char *username;
      const char *uttyname;
      const void *void_uttyname;
@@ -23,7 +33,7 @@ Index: Linux-PAM/modules/pam_securetty/pam_securetty.c
  
      /* log a trail for debugging */
      if (ctrl & PAM_DEBUG_ARG) {
-@@ -101,63 +94,10 @@
+@@ -101,63 +97,10 @@
  	return PAM_SERVICE_ERR;
      }
  
@@ -84,53 +94,18 @@ Index: Linux-PAM/modules/pam_securetty/pam_securetty.c
 -	}
 -	retval = PAM_SUCCESS;
 -
-+    retval = pam_modutil_tty_secure(pamh, uttyname);
++    retval = _pammodutil_tty_secure(pamh, uttyname);
 +    if ((retval == PAM_SUCCESS) && (ctrl & PAM_DEBUG_ARG)) {
 +	pam_syslog(pamh, LOG_DEBUG, "access allowed for '%s' on '%s'",
 +	           username, uttyname);
      }
  
      return retval;
-Index: Linux-PAM/libpam/Makefile.am
-===================================================================
---- Linux-PAM/libpam/Makefile.am.orig
-+++ Linux-PAM/libpam/Makefile.am
-@@ -39,4 +39,5 @@
- 	pam_vprompt.c pam_syslog.c pam_dynamic.c pam_audit.c \
- 	pam_modutil_cleanup.c pam_modutil_getpwnam.c pam_modutil_ioloop.c \
- 	pam_modutil_getgrgid.c pam_modutil_getpwuid.c pam_modutil_getgrnam.c \
--	pam_modutil_getspnam.c pam_modutil_getlogin.c  pam_modutil_ingroup.c
-+	pam_modutil_getspnam.c pam_modutil_getlogin.c  pam_modutil_ingroup.c \
-+	pam_modutil_tty_secure.c
-Index: Linux-PAM/libpam/include/security/pam_modutil.h
-===================================================================
---- Linux-PAM/libpam/include/security/pam_modutil.h.orig
-+++ Linux-PAM/libpam/include/security/pam_modutil.h
-@@ -97,6 +97,9 @@
- extern int
- pam_modutil_write(int fd, const char *buffer, int count);
- 
-+extern int
-+pam_modutil_tty_secure(const pam_handle_t *pamh, const char *uttyname);
-+
- #ifdef __cplusplus
- }
- #endif
-Index: Linux-PAM/libpam/libpam.map
-===================================================================
---- Linux-PAM/libpam/libpam.map.orig
-+++ Linux-PAM/libpam/libpam.map
-@@ -44,4 +44,5 @@
-     pam_modutil_getlogin;
-     pam_modutil_read;
-     pam_modutil_write;
-+    pam_modutil_tty_secure;
- };
-Index: Linux-PAM/libpam/pam_modutil_tty_secure.c
+Index: Linux-PAM/modules/pam_securetty/tty_secure.c
 ===================================================================
 --- /dev/null
-+++ Linux-PAM/libpam/pam_modutil_tty_secure.c
-@@ -0,0 +1,89 @@
++++ Linux-PAM/modules/pam_securetty/tty_secure.c
+@@ -0,0 +1,92 @@
 +/*
 + * A function to determine if a particular line is in /etc/securetty
 + */
@@ -161,7 +136,10 @@ Index: Linux-PAM/libpam/pam_modutil_tty_secure.c
 +#include <security/pam_modutil.h>
 +#include <security/pam_ext.h>
 +
-+int pam_modutil_tty_secure(const pam_handle_t *pamh, const char *uttyname)
++extern int _pammodutil_tty_secure(const pam_handle_t *pamh,
++                                  const char *uttyname);
++
++int _pammodutil_tty_secure(const pam_handle_t *pamh, const char *uttyname)
 +{
 +    int retval = PAM_AUTH_ERR;
 +    char ttyfileline[256];
@@ -220,3 +198,18 @@ Index: Linux-PAM/libpam/pam_modutil_tty_secure.c
 +
 +    return retval;
 +}
+Index: Linux-PAM/modules/pam_securetty/Makefile.am
+===================================================================
+--- Linux-PAM/modules/pam_securetty/Makefile.am.orig
++++ Linux-PAM/modules/pam_securetty/Makefile.am
+@@ -23,6 +23,10 @@
+ 
+ securelib_LTLIBRARIES = pam_securetty.la
+ 
++pam_securetty_la_SOURCES =	\
++	pam_securetty.c		\
++	tty_secure.c
++
+ if ENABLE_REGENERATE_MAN
+ noinst_DATA = README
+ README: pam_securetty.8.xml

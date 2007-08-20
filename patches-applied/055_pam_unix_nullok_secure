@@ -41,7 +41,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
 +		if (retval2 != PAM_SUCCESS || uttyname == NULL)
 +			return 0;
 +
-+		if (pam_modutil_tty_secure(pamh, (const char *)uttyname) != PAM_SUCCESS)
++		if (_pammodutil_tty_secure(pamh, (const char *)uttyname) != PAM_SUCCESS)
 +			return 0;
 +	}
 +
@@ -89,3 +89,27 @@ Index: Linux-PAM/modules/pam_unix/support.h
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag | unix_args[UNIX_NOOBSCURE_CHECKS].flag)
+@@ -159,6 +161,9 @@
+ 			,const void **pass);
+ extern int _unix_shadowed(const struct passwd *pwd);
+ 
++extern int _pammodutil_tty_secure(const pam_handle_t *pamh,
++                                  const char *uttyname);
++
+ extern struct spwd *_unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl, const char *user);
+ 
+ extern unsigned int pass_min_len;
+Index: Linux-PAM/modules/pam_unix/Makefile.am
+===================================================================
+--- Linux-PAM/modules/pam_unix/Makefile.am.orig
++++ Linux-PAM/modules/pam_unix/Makefile.am
+@@ -44,6 +44,9 @@
+ 	pam_unix_auth.c pam_unix_passwd.c pam_unix_sess.c support.c \
+ 	yppasswd_xdr.c md5_good.c md5_broken.c obscure.c
+ 
++pam_unix_la_LIBADD = \
++	../pam_securetty/tty_secure.lo
++
+ bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
+ bigcrypt_CFLAGS = $(AM_CFLAGS)
+ bigcrypt_LDFLAGS = @LIBCRYPT@
