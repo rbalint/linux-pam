@@ -8,10 +8,10 @@
 DH_COMPAT = 3
 export DH_COMPAT
 
-OS_CFLAGS	:= -g -D_GNU_SOURCE -D_REENTRANT -fPIC
+CFLAGS	:= -g -D_GNU_SOURCE -D_REENTRANT -fPIC
 
 ifeq (,$(findstring noopt, ${DEB_BUILD_OPTIONS}))
-OS_CFLAGS += -O2
+CFLAGS += -O2
 endif
 
 LC_COLLATE=C
@@ -36,7 +36,7 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# Compile everything else
-	$(MAKE) -C $(BUILD_TREE) OS_CFLAGS="$(OS_CFLAGS)"
+	$(MAKE) -C $(BUILD_TREE) CFLAGS="$(CFLAGS)"
 
 	touch build-stamp
 
