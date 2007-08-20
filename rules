@@ -40,7 +40,7 @@ build-stamp: configure-stamp
 
 	touch build-stamp
 
-configure: configure-stamp
+configure: patch configure-stamp
 
 configure-stamp:
 	touch $(BUILD_TREE)/configure
@@ -52,7 +52,9 @@ configure-stamp:
 	touch configure-stamp
 
 
-clean:
+clean: clean-patched unpatch
+
+clean-patched:
 	dh_testdir
 	dh_testroot
 	touch $(BUILD_TREE)/configure
@@ -149,4 +151,4 @@ module_check:
 	done
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary
+.PHONY: build clean binary-indep binary-arch binary patch unpatch install configure
