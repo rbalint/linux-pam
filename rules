@@ -67,6 +67,9 @@ install: build
 	rm -f $(CURDIR)/debian/libpam-modules/lib/security/pam_cracklib.so
 	# .la files are teh devil
 	rm -f $(CURDIR)/debian/tmp/lib/*.la
+	# for modules, we only want the .so
+	rm -f $(CURDIR)/debian/tmp/lib/security/*.la \
+	      $(CURDIR)/debian/tmp/lib/security/*.a
 
 # Build architecture-independent files here.
 binary-indep: install
