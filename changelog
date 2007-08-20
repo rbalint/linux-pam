@@ -48,8 +48,10 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       tree
     - consequently, drop libpam-doc.dirs as well which is no longer needed
       and no longer accurate
+  * Drop debian/libpam0g.links, no longer needed because upstream now has a
+    working install target which creates the library symlinks
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 16:51:39 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 17:05:56 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
