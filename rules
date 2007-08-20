@@ -113,6 +113,8 @@ binary-arch: install
 	dh_installdocs -a $(BUILD_TREE)/README
 	$(i) $(dl)/Debian-PAM-MiniPolicy $(d)/libpam0g/usr/share/doc/libpam0g
 	dh_installexamples -a
+	find $(d)/libpam0g-dev/usr/share/doc/libpam0g-dev/examples -type f -name 'Makefile*' -print0 | xargs -0 rm -f
+
 	dh_installcron -a
 
 	dh_installchangelogs -a $(BUILD_TREE)/ChangeLog
