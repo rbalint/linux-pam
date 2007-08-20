@@ -8,6 +8,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       accordingly
     - bump the shlibs
     - the 'test.c' example no longer exists
+    - add /usr/share/locale to libpam-runtime.
   * Mark myself as primary maintainer as previously discussed with Sam, and
     add Roger as an uploader.
   * Refactor to use quilt.
