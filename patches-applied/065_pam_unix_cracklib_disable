@@ -1,0 +1,18 @@
+Index: pam/Linux-PAM/modules/pam_unix/Makefile.am
+===================================================================
+--- pam.orig/Linux-PAM/modules/pam_unix/Makefile.am
++++ pam/Linux-PAM/modules/pam_unix/Makefile.am
+@@ -21,12 +21,9 @@
+ if HAVE_LIBSELINUX
+   AM_CFLAGS += -D"WITH_SELINUX"
+ endif
+-if HAVE_LIBCRACK
+-  AM_CFLAGS += -D"USE_CRACKLIB"
+-endif
+ 
+ pam_unix_la_LDFLAGS = -no-undefined -avoid-version -module \
+-	@LIBCRACK@ @LIBNSL@ -L$(top_builddir)/libpam -lpam \
++	@LIBNSL@ -L$(top_builddir)/libpam -lpam \
+ 	@LIBCRYPT@ @LIBSELINUX@
+ if HAVE_VERSIONING
+   pam_unix_la_LDFLAGS += -Wl,--version-script=$(srcdir)/../modules.map
