@@ -68,8 +68,9 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     - kill off references to unused variables
     - make binary-arch also depend on the install target, and streamline the
       rules
+  * Drop debian/local/unix_chkpwd.8 in favor of the upstream manpage.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 22:42:40 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 23:02:46 -0700
 
 pam (0.79-4) unstable; urgency=medium
 

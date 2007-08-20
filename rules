@@ -102,8 +102,6 @@ binary-arch: install module_check
 	dh_testroot -a
 
 	mkdir -p debian/tmp/etc/pam.d
-	$(ie) -D  $(BUILD_TREE)/modules/pam_tally/pam_tally $(d)/tmp/usr/sbin/pam_tally
-	$(i) $(dl)/unix_chkpwd.8 $(d)/libpam-modules/usr/share/man/man8
 	mkdir -p debian/tmp/usr/lib
 	mv debian/tmp/lib/*.a debian/tmp/usr/lib
 	dh_movefiles  -plibpam0g-dev -plibpam-cracklib -plibpam0g
