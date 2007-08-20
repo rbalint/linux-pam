@@ -97,17 +97,11 @@ binary-indep: install
 	dh_md5sums -i
 	dh_builddeb -i
 
-binary-arch: build module_check $(dh_mak_deps)
+binary-arch: install module_check
 	dh_testdir -a
 	dh_testroot -a
-	dh_clean -a -k
-	dh_installdirs -a
 
-	$(MAKE) install -C $(BUILD_TREE) FAKEROOT=$(d)/tmp \
-		DIRS="libpam libpam_misc modules libpamc"
 	mkdir -p debian/tmp/etc/pam.d
-	$(i) $(dl)/pam.conf $(d)/tmp/etc
-	$(i) $(dl)/other $(d)/tmp/etc/pam.d
 	$(ie) -D  $(BUILD_TREE)/modules/pam_tally/pam_tally $(d)/tmp/usr/sbin/pam_tally
 	$(i) $(dl)/unix_chkpwd.8 $(d)/libpam-modules/usr/share/man/man8
 	mkdir -p debian/tmp/usr/lib

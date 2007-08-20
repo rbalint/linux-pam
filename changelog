@@ -63,9 +63,13 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     Christoph Nordholz.
   * New patch 065_pam_unix_cracklib_disable: Debian-specific patch to disable
     cracklib support in pam_unix.  Thanks to Christoph Nordholz.
-  * Rename OS_CFLAGS to CFLAGS.
+  * debian/rules:
+    - Rename OS_CFLAGS to CFLAGS.
+    - kill off references to unused variables
+    - make binary-arch also depend on the install target, and streamline the
+      rules
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 22:33:36 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 22:42:40 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
