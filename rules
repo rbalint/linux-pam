@@ -40,9 +40,9 @@ build-stamp: configure-stamp
 
 	touch build-stamp
 
-configure: patch configure-stamp
+configure: configure-stamp
 
-configure-stamp:
+configure-stamp: patch
 	touch $(BUILD_TREE)/configure
 	cd $(BUILD_TREE) && \
 	./configure --sysconfdir=/etc --prefix=/usr --enable-static-libpam \
