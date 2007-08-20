@@ -54,8 +54,7 @@ clean: clean-patched unpatch
 clean-patched:
 	dh_testdir
 	dh_testroot
-	touch $(BUILD_TREE)/configure
-	-$(MAKE) -C $(BUILD_TREE) distclean
+	[ ! -f $(BUILD_TREE)/Makefile ] || $(MAKE) -C $(BUILD_TREE) distclean
 	rm -f build-stamp configure-stamp
 	rm -f Linux-PAM/bin/[a-z]*
 	dh_clean
