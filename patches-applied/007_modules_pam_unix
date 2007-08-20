@@ -781,3 +781,54 @@ Index: Linux-PAM/modules/pam_unix/Makefile.am
  
  bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
  bigcrypt_CFLAGS = $(AM_CFLAGS)
+Index: Linux-PAM/modules/pam_unix/README
+===================================================================
+--- Linux-PAM/modules/pam_unix/README.orig
++++ Linux-PAM/modules/pam_unix/README
+@@ -119,6 +119,46 @@
+     Ignore errors reading shadow inforation for users in the account management
+     module.
+ 
++min=n
++
++    Set a minimum password length of n characters. The default value is 1.
++
++max=n
++
++    Set a maximum password length of n characters. The default value is 8.
++
++obscure
++
++    Enable some extra checks on password strength. These checks are based on
++    the "obscure" checks in the original shadow package. The behavior is
++    similar to the pam_cracklib module, but for non-dictionary-based checks.
++    The following checks are implemented:
++
++    Palindrome
++
++        Verifies that the new password is not a palindrome of (i.e., the
++        reverse of) the previous one.
++
++    Case Change Only
++
++        Verifies that the new password isn't the same as the old one with a
++        change of case.
++
++    Similar
++
++        Verifies that the new password isn't too much like the previous one.
++
++    Simple
++
++        Is the new password too simple? This is based on the length of the
++        password and the number of different types of characters (alpha,
++        numeric, etc.) used.
++
++    Rotated
++
++        Is the new password a rotated version of the old password? (E.g.,
++        "billy" and "illyb")
++
+ Invalid arguments are logged with syslog(3).
+ 
+ EXAMPLES
