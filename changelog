@@ -53,6 +53,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * debian/patches-applied/PAM-manpage-section: "PAM" is not a daemon, manpage
     belongs in section 7, not in section 8.
   * Actually ship the pam, pam.conf, and pam.d manpages in libpam-runtime.
+  * debian/patches-applied/autoconf.patch: move all changes to autotools
+    generated files into a single patch at the end of the stack.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 17:51:54 -0700
 

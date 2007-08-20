@@ -101,20 +101,6 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      return retval;
  }
  
-Index: Linux-PAM/config.h.in
-===================================================================
---- Linux-PAM/config.h.in.orig
-+++ Linux-PAM/config.h.in
-@@ -168,6 +168,9 @@
- /* Define to 1 if you have the <syslog.h> header file. */
- #undef HAVE_SYSLOG_H
- 
-+/* Define to 1 if you have the <sys/capability.h> header file. */
-+#undef HAVE_SYS_CAPABILITY_H
-+
- /* Define to 1 if you have the <sys/dir.h> header file, and it defines `DIR'.
-    */
- #undef HAVE_SYS_DIR_H
 Index: Linux-PAM/modules/pam_limits/Makefile.am
 ===================================================================
 --- Linux-PAM/modules/pam_limits/Makefile.am.orig

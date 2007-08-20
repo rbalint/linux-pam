@@ -56,17 +56,3 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
           if (rlimit_value != RLIM_INFINITY)
              rlimit_value *= 1024;
      	 break;
-Index: Linux-PAM/config.h.in
-===================================================================
---- Linux-PAM/config.h.in.orig
-+++ Linux-PAM/config.h.in
-@@ -126,6 +126,9 @@
- /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
- #undef HAVE_NDIR_H
- 
-+/* Define to 1 if you have the <net/if.h> header file. */
-+#undef HAVE_NET_IF_H
-+
- /* Define to 1 if you have the <paths.h> header file. */
- #undef HAVE_PATHS_H
- 
