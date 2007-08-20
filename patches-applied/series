@@ -25,3 +25,4 @@
 057_pam_unix_passwd_OOM_check -p0
 061_pam_issue_double_free -p0
 063_paswd_segv -p0
+PAM-manpage-section

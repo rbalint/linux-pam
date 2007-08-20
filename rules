@@ -90,7 +90,6 @@ binary-indep: install
 	dh_movefiles -i
 
 	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
-	rm  debian/libpam-runtime/usr/share/man/man8/{pam.8,pam.d.8,pam.conf.8}
 	dh_installdocs -i
 	dh_installchangelogs -i $(BUILD_TREE)/CHANGELOG
 	dh_compress -i -X.html
