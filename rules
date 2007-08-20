@@ -107,8 +107,7 @@ binary-arch: install
 	dh_movefiles  -plibpam0g-dev -plibpam-cracklib -plibpam0g
 	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*.so`
 	dh_link -a
-	dh_installman -plibpam0g-dev $(BUILD_TREE)/doc/man/*.3
-	dh_installman -a -Nlibpam0g-dev
+	dh_installman -a
 	rm -rf $(d)/libpam-modules/usr/share/man/man7
 
 	dh_installdocs -a $(BUILD_TREE)/README
