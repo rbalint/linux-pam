@@ -55,6 +55,9 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       tree
     - consequently, drop libpam-doc.dirs as well which is no longer needed
       and no longer accurate
+    - add debian/libpam-doc.install for moving the docs to the right place;
+      for the moment this means we're using both dh_movefiles and
+      dh_install...
   * Drop debian/libpam0g.links, no longer needed because upstream now has a
     working install target which creates the library symlinks
   * debian/patches-applied/PAM-manpage-section: "PAM" is not a daemon, manpage
@@ -83,7 +86,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Update to debhelper V5.
   * Don't ship Makefiles as part of the libpam0g-dev examples.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 01:31:33 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 02:11:21 -0700
 
 pam (0.79-4) unstable; urgency=medium
 

@@ -85,6 +85,7 @@ binary-indep: install
 	$(i) $(dl)/common-* $(d)/tmp/usr/share/pam/
 
 	dh_movefiles -i
+	dh_install -i
 
 	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
 	dh_installdocs -i
