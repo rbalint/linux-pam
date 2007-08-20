@@ -61,8 +61,10 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * New patch 064_pam_unix_cracklib_dictpath: correctly define
     CRACKLIB_DICTS, since this is not defined by configure.  Thanks to Jan
     Christoph Nordholz.
+  * New patch 065_pam_unix_cracklib_disable: Debian-specific patch to disable
+    cracklib support in pam_unix.  Thanks to Christoph Nordholz.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 22:21:16 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 22:23:51 -0700
 
 pam (0.79-4) unstable; urgency=medium
 

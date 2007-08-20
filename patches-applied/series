@@ -26,5 +26,6 @@
 061_pam_issue_double_free -p0
 063_paswd_segv -p0
 064_pam_unix_cracklib_dictpath
+065_pam_unix_cracklib_disable
 PAM-manpage-section
 autoconf.patch
