@@ -312,3 +312,23 @@ Index: Linux-PAM/modules/pam_limits/limits.conf.5
  .nf
  *               soft    core            0
  *               hard    rss             10000
+Index: Linux-PAM/modules/pam_limits/limits.conf
+===================================================================
+--- Linux-PAM/modules/pam_limits/limits.conf.orig
++++ Linux-PAM/modules/pam_limits/limits.conf
+@@ -35,6 +35,7 @@
+ #        - msgqueue - max memory used by POSIX message queues (bytes)
+ #        - nice - max nice priority allowed to raise to
+ #        - rtprio - max realtime priority
++#        - chroot - change root to directory (Debian-specific)
+ #
+ #<domain>      <type>  <item>         <value>
+ #
+@@ -45,6 +46,7 @@
+ #@faculty        soft    nproc           20
+ #@faculty        hard    nproc           50
+ #ftp             hard    nproc           0
++#ftp             -       chroot          /ftp
+ #@student        -       maxlogins       4
+ 
+ # End of file
