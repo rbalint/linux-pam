@@ -119,7 +119,8 @@ binary-arch: install
 	dh_installchangelogs -a $(BUILD_TREE)/ChangeLog
 	dh_strip -a
 	dh_compress -a
-	dh_fixperms -Xunix_chkpwd -a
+	dh_fixperms -a
+	chmod 04755 $(d)/libpam-modules/sbin/unix_chkpwd
 	dh_makeshlibs -plibpam0g -V "libpam0g (>= 0.99.7.1)"
 	dh_installdeb -a
 	dh_shlibdeps -a -L libpam0g -l$(CURDIR)/debian/libpam0g/lib
