@@ -28,8 +28,8 @@ dl = $(d)/local
 i = install -p -m 0644
 ie = install -p -m 0755
 
-build:   build-stamp
-build-stamp: configure-stamp
+build: configure build-stamp
+build-stamp:
 	dh_testdir
 
 	# Compile everything else
@@ -37,9 +37,8 @@ build-stamp: configure-stamp
 
 	touch build-stamp
 
-configure: configure-stamp
-
-configure-stamp: patch
+configure: patch configure-stamp
+configure-stamp:
 	cd $(BUILD_TREE) && \
 	./configure --sysconfdir=/etc --prefix=/usr --enable-static \
 	--enable-shared \
