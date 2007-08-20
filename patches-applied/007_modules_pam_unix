@@ -768,3 +768,16 @@ Index: Linux-PAM/modules/pam_unix/pam_unix.8
  .nf
  # Authenticate the user
  auth       required   pam_unix.so
+Index: Linux-PAM/modules/pam_unix/Makefile.am
+===================================================================
+--- Linux-PAM/modules/pam_unix/Makefile.am.orig
++++ Linux-PAM/modules/pam_unix/Makefile.am
+@@ -42,7 +42,7 @@
+ 
+ pam_unix_la_SOURCES = bigcrypt.c pam_unix_acct.c \
+ 	pam_unix_auth.c pam_unix_passwd.c pam_unix_sess.c support.c \
+-	yppasswd_xdr.c md5_good.c md5_broken.c
++	yppasswd_xdr.c md5_good.c md5_broken.c obscure.c
+ 
+ bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
+ bigcrypt_CFLAGS = $(AM_CFLAGS)
