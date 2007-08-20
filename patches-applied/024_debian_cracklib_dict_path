@@ -11,3 +11,16 @@ Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
                  if (ctrl & PAM_DEBUG_ARG)
                      pam_syslog(pamh,LOG_DEBUG,"bad password: %s",crack_msg);
                  pam_error(pamh, _("BAD PASSWORD: %s"), crack_msg);
+Index: Linux-PAM/configure.in
+===================================================================
+--- Linux-PAM/configure.in.orig
++++ Linux-PAM/configure.in
+@@ -312,7 +312,7 @@
+         AC_HELP_STRING([--disable-cracklib],[do not use cracklib]),
+         WITH_CRACKLIB=$enableval, WITH_CRACKLIB=yes)
+ if test x"$WITH_CRACKLIB" != xno ; then
+-        AC_CHECK_HEADER([crack.h],
++        AC_CHECK_HEADERS([crack.h],
+               AC_CHECK_LIB([crack], [FascistCheck], LIBCRACK="-lcrack", LIBCRACK=""))
+ else
+ 	LIBCRACK=""
