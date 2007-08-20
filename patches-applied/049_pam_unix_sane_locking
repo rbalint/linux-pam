@@ -71,7 +71,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 +			i++;
 +		}
 +		if(retval != 0) {
-+			retval PAM_AUTHTOK_LOCK_BUSY;
++			retval = PAM_AUTHTOK_LOCK_BUSY;
 +			goto done;
 +		}
 +#endif
