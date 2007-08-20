@@ -355,25 +355,8 @@ Index: pam/Linux-PAM/aclocal.m4
 ===================================================================
 --- pam.orig/Linux-PAM/aclocal.m4
 +++ pam/Linux-PAM/aclocal.m4
-@@ -1,7 +1,7 @@
--# generated automatically by aclocal 1.10 -*- Autoconf -*-
-+# generated automatically by aclocal 1.9.6 -*- Autoconf -*-
+@@ -18,7 +18,7 @@
  
- # Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
--# 2005, 2006  Free Software Foundation, Inc.
-+# 2005  Free Software Foundation, Inc.
- # This file is free software; the Free Software Foundation
- # gives unlimited permission to copy and/or distribute it,
- # with or without modifications, as long as this notice is preserved.
-@@ -11,14 +11,9 @@
- # even the implied warranty of MERCHANTABILITY or FITNESS FOR A
- # PARTICULAR PURPOSE.
- 
--m4_if(m4_PACKAGE_VERSION, [2.61],,
--[m4_fatal([this file was generated for autoconf 2.61.
--You have another version of autoconf.  If you want to use that,
--you should regenerate the build system entirely.], [63])])
--
  # libtool.m4 - Configure libtool for the host system. -*-Autoconf-*-
  
 -# serial 48 AC_PROG_LIBTOOL
@@ -381,7 +364,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
  
  # AC_PROVIDE_IFELSE(MACRO-NAME, IF-PROVIDED, IF-NOT-PROVIDED)
-@@ -181,7 +176,7 @@
+@@ -181,7 +181,7 @@
  test -z "$ac_objext" && ac_objext=o
  
  # Determine commands to create old-style static archives.
@@ -390,7 +373,7 @@ Index: pam/Linux-PAM/aclocal.m4
  old_postinstall_cmds='chmod 644 $oldlib'
  old_postuninstall_cmds=
  
-@@ -268,8 +263,9 @@
+@@ -268,8 +268,9 @@
  # Check for compiler boilerplate output or warnings with
  # the simple compiler test code.
  AC_DEFUN([_LT_COMPILER_BOILERPLATE],
@@ -402,7 +385,7 @@ Index: pam/Linux-PAM/aclocal.m4
  eval "$ac_compile" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_compiler_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -281,8 +277,9 @@
+@@ -281,8 +282,9 @@
  # Check for linker boilerplate output or warnings with
  # the simple link test code.
  AC_DEFUN([_LT_LINKER_BOILERPLATE],
@@ -414,7 +397,7 @@ Index: pam/Linux-PAM/aclocal.m4
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -298,12 +295,20 @@
+@@ -298,12 +300,20 @@
  # If we don't find anything, use the default library path according
  # to the aix ld manual.
  AC_DEFUN([_LT_AC_SYS_LIBPATH_AIX],
@@ -440,7 +423,7 @@ Index: pam/Linux-PAM/aclocal.m4
  if test -z "$aix_libpath"; then aix_libpath="/usr/lib:/lib"; fi
  ])# _LT_AC_SYS_LIBPATH_AIX
  
-@@ -534,13 +539,17 @@
+@@ -534,13 +544,17 @@
    rm -rf conftest*
    ;;
  
@@ -459,7 +442,7 @@ Index: pam/Linux-PAM/aclocal.m4
          x86_64-*linux*)
            LD="${LD-ld} -m elf_i386"
            ;;
-@@ -557,6 +566,9 @@
+@@ -557,6 +571,9 @@
        ;;
      *64-bit*)
        case $host in
@@ -469,7 +452,7 @@ Index: pam/Linux-PAM/aclocal.m4
          x86_64-*linux*)
            LD="${LD-ld} -m elf_x86_64"
            ;;
-@@ -628,7 +640,7 @@
+@@ -628,7 +645,7 @@
  AC_CACHE_CHECK([$1], [$2],
    [$2=no
    ifelse([$4], , [ac_outfile=conftest.$ac_objext], [ac_outfile=$4])
@@ -478,7 +461,7 @@ Index: pam/Linux-PAM/aclocal.m4
     lt_compiler_flag="$3"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -669,11 +681,12 @@
+@@ -669,11 +686,12 @@
  # ------------------------------------------------------------
  # Check whether the given compiler option works
  AC_DEFUN([AC_LIBTOOL_LINKER_OPTION],
@@ -493,7 +476,7 @@ Index: pam/Linux-PAM/aclocal.m4
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -787,24 +800,27 @@
+@@ -787,24 +805,27 @@
      fi
      ;;
    *)
@@ -538,7 +521,7 @@ Index: pam/Linux-PAM/aclocal.m4
      ;;
    esac
  ])
-@@ -1031,7 +1047,8 @@
+@@ -1031,7 +1052,8 @@
  # ---------------------------------
  # Check to see if options -c and -o are simultaneously supported by compiler
  AC_DEFUN([AC_LIBTOOL_PROG_CC_C_O],
@@ -548,7 +531,7 @@ Index: pam/Linux-PAM/aclocal.m4
  AC_CACHE_CHECK([if $compiler supports -c -o file.$ac_objext],
    [_LT_AC_TAGVAR(lt_cv_prog_compiler_c_o, $1)],
    [_LT_AC_TAGVAR(lt_cv_prog_compiler_c_o, $1)=no
-@@ -1039,7 +1056,7 @@
+@@ -1039,7 +1061,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -557,7 +540,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -1179,6 +1196,7 @@
+@@ -1179,6 +1201,7 @@
     darwin*)
         if test -n "$STRIP" ; then
           striplib="$STRIP -x"
@@ -565,7 +548,7 @@ Index: pam/Linux-PAM/aclocal.m4
           AC_MSG_RESULT([yes])
         else
    AC_MSG_RESULT([no])
-@@ -1196,7 +1214,8 @@
+@@ -1196,7 +1219,8 @@
  # -----------------------------
  # PORTME Fill in your ld.so characteristics
  AC_DEFUN([AC_LIBTOOL_SYS_DYNAMIC_LINKER],
@@ -575,7 +558,7 @@ Index: pam/Linux-PAM/aclocal.m4
  library_names_spec=
  libname_spec='lib$name'
  soname_spec=
-@@ -1210,20 +1229,58 @@
+@@ -1210,20 +1234,58 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -639,7 +622,7 @@ Index: pam/Linux-PAM/aclocal.m4
  need_lib_prefix=unknown
  hardcode_into_libs=no
  
-@@ -1380,12 +1437,8 @@
+@@ -1380,12 +1442,8 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -654,7 +637,7 @@ Index: pam/Linux-PAM/aclocal.m4
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -1402,18 +1455,6 @@
+@@ -1402,18 +1460,6 @@
    dynamic_linker=no
    ;;
  
@@ -673,7 +656,7 @@ Index: pam/Linux-PAM/aclocal.m4
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -1451,7 +1492,7 @@
+@@ -1451,7 +1497,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -682,7 +665,7 @@ Index: pam/Linux-PAM/aclocal.m4
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -1514,7 +1555,7 @@
+@@ -1514,7 +1560,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -691,7 +674,7 @@ Index: pam/Linux-PAM/aclocal.m4
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -1569,7 +1610,7 @@
+@@ -1569,7 +1615,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -700,7 +683,7 @@ Index: pam/Linux-PAM/aclocal.m4
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -1585,7 +1626,7 @@
+@@ -1585,7 +1631,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -709,7 +692,7 @@ Index: pam/Linux-PAM/aclocal.m4
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -1598,7 +1639,7 @@
+@@ -1598,7 +1644,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -718,7 +701,7 @@ Index: pam/Linux-PAM/aclocal.m4
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -1607,7 +1648,7 @@
+@@ -1607,7 +1653,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -727,7 +710,7 @@ Index: pam/Linux-PAM/aclocal.m4
    ;;
  
  netbsd*)
-@@ -1691,6 +1732,10 @@
+@@ -1691,6 +1737,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -738,7 +721,7 @@ Index: pam/Linux-PAM/aclocal.m4
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -1796,7 +1841,8 @@
+@@ -1796,7 +1846,8 @@
  # _LT_AC_TAGCONFIG
  # ----------------
  AC_DEFUN([_LT_AC_TAGCONFIG],
@@ -748,7 +731,7 @@ Index: pam/Linux-PAM/aclocal.m4
      [AC_HELP_STRING([--with-tags@<:@=TAGS@:>@],
          [include additional configurations @<:@automatic@:>@])],
      [tagnames="$withval"])
-@@ -2057,7 +2103,7 @@
+@@ -2057,7 +2108,7 @@
  
  # AC_PATH_TOOL_PREFIX
  # -------------------
@@ -757,7 +740,7 @@ Index: pam/Linux-PAM/aclocal.m4
  AC_DEFUN([AC_PATH_TOOL_PREFIX],
  [AC_REQUIRE([AC_PROG_EGREP])dnl
  AC_MSG_CHECKING([for $1])
-@@ -2120,7 +2166,7 @@
+@@ -2120,7 +2171,7 @@
  
  # AC_PATH_MAGIC
  # -------------
@@ -766,7 +749,7 @@ Index: pam/Linux-PAM/aclocal.m4
  AC_DEFUN([AC_PATH_MAGIC],
  [AC_PATH_TOOL_PREFIX(${ac_tool_prefix}file, /usr/bin$PATH_SEPARATOR$PATH)
  if test -z "$lt_cv_path_MAGIC_CMD"; then
-@@ -2267,7 +2313,7 @@
+@@ -2267,7 +2318,7 @@
  # how to check for library dependencies
  #  -- PORTME fill in with the dynamic library characteristics
  AC_DEFUN([AC_DEPLIBS_CHECK_METHOD],
@@ -775,7 +758,7 @@ Index: pam/Linux-PAM/aclocal.m4
  lt_cv_deplibs_check_method,
  [lt_cv_file_magic_cmd='$MAGIC_CMD'
  lt_cv_file_magic_test_file=
-@@ -2306,16 +2352,22 @@
+@@ -2306,16 +2357,22 @@
  
  mingw* | pw32*)
    # Base MSYS/MinGW do not provide the 'file' command needed by
@@ -802,7 +785,7 @@ Index: pam/Linux-PAM/aclocal.m4
    if echo __ELF__ | $CC -E - | grep __ELF__ > /dev/null; then
      case $host_cpu in
      i*86 )
-@@ -2353,7 +2405,7 @@
+@@ -2353,7 +2410,7 @@
    esac
    ;;
  
@@ -811,7 +794,7 @@ Index: pam/Linux-PAM/aclocal.m4
    # PIC code is broken on Interix 3.x, that's why |\.a not |_pic\.a here
    lt_cv_deplibs_check_method='match_pattern /lib[[^/]]+(\.so|\.a)$'
    ;;
-@@ -2369,11 +2421,11 @@
+@@ -2369,11 +2426,11 @@
    ;;
  
  # This must be Linux ELF.
@@ -825,7 +808,7 @@ Index: pam/Linux-PAM/aclocal.m4
    if echo __ELF__ | $CC -E - | grep __ELF__ > /dev/null; then
      lt_cv_deplibs_check_method='match_pattern /lib[[^/]]+(\.so\.[[0-9]]+\.[[0-9]]+|_pic\.a)$'
    else
-@@ -2403,6 +2455,10 @@
+@@ -2403,6 +2460,10 @@
    lt_cv_deplibs_check_method=pass_all
    ;;
  
@@ -836,7 +819,7 @@ Index: pam/Linux-PAM/aclocal.m4
  solaris*)
    lt_cv_deplibs_check_method=pass_all
    ;;
-@@ -2455,7 +2511,7 @@
+@@ -2455,7 +2516,7 @@
    lt_cv_path_NM="$NM"
  else
    lt_nm_to_check="${ac_tool_prefix}nm"
@@ -845,7 +828,7 @@ Index: pam/Linux-PAM/aclocal.m4
      lt_nm_to_check="$lt_nm_to_check nm"
    fi
    for lt_tmp_nm in $lt_nm_to_check; do
-@@ -2671,10 +2727,10 @@
+@@ -2671,10 +2732,10 @@
  _LT_AC_TAGVAR(objext, $1)=$objext
  
  # Code to be used in simple compile tests
@@ -858,7 +841,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
  _LT_AC_SYS_COMPILER
  
-@@ -2776,10 +2832,10 @@
+@@ -2776,10 +2837,10 @@
  _LT_AC_TAGVAR(objext, $1)=$objext
  
  # Code to be used in simple compile tests
@@ -871,7 +854,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  _LT_AC_SYS_COMPILER
-@@ -2925,7 +2981,7 @@
+@@ -2925,7 +2986,7 @@
  	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	then
  	  # We have reworked collect2
@@ -880,7 +863,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	else
  	  # We have old collect2
  	  _LT_AC_TAGVAR(hardcode_direct, $1)=unsupported
-@@ -3084,10 +3140,10 @@
+@@ -3084,10 +3145,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -893,7 +876,7 @@ Index: pam/Linux-PAM/aclocal.m4
            _LT_AC_TAGVAR(module_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -3121,7 +3177,7 @@
+@@ -3121,7 +3182,7 @@
    freebsd-elf*)
      _LT_AC_TAGVAR(archive_cmds_need_lc, $1)=no
      ;;
@@ -902,7 +885,7 @@ Index: pam/Linux-PAM/aclocal.m4
      # FreeBSD 3 and later use GNU C++ and GNU ld with standard ELF
      # conventions
      _LT_AC_TAGVAR(ld_shlibs, $1)=yes
-@@ -3170,9 +3226,7 @@
+@@ -3170,9 +3231,7 @@
        _LT_AC_TAGVAR(hardcode_libdir_separator, $1)=:
  
        case $host_cpu in
@@ -913,7 +896,7 @@ Index: pam/Linux-PAM/aclocal.m4
        *)
  	_LT_AC_TAGVAR(export_dynamic_flag_spec, $1)='${wl}-E'
          ;;
-@@ -3240,7 +3294,7 @@
+@@ -3240,7 +3299,7 @@
  	;;
      esac
      ;;
@@ -922,7 +905,7 @@ Index: pam/Linux-PAM/aclocal.m4
      _LT_AC_TAGVAR(hardcode_direct, $1)=no
      _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=no
      _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}-rpath,$libdir'
-@@ -3280,7 +3334,7 @@
+@@ -3280,7 +3339,7 @@
      _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}-rpath ${wl}$libdir'
      _LT_AC_TAGVAR(hardcode_libdir_separator, $1)=:
      ;;
@@ -931,7 +914,7 @@ Index: pam/Linux-PAM/aclocal.m4
      case $cc_basename in
        KCC*)
  	# Kuck and Associates, Inc. (KAI) C++ Compiler
-@@ -3360,6 +3414,29 @@
+@@ -3360,6 +3419,29 @@
  	# dependencies.
  	output_verbose_link_cmd='templist=`$CC -shared $CFLAGS -v conftest.$objext 2>&1 | grep "ld"`; templist=`echo $templist | $SED "s/\(^.*ld.*\)\( .*ld .*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
  	;;
@@ -961,7 +944,7 @@ Index: pam/Linux-PAM/aclocal.m4
      esac
      ;;
    lynxos*)
-@@ -3382,7 +3459,7 @@
+@@ -3382,7 +3464,7 @@
  	;;
      esac
      ;;
@@ -970,7 +953,7 @@ Index: pam/Linux-PAM/aclocal.m4
      if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
        _LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable  -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linker_flags'
        wlarc=
-@@ -3398,16 +3475,20 @@
+@@ -3398,16 +3480,20 @@
      _LT_AC_TAGVAR(ld_shlibs, $1)=no
      ;;
    openbsd*)
@@ -1000,7 +983,7 @@ Index: pam/Linux-PAM/aclocal.m4
      ;;
    osf3*)
      case $cc_basename in
-@@ -3569,15 +3650,10 @@
+@@ -3569,15 +3655,10 @@
  	case $host_os in
  	  solaris2.[[0-5]] | solaris2.[[0-5]].*) ;;
  	  *)
@@ -1019,7 +1002,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	    ;;
  	esac
  	_LT_AC_TAGVAR(link_all_deplibs, $1)=yes
-@@ -3624,6 +3700,12 @@
+@@ -3624,6 +3705,12 @@
  	  fi
  
  	  _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}-R $wl$libdir'
@@ -1032,7 +1015,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	fi
  	;;
      esac
-@@ -3867,7 +3949,7 @@
+@@ -3867,7 +3954,7 @@
  # PORTME: override above test on systems where it is broken
  ifelse([$1],[CXX],
  [case $host_os in
@@ -1041,7 +1024,7 @@ Index: pam/Linux-PAM/aclocal.m4
    # Interix 3.5 installs completely hosed .la files for C++, so rather than
    # hack all around it, let's just trust "g++" to DTRT.
    _LT_AC_TAGVAR(predep_objects,$1)=
-@@ -3875,13 +3957,46 @@
+@@ -3875,13 +3962,46 @@
    _LT_AC_TAGVAR(postdeps,$1)=
    ;;
  
@@ -1089,7 +1072,7 @@ Index: pam/Linux-PAM/aclocal.m4
      ;;
    esac
    ;;
-@@ -3930,10 +4045,17 @@
+@@ -3930,10 +4050,17 @@
  _LT_AC_TAGVAR(objext, $1)=$objext
  
  # Code to be used in simple compile tests
@@ -1109,7 +1092,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  _LT_AC_SYS_COMPILER
-@@ -4012,10 +4134,10 @@
+@@ -4012,10 +4139,10 @@
  _LT_AC_TAGVAR(objext, $1)=$objext
  
  # Code to be used in simple compile tests
@@ -1122,7 +1105,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  _LT_AC_SYS_COMPILER
-@@ -4068,7 +4190,7 @@
+@@ -4068,7 +4195,7 @@
  _LT_AC_TAGVAR(objext, $1)=$objext
  
  # Code to be used in simple compile tests
@@ -1131,7 +1114,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
  # Code to be used in simple link tests
  lt_simple_link_test_code="$lt_simple_compile_test_code"
-@@ -4157,6 +4279,7 @@
+@@ -4157,6 +4284,7 @@
      _LT_AC_TAGVAR(module_cmds, $1) \
      _LT_AC_TAGVAR(module_expsym_cmds, $1) \
      _LT_AC_TAGVAR(lt_cv_prog_compiler_c_o, $1) \
@@ -1139,7 +1122,7 @@ Index: pam/Linux-PAM/aclocal.m4
      _LT_AC_TAGVAR(exclude_expsyms, $1) \
      _LT_AC_TAGVAR(include_expsyms, $1); do
  
-@@ -4203,7 +4326,7 @@
+@@ -4203,7 +4331,7 @@
  # Generated automatically by $PROGRAM (GNU $PACKAGE $VERSION$TIMESTAMP)
  # NOTE: Changes made to this file will be lost: look at ltmain.sh.
  #
@@ -1148,7 +1131,7 @@ Index: pam/Linux-PAM/aclocal.m4
  # Free Software Foundation, Inc.
  #
  # This file is part of GNU Libtool:
-@@ -4528,7 +4651,7 @@
+@@ -4528,7 +4656,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -1157,7 +1140,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$_LT_AC_TAGVAR(always_export_symbols, $1)
-@@ -4611,6 +4734,7 @@
+@@ -4611,6 +4739,7 @@
  # ---------------------------------
  AC_DEFUN([AC_LIBTOOL_SYS_GLOBAL_SYMBOL_PIPE],
  [AC_REQUIRE([AC_CANONICAL_HOST])
@@ -1165,7 +1148,7 @@ Index: pam/Linux-PAM/aclocal.m4
  AC_REQUIRE([AC_PROG_NM])
  AC_REQUIRE([AC_OBJEXT])
  # Check for command to grab the raw symbol name followed by C symbol from nm.
-@@ -4647,7 +4771,7 @@
+@@ -4647,7 +4776,7 @@
    lt_cv_sys_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^$symcode* .* \(.*\)$/extern char \1;/p'"
    lt_cv_sys_global_symbol_to_c_name_address="sed -n -e 's/^: \([[^ ]]*\) $/  {\\\"\1\\\", (lt_ptr) 0},/p' -e 's/^$symcode* \([[^ ]]*\) \([[^ ]]*\)$/  {\"\2\", (lt_ptr) \&\2},/p'"
    ;;
@@ -1174,7 +1157,7 @@ Index: pam/Linux-PAM/aclocal.m4
    if test "$host_cpu" = ia64; then
      symcode='[[ABCDGIRSTW]]'
      lt_cv_sys_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^$symcode* .* \(.*\)$/extern char \1;/p'"
-@@ -4837,12 +4961,14 @@
+@@ -4837,12 +4966,14 @@
        # like `-m68040'.
        _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-m68020 -resident32 -malways-restore-a4'
        ;;
@@ -1191,7 +1174,7 @@ Index: pam/Linux-PAM/aclocal.m4
        _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-DDLL_EXPORT'
        ;;
      darwin* | rhapsody*)
-@@ -4854,7 +4980,7 @@
+@@ -4854,7 +4985,7 @@
        # DJGPP does not support shared libraries at all
        _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)=
        ;;
@@ -1200,7 +1183,7 @@ Index: pam/Linux-PAM/aclocal.m4
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -4920,7 +5046,7 @@
+@@ -4920,7 +5051,7 @@
  	    ;;
  	esac
  	;;
@@ -1209,7 +1192,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	# FreeBSD uses GNU C++
  	;;
        hpux9* | hpux10* | hpux11*)
-@@ -4963,7 +5089,7 @@
+@@ -4963,7 +5094,7 @@
  	    ;;
  	esac
  	;;
@@ -1218,7 +1201,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	case $cc_basename in
  	  KCC*)
  	    # KAI C++ Compiler
-@@ -4990,6 +5116,14 @@
+@@ -4990,6 +5121,14 @@
  	    _LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-non_shared'
  	    ;;
  	  *)
@@ -1233,7 +1216,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	    ;;
  	esac
  	;;
-@@ -5006,7 +5140,7 @@
+@@ -5006,7 +5145,7 @@
  	    ;;
  	esac
  	;;
@@ -1242,7 +1225,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	;;
        osf3* | osf4* | osf5*)
  	case $cc_basename in
-@@ -5110,13 +5244,15 @@
+@@ -5110,13 +5249,15 @@
        _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-m68020 -resident32 -malways-restore-a4'
        ;;
  
@@ -1260,7 +1243,7 @@ Index: pam/Linux-PAM/aclocal.m4
        _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-DDLL_EXPORT'
        ;;
  
-@@ -5126,7 +5262,7 @@
+@@ -5126,7 +5267,7 @@
        _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-fno-common'
        ;;
  
@@ -1269,7 +1252,7 @@ Index: pam/Linux-PAM/aclocal.m4
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -5184,7 +5320,7 @@
+@@ -5184,7 +5325,7 @@
         esac
         ;;
  
@@ -1278,7 +1261,7 @@ Index: pam/Linux-PAM/aclocal.m4
        # This hack is so that the source file can tell whether it is being
        # built for inclusion in a dll (and should export symbols for example).
        _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-DDLL_EXPORT'
-@@ -5217,7 +5353,7 @@
+@@ -5217,7 +5358,7 @@
        _LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
        ;;
  
@@ -1287,7 +1270,7 @@ Index: pam/Linux-PAM/aclocal.m4
        case $cc_basename in
        icc* | ecc*)
  	_LT_AC_TAGVAR(lt_prog_compiler_wl, $1)='-Wl,'
-@@ -5236,6 +5372,22 @@
+@@ -5236,6 +5377,22 @@
          # All Alpha code is PIC.
          _LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-non_shared'
          ;;
@@ -1310,7 +1293,7 @@ Index: pam/Linux-PAM/aclocal.m4
        esac
        ;;
  
-@@ -5245,6 +5397,10 @@
+@@ -5245,6 +5402,10 @@
        _LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-non_shared'
        ;;
  
@@ -1321,7 +1304,7 @@ Index: pam/Linux-PAM/aclocal.m4
      solaris*)
        _LT_AC_TAGVAR(lt_prog_compiler_pic, $1)='-KPIC'
        _LT_AC_TAGVAR(lt_prog_compiler_static, $1)='-Bstatic'
-@@ -5339,7 +5495,8 @@
+@@ -5339,7 +5500,8 @@
  # ------------------------------------
  # See if the linker supports building shared libraries.
  AC_DEFUN([AC_LIBTOOL_PROG_LD_SHLIBS],
@@ -1331,7 +1314,7 @@ Index: pam/Linux-PAM/aclocal.m4
  ifelse([$1],[CXX],[
    _LT_AC_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
    case $host_os in
-@@ -5356,7 +5513,10 @@
+@@ -5356,7 +5518,10 @@
      _LT_AC_TAGVAR(export_symbols_cmds, $1)="$ltdll_cmds"
    ;;
    cygwin* | mingw*)
@@ -1343,7 +1326,7 @@ Index: pam/Linux-PAM/aclocal.m4
    ;;
    *)
      _LT_AC_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
-@@ -5495,7 +5655,7 @@
+@@ -5495,7 +5660,7 @@
        _LT_AC_TAGVAR(allow_undefined_flag, $1)=unsupported
        _LT_AC_TAGVAR(always_export_symbols, $1)=no
        _LT_AC_TAGVAR(enable_shared_with_static_runtimes, $1)=yes
@@ -1352,7 +1335,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
        if $LD --help 2>&1 | grep 'auto-import' > /dev/null; then
          _LT_AC_TAGVAR(archive_cmds, $1)='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-@@ -5513,7 +5673,7 @@
+@@ -5513,7 +5678,7 @@
        fi
        ;;
  
@@ -1361,7 +1344,7 @@ Index: pam/Linux-PAM/aclocal.m4
        _LT_AC_TAGVAR(hardcode_direct, $1)=no
        _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=no
        _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='${wl}-rpath,$libdir'
-@@ -5528,7 +5688,7 @@
+@@ -5528,7 +5693,7 @@
        _LT_AC_TAGVAR(archive_expsym_cmds, $1)='sed "s,^,_," $export_symbols >$output_objdir/$soname.expsym~$CC -shared $pic_flag $libobjs $deplibs $compiler_flags ${wl}-h,$soname ${wl}--retain-symbols-file,$output_objdir/$soname.expsym ${wl}--image-base,`expr ${RANDOM-$$} % 4096 / 2 \* 262144 + 1342177280` -o $lib'
        ;;
  
@@ -1370,7 +1353,7 @@ Index: pam/Linux-PAM/aclocal.m4
        if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
  	tmp_addflag=
  	case $cc_basename,$host_cpu in
-@@ -5546,20 +5706,30 @@
+@@ -5546,20 +5711,30 @@
  	ifc* | ifort*)			# Intel Fortran compiler
  	  tmp_addflag=' -nofor_main' ;;
  	esac
@@ -1404,7 +1387,7 @@ Index: pam/Linux-PAM/aclocal.m4
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	_LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
  	wlarc=
-@@ -5592,7 +5762,7 @@
+@@ -5592,7 +5767,7 @@
  
      sysv5* | sco3.2v5* | sco5v6* | unixware* | OpenUNIX*)
        case `$LD -v 2>&1` in
@@ -1413,7 +1396,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	_LT_AC_TAGVAR(ld_shlibs, $1)=no
  	cat <<_LT_EOF 1>&2
  
-@@ -5711,7 +5881,7 @@
+@@ -5711,7 +5886,7 @@
    	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	  then
    	  # We have reworked collect2
@@ -1422,7 +1405,7 @@ Index: pam/Linux-PAM/aclocal.m4
  	  else
    	  # We have old collect2
    	  _LT_AC_TAGVAR(hardcode_direct, $1)=unsupported
-@@ -5804,7 +5974,7 @@
+@@ -5804,7 +5979,7 @@
        # The linker will automatically build a .lib file if we build a DLL.
        _LT_AC_TAGVAR(old_archive_From_new_cmds, $1)='true'
        # FIXME: Should let the user specify the lib program.
@@ -1431,7 +1414,7 @@ Index: pam/Linux-PAM/aclocal.m4
        _LT_AC_TAGVAR(fix_srcfile_path, $1)='`cygpath -w "$srcfile"`'
        _LT_AC_TAGVAR(enable_shared_with_static_runtimes, $1)=yes
        ;;
-@@ -5846,10 +6016,10 @@
+@@ -5846,10 +6021,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -1444,7 +1427,7 @@ Index: pam/Linux-PAM/aclocal.m4
            _LT_AC_TAGVAR(module_expsym_cmds, $1)='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -5889,7 +6059,7 @@
+@@ -5889,7 +6064,7 @@
        ;;
  
      # FreeBSD 3 and greater uses gcc -shared to do shared libraries.
@@ -1453,7 +1436,7 @@ Index: pam/Linux-PAM/aclocal.m4
        _LT_AC_TAGVAR(archive_cmds, $1)='$CC -shared -o $lib $libobjs $deplibs $compiler_flags'
        _LT_AC_TAGVAR(hardcode_libdir_flag_spec, $1)='-R$libdir'
        _LT_AC_TAGVAR(hardcode_direct, $1)=yes
-@@ -5991,7 +6161,7 @@
+@@ -5991,7 +6166,7 @@
        _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
        ;;
  
@@ -1462,7 +1445,7 @@ Index: pam/Linux-PAM/aclocal.m4
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	_LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
        else
-@@ -6011,24 +6181,28 @@
+@@ -6011,24 +6186,28 @@
        ;;
  
      openbsd*)
@@ -1508,7 +1491,7 @@ Index: pam/Linux-PAM/aclocal.m4
        fi
        ;;
  
-@@ -6087,17 +6261,16 @@
+@@ -6087,17 +6266,16 @@
        case $host_os in
        solaris2.[[0-5]] | solaris2.[[0-5]].*) ;;
        *)
@@ -1535,7 +1518,7 @@ Index: pam/Linux-PAM/aclocal.m4
        esac
        _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
        ;;
-@@ -6154,7 +6327,7 @@
+@@ -6154,7 +6332,7 @@
        fi
        ;;
  
@@ -1544,7 +1527,7 @@ Index: pam/Linux-PAM/aclocal.m4
        _LT_AC_TAGVAR(no_undefined_flag, $1)='${wl}-z,text'
        _LT_AC_TAGVAR(archive_cmds_need_lc, $1)=no
        _LT_AC_TAGVAR(hardcode_shlibpath_var, $1)=no
-@@ -6229,7 +6402,7 @@
+@@ -6229,7 +6407,7 @@
        # to ld, don't add -lc before -lgcc.
        AC_MSG_CHECKING([whether -lc should be explicitly linked in])
        $rm conftest*
@@ -1553,7 +1536,7 @@ Index: pam/Linux-PAM/aclocal.m4
  
        if AC_TRY_EVAL(ac_compile) 2>conftest.err; then
          soname=conftest
-@@ -6332,6 +6505,30 @@
+@@ -6332,6 +6510,30 @@
  [AC_CHECK_TOOL(RC, windres, no)
  ])
  
@@ -1584,7 +1567,7 @@ Index: pam/Linux-PAM/aclocal.m4
  # NOTE: This macro has been submitted for inclusion into   #
  #  GNU Autoconf as AC_PROG_SED.  When it is available in   #
  #  a released version of Autoconf we should remove this    #
-@@ -6352,12 +6549,13 @@
+@@ -6352,12 +6554,13 @@
    test -z "$as_dir" && as_dir=.
    for lt_ac_prog in sed gsed; do
      for ac_exec_ext in '' $ac_executable_extensions; do
@@ -1599,7 +1582,7 @@ Index: pam/Linux-PAM/aclocal.m4
  lt_ac_max=0
  lt_ac_count=0
  # Add /usr/xpg4/bin/sed as it is typically found on Solaris
-@@ -6390,10 +6588,11 @@
+@@ -6390,6 +6593,7 @@
  done
  ])
  SED=$lt_cv_path_SED
@@ -1607,364 +1590,6 @@ Index: pam/Linux-PAM/aclocal.m4
  AC_MSG_RESULT([$SED])
  ])
  
--# Copyright (C) 2002, 2003, 2005, 2006  Free Software Foundation, Inc.
-+# Copyright (C) 2002, 2003, 2005  Free Software Foundation, Inc.
- #
- # This file is free software; the Free Software Foundation
- # gives unlimited permission to copy and/or distribute it,
-@@ -6403,29 +6602,14 @@
- # ----------------------------
- # Automake X.Y traces this macro to ensure aclocal.m4 has been
- # generated from the m4 files accompanying Automake X.Y.
--# (This private macro should not be called outside this file.)
--AC_DEFUN([AM_AUTOMAKE_VERSION],
--[am__api_version='1.10'
--dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
--dnl require some minimum version.  Point them to the right macro.
--m4_if([$1], [1.10], [],
--      [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
--])
--
--# _AM_AUTOCONF_VERSION(VERSION)
--# -----------------------------
--# aclocal traces this macro to find the Autoconf version.
--# This is a private macro too.  Using m4_define simplifies
--# the logic in aclocal, which can simply ignore this definition.
--m4_define([_AM_AUTOCONF_VERSION], [])
-+AC_DEFUN([AM_AUTOMAKE_VERSION], [am__api_version="1.9"])
- 
- # AM_SET_CURRENT_AUTOMAKE_VERSION
- # -------------------------------
--# Call AM_AUTOMAKE_VERSION and AM_AUTOMAKE_VERSION so they can be traced.
-+# Call AM_AUTOMAKE_VERSION so it can be traced.
- # This function is AC_REQUIREd by AC_INIT_AUTOMAKE.
- AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
--[AM_AUTOMAKE_VERSION([1.10])dnl
--_AM_AUTOCONF_VERSION(m4_PACKAGE_VERSION)])
-+	 [AM_AUTOMAKE_VERSION([1.9.6])])
- 
- # AM_AUX_DIR_EXPAND                                         -*- Autoconf -*-
- 
-@@ -6482,14 +6666,14 @@
- 
- # AM_CONDITIONAL                                            -*- Autoconf -*-
- 
--# Copyright (C) 1997, 2000, 2001, 2003, 2004, 2005, 2006
-+# Copyright (C) 1997, 2000, 2001, 2003, 2004, 2005
- # Free Software Foundation, Inc.
- #
- # This file is free software; the Free Software Foundation
- # gives unlimited permission to copy and/or distribute it,
- # with or without modifications, as long as this notice is preserved.
- 
--# serial 8
-+# serial 7
- 
- # AM_CONDITIONAL(NAME, SHELL-CONDITION)
- # -------------------------------------
-@@ -6498,10 +6682,8 @@
- [AC_PREREQ(2.52)dnl
-  ifelse([$1], [TRUE],  [AC_FATAL([$0: invalid condition: $1])],
- 	[$1], [FALSE], [AC_FATAL([$0: invalid condition: $1])])dnl
--AC_SUBST([$1_TRUE])dnl
--AC_SUBST([$1_FALSE])dnl
--_AM_SUBST_NOTMAKE([$1_TRUE])dnl
--_AM_SUBST_NOTMAKE([$1_FALSE])dnl
-+AC_SUBST([$1_TRUE])
-+AC_SUBST([$1_FALSE])
- if $2; then
-   $1_TRUE=
-   $1_FALSE='#'
-@@ -6515,14 +6697,15 @@
- Usually this means the macro was only invoked conditionally.]])
- fi])])
- 
--# Copyright (C) 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006
-+
-+# Copyright (C) 1999, 2000, 2001, 2002, 2003, 2004, 2005
- # Free Software Foundation, Inc.
- #
- # This file is free software; the Free Software Foundation
- # gives unlimited permission to copy and/or distribute it,
- # with or without modifications, as long as this notice is preserved.
- 
--# serial 9
-+# serial 8
- 
- # There are a few dirty hacks below to avoid letting `AC_PROG_CC' be
- # written in clear, in which case automake, when reading aclocal.m4,
-@@ -6550,7 +6733,6 @@
- ifelse([$1], CC,   [depcc="$CC"   am_compiler_list=],
-        [$1], CXX,  [depcc="$CXX"  am_compiler_list=],
-        [$1], OBJC, [depcc="$OBJC" am_compiler_list='gcc3 gcc'],
--       [$1], UPC,  [depcc="$UPC"  am_compiler_list=],
-        [$1], GCJ,  [depcc="$GCJ"  am_compiler_list='gcc3 gcc'],
-                    [depcc="$$1"   am_compiler_list=])
- 
-@@ -6616,7 +6798,6 @@
-        depfile=sub/conftest.Po tmpdepfile=sub/conftest.TPo \
-        $SHELL ./depcomp $depcc -c -o sub/conftest.${OBJEXT-o} sub/conftest.c \
-          >/dev/null 2>conftest.err &&
--       grep sub/conftst1.h sub/conftest.Po > /dev/null 2>&1 &&
-        grep sub/conftst6.h sub/conftest.Po > /dev/null 2>&1 &&
-        grep sub/conftest.${OBJEXT-o} sub/conftest.Po > /dev/null 2>&1 &&
-        ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
-@@ -6669,8 +6850,7 @@
-   AMDEPBACKSLASH='\'
- fi
- AM_CONDITIONAL([AMDEP], [test "x$enable_dependency_tracking" != xno])
--AC_SUBST([AMDEPBACKSLASH])dnl
--_AM_SUBST_NOTMAKE([AMDEPBACKSLASH])dnl
-+AC_SUBST([AMDEPBACKSLASH])
- ])
- 
- # Generate code to set up dependency tracking.              -*- Autoconf -*-
-@@ -6695,9 +6875,8 @@
-   # some people rename them; so instead we look at the file content.
-   # Grep'ing the first line is not enough: some people post-process
-   # each Makefile.in and add a new line on top of each file to say so.
--  # Grep'ing the whole file is not good either: AIX grep has a line
--  # limit of 2048, but all sed's we know have understand at least 4000.
--  if sed 10q "$mf" | grep '^#.*generated by automake' > /dev/null 2>&1; then
-+  # So let's grep whole file.
-+  if grep '^#.*generated by automake' $mf > /dev/null 2>&1; then
-     dirpart=`AS_DIRNAME("$mf")`
-   else
-     continue
-@@ -6756,8 +6935,8 @@
- 
- # Do all the work for Automake.                             -*- Autoconf -*-
- 
--# Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
--# 2005, 2006 Free Software Foundation, Inc.
-+# Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005
-+# Free Software Foundation, Inc.
- #
- # This file is free software; the Free Software Foundation
- # gives unlimited permission to copy and/or distribute it,
-@@ -6780,20 +6959,16 @@
- # arguments mandatory, and then we can depend on a new Autoconf
- # release and drop the old call support.
- AC_DEFUN([AM_INIT_AUTOMAKE],
--[AC_PREREQ([2.60])dnl
-+[AC_PREREQ([2.58])dnl
- dnl Autoconf wants to disallow AM_ names.  We explicitly allow
- dnl the ones we care about.
- m4_pattern_allow([^AM_[A-Z]+FLAGS$])dnl
- AC_REQUIRE([AM_SET_CURRENT_AUTOMAKE_VERSION])dnl
- AC_REQUIRE([AC_PROG_INSTALL])dnl
--if test "`cd $srcdir && pwd`" != "`pwd`"; then
--  # Use -I$(srcdir) only when $(srcdir) != ., so that make's output
--  # is not polluted with repeated "-I."
--  AC_SUBST([am__isrc], [' -I$(srcdir)'])_AM_SUBST_NOTMAKE([am__isrc])dnl
--  # test to see if srcdir already configured
--  if test -f $srcdir/config.status; then
--    AC_MSG_ERROR([source directory already configured; run "make distclean" there first])
--  fi
-+# test to see if srcdir already configured
-+if test "`cd $srcdir && pwd`" != "`pwd`" &&
-+   test -f $srcdir/config.status; then
-+  AC_MSG_ERROR([source directory already configured; run "make distclean" there first])
- fi
- 
- # test whether we have cygpath
-@@ -6813,9 +6988,6 @@
-  AC_SUBST([PACKAGE], [$1])dnl
-  AC_SUBST([VERSION], [$2])],
- [_AM_SET_OPTIONS([$1])dnl
--dnl Diagnose old-style AC_INIT with new-style AM_AUTOMAKE_INIT.
--m4_if(m4_ifdef([AC_PACKAGE_NAME], 1)m4_ifdef([AC_PACKAGE_VERSION], 1), 11,,
--  [m4_fatal([AC_INIT should be called with package and version arguments])])dnl
-  AC_SUBST([PACKAGE], ['AC_PACKAGE_TARNAME'])dnl
-  AC_SUBST([VERSION], ['AC_PACKAGE_VERSION'])])dnl
- 
-@@ -6851,10 +7023,6 @@
-                   [_AM_DEPENDENCIES(CXX)],
-                   [define([AC_PROG_CXX],
-                           defn([AC_PROG_CXX])[_AM_DEPENDENCIES(CXX)])])dnl
--AC_PROVIDE_IFELSE([AC_PROG_OBJC],
--                  [_AM_DEPENDENCIES(OBJC)],
--                  [define([AC_PROG_OBJC],
--                          defn([AC_PROG_OBJC])[_AM_DEPENDENCIES(OBJC)])])dnl
- ])
- ])
- 
-@@ -6890,7 +7058,7 @@
- # Define $install_sh.
- AC_DEFUN([AM_PROG_INSTALL_SH],
- [AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
--install_sh=${install_sh-"\$(SHELL) $am_aux_dir/install-sh"}
-+install_sh=${install_sh-"$am_aux_dir/install-sh"}
- AC_SUBST(install_sh)])
- 
- # Copyright (C) 2003, 2005  Free Software Foundation, Inc.
-@@ -6987,14 +7155,13 @@
- rm -f confinc confmf
- ])
- 
--# Copyright (C) 1999, 2000, 2001, 2003, 2004, 2005
--# Free Software Foundation, Inc.
-+# Copyright (C) 1999, 2000, 2001, 2003, 2005  Free Software Foundation, Inc.
- #
- # This file is free software; the Free Software Foundation
- # gives unlimited permission to copy and/or distribute it,
- # with or without modifications, as long as this notice is preserved.
- 
--# serial 5
-+# serial 3
- 
- # AM_PROG_CC_C_O
- # --------------
-@@ -7002,7 +7169,6 @@
- AC_DEFUN([AM_PROG_CC_C_O],
- [AC_REQUIRE([AC_PROG_CC_C_O])dnl
- AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
--AC_REQUIRE_AUX_FILE([compile])dnl
- # FIXME: we rely on the cache variable name because
- # there is no other way.
- set dummy $CC
-@@ -7015,22 +7181,18 @@
-    # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
-    CC="$am_aux_dir/compile $CC"
- fi
--dnl Make sure AC_PROG_CC is never called again, or it will override our
--dnl setting of CC.
--m4_define([AC_PROG_CC],
--          [m4_fatal([AC_PROG_CC cannot be called after AM_PROG_CC_C_O])])
- ])
- 
- # Fake the existence of programs that GNU maintainers use.  -*- Autoconf -*-
- 
--# Copyright (C) 1997, 1999, 2000, 2001, 2003, 2004, 2005
-+# Copyright (C) 1997, 1999, 2000, 2001, 2003, 2005
- # Free Software Foundation, Inc.
- #
- # This file is free software; the Free Software Foundation
- # gives unlimited permission to copy and/or distribute it,
- # with or without modifications, as long as this notice is preserved.
- 
--# serial 5
-+# serial 4
- 
- # AM_MISSING_PROG(NAME, PROGRAM)
- # ------------------------------
-@@ -7046,7 +7208,6 @@
- # If it does, set am_missing_run to use it, otherwise, to nothing.
- AC_DEFUN([AM_MISSING_HAS_RUN],
- [AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
--AC_REQUIRE_AUX_FILE([missing])dnl
- test x"${MISSING+set}" = xset || MISSING="\${SHELL} $am_aux_dir/missing"
- # Use eval to expand $SHELL
- if eval "$MISSING --run true"; then
-@@ -7057,7 +7218,7 @@
- fi
- ])
- 
--# Copyright (C) 2003, 2004, 2005, 2006  Free Software Foundation, Inc.
-+# Copyright (C) 2003, 2004, 2005  Free Software Foundation, Inc.
- #
- # This file is free software; the Free Software Foundation
- # gives unlimited permission to copy and/or distribute it,
-@@ -7065,23 +7226,60 @@
- 
- # AM_PROG_MKDIR_P
- # ---------------
--# Check for `mkdir -p'.
-+# Check whether `mkdir -p' is supported, fallback to mkinstalldirs otherwise.
-+#
-+# Automake 1.8 used `mkdir -m 0755 -p --' to ensure that directories
-+# created by `make install' are always world readable, even if the
-+# installer happens to have an overly restrictive umask (e.g. 077).
-+# This was a mistake.  There are at least two reasons why we must not
-+# use `-m 0755':
-+#   - it causes special bits like SGID to be ignored,
-+#   - it may be too restrictive (some setups expect 775 directories).
-+#
-+# Do not use -m 0755 and let people choose whatever they expect by
-+# setting umask.
-+#
-+# We cannot accept any implementation of `mkdir' that recognizes `-p'.
-+# Some implementations (such as Solaris 8's) are not thread-safe: if a
-+# parallel make tries to run `mkdir -p a/b' and `mkdir -p a/c'
-+# concurrently, both version can detect that a/ is missing, but only
-+# one can create it and the other will error out.  Consequently we
-+# restrict ourselves to GNU make (using the --version option ensures
-+# this.)
- AC_DEFUN([AM_PROG_MKDIR_P],
--[AC_PREREQ([2.60])dnl
--AC_REQUIRE([AC_PROG_MKDIR_P])dnl
--dnl Automake 1.8 to 1.9.6 used to define mkdir_p.  We now use MKDIR_P,
--dnl while keeping a definition of mkdir_p for backward compatibility.
--dnl @MKDIR_P@ is magic: AC_OUTPUT adjusts its value for each Makefile.
--dnl However we cannot define mkdir_p as $(MKDIR_P) for the sake of
--dnl Makefile.ins that do not define MKDIR_P, so we do our own
--dnl adjustment using top_builddir (which is defined more often than
--dnl MKDIR_P).
--AC_SUBST([mkdir_p], ["$MKDIR_P"])dnl
--case $mkdir_p in
--  [[\\/$]]* | ?:[[\\/]]*) ;;
--  */*) mkdir_p="\$(top_builddir)/$mkdir_p" ;;
--esac
--])
-+[if mkdir -p --version . >/dev/null 2>&1 && test ! -d ./--version; then
-+  # We used to keeping the `.' as first argument, in order to
-+  # allow $(mkdir_p) to be used without argument.  As in
-+  #   $(mkdir_p) $(somedir)
-+  # where $(somedir) is conditionally defined.  However this is wrong
-+  # for two reasons:
-+  #  1. if the package is installed by a user who cannot write `.'
-+  #     make install will fail,
-+  #  2. the above comment should most certainly read
-+  #     $(mkdir_p) $(DESTDIR)$(somedir)
-+  #     so it does not work when $(somedir) is undefined and
-+  #     $(DESTDIR) is not.
-+  #  To support the latter case, we have to write
-+  #     test -z "$(somedir)" || $(mkdir_p) $(DESTDIR)$(somedir),
-+  #  so the `.' trick is pointless.
-+  mkdir_p='mkdir -p --'
-+else
-+  # On NextStep and OpenStep, the `mkdir' command does not
-+  # recognize any option.  It will interpret all options as
-+  # directories to create, and then abort because `.' already
-+  # exists.
-+  for d in ./-p ./--version;
-+  do
-+    test -d $d && rmdir $d
-+  done
-+  # $(mkinstalldirs) is defined by Automake if mkinstalldirs exists.
-+  if test -f "$ac_aux_dir/mkinstalldirs"; then
-+    mkdir_p='$(mkinstalldirs)'
-+  else
-+    mkdir_p='$(install_sh) -d'
-+  fi
-+fi
-+AC_SUBST([mkdir_p])])
- 
- # Helper functions for option handling.                     -*- Autoconf -*-
- 
-@@ -7193,21 +7391,9 @@
- if test "$cross_compiling" != no; then
-   AC_CHECK_TOOL([STRIP], [strip], :)
- fi
--INSTALL_STRIP_PROGRAM="\$(install_sh) -c -s"
-+INSTALL_STRIP_PROGRAM="\${SHELL} \$(install_sh) -c -s"
- AC_SUBST([INSTALL_STRIP_PROGRAM])])
- 
--# Copyright (C) 2006  Free Software Foundation, Inc.
--#
--# This file is free software; the Free Software Foundation
--# gives unlimited permission to copy and/or distribute it,
--# with or without modifications, as long as this notice is preserved.
--
--# _AM_SUBST_NOTMAKE(VARIABLE)
--# ---------------------------
--# Prevent Automake from outputing VARIABLE = @VARIABLE@ in Makefile.in.
--# This macro is traced by Automake.
--AC_DEFUN([_AM_SUBST_NOTMAKE])
--
- # Check how to create a tarball.                            -*- Autoconf -*-
- 
- # Copyright (C) 2004, 2005  Free Software Foundation, Inc.
 Index: pam/Linux-PAM/conf/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/conf/Makefile.in
@@ -2649,15 +2274,7 @@ Index: pam/Linux-PAM/configure
 ===================================================================
 --- pam.orig/Linux-PAM/configure
 +++ pam/Linux-PAM/configure
-@@ -808,7 +808,6 @@
- INSTALL_PROGRAM
- INSTALL_SCRIPT
- INSTALL_DATA
--am__isrc
- CYGPATH_W
- PACKAGE
- VERSION
-@@ -859,6 +858,7 @@
+@@ -859,6 +859,7 @@
  LEX_OUTPUT_ROOT
  LEXLIB
  LN_S
@@ -2665,7 +2282,7 @@ Index: pam/Linux-PAM/configure
  GREP
  EGREP
  ECHO
-@@ -908,6 +908,7 @@
+@@ -908,6 +909,7 @@
  LIBSELINUX
  HAVE_LIBSELINUX_TRUE
  HAVE_LIBSELINUX_FALSE
@@ -2673,188 +2290,7 @@ Index: pam/Linux-PAM/configure
  LIBOBJS
  HAVE_UNSHARE_TRUE
  HAVE_UNSHARE_FALSE
-@@ -2030,8 +2031,7 @@
- ac_compiler_gnu=$ac_cv_c_compiler_gnu
- 
- 
--am__api_version='1.10'
--
-+am__api_version="1.9"
- ac_aux_dir=
- for ac_dir in "$srcdir" "$srcdir/.." "$srcdir/../.."; do
-   if test -f "$ac_dir/install-sh"; then
-@@ -2214,53 +2214,38 @@
- echo "$as_me: WARNING: \`missing' script is too old or missing" >&2;}
- fi
- 
--{ echo "$as_me:$LINENO: checking for a thread-safe mkdir -p" >&5
--echo $ECHO_N "checking for a thread-safe mkdir -p... $ECHO_C" >&6; }
--if test -z "$MKDIR_P"; then
--  if test "${ac_cv_path_mkdir+set}" = set; then
--  echo $ECHO_N "(cached) $ECHO_C" >&6
--else
--  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
--for as_dir in $PATH$PATH_SEPARATOR/opt/sfw/bin
--do
--  IFS=$as_save_IFS
--  test -z "$as_dir" && as_dir=.
--  for ac_prog in mkdir gmkdir; do
--	 for ac_exec_ext in '' $ac_executable_extensions; do
--	   { test -f "$as_dir/$ac_prog$ac_exec_ext" && $as_test_x "$as_dir/$ac_prog$ac_exec_ext"; } || continue
--	   case `"$as_dir/$ac_prog$ac_exec_ext" --version 2>&1` in #(
--	     'mkdir (GNU coreutils) '* | \
--	     'mkdir (coreutils) '* | \
--	     'mkdir (fileutils) '4.1*)
--	       ac_cv_path_mkdir=$as_dir/$ac_prog$ac_exec_ext
--	       break 3;;
--	   esac
--	 done
--       done
--done
--IFS=$as_save_IFS
--
--fi
--
--  if test "${ac_cv_path_mkdir+set}" = set; then
--    MKDIR_P="$ac_cv_path_mkdir -p"
-+if mkdir -p --version . >/dev/null 2>&1 && test ! -d ./--version; then
-+  # We used to keeping the `.' as first argument, in order to
-+  # allow $(mkdir_p) to be used without argument.  As in
-+  #   $(mkdir_p) $(somedir)
-+  # where $(somedir) is conditionally defined.  However this is wrong
-+  # for two reasons:
-+  #  1. if the package is installed by a user who cannot write `.'
-+  #     make install will fail,
-+  #  2. the above comment should most certainly read
-+  #     $(mkdir_p) $(DESTDIR)$(somedir)
-+  #     so it does not work when $(somedir) is undefined and
-+  #     $(DESTDIR) is not.
-+  #  To support the latter case, we have to write
-+  #     test -z "$(somedir)" || $(mkdir_p) $(DESTDIR)$(somedir),
-+  #  so the `.' trick is pointless.
-+  mkdir_p='mkdir -p --'
-+else
-+  # On NextStep and OpenStep, the `mkdir' command does not
-+  # recognize any option.  It will interpret all options as
-+  # directories to create, and then abort because `.' already
-+  # exists.
-+  for d in ./-p ./--version;
-+  do
-+    test -d $d && rmdir $d
-+  done
-+  # $(mkinstalldirs) is defined by Automake if mkinstalldirs exists.
-+  if test -f "$ac_aux_dir/mkinstalldirs"; then
-+    mkdir_p='$(mkinstalldirs)'
-   else
--    # As a last resort, use the slow shell script.  Don't cache a
--    # value for MKDIR_P within a source directory, because that will
--    # break other packages using the cache if that directory is
--    # removed, or if the value is a relative name.
--    test -d ./--version && rmdir ./--version
--    MKDIR_P="$ac_install_sh -d"
-+    mkdir_p='$(install_sh) -d'
-   fi
- fi
--{ echo "$as_me:$LINENO: result: $MKDIR_P" >&5
--echo "${ECHO_T}$MKDIR_P" >&6; }
--
--mkdir_p="$MKDIR_P"
--case $mkdir_p in
--  [\\/$]* | ?:[\\/]*) ;;
--  */*) mkdir_p="\$(top_builddir)/$mkdir_p" ;;
--esac
- 
- for ac_prog in gawk mawk nawk awk
- do
-@@ -2343,16 +2328,12 @@
- fi
- rmdir .tst 2>/dev/null
- 
--if test "`cd $srcdir && pwd`" != "`pwd`"; then
--  # Use -I$(srcdir) only when $(srcdir) != ., so that make's output
--  # is not polluted with repeated "-I."
--  am__isrc=' -I$(srcdir)'
--  # test to see if srcdir already configured
--  if test -f $srcdir/config.status; then
--    { { echo "$as_me:$LINENO: error: source directory already configured; run \"make distclean\" there first" >&5
-+# test to see if srcdir already configured
-+if test "`cd $srcdir && pwd`" != "`pwd`" &&
-+   test -f $srcdir/config.status; then
-+  { { echo "$as_me:$LINENO: error: source directory already configured; run \"make distclean\" there first" >&5
- echo "$as_me: error: source directory already configured; run \"make distclean\" there first" >&2;}
-    { (exit 1); exit 1; }; }
--  fi
- fi
- 
- # test whether we have cygpath
-@@ -2395,7 +2376,7 @@
- 
- MAKEINFO=${MAKEINFO-"${am_missing_run}makeinfo"}
- 
--install_sh=${install_sh-"\$(SHELL) $am_aux_dir/install-sh"}
-+install_sh=${install_sh-"$am_aux_dir/install-sh"}
- 
- # Installed binaries are usually stripped using `strip' when the user
- # run `make install-strip'.  However `strip' might not be the right
-@@ -2499,7 +2480,7 @@
- fi
- 
- fi
--INSTALL_STRIP_PROGRAM="\$(install_sh) -c -s"
-+INSTALL_STRIP_PROGRAM="\${SHELL} \$(install_sh) -c -s"
- 
- # We need awk for the "check" target.  The system "awk" is bad on
- # some platforms.
-@@ -2738,7 +2719,9 @@
- 
- 
- fi
-- if test "$STATIC_MODULES" != "no"; then
-+
-+
-+if test "$STATIC_MODULES" != "no"; then
-   STATIC_MODULES_TRUE=
-   STATIC_MODULES_FALSE='#'
- else
-@@ -3724,7 +3707,9 @@
-   am_depcomp="$ac_aux_dir/depcomp"
-   AMDEPBACKSLASH='\'
- fi
-- if test "x$enable_dependency_tracking" != xno; then
-+
-+
-+if test "x$enable_dependency_tracking" != xno; then
-   AMDEP_TRUE=
-   AMDEP_FALSE='#'
- else
-@@ -3734,6 +3719,7 @@
- 
- 
- 
-+
- depcc="$CC"   am_compiler_list=
- 
- { echo "$as_me:$LINENO: checking dependency style of $depcc" >&5
-@@ -3801,7 +3787,6 @@
-        depfile=sub/conftest.Po tmpdepfile=sub/conftest.TPo \
-        $SHELL ./depcomp $depcc -c -o sub/conftest.${OBJEXT-o} sub/conftest.c \
-          >/dev/null 2>conftest.err &&
--       grep sub/conftst1.h sub/conftest.Po > /dev/null 2>&1 &&
-        grep sub/conftst6.h sub/conftest.Po > /dev/null 2>&1 &&
-        grep sub/conftest.${OBJEXT-o} sub/conftest.Po > /dev/null 2>&1 &&
-        ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
-@@ -3831,7 +3816,9 @@
- echo "${ECHO_T}$am_cv_CC_dependencies_compiler_type" >&6; }
- CCDEPMODE=depmode=$am_cv_CC_dependencies_compiler_type
- 
-- if
-+
-+
-+if
-   test "x$enable_dependency_tracking" != xno \
-   && test "$am_cv_CC_dependencies_compiler_type" = gcc3; then
-   am__fastdepCC_TRUE=
-@@ -4252,12 +4239,13 @@
+@@ -4252,12 +4254,13 @@
    test -z "$as_dir" && as_dir=.
    for lt_ac_prog in sed gsed; do
      for ac_exec_ext in '' $ac_executable_extensions; do
@@ -2869,7 +2305,7 @@ Index: pam/Linux-PAM/configure
  lt_ac_max=0
  lt_ac_count=0
  # Add /usr/xpg4/bin/sed as it is typically found on Solaris
-@@ -4292,6 +4280,7 @@
+@@ -4292,6 +4295,7 @@
  fi
  
  SED=$lt_cv_path_SED
@@ -2877,7 +2313,7 @@ Index: pam/Linux-PAM/configure
  { echo "$as_me:$LINENO: result: $SED" >&5
  echo "${ECHO_T}$SED" >&6; }
  
-@@ -4642,8 +4631,8 @@
+@@ -4642,8 +4646,8 @@
  echo "${ECHO_T}$lt_cv_path_NM" >&6; }
  NM="$lt_cv_path_NM"
  
@@ -2888,7 +2324,7 @@ Index: pam/Linux-PAM/configure
  if test "${lt_cv_deplibs_check_method+set}" = set; then
    echo $ECHO_N "(cached) $ECHO_C" >&6
  else
-@@ -4684,16 +4673,22 @@
+@@ -4684,16 +4688,22 @@
  
  mingw* | pw32*)
    # Base MSYS/MinGW do not provide the 'file' command needed by
@@ -2915,7 +2351,7 @@ Index: pam/Linux-PAM/configure
    if echo __ELF__ | $CC -E - | grep __ELF__ > /dev/null; then
      case $host_cpu in
      i*86 )
-@@ -4731,7 +4726,7 @@
+@@ -4731,7 +4741,7 @@
    esac
    ;;
  
@@ -2924,7 +2360,7 @@ Index: pam/Linux-PAM/configure
    # PIC code is broken on Interix 3.x, that's why |\.a not |_pic\.a here
    lt_cv_deplibs_check_method='match_pattern /lib[^/]+(\.so|\.a)$'
    ;;
-@@ -4747,11 +4742,11 @@
+@@ -4747,11 +4757,11 @@
    ;;
  
  # This must be Linux ELF.
@@ -2938,7 +2374,7 @@ Index: pam/Linux-PAM/configure
    if echo __ELF__ | $CC -E - | grep __ELF__ > /dev/null; then
      lt_cv_deplibs_check_method='match_pattern /lib[^/]+(\.so\.[0-9]+\.[0-9]+|_pic\.a)$'
    else
-@@ -4781,6 +4776,10 @@
+@@ -4781,6 +4791,10 @@
    lt_cv_deplibs_check_method=pass_all
    ;;
  
@@ -2949,16 +2385,16 @@ Index: pam/Linux-PAM/configure
  solaris*)
    lt_cv_deplibs_check_method=pass_all
    ;;
-@@ -4867,7 +4866,7 @@
+@@ -4867,7 +4881,7 @@
    ;;
  *-*-irix6*)
    # Find out which ABI we are using.
 -  echo '#line 4870 "configure"' > conftest.$ac_ext
-+  echo '#line 4869 "configure"' > conftest.$ac_ext
++  echo '#line 4884 "configure"' > conftest.$ac_ext
    if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
    ac_status=$?
-@@ -4902,7 +4901,8 @@
+@@ -4902,7 +4916,8 @@
    rm -rf conftest*
    ;;
  
@@ -2968,7 +2404,7 @@ Index: pam/Linux-PAM/configure
    # Find out which ABI we are using.
    echo 'int i;' > conftest.$ac_ext
    if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
-@@ -4913,6 +4913,9 @@
+@@ -4913,6 +4928,9 @@
      case `/usr/bin/file conftest.o` in
      *32-bit*)
        case $host in
@@ -2978,7 +2414,7 @@ Index: pam/Linux-PAM/configure
          x86_64-*linux*)
            LD="${LD-ld} -m elf_i386"
            ;;
-@@ -4929,6 +4932,9 @@
+@@ -4929,6 +4947,9 @@
        ;;
      *64-bit*)
        case $host in
@@ -2988,26 +2424,7 @@ Index: pam/Linux-PAM/configure
          x86_64-*linux*)
            LD="${LD-ld} -m elf_x86_64"
            ;;
-@@ -6091,7 +6097,6 @@
-        depfile=sub/conftest.Po tmpdepfile=sub/conftest.TPo \
-        $SHELL ./depcomp $depcc -c -o sub/conftest.${OBJEXT-o} sub/conftest.c \
-          >/dev/null 2>conftest.err &&
--       grep sub/conftst1.h sub/conftest.Po > /dev/null 2>&1 &&
-        grep sub/conftst6.h sub/conftest.Po > /dev/null 2>&1 &&
-        grep sub/conftest.${OBJEXT-o} sub/conftest.Po > /dev/null 2>&1 &&
-        ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
-@@ -6121,7 +6126,9 @@
- echo "${ECHO_T}$am_cv_CXX_dependencies_compiler_type" >&6; }
- CXXDEPMODE=depmode=$am_cv_CXX_dependencies_compiler_type
- 
-- if
-+
-+
-+if
-   test "x$enable_dependency_tracking" != xno \
-   && test "$am_cv_CXX_dependencies_compiler_type" = gcc3; then
-   am__fastdepCXX_TRUE=
-@@ -6716,24 +6723,27 @@
+@@ -6716,24 +6737,27 @@
      fi
      ;;
    *)
@@ -3052,7 +2469,7 @@ Index: pam/Linux-PAM/configure
      ;;
    esac
  
-@@ -6750,6 +6760,7 @@
+@@ -6750,6 +6774,7 @@
  
  
  
@@ -3060,7 +2477,7 @@ Index: pam/Linux-PAM/configure
  # Check for command to grab the raw symbol name followed by C symbol from nm.
  { echo "$as_me:$LINENO: checking command to parse $NM output from $compiler object" >&5
  echo $ECHO_N "checking command to parse $NM output from $compiler object... $ECHO_C" >&6; }
-@@ -6787,7 +6798,7 @@
+@@ -6787,7 +6812,7 @@
    lt_cv_sys_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^$symcode* .* \(.*\)$/extern char \1;/p'"
    lt_cv_sys_global_symbol_to_c_name_address="sed -n -e 's/^: \([^ ]*\) $/  {\\\"\1\\\", (lt_ptr) 0},/p' -e 's/^$symcode* \([^ ]*\) \([^ ]*\)$/  {\"\2\", (lt_ptr) \&\2},/p'"
    ;;
@@ -3069,7 +2486,7 @@ Index: pam/Linux-PAM/configure
    if test "$host_cpu" = ia64; then
      symcode='[ABCDGIRSTW]'
      lt_cv_sys_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^$symcode* .* \(.*\)$/extern char \1;/p'"
-@@ -7338,7 +7349,7 @@
+@@ -7338,7 +7363,7 @@
  test -z "$ac_objext" && ac_objext=o
  
  # Determine commands to create old-style static archives.
@@ -3078,7 +2495,7 @@ Index: pam/Linux-PAM/configure
  old_postinstall_cmds='chmod 644 $oldlib'
  old_postuninstall_cmds=
  
-@@ -7538,10 +7549,10 @@
+@@ -7538,10 +7563,10 @@
  objext=$objext
  
  # Code to be used in simple compile tests
@@ -3091,7 +2508,7 @@ Index: pam/Linux-PAM/configure
  
  
  # If no C compiler was specified, use CC.
-@@ -7556,13 +7567,13 @@
+@@ -7556,13 +7581,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -3107,7 +2524,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -7582,7 +7593,7 @@
+@@ -7582,7 +7607,7 @@
  else
    lt_cv_prog_compiler_rtti_exceptions=no
    ac_outfile=conftest.$ac_objext
@@ -3116,21 +2533,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="-fno-rtti -fno-exceptions"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -7593,11 +7604,11 @@
+@@ -7593,11 +7618,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:7596: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:7607: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:7621: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:7600: \$? = $ac_status" >&5
-+   echo "$as_me:7611: \$? = $ac_status" >&5
++   echo "$as_me:7625: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -7648,13 +7659,15 @@
+@@ -7648,13 +7673,15 @@
        lt_prog_compiler_pic='-m68020 -resident32 -malways-restore-a4'
        ;;
  
@@ -3148,7 +2565,7 @@ Index: pam/Linux-PAM/configure
        lt_prog_compiler_pic='-DDLL_EXPORT'
        ;;
  
-@@ -7664,7 +7677,7 @@
+@@ -7664,7 +7691,7 @@
        lt_prog_compiler_pic='-fno-common'
        ;;
  
@@ -3157,7 +2574,7 @@ Index: pam/Linux-PAM/configure
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -7722,7 +7735,7 @@
+@@ -7722,7 +7749,7 @@
         esac
         ;;
  
@@ -3166,7 +2583,7 @@ Index: pam/Linux-PAM/configure
        # This hack is so that the source file can tell whether it is being
        # built for inclusion in a dll (and should export symbols for example).
        lt_prog_compiler_pic='-DDLL_EXPORT'
-@@ -7755,7 +7768,7 @@
+@@ -7755,7 +7782,7 @@
        lt_prog_compiler_static='-Bstatic'
        ;;
  
@@ -3175,7 +2592,7 @@ Index: pam/Linux-PAM/configure
        case $cc_basename in
        icc* | ecc*)
  	lt_prog_compiler_wl='-Wl,'
-@@ -7774,6 +7787,22 @@
+@@ -7774,6 +7801,22 @@
          # All Alpha code is PIC.
          lt_prog_compiler_static='-non_shared'
          ;;
@@ -3198,7 +2615,7 @@ Index: pam/Linux-PAM/configure
        esac
        ;;
  
-@@ -7783,6 +7812,10 @@
+@@ -7783,6 +7826,10 @@
        lt_prog_compiler_static='-non_shared'
        ;;
  
@@ -3209,7 +2626,7 @@ Index: pam/Linux-PAM/configure
      solaris*)
        lt_prog_compiler_pic='-KPIC'
        lt_prog_compiler_static='-Bstatic'
-@@ -7850,7 +7883,7 @@
+@@ -7850,7 +7897,7 @@
  else
    lt_prog_compiler_pic_works=no
    ac_outfile=conftest.$ac_objext
@@ -3218,21 +2635,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="$lt_prog_compiler_pic -DPIC"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -7861,11 +7894,11 @@
+@@ -7861,11 +7908,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:7864: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:7897: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:7911: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:7868: \$? = $ac_status" >&5
-+   echo "$as_me:7901: \$? = $ac_status" >&5
++   echo "$as_me:7915: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -7914,7 +7947,7 @@
+@@ -7914,7 +7961,7 @@
    lt_prog_compiler_static_works=no
     save_LDFLAGS="$LDFLAGS"
     LDFLAGS="$LDFLAGS $lt_tmp_static_flag"
@@ -3241,7 +2658,7 @@ Index: pam/Linux-PAM/configure
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -7954,7 +7987,7 @@
+@@ -7954,7 +8001,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -3250,21 +2667,21 @@ Index: pam/Linux-PAM/configure
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -7965,11 +7998,11 @@
+@@ -7965,11 +8012,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:7968: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:8001: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:8015: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>out/conftest.err)
     ac_status=$?
     cat out/conftest.err >&5
 -   echo "$as_me:7972: \$? = $ac_status" >&5
-+   echo "$as_me:8005: \$? = $ac_status" >&5
++   echo "$as_me:8019: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s out/conftest2.$ac_objext
     then
       # The compiler can only warn and ignore the option if not recognized
-@@ -8161,7 +8194,7 @@
+@@ -8161,7 +8208,7 @@
        allow_undefined_flag=unsupported
        always_export_symbols=no
        enable_shared_with_static_runtimes=yes
@@ -3273,7 +2690,7 @@ Index: pam/Linux-PAM/configure
  
        if $LD --help 2>&1 | grep 'auto-import' > /dev/null; then
          archive_cmds='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-@@ -8179,7 +8212,7 @@
+@@ -8179,7 +8226,7 @@
        fi
        ;;
  
@@ -3282,7 +2699,7 @@ Index: pam/Linux-PAM/configure
        hardcode_direct=no
        hardcode_shlibpath_var=no
        hardcode_libdir_flag_spec='${wl}-rpath,$libdir'
-@@ -8194,7 +8227,7 @@
+@@ -8194,7 +8241,7 @@
        archive_expsym_cmds='sed "s,^,_," $export_symbols >$output_objdir/$soname.expsym~$CC -shared $pic_flag $libobjs $deplibs $compiler_flags ${wl}-h,$soname ${wl}--retain-symbols-file,$output_objdir/$soname.expsym ${wl}--image-base,`expr ${RANDOM-$$} % 4096 / 2 \* 262144 + 1342177280` -o $lib'
        ;;
  
@@ -3291,7 +2708,7 @@ Index: pam/Linux-PAM/configure
        if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
  	tmp_addflag=
  	case $cc_basename,$host_cpu in
-@@ -8212,20 +8245,30 @@
+@@ -8212,20 +8259,30 @@
  	ifc* | ifort*)			# Intel Fortran compiler
  	  tmp_addflag=' -nofor_main' ;;
  	esac
@@ -3325,7 +2742,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
  	wlarc=
-@@ -8377,7 +8420,7 @@
+@@ -8377,7 +8434,7 @@
    	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	  then
    	  # We have reworked collect2
@@ -3334,7 +2751,7 @@ Index: pam/Linux-PAM/configure
  	  else
    	  # We have old collect2
    	  hardcode_direct=unsupported
-@@ -8451,11 +8494,18 @@
+@@ -8451,11 +8508,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -3357,7 +2774,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -8510,11 +8560,18 @@
+@@ -8510,11 +8574,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -3380,7 +2797,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -8568,7 +8625,7 @@
+@@ -8568,7 +8639,7 @@
        # The linker will automatically build a .lib file if we build a DLL.
        old_archive_From_new_cmds='true'
        # FIXME: Should let the user specify the lib program.
@@ -3389,7 +2806,7 @@ Index: pam/Linux-PAM/configure
        fix_srcfile_path='`cygpath -w "$srcfile"`'
        enable_shared_with_static_runtimes=yes
        ;;
-@@ -8610,10 +8667,10 @@
+@@ -8610,10 +8681,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -3402,7 +2819,7 @@ Index: pam/Linux-PAM/configure
            module_expsym_cmds='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -8653,7 +8710,7 @@
+@@ -8653,7 +8724,7 @@
        ;;
  
      # FreeBSD 3 and greater uses gcc -shared to do shared libraries.
@@ -3411,7 +2828,7 @@ Index: pam/Linux-PAM/configure
        archive_cmds='$CC -shared -o $lib $libobjs $deplibs $compiler_flags'
        hardcode_libdir_flag_spec='-R$libdir'
        hardcode_direct=yes
-@@ -8755,7 +8812,7 @@
+@@ -8755,7 +8826,7 @@
        link_all_deplibs=yes
        ;;
  
@@ -3420,7 +2837,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
        else
-@@ -8775,24 +8832,28 @@
+@@ -8775,24 +8846,28 @@
        ;;
  
      openbsd*)
@@ -3466,7 +2883,7 @@ Index: pam/Linux-PAM/configure
        fi
        ;;
  
-@@ -8851,17 +8912,16 @@
+@@ -8851,17 +8926,16 @@
        case $host_os in
        solaris2.[0-5] | solaris2.[0-5].*) ;;
        *)
@@ -3493,7 +2910,7 @@ Index: pam/Linux-PAM/configure
        esac
        link_all_deplibs=yes
        ;;
-@@ -8918,7 +8978,7 @@
+@@ -8918,7 +8992,7 @@
        fi
        ;;
  
@@ -3502,7 +2919,7 @@ Index: pam/Linux-PAM/configure
        no_undefined_flag='${wl}-z,text'
        archive_cmds_need_lc=no
        hardcode_shlibpath_var=no
-@@ -8995,7 +9055,7 @@
+@@ -8995,7 +9069,7 @@
        { echo "$as_me:$LINENO: checking whether -lc should be explicitly linked in" >&5
  echo $ECHO_N "checking whether -lc should be explicitly linked in... $ECHO_C" >&6; }
        $rm conftest*
@@ -3511,7 +2928,7 @@ Index: pam/Linux-PAM/configure
  
        if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
-@@ -9053,17 +9113,55 @@
+@@ -9053,17 +9127,55 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -3571,7 +2988,7 @@ Index: pam/Linux-PAM/configure
  else
    sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib"
  fi
-@@ -9223,12 +9321,8 @@
+@@ -9223,12 +9335,8 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -3586,7 +3003,7 @@ Index: pam/Linux-PAM/configure
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -9245,18 +9339,6 @@
+@@ -9245,18 +9353,6 @@
    dynamic_linker=no
    ;;
  
@@ -3605,7 +3022,7 @@ Index: pam/Linux-PAM/configure
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -9294,7 +9376,7 @@
+@@ -9294,7 +9390,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -3614,7 +3031,7 @@ Index: pam/Linux-PAM/configure
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -9357,7 +9439,7 @@
+@@ -9357,7 +9453,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -3623,7 +3040,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -9412,7 +9494,7 @@
+@@ -9412,7 +9508,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -3632,7 +3049,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -9428,7 +9510,7 @@
+@@ -9428,7 +9524,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -3641,7 +3058,7 @@ Index: pam/Linux-PAM/configure
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -9441,7 +9523,7 @@
+@@ -9441,7 +9537,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -3650,7 +3067,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -9450,7 +9532,7 @@
+@@ -9450,7 +9546,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -3659,7 +3076,7 @@ Index: pam/Linux-PAM/configure
    ;;
  
  netbsd*)
-@@ -9534,6 +9616,10 @@
+@@ -9534,6 +9630,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -3670,7 +3087,7 @@ Index: pam/Linux-PAM/configure
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -9687,6 +9773,7 @@
+@@ -9687,6 +9787,7 @@
     darwin*)
         if test -n "$STRIP" ; then
           striplib="$STRIP -x"
@@ -3678,25 +3095,25 @@ Index: pam/Linux-PAM/configure
           { echo "$as_me:$LINENO: result: yes" >&5
  echo "${ECHO_T}yes" >&6; }
         else
-@@ -10273,7 +10360,7 @@
+@@ -10273,7 +10374,7 @@
    lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
    lt_status=$lt_dlunknown
    cat > conftest.$ac_ext <<EOF
 -#line 10276 "configure"
-+#line 10363 "configure"
++#line 10377 "configure"
  #include "confdefs.h"
  
  #if HAVE_DLFCN_H
-@@ -10373,7 +10460,7 @@
+@@ -10373,7 +10474,7 @@
    lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
    lt_status=$lt_dlunknown
    cat > conftest.$ac_ext <<EOF
 -#line 10376 "configure"
-+#line 10463 "configure"
++#line 10477 "configure"
  #include "confdefs.h"
  
  #if HAVE_DLFCN_H
-@@ -10571,6 +10658,7 @@
+@@ -10571,6 +10672,7 @@
      module_cmds \
      module_expsym_cmds \
      lt_cv_prog_compiler_c_o \
@@ -3704,7 +3121,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms \
      include_expsyms; do
  
-@@ -10615,7 +10703,7 @@
+@@ -10615,7 +10717,7 @@
  # Generated automatically by $PROGRAM (GNU $PACKAGE $VERSION$TIMESTAMP)
  # NOTE: Changes made to this file will be lost: look at ltmain.sh.
  #
@@ -3713,7 +3130,7 @@ Index: pam/Linux-PAM/configure
  # Free Software Foundation, Inc.
  #
  # This file is part of GNU Libtool:
-@@ -10939,7 +11027,7 @@
+@@ -10939,7 +11041,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -3722,7 +3139,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols
-@@ -11108,10 +11196,10 @@
+@@ -11108,10 +11210,10 @@
  objext_CXX=$objext
  
  # Code to be used in simple compile tests
@@ -3735,7 +3152,7 @@ Index: pam/Linux-PAM/configure
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  
-@@ -11127,13 +11215,13 @@
+@@ -11127,13 +11229,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -3751,7 +3168,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -11392,7 +11480,7 @@
+@@ -11392,7 +11494,7 @@
  	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	then
  	  # We have reworked collect2
@@ -3760,7 +3177,7 @@ Index: pam/Linux-PAM/configure
  	else
  	  # We have old collect2
  	  hardcode_direct_CXX=unsupported
-@@ -11466,11 +11554,18 @@
+@@ -11466,11 +11568,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -3783,7 +3200,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -11526,11 +11621,18 @@
+@@ -11526,11 +11635,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -3806,7 +3223,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -11649,10 +11751,10 @@
+@@ -11649,10 +11765,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -3819,7 +3236,7 @@ Index: pam/Linux-PAM/configure
            module_expsym_cmds_CXX='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -11686,7 +11788,7 @@
+@@ -11686,7 +11802,7 @@
    freebsd-elf*)
      archive_cmds_need_lc_CXX=no
      ;;
@@ -3828,7 +3245,7 @@ Index: pam/Linux-PAM/configure
      # FreeBSD 3 and later use GNU C++ and GNU ld with standard ELF
      # conventions
      ld_shlibs_CXX=yes
-@@ -11735,9 +11837,7 @@
+@@ -11735,9 +11851,7 @@
        hardcode_libdir_separator_CXX=:
  
        case $host_cpu in
@@ -3839,7 +3256,7 @@ Index: pam/Linux-PAM/configure
        *)
  	export_dynamic_flag_spec_CXX='${wl}-E'
          ;;
-@@ -11805,7 +11905,7 @@
+@@ -11805,7 +11919,7 @@
  	;;
      esac
      ;;
@@ -3848,7 +3265,7 @@ Index: pam/Linux-PAM/configure
      hardcode_direct_CXX=no
      hardcode_shlibpath_var_CXX=no
      hardcode_libdir_flag_spec_CXX='${wl}-rpath,$libdir'
-@@ -11845,7 +11945,7 @@
+@@ -11845,7 +11959,7 @@
      hardcode_libdir_flag_spec_CXX='${wl}-rpath ${wl}$libdir'
      hardcode_libdir_separator_CXX=:
      ;;
@@ -3857,7 +3274,7 @@ Index: pam/Linux-PAM/configure
      case $cc_basename in
        KCC*)
  	# Kuck and Associates, Inc. (KAI) C++ Compiler
-@@ -11925,6 +12025,29 @@
+@@ -11925,6 +12039,29 @@
  	# dependencies.
  	output_verbose_link_cmd='templist=`$CC -shared $CFLAGS -v conftest.$objext 2>&1 | grep "ld"`; templist=`echo $templist | $SED "s/\(^.*ld.*\)\( .*ld .*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
  	;;
@@ -3887,7 +3304,7 @@ Index: pam/Linux-PAM/configure
      esac
      ;;
    lynxos*)
-@@ -11947,7 +12070,7 @@
+@@ -11947,7 +12084,7 @@
  	;;
      esac
      ;;
@@ -3896,7 +3313,7 @@ Index: pam/Linux-PAM/configure
      if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
        archive_cmds_CXX='$LD -Bshareable  -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linker_flags'
        wlarc=
-@@ -11963,16 +12086,20 @@
+@@ -11963,16 +12100,20 @@
      ld_shlibs_CXX=no
      ;;
    openbsd*)
@@ -3926,7 +3343,7 @@ Index: pam/Linux-PAM/configure
      ;;
    osf3*)
      case $cc_basename in
-@@ -12134,15 +12261,10 @@
+@@ -12134,15 +12275,10 @@
  	case $host_os in
  	  solaris2.[0-5] | solaris2.[0-5].*) ;;
  	  *)
@@ -3945,7 +3362,7 @@ Index: pam/Linux-PAM/configure
  	    ;;
  	esac
  	link_all_deplibs_CXX=yes
-@@ -12189,6 +12311,12 @@
+@@ -12189,6 +12325,12 @@
  	  fi
  
  	  hardcode_libdir_flag_spec_CXX='${wl}-R $wl$libdir'
@@ -3958,7 +3375,7 @@ Index: pam/Linux-PAM/configure
  	fi
  	;;
      esac
-@@ -12380,7 +12508,7 @@
+@@ -12380,7 +12522,7 @@
  
  # PORTME: override above test on systems where it is broken
  case $host_os in
@@ -3967,7 +3384,7 @@ Index: pam/Linux-PAM/configure
    # Interix 3.5 installs completely hosed .la files for C++, so rather than
    # hack all around it, let's just trust "g++" to DTRT.
    predep_objects_CXX=
-@@ -12388,13 +12516,46 @@
+@@ -12388,13 +12530,46 @@
    postdeps_CXX=
    ;;
  
@@ -4015,7 +3432,7 @@ Index: pam/Linux-PAM/configure
      ;;
    esac
    ;;
-@@ -12431,12 +12592,14 @@
+@@ -12431,12 +12606,14 @@
        # like `-m68040'.
        lt_prog_compiler_pic_CXX='-m68020 -resident32 -malways-restore-a4'
        ;;
@@ -4032,7 +3449,7 @@ Index: pam/Linux-PAM/configure
        lt_prog_compiler_pic_CXX='-DDLL_EXPORT'
        ;;
      darwin* | rhapsody*)
-@@ -12448,7 +12611,7 @@
+@@ -12448,7 +12625,7 @@
        # DJGPP does not support shared libraries at all
        lt_prog_compiler_pic_CXX=
        ;;
@@ -4041,7 +3458,7 @@ Index: pam/Linux-PAM/configure
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -12514,7 +12677,7 @@
+@@ -12514,7 +12691,7 @@
  	    ;;
  	esac
  	;;
@@ -4050,7 +3467,7 @@ Index: pam/Linux-PAM/configure
  	# FreeBSD uses GNU C++
  	;;
        hpux9* | hpux10* | hpux11*)
-@@ -12557,7 +12720,7 @@
+@@ -12557,7 +12734,7 @@
  	    ;;
  	esac
  	;;
@@ -4059,7 +3476,7 @@ Index: pam/Linux-PAM/configure
  	case $cc_basename in
  	  KCC*)
  	    # KAI C++ Compiler
-@@ -12584,6 +12747,14 @@
+@@ -12584,6 +12761,14 @@
  	    lt_prog_compiler_static_CXX='-non_shared'
  	    ;;
  	  *)
@@ -4074,7 +3491,7 @@ Index: pam/Linux-PAM/configure
  	    ;;
  	esac
  	;;
-@@ -12600,7 +12771,7 @@
+@@ -12600,7 +12785,7 @@
  	    ;;
  	esac
  	;;
@@ -4083,7 +3500,7 @@ Index: pam/Linux-PAM/configure
  	;;
        osf3* | osf4* | osf5*)
  	case $cc_basename in
-@@ -12698,7 +12869,7 @@
+@@ -12698,7 +12883,7 @@
  else
    lt_prog_compiler_pic_works_CXX=no
    ac_outfile=conftest.$ac_objext
@@ -4092,21 +3509,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="$lt_prog_compiler_pic_CXX -DPIC"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -12709,11 +12880,11 @@
+@@ -12709,11 +12894,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:12712: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:12883: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:12897: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:12716: \$? = $ac_status" >&5
-+   echo "$as_me:12887: \$? = $ac_status" >&5
++   echo "$as_me:12901: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -12762,7 +12933,7 @@
+@@ -12762,7 +12947,7 @@
    lt_prog_compiler_static_works_CXX=no
     save_LDFLAGS="$LDFLAGS"
     LDFLAGS="$LDFLAGS $lt_tmp_static_flag"
@@ -4115,7 +3532,7 @@ Index: pam/Linux-PAM/configure
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -12802,7 +12973,7 @@
+@@ -12802,7 +12987,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -4124,21 +3541,21 @@ Index: pam/Linux-PAM/configure
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -12813,11 +12984,11 @@
+@@ -12813,11 +12998,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:12816: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:12987: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:13001: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>out/conftest.err)
     ac_status=$?
     cat out/conftest.err >&5
 -   echo "$as_me:12820: \$? = $ac_status" >&5
-+   echo "$as_me:12991: \$? = $ac_status" >&5
++   echo "$as_me:13005: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s out/conftest2.$ac_objext
     then
       # The compiler can only warn and ignore the option if not recognized
-@@ -12883,7 +13054,10 @@
+@@ -12883,7 +13068,10 @@
      export_symbols_cmds_CXX="$ltdll_cmds"
    ;;
    cygwin* | mingw*)
@@ -4150,7 +3567,7 @@ Index: pam/Linux-PAM/configure
    ;;
    *)
      export_symbols_cmds_CXX='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
-@@ -12914,7 +13088,7 @@
+@@ -12914,7 +13102,7 @@
        { echo "$as_me:$LINENO: checking whether -lc should be explicitly linked in" >&5
  echo $ECHO_N "checking whether -lc should be explicitly linked in... $ECHO_C" >&6; }
        $rm conftest*
@@ -4159,7 +3576,7 @@ Index: pam/Linux-PAM/configure
  
        if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
-@@ -12972,20 +13146,7 @@
+@@ -12972,20 +13160,7 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -4181,7 +3598,7 @@ Index: pam/Linux-PAM/configure
  need_lib_prefix=unknown
  hardcode_into_libs=no
  
-@@ -13142,12 +13303,7 @@
+@@ -13142,12 +13317,7 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -4195,7 +3612,7 @@ Index: pam/Linux-PAM/configure
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -13164,18 +13320,6 @@
+@@ -13164,18 +13334,6 @@
    dynamic_linker=no
    ;;
  
@@ -4214,7 +3631,7 @@ Index: pam/Linux-PAM/configure
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -13213,7 +13357,7 @@
+@@ -13213,7 +13371,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -4223,7 +3640,7 @@ Index: pam/Linux-PAM/configure
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -13276,7 +13420,7 @@
+@@ -13276,7 +13434,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -4232,7 +3649,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -13331,7 +13475,7 @@
+@@ -13331,7 +13489,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -4241,7 +3658,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -13347,7 +13491,7 @@
+@@ -13347,7 +13505,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -4250,7 +3667,7 @@ Index: pam/Linux-PAM/configure
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -13360,7 +13504,7 @@
+@@ -13360,7 +13518,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -4259,7 +3676,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -13369,7 +13513,7 @@
+@@ -13369,7 +13527,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -4268,7 +3685,7 @@ Index: pam/Linux-PAM/configure
    ;;
  
  netbsd*)
-@@ -13453,6 +13597,10 @@
+@@ -13453,6 +13611,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -4279,7 +3696,7 @@ Index: pam/Linux-PAM/configure
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -13647,6 +13795,7 @@
+@@ -13647,6 +13809,7 @@
      module_cmds_CXX \
      module_expsym_cmds_CXX \
      lt_cv_prog_compiler_c_o_CXX \
@@ -4287,7 +3704,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms_CXX \
      include_expsyms_CXX; do
  
-@@ -13967,7 +14116,7 @@
+@@ -13967,7 +14130,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -4296,7 +3713,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols_CXX
-@@ -14058,10 +14207,17 @@
+@@ -14058,10 +14221,17 @@
  objext_F77=$objext
  
  # Code to be used in simple compile tests
@@ -4316,7 +3733,7 @@ Index: pam/Linux-PAM/configure
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  
-@@ -14077,13 +14233,13 @@
+@@ -14077,13 +14247,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -4332,7 +3749,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -14170,13 +14326,15 @@
+@@ -14170,13 +14340,15 @@
        lt_prog_compiler_pic_F77='-m68020 -resident32 -malways-restore-a4'
        ;;
  
@@ -4350,7 +3767,7 @@ Index: pam/Linux-PAM/configure
        lt_prog_compiler_pic_F77='-DDLL_EXPORT'
        ;;
  
-@@ -14186,7 +14344,7 @@
+@@ -14186,7 +14358,7 @@
        lt_prog_compiler_pic_F77='-fno-common'
        ;;
  
@@ -4359,7 +3776,7 @@ Index: pam/Linux-PAM/configure
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -14244,7 +14402,7 @@
+@@ -14244,7 +14416,7 @@
         esac
         ;;
  
@@ -4368,7 +3785,7 @@ Index: pam/Linux-PAM/configure
        # This hack is so that the source file can tell whether it is being
        # built for inclusion in a dll (and should export symbols for example).
        lt_prog_compiler_pic_F77='-DDLL_EXPORT'
-@@ -14277,7 +14435,7 @@
+@@ -14277,7 +14449,7 @@
        lt_prog_compiler_static_F77='-Bstatic'
        ;;
  
@@ -4377,7 +3794,7 @@ Index: pam/Linux-PAM/configure
        case $cc_basename in
        icc* | ecc*)
  	lt_prog_compiler_wl_F77='-Wl,'
-@@ -14296,6 +14454,22 @@
+@@ -14296,6 +14468,22 @@
          # All Alpha code is PIC.
          lt_prog_compiler_static_F77='-non_shared'
          ;;
@@ -4400,7 +3817,7 @@ Index: pam/Linux-PAM/configure
        esac
        ;;
  
-@@ -14305,6 +14479,10 @@
+@@ -14305,6 +14493,10 @@
        lt_prog_compiler_static_F77='-non_shared'
        ;;
  
@@ -4411,7 +3828,7 @@ Index: pam/Linux-PAM/configure
      solaris*)
        lt_prog_compiler_pic_F77='-KPIC'
        lt_prog_compiler_static_F77='-Bstatic'
-@@ -14372,7 +14550,7 @@
+@@ -14372,7 +14564,7 @@
  else
    lt_prog_compiler_pic_works_F77=no
    ac_outfile=conftest.$ac_objext
@@ -4420,21 +3837,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="$lt_prog_compiler_pic_F77"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -14383,11 +14561,11 @@
+@@ -14383,11 +14575,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:14386: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:14564: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:14578: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:14390: \$? = $ac_status" >&5
-+   echo "$as_me:14568: \$? = $ac_status" >&5
++   echo "$as_me:14582: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -14436,7 +14614,7 @@
+@@ -14436,7 +14628,7 @@
    lt_prog_compiler_static_works_F77=no
     save_LDFLAGS="$LDFLAGS"
     LDFLAGS="$LDFLAGS $lt_tmp_static_flag"
@@ -4443,7 +3860,7 @@ Index: pam/Linux-PAM/configure
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -14476,7 +14654,7 @@
+@@ -14476,7 +14668,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -4452,21 +3869,21 @@ Index: pam/Linux-PAM/configure
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -14487,11 +14665,11 @@
+@@ -14487,11 +14679,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:14490: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:14668: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:14682: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>out/conftest.err)
     ac_status=$?
     cat out/conftest.err >&5
 -   echo "$as_me:14494: \$? = $ac_status" >&5
-+   echo "$as_me:14672: \$? = $ac_status" >&5
++   echo "$as_me:14686: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s out/conftest2.$ac_objext
     then
       # The compiler can only warn and ignore the option if not recognized
-@@ -14683,7 +14861,7 @@
+@@ -14683,7 +14875,7 @@
        allow_undefined_flag_F77=unsupported
        always_export_symbols_F77=no
        enable_shared_with_static_runtimes_F77=yes
@@ -4475,7 +3892,7 @@ Index: pam/Linux-PAM/configure
  
        if $LD --help 2>&1 | grep 'auto-import' > /dev/null; then
          archive_cmds_F77='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-@@ -14701,7 +14879,7 @@
+@@ -14701,7 +14893,7 @@
        fi
        ;;
  
@@ -4484,7 +3901,7 @@ Index: pam/Linux-PAM/configure
        hardcode_direct_F77=no
        hardcode_shlibpath_var_F77=no
        hardcode_libdir_flag_spec_F77='${wl}-rpath,$libdir'
-@@ -14716,7 +14894,7 @@
+@@ -14716,7 +14908,7 @@
        archive_expsym_cmds_F77='sed "s,^,_," $export_symbols >$output_objdir/$soname.expsym~$CC -shared $pic_flag $libobjs $deplibs $compiler_flags ${wl}-h,$soname ${wl}--retain-symbols-file,$output_objdir/$soname.expsym ${wl}--image-base,`expr ${RANDOM-$$} % 4096 / 2 \* 262144 + 1342177280` -o $lib'
        ;;
  
@@ -4493,7 +3910,7 @@ Index: pam/Linux-PAM/configure
        if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
  	tmp_addflag=
  	case $cc_basename,$host_cpu in
-@@ -14734,20 +14912,30 @@
+@@ -14734,20 +14926,30 @@
  	ifc* | ifort*)			# Intel Fortran compiler
  	  tmp_addflag=' -nofor_main' ;;
  	esac
@@ -4527,7 +3944,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds_F77='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
  	wlarc=
-@@ -14899,7 +15087,7 @@
+@@ -14899,7 +15101,7 @@
    	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	  then
    	  # We have reworked collect2
@@ -4536,7 +3953,7 @@ Index: pam/Linux-PAM/configure
  	  else
    	  # We have old collect2
    	  hardcode_direct_F77=unsupported
-@@ -14963,11 +15151,18 @@
+@@ -14963,11 +15165,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -4559,7 +3976,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -15012,11 +15207,18 @@
+@@ -15012,11 +15221,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -4582,7 +3999,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -15070,7 +15272,7 @@
+@@ -15070,7 +15286,7 @@
        # The linker will automatically build a .lib file if we build a DLL.
        old_archive_From_new_cmds_F77='true'
        # FIXME: Should let the user specify the lib program.
@@ -4591,7 +4008,7 @@ Index: pam/Linux-PAM/configure
        fix_srcfile_path_F77='`cygpath -w "$srcfile"`'
        enable_shared_with_static_runtimes_F77=yes
        ;;
-@@ -15112,10 +15314,10 @@
+@@ -15112,10 +15328,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -4604,7 +4021,7 @@ Index: pam/Linux-PAM/configure
            module_expsym_cmds_F77='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -15155,7 +15357,7 @@
+@@ -15155,7 +15371,7 @@
        ;;
  
      # FreeBSD 3 and greater uses gcc -shared to do shared libraries.
@@ -4613,7 +4030,7 @@ Index: pam/Linux-PAM/configure
        archive_cmds_F77='$CC -shared -o $lib $libobjs $deplibs $compiler_flags'
        hardcode_libdir_flag_spec_F77='-R$libdir'
        hardcode_direct_F77=yes
-@@ -15257,7 +15459,7 @@
+@@ -15257,7 +15473,7 @@
        link_all_deplibs_F77=yes
        ;;
  
@@ -4622,7 +4039,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds_F77='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
        else
-@@ -15277,24 +15479,28 @@
+@@ -15277,24 +15493,28 @@
        ;;
  
      openbsd*)
@@ -4668,7 +4085,7 @@ Index: pam/Linux-PAM/configure
        fi
        ;;
  
-@@ -15353,17 +15559,16 @@
+@@ -15353,17 +15573,16 @@
        case $host_os in
        solaris2.[0-5] | solaris2.[0-5].*) ;;
        *)
@@ -4695,7 +4112,7 @@ Index: pam/Linux-PAM/configure
        esac
        link_all_deplibs_F77=yes
        ;;
-@@ -15420,7 +15625,7 @@
+@@ -15420,7 +15639,7 @@
        fi
        ;;
  
@@ -4704,7 +4121,7 @@ Index: pam/Linux-PAM/configure
        no_undefined_flag_F77='${wl}-z,text'
        archive_cmds_need_lc_F77=no
        hardcode_shlibpath_var_F77=no
-@@ -15497,7 +15702,7 @@
+@@ -15497,7 +15716,7 @@
        { echo "$as_me:$LINENO: checking whether -lc should be explicitly linked in" >&5
  echo $ECHO_N "checking whether -lc should be explicitly linked in... $ECHO_C" >&6; }
        $rm conftest*
@@ -4713,7 +4130,7 @@ Index: pam/Linux-PAM/configure
  
        if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
-@@ -15555,20 +15760,7 @@
+@@ -15555,20 +15774,7 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -4735,7 +4152,7 @@ Index: pam/Linux-PAM/configure
  need_lib_prefix=unknown
  hardcode_into_libs=no
  
-@@ -15725,12 +15917,7 @@
+@@ -15725,12 +15931,7 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -4749,7 +4166,7 @@ Index: pam/Linux-PAM/configure
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -15747,18 +15934,6 @@
+@@ -15747,18 +15948,6 @@
    dynamic_linker=no
    ;;
  
@@ -4768,7 +4185,7 @@ Index: pam/Linux-PAM/configure
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -15796,7 +15971,7 @@
+@@ -15796,7 +15985,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -4777,7 +4194,7 @@ Index: pam/Linux-PAM/configure
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -15859,7 +16034,7 @@
+@@ -15859,7 +16048,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -4786,7 +4203,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -15914,7 +16089,7 @@
+@@ -15914,7 +16103,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -4795,7 +4212,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -15930,7 +16105,7 @@
+@@ -15930,7 +16119,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -4804,7 +4221,7 @@ Index: pam/Linux-PAM/configure
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -15943,7 +16118,7 @@
+@@ -15943,7 +16132,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -4813,7 +4230,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -15952,7 +16127,7 @@
+@@ -15952,7 +16141,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -4822,7 +4239,7 @@ Index: pam/Linux-PAM/configure
    ;;
  
  netbsd*)
-@@ -16036,6 +16211,10 @@
+@@ -16036,6 +16225,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -4833,7 +4250,7 @@ Index: pam/Linux-PAM/configure
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -16230,6 +16409,7 @@
+@@ -16230,6 +16423,7 @@
      module_cmds_F77 \
      module_expsym_cmds_F77 \
      lt_cv_prog_compiler_c_o_F77 \
@@ -4841,7 +4258,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms_F77 \
      include_expsyms_F77; do
  
-@@ -16550,7 +16730,7 @@
+@@ -16550,7 +16744,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -4850,7 +4267,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols_F77
-@@ -16608,10 +16788,10 @@
+@@ -16608,10 +16802,10 @@
  objext_GCJ=$objext
  
  # Code to be used in simple compile tests
@@ -4863,7 +4280,7 @@ Index: pam/Linux-PAM/configure
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  
-@@ -16627,13 +16807,13 @@
+@@ -16627,13 +16821,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -4879,7 +4296,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -16674,7 +16854,7 @@
+@@ -16674,7 +16868,7 @@
  else
    lt_cv_prog_compiler_rtti_exceptions=no
    ac_outfile=conftest.$ac_objext
@@ -4888,21 +4305,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="-fno-rtti -fno-exceptions"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -16685,11 +16865,11 @@
+@@ -16685,11 +16879,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:16688: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:16868: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:16882: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:16692: \$? = $ac_status" >&5
-+   echo "$as_me:16872: \$? = $ac_status" >&5
++   echo "$as_me:16886: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -16740,13 +16920,15 @@
+@@ -16740,13 +16934,15 @@
        lt_prog_compiler_pic_GCJ='-m68020 -resident32 -malways-restore-a4'
        ;;
  
@@ -4920,7 +4337,7 @@ Index: pam/Linux-PAM/configure
        lt_prog_compiler_pic_GCJ='-DDLL_EXPORT'
        ;;
  
-@@ -16756,7 +16938,7 @@
+@@ -16756,7 +16952,7 @@
        lt_prog_compiler_pic_GCJ='-fno-common'
        ;;
  
@@ -4929,7 +4346,7 @@ Index: pam/Linux-PAM/configure
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -16814,7 +16996,7 @@
+@@ -16814,7 +17010,7 @@
         esac
         ;;
  
@@ -4938,7 +4355,7 @@ Index: pam/Linux-PAM/configure
        # This hack is so that the source file can tell whether it is being
        # built for inclusion in a dll (and should export symbols for example).
        lt_prog_compiler_pic_GCJ='-DDLL_EXPORT'
-@@ -16847,7 +17029,7 @@
+@@ -16847,7 +17043,7 @@
        lt_prog_compiler_static_GCJ='-Bstatic'
        ;;
  
@@ -4947,7 +4364,7 @@ Index: pam/Linux-PAM/configure
        case $cc_basename in
        icc* | ecc*)
  	lt_prog_compiler_wl_GCJ='-Wl,'
-@@ -16866,6 +17048,22 @@
+@@ -16866,6 +17062,22 @@
          # All Alpha code is PIC.
          lt_prog_compiler_static_GCJ='-non_shared'
          ;;
@@ -4970,7 +4387,7 @@ Index: pam/Linux-PAM/configure
        esac
        ;;
  
-@@ -16875,6 +17073,10 @@
+@@ -16875,6 +17087,10 @@
        lt_prog_compiler_static_GCJ='-non_shared'
        ;;
  
@@ -4981,7 +4398,7 @@ Index: pam/Linux-PAM/configure
      solaris*)
        lt_prog_compiler_pic_GCJ='-KPIC'
        lt_prog_compiler_static_GCJ='-Bstatic'
-@@ -16942,7 +17144,7 @@
+@@ -16942,7 +17158,7 @@
  else
    lt_prog_compiler_pic_works_GCJ=no
    ac_outfile=conftest.$ac_objext
@@ -4990,21 +4407,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="$lt_prog_compiler_pic_GCJ"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -16953,11 +17155,11 @@
+@@ -16953,11 +17169,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:16956: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:17158: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:17172: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:16960: \$? = $ac_status" >&5
-+   echo "$as_me:17162: \$? = $ac_status" >&5
++   echo "$as_me:17176: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -17006,7 +17208,7 @@
+@@ -17006,7 +17222,7 @@
    lt_prog_compiler_static_works_GCJ=no
     save_LDFLAGS="$LDFLAGS"
     LDFLAGS="$LDFLAGS $lt_tmp_static_flag"
@@ -5013,7 +4430,7 @@ Index: pam/Linux-PAM/configure
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -17046,7 +17248,7 @@
+@@ -17046,7 +17262,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -5022,21 +4439,21 @@ Index: pam/Linux-PAM/configure
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -17057,11 +17259,11 @@
+@@ -17057,11 +17273,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:17060: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:17262: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:17276: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>out/conftest.err)
     ac_status=$?
     cat out/conftest.err >&5
 -   echo "$as_me:17064: \$? = $ac_status" >&5
-+   echo "$as_me:17266: \$? = $ac_status" >&5
++   echo "$as_me:17280: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s out/conftest2.$ac_objext
     then
       # The compiler can only warn and ignore the option if not recognized
-@@ -17253,7 +17455,7 @@
+@@ -17253,7 +17469,7 @@
        allow_undefined_flag_GCJ=unsupported
        always_export_symbols_GCJ=no
        enable_shared_with_static_runtimes_GCJ=yes
@@ -5045,7 +4462,7 @@ Index: pam/Linux-PAM/configure
  
        if $LD --help 2>&1 | grep 'auto-import' > /dev/null; then
          archive_cmds_GCJ='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-@@ -17271,7 +17473,7 @@
+@@ -17271,7 +17487,7 @@
        fi
        ;;
  
@@ -5054,7 +4471,7 @@ Index: pam/Linux-PAM/configure
        hardcode_direct_GCJ=no
        hardcode_shlibpath_var_GCJ=no
        hardcode_libdir_flag_spec_GCJ='${wl}-rpath,$libdir'
-@@ -17286,7 +17488,7 @@
+@@ -17286,7 +17502,7 @@
        archive_expsym_cmds_GCJ='sed "s,^,_," $export_symbols >$output_objdir/$soname.expsym~$CC -shared $pic_flag $libobjs $deplibs $compiler_flags ${wl}-h,$soname ${wl}--retain-symbols-file,$output_objdir/$soname.expsym ${wl}--image-base,`expr ${RANDOM-$$} % 4096 / 2 \* 262144 + 1342177280` -o $lib'
        ;;
  
@@ -5063,7 +4480,7 @@ Index: pam/Linux-PAM/configure
        if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
  	tmp_addflag=
  	case $cc_basename,$host_cpu in
-@@ -17304,20 +17506,30 @@
+@@ -17304,20 +17520,30 @@
  	ifc* | ifort*)			# Intel Fortran compiler
  	  tmp_addflag=' -nofor_main' ;;
  	esac
@@ -5097,7 +4514,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds_GCJ='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
  	wlarc=
-@@ -17469,7 +17681,7 @@
+@@ -17469,7 +17695,7 @@
    	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	  then
    	  # We have reworked collect2
@@ -5106,7 +4523,7 @@ Index: pam/Linux-PAM/configure
  	  else
    	  # We have old collect2
    	  hardcode_direct_GCJ=unsupported
-@@ -17543,11 +17755,18 @@
+@@ -17543,11 +17769,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -5129,7 +4546,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -17602,11 +17821,18 @@
+@@ -17602,11 +17835,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -5152,7 +4569,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -17660,7 +17886,7 @@
+@@ -17660,7 +17900,7 @@
        # The linker will automatically build a .lib file if we build a DLL.
        old_archive_From_new_cmds_GCJ='true'
        # FIXME: Should let the user specify the lib program.
@@ -5161,7 +4578,7 @@ Index: pam/Linux-PAM/configure
        fix_srcfile_path_GCJ='`cygpath -w "$srcfile"`'
        enable_shared_with_static_runtimes_GCJ=yes
        ;;
-@@ -17702,10 +17928,10 @@
+@@ -17702,10 +17942,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -5174,7 +4591,7 @@ Index: pam/Linux-PAM/configure
            module_expsym_cmds_GCJ='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -17745,7 +17971,7 @@
+@@ -17745,7 +17985,7 @@
        ;;
  
      # FreeBSD 3 and greater uses gcc -shared to do shared libraries.
@@ -5183,7 +4600,7 @@ Index: pam/Linux-PAM/configure
        archive_cmds_GCJ='$CC -shared -o $lib $libobjs $deplibs $compiler_flags'
        hardcode_libdir_flag_spec_GCJ='-R$libdir'
        hardcode_direct_GCJ=yes
-@@ -17847,7 +18073,7 @@
+@@ -17847,7 +18087,7 @@
        link_all_deplibs_GCJ=yes
        ;;
  
@@ -5192,7 +4609,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds_GCJ='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
        else
-@@ -17867,24 +18093,28 @@
+@@ -17867,24 +18107,28 @@
        ;;
  
      openbsd*)
@@ -5238,7 +4655,7 @@ Index: pam/Linux-PAM/configure
        fi
        ;;
  
-@@ -17943,17 +18173,16 @@
+@@ -17943,17 +18187,16 @@
        case $host_os in
        solaris2.[0-5] | solaris2.[0-5].*) ;;
        *)
@@ -5265,7 +4682,7 @@ Index: pam/Linux-PAM/configure
        esac
        link_all_deplibs_GCJ=yes
        ;;
-@@ -18010,7 +18239,7 @@
+@@ -18010,7 +18253,7 @@
        fi
        ;;
  
@@ -5274,7 +4691,7 @@ Index: pam/Linux-PAM/configure
        no_undefined_flag_GCJ='${wl}-z,text'
        archive_cmds_need_lc_GCJ=no
        hardcode_shlibpath_var_GCJ=no
-@@ -18087,7 +18316,7 @@
+@@ -18087,7 +18330,7 @@
        { echo "$as_me:$LINENO: checking whether -lc should be explicitly linked in" >&5
  echo $ECHO_N "checking whether -lc should be explicitly linked in... $ECHO_C" >&6; }
        $rm conftest*
@@ -5283,7 +4700,7 @@ Index: pam/Linux-PAM/configure
  
        if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
-@@ -18145,20 +18374,7 @@
+@@ -18145,20 +18388,7 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -5305,7 +4722,7 @@ Index: pam/Linux-PAM/configure
  need_lib_prefix=unknown
  hardcode_into_libs=no
  
-@@ -18315,12 +18531,7 @@
+@@ -18315,12 +18545,7 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -5319,7 +4736,7 @@ Index: pam/Linux-PAM/configure
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -18337,18 +18548,6 @@
+@@ -18337,18 +18562,6 @@
    dynamic_linker=no
    ;;
  
@@ -5338,7 +4755,7 @@ Index: pam/Linux-PAM/configure
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -18386,7 +18585,7 @@
+@@ -18386,7 +18599,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -5347,7 +4764,7 @@ Index: pam/Linux-PAM/configure
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -18449,7 +18648,7 @@
+@@ -18449,7 +18662,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -5356,7 +4773,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -18504,7 +18703,7 @@
+@@ -18504,7 +18717,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -5365,7 +4782,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -18520,7 +18719,7 @@
+@@ -18520,7 +18733,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -5374,7 +4791,7 @@ Index: pam/Linux-PAM/configure
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -18533,7 +18732,7 @@
+@@ -18533,7 +18746,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -5383,7 +4800,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -18542,7 +18741,7 @@
+@@ -18542,7 +18755,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -5392,7 +4809,7 @@ Index: pam/Linux-PAM/configure
    ;;
  
  netbsd*)
-@@ -18626,6 +18825,10 @@
+@@ -18626,6 +18839,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -5403,7 +4820,7 @@ Index: pam/Linux-PAM/configure
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -18820,6 +19023,7 @@
+@@ -18820,6 +19037,7 @@
      module_cmds_GCJ \
      module_expsym_cmds_GCJ \
      lt_cv_prog_compiler_c_o_GCJ \
@@ -5411,7 +4828,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms_GCJ \
      include_expsyms_GCJ; do
  
-@@ -19140,7 +19344,7 @@
+@@ -19140,7 +19358,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -5420,7 +4837,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols_GCJ
-@@ -19197,7 +19401,7 @@
+@@ -19197,7 +19415,7 @@
  objext_RC=$objext
  
  # Code to be used in simple compile tests
@@ -5429,7 +4846,7 @@ Index: pam/Linux-PAM/configure
  
  # Code to be used in simple link tests
  lt_simple_link_test_code="$lt_simple_compile_test_code"
-@@ -19216,13 +19420,13 @@
+@@ -19216,13 +19434,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -5445,7 +4862,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -19300,6 +19504,7 @@
+@@ -19300,6 +19518,7 @@
      module_cmds_RC \
      module_expsym_cmds_RC \
      lt_cv_prog_compiler_c_o_RC \
@@ -5453,7 +4870,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms_RC \
      include_expsyms_RC; do
  
-@@ -19620,7 +19825,7 @@
+@@ -19620,7 +19839,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -5462,26 +4879,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols_RC
-@@ -19845,7 +20050,6 @@
- fi
- 
- 
--
-     { echo "$as_me:$LINENO: checking whether ld supports --as-needed" >&5
- echo $ECHO_N "checking whether ld supports --as-needed... $ECHO_C" >&6; }
- if test "${pam_cv_ld_as_needed+set}" = set; then
-@@ -20453,7 +20657,9 @@
- fi
- { echo "$as_me:$LINENO: result: $libc_cv_ld_version_script_option" >&5
- echo "${ECHO_T}$libc_cv_ld_version_script_option" >&6; }
-- if test "$libc_cv_ld_version_script_option" = "yes"; then
-+
-+
-+if test "$libc_cv_ld_version_script_option" = "yes"; then
-   HAVE_VERSIONING_TRUE=
-   HAVE_VERSIONING_FALSE='#'
- else
-@@ -21235,18 +21441,23 @@
+@@ -21235,18 +21454,23 @@
  fi
  
  if test x"$WITH_CRACKLIB" != xno ; then
@@ -5513,7 +4911,7 @@ Index: pam/Linux-PAM/configure
  cat >conftest.$ac_ext <<_ACEOF
  /* confdefs.h.  */
  _ACEOF
-@@ -21254,7 +21465,7 @@
+@@ -21254,7 +21478,7 @@
  cat >>conftest.$ac_ext <<_ACEOF
  /* end confdefs.h.  */
  $ac_includes_default
@@ -5522,7 +4920,7 @@ Index: pam/Linux-PAM/configure
  _ACEOF
  rm -f conftest.$ac_objext
  if { (ac_try="$ac_compile"
-@@ -21286,15 +21497,15 @@
+@@ -21286,15 +21510,15 @@
  echo "${ECHO_T}$ac_header_compiler" >&6; }
  
  # Is the header present?
@@ -5541,7 +4939,7 @@ Index: pam/Linux-PAM/configure
  _ACEOF
  if { (ac_try="$ac_cpp conftest.$ac_ext"
  case "(($ac_try" in
-@@ -21327,41 +21538,45 @@
+@@ -21327,41 +21551,45 @@
  # So?  What about this header?
  case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
    yes:no: )
@@ -5611,7 +5009,7 @@ Index: pam/Linux-PAM/configure
  echo $ECHO_N "checking for FascistCheck in -lcrack... $ECHO_C" >&6; }
  if test "${ac_cv_lib_crack_FascistCheck+set}" = set; then
    echo $ECHO_N "(cached) $ECHO_C" >&6
-@@ -21430,12 +21645,15 @@
+@@ -21430,6 +21658,7 @@
  
  fi
  
@@ -5619,38 +5017,7 @@ Index: pam/Linux-PAM/configure
  
  else
  	LIBCRACK=""
- fi
- 
-- if test ! -z "$LIBCRACK"; then
-+
-+
-+if test ! -z "$LIBCRACK"; then
-   HAVE_LIBCRACK_TRUE=
-   HAVE_LIBCRACK_FALSE='#'
- else
-@@ -22250,7 +22468,9 @@
-         fi
- fi
- 
-- if test ! -z "$LIBDB"; then
-+
-+
-+if test ! -z "$LIBDB"; then
-   HAVE_LIBDB_TRUE=
-   HAVE_LIBDB_FALSE='#'
- else
-@@ -22503,7 +22723,9 @@
-   LIBSELINUX=""
- fi
- 
-- if test ! -z "$LIBSELINUX"; then
-+
-+
-+if test ! -z "$LIBSELINUX"; then
-   HAVE_LIBSELINUX_TRUE=
-   HAVE_LIBSELINUX_FALSE='#'
- else
-@@ -22519,6 +22741,75 @@
+@@ -22519,6 +22748,75 @@
  
  fi
  
@@ -5726,7 +5093,7 @@ Index: pam/Linux-PAM/configure
  
  
  
-@@ -23012,7 +23303,9 @@
+@@ -23012,7 +23310,9 @@
  
  
  
@@ -5737,67 +5104,7 @@ Index: pam/Linux-PAM/configure
  do
  as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
  if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-@@ -25136,7 +25429,9 @@
- fi
- done
- 
-- if test "$UNSHARE" = yes; then
-+
-+
-+if test "$UNSHARE" = yes; then
-   HAVE_UNSHARE_TRUE=
-   HAVE_UNSHARE_FALSE='#'
- else
-@@ -25428,7 +25723,9 @@
- 
- 
- 
-- if test x$enable_man != xno; then
-+
-+
-+if test x$enable_man != xno; then
-   ENABLE_REGENERATE_MAN_TRUE=
-   ENABLE_REGENERATE_MAN_FALSE='#'
- else
-@@ -25436,7 +25733,9 @@
-   ENABLE_REGENERATE_MAN_FALSE=
- fi
- 
-- if test ! -z "$FO2PDF"; then
-+
-+
-+if test ! -z "$FO2PDF"; then
-   ENABLE_GENERATE_PDF_TRUE=
-   ENABLE_GENERATE_PDF_FALSE='#'
- else
-@@ -27528,7 +27827,9 @@
- HAVE_KEY_MANAGEMENT=$HAVE_KEY_MANAGEMENT
- 
- 
-- if test "$have_key_syscalls" = 1; then
-+
-+
-+if test "$have_key_syscalls" = 1; then
-   HAVE_KEY_MANAGEMENT_TRUE=
-   HAVE_KEY_MANAGEMENT_FALSE='#'
- else
-@@ -28083,7 +28384,6 @@
- ac_pwd='$ac_pwd'
- srcdir='$srcdir'
- INSTALL='$INSTALL'
--MKDIR_P='$MKDIR_P'
- _ACEOF
- 
- cat >>$CONFIG_STATUS <<\_ACEOF
-@@ -28356,7 +28656,6 @@
- INSTALL_PROGRAM!$INSTALL_PROGRAM$ac_delim
- INSTALL_SCRIPT!$INSTALL_SCRIPT$ac_delim
- INSTALL_DATA!$INSTALL_DATA$ac_delim
--am__isrc!$am__isrc$ac_delim
- CYGPATH_W!$CYGPATH_W$ac_delim
- PACKAGE!$PACKAGE$ac_delim
- VERSION!$VERSION$ac_delim
-@@ -28407,6 +28706,7 @@
+@@ -28407,12 +28707,12 @@
  LEX_OUTPUT_ROOT!$LEX_OUTPUT_ROOT$ac_delim
  LEXLIB!$LEXLIB$ac_delim
  LN_S!$LN_S$ac_delim
@@ -5805,7 +5112,21 @@ Index: pam/Linux-PAM/configure
  GREP!$GREP$ac_delim
  EGREP!$EGREP$ac_delim
  ECHO!$ECHO$ac_delim
-@@ -28497,6 +28797,7 @@
+ AR!$AR$ac_delim
+ RANLIB!$RANLIB$ac_delim
+-CPP!$CPP$ac_delim
+ _ACEOF
+ 
+   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
+@@ -28454,6 +28754,7 @@
+ ac_delim='%!_!# '
+ for ac_last_try in false false false false false :; do
+   cat >conf$$subs.sed <<_ACEOF
++CPP!$CPP$ac_delim
+ CXX!$CXX$ac_delim
+ CXXFLAGS!$CXXFLAGS$ac_delim
+ ac_ct_CXX!$ac_ct_CXX$ac_delim
+@@ -28497,6 +28798,7 @@
  LIBSELINUX!$LIBSELINUX$ac_delim
  HAVE_LIBSELINUX_TRUE!$HAVE_LIBSELINUX_TRUE$ac_delim
  HAVE_LIBSELINUX_FALSE!$HAVE_LIBSELINUX_FALSE$ac_delim
@@ -5813,47 +5134,15 @@ Index: pam/Linux-PAM/configure
  LIBOBJS!$LIBOBJS$ac_delim
  HAVE_UNSHARE_TRUE!$HAVE_UNSHARE_TRUE$ac_delim
  HAVE_UNSHARE_FALSE!$HAVE_UNSHARE_FALSE$ac_delim
-@@ -28531,7 +28832,7 @@
+@@ -28531,7 +28833,7 @@
  LTLIBOBJS!$LTLIBOBJS$ac_delim
  _ACEOF
  
 -  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 75; then
-+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 76; then
++  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 77; then
      break
    elif $ac_last_try; then
      { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
-@@ -28758,11 +29059,6 @@
-   [\\/$]* | ?:[\\/]* ) ac_INSTALL=$INSTALL ;;
-   *) ac_INSTALL=$ac_top_build_prefix$INSTALL ;;
-   esac
--  ac_MKDIR_P=$MKDIR_P
--  case $MKDIR_P in
--  [\\/$]* | ?:[\\/]* ) ;;
--  */*) ac_MKDIR_P=$ac_top_build_prefix$MKDIR_P ;;
--  esac
- _ACEOF
- 
- cat >>$CONFIG_STATUS <<\_ACEOF
-@@ -28816,7 +29112,6 @@
- s&@abs_builddir@&$ac_abs_builddir&;t t
- s&@abs_top_builddir@&$ac_abs_top_builddir&;t t
- s&@INSTALL@&$ac_INSTALL&;t t
--s&@MKDIR_P@&$ac_MKDIR_P&;t t
- $ac_datarootdir_hack
- " $ac_file_inputs | sed -f "$tmp/subs-1.sed" | sed -f "$tmp/subs-2.sed" >$tmp/out
- 
-@@ -28981,9 +29276,8 @@
-   # some people rename them; so instead we look at the file content.
-   # Grep'ing the first line is not enough: some people post-process
-   # each Makefile.in and add a new line on top of each file to say so.
--  # Grep'ing the whole file is not good either: AIX grep has a line
--  # limit of 2048, but all sed's we know have understand at least 4000.
--  if sed 10q "$mf" | grep '^#.*generated by automake' > /dev/null 2>&1; then
-+  # So let's grep whole file.
-+  if grep '^#.*generated by automake' $mf > /dev/null 2>&1; then
-     dirpart=`$as_dirname -- "$mf" ||
- $as_expr X"$mf" : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
- 	 X"$mf" : 'X\(//\)[^/]' \| \
 Index: pam/Linux-PAM/doc/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/doc/Makefile.in
