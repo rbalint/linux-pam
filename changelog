@@ -7,6 +7,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
+    - the 'test.c' example no longer exists
   * Mark myself as primary maintainer as previously discussed with Sam, and
     add Roger as an uploader.
   * Refactor to use quilt.
@@ -76,7 +77,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     for consistency.
   * Fix up the clean target to not ignore errors; thanks to Roger Leigh.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 23:47:32 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 00:35:35 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
