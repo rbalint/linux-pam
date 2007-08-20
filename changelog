@@ -4,6 +4,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     for their extensive work in helping to prepare for this update in Debian.
     - now uses autoconf for library detection, so SELinux should not be
       unconditionally enabled on non-Linux archs.  Closes: #333141.
+    - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
+      accordingly
   * Mark myself as primary maintainer as previously discussed with Sam, and
     add Roger as an uploader.
   * Refactor to use quilt.
@@ -72,7 +74,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * libpam-modules.files: /usr/sbin/pam_tally has moved to /sbin/pam_tally
     for consistency.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 23:13:46 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 19 Aug 2007 23:16:21 -0700
 
 pam (0.79-4) unstable; urgency=medium
 

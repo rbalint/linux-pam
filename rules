@@ -92,7 +92,7 @@ binary-indep: install
 
 	dh_installman -plibpam-runtime $(BUILD_TREE)/doc/man/*.[578]
 	dh_installdocs -i
-	dh_installchangelogs -i $(BUILD_TREE)/CHANGELOG
+	dh_installchangelogs -i $(BUILD_TREE)/ChangeLog
 	dh_compress -i -X.html
 	dh_fixperms -i
 	dh_installdeb -i
@@ -119,7 +119,7 @@ binary-arch: install module_check
 	dh_installexamples -a
 	dh_installcron -a
 
-	dh_installchangelogs -a $(BUILD_TREE)/CHANGELOG
+	dh_installchangelogs -a $(BUILD_TREE)/ChangeLog
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -Xunix_chkpwd -a
