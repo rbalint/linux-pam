@@ -36,12 +36,12 @@ Index: Linux-PAM/modules/pam_unix/support.c
  
 +	if ((retval == 1) && on(UNIX_NULLOK_SECURE, ctrl)) {
 +		int retval2;
-+		const char *uttyname;
-+		retval2 = pam_get_item(pamh, PAM_TTY, (const void **)&uttyname);
++		const void *uttyname;
++		retval2 = pam_get_item(pamh, PAM_TTY, &uttyname);
 +		if (retval2 != PAM_SUCCESS || uttyname == NULL)
 +			return 0;
 +
-+		if (pam_modutil_tty_secure(uttyname) != PAM_SUCCESS)
++		if (pam_modutil_tty_secure(pamh, (const char *)uttyname) != PAM_SUCCESS)
 +			return 0;
 +	}
 +
