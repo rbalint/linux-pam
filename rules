@@ -91,6 +91,7 @@ binary-indep: install
 	dh_installdocs -i
 	dh_installchangelogs -i $(BUILD_TREE)/ChangeLog
 	dh_compress -i -X.html
+	dh_link -i
 	dh_fixperms -i
 	dh_installdeb -i
 	dh_gencontrol -i
@@ -105,9 +106,10 @@ binary-arch: install
 	mv debian/tmp/lib/*.a debian/tmp/usr/lib
 	dh_movefiles  -plibpam0g-dev -plibpam-cracklib -plibpam0g
 	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*.so`
-	dh_link -A
+	dh_link -a
 	dh_installman -plibpam0g-dev $(BUILD_TREE)/doc/man/*.3
 	dh_installman -Nlibpam0g-dev
+	rm -rf $(d)/libpam-modules/usr/share/man/man7
 
 	dh_installdocs -a $(BUILD_TREE)/README
 	$(i) $(dl)/Debian-PAM-MiniPolicy $(d)/libpam0g/usr/share/doc/libpam0g
