@@ -41,7 +41,8 @@ configure: configure-stamp
 configure-stamp: patch
 	touch $(BUILD_TREE)/configure
 	cd $(BUILD_TREE) && \
-	./configure --sysconfdir=/etc --prefix=/usr --enable-static-libpam \
+	./configure --sysconfdir=/etc --prefix=/usr --enable-static \
+	--enable-shared \
 	--mandir=/usr/share/man --infodir=/usr/share/info --libdir=/lib \
 	--sbindir=/sbin --enable-docdir=/usr/share/doc/libpam-doc \
 	--with-mailspool=/var/mail
@@ -69,6 +70,8 @@ install: build
 
 	# Provided in libpam-cracklib
 	rm -f $(CURDIR)/debian/libpam-modules/lib/security/pam_cracklib.so
+	# .la files are teh devil
+	rm -f $(CURDIR)/debian/tmp/lib/*.la
 
 # Build architecture-independent files here.
 binary-indep: install
@@ -101,7 +104,6 @@ binary-arch: install module_check
 	dh_testdir -a
 	dh_testroot -a
 
-	mkdir -p debian/tmp/etc/pam.d
 	mkdir -p debian/tmp/usr/lib
 	mv debian/tmp/lib/*.a debian/tmp/usr/lib
 	dh_movefiles  -plibpam0g-dev -plibpam-cracklib -plibpam0g
