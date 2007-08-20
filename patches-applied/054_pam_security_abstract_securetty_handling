@@ -130,7 +130,7 @@ Index: Linux-PAM/libpam/pam_modutil_tty_secure.c
 ===================================================================
 --- /dev/null
 +++ Linux-PAM/libpam/pam_modutil_tty_secure.c
-@@ -0,0 +1,88 @@
+@@ -0,0 +1,89 @@
 +/*
 + * A function to determine if a particular line is in /etc/securetty
 + */
@@ -158,7 +158,8 @@ Index: Linux-PAM/libpam/pam_modutil_tty_secure.c
 +#include <string.h>
 +#include <stdlib.h>
 +#include <ctype.h>
-+#include <security/_pam_modutil.h>
++#include <security/pam_modutil.h>
++#include <security/pam_ext.h>
 +
 +int pam_modutil_tty_secure(const pam_handle_t *pamh, const char *uttyname)
 +{
