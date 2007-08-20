@@ -74,12 +74,14 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     - kill off references to unused variables
     - make binary-arch also depend on the install target, and streamline the
       rules
+    - fix up the clean target to not ignore errors; thanks to Roger Leigh
+    - drop the local module_check target in favor of using -Wl,-z,defs
+      in LDFLAGS to enforce correct linkage of all objects at build time
   * Drop debian/local/unix_chkpwd.8 in favor of the upstream manpage.
   * libpam-modules.files: /usr/sbin/pam_tally has moved to /sbin/pam_tally
     for consistency.
-  * Fix up the clean target to not ignore errors; thanks to Roger Leigh.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 00:35:35 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 01:02:17 -0700
 
 pam (0.79-4) unstable; urgency=medium
 

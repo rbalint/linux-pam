@@ -9,6 +9,7 @@ DH_COMPAT = 3
 export DH_COMPAT
 
 CFLAGS	:= -g -D_GNU_SOURCE -D_REENTRANT -fPIC
+LDFLAGS := -Wl,-z,defs
 
 ifeq (,$(findstring noopt, ${DEB_BUILD_OPTIONS}))
 CFLAGS += -O2
@@ -98,7 +99,7 @@ binary-indep: install
 	dh_md5sums -i
 	dh_builddeb -i
 
-binary-arch: install module_check
+binary-arch: install
 	dh_testdir -a
 	dh_testroot -a
 
@@ -127,16 +128,6 @@ binary-arch: install module_check
 	dh_gencontrol -a
 	dh_md5sums -a
 	dh_builddeb -a
-
-module_check:
-	for module in `ls build-tree/Linux-PAM-*/modules/pam_*/pam_*.so`; \
-	do \
-		test=`ldd $$module | grep libpam.so.0`; \
-		if [ "x$$test" = "x" ]; then \
-			echo $$module is not linked to libpam; \
-			exit 1; \
-		fi; \
-	done
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary patch unpatch install configure
