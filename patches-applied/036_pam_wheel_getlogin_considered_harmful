@@ -222,3 +222,20 @@ Index: Linux-PAM/modules/pam_wheel/pam_wheel.8
  .nf
  su      auth     sufficient     pam_rootok.so
  su      auth     required       pam_wheel.so
+Index: Linux-PAM/modules/pam_wheel/README
+===================================================================
+--- Linux-PAM/modules/pam_wheel/README.orig
++++ Linux-PAM/modules/pam_wheel/README
+@@ -39,12 +39,6 @@
+     modules the wheel members may be able to su to root without being prompted
+     for a passwd).
+ 
+-use_uid
+-
+-    The check for wheel membership will be done against the current uid instead
+-    of the original one (useful when jumping with su from one account to
+-    another for example).
+-
+ EXAMPLES
+ 
+ The root account gains access by default (rootok), only wheel members can
