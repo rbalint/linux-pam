@@ -60,6 +60,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       dh_install...
   * Drop debian/libpam0g.links, no longer needed because upstream now has a
     working install target which creates the library symlinks
+  * Add libpam-modules.links: create pam_unix_{acct,auth,passwd,session}.so
+    symlinks by hand, no longer provided upstream.
   * debian/patches-applied/PAM-manpage-section: "PAM" is not a daemon, manpage
     belongs in section 7, not in section 8.
   * Actually ship the pam, pam.conf, and pam.d manpages in libpam-runtime.
@@ -87,10 +89,10 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Don't ship Makefiles as part of the libpam0g-dev examples.
   * libpam-modules.manpages, libpam-runtime.manpages: put all the manpages in
     the correct packages.
-  * libpam-modules.links: create pam_unix_{acct,auth,passwd,session}.so
-    symlinks by hand, no longer provided upstream.
+  * Drop libpam{0g,0g-dev,-modules,-runtime}.dirs, not needed for anything
+    because we aren't trying to ship empty directories in the packages
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 02:53:53 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 02:55:49 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
