@@ -2,6 +2,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
 
   * New upstream release; thanks to Roger Leigh and Jan Christoph Nordholz
     for their extensive work in helping to prepare for this update in Debian.
+    - now uses autoconf for library detection, so SELinux should not be
+      unconditionally enabled on non-Linux archs.  Closes: #333141.
   * Mark myself as primary maintainer as previously discussed with Sam, and
     add Roger as an uploader.
   * Refactor to use quilt.
