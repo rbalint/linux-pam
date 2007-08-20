@@ -1,0 +1,4 @@
+/lib/security/pam_unix.so /lib/security/pam_unix_acct.so
+/lib/security/pam_unix.so /lib/security/pam_unix_auth.so
+/lib/security/pam_unix.so /lib/security/pam_unix_passwd.so
+/lib/security/pam_unix.so /lib/security/pam_unix_session.so
