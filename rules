@@ -106,9 +106,6 @@ binary-arch: install
 	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*.so`
 	dh_link -A
 	dh_installman -plibpam0g-dev $(BUILD_TREE)/doc/man/*.3
-	for manpage in pam_end pam_close_session pam_get_item; do \
-	rm debian/libpam0g-dev/usr/share/man/man3/$$manpage.3; done
-
 
 	dh_installdocs -a $(BUILD_TREE)/README
 	$(i) $(dl)/Debian-PAM-MiniPolicy $(d)/libpam0g/usr/share/doc/libpam0g
