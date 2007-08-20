@@ -2,11 +2,11 @@ Index: Linux-PAM/libpam/pam_handlers.c
 ===================================================================
 --- Linux-PAM/libpam/pam_handlers.c.orig
 +++ Linux-PAM/libpam/pam_handlers.c
-@@ -114,6 +114,61 @@
+@@ -114,6 +114,62 @@
  		module_type = PAM_T_ACCT;
  	    } else if (!strcasecmp("password", tok)) {
  		module_type = PAM_T_PASS;
-+	    } else if (!_pam_strCMP("@include", tok)) {
++	    } else if (!strcasecmp("@include", tok)) {
 +		/* include a file here
 +		 * most of the code adapted from _pam_init_handlers */
 +		FILE *inc_f;
@@ -16,14 +16,14 @@ Index: Linux-PAM/libpam/pam_handlers.c
 +		tok = _pam_StrTok(NULL, " \n\t", &nexttok);
 +		if (tok == NULL) {
 +			D(("_pam_parse_conf_file: included file name not given"));
-+			_pam_system_log(LOG_ERR,
-+				"(%s) included file name not given",
-+				this_service);
++			pam_syslog(pamh, LOG_ERR,
++			           "(%s) included file name not given",
++			           this_service);
 +		} else {
 +			char *filename;
 +			struct stat test_d;
 +
-+			if (!_pam_strCMP("/", tok)) {
++			if (!strcmp("/", tok)) {
 +				filename = tok;
 +				drop_f = 0;
 +			} else if ( stat(PAM_CONFIG_D, &test_d) == 0 && S_ISDIR(test_d.st_mode) ) {
@@ -31,9 +31,9 @@ Index: Linux-PAM/libpam/pam_handlers.c
 +				filename = malloc(sizeof(PAM_CONFIG_DF)
 +						+strlen(tok));
 +				if (filename == NULL) {
-+					_pam_system_log(LOG_ERR,
-+						"_pam_parse_conf_file: no memory; service %s",
-+						this_service);
++					pam_syslog(pamh, LOG_ERR,
++					           "_pam_parse_conf_file: no memory; service %s",
++					           this_service);
 +					return PAM_BUF_ERR;
 +				}
 +				sprintf(filename, PAM_CONFIG_DF, tok);
@@ -48,11 +48,12 @@ Index: Linux-PAM/libpam/pam_handlers.c
 +					 );
 +				fclose(inc_f);
 +				if (retval != PAM_SUCCESS) {
-+				    _pam_system_log(LOG_ERR,
-+					    "_pam_parse_conf_file: error reading %s",
-+					    filename);
-+				    _pam_system_log(LOG_ERR, "_pam_parse_conf_file: [%s]",
-+					    pam_strerror(pamh, retval));
++				    pam_syslog(pamh, LOG_ERR,
++				               "_pam_parse_conf_file: error reading %s",
++				               filename);
++				    pam_syslog(pamh, LOG_ERR,
++				               "_pam_parse_conf_file: [%s]",
++				               pam_strerror(pamh, retval));
 +				    return retval;
 +				}
 +			}
@@ -64,7 +65,7 @@ Index: Linux-PAM/libpam/pam_handlers.c
  	    } else {
  		/* Illegal module type */
  		D(("_pam_init_handlers: bad module type: %s", tok));
-@@ -244,6 +299,7 @@
+@@ -244,6 +300,7 @@
  		return PAM_ABORT;
  	    }
  	}
