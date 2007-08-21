@@ -23,6 +23,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       Closes: #181451.
     - pam_localuser now supports being used as a session module.
       Closes: #412484.
+    - package no longer fails to build with dash as /bin/sh.
+      Closes: #331208.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
