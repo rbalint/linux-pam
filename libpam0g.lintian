@@ -1,0 +1,3 @@
+# obvious multilib package false-positive; also the package name hasn't
+# changed since the glibc transition, go us!
+libpam0g: package-name-doesnt-match-sonames libpam0 libpam-misc0 libpamc0

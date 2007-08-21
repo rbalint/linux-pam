@@ -120,6 +120,10 @@ binary-arch: install
 	dh_installcron -a
 
 	dh_installchangelogs -a $(BUILD_TREE)/ChangeLog
+	for pkg in libpam0g libpam-modules; do \
+		install -m 0644 -D $(d)/$$pkg.lintian $(d)/$$pkg/usr/share/lintian/overrides/$$pkg || exit; \
+	done
+
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -a
