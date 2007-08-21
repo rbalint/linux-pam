@@ -29,6 +29,9 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       guide.  Closes: #350620.
     - pam_userdb now logs an error instead of segfaulting when no db=
       option is provided.  Closes: #436005.
+    - pam_time now warns on a missing tty instead of erroring out,
+      making it possible to use the module with non-console services.
+      Closes: #127931.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
