@@ -2,6 +2,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
 
   * New upstream release; thanks to Roger Leigh and Jan Christoph Nordholz
     for their extensive work in helping to prepare for this update in Debian.
+    Closes: #360460.
     - now uses autoconf for library detection, so SELinux should not be
       unconditionally enabled on non-Linux archs.  Closes: #333141.
     - pam_mail notice handling has been completely reworked, so there should
