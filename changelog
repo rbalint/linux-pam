@@ -21,6 +21,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       Linux-PAM error".  Closes: #220157.
     - the text documentation no longer uses ANSI bold sequences.
       Closes: #181451.
+    - pam_localuser now supports being used as a session module.
+      Closes: #412484.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
