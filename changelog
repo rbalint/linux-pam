@@ -27,6 +27,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       Closes: #331208.
     - All modules should now be documented in the system administrator
       guide.  Closes: #350620.
+    - pam_userdb now logs an error instead of segfaulting when no db=
+      option is provided.  Closes: #436005.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
