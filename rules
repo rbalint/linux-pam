@@ -111,7 +111,6 @@ binary-arch: install
 	rm -rf $(d)/libpam-modules/usr/share/man/man7
 
 	dh_installdocs -a $(BUILD_TREE)/README
-	$(i) $(dl)/Debian-PAM-MiniPolicy $(d)/libpam0g/usr/share/doc/libpam0g
 	dh_installexamples -a
 	find $(d)/libpam0g-dev/usr/share/doc/libpam0g-dev/examples -type f -name 'Makefile*' -print0 | xargs -0 rm -f
 

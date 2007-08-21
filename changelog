@@ -98,8 +98,10 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     documentation from a tool in contrib.
   * libpam-cracklib should depend on a real wordlist package, per policy;
     use wamerican as the default.
+  * libpam0g.docs: install the Debian-PAM-MiniPolicy from here, further
+    cleaning up debian/rules
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 21:30:06 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 21:35:29 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
