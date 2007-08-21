@@ -9,6 +9,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     - with libtool and autoconf, now behaves "sensibly" on unknown
       platforms.  Closes: #165067.
     - the source now builds without warnings.  Closes: #212165.
+    - uses automake instead of hand-rolled makefiles with indentation
+      bugs.  Closes: #241661.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
