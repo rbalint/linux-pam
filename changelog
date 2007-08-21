@@ -14,6 +14,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       bugs.  Closes: #241661.
     - pam_mkhomedir now creates directories recursively as needed.
       Closes: #178225.
+    - pam_listfile now supports being used as a session module too.
+      Closes: #416665.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
