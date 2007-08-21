@@ -111,6 +111,7 @@ binary-arch: install
 	dh_link -a
 	dh_installman -a
 	rm -rf $(d)/libpam-modules/usr/share/man/man7
+	rm -f $(d)/libpam-modules/usr/share/man/man8/pam.8
 
 	dh_installdocs -a $(BUILD_TREE)/README
 	dh_installexamples -a
