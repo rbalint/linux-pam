@@ -16,6 +16,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       Closes: #178225.
     - pam_listfile now supports being used as a session module too.
       Closes: #416665.
+    - misspelled pam_userdb log message has been corrected.  Closes: #305058.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
