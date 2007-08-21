@@ -19,6 +19,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     - misspelled pam_userdb log message has been corrected.  Closes: #305058.
     - the current pam_strerror manpage no longer mentions "Unknown
       Linux-PAM error".  Closes: #220157.
+    - the text documentation no longer uses ANSI bold sequences.
+      Closes: #181451.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
