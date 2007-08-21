@@ -15,7 +15,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     add Roger as an uploader.
   * Refactor to use quilt.
   * Drop unnecessary build-dependency on patch, which is
-    build-essential.
+    build-essential (and no longer invoked directly).
   * Drop patches 002_debian_no_ldconfig_call, 010_pam_cplusplus,
     018_man_fixes, 030_makefile_link_against_libpam,
     037_pam_issue_ttyname_can_be_null, 044_configure_supports_bsd,
@@ -61,6 +61,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     - add debian/libpam-doc.install for moving the docs to the right place;
       for the moment this means we're using both dh_movefiles and
       dh_install...
+    - libpam0g.docs: install the Debian-PAM-MiniPolicy from here, further
+      cleaning up debian/rules
   * Drop debian/libpam0g.links, no longer needed because upstream now has a
     working install target which creates the library symlinks
   * Add libpam-modules.links: create pam_unix_{acct,auth,passwd,session}.so
@@ -98,8 +100,6 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     documentation from a tool in contrib.
   * libpam-cracklib should depend on a real wordlist package, per policy;
     use wamerican as the default.
-  * libpam0g.docs: install the Debian-PAM-MiniPolicy from here, further
-    cleaning up debian/rules
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 21:35:29 -0700
 
