@@ -116,8 +116,11 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Add lintian overrides for known false-positives
   * Conflicts/Replaces/Provides libpam-umask, now included upstream.
     Closes: #436222.
+  * Upstream no longer marks unix_chkpwd suid-root for us, so set the perms
+    by hand in debian/rules.  In the process, unix_chkpwd is now writable
+    by the owner, as expected by policy.  Closes: #368100.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 23:34:12 -0700
+ -- Steve Langasek <vorlon@debian.org>  Tue, 21 Aug 2007 00:29:37 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
