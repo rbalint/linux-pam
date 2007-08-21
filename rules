@@ -32,6 +32,8 @@ build-stamp:
 	# Compile everything else
 	$(MAKE) -C $(BUILD_TREE) CFLAGS="$(CFLAGS)"
 
+	pod2man --section 8 --release="Debian GNU/Linux" $(dl)/pam_getenv >$(dl)/pam_getenv.8
+
 	touch build-stamp
 
 configure: patch configure-stamp
@@ -51,6 +53,7 @@ clean-patched:
 	dh_testdir
 	dh_testroot
 	[ ! -f $(BUILD_TREE)/Makefile ] || $(MAKE) -C $(BUILD_TREE) distclean
+	rm -f $(dl)/pam_getenv.8
 	rm -f build-stamp configure-stamp
 	dh_clean
 
@@ -80,7 +83,6 @@ binary-indep: install
 	$(i) $(dl)/pam.conf $(d)/tmp/etc
 	-mkdir -p $(d)/tmp/usr/sbin $(d)/tmp/usr/share/man/man8
 	$(ie) $(dl)/pam_getenv $(d)/tmp/usr/sbin
-	pod2man --section 8 --release="Debian GNU/Linux" $(dl)/pam_getenv >$(d)/tmp/usr/share/man/man8/pam_getenv.8
 	$(i) $(dl)/other $(d)/tmp/etc/pam.d
 	$(i) $(dl)/common-* $(d)/tmp/usr/share/pam/
 

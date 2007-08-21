@@ -1,4 +1,5 @@
 debian/tmp/usr/share/man/man8/*.8
+debian/local/pam_getenv.8
 debian/tmp/usr/share/man/man5/access.conf.5
 debian/tmp/usr/share/man/man5/group.conf.5
 debian/tmp/usr/share/man/man5/limits.conf.5
