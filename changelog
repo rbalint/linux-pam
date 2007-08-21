@@ -25,6 +25,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       Closes: #412484.
     - package no longer fails to build with dash as /bin/sh.
       Closes: #331208.
+    - All modules should now be documented in the system administrator
+      guide.  Closes: #350620.
     - upstream changelog is now 'ChangeLog' instead of 'CHANGELOG'; install
       accordingly
     - bump the shlibs
