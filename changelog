@@ -103,7 +103,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Update to debhelper V5.
   * Don't ship Makefiles as part of the libpam0g-dev examples.
   * libpam-modules.manpages, libpam-runtime.manpages, libpam0g-dev.manpages:
-    put all the manpages in the correct packages.  Closes: #411812, #62193.
+    put all the manpages in the correct packages.  Closes: #411812,
+    #62193, #313486.
   * Drop libpam{0g,0g-dev,-modules,-runtime}.dirs, not needed for anything
     because we aren't trying to ship empty directories in the packages
   * Build-Conflict with fop, to avoid unreproducible builds of pdf
