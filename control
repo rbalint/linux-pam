@@ -28,9 +28,9 @@ Package: libpam-modules
 Priority: required
 Architecture: any
 Depends: ${shlibs:Depends}
-Conflicts: libpam0g-modules (= 0.66-1), libpam-motd, libpam-mkhomedir, suidmanager (<< 0.50)
-Replaces: libpam0g-util
-Provides: libpam-motd, libpam-mkhomedir
+Conflicts: libpam0g-modules (= 0.66-1), libpam-motd, libpam-mkhomedir, libpam-umask, suidmanager (<< 0.50)
+Replaces: libpam0g-util, libpam-umask
+Provides: libpam-motd, libpam-mkhomedir, libpam-umask
 Description: Pluggable Authentication Modules for PAM
  This package completes the set of modules for PAM. It includes the
   pam_unix_*.so module as well as some specialty modules.

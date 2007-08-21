@@ -110,8 +110,10 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Drop local/pam-undocumented.7 from the package, since we no longer have
     a reason to ship it
   * Add lintian overrides for known false-positives
+  * Conflicts/Replaces/Provides libpam-umask, now included upstream.
+    Closes: #436222.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 22:42:15 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 20 Aug 2007 23:34:12 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
