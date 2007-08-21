@@ -44,7 +44,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Patch 007: update for the switch from SGML to XML; drop some log
     messages that were already added upstream; update for the pam_modutil
     changes; tighten the flag handling of the 'obscure' option; drop bogus
-    check in unix_chkpwd for null passwords.
+    check in unix_chkpwd for null passwords.  Also fix a grammar error
+    along the way.  Closes: #362855.
   * Patch 024: CRACKLIB_DICTPATH is no longer set in configure.in, so patch
     pam_cracklib.c instead to use the default dictpath already available
     from crack.h; and patch configure.in to use AC_CHECK_HEADERS instead
