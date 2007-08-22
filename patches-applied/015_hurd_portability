@@ -56,3 +56,16 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
           if (rlimit_value != RLIM_INFINITY)
              rlimit_value *= 1024;
      	 break;
+Index: Linux-PAM/libpam/Makefile.am
+===================================================================
+--- Linux-PAM/libpam/Makefile.am.orig
++++ Linux-PAM/libpam/Makefile.am
+@@ -20,7 +20,7 @@
+ noinst_HEADERS = pam_prelude.h pam_private.h pam_tokens.h \
+ 		pam_modutil_private.h pam_static_modules.h
+ 
+-libpam_la_LDFLAGS = -no-undefined -version-info 81:6:81 \
++libpam_la_LDFLAGS = -pthread -no-undefined -version-info 81:6:81 \
+ 	@LIBAUDIT@ $(LIBPRELUDE_LIBS) @LIBDL@
+ if STATIC_MODULES
+   libpam_la_LDFLAGS += `ls ../modules/pam_*/*.lo` \

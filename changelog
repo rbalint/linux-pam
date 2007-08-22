@@ -145,6 +145,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     Laurent Bigonville for the hint.  Closes: #439038.
   * Add a watch file for use with uscan; thanks to Laurent Bigonville for
     this patch as well.  Closes: #439040.
+  * Update 015_hurd_portability to include -pthread in
+    libpam_la_LDFLAGS, required for portability to non-Linux platforms.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 21 Aug 2007 18:29:45 -0700
 
