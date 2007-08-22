@@ -141,9 +141,11 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * Migrate from db4.3 to db4.6; once again, no administrator action should
     be needed for upgrading on-disk database formats.  Closes: #354309.
   * Add XS-Vcs-Svn and XS-Vcs-Browser fields to debian/control; thanks to
-    Laurent Bigonville for the hint.
+    Laurent Bigonville for the hint.  Closes: #439038.
+  * Add a watch file for use with uscan; thanks to Laurent Bigonville for
+    this patch as well.  Closes: #439040.
 
- -- Steve Langasek <vorlon@debian.org>  Tue, 21 Aug 2007 17:39:49 -0700
+ -- Steve Langasek <vorlon@debian.org>  Tue, 21 Aug 2007 18:29:45 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
