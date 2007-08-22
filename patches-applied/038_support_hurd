@@ -73,16 +73,6 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
  
      return (1);
  }
-@@ -567,6 +589,9 @@
-      * Go here to exit after the fsuid/euid has been adjusted so that
-      * they are reset before we exit.
-      */
-+#ifndef MAXPATHLEN
-+    if(pbuf)free(pbuf);
-+#endif
- 
- #ifdef __linux__
-     setfsuid(uid);
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
