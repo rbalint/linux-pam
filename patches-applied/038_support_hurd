@@ -86,3 +86,57 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  #endif
  
  #include "config.h"
+Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
+===================================================================
+--- Linux-PAM/modules/pam_xauth/pam_xauth.c.orig
++++ Linux-PAM/modules/pam_xauth/pam_xauth.c
+@@ -35,7 +35,9 @@
+ 
+ #include "config.h"
+ #include <sys/types.h>
++#ifdef HAVE_SYS_FSUID_H
+ #include <sys/fsuid.h>
++#endif /* HAVE_SYS_FSUID_H */
+ #include <sys/wait.h>
+ #include <errno.h>
+ #include <fnmatch.h>
+@@ -63,6 +65,11 @@
+ #define XAUTHDEF ".Xauthority"
+ #define XAUTHTMP ".xauthXXXXXX"
+ 
++/* Hurd compatibility */
++#ifndef PATH_MAX
++#define PATH_MAX 4096
++#endif
++
+ /* Possible paths to xauth executable */
+ static const char * const xauthpaths[] = {
+ #ifdef PAM_PATH_XAUTH
+@@ -221,9 +228,13 @@
+ 		return PAM_SESSION_ERR;
+ 	}
+ 	euid = geteuid();
++#ifdef HAVE_SYS_FSUID_H
+ 	setfsuid(pwd->pw_uid);
++#endif
+ 	fp = fopen(path, "r");
++#ifdef HAVE_SYS_FSUID_H
+ 	setfsuid(euid);
++#endif
+ 	if (fp != NULL) {
+ 		char buf[LINE_MAX], *tmp;
+ 		/* Scan the file for a list of specs of users to "trust". */
+@@ -536,9 +547,13 @@
+ 
+ 		/* Generate a new file to hold the data. */
+ 		euid = geteuid();
++#ifdef HAVE_SYS_FSUID_H
+ 		setfsuid(tpwd->pw_uid);
++#endif
+ 		fd = mkstemp(xauthority + strlen(XAUTHENV) + 1);
++#ifdef HAVE_SYS_FSUID_H
+ 		setfsuid(euid);
++#endif
+ 		if (fd == -1) {
+ 			pam_syslog(pamh, LOG_ERR,
+ 				   "error creating temporary file `%s': %m",

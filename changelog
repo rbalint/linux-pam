@@ -67,7 +67,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     from crack.h; and patch configure.in to use AC_CHECK_HEADERS instead
     of AC_CHECK_HEADER, so crack.h is actually included.  Also remove
     unnecessary string copies, which break on the Hurd due to PATH_MAX.
-  * Patch 038: partially merged/superseded upstream
+  * Patch 038: partially merged/superseded upstream; also add new Hurd
+    fixes for pam_xauth.
   * Patch 061: partially merged upstream
   * Use ${binary:Version} instead of ${Source-Version} in
     debian/control.
