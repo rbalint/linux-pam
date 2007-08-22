@@ -7,6 +7,8 @@ Standards-Version: 3.7.2
 Build-Depends: cracklib2-dev (>= 2.7-9), bzip2, debhelper, quilt, flex, libdb-dev, libcap-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64 !netbsd-i386], libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64 !netbsd-i386]
 Build-Depends-Indep: xsltproc, libxml2-utils, docbook-xml, docbook-xsl, w3m
 Build-Conflicts-Indep: fop
+XS-Vcs-Svn: svn://svn.debian.org/svn/pkg-pam/trunk/pam/
+XS-Vcs-Browser: http://svn.debian.org/wsvn/pkg-pam/trunk/pam/
 
 Package: libpam0g
 Priority: required
