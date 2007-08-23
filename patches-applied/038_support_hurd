@@ -147,7 +147,7 @@ Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
  	fp = fopen(path, "r");
 +#ifdef HAVE_SYS_FSUID_H
  	setfsuid(euid);
-+else
++#else
 +	if (uid == pwd->pw_uid)
 +		setreuid(uid, euid);
 +	else {
@@ -192,7 +192,7 @@ Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
  		fd = mkstemp(xauthority + strlen(XAUTHENV) + 1);
 +#ifdef HAVE_SYS_FSUID_H
  		setfsuid(euid);
-+else
++#else
 +		if (uid == tpwd->pw_uid)
 +			setreuid(uid, euid);
 +		else {
