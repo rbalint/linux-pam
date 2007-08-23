@@ -1,10 +1,12 @@
-Patch from  Michal 'hramrach' Suchanek" <hramrach_l@centrum.cz>
-
 This patch is slightly hurd-specific in that it uses getline which is
 not portable.
 
 However hurd is basically the only modern os without maxhostnamelen
 
+Authors: Michal 'hramrach' Suchanek" <hramrach_l@centrum.cz>,
+         Steve Langasek <vorlon@debian.org>
+
+Upstream status: submitted in <20070823084620.GA3852@dario.dodds.net>
 
 Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 ===================================================================
@@ -112,31 +114,94 @@ Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
  /* Possible paths to xauth executable */
  static const char * const xauthpaths[] = {
  #ifdef PAM_PATH_XAUTH
-@@ -221,9 +228,13 @@
+@@ -205,6 +212,9 @@
+ 	FILE *fp;
+ 	int i;
+ 	uid_t euid;
++#ifdef HAVE_SYS_FSUID_H
++	uid_t uid;
++#endif
+ 	/* Check this user's <sense> file. */
+ 	pwd = pam_modutil_getpwnam(pamh, this_user);
+ 	if (pwd == NULL) {
+@@ -221,9 +228,34 @@
  		return PAM_SESSION_ERR;
  	}
  	euid = geteuid();
 +#ifdef HAVE_SYS_FSUID_H
  	setfsuid(pwd->pw_uid);
++#else
++	uid = getuid();
++	if (uid == pwd->pw_uid)
++		setreuid(euid, uid);
++	else {
++		setreuid(0, -1);
++		if (setreuid(-1, uid) == -1) {
++			setreuid(-1, 0);
++			setreuid(0, -1);
++			if (setreuid(-1, pwd->pw_uid)
++				return PAM_CRED_INSUFFICIENT;
++		}
++	}
 +#endif
  	fp = fopen(path, "r");
 +#ifdef HAVE_SYS_FSUID_H
  	setfsuid(euid);
++else
++	if (uid == pwd->pw_uid)
++		setreuid(uid, euid);
++	else {
++		if (setreuid(-1, 0) == -1)
++			setreuid(uid, -1);
++		setreuid(-1, euid);
++	}
 +#endif
  	if (fp != NULL) {
  		char buf[LINE_MAX], *tmp;
  		/* Scan the file for a list of specs of users to "trust". */
-@@ -536,9 +547,13 @@
+@@ -292,6 +327,9 @@
+ 	int fd, i, debug = 0;
+ 	int retval = PAM_SUCCESS;
+ 	uid_t systemuser = 499, targetuser = 0, euid;
++#ifdef HAVE_SYS_FSUID_H
++	uid_t uid;
++#endif
+ 
+ 	/* Parse arguments.  We don't understand many, so no sense in breaking
+ 	 * this into a separate function. */
+@@ -536,9 +574,34 @@
  
  		/* Generate a new file to hold the data. */
  		euid = geteuid();
 +#ifdef HAVE_SYS_FSUID_H
  		setfsuid(tpwd->pw_uid);
++#else
++		uid = getuid();
++		if (uid == tpwd->pw_uid)
++			setreuid(euid, uid);
++		else {
++			setreuid(0, -1);
++			if (setreuid(-1, uid) == -1) {
++				setreuid(-1, 0);
++				setreuid(0, -1);
++				if (setreuid(-1, tpwd->pw_uid)
++					return PAM_CRED_INSUFFICIENT;
++			}
++		}
 +#endif
  		fd = mkstemp(xauthority + strlen(XAUTHENV) + 1);
 +#ifdef HAVE_SYS_FSUID_H
  		setfsuid(euid);
++else
++		if (uid == tpwd->pw_uid)
++			setreuid(uid, euid);
++		else {
++			if (setreuid(-1, 0) == -1)
++				setreuid(uid, -1);
++			setreuid(-1, euid);
++		}
 +#endif
  		if (fd == -1) {
  			pam_syslog(pamh, LOG_ERR,
  				   "error creating temporary file `%s': %m",
+

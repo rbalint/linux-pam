@@ -1,5 +1,8 @@
-Patch from  Igor Khavkine <i_khavki@alcor.concordia.ca>Patch from
-Debian bug #76119
+Patch from Debian bug #76119
+Authors: Igor Khavkine <i_khavki@alcor.concordia.ca>,
+         Steve Langasek <vorlon@debian.org>
+
+Upstream status: submitted in <20070823084620.GA3852@dario.dodds.net>
 
 Index: Linux-PAM/configure.in
 ===================================================================
