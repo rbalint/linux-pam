@@ -2,9 +2,10 @@ Patch for Debian bug #84428
 
 Support a 'quiet' option to pam_listfile, to reduce the logging output
 
-Authors: Ben Collins <bcollins@debian.org>
+Authors: Ben Collins <bcollins@debian.org>,
+         Steve Langasek <vorlon@debian.org>
 
-Upstream status: not yet submitted
+Upstream status: submitted in <20070825214616.GD20780@dario.dodds.net>
 
 Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
 ===================================================================
