@@ -1,7 +1,5 @@
-This patch is slightly hurd-specific in that it uses getline which is
-not portable.
-
-However hurd is basically the only modern os without maxhostnamelen
+Prefer using getline() instead of a static buffer; makes pam_rhosts
+portable to Hurd.
 
 Authors: Michal 'hramrach' Suchanek" <hramrach_l@centrum.cz>,
          Steve Langasek <vorlon@debian.org>
@@ -12,69 +10,71 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 ===================================================================
 --- Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c.orig
 +++ Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
-@@ -348,11 +348,18 @@
+@@ -293,7 +293,6 @@
+     /*
+       luser is user entry from .rhosts/hosts.equiv file
+       ruser is user id on remote host
+-      rhost is the remote host name
+       */
+     const void *user;
+ 
+@@ -348,11 +347,17 @@
      register const char *user;
      register char *p;
      int hcheck, ucheck;
-+#ifndef MAXHOSTNAMELEN
+-    char buf[MAXHOSTNAMELEN + 128];                       /* host + login */
++    int retval = 1;
++#ifdef HAVE_GETLINE
 +    char *buf=NULL;
 +    int buflen=0;
-+	/* XXX definitely should check for getline if should be portable */
+ 
+-    buf[sizeof (buf)-1] = '\0';                 	/* terminate line */
 +    while (getline(&buf,&buflen,hostf)) {
 +#else
-     char buf[MAXHOSTNAMELEN + 128];                       /* host + login */
- 
-     buf[sizeof (buf)-1] = '\0';                 	/* terminate line */
++    char buf[MAXHOSTNAMELEN + 128];                       /* host + login */
  
      while (fgets(buf, sizeof(buf), hostf) != NULL) {   /* hostf file line */
 +#endif
          p = buf;                              /* from beginning of file.. */
  
  	/* Skip empty or comment lines */
-@@ -400,8 +407,12 @@
- 	/* First check host part */
+@@ -401,7 +406,7 @@
  	hcheck=__icheckhost(pamh, opts, raddr, buf, rhost);
  
--	if (hcheck<0)
-+	if (hcheck<0) {
-+#ifndef MAXHOSTNAMELEN
-+	    free(buf);
-+#endif
- 	    return(1);
-+	}
+ 	if (hcheck<0)
+-	    return(1);
++	    break;
  
  	if (hcheck) {
  	    /* Then check user part */
-@@ -411,16 +422,27 @@
+@@ -411,18 +416,23 @@
  	    ucheck=__icheckuser(pamh, opts, user, ruser);
  
  	    /* Positive 'host user' match? */
 -	    if (ucheck>0)
+-		return(0);
 +	    if (ucheck>0) {
-+#ifndef MAXHOSTNAMELEN
-+		free(buf);
-+#endif
- 		return(0);
++		retval = 0;
++		break;
 +	    }
  
  	    /* Negative 'host -user' match? */
--	    if (ucheck<0)
-+	    if (ucheck<0) {
-+#ifndef MAXHOSTNAMELEN
-+		free(buf);
-+#endif
- 		return(1);
-+	    }
+ 	    if (ucheck<0)
+-		return(1);
++		break;
  
  	    /* Neither, go on looking for match */
  	}
      }
-+#ifndef MAXHOSTNAMELEN
++#ifdef HAVE_GETLINE
 +    if(buf)free(buf);
 +#endif
  
-     return (1);
+-    return (1);
++    return retval;
  }
+ 
+ /*
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
