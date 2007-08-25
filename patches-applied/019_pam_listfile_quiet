@@ -1,3 +1,11 @@
+Patch for Debian bug #84428
+
+Support a 'quiet' option to pam_listfile, to reduce the logging output
+
+Authors: Ben Collins <bcollins@debian.org>
+
+Upstream status: not ready to be submitted
+
 Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
 ===================================================================
 --- Linux-PAM/modules/pam_listfile/pam_listfile.c.orig
