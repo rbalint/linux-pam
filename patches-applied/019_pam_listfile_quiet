@@ -4,22 +4,22 @@ Support a 'quiet' option to pam_listfile, to reduce the logging output
 
 Authors: Ben Collins <bcollins@debian.org>
 
-Upstream status: not ready to be submitted
+Upstream status: not yet submitted
 
 Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
 ===================================================================
 --- Linux-PAM/modules/pam_listfile/pam_listfile.c.orig
 +++ Linux-PAM/modules/pam_listfile/pam_listfile.c
-@@ -39,6 +39,8 @@
- #include <security/pam_modutil.h>
- #include <security/pam_ext.h>
- 
-+static int quiet = 0;
-+
- /* checks if a user is on a list of members */
- static int is_on_list(char * const *list, const char *member)
+@@ -68,7 +68,7 @@
+ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
+ 		     int argc, const char **argv)
  {
-@@ -155,6 +157,8 @@
+-    int retval, i, citem=0, extitem=0, onerr=PAM_SERVICE_ERR, sense=2;
++    int retval, i, citem=0, extitem=0, onerr=PAM_SERVICE_ERR, sense=2, quiet=0;
+     const void *void_citemp;
+     const char *citemp;
+     char *ifname=NULL;
+@@ -155,6 +155,8 @@
  		    apply_type=APPLY_TYPE_USER;
  		    strncpy(apply_val,myval,sizeof(apply_val)-1);
  		}
@@ -28,7 +28,7 @@ Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
  	    } else {
  		free(ifname);
  		pam_syslog(pamh,LOG_ERR, "Unknown option: %s",mybuf);
-@@ -316,7 +320,8 @@
+@@ -316,7 +318,8 @@
  	     ifname, citem, citemp, sense);
  #endif
      if(lstat(ifname,&fileinfo)) {
@@ -38,7 +38,7 @@ Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
  	free(ifname);
  	return onerr;
      }
-@@ -325,16 +330,17 @@
+@@ -325,16 +328,17 @@
         || !S_ISREG(fileinfo.st_mode)) {
  	/* If the file is world writable or is not a
  	   normal file, return error */
@@ -60,7 +60,7 @@ Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
  	    /* Only report if it's an error... */
  	    pam_syslog(pamh,LOG_ERR,  "Error opening %s", ifname);
  	}
-@@ -399,8 +405,9 @@
+@@ -399,8 +403,9 @@
  #endif
  	(void) pam_get_item(pamh, PAM_SERVICE, &service);
  	(void) pam_get_user(pamh, &user_name, NULL);
