@@ -1,8 +1,30 @@
+Fix the cracklib autoconf check so that HAVE_CRACK_H gets defined.
+
+Don't copy around the cracklib dictpath into a fixed-width buffer, when
+we can just point at the existing strings; and use the cracklib-provided
+default if no dictionary is specified in pam.conf.
+
+Authors: Steve Langasek <vorlon@debian.org>
+
+Upstream status: not yet submitted
+
 Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
 ===================================================================
 --- Linux-PAM/modules/pam_cracklib/pam_cracklib.c.orig
 +++ Linux-PAM/modules/pam_cracklib/pam_cracklib.c
-@@ -94,7 +94,7 @@
+@@ -54,6 +54,11 @@
+ #include <crack.h>
+ #else
+ extern char *FascistCheck(char *pw, const char *dictpath);
++static const char CRACKLIB_DICTPATH[] = "/usr/share/dict/cracklib_dict"
++#endif
++
++#ifndef CRACKLIB_DICT
++#define CRACKLIB_DICT CRACKLIB_DICTPATH
+ #endif
+ 
+ /* For Translators: "%s%s" could be replaced with "<service> " or "". */
+@@ -94,7 +99,7 @@
  	int oth_credit;
  	int use_authtok;
  	char prompt_type[BUFSIZ];
@@ -11,7 +33,7 @@ Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
  };
  
  #define CO_RETRY_TIMES  1
-@@ -159,14 +159,15 @@
+@@ -159,14 +164,15 @@
  	 } else if (!strncmp(*argv,"use_authtok",11)) {
  		 opt->use_authtok = 1;
  	 } else if (!strncmp(*argv,"dictpath=",9)) {
@@ -19,7 +41,7 @@ Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
 -		     sizeof(opt->cracklib_dictpath) - 1);
 +	     opt->cracklib_dictpath = *argv+9;
 +	     if (!*(opt->cracklib_dictpath)) {
-+		 opt->cracklib_dictpath = CRACKLIB_DICTPATH;
++		 opt->cracklib_dictpath = CRACKLIB_DICT;
 +	     }
  	 } else {
  	     pam_syslog(pamh,LOG_ERR,"pam_parse: unknown option; %s",*argv);
@@ -30,17 +52,17 @@ Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
  
       return ctrl;
  }
-@@ -514,8 +515,7 @@
+@@ -514,8 +520,7 @@
      options.use_authtok = CO_USE_AUTHTOK;
      memset(options.prompt_type, 0, BUFSIZ);
      strcpy(options.prompt_type,"UNIX");
 -    memset(options.cracklib_dictpath, 0,
 -	   sizeof (options.cracklib_dictpath));
-+    options.cracklib_dictpath = CRACKLIB_DICTPATH;
++    options.cracklib_dictpath = CRACKLIB_DICT;
  
      ctrl = _pam_parse(pamh, &options, argc, argv);
  
-@@ -609,7 +609,7 @@
+@@ -609,7 +614,7 @@
              const char *crack_msg;
  
  	    D(("against cracklib"));
