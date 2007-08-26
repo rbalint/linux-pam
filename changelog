@@ -146,6 +146,9 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
     Laurent Bigonville for the hint.  Closes: #439038.
   * Add a watch file for use with uscan; thanks to Laurent Bigonville for
     this patch as well.  Closes: #439040.
+  * Rewrite of 031_pam_include, fixing a memory leak and letting us drop
+    patch 056_no_label_at_end; thanks to Jan Christoph Nordholz
+    <hesso@pool.math.tu-berlin.de> for this much-improved version!
   * New patch no_pthread_mutexes: don't use pthread mutexes in
     pam_modutil functions, they're not needed because pam handles
     themselves should not be used concurrently by multiple threads and
@@ -153,7 +156,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * New patch hurd_no_setfsuid: if we don't have sys/fsuid.h, work around
     using setreuid instead.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 25 Aug 2007 03:49:47 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sat, 25 Aug 2007 22:00:05 -0700
 
 pam (0.79-4) unstable; urgency=medium
 

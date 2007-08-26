@@ -1,75 +1,59 @@
-Index: Linux-PAM/libpam/pam_handlers.c
+Patch to implement an @include directive for use in pam.d config files.
+
+Authors: Jan Christoph Nordholz <hesso@pool.math.tu-berlin.de>
+
+Upstream status: not yet submitted
+
+Index: pam/Linux-PAM/libpam/pam_handlers.c
 ===================================================================
---- Linux-PAM/libpam/pam_handlers.c.orig
-+++ Linux-PAM/libpam/pam_handlers.c
-@@ -114,6 +114,62 @@
+--- pam.orig/Linux-PAM/libpam/pam_handlers.c
++++ pam/Linux-PAM/libpam/pam_handlers.c
+@@ -114,6 +114,11 @@
  		module_type = PAM_T_ACCT;
  	    } else if (!strcasecmp("password", tok)) {
  		module_type = PAM_T_PASS;
 +	    } else if (!strcasecmp("@include", tok)) {
-+		/* include a file here
-+		 * most of the code adapted from _pam_init_handlers */
-+		FILE *inc_f;
-+		int retval;
-+		int drop_f = 1;
-+
-+		tok = _pam_StrTok(NULL, " \n\t", &nexttok);
-+		if (tok == NULL) {
-+			D(("_pam_parse_conf_file: included file name not given"));
-+			pam_syslog(pamh, LOG_ERR,
-+			           "(%s) included file name not given",
-+			           this_service);
-+		} else {
-+			char *filename;
-+			struct stat test_d;
-+
-+			if (!strcmp("/", tok)) {
-+				filename = tok;
-+				drop_f = 0;
-+			} else if ( stat(PAM_CONFIG_D, &test_d) == 0 && S_ISDIR(test_d.st_mode) ) {
-+				D(("searching " PAM_CONFIG_D " for included file"));
-+				filename = malloc(sizeof(PAM_CONFIG_DF)
-+						+strlen(tok));
-+				if (filename == NULL) {
-+					pam_syslog(pamh, LOG_ERR,
-+					           "_pam_parse_conf_file: no memory; service %s",
-+					           this_service);
-+					return PAM_BUF_ERR;
-+				}
-+				sprintf(filename, PAM_CONFIG_DF, tok);
-+			}
-+			D(("opening %s", filename));
-+			inc_f = fopen(filename, "r");
-+	    		if (inc_f != NULL) {
-+				retval = _pam_parse_conf_file(pamh, inc_f, known_service, requested_module_type
-+#ifdef PAM_READ_BOTH_CONFS
-+							      , not_other
-+#endif /* PAM_READ_BOTH_CONFS */
-+					 );
-+				fclose(inc_f);
-+				if (retval != PAM_SUCCESS) {
-+				    pam_syslog(pamh, LOG_ERR,
-+				               "_pam_parse_conf_file: error reading %s",
-+				               filename);
-+				    pam_syslog(pamh, LOG_ERR,
-+				               "_pam_parse_conf_file: [%s]",
-+				               pam_strerror(pamh, retval));
-+				    return retval;
-+				}
-+			}
-+			if (drop_f)
-+				_pam_drop(filename);
-+	    	}
-+		/* skip dealing with the module; and go to the next line */
-+		goto end;
++		pam_include = 1;
++		D(("Following legacy '@include' directive."));
++		module_type = requested_module_type;
++		goto parsing_done;
  	    } else {
  		/* Illegal module type */
  		D(("_pam_init_handlers: bad module type: %s", tok));
-@@ -244,6 +300,7 @@
- 		return PAM_ABORT;
+@@ -178,14 +183,33 @@
+ 		_pam_set_default_control(actions, _PAM_ACTION_BAD);
  	    }
- 	}
-+end:
-     }
  
-     return ( (x < 0) ? PAM_ABORT:PAM_SUCCESS );
++parsing_done:
+ 	    tok = _pam_StrTok(NULL, " \n\t", &nexttok);
+ 	    if (pam_include) {
+-		if (_pam_load_conf_file(pamh, tok, this_service, module_type
++		struct stat include_dir;
++		if (tok[0] == '/') {
++		    if (_pam_load_conf_file(pamh, tok, this_service, module_type
+ #ifdef PAM_READ_BOTH_CONFS
+-					      , !other
++						, !other
+ #endif /* PAM_READ_BOTH_CONFS */
+ 		    ) == PAM_SUCCESS)
+-		    continue;
++			continue;
++		} else if (!stat(PAM_CONFIG_D, &include_dir) && S_ISDIR(include_dir.st_mode)) {
++		    char *include_file;
++		    if (asprintf (&include_file, PAM_CONFIG_DF, tok) < 0) {
++			pam_syslog(pamh, LOG_CRIT, "asprintf failed");
++			return PAM_ABORT;
++		    }
++		    if (_pam_load_conf_file(pamh, include_file, this_service, module_type
++#ifdef PAM_READ_BOTH_CONFS
++						, !other
++#endif /* PAM_READ_BOTH_CONFS */
++		    ) == PAM_SUCCESS) {
++			free(include_file);
++			continue;
++		    }
++		    free(include_file);
++		}
+ 		_pam_set_default_control(actions, _PAM_ACTION_BAD);
+ 		mod_path = NULL;
+ 		must_fail = 1;

@@ -9,7 +9,7 @@
 026_pam_unix_passwd_unknown_user -p0
 027_pam_limits_better_init_allow_explicit_root -p0
 029_pam_limits_capabilities -p0
-031_pam_include -p0
+031_pam_include
 032_pam_limits_EPERM_NOT_FATAL -p0
 036_pam_wheel_getlogin_considered_harmful -p0
 038_support_hurd -p0
@@ -22,7 +22,6 @@ hurd_no_setfsuid -p0
 049_pam_unix_sane_locking -p0
 054_pam_security_abstract_securetty_handling -p0
 055_pam_unix_nullok_secure -p0
-056_no_label_at_end -p0
 057_pam_unix_passwd_OOM_check -p0
 061_pam_issue_double_free -p0
 063_paswd_segv -p0
