@@ -1,0 +1,5 @@
+debian/tmp/etc/pam.conf		etc
+debian/tmp/etc/pam.d/other	etc/pam.d
+debian/tmp/usr/share/pam	usr/share
+debian/tmp/usr/sbin/pam_getenv	usr/sbin
+debian/tmp/usr/share/locale	usr/share

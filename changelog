@@ -89,7 +89,8 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
       tree
     - consequently, drop libpam-doc.dirs as well which is no longer needed
       and no longer accurate
-    - add debian/libpam-doc.install for moving the docs to the right place;
+    - add debian/libpam-doc.install for moving the docs to the right place,
+      and also replace libpam-runtime.files with libpam-runtime.install;
       for the moment this means we're using both dh_movefiles and
       dh_install...
     - libpam0g.docs: install the Debian-PAM-MiniPolicy from here, further
@@ -156,7 +157,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * New patch hurd_no_setfsuid: if we don't have sys/fsuid.h, work around
     using setreuid instead.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 25 Aug 2007 22:00:05 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 26 Aug 2007 01:10:01 -0700
 
 pam (0.79-4) unstable; urgency=medium
 

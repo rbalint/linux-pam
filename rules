@@ -86,7 +86,6 @@ binary-indep: install
 	$(i) $(dl)/other $(d)/tmp/etc/pam.d
 	$(i) $(dl)/common-* $(d)/tmp/usr/share/pam/
 
-	dh_movefiles -i
 	dh_install -i
 
 	dh_installman -i
