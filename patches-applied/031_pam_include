@@ -8,19 +8,18 @@ Index: pam/Linux-PAM/libpam/pam_handlers.c
 ===================================================================
 --- pam.orig/Linux-PAM/libpam/pam_handlers.c
 +++ pam/Linux-PAM/libpam/pam_handlers.c
-@@ -114,6 +114,11 @@
+@@ -114,6 +114,10 @@
  		module_type = PAM_T_ACCT;
  	    } else if (!strcasecmp("password", tok)) {
  		module_type = PAM_T_PASS;
 +	    } else if (!strcasecmp("@include", tok)) {
 +		pam_include = 1;
-+		D(("Following legacy '@include' directive."));
 +		module_type = requested_module_type;
 +		goto parsing_done;
  	    } else {
  		/* Illegal module type */
  		D(("_pam_init_handlers: bad module type: %s", tok));
-@@ -178,14 +183,33 @@
+@@ -178,14 +182,33 @@
  		_pam_set_default_control(actions, _PAM_ACTION_BAD);
  	    }
  
