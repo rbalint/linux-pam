@@ -1,0 +1,28 @@
+Patch for Debian bug #1708
+
+Don't block SIGINT in misc_conv, it's perfectly valid to allow the user
+to interrupt at a prompt if the application hasn't otherwise blocked the
+signal.
+
+Authors: Steve Langasek <vorlon@debian.org>
+
+Upstream status: not yet submitted
+
+Index: pam/Linux-PAM/libpam_misc/misc_conv.c
+===================================================================
+--- pam.orig/Linux-PAM/libpam_misc/misc_conv.c
++++ pam/Linux-PAM/libpam_misc/misc_conv.c
+@@ -150,12 +150,11 @@
+ 	have_term = 1;
+ 
+ 	/*
+-	 * We make a simple attempt to block TTY signals from terminating
++	 * We make a simple attempt to block TTY signals from suspending
+ 	 * the conversation without giving PAM a chance to clean up.
+ 	 */
+ 
+ 	sigemptyset(&nset);
+-	sigaddset(&nset, SIGINT);
+ 	sigaddset(&nset, SIGTSTP);
+ 	(void) sigprocmask(SIG_BLOCK, &nset, &oset);
+ 

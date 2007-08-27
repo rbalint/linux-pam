@@ -30,4 +30,5 @@ hurd_no_setfsuid -p0
 PAM-manpage-section
 no_pthread_mutexes
 limits_wrong_strncpy
+misc_conv_allow_sigint.patch
 autoconf.patch
