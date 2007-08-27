@@ -6,8 +6,11 @@ pam (0.99.7.1-3) UNRELEASED; urgency=low
   * New patch misc_conv_allow_sigint.patch: allow SIGINT to be handled by the
     application, instead of blocking it when misc_conv is in use and
     preventing users from being able to ^C at any PAM prompt.  Closes: #1708.
+  * 024_debian_cracklib_dict_path: default to NULL instead of a specific
+    dictionary path when none is defined for consistency with the new upstream
+    version of cracklib, and define our path in debian/rules.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 27 Aug 2007 00:00:01 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 27 Aug 2007 01:00:06 -0700
 
 pam (0.99.7.1-2) unstable; urgency=low
 
