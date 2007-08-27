@@ -42,7 +42,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix_acct.c.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix_acct.c
-@@ -267,7 +267,9 @@
+@@ -266,7 +266,9 @@
  
  	curdays = time(NULL) / (60 * 60 * 24);
  	D(("today is %d, last change %d", curdays, spent->sp_lstchg));
@@ -53,7 +53,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
  		pam_syslog(pamh, LOG_NOTICE,
  			 "account %s has expired (account expired)",
  			 uname);
-@@ -294,7 +296,9 @@
+@@ -293,7 +295,9 @@
  	if ((curdays - spent->sp_lstchg > spent->sp_max)
  	    && (curdays - spent->sp_lstchg > spent->sp_inact)
  	    && (curdays - spent->sp_lstchg > spent->sp_max + spent->sp_inact)
@@ -64,7 +64,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
  		pam_syslog(pamh, LOG_NOTICE,
  		    "account %s has expired (failed to change password)",
  		    uname);
-@@ -303,7 +307,9 @@
+@@ -302,7 +306,9 @@
  		D(("account expired 2"));
  		return PAM_ACCT_EXPIRED;
  	}
@@ -75,7 +75,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
  		pam_syslog(pamh, LOG_DEBUG,
  			 "expired password for user %s (password aged)",
  			 uname);
-@@ -313,7 +319,9 @@
+@@ -312,7 +318,9 @@
  		return PAM_NEW_AUTHTOK_REQD;
  	}
  	if ((curdays - spent->sp_lstchg > spent->sp_max - spent->sp_warn)
@@ -148,7 +148,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
  
  		++argv;		/* step to next argument */
  	}
-@@ -693,6 +703,8 @@
+@@ -692,6 +702,8 @@
  	    } else if (!p || (*salt == '*')) {
  		retval = PAM_AUTH_ERR;
  	    } else {

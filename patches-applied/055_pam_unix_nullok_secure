@@ -48,7 +48,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
  	return retval;
  }
  
-@@ -693,7 +711,7 @@
+@@ -692,7 +710,7 @@
  	    int salt_len = strlen(salt);
  	    if (!salt_len) {
  		/* the stored password is NULL */
