@@ -1,3 +1,12 @@
+Debian patch to add a new 'nullok_secure' option to pam_unix, which
+accepts users with null passwords only when the applicant is connected
+from a tty listed in /etc/securetty.
+
+Authors: Sam Hartman <hartmans@debian.org>,
+         Steve Langasek <vorlon@debian.org>
+
+Upstream status: not yet submitted
+
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/support.c.orig
@@ -113,3 +122,89 @@ Index: Linux-PAM/modules/pam_unix/Makefile.am
  bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
  bigcrypt_CFLAGS = $(AM_CFLAGS)
  bigcrypt_LDFLAGS = @LIBCRYPT@
+Index: Linux-PAM/modules/pam_unix/README
+===================================================================
+--- Linux-PAM/modules/pam_unix/README.orig
++++ Linux-PAM/modules/pam_unix/README
+@@ -57,7 +57,16 @@
+ 
+     The default action of this module is to not permit the user access to a
+     service if their official password is blank. The nullok argument overrides
+-    this default.
++    this default and allows any user with a blank password to access the
++    service.
++
++nullok_secure
++
++    The default action of this module is to not permit the user access to a
++    service if their official password is blank. The nullok_secure argument
++    overrides this default and allows any user with a blank password to access
++    the service as long as the value of PAM_TTY is set to one of the values
++    found in /etc/securetty.
+ 
+ try_first_pass
+ 
+Index: Linux-PAM/modules/pam_unix/pam_unix.8
+===================================================================
+--- Linux-PAM/modules/pam_unix/pam_unix.8.orig
++++ Linux-PAM/modules/pam_unix/pam_unix.8
+@@ -1,11 +1,11 @@
+ .\"     Title: pam_unix
+ .\"    Author: 
+ .\" Generator: DocBook XSL Stylesheets v1.72.0 <http://docbook.sf.net/>
+-.\"      Date: 08/19/2007
++.\"      Date: 08/27/2007
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"
+-.TH "PAM_UNIX" "8" "08/19/2007" "Linux\-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_UNIX" "8" "08/27/2007" "Linux\-PAM Manual" "Linux\-PAM Manual"
+ .\" disable hyphenation
+ .nh
+ .\" disable justification (adjust text to left margin only)
+@@ -62,7 +62,14 @@
+ .RS 4
+ The default action of this module is to not permit the user access to a service if their official password is blank. The
+ \fBnullok\fR
+-argument overrides this default.
++argument overrides this default and allows any user with a blank password to access the service.
++.RE
++.PP
++\fBnullok_secure\fR
++.RS 4
++The default action of this module is to not permit the user access to a service if their official password is blank. The
++\fBnullok_secure\fR
++argument overrides this default and allows any user with a blank password to access the service as long as the value of PAM_TTY is set to one of the values found in /etc/securetty.
+ .RE
+ .PP
+ \fBtry_first_pass\fR
+Index: Linux-PAM/modules/pam_unix/pam_unix.8.xml
+===================================================================
+--- Linux-PAM/modules/pam_unix/pam_unix.8.xml.orig
++++ Linux-PAM/modules/pam_unix/pam_unix.8.xml
+@@ -135,7 +135,24 @@
+           <para>
+             The default action of this module is to not permit the
+             user access to a service if their official password is blank.
+-            The <option>nullok</option> argument overrides this default.
++            The <option>nullok</option> argument overrides this default
++            and allows any user with a blank password to access the
++            service.
++          </para>
++        </listitem>
++      </varlistentry>
++      <varlistentry>
++        <term>
++          <option>nullok_secure</option>
++        </term>
++        <listitem>
++          <para>
++            The default action of this module is to not permit the
++            user access to a service if their official password is blank.
++            The <option>nullok_secure</option> argument overrides this
++            default and allows any user with a blank password to access
++            the service as long as the value of PAM_TTY is set to one of
++	    the values found in /etc/securetty.
+           </para>
+         </listitem>
+       </varlistentry>
