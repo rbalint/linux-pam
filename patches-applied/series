@@ -29,5 +29,5 @@ hurd_no_setfsuid -p0
 065_pam_unix_cracklib_disable
 PAM-manpage-section
 no_pthread_mutexes
-limits_stupid_strncpy
+limits_wrong_strncpy
 autoconf.patch
