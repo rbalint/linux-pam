@@ -61,18 +61,18 @@ Index: Linux-PAM/modules/pam_unix/support.h
 ===================================================================
 --- Linux-PAM/modules/pam_unix/support.h.orig
 +++ Linux-PAM/modules/pam_unix/support.h
-@@ -88,8 +88,9 @@
+@@ -87,8 +87,9 @@
+ #define UNIX_MAX_PASS_LEN        23	/* Max length for password */
  #define UNIX_MIN_PASS_LEN        24     /* Min length for password */
- #define UNIX_NOOBSCURE_CHECKS    25	/* internal */
- #define UNIX_OBSCURE_CHECKS      26     /* enable obscure checks on passwords */
-+#define UNIX_NULLOK_SECURE       27	/* NULL passwords allowed only on secure ttys */
+ #define UNIX_OBSCURE_CHECKS      25     /* enable obscure checks on passwords */
++#define UNIX_NULLOK_SECURE       26	/* NULL passwords allowed only on secure ttys */
  /* -------------- */
--#define UNIX_CTRLS_              27	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              28	/* number of ctrl arguments defined */
+-#define UNIX_CTRLS_              26	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              27	/* number of ctrl arguments defined */
  
  
  static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
-@@ -106,7 +107,7 @@
+@@ -105,7 +106,7 @@
  /* UNIX_NOT_SET_PASS */    {"not_set_pass",    _ALL_ON_,                 0x40},
  /* UNIX__PRELIM */         {NULL,              _ALL_ON_^(0x180),         0x80},
  /* UNIX__UPDATE */         {NULL,              _ALL_ON_^(0x180),        0x100},
@@ -81,15 +81,15 @@ Index: Linux-PAM/modules/pam_unix/support.h
  /* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
  /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
  /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
-@@ -124,6 +125,7 @@
+@@ -122,6 +123,7 @@
+ /* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,             0x400000},
  /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x800000},
- /* UNIX_NOOBSCURE_CHECKS */{NULL,              _ALL_ON_,            0x1000000},
- /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_^(0x1000000),        0},
+ /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x1000000},
 +/* UNIX_NULLOK_SECURE */   {"nullok_secure",   _ALL_ON_^(0x200),    0x2000000},
  };
  
- #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag | unix_args[UNIX_NOOBSCURE_CHECKS].flag)
-@@ -159,6 +161,9 @@
+ #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
+@@ -157,6 +159,9 @@
  			,const void **pass);
  extern int _unix_shadowed(const struct passwd *pwd);
  
