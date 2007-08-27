@@ -161,21 +161,20 @@ Index: Linux-PAM/modules/pam_unix/support.h
 ===================================================================
 --- Linux-PAM/modules/pam_unix/support.h.orig
 +++ Linux-PAM/modules/pam_unix/support.h
-@@ -84,8 +84,12 @@
+@@ -84,8 +84,11 @@
  #define UNIX_NOREAP              21     /* don't reap child process */
  #define UNIX_BROKEN_SHADOW       22     /* ignore errors reading password aging
  					 * information during acct management */
 +#define UNIX_MAX_PASS_LEN        23	/* Max length for password */
 +#define UNIX_MIN_PASS_LEN        24     /* Min length for password */
-+#define UNIX_NOOBSCURE_CHECKS    25	/* internal */
-+#define UNIX_OBSCURE_CHECKS      26     /* enable obscure checks on passwords */
++#define UNIX_OBSCURE_CHECKS      25     /* enable obscure checks on passwords */
  /* -------------- */
 -#define UNIX_CTRLS_              23	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              27	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              26	/* number of ctrl arguments defined */
  
  
  static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
-@@ -93,32 +97,36 @@
+@@ -93,29 +96,32 @@
  /* symbol                  token name          ctrl mask             ctrl     *
   * ----------------------- ------------------- --------------------- -------- */
  
@@ -227,16 +226,11 @@ Index: Linux-PAM/modules/pam_unix/support.h
 +/* UNIX_BROKEN_SHADOW */   {"broken_shadow",   _ALL_ON_,             0x200000},
 +/* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,             0x400000},
 +/* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x800000},
-+/* UNIX_NOOBSCURE_CHECKS */{NULL,              _ALL_ON_,            0x1000000},
-+/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_^(0x1000000),        0},
++/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x1000000},
  };
  
--#define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-+#define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag | unix_args[UNIX_NOOBSCURE_CHECKS].flag)
- 
- 
- /* use this to free strings. ESPECIALLY password strings */
-@@ -152,4 +160,8 @@
+ #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
+@@ -152,4 +158,8 @@
  extern int _unix_shadowed(const struct passwd *pwd);
  
  extern struct spwd *_unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl, const char *user);
@@ -545,7 +539,7 @@ Index: Linux-PAM/modules/pam_unix/obscure.c
 +		return "Bad: new password is too short";
 +
 +	/* Remaining checks are optional. */
-+	if (on(UNIX_NOOBSCURE_CHECKS,ctrl))
++	if (off(UNIX_OBSCURE_CHECKS,ctrl))
 +		return NULL;
 +
 +	if ((msg = password_check(old, new, pwdp)) != NULL)
