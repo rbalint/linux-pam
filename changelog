@@ -14,8 +14,10 @@ pam (0.99.7.1-3) UNRELEASED; urgency=low
   * Create /etc/security/opasswd on new installs or on upgrades from
     0.99.7.1-2 or below, so that users that enable the remember=<n> option to
     pam_unix aren't left unable to change passwords.  Closes: #95324.
+  * Fix a couple of thinkos in hurd_no_setfsuid, that were preventing the code
+    from compiling on the Hurd still.  Thanks to Michael Banck for the catch.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 27 Aug 2007 02:17:52 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 27 Aug 2007 16:12:05 -0700
 
 pam (0.99.7.1-2) unstable; urgency=low
 

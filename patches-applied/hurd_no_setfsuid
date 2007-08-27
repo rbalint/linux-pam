@@ -22,7 +22,7 @@ Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
  	FILE *fp;
  	int i;
  	uid_t euid;
-+#ifdef HAVE_SYS_FSUID_H
++#ifndef HAVE_SYS_FSUID_H
 +	uid_t uid;
 +#endif
  	/* Check this user's <sense> file. */
@@ -43,7 +43,7 @@ Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
 +		if (setreuid(-1, uid) == -1) {
 +			setreuid(-1, 0);
 +			setreuid(0, -1);
-+			if (setreuid(-1, pwd->pw_uid)
++			if (setreuid(-1, pwd->pw_uid))
 +				return PAM_CRED_INSUFFICIENT;
 +		}
 +	}
@@ -67,7 +67,7 @@ Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
  	int fd, i, debug = 0;
  	int retval = PAM_SUCCESS;
  	uid_t systemuser = 499, targetuser = 0, euid;
-+#ifdef HAVE_SYS_FSUID_H
++#ifndef HAVE_SYS_FSUID_H
 +	uid_t uid;
 +#endif
  
