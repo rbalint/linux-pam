@@ -1,4 +1,4 @@
-pam (0.99.7.1-2) UNRELEASED; urgency=low
+pam (0.99.7.1-2) unstable; urgency=low
 
   * New upstream release; thanks to Roger Leigh and Jan Christoph Nordholz
     for their extensive work in helping to prepare for this update in Debian.
@@ -160,7 +160,7 @@ pam (0.99.7.1-2) UNRELEASED; urgency=low
   * New patch hurd_no_setfsuid: if we don't have sys/fsuid.h, work around
     using setreuid instead.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 26 Aug 2007 01:10:01 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 26 Aug 2007 19:15:09 -0700
 
 pam (0.79-4) unstable; urgency=medium
 
