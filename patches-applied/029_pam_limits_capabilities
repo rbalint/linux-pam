@@ -1,3 +1,12 @@
+Patch for Debian bug #74176
+
+Add support to pam_limits for setting capabilities via limits.conf.
+
+Authors: Topi Miettinen <Topi.Miettinen@nic.fi>,
+         Steve Langasek <vorlon@debian.org>
+
+Upstream status: not yet submitted
+
 Index: Linux-PAM/configure.in
 ===================================================================
 --- Linux-PAM/configure.in.orig
@@ -33,18 +42,17 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  #include <stdio.h>
  #include <unistd.h>
  #include <string.h>
-@@ -76,6 +80,10 @@
+@@ -76,6 +80,9 @@
  			      specific user or to count all logins */
      int priority;	 /* the priority to run user process with */
      char chroot_dir[8092]; /* directory to chroot into */
 +#ifdef HAVE_SYS_CAPABILITY_H
-+    cap_t capabilities; /*capability handle*/
-+    int caps_set;
++    cap_t capabilities; /* capability handle */
 +#endif /* HAVE_SYS_CAPABILITY_H */
      struct user_limits_struct limits[RLIM_NLIMITS];
      char conf_file[BUFSIZ];
      int utmp_after_pam_call;
-@@ -87,6 +95,7 @@
+@@ -87,6 +94,7 @@
  
  #define LIMIT_PRI RLIM_NLIMITS+3
  #define LIMIT_CHROOT RLIM_NLIMITS+4
@@ -52,18 +60,17 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
  
  #define LIMIT_SOFT  1
  #define LIMIT_HARD  2
-@@ -274,6 +283,10 @@
+@@ -274,6 +282,9 @@
      pl->login_limit = -2;
      pl->login_limit_def = LIMITS_DEF_NONE;
  
 +#ifdef HAVE_SYS_CAPABILITY_H
-+    pl->capabilities = cap_init();
-+    pl->caps_set = 0;
++    pl->capabilities = NULL;
 +#endif /* HAVE_SYS_CAPABILITY_H */
      pl->chroot_dir[0] = '\0';
      
      return retval;
-@@ -348,6 +361,10 @@
+@@ -348,6 +359,10 @@
  	limit_item = LIMIT_PRI;
      } else if (strcmp(lim_item, "chroot") == 0) {
  	limit_item = LIMIT_CHROOT;
@@ -74,33 +81,57 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      } else {
          pam_syslog(pamh, LOG_DEBUG, "unknown limit item '%s'", lim_item);
          return;
-@@ -438,6 +455,13 @@
+@@ -438,6 +453,14 @@
  
      if (limit_item == LIMIT_CHROOT)
  	strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir));
 +#ifdef HAVE_SYS_CAPABILITY_H
 +    else if (limit_item == LIMIT_CAPS) {
++	if (pl->capabilities)
++	    cap_free(pl->capabilities);
 +	pl->capabilities = cap_from_text(value_orig);
 +	prctl(PR_SET_KEEPCAPS, 1);
-+	pl->caps_set = 1;
 +    }
 +#endif
      else if ( (limit_item != LIMIT_LOGIN)
  	 && (limit_item != LIMIT_NUMSYSLOGINS)
  	 && (limit_item != LIMIT_PRI) ) {
-@@ -649,6 +673,12 @@
+@@ -649,6 +672,11 @@
  	if (i != 0)
  	    retval = LIMIT_ERR;
      }
 +#ifdef HAVE_SYS_CAPABILITY_H
-+    if (!retval && pl->caps_set) {
++    if (!retval && pl->capabilities != NULL) {
 +	retval = cap_set_proc(pl->capabilities) ? LIMIT_ERR : 0;
-+	cap_free(pl->capabilities);
 +    }
 +#endif /* HAVE_SYS_CAPABILITY_H */
      return retval;
  }
  
+@@ -693,10 +721,14 @@
+     retval = parse_config_file(pamh, pwd->pw_name, ctrl, &pl);
+     if (retval == PAM_IGNORE) {
+ 	D(("the configuration file has an applicable '<domain> -' entry"));
++	if (pl.capabilities)
++	    cap_free(pl.capabilities);
+ 	return PAM_SUCCESS;
+     }
+     if (retval != PAM_SUCCESS) {
+         pam_syslog(pamh, LOG_WARNING, "error parsing the configuration file");
++	if (pl.capabilities)
++	    cap_free(pl.capabilities);
+         return retval;
+     }
+ 
+@@ -704,6 +736,8 @@
+ 	setreuid(pwd->pw_uid, -1);
+     }
+     retval = setup_limits(pamh, pwd->pw_name, pwd->pw_uid, ctrl, &pl);
++    if (pl.capabilities)
++	cap_free(pl.capabilities);
+     if (retval & LOGIN_ERR)
+ 	pam_error(pamh, _("Too many logins for '%s'."), pwd->pw_name);
+     if (retval != LIMITED_OK) {
 Index: Linux-PAM/modules/pam_limits/Makefile.am
 ===================================================================
 --- Linux-PAM/modules/pam_limits/Makefile.am.orig
