@@ -1,8 +1,7 @@
 Patch from Debian bug #76119
-Authors: Igor Khavkine <i_khavki@alcor.concordia.ca>,
-         Steve Langasek <vorlon@debian.org>
+Authors: Igor Khavkine <i_khavki@alcor.concordia.ca>
 
-Upstream status: submitted in <20070823084620.GA3852@dario.dodds.net>
+Upstream status: committed to CVS
 
 Index: Linux-PAM/configure.in
 ===================================================================

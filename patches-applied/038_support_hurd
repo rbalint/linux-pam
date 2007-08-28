@@ -4,7 +4,7 @@ portable to Hurd.
 Authors: Michal 'hramrach' Suchanek" <hramrach_l@centrum.cz>,
          Steve Langasek <vorlon@debian.org>
 
-Upstream status: submitted in <20070823084620.GA3852@dario.dodds.net>
+Upstream status: committed to CVS.
 
 Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 ===================================================================
