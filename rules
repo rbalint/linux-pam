@@ -114,6 +114,7 @@ binary-arch: install
 	rm -f $(d)/libpam-modules/usr/share/man/man5/pam.conf.5
 	rm -f $(d)/libpam-modules/usr/share/man/man5/pam.d.5
 
+	dh_installdebconf -a
 	dh_installdocs -a $(BUILD_TREE)/README
 	dh_installexamples -a
 	find $(d)/libpam0g-dev/usr/share/doc/libpam0g-dev/examples -type f -name 'Makefile*' -print0 | xargs -0 rm -f

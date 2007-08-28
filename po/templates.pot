@@ -1,0 +1,90 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-08-28 06:06-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"This release of Linux-PAM introduces new programming interfaces.  PAM "
+"modules that require these interfaces will not be usable by already-running "
+"services until these services have been restarted."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Please check the list of detected services that need to be restarted and "
+"correct it, if needed. The services names must be identical to the init "
+"script names in /etc/init.d and separated by spaces.  To avoid restarting "
+"any services at this time, use an empty list."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Among the services that need to be restarted for the Linux-PAM upgrade are "
+"the X display managers, gdm, kdm, wdm, and xdm.  If you are performing this "
+"upgrade from within an X session started with one of these display managers, "
+"restarting the service will terminate your X session.  In this case it is "
+"recommended that you remove this service from the list here and restart it "
+"later at your convenience."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Other services that use PAM but cannot be restarted with this script include "
+"xscreensaver, gnome-screensaver, xlockmore, and vlock.  You will not be able "
+"to authenticate to these services until they have been restarted manually."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "${services}"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr ""
