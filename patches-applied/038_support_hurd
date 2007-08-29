@@ -26,7 +26,7 @@ Index: Linux-PAM/modules/pam_rhosts/pam_rhosts_auth.c
 +    int retval = 1;
 +#ifdef HAVE_GETLINE
 +    char *buf=NULL;
-+    int buflen=0;
++    size_t buflen=0;
  
 -    buf[sizeof (buf)-1] = '\0';                 	/* terminate line */
 +    while (getline(&buf,&buflen,hostf) < 0) {
