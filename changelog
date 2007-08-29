@@ -4,6 +4,8 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
     to fix the library skew, only reloaded; special-case this daemon in the
     postinst and remove the mention of it from the debconf template, also
     tightening the language of the debconf template in the process.
+  * Add courier-authdaemon to the list of services that need to be
+    restarted; thanks to Micah Anderson for reporting.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 28 Aug 2007 22:05:11 -0700
 
