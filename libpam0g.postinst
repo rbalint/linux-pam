@@ -135,6 +135,18 @@ then
 			    idl=$(ls /etc/rc${rl}.d/S??${service} 2> /dev/null | head -n 1)
 			fi
 
+			case "$service" in
+			    gdm)
+				echo -n "  $service: reloading..."
+				if $idl reload > /dev/null 2>&1; then
+				    echo "done."
+				else
+				    echo "FAILED! ($?)"
+				    failed="$service $failed"
+				fi
+				continue
+			    ;;
+			esac
 			echo -n "  $service: stopping..."
 			$idl stop > /dev/null 2>&1 || true
 			sleep 1

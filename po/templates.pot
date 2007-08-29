@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-08-28 06:06-0700\n"
+"POT-Creation-Date: 2007-08-28 22:06-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,40 +26,39 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"This release of Linux-PAM introduces new programming interfaces.  PAM "
-"modules that require these interfaces will not be usable by already-running "
-"services until these services have been restarted."
+"Most PAM-using services that are running at the time of upgrade must be "
+"restarted before they can use PAM modules built against this new version of "
+"libpam."
 msgstr ""
 
 #. Type: string
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Please check the list of detected services that need to be restarted and "
-"correct it, if needed. The services names must be identical to the init "
-"script names in /etc/init.d and separated by spaces.  To avoid restarting "
-"any services at this time, use an empty list."
+"Please check the following list of services detected for restart and correct "
+"it if needed. The services are listed by the names of the init scripts in /"
+"etc/init.d and must be separated by spaces.  To avoid restarting any "
+"services at this time, use an empty list."
 msgstr ""
 
 #. Type: string
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Among the services that need to be restarted for the Linux-PAM upgrade are "
-"the X display managers, gdm, kdm, wdm, and xdm.  If you are performing this "
-"upgrade from within an X session started with one of these display managers, "
-"restarting the service will terminate your X session.  In this case it is "
-"recommended that you remove this service from the list here and restart it "
-"later at your convenience."
+"Among the services that require restarting are the display managers kdm, "
+"wdm, and xdm.  If you are upgrading from within an X session started with "
+"one of these display managers, restarting that service will terminate your X "
+"session.  It is recommended that you remove this service from the list here "
+"and restart it later at your convenience."
 msgstr ""
 
 #. Type: string
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Other services that use PAM but cannot be restarted with this script include "
-"xscreensaver, gnome-screensaver, xlockmore, and vlock.  You will not be able "
-"to authenticate to these services until they have been restarted manually."
+"Other services that use PAM but cannot be restarted for you include "
+"xscreensaver, gnome-screensaver, and xlockmore.  You will not be able to "
+"authenticate to these services until you restart them manually."
 msgstr ""
 
 #. Type: error
