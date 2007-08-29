@@ -16,8 +16,10 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
   * getline() returns -1 on EOF, not 0; check this appropriately, to fix
     an infinite loop in pam_rhosts_auth.  Thanks to Stephan Springl
     <springl-rhosts@bfw-online.de> for the fix.  Closes: #440019.
+  * Use ${misc:Depends} for libpam0g, so we get a proper dependency on
+    debconf.
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 29 Aug 2007 03:30:46 -0700
+ -- Steve Langasek <vorlon@debian.org>  Wed, 29 Aug 2007 14:43:59 -0700
 
 pam (0.99.7.1-3) unstable; urgency=low
 

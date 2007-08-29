@@ -15,7 +15,7 @@ Priority: required
 Architecture: any
 Conflicts: libpam0 (<= 0.56-2), libpam
 Replaces: libpam0g-util
-Depends: ${shlibs:Depends}, libpam-runtime
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpam-runtime
 Suggests: libpam-doc
 Description: Pluggable Authentication Modules library
  Contains the C shared library for Linux-PAM, a suite of shared
