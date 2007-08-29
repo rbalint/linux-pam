@@ -29,39 +29,7 @@ Index: Linux-PAM/modules/pam_listfile/pam_listfile.c
  	    } else {
  		free(ifname);
  		pam_syslog(pamh,LOG_ERR, "Unknown option: %s",mybuf);
-@@ -316,7 +318,8 @@
- 	     ifname, citem, citemp, sense);
- #endif
-     if(lstat(ifname,&fileinfo)) {
--	pam_syslog(pamh,LOG_ERR, "Couldn't open %s",ifname);
-+	if (!quiet)
-+	    pam_syslog(pamh,LOG_ERR, "Couldn't open %s",ifname);
- 	free(ifname);
- 	return onerr;
-     }
-@@ -325,16 +328,17 @@
-        || !S_ISREG(fileinfo.st_mode)) {
- 	/* If the file is world writable or is not a
- 	   normal file, return error */
--	pam_syslog(pamh,LOG_ERR,
--		 "%s is either world writable or not a normal file",
--		 ifname);
-+	if (!quiet)
-+	    pam_syslog(pamh,LOG_ERR,
-+	               "%s is either world writable or not a normal file",
-+	               ifname);
- 	free(ifname);
- 	return PAM_AUTH_ERR;
-     }
- 
-     inf = fopen(ifname,"r");
-     if(inf == NULL) { /* Check that we opened it successfully */
--	if (onerr == PAM_SERVICE_ERR) {
-+	if (onerr == PAM_SERVICE_ERR && !quiet) {
- 	    /* Only report if it's an error... */
- 	    pam_syslog(pamh,LOG_ERR,  "Error opening %s", ifname);
- 	}
-@@ -399,8 +403,9 @@
+@@ -399,8 +401,9 @@
  #endif
  	(void) pam_get_item(pamh, PAM_SERVICE, &service);
  	(void) pam_get_user(pamh, &user_name, NULL);
