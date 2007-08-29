@@ -1,0 +1,21 @@
+Index: pam/Linux-PAM/modules/pam_env/pam_env.c
+===================================================================
+--- pam.orig/Linux-PAM/modules/pam_env/pam_env.c
++++ pam/Linux-PAM/modules/pam_env/pam_env.c
+@@ -232,9 +232,14 @@
+ 
+ 	for ( i = 0 ; key[i] != '=' && key[i] != '\0' ; i++ )
+ 	    if (!isalnum(key[i]) && key[i] != '_') {
+-		D(("key is not alpha numeric - '%s', ignoring", key));
+-		continue;
++		pam_syslog(pamh, LOG_ERR,
++		           "non-alphanumeric key '%s' in %s', ignoring",
++		           key, file);
++		break;
+ 	    }
++	/* non-alphanumeric key, ignore this line */
++	if (key[i] != '=' && key[i] != '\0')
++	    continue;
+ 
+ 	/* now we try to be smart about quotes around the value,
+ 	   but not too smart, we can't get all fancy with escaped
