@@ -4,6 +4,7 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
     to fix the library skew, only reloaded; special-case this daemon in the
     postinst and remove the mention of it from the debconf template, also
     tightening the language of the debconf template in the process.
+    Closes:# 440074.
   * Add courier-authdaemon to the list of services that need to be
     restarted; thanks to Micah Anderson for reporting.
   * New patch pam_env_ignore_garbage.patch: fix pam_env to really skip over
