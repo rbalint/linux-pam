@@ -88,7 +88,7 @@ Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
 +			if (setreuid(-1, uid) == -1) {
 +				setreuid(-1, 0);
 +				setreuid(0, -1);
-+				if (setreuid(-1, tpwd->pw_uid)
++				if (setreuid(-1, tpwd->pw_uid))
 +					return PAM_CRED_INSUFFICIENT;
 +			}
 +		}

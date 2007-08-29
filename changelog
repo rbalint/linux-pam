@@ -9,8 +9,10 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
   * New patch pam_env_ignore_garbage.patch: fix pam_env to really skip over
     garbage lines in /etc/environment and log an error, instead of failing
     with an obscure error.  Closes: #439984.
+  * Yet another thinko in hurd_no_setfsuid; really should make this code
+    Hurd-safe at last...
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 29 Aug 2007 02:50:36 -0700
+ -- Steve Langasek <vorlon@debian.org>  Wed, 29 Aug 2007 03:03:31 -0700
 
 pam (0.99.7.1-3) unstable; urgency=low
 
