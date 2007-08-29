@@ -12,8 +12,11 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
   * Yet another thinko in hurd_no_setfsuid and in
     029_pam_limits_capabilities; this code should really be Hurd-safe at
     last...
+  * getline() returns -1 on EOF, not 0; check this appropriately, to fix
+    an infinite loop in pam_rhosts_auth.  Thanks to Stephan Springl
+    <springl-rhosts@bfw-online.de> for the fix.  Closes: #440019.
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 29 Aug 2007 03:03:31 -0700
+ -- Steve Langasek <vorlon@debian.org>  Wed, 29 Aug 2007 03:30:46 -0700
 
 pam (0.99.7.1-3) unstable; urgency=low
 
