@@ -108,27 +108,33 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      return retval;
  }
  
-@@ -693,10 +721,14 @@
+@@ -693,10 +721,18 @@
      retval = parse_config_file(pamh, pwd->pw_name, ctrl, &pl);
      if (retval == PAM_IGNORE) {
  	D(("the configuration file has an applicable '<domain> -' entry"));
++#ifdef HAVE_SYS_CAPABILITY_H
 +	if (pl.capabilities)
 +	    cap_free(pl.capabilities);
++#endif
  	return PAM_SUCCESS;
      }
      if (retval != PAM_SUCCESS) {
          pam_syslog(pamh, LOG_WARNING, "error parsing the configuration file");
++#ifdef HAVE_SYS_CAPABILITY_H
 +	if (pl.capabilities)
 +	    cap_free(pl.capabilities);
++#endif
          return retval;
      }
  
-@@ -704,6 +736,8 @@
+@@ -704,6 +740,10 @@
  	setreuid(pwd->pw_uid, -1);
      }
      retval = setup_limits(pamh, pwd->pw_name, pwd->pw_uid, ctrl, &pl);
++#ifdef HAVE_SYS_CAPABILITY_H
 +    if (pl.capabilities)
 +	cap_free(pl.capabilities);
++#endif
      if (retval & LOGIN_ERR)
  	pam_error(pamh, _("Too many logins for '%s'."), pwd->pw_name);
      if (retval != LIMITED_OK) {
