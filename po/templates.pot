@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-08-28 22:06-0700\n"
+"POT-Creation-Date: 2007-08-29 16:06-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,19 +26,10 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Most PAM-using services that are running at the time of upgrade must be "
-"restarted before they can use PAM modules built against this new version of "
-"libpam."
-msgstr ""
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
-"Please check the following list of services detected for restart and correct "
-"it if needed. The services are listed by the names of the init scripts in /"
-"etc/init.d and must be separated by spaces.  To avoid restarting any "
-"services at this time, use an empty list."
+"Most services that use Pluggable Authentication Modules need to be restarted "
+"to use modules built for this new version of libpam.  Please review the "
+"following space-separated list of init.d scripts for services to be "
+"restarted, and correct it if needed."
 msgstr ""
 
 #. Type: string
@@ -56,9 +47,9 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Other services that use PAM but cannot be restarted for you include "
-"xscreensaver, gnome-screensaver, and xlockmore.  You will not be able to "
-"authenticate to these services until you restart them manually."
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
 msgstr ""
 
 #. Type: error
@@ -72,12 +63,6 @@ msgstr ""
 #: ../libpam0g.templates:2001
 msgid ""
 "The following services could not be restarted for the PAM library upgrade:"
-msgstr ""
-
-#. Type: error
-#. Description
-#: ../libpam0g.templates:2001
-msgid "${services}"
 msgstr ""
 
 #. Type: error

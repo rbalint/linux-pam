@@ -1,14 +1,10 @@
 Template: libpam0g/restart-services
 Type: string
 _Description: Services to restart for PAM library upgrade:
- Most PAM-using services that are running at the time of upgrade must be
- restarted before they can use PAM modules built against this new version
- of libpam.
- .
- Please check the following list of services detected for restart and
- correct it if needed. The services are listed by the names of the init
- scripts in /etc/init.d and must be separated by spaces.  To avoid
- restarting any services at this time, use an empty list.
+ Most services that use Pluggable Authentication Modules need to be
+ restarted to use modules built for this new version of libpam.  Please
+ review the following space-separated list of init.d scripts for services
+ to be restarted, and correct it if needed.
  .
  Among the services that require restarting are the display managers kdm,
  wdm, and xdm.  If you are upgrading from within an X session started with
@@ -16,12 +12,13 @@ _Description: Services to restart for PAM library upgrade:
  X session.  It is recommended that you remove this service from the
  list here and restart it later at your convenience.
  .
- Other services that use PAM but cannot be restarted for you include
- xscreensaver, gnome-screensaver, and xlockmore.  You will not be able to
- authenticate to these services until you restart them manually.
+ Some other services such as xscreensaver, gnome-screensaver, and xlockmore
+ cannot be restarted for you.  You will not be able to authenticate to these
+ services until you restart them manually.
 
 Template: libpam0g/restart-failed
 Type: error
+#flag:translate!:3
 _Description: Failure restarting some services for PAM upgrade
  The following services could not be restarted for the PAM library upgrade:
  .
