@@ -17,8 +17,8 @@ Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
  extern char *FascistCheck(char *pw, const char *dictpath);
  #endif
  
-+#ifndef CRACKLIB_DICT
-+#define CRACKLIB_DICT NULL
++#ifndef CRACKLIB_DICTS
++#define CRACKLIB_DICTS NULL
 +#endif
 +
  /* For Translators: "%s%s" could be replaced with "<service> " or "". */
@@ -41,7 +41,7 @@ Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
 -		     sizeof(opt->cracklib_dictpath) - 1);
 +	     opt->cracklib_dictpath = *argv+9;
 +	     if (!*(opt->cracklib_dictpath)) {
-+		 opt->cracklib_dictpath = CRACKLIB_DICT;
++		 opt->cracklib_dictpath = CRACKLIB_DICTS;
 +	     }
  	 } else {
  	     pam_syslog(pamh,LOG_ERR,"pam_parse: unknown option; %s",*argv);
@@ -58,7 +58,7 @@ Index: Linux-PAM/modules/pam_cracklib/pam_cracklib.c
      strcpy(options.prompt_type,"UNIX");
 -    memset(options.cracklib_dictpath, 0,
 -	   sizeof (options.cracklib_dictpath));
-+    options.cracklib_dictpath = CRACKLIB_DICT;
++    options.cracklib_dictpath = CRACKLIB_DICTS;
  
      ctrl = _pam_parse(pamh, &options, argc, argv);
  
