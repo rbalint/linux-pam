@@ -6,7 +6,7 @@ signal.
 
 Authors: Steve Langasek <vorlon@debian.org>
 
-Upstream status: not yet submitted
+Upstream status: submitted in <20070827073042.GA6388@dario.dodds.net>
 
 Index: pam/Linux-PAM/libpam_misc/misc_conv.c
 ===================================================================
