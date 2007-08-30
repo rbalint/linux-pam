@@ -27,8 +27,9 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
     original bugfix.
   * Drop patch 064_pam_unix_cracklib_dictpath, which is not needed now that
     we define CRACKLIB_DICTS in debian/rules.
+  * Drop patch 063_paswd_segv, superseded by a different upstream fix
 
- -- Steve Langasek <vorlon@debian.org>  Thu, 30 Aug 2007 00:42:25 -0700
+ -- Steve Langasek <vorlon@debian.org>  Thu, 30 Aug 2007 01:23:29 -0700
 
 pam (0.99.7.1-3) unstable; urgency=low
 
