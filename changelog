@@ -28,6 +28,8 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
   * Drop patch 064_pam_unix_cracklib_dictpath, which is not needed now that
     we define CRACKLIB_DICTS in debian/rules.
   * Drop patch 063_paswd_segv, superseded by a different upstream fix
+  * Split 047_pam_limits_chroot_string_value up between
+    008_modules_pam_limits_chroot and 029_pam_limits_capabilites
 
  -- Steve Langasek <vorlon@debian.org>  Thu, 30 Aug 2007 01:23:29 -0700
 

@@ -81,6 +81,15 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
      } else {
          pam_syslog(pamh, LOG_DEBUG, "unknown limit item '%s'", lim_item);
          return;
+@@ -387,7 +402,7 @@
+ 				   lim_value, lim_type);
+ 			return;
+ 		}
+-	} else if (limit_item != LIMIT_CHROOT) {
++	} else if (limit_item != LIMIT_CHROOT && limit_item != LIMIT_CAPS) {
+ #ifdef __USE_FILE_OFFSET64
+ 		rlimit_value = strtoull (lim_value, &endptr, 10);
+ #else
 @@ -438,6 +453,14 @@
  
      if (limit_item == LIMIT_CHROOT)

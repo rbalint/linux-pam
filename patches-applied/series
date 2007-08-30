@@ -18,7 +18,6 @@ hurd_no_setfsuid -p0
 043_pam_unix_unknown_user_not_alert -p0
 045_pam_dispatch_jump_is_ignore -p0
 046_pam_group_example -p0
-047_pam_limits_chroot_string_value -p0
 049_pam_unix_sane_locking -p0
 054_pam_security_abstract_securetty_handling -p0
 055_pam_unix_nullok_secure -p0
