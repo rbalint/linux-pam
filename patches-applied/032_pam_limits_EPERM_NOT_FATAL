@@ -3,6 +3,10 @@ increase the number  of open files too much.  This is not something we
 want to consider fatal.     This also happens if you use non-root and
 try to decrease a limit.  Running PAM as non-root is not so great.
 
+Authors: ?
+
+Upstream status: submitted in <20070830171918.GB30563@dario.dodds.net>
+
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig

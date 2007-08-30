@@ -1,3 +1,12 @@
+Patch for Debian bug #180310
+
+Generate some (low-severity) log information whenever setrlimit() fails,
+for debugging purposes.
+
+Authors: Sam Hartman <hartmans@debian.org>
+
+Upstream status: submitted in <20070830171918.GB30563@dario.dodds.net>
+
 Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
