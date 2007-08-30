@@ -1,34 +1,7 @@
   * Add support for credential reinitialization in pam_group, closes: #108697
-  * Only log unknown user at warning, not alert, closes: #95220
   * By default do complete matches not substring matches for pam_time.
     You can include explicit wildcard for substring, closes: #66152 
 
-Index: Linux-PAM/modules/pam_unix/support.c
-===================================================================
---- Linux-PAM/modules/pam_unix/support.c.orig
-+++ Linux-PAM/modules/pam_unix/support.c
-@@ -675,7 +675,7 @@
- 			if (on(UNIX_AUDIT, ctrl)) {
- 				/* this might be a typo and the user has given a password
- 				   instead of a username. Careful with this. */
--				pam_syslog(pamh, LOG_ALERT,
-+				pam_syslog(pamh, LOG_WARNING,
- 				         "check pass; user (%s) unknown", name);
- 			} else {
- 				name = NULL;
-Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
-===================================================================
---- Linux-PAM/modules/pam_unix/unix_chkpwd.c.orig
-+++ Linux-PAM/modules/pam_unix/unix_chkpwd.c
-@@ -179,7 +179,7 @@
- 		}
- 	}
- 	if (pwd == NULL || salt == NULL) {
--		_log_err(LOG_ALERT, "check pass; user unknown");
-+		_log_err(LOG_WARNING, "check pass; user unknown");
- 		p = NULL;
- 		return PAM_USER_UNKNOWN;
- 	}
 Index: Linux-PAM/modules/pam_time/pam_time.c
 ===================================================================
 --- Linux-PAM/modules/pam_time/pam_time.c.orig

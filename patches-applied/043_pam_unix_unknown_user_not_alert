@@ -1,8 +1,23 @@
+Patch for Debian bugs #95220, #175900
+
+A wrong username doesn't need to be logged as an 'alert', a 'warning'
+should be sufficient.
+
+Authors: Sam Hartman <hartmans@debian.org>
+
+Upstream status: submitted in <20070830094545.GA17457@dario.dodds.net>
+
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/support.c.orig
 +++ Linux-PAM/modules/pam_unix/support.c
-@@ -680,7 +680,7 @@
+@@ -675,12 +675,12 @@
+ 			if (on(UNIX_AUDIT, ctrl)) {
+ 				/* this might be a typo and the user has given a password
+ 				   instead of a username. Careful with this. */
+-				pam_syslog(pamh, LOG_ALERT,
++				pam_syslog(pamh, LOG_WARNING,
+ 				         "check pass; user (%s) unknown", name);
  			} else {
  				name = NULL;
  				if (on(UNIX_DEBUG, ctrl) || pwd == NULL) {
@@ -11,3 +26,16 @@ Index: Linux-PAM/modules/pam_unix/support.c
  				            "check pass; user unknown");
  				} else {
  				    /* don't log failure as another pam module can succeed */
+Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
+===================================================================
+--- Linux-PAM/modules/pam_unix/unix_chkpwd.c.orig
++++ Linux-PAM/modules/pam_unix/unix_chkpwd.c
+@@ -179,7 +179,7 @@
+ 		}
+ 	}
+ 	if (pwd == NULL || salt == NULL) {
+-		_log_err(LOG_ALERT, "check pass; user unknown");
++		_log_err(LOG_WARNING, "check pass; user unknown");
+ 		p = NULL;
+ 		return PAM_USER_UNKNOWN;
+ 	}
