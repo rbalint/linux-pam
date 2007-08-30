@@ -1,3 +1,11 @@
+Patch for Debian bug #360657
+
+Fix a segfault when the user presses ^D at a password prompt
+
+Authors: Dann Frazier <dannf@debian.org>
+
+Upstream status: not yet submitted
+
 Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
