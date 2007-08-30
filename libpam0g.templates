@@ -9,8 +9,8 @@ _Description: Services to restart for PAM library upgrade:
  Among the services that require restarting are the display managers kdm,
  wdm, and xdm.  If you are upgrading from within an X session started with
  one of these display managers, restarting that service will terminate your
- X session.  It is recommended that you remove this service from the
- list here and restart it later at your convenience.
+ X session.  It is recommended that you remove that service from the list
+ here and restart it later at your convenience.
  .
  Some other services such as xscreensaver, gnome-screensaver, and xlockmore
  cannot be restarted for you.  You will not be able to authenticate to these
