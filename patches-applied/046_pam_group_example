@@ -5,7 +5,7 @@ potential security hole.
 
 Authors: Peter Cordes <peter@llama.nslug.ns.ca>
 
-Upstream status: not yet submitted
+Upstream status: submitted in <20070830085503.GA15842@dario.dodds.net>
 
 Index: Linux-PAM/modules/pam_group/group.conf
 ===================================================================
