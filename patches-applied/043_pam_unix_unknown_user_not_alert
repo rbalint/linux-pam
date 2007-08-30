@@ -5,7 +5,7 @@ should be sufficient.
 
 Authors: Sam Hartman <hartmans@debian.org>
 
-Upstream status: submitted in <20070830094545.GA17457@dario.dodds.net>
+Upstream status: committed to CVS
 
 Index: Linux-PAM/modules/pam_unix/support.c
 ===================================================================
