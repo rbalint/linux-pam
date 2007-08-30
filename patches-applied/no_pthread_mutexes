@@ -3,7 +3,7 @@ problems on non-Linux platforms.
 
 Authors: Steve Langasek <vorlon@debian.org>
 
-Upstream status: submitted in <20070825115252.GD23503@dario.dodds.net>
+Upstream status: committed to CVS
 
 Index: pam/Linux-PAM/libpam/pam_modutil_getgrgid.c
 ===================================================================
