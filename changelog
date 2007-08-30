@@ -9,7 +9,9 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
     restarted; thanks to Micah Anderson for reporting.
   * New patch pam_env_ignore_garbage.patch: fix pam_env to really skip over
     garbage lines in /etc/environment and log an error, instead of failing
-    with an obscure error.  Closes: #439984.
+    with an obscure error; and ignore any PAM_BAD_ITEM values returned
+    by pam_putenv(), since this is the expected error return when trying
+    to delete a non-existent var.  Closes: #439984.
   * Yet another thinko in hurd_no_setfsuid and in
     029_pam_limits_capabilities; this code should really be Hurd-safe at
     last...
