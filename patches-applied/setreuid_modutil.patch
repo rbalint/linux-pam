@@ -1,0 +1,331 @@
+Refactor uid-handling code into pam_modutil so it can be shared between
+modules
+
+Authors: Steve Langasek <vorlon@debian.org>
+
+Upstream status: submitted in <20070825010039.GA13568@dario.dodds.net>
+
+Index: Linux-PAM/libpam/Makefile.am
+===================================================================
+--- Linux-PAM/libpam/Makefile.am.orig
++++ Linux-PAM/libpam/Makefile.am
+@@ -39,4 +39,5 @@
+ 	pam_vprompt.c pam_syslog.c pam_dynamic.c pam_audit.c \
+ 	pam_modutil_cleanup.c pam_modutil_getpwnam.c pam_modutil_ioloop.c \
+ 	pam_modutil_getgrgid.c pam_modutil_getpwuid.c pam_modutil_getgrnam.c \
+-	pam_modutil_getspnam.c pam_modutil_getlogin.c  pam_modutil_ingroup.c
++	pam_modutil_getspnam.c pam_modutil_getlogin.c pam_modutil_ingroup.c \
++	pam_modutil_setreuid.c
+Index: Linux-PAM/libpam/include/security/pam_modutil.h
+===================================================================
+--- Linux-PAM/libpam/include/security/pam_modutil.h.orig
++++ Linux-PAM/libpam/include/security/pam_modutil.h
+@@ -97,6 +97,12 @@
+ extern int
+ pam_modutil_write(int fd, const char *buffer, int count);
+ 
++extern int PAM_NONNULL((1,2))
++pam_modutil_set_euid(uid_t *uid, uid_t *euid);
++
++extern int
++pam_modutil_restore_reuid(uid_t uid, uid_t euid);
++
+ #ifdef __cplusplus
+ }
+ #endif
+Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
+===================================================================
+--- Linux-PAM/modules/pam_unix/pam_unix_acct.c.orig
++++ Linux-PAM/modules/pam_unix/pam_unix_acct.c
+@@ -225,27 +225,12 @@
+ 	if (!strcmp( pwent->pw_passwd, "*NP*" )) { /* NIS+ */
+ 		uid_t save_euid, save_uid;
+ 
+-		save_euid = geteuid();
+-		save_uid = getuid();
+-		if (save_uid == pwent->pw_uid)
+-			setreuid( save_euid, save_uid );
+-		else  {
+-			setreuid( 0, -1 );
+-			if (setreuid( -1, pwent->pw_uid ) == -1) {
+-				setreuid( -1, 0 );
+-				setreuid( 0, -1 );
+-				if(setreuid( -1, pwent->pw_uid ) == -1)
+-					return PAM_CRED_INSUFFICIENT;
+-			}
+-		}
++		save_euid = pwent->pw_uid;
++		retval = pam_modutil_set_euid(&save_uid,&save_euid);
++		if (retval != PAM_SUCCESS)
++			return retval;
+ 		spent = pam_modutil_getspnam (pamh, uname);
+-		if (save_uid == pwent->pw_uid)
+-			setreuid( save_uid, save_euid );
+-		else {
+-			if (setreuid( -1, 0 ) == -1)
+-			setreuid( save_uid, -1 );
+-			setreuid( -1, save_euid );
+-		}
++		pam_modutil_restore_reuid(save_uid,save_euid);
+ 
+ 	} else if (_unix_shadowed (pwent))
+ 		spent = pam_modutil_getspnam (pamh, uname);
+Index: Linux-PAM/modules/pam_unix/support.c
+===================================================================
+--- Linux-PAM/modules/pam_unix/support.c.orig
++++ Linux-PAM/modules/pam_unix/support.c
+@@ -429,29 +429,12 @@
+ 		{ /* NIS+ */
+ 			uid_t save_euid, save_uid;
+ 
+-			save_euid = geteuid();
+-			save_uid = getuid();
+-			if (save_uid == pwd->pw_uid)
+-				setreuid( save_euid, save_uid );
+-			else  {
+-				setreuid( 0, -1 );
+-				if (setreuid( -1, pwd->pw_uid ) == -1) {
+-					setreuid( -1, 0 );
+-					setreuid( 0, -1 );
+-					if(setreuid( -1, pwd->pw_uid ) == -1)
++			save_euid = pwd->pw_uid;
++			if (pam_modutil_set_euid(&save_uid,&save_euid) != PAM_SUCCESS)
+ 						/* Will fail elsewhere. */
+ 						return 0;
+-				}
+-			}
+-
+ 			spwdent = pam_modutil_getspnam (pamh, name);
+-			if (save_uid == pwd->pw_uid)
+-				setreuid( save_uid, save_euid );
+-			else {
+-				if (setreuid( -1, 0 ) == -1)
+-					setreuid( save_uid, -1 );
+-				setreuid( -1, save_euid );
+-			}
++			pam_modutil_restore_reuid(save_uid,save_euid);
+ 		} else if (_unix_shadowed(pwd)) {
+ 			/*
+ 			 * ...and shadow password file entry for this user,
+@@ -633,28 +616,11 @@
+ 		{ /* NIS+ */
+ 			uid_t save_euid, save_uid;
+ 
+-			save_euid = geteuid();
+-			save_uid = getuid();
+-			if (save_uid == pwd->pw_uid)
+-				setreuid( save_euid, save_uid );
+-			else  {
+-				setreuid( 0, -1 );
+-				if (setreuid( -1, pwd->pw_uid ) == -1) {
+-					setreuid( -1, 0 );
+-					setreuid( 0, -1 );
+-					if(setreuid( -1, pwd->pw_uid ) == -1)
++			save_euid = pwd->pw_uid;
++			if (pam_modutil_set_euid(&save_uid,&save_euid) != PAM_SUCCESS)
+ 						return PAM_CRED_INSUFFICIENT;
+-				}
+-			}
+-
+ 			spwdent = pam_modutil_getspnam (pamh, name);
+-			if (save_uid == pwd->pw_uid)
+-				setreuid( save_uid, save_euid );
+-			else {
+-				if (setreuid( -1, 0 ) == -1)
+-				setreuid( save_uid, -1 );
+-				setreuid( -1, save_euid );
+-			}
++			pam_modutil_restore_reuid(save_uid,save_euid);
+ 		} else if (_unix_shadowed(pwd)) {
+ 			/*
+ 			 * ...and shadow password file entry for this user,
+Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
+===================================================================
+--- Linux-PAM/modules/pam_xauth/pam_xauth.c.orig
++++ Linux-PAM/modules/pam_xauth/pam_xauth.c
+@@ -35,7 +35,9 @@
+ 
+ #include "config.h"
+ #include <sys/types.h>
++#ifdef HAVE_SYS_FSUID_H
+ #include <sys/fsuid.h>
++#endif /* HAVE_SYS_FSUID_H */
+ #include <sys/wait.h>
+ #include <errno.h>
+ #include <fnmatch.h>
+@@ -210,6 +212,9 @@
+ 	FILE *fp;
+ 	int i;
+ 	uid_t euid;
++#ifdef HAVE_SYS_FSUID_H
++	uid_t uid;
++#endif
+ 	/* Check this user's <sense> file. */
+ 	pwd = pam_modutil_getpwnam(pamh, this_user);
+ 	if (pwd == NULL) {
+@@ -225,10 +230,20 @@
+ 			   "name of user's home directory is too long");
+ 		return PAM_SESSION_ERR;
+ 	}
++#ifdef HAVE_SYS_FSUID_H
+ 	euid = geteuid();
+ 	setfsuid(pwd->pw_uid);
++#else
++	euid = pwd->pw_uid;
++	if (pam_modutil_set_euid(&uid,&euid) != PAM_SUCCESS)
++		return PAM_SESSION_ERR;
++#endif
+ 	fp = fopen(path, "r");
++#ifdef HAVE_SYS_FSUID_H
+ 	setfsuid(euid);
++#else
++	pam_modutil_restore_reuid(uid,euid);
++#endif
+ 	if (fp != NULL) {
+ 		char buf[LINE_MAX], *tmp;
+ 		/* Scan the file for a list of specs of users to "trust". */
+@@ -297,6 +312,9 @@
+ 	int fd, i, debug = 0;
+ 	int retval = PAM_SUCCESS;
+ 	uid_t systemuser = 499, targetuser = 0, euid;
++#ifdef HAVE_SYS_FSUID_H
++	uid_t uid;
++#endif
+ 
+ 	/* Parse arguments.  We don't understand many, so no sense in breaking
+ 	 * this into a separate function. */
+@@ -540,10 +558,22 @@
+ 		}
+ 
+ 		/* Generate a new file to hold the data. */
++#ifdef HAVE_SYS_FSUID_H
+ 		euid = geteuid();
+ 		setfsuid(tpwd->pw_uid);
++#else
++		euid = tpwd->pw_uid;
++		if (pam_modutil_set_euid(&uid,&euid) != PAM_SUCCESS) {
++			retval = PAM_SESSION_ERR;
++			goto cleanup;
++		}
++#endif
+ 		fd = mkstemp(xauthority + strlen(XAUTHENV) + 1);
++#ifdef HAVE_SYS_FSUID_H
+ 		setfsuid(euid);
++#else
++		pam_modutil_restore_reuid(uid,euid);
++#endif
+ 		if (fd == -1) {
+ 			pam_syslog(pamh, LOG_ERR,
+ 				   "error creating temporary file `%s': %m",
+Index: Linux-PAM/libpam/pam_modutil_setreuid.c
+===================================================================
+--- /dev/null
++++ Linux-PAM/libpam/pam_modutil_setreuid.c
+@@ -0,0 +1,96 @@
++/*
++ * $Id$
++ *
++ * These functions provide a wrapper for changing the effective uid of a
++ * process in a fashion that's reliably reversible, using only the POSIX
++ * setreuid() call.
++ * 
++ * On Linux, this would be more reliable in certain corner cases if we
++ * used setresuid(); but setresuid isn't compatible with non-Linux
++ * systems or with the throbbing pain that surfaces behind my left eye
++ * when I think about this code, so leave these corner cases unhandled
++ * and require the calling application to not do outlandish things with
++ * the save set-user-id.
++ *
++ */
++
++#include "pam_modutil_private.h"
++
++#include <unistd.h>
++#include <sys/types.h>
++
++int
++pam_modutil_set_euid(uid_t *uid, uid_t *euid)
++{
++	uid_t save_uid, save_euid;
++
++	save_uid = getuid();
++	save_euid = geteuid();
++
++	if (*euid == save_euid) {
++		*uid = save_uid;
++		return PAM_SUCCESS;
++	}
++
++	if (*euid == save_uid)
++		/*
++		 * simple swap; if saved set-user-id is 0 and both the
++		 * uid and euid are !0, this will drop the root saved
++		 * set-user-id, so don't invoke PAM that way!
++		 */
++		setreuid(save_euid, save_uid);
++	else {
++		/*
++		 * make sure we save root privs somewhere if we're
++		 * suid
++		 */
++		setreuid(0,-1);
++		/*
++		 * If this fails, we're not running suid root and we don't
++		 * have a saved set-user-id matching the target euid; but
++		 * we could still have a saved set-user-id of 0 that will
++		 * let us continue.
++		 */
++		if (setreuid(-1, *euid) == -1) {
++			/* works IFF the saved set-user-id is 0 */
++			setreuid(-1, 0);
++			setreuid(0, -1);
++			/* also changes the saved set-user-id on success */
++			if (setreuid(-1, *euid))
++				/* so nothing worked, no rollback needed */
++				return PAM_CRED_INSUFFICIENT;
++		}
++	}
++	*uid = save_uid;
++	*euid = save_euid;
++	return PAM_SUCCESS;
++}
++
++int
++pam_modutil_restore_reuid(uid_t uid, uid_t euid)
++{
++	/* no-op */
++	if (uid == getuid() && euid == geteuid())
++		return PAM_SUCCESS;
++
++	/* only true if this was a swap in the first place */
++	if (uid == geteuid())
++		/*
++		 * simple swap again; saved set-user-id now equals the euid,
++		 * whether we wanted that or not
++		 */
++		setreuid(uid, euid);
++	else {
++		/*
++		 * succeeds if the real uid is 0; otherwise we can't
++		 * reach this point unless the uid and euid are both
++		 * non-zero and different, in which case the saved
++		 * set-user-id will be equal to the euid and this will
++		 * fail.
++		 */
++		setreuid(-1,0);
++		setreuid(uid,-1);
++		setreuid(-1,euid);
++	}
++	return PAM_SUCCESS;
++}
+Index: Linux-PAM/libpam/libpam.map
+===================================================================
+--- Linux-PAM/libpam/libpam.map.orig
++++ Linux-PAM/libpam/libpam.map
+@@ -44,4 +44,6 @@
+     pam_modutil_getlogin;
+     pam_modutil_read;
+     pam_modutil_write;
++    pam_modutil_set_euid;
++    pam_modutil_restore_reuid;
+ };
