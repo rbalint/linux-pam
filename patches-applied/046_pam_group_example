@@ -1,13 +1,18 @@
+Patch for Debian bug #197080
+
+Don't use the 'games' group as an example in group.conf, this is a
+potential security hole.
+
+Authors: Peter Cordes <peter@llama.nslug.ns.ca>
+
+Upstream status: not yet submitted
+
 Index: Linux-PAM/modules/pam_group/group.conf
 ===================================================================
 --- Linux-PAM/modules/pam_group/group.conf.orig
 +++ Linux-PAM/modules/pam_group/group.conf
-@@ -84,16 +84,17 @@
+@@ -88,10 +88,11 @@
  #
- 
- #xsh;tty*&!ttyp*;us;Al0000-2400;floppy
--
--#
  # another example: running 'xsh' on tty* (any ttyXXX device),
  # the user 'sword' is given access to games (through membership of
 -# the floppy group) after work hours
@@ -19,8 +24,4 @@ Index: Linux-PAM/modules/pam_group/group.conf
 +#xsh; tty* ;sword;!Wk0900-1800;sound, play
  #xsh; tty* ;*;Al0900-1800;floppy
  
-+
-+
- #
- # End of group.conf file
  #
