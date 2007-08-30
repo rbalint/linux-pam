@@ -1,10 +1,10 @@
 Template: libpam0g/restart-services
 Type: string
 _Description: Services to restart for PAM library upgrade:
- Most services that use Pluggable Authentication Modules need to be
- restarted to use modules built for this new version of libpam.  Please
- review the following space-separated list of init.d scripts for services
- to be restarted now, and correct it if needed.
+ Most services that use PAM need to be restarted to use modules built for
+ this new version of libpam.  Please review the following space-separated
+ list of init.d scripts for services to be restarted now, and correct it
+ if needed.
  .
  Among the services that require restarting are the display managers kdm,
  wdm, and xdm.  If you are upgrading from within an X session started with
