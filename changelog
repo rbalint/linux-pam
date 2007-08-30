@@ -23,8 +23,10 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
   * 019_pam_listfile_quiet: per discussion with upstream, don't suppress
     errors about missing files or files with wrong permissions; these are
     real errors that should not be buried.
+  * Drop the remainder of 061_pam_issue_double_free, not required for the
+    original bugfix.
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 29 Aug 2007 15:13:27 -0700
+ -- Steve Langasek <vorlon@debian.org>  Thu, 30 Aug 2007 00:05:38 -0700
 
 pam (0.99.7.1-3) unstable; urgency=low
 

@@ -23,7 +23,6 @@ hurd_no_setfsuid -p0
 054_pam_security_abstract_securetty_handling -p0
 055_pam_unix_nullok_secure -p0
 057_pam_unix_passwd_OOM_check -p0
-061_pam_issue_double_free -p0
 063_paswd_segv -p0
 064_pam_unix_cracklib_dictpath
 065_pam_unix_cracklib_disable
