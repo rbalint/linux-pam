@@ -94,8 +94,8 @@ Index: Linux-PAM/modules/pam_unix/support.c
  #define SELINUX_ENABLED 0
  #endif
  
++/* FIXME: should not be using globals here!! */
 +unsigned int pass_min_len = 6;
-+unsigned int pass_max_len = 8;
 +
  /* this is a front-end for module-application conversations */
  
@@ -118,7 +118,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
  				break;
  			}
  		}
-@@ -101,16 +106,21 @@
+@@ -101,20 +106,25 @@
  			ctrl &= unix_args[j].mask;	/* for turning things off */
  			ctrl |= unix_args[j].flag;	/* for turning things on  */
  
@@ -137,17 +137,21 @@ Index: Linux-PAM/modules/pam_unix/support.c
 +					*remember = -1;
 +				if (*remember > 400)
 +					*remember = 400;
-+			} else if (j == UNIX_MAX_PASS_LEN) {
-+				pass_max_len = atoi(*argv + 4);
 +			} else if (j == UNIX_MIN_PASS_LEN) {
 +				pass_min_len = atoi(*argv + 4);
  			}
  		}
-+		if (pass_min_len > pass_max_len)
-+			pass_min_len = pass_max_len;
  
  		++argv;		/* step to next argument */
  	}
+ 
++	if (off(UNIX_BIGCRYPT,ctrl) && off(UNIX_MD5_PASS,ctrl)
++	    && pass_min_len > 8)
++		pass_min_len = 8;
++
+ 	if (flags & PAM_DISALLOW_NULL_AUTHTOK) {
+ 		D(("DISALLOW_NULL_AUTHTOK"));
+ 		set(UNIX__NONULL, ctrl);
 @@ -692,6 +702,8 @@
  	    } else if (!p || (*salt == '*')) {
  		retval = PAM_AUTH_ERR;
@@ -165,7 +169,7 @@ Index: Linux-PAM/modules/pam_unix/support.h
  #define UNIX_NOREAP              21     /* don't reap child process */
  #define UNIX_BROKEN_SHADOW       22     /* ignore errors reading password aging
  					 * information during acct management */
-+#define UNIX_MAX_PASS_LEN        23	/* Max length for password */
++#define UNIX_MAX_PASS_LEN        23     /* internal, for compatibility only */
 +#define UNIX_MIN_PASS_LEN        24     /* Min length for password */
 +#define UNIX_OBSCURE_CHECKS      25     /* enable obscure checks on passwords */
  /* -------------- */
@@ -224,19 +228,18 @@ Index: Linux-PAM/modules/pam_unix/support.h
 +/* UNIX_REMEMBER_PASSWD */ {"remember=",       _ALL_ON_,              0x80000},
 +/* UNIX_NOREAP */          {"noreap",          _ALL_ON_,             0x100000},
 +/* UNIX_BROKEN_SHADOW */   {"broken_shadow",   _ALL_ON_,             0x200000},
-+/* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,             0x400000},
-+/* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x800000},
-+/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x1000000},
++/* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
++/* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x400000},
++/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,             0x800000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -152,4 +158,8 @@
+@@ -152,4 +158,7 @@
  extern int _unix_shadowed(const struct passwd *pwd);
  
  extern struct spwd *_unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl, const char *user);
 +
 +extern unsigned int pass_min_len;
-+extern unsigned int pass_max_len;
 +
  #endif /* _PAM_UNIX_SUPPORT_H */
 Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
@@ -261,7 +264,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix.8.xml
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix.8.xml.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix.8.xml
-@@ -269,6 +269,101 @@
+@@ -269,6 +269,90 @@
            </para>
          </listitem>
        </varlistentry>
@@ -273,17 +276,6 @@ Index: Linux-PAM/modules/pam_unix/pam_unix.8.xml
 +          <para>
 +            Set a minimum password length of <replaceable>n</replaceable>
 +            characters.  The default value is 1.
-+          </para>
-+        </listitem>
-+      </varlistentry>
-+      <varlistentry>
-+        <term>
-+          <option>max=<replaceable>n</replaceable></option>
-+        </term>
-+        <listitem>
-+          <para>
-+            Set a maximum password length of <replaceable>n</replaceable>
-+            characters.  The default value is 8.
 +          </para>
 +        </listitem>
 +      </varlistentry>
@@ -367,7 +359,7 @@ Index: Linux-PAM/modules/pam_unix/obscure.c
 ===================================================================
 --- /dev/null
 +++ Linux-PAM/modules/pam_unix/obscure.c
-@@ -0,0 +1,203 @@
+@@ -0,0 +1,199 @@
 +/*
 + * Copyright 1989 - 1994, Julianne Frances Haugh
 + * All rights reserved.
@@ -551,18 +543,14 @@ Index: Linux-PAM/modules/pam_unix/obscure.c
 +	   Example: "password$%^&*123".  So check it again, this time
 +	   truncated to the maximum length.  Idea from npasswd.  --marekm */
 +
-+	if (on(UNIX_MD5_PASS,ctrl))
++	if (on(UNIX_MD5_PASS,ctrl) || on(UNIX_BIGCRYPT,ctrl))
 +		return NULL;  /* unlimited password length */
 +
-+	if (oldlen <= pass_max_len && newlen <= pass_max_len)
++	if (oldlen <= 8 && newlen <= 8)
 +		return NULL;
 +
-+	new1 = strdup(new);
-+	old1 = strdup(old);
-+	if (newlen > pass_max_len)
-+		new1[pass_max_len] = '\0';
-+	if (oldlen > pass_max_len)
-+		old1[pass_max_len] = '\0';
++	new1 = strndup(new,8);
++	old1 = strdup(old,8);
 +
 +	msg = password_check(old1, new1, pwdp);
 +
@@ -575,68 +563,125 @@ Index: Linux-PAM/modules/pam_unix/pam_unix.8
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix.8.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix.8
-@@ -1,11 +1,11 @@
+@@ -1,133 +1,201 @@
  .\"     Title: pam_unix
  .\"    Author: 
 -.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
 -.\"      Date: 09/20/2006
 -.\"    Manual: Linux\-PAM Manual
 -.\"    Source: Linux\-PAM Manual
-+.\" Generator: DocBook XSL Stylesheets v1.72.0 <http://docbook.sf.net/>
-+.\"      Date: 08/19/2007
++.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
++.\"      Date: 08/31/2007
 +.\"    Manual: Linux-PAM Manual
 +.\"    Source: Linux-PAM Manual
  .\"
 -.TH "PAM_UNIX" "8" "09/20/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_UNIX" "8" "08/19/2007" "Linux\-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_UNIX" "8" "08/31/2007" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" disable hyphenation
  .nh
  .\" disable justification (adjust text to left margin only)
-@@ -46,61 +46,134 @@
- Remaining arguments, supported by others functions of this module, are silently ignored. Other arguments are logged as errors through
- \fBsyslog\fR(3).
+ .ad l
+ .SH "NAME"
+-pam_unix \- Module for traditional password authentication
++pam_unix - Module for traditional password authentication
+ .SH "SYNOPSIS"
+ .HP 12
+-\fBpam_unix.so\fR [...]
++\fBpam_unix\.so\fR [\.\.\.]
+ .SH "DESCRIPTION"
+ .PP
+-This is the standard Unix authentication module. It uses standard calls from the system's libraries to retrieve and set account information as well as authentication. Usually this is obtained from the /etc/passwd and the /etc/shadow file as well if shadow is enabled.
++This is the standard Unix authentication module\. It uses standard calls from the system\'s libraries to retrieve and set account information as well as authentication\. Usually this is obtained from the /etc/passwd and the /etc/shadow file as well if shadow is enabled\.
+ .PP
+-The account component performs the task of establishing the status of the user's account and password based on the following
++The account component performs the task of establishing the status of the user\'s account and password based on the following
+ \fIshadow\fR
+-elements: expire, last_change, max_change, min_change, warn_change. In the case of the latter, it may offer advice to the user on changing their password or, through the
++elements: expire, last_change, max_change, min_change, warn_change\. In the case of the latter, it may offer advice to the user on changing their password or, through the
+ \fBPAM_AUTHTOKEN_REQD\fR
+-return, delay giving service to the user until they have established a new password. The entries listed above are documented in the
++return, delay giving service to the user until they have established a new password\. The entries listed above are documented in the
+ \fBshadow\fR(5)
+-manual page. Should the user's record not contain one or more of these entries, the corresponding
++manual page\. Should the user\'s record not contain one or more of these entries, the corresponding
+ \fIshadow\fR
+-check is not performed.
++check is not performed\.
+ .PP
+-The authentication component performs the task of checking the users credentials (password). The default action of this module is to not permit the user access to a service if their official password is blank.
++The authentication component performs the task of checking the users credentials (password)\. The default action of this module is to not permit the user access to a service if their official password is blank\.
+ .PP
+ A helper binary,
+-\fBunix_chkpwd\fR(8), is provided to check the user's password when it is stored in a read protected database. This binary is very simple and will only check the password of the user invoking it. It is called transparently on behalf of the user by the authenticating component of this module. In this way it is possible for applications like
++\fBunix_chkpwd\fR(8), is provided to check the user\'s password when it is stored in a read protected database\. This binary is very simple and will only check the password of the user invoking it\. It is called transparently on behalf of the user by the authenticating component of this module\. In this way it is possible for applications like
+ \fBxlock\fR(1)
+-to work without being setuid\-root. The module, by default, will temporarily turn off SIGCHLD handling for the duration of execution of the helper binary. This is generally the right thing to do, as many applications are not prepared to handle this signal from a child they didn't know was
+-\fBfork()\fRd. The
++to work without being setuid\-root\. The module, by default, will temporarily turn off SIGCHLD handling for the duration of execution of the helper binary\. This is generally the right thing to do, as many applications are not prepared to handle this signal from a child they didn\'t know was
++\fBfork()\fRd\. The
+ \fBnoreap\fR
+-module argument can be used to suppress this temporary shielding and may be needed for use with certain applications.
++module argument can be used to suppress this temporary shielding and may be needed for use with certain applications\.
+ .PP
+-The password component of this module performs the task of updating the user's password.
++The password component of this module performs the task of updating the user\'s password\.
+ .PP
+-The session component of this module logs when a user logins or leave the system.
++The session component of this module logs when a user logins or leave the system\.
+ .PP
+-Remaining arguments, supported by others functions of this module, are silently ignored. Other arguments are logged as errors through
+-\fBsyslog\fR(3).
++Remaining arguments, supported by others functions of this module, are silently ignored\. Other arguments are logged as errors through
++\fBsyslog\fR(3)\.
  .SH "OPTIONS"
 -.TP 3n
 +.PP
  \fBdebug\fR
 +.RS 4
  Turns on debugging via
- \fBsyslog\fR(3).
+-\fBsyslog\fR(3).
 -.TP 3n
++\fBsyslog\fR(3)\.
 +.RE
 +.PP
  \fBaudit\fR
-+.RS 4
- A little more extreme than debug.
+-A little more extreme than debug.
 -.TP 3n
++.RS 4
++A little more extreme than debug\.
 +.RE
 +.PP
  \fBnullok\fR
+-The default action of this module is to not permit the user access to a service if their official password is blank. The
 +.RS 4
- The default action of this module is to not permit the user access to a service if their official password is blank. The
++The default action of this module is to not permit the user access to a service if their official password is blank\. The
  \fBnullok\fR
- argument overrides this default.
+-argument overrides this default.
 -.TP 3n
++argument overrides this default\.
 +.RE
 +.PP
  \fBtry_first_pass\fR
-+.RS 4
- Before prompting the user for their password, the module first tries the previous stacked module's password in case that satisfies this module as well.
+-Before prompting the user for their password, the module first tries the previous stacked module's password in case that satisfies this module as well.
 -.TP 3n
++.RS 4
++Before prompting the user for their password, the module first tries the previous stacked module\'s password in case that satisfies this module as well\.
 +.RE
 +.PP
  \fBuse_first_pass\fR
 +.RS 4
  The argument
  \fBuse_first_pass\fR
- forces the module to use a previous stacked modules password and will never prompt the user \- if no password is available or the password is not appropriate, the user will be denied access.
+-forces the module to use a previous stacked modules password and will never prompt the user \- if no password is available or the password is not appropriate, the user will be denied access.
 -.TP 3n
++forces the module to use a previous stacked modules password and will never prompt the user \- if no password is available or the password is not appropriate, the user will be denied access\.
 +.RE
 +.PP
  \fBnodelay\fR
-+.RS 4
- This argument can be used to discourage the authentication component from requesting a delay should the authentication as a whole fail. The default action is for the module to request a delay\-on\-failure of the order of two second.
+-This argument can be used to discourage the authentication component from requesting a delay should the authentication as a whole fail. The default action is for the module to request a delay\-on\-failure of the order of two second.
 -.TP 3n
++.RS 4
++This argument can be used to discourage the authentication component from requesting a delay should the authentication as a whole fail\. The default action is for the module to request a delay\-on\-failure of the order of two second\.
 +.RE
 +.PP
  \fBuse_authtok\fR
@@ -645,20 +690,23 @@ Index: Linux-PAM/modules/pam_unix/pam_unix.8
  \fBpassword\fR
  module (this is used in the example of the stacking of the
  \fBpam_cracklib\fR
- module documented above).
+-module documented above).
 -.TP 3n
++module documented above)\.
 +.RE
 +.PP
  \fBnot_set_pass\fR
-+.RS 4
- This argument is used to inform the module that it is not to pay attention to/make available the old or new passwords from/to other (stacked) password modules.
+-This argument is used to inform the module that it is not to pay attention to/make available the old or new passwords from/to other (stacked) password modules.
 -.TP 3n
++.RS 4
++This argument is used to inform the module that it is not to pay attention to/make available the old or new passwords from/to other (stacked) password modules\.
 +.RE
 +.PP
  \fBnis\fR
-+.RS 4
- NIS RPC is used for setting new passwords.
+-NIS RPC is used for setting new passwords.
 -.TP 3n
++.RS 4
++NIS RPC is used for setting new passwords\.
 +.RE
 +.PP
  \fBremember=\fR\fB\fIn\fR\fR
@@ -667,101 +715,124 @@ Index: Linux-PAM/modules/pam_unix/pam_unix.8
  \fIn\fR
  passwords for each user are saved in
  \fI/etc/security/opasswd\fR
- in order to force password change history and keep the user from alternating between the same password too frequently.
+-in order to force password change history and keep the user from alternating between the same password too frequently.
 -.TP 3n
++in order to force password change history and keep the user from alternating between the same password too frequently\.
 +.RE
 +.PP
  \fBshadow\fR
-+.RS 4
- Try to maintain a shadow based system.
+-Try to maintain a shadow based system.
 -.TP 3n
++.RS 4
++Try to maintain a shadow based system\.
 +.RE
 +.PP
  \fBmd5\fR
-+.RS 4
- When a user changes their password next, encrypt it with the MD5 algorithm.
+-When a user changes their password next, encrypt it with the MD5 algorithm.
 -.TP 3n
++.RS 4
++When a user changes their password next, encrypt it with the MD5 algorithm\.
 +.RE
 +.PP
  \fBbigcrypt\fR
-+.RS 4
- When a user changes their password next, encrypt it with the DEC C2 algorithm.
+-When a user changes their password next, encrypt it with the DEC C2 algorithm.
 -.TP 3n
++.RS 4
++When a user changes their password next, encrypt it with the DEC C2 algorithm\.
 +.RE
 +.PP
  \fBbroken_shadow\fR
+-Ignore errors reading shadow inforation for users in the account management module.
 +.RS 4
- Ignore errors reading shadow inforation for users in the account management module.
++Ignore errors reading shadow inforation for users in the account management module\.
 +.RE
 +.PP
 +\fBmin=\fR\fB\fIn\fR\fR
 +.RS 4
 +Set a minimum password length of
 +\fIn\fR
-+characters. The default value is 1.
-+.RE
-+.PP
-+\fBmax=\fR\fB\fIn\fR\fR
-+.RS 4
-+Set a maximum password length of
-+\fIn\fR
-+characters. The default value is 8.
++characters\. The default value is 1\.
 +.RE
 +.PP
 +\fBobscure\fR
 +.RS 4
-+Enable some extra checks on password strength. These checks are based on the "obscure" checks in the original shadow package. The behavior is similar to the pam_cracklib module, but for non\-dictionary\-based checks. The following checks are implemented:
++Enable some extra checks on password strength\. These checks are based on the "obscure" checks in the original shadow package\. The behavior is similar to the pam_cracklib module, but for non\-dictionary\-based checks\. The following checks are implemented:
 +.PP
 +\fBPalindrome\fR
 +.RS 4
-+Verifies that the new password is not a palindrome of (i.e., the reverse of) the previous one.
++Verifies that the new password is not a palindrome of (i\.e\., the reverse of) the previous one\.
 +.RE
 +.PP
 +\fBCase Change Only\fR
 +.RS 4
-+Verifies that the new password isn't the same as the old one with a change of case.
++Verifies that the new password isn\'t the same as the old one with a change of case\.
 +.RE
 +.PP
 +\fBSimilar\fR
 +.RS 4
-+Verifies that the new password isn't too much like the previous one.
++Verifies that the new password isn\'t too much like the previous one\.
 +.RE
 +.PP
 +\fBSimple\fR
 +.RS 4
-+Is the new password too simple? This is based on the length of the password and the number of different types of characters (alpha, numeric, etc.) used.
++Is the new password too simple? This is based on the length of the password and the number of different types of characters (alpha, numeric, etc\.) used\.
 +.RE
 +.PP
 +\fBRotated\fR
 +.RS 4
-+Is the new password a rotated version of the old password? (E.g., "billy" and "illyb")
++Is the new password a rotated version of the old password? (E\.g\., "billy" and "illyb")
 +.RE
 +.sp
 +.RE
  .PP
  Invalid arguments are logged with
- \fBsyslog\fR(3).
-@@ -108,16 +181,18 @@
+-\fBsyslog\fR(3).
++\fBsyslog\fR(3)\.
+ .SH "MODULE SERVICES PROVIDED"
  .PP
- All service are supported.
+-All service are supported.
++All service are supported\.
  .SH "RETURN VALUES"
 -.TP 3n
 +.PP
  PAM_IGNORE
+-Ignore this module.
 +.RS 4
- Ignore this module.
++Ignore this module\.
 +.RE
  .SH "EXAMPLES"
  .PP
  An example usage for
- \fI/etc/pam.d/login\fR
+-\fI/etc/pam.d/login\fR
++\fI/etc/pam\.d/login\fR
  would be:
  .sp
 -.RS 3n
 +.RS 4
  .nf
  # Authenticate the user
- auth       required   pam_unix.so
+-auth       required   pam_unix.so
++auth       required   pam_unix\.so
+ # Ensure users account and password are still active
+-account    required   pam_unix.so
++account    required   pam_unix\.so
+ # Change the users password, but at first check the strength
+ # with pam_cracklib(8)
+-password   required   pam_cracklib.so retry=3 minlen=6 difok=3
+-password   required   pam_unix.so use_authtok nullok md5
+-session    required   pam_unix.so
++password   required   pam_cracklib\.so retry=3 minlen=6 difok=3
++password   required   pam_unix\.so use_authtok nullok md5
++session    required   pam_unix\.so
+       
+ .fi
+ .RE
+@@ -140,4 +208,4 @@
+ \fBpam\fR(8)
+ .SH "AUTHOR"
+ .PP
+-pam_unix was written by various people.
++pam_unix was written by various people\.
 Index: Linux-PAM/modules/pam_unix/Makefile.am
 ===================================================================
 --- Linux-PAM/modules/pam_unix/Makefile.am.orig
@@ -779,17 +850,13 @@ Index: Linux-PAM/modules/pam_unix/README
 ===================================================================
 --- Linux-PAM/modules/pam_unix/README.orig
 +++ Linux-PAM/modules/pam_unix/README
-@@ -119,6 +119,46 @@
+@@ -119,6 +119,42 @@
      Ignore errors reading shadow inforation for users in the account management
      module.
  
 +min=n
 +
-+    Set a minimum password length of n characters. The default value is 1.
-+
-+max=n
-+
-+    Set a maximum password length of n characters. The default value is 8.
++    Set a minimum password length of n characters. The default value is 6.
 +
 +obscure
 +

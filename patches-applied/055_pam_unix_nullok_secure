@@ -71,7 +71,7 @@ Index: Linux-PAM/modules/pam_unix/support.h
 --- Linux-PAM/modules/pam_unix/support.h.orig
 +++ Linux-PAM/modules/pam_unix/support.h
 @@ -87,8 +87,9 @@
- #define UNIX_MAX_PASS_LEN        23	/* Max length for password */
+ #define UNIX_MAX_PASS_LEN        23     /* internal, for compatibility only */
  #define UNIX_MIN_PASS_LEN        24     /* Min length for password */
  #define UNIX_OBSCURE_CHECKS      25     /* enable obscure checks on passwords */
 +#define UNIX_NULLOK_SECURE       26	/* NULL passwords allowed only on secure ttys */
@@ -86,15 +86,15 @@ Index: Linux-PAM/modules/pam_unix/support.h
  /* UNIX__PRELIM */         {NULL,              _ALL_ON_^(0x180),         0x80},
  /* UNIX__UPDATE */         {NULL,              _ALL_ON_^(0x180),        0x100},
 -/* UNIX__NONULL */         {NULL,              _ALL_ON_,                0x200},
-+/* UNIX__NONULL */         {NULL,              _ALL_ON_^(0x2000000),    0x200},
++/* UNIX__NONULL */         {NULL,              _ALL_ON_^(0x1000000),    0x200},
  /* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
  /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
  /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
 @@ -122,6 +123,7 @@
- /* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,             0x400000},
- /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x800000},
- /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x1000000},
-+/* UNIX_NULLOK_SECURE */   {"nullok_secure",   _ALL_ON_^(0x200),    0x2000000},
+ /* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
+ /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x400000},
+ /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,             0x800000},
++/* UNIX_NULLOK_SECURE */   {"nullok_secure",   _ALL_ON_^(0x200),    0x1000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
@@ -148,33 +148,19 @@ Index: Linux-PAM/modules/pam_unix/pam_unix.8
 ===================================================================
 --- Linux-PAM/modules/pam_unix/pam_unix.8.orig
 +++ Linux-PAM/modules/pam_unix/pam_unix.8
-@@ -1,11 +1,11 @@
- .\"     Title: pam_unix
- .\"    Author: 
- .\" Generator: DocBook XSL Stylesheets v1.72.0 <http://docbook.sf.net/>
--.\"      Date: 08/19/2007
-+.\"      Date: 08/27/2007
- .\"    Manual: Linux-PAM Manual
- .\"    Source: Linux-PAM Manual
- .\"
--.TH "PAM_UNIX" "8" "08/19/2007" "Linux\-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_UNIX" "8" "08/27/2007" "Linux\-PAM Manual" "Linux\-PAM Manual"
- .\" disable hyphenation
- .nh
- .\" disable justification (adjust text to left margin only)
 @@ -62,7 +62,14 @@
  .RS 4
- The default action of this module is to not permit the user access to a service if their official password is blank. The
+ The default action of this module is to not permit the user access to a service if their official password is blank\. The
  \fBnullok\fR
--argument overrides this default.
-+argument overrides this default and allows any user with a blank password to access the service.
+-argument overrides this default\.
++argument overrides this default and allows any user with a blank password to access the service\.
 +.RE
 +.PP
 +\fBnullok_secure\fR
 +.RS 4
-+The default action of this module is to not permit the user access to a service if their official password is blank. The
++The default action of this module is to not permit the user access to a service if their official password is blank\. The
 +\fBnullok_secure\fR
-+argument overrides this default and allows any user with a blank password to access the service as long as the value of PAM_TTY is set to one of the values found in /etc/securetty.
++argument overrides this default and allows any user with a blank password to access the service as long as the value of PAM_TTY is set to one of the values found in /etc/securetty\.
  .RE
  .PP
  \fBtry_first_pass\fR

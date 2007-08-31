@@ -35,8 +35,13 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
   * Updates to patch 007_modules_pam_unix: restore the same built-in min
     password len of 6 that upstream uses; fix a typo panlindrome ->
     palindrome.
+  * The 'max=' option was never intended to be used to limit maximum password
+    length for users, only to declare what the number of significant
+    characters /is/ for a password.  But we don't need a config option to
+    tell us that, we know the answer based on which crypt type we're using,
+    so drop this as a config file option.  Closes: #389197.
 
- -- Steve Langasek <vorlon@debian.org>  Fri, 31 Aug 2007 00:36:52 -0700
+ -- Steve Langasek <vorlon@debian.org>  Fri, 31 Aug 2007 14:39:59 -0700
 
 pam (0.99.7.1-3) unstable; urgency=low
 
