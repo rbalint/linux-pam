@@ -1,0 +1,87 @@
+# Czech translation of pam debconf mesages.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the pam package.
+# Miroslav Kure <kurem@debian.cz>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pam\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-08-30 08:07-0700\n"
+"PO-Revision-Date: 2007-08-31 22:48+0200\n"
+"Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
+"Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "Služby, které se mají restartovat po aktualizaci knihovny PAM:"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"Aby se začaly používat moduly z nové verze knihovny libpam, musí se většina "
+"služeb používajících PAM restartovat. Zkontrolujte prosím následující seznam "
+"služeb (init.d skriptů), které se mají nyní restartovat a v případě potřeby "
+"seznam opravte."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Among the services that require restarting are the display managers kdm, "
+"wdm, and xdm.  If you are upgrading from within an X session started with "
+"one of these display managers, restarting that service will terminate your X "
+"session.  It is recommended that you remove that service from the list here "
+"and restart it later at your convenience."
+msgstr ""
+"Mezi službami vyžadujícími restart jsou i správci displejů kdm, wdm a xdm. "
+"Aktualizujete-li z X sezení spuštěného některým ze zmíněných programů, "
+"znamená to, že restart příslušné služby ukončí stávající X sezení.  V takovém "
+"případě doporučujeme službu ze seznamu odstranit a restartovat později, až "
+"pro to nastane vhodnější příležitost."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"Některé služby (např. xscreensaver, gnome-screensaver a xlockmore) nemohou "
+"být restartovány automaticky. Dokud je nerestartujete ručně, nebudete se "
+"moci vůči nim autentizovat."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "Restartování některých služeb při aktualizaci PAMu selhalo"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr ""
+"Následující služby nemohly být při aktualizaci knihovny PAM restartovány:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr ""
+"Tyto služby budete muset spustit ručně příkazem '/etc/init.d/<služba> start'."
