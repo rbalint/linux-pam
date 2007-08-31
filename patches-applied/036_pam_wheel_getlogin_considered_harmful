@@ -1,3 +1,13 @@
+Patch for Debian bug #163787 et al
+
+Always use the process uid, not getlogin(), to identify an applicant in
+pam_wheel; utmp may be wrong or may have no entry at all in the case of
+an xterm
+
+Authors: Ben Collins <bcollins@debian.org>
+
+Upstream status: not yet submitted
+
 Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
 ===================================================================
 --- Linux-PAM/modules/pam_wheel/pam_wheel.c.orig
