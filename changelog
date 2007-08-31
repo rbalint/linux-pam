@@ -32,8 +32,11 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
     008_modules_pam_limits_chroot and 029_pam_limits_capabilites
   * Debconf translations:
     - Spanish, thanks to Javier Fernández-Sanguino Peña <jfs@debian.org>
+  * Updates to patch 007_modules_pam_unix: restore the same built-in min
+    password len of 6 that upstream uses; fix a typo panlindrome ->
+    palindrome.
 
- -- Steve Langasek <vorlon@debian.org>  Thu, 30 Aug 2007 17:13:44 -0700
+ -- Steve Langasek <vorlon@debian.org>  Fri, 31 Aug 2007 00:36:52 -0700
 
 pam (0.99.7.1-3) unstable; urgency=low
 

@@ -94,7 +94,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
  #define SELINUX_ENABLED 0
  #endif
  
-+unsigned int pass_min_len = 1;
++unsigned int pass_min_len = 6;
 +unsigned int pass_max_len = 8;
 +
  /* this is a front-end for module-application conversations */
@@ -505,7 +505,7 @@ Index: Linux-PAM/modules/pam_unix/obscure.c
 +	strcat (wrapped, oldmono);
 +
 +	if (palindrome(oldmono, newmono)) {
-+		msg = "Bad: new password cannot be a panlindrome";
++		msg = "Bad: new password cannot be a palindrome";
 +	} else if (strcmp(oldmono, newmono) == 0) {
 +		msg = "Bad: new and old password must differ by more than just case";
 +	} else if (similar(oldmono, newmono)) {
