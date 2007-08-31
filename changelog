@@ -30,8 +30,6 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
   * Drop patch 063_paswd_segv, superseded by a different upstream fix
   * Split 047_pam_limits_chroot_string_value up between
     008_modules_pam_limits_chroot and 029_pam_limits_capabilites
-  * Debconf translations:
-    - Spanish, thanks to Javier Fernández-Sanguino Peña <jfs@debian.org>
   * Updates to patch 007_modules_pam_unix: restore the same built-in min
     password len of 6 that upstream uses; fix a typo panlindrome ->
     palindrome.
@@ -40,8 +38,16 @@ pam (0.99.7.1-4) UNRELEASED; urgency=low
     characters /is/ for a password.  But we don't need a config option to
     tell us that, we know the answer based on which crypt type we're using,
     so drop this as a config file option.  Closes: #389197.
+  * Debconf translations:
+    - Spanish, thanks to Javier Fernández-Sanguino Peña <jfs@debian.org>
+    - Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
+    - German, thanks to Sven Joachim <svenjoac@gmx.de> (closes: #440355)
+    - Czech, thanks to Miroslav Kure <kurem@upcase.inf.upol.cz>
+      (closes: #440362)
+    - Portuguese, thanks to Américo Monteiro <a_monteiro@netcabo.pt>
+      (closes: #440368)
 
- -- Steve Langasek <vorlon@debian.org>  Fri, 31 Aug 2007 14:39:59 -0700
+ -- Steve Langasek <vorlon@debian.org>  Fri, 31 Aug 2007 14:50:28 -0700
 
 pam (0.99.7.1-3) unstable; urgency=low
 
