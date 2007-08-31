@@ -1,0 +1,101 @@
+# pam po-debconf translation to Spanish
+# Copyright (C) 2007 Software in the Public Interest, SPI Inc.
+# This file is distributed under the same license as the pam package.
+#
+# Changes:
+# - Initial translation
+#       Javier Fernández-Sanguino , 2007
+#
+#
+#  Traductores, si no conoce el formato PO, merece la pena leer la 
+#  documentación de gettext, especialmente las secciones dedicadas a este
+#  formato, por ejemplo ejecutando:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+# Equipo de traducción al español, por favor lean antes de traducir
+# los siguientes documentos:
+#
+# - El proyecto de traducción de Debian al español
+#   http://www.debian.org/intl/spanish/
+#   especialmente las notas y normas de traducción en
+#   http://www.debian.org/intl/spanish/notas
+#
+# - La guía de traducción de po's de debconf:
+#   /usr/share/doc/po-debconf/README-trans
+#   o http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+# Si tiene dudas o consultas sobre esta traducción consulte con el último
+# traductor (campo Last-Translator) y ponga en copia a la lista de
+# traducción de Debian al español (<debian-l10n-spanish@lists.debian.org>)
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pam 0.79-4\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-08-30 08:07-0700\n"
+"PO-Revision-Date: 2007-08-31 01:42+0200\n"
+"Last-Translator: Javier Fernández-Sanguino <jfs@debian.org>\n"
+"Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-POFile-SpellExtra: kdm gnome xscreensaver xdm xlockmore wdm start init\n"
+"X-POFile-SpellExtra: screensaver PAM libpam\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "Servicios a reiniciar para la actualización de la librería de PAM:"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr "Es necesario reiniciar la mayoría de los servicios que utilizan PAM para que utilicen los módulos de esta versión de libpam. Por favor, revise la lista separada por espacios mostrada a continuación que indica los servicios a reiniciar ahora y corrígala si es necesario."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Among the services that require restarting are the display managers kdm, "
+"wdm, and xdm.  If you are upgrading from within an X session started with "
+"one of these display managers, restarting that service will terminate your X "
+"session.  It is recommended that you remove that service from the list here "
+"and restart it later at your convenience."
+msgstr "Entre los servicios que deben reiniciarse están los gestores de pantalla kdm, wdm y xdm. El reinicio del servicio terminará su sesión de X si está actualizando desde una sesión de X arrancada desde alguno de estos gestores. Se le recomienda eliminar el servicio de la lista y reiniciarlo más adelante cuando lo considere oportuno."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr "No se podrán reiniciar algunos servicios como puedan ser «xscreensaver», «gnome-screensaver» y «xlockmore». No podrá autenticarse en estos servicios hasta que los reinicie manualmente."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "Fallo al reiniciar alguno de los servicios en la actualización de PAM"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr "No se pudieron reiniciar los servicios indicados a continuación para la actualización de la librería de PAM:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr "Deberá arrancar manualmente estos servicios ejecutando «/etc/init.d/<servicio> start»."
