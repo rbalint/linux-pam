@@ -6,7 +6,7 @@ an xterm
 
 Authors: Ben Collins <bcollins@debian.org>
 
-Upstream status: not yet submitted
+Upstream status: submitted in <20070901175405.GA26092@dario.dodds.net>
 
 Index: Linux-PAM/modules/pam_wheel/pam_wheel.c
 ===================================================================
