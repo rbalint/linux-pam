@@ -5,8 +5,9 @@ pam (0.99.7.1-5) UNRELEASED; urgency=low
     - Brazilian Portuguese, thanks to Eder L. Marques <frolic@debian-ce.org>
       (closes: #440385).
     - Russian, thanks to Yuri Kozlov <kozlov.y@gmail.com> (closes: #440390)
+    - Updated Portuguese, thanks to Américo Monteiro <a_monteiro@netcabo.pt>
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 01 Sep 2007 00:35:40 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sat, 01 Sep 2007 09:46:26 -0700
 
 pam (0.99.7.1-4) unstable; urgency=low
 

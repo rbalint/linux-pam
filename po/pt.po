@@ -1,4 +1,5 @@
 # translation of pam debconf to Portuguese
+# translation of pam debconf to Portuguese
 # Copyright (C) 2007 Américo Monteiro
 # This file is distributed under the same license as the pam package.
 #
@@ -8,7 +9,7 @@ msgstr ""
 "Project-Id-Version: pam 0.99.7.1-3\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-08-30 08:07-0700\n"
-"PO-Revision-Date: 2007-08-29 23:35+0100\n"
+"PO-Revision-Date: 2007-09-01 13:24+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@netcabo.pt>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,18 +32,14 @@ msgid ""
 "list of init.d scripts for services to be restarted now, and correct it if "
 "needed."
 msgstr ""
+"A maioria dos serviços que usam PAM precisam ser reiniciados para usarem os "
+"módulos construidos para esta nova versão do libpam.  Por favor, reveja a "
+"seguinte lista de scripts init.d de serviços para serem reiniciados agora "
+"(separados por espaços), e corrija-a se for necessário."
 
 #. Type: string
 #. Description
 #: ../libpam0g.templates:1001
-#, fuzzy
-#| msgid ""
-#| "Among the services that need to be restarted for the Linux-PAM upgrade "
-#| "are the X display managers, gdm, kdm, wdm, and xdm.  If you are "
-#| "performing this upgrade from within an X session started with one of "
-#| "these display managers, restarting the service will terminate your X "
-#| "session.  In this case it is recommended that you remove this service "
-#| "from the list here and restart it later at your convenience."
 msgid ""
 "Among the services that require restarting are the display managers kdm, "
 "wdm, and xdm.  If you are upgrading from within an X session started with "
@@ -50,31 +47,23 @@ msgid ""
 "session.  It is recommended that you remove that service from the list here "
 "and restart it later at your convenience."
 msgstr ""
-"Entre os serviços que precisam ser reiniciados para a actualização Linux-PAM "
-"são os gestores de display X, gdm, kdm, wdm, e xdm. Se você está a efectuar "
-"esta actualização de dentro duma sessão X iniciada por um destes gestores de "
-"display, reiniciar o serviço irá terminar a sua sessão X. Neste caso é "
-"recomendado que remova esse serviço desta lista aqui e o reinicie mais tarde "
-"quando lhe for conveniente."
+"Entre os serviços que precisam ser reiniciados estão os gestores de 'display' "
+"kdm, wdm, e xdm. Se você está a actualizar de dentro duma sessão X iniciada "
+"por um destes gestores de 'display', reiniciar esse serviço irá terminar a "
+"sua sessão X. É recomendado que remova esse serviço desta lista aqui e o "
+"reinicie mais tarde quando lhe for conveniente."
 
 #. Type: string
 #. Description
 #: ../libpam0g.templates:1001
-#, fuzzy
-#| msgid ""
-#| "Other services that use PAM but cannot be restarted with this script "
-#| "include xscreensaver, gnome-screensaver, xlockmore, and vlock.  You will "
-#| "not be able to authenticate to these services until they have been "
-#| "restarted manually."
 msgid ""
 "Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
 "cannot be restarted for you.  You will not be able to authenticate to these "
 "services until you restart them manually."
 msgstr ""
-"Outros serviços que usam PAM mas não podem ser reiniciados com este script "
-"incluem xscreensaver, gnome-screensaver, xlockmore, e vlock. Você não vai "
-"poder autenticar-se nestes serviços até que eles sejam reiniciados "
-"manualmente."
+"Outros serviços como o xscreensaver, gnome-screensaver, e xlockmore não podem "
+"ser reiniciados para si. Você não vai poder autenticar-se nestes serviços até "
+"que você os reinicie manualmente."
 
 #. Type: error
 #. Description
@@ -85,8 +74,7 @@ msgstr "Falha ao reiniciar alguns serviços para a actualização PAM"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
-msgid ""
-"The following services could not be restarted for the PAM library upgrade:"
+msgid "The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
 "Os seguintes serviços não puderam ser reiniciados para a actualização da "
 "biblioteca PAM:"
@@ -100,27 +88,3 @@ msgid ""
 msgstr ""
 "Você precisa de iniciar manualmente estes serviços fazendo '/etc/init.d/"
 "<service> start'."
-
-#~ msgid ""
-#~ "This release of Linux-PAM introduces new programming interfaces.  PAM "
-#~ "modules that require these interfaces will not be usable by already-"
-#~ "running services until these services have been restarted."
-#~ msgstr ""
-#~ "Este lançamento do Linux-PAM introduz novas interfaces de programação. Os "
-#~ "módulos PAM que requerem estas interfaces não serão utilizáveis por "
-#~ "serviços que já estejam a correr até que estes serviços sejam reiniciados."
-
-#~ msgid ""
-#~ "Please check the list of detected services that need to be restarted and "
-#~ "correct it, if needed. The services names must be identical to the init "
-#~ "script names in /etc/init.d and separated by spaces.  To avoid restarting "
-#~ "any services at this time, use an empty list."
-#~ msgstr ""
-#~ "Por favor, verifique a lista de serviços detectados que precisam ser "
-#~ "reiniciados e corrija-a se necessário. Os nomes dos serviços têm que ser "
-#~ "idênticos aos nomes dos scripts init em /etc/init.d e separados por "
-#~ "espaços. Para evitar reiniciar quaisquer serviços agora, use uma lista "
-#~ "vazia."
-
-#~ msgid "${services}"
-#~ msgstr "${services}"
