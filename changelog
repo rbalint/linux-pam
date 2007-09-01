@@ -1,3 +1,9 @@
+pam (0.99.7.1-5) UNRELEASED; urgency=low
+
+  * More lintian overrides, related to debconf prompting in the postinst
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 31 Aug 2007 18:49:17 -0700
+
 pam (0.99.7.1-4) unstable; urgency=low
 
   * libpam0g.postinst, libpam0g.templates: gdm doesn't need to be restarted
