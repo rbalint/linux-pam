@@ -1,6 +1,9 @@
 pam (0.99.7.1-5) UNRELEASED; urgency=low
 
   * More lintian overrides, related to debconf prompting in the postinst
+  * Debconf translations:
+    - Brazilian Portuguese, thanks to Eder L. Marques <frolic@debian-ce.org>
+      (closes: #440385).
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 31 Aug 2007 18:49:17 -0700
 
