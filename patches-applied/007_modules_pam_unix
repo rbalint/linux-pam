@@ -550,7 +550,7 @@ Index: Linux-PAM/modules/pam_unix/obscure.c
 +		return NULL;
 +
 +	new1 = strndup(new,8);
-+	old1 = strdup(old,8);
++	old1 = strndup(old,8);
 +
 +	msg = password_check(old1, new1, pwdp);
 +
