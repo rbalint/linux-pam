@@ -1,3 +1,12 @@
+Patch for Debian bug #331278
+
+Remove a number of unnecessary string manipulations, including a
+strncpy() that was acting on overlapping memory.
+
+Authors: Steve Langasek <vorlon@debian.org>
+
+Upstream status: submitted in <20070901100913.GB10022@dario.dodds.net>
+
 Index: pam/Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_limits/pam_limits.c
