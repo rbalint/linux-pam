@@ -1,12 +1,12 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Debconf questions for the Linux-PAM package.
+# Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
+# This file is distributed under the same license as the pam package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: pam 0.99.7.1-4\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-08-30 08:07-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
