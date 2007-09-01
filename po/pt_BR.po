@@ -4,7 +4,7 @@
 # Eder L. Marques <frolic@debian-ce.org>, 2007.
 #
 msgid ""
-msgstr "pt_BR utf-8\n"
+msgstr ""
 "Project-Id-Version: pam_0.99.7.1-4\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-08-30 08:07-0700\n"
@@ -14,6 +14,7 @@ msgstr "pt_BR utf-8\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"pt_BR utf-8\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #. Type: string
@@ -49,8 +50,8 @@ msgstr ""
 "Entre os serviços que precisam ser reiniciados estão os gerenciadores de "
 "display kdm, wdm e xdm. Se você está atualizando dentro de uma sessão X "
 "iniciada por um destes gerenciadores de display, reiniciar o servico irá "
-"terminar com a sua sessão X. É recomendado que você remova o serviço da lista "
-"e reinicie-o mais tarde de acordo com a sua conveniência."
+"terminar com a sua sessão X. É recomendado que você remova o serviço da "
+"lista e reinicie-o mais tarde de acordo com a sua conveniência."
 
 #. Type: string
 #. Description
@@ -73,10 +74,11 @@ msgstr "Falha ao reiniciar alguns serviços para a atualização da PAM"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
-msgid "The following services could not be restarted for the PAM library upgrade:"
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
-"Os seguintes serviços não puderam ser reiniciados para a atualização "
-"da biblioteca PAM:"
+"Os seguintes serviços não puderam ser reiniciados para a atualização da "
+"biblioteca PAM:"
 
 #. Type: error
 #. Description
@@ -86,4 +88,3 @@ msgid ""
 "start'."
 msgstr ""
 "Você deverá iniciá-los manualmente executando '/etc/init.d/<serviço> start'."
-
