@@ -14,8 +14,9 @@ pam (0.99.7.1-5) UNRELEASED; urgency=low
     been obsoleted.
   * Fix up the comments in /etc/pam.d/common-password to make it clear that
     the options are specific to pam_unix.  Closes: #414559.
+  * Patch 038: fix another thinko in the getline handling.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 01 Sep 2007 11:42:08 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 02 Sep 2007 11:24:06 -0700
 
 pam (0.99.7.1-4) unstable; urgency=low
 
