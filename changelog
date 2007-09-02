@@ -9,8 +9,13 @@ pam (0.99.7.1-5) UNRELEASED; urgency=low
   * Further cleanups of 007_modules_pam_unix -- don't use a global variable
     for pass_min_len, don't gratuitously move the length checking into the
     "obscure" checks, and internationalize the error strings.
+  * Stop overriding the built-in default minimum password length in
+    /etc/pam.d/common-password, and also drop the "max" option which has now
+    been obsoleted.
+  * Fix up the comments in /etc/pam.d/common-password to make it clear that
+    the options are specific to pam_unix.  Closes: #414559.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 01 Sep 2007 10:59:34 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sat, 01 Sep 2007 11:42:08 -0700
 
 pam (0.99.7.1-4) unstable; urgency=low
 

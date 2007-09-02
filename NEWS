@@ -1,0 +1,23 @@
+pam (0.99.7.1-5) unstable; urgency=low
+
+  * Default Unix minimum password length has changed
+
+    Previous versions of pam_unix on Debian had a built-in minimum password
+    length of 1 character, and a minimum password length configured in
+    /etc/pam.d/common-password of 4 characters.  This differed from the
+    upstream default of 6 characters.  This has been changed, so the
+    default /etc/pam.d/common-password no longer overrides the compile-time
+    default and the compile-time default has been raised to 6 characters.
+    If you are using pam_unix but are not using the default
+    /etc/pam.d/common-password file, it is recommended that you drop any
+    min= options to pam_unix from your config unless you have stronger
+    local password requirements that the upstream default.
+
+    The password length 'max' option has also been deprecated in this
+    version because it was never written to work as suggested in the
+    documentation.  If you are using pam_unix but are not using the default
+    /etc/pam.d/common-password file, you should remove any old max= options
+    to pam_unix from your config as this option will be considered an error
+    in future versions of pam.
+
+ -- Steve Langasek <vorlon@debian.org>  Sat, 01 Sep 2007 21:27:11 -0700
