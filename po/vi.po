@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam\n"
+"Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-03 23:24-0700\n"
-"PO-Revision-Date: 2007-08-31 21:13+0930\n"
+"PO-Revision-Date: 2007-09-04 19:04+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -16,15 +16,15 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.7b1\n"
 
+#: ../libpam0g.templates:1001
 #. Type: string
 #. Description
-#: ../libpam0g.templates:1001
 msgid "Services to restart for PAM library upgrade:"
 msgstr "Dịch vụ cần khởi chạy lại khi nâng cấp thư viện PAM:"
 
+#: ../libpam0g.templates:1001
 #. Type: string
 #. Description
-#: ../libpam0g.templates:1001
 msgid ""
 "Most services that use PAM need to be restarted to use modules built for "
 "this new version of libpam.  Please review the following space-separated "
@@ -36,9 +36,9 @@ msgstr ""
 "định giới bằng dấu cách theo đây hiển thị các dịch vụ cần khởi chạy lại ngay "
 "bây giờ, và sửa chữa nếu cần thiết."
 
+#: ../libpam0g.templates:1001
 #. Type: string
 #. Description
-#: ../libpam0g.templates:1001
 msgid ""
 "Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
 "cannot be restarted for you.  You will not be able to authenticate to these "
@@ -48,40 +48,40 @@ msgstr ""
 "thể được khởi chạy lại cho bạn.Bạn sẽ không thể xác thực được tới dịch vụ "
 "như vậy nếu bạn chưa tự khởi chạy lại nó."
 
+#: ../libpam0g.templates:2001
 #. Type: error
 #. Description
-#: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "Trình quản lý trình bày phải được khởi chạy bằng tay"
 
+#: ../libpam0g.templates:2001
 #. Type: error
 #. Description
-#: ../libpam0g.templates:2001
 msgid ""
 "The kdm, wdm, and xdm display managers require a restart for the new version "
 "of libpam, but restarting these services would terminate any X session "
 "running inside.  Because the $DISPLAY variable is set in your environment, "
 "these services have not been restarted for you.  You will therefore need to "
 "restart them by hand before they will be usable again."
-msgstr ""
+msgstr "Trình quản lý trình bày kdm, wdm, hay xdm cần thiết được khởi chạy lại để sử dụng phiên bản mới của thư viện libpam, nhưng việc khởi chạy lại dịch vụ này sẽ cũng chấm dứt phiên chạy X đang hoạt động. Không tự động khởi chạy lại dịch vụ này cho bạn, vì biến môi trường $DISPLAY đã được đặt. Vì vậy bạn cần phải tự khởi chạy trình quản lý trình bày để có khả năng sử dụng nó lại."
 
+#: ../libpam0g.templates:3001
 #. Type: error
 #. Description
-#: ../libpam0g.templates:3001
 msgid "Failure restarting some services for PAM upgrade"
 msgstr "Lỗi khởi chạy lại một số dịch vụ để nâng cấp PAM"
 
+#: ../libpam0g.templates:3001
 #. Type: error
 #. Description
-#: ../libpam0g.templates:3001
 msgid ""
 "The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
 "Những dịch vụ theo đây không thể được khởi chạy lại để nâng cấp thư viện PAM:"
 
+#: ../libpam0g.templates:3001
 #. Type: error
 #. Description
-#: ../libpam0g.templates:3001
 msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
