@@ -6,15 +6,18 @@ _Description: Services to restart for PAM library upgrade:
  list of init.d scripts for services to be restarted now, and correct it
  if needed.
  .
- Among the services that require restarting are the display managers kdm,
- wdm, and xdm.  If you are upgrading from within an X session started with
- one of these display managers, restarting that service will terminate your
- X session.  It is recommended that you remove that service from the list
- here and restart it later at your convenience.
- .
  Some other services such as xscreensaver, gnome-screensaver, and xlockmore
  cannot be restarted for you.  You will not be able to authenticate to these
  services until you restart them manually.
+
+Template: libpam0g/xdm-needs-restart
+Type: error
+_Description: Display manager must be restarted manually
+ The kdm, wdm, and xdm display managers require a restart for the new
+ version of libpam, but restarting these services would terminate any X
+ session running inside.  Because the $DISPLAY variable is set in your
+ environment, these services have not been restarted for you.  You will
+ therefore need to restart them by hand before they will be usable again.
 
 Template: libpam0g/restart-failed
 Type: error

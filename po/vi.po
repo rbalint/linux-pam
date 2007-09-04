@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-08-30 08:07-0700\n"
+"POT-Creation-Date: 2007-09-03 23:24-0700\n"
 "PO-Revision-Date: 2007-08-31 21:13+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -16,60 +16,88 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: LocFactoryEditor 1.7b1\n"
 
-#: ../libpam0g.templates:1001
 #. Type: string
 #. Description
+#: ../libpam0g.templates:1001
 msgid "Services to restart for PAM library upgrade:"
 msgstr "Dịch vụ cần khởi chạy lại khi nâng cấp thư viện PAM:"
 
-#: ../libpam0g.templates:1001
 #. Type: string
 #. Description
+#: ../libpam0g.templates:1001
 msgid ""
 "Most services that use PAM need to be restarted to use modules built for "
 "this new version of libpam.  Please review the following space-separated "
 "list of init.d scripts for services to be restarted now, and correct it if "
 "needed."
-msgstr "Phần lớn dịch vụ sử dụng PAM cũng cần phải được khởi chạy lại để sử dụng các mô-đun được xây dựng cho phân vùng libpam mới này. Hãy xem lại danh sách định giới bằng dấu cách theo đây hiển thị các dịch vụ cần khởi chạy lại ngay bây giờ, và sửa chữa nếu cần thiết."
+msgstr ""
+"Phần lớn dịch vụ sử dụng PAM cũng cần phải được khởi chạy lại để sử dụng các "
+"mô-đun được xây dựng cho phân vùng libpam mới này. Hãy xem lại danh sách "
+"định giới bằng dấu cách theo đây hiển thị các dịch vụ cần khởi chạy lại ngay "
+"bây giờ, và sửa chữa nếu cần thiết."
 
-#: ../libpam0g.templates:1001
 #. Type: string
 #. Description
-msgid ""
-"Among the services that require restarting are the display managers kdm, "
-"wdm, and xdm.  If you are upgrading from within an X session started with "
-"one of these display managers, restarting that service will terminate your X "
-"session.  It is recommended that you remove that service from the list here "
-"and restart it later at your convenience."
-msgstr "Các dịch vụ cần khởi chạy lại bao gồm trình quản lý trình bày kđm, wdm và xdm. Nếu bạn đang nâng cấp từ bên trong phiên chạy X được bắt đầu bằng một của những trình quản lý trình bày này, việc khởi chạy lại dịch vụ đó sẽ cũng chấm dứt phiên chạy X của bạn. Khuyên bạn gỡ bỏ dịch vụ đó khỏi danh sách ở đây, rồi khởi chạy lại nó về sau."
-
 #: ../libpam0g.templates:1001
-#. Type: string
-#. Description
 msgid ""
 "Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
 "cannot be restarted for you.  You will not be able to authenticate to these "
 "services until you restart them manually."
-msgstr "Một số dịch vụ khác như xscreensaver, gnome-screensaver, và xlockmore không thể được khởi chạy lại cho bạn.Bạn sẽ không thể xác thực được tới dịch vụ như vậy nếu bạn chưa tự khởi chạy lại nó."
+msgstr ""
+"Một số dịch vụ khác như xscreensaver, gnome-screensaver, và xlockmore không "
+"thể được khởi chạy lại cho bạn.Bạn sẽ không thể xác thực được tới dịch vụ "
+"như vậy nếu bạn chưa tự khởi chạy lại nó."
 
-#: ../libpam0g.templates:2001
 #. Type: error
 #. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but restarting these services would terminate any X session "
+"running inside.  Because the $DISPLAY variable is set in your environment, "
+"these services have not been restarted for you.  You will therefore need to "
+"restart them by hand before they will be usable again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
 msgid "Failure restarting some services for PAM upgrade"
 msgstr "Lỗi khởi chạy lại một số dịch vụ để nâng cấp PAM"
 
-#: ../libpam0g.templates:2001
 #. Type: error
 #. Description
+#: ../libpam0g.templates:3001
 msgid ""
 "The following services could not be restarted for the PAM library upgrade:"
-msgstr "Những dịch vụ theo đây không thể được khởi chạy lại để nâng cấp thư viện PAM:"
+msgstr ""
+"Những dịch vụ theo đây không thể được khởi chạy lại để nâng cấp thư viện PAM:"
 
-#: ../libpam0g.templates:2001
 #. Type: error
 #. Description
+#: ../libpam0g.templates:3001
 msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
-msgstr "Bạn cần phải tự khởi chạy lại chúng bằng cách chạy lệnh « /etc/init.d/<tên_dịch_vụ> start »."
-""
+msgstr ""
+"Bạn cần phải tự khởi chạy lại chúng bằng cách chạy lệnh « /etc/init.d/"
+"<tên_dịch_vụ> start »."
+
+#~ msgid ""
+#~ "Among the services that require restarting are the display managers kdm, "
+#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
+#~ "one of these display managers, restarting that service will terminate "
+#~ "your X session.  It is recommended that you remove that service from the "
+#~ "list here and restart it later at your convenience."
+#~ msgstr ""
+#~ "Các dịch vụ cần khởi chạy lại bao gồm trình quản lý trình bày kđm, wdm và "
+#~ "xdm. Nếu bạn đang nâng cấp từ bên trong phiên chạy X được bắt đầu bằng "
+#~ "một của những trình quản lý trình bày này, việc khởi chạy lại dịch vụ đó "
+#~ "sẽ cũng chấm dứt phiên chạy X của bạn. Khuyên bạn gỡ bỏ dịch vụ đó khỏi "
+#~ "danh sách ở đây, rồi khởi chạy lại nó về sau."

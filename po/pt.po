@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.99.7.1-3\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-08-30 08:07-0700\n"
+"POT-Creation-Date: 2007-09-03 23:24-0700\n"
 "PO-Revision-Date: 2007-09-01 13:24+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@netcabo.pt>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -41,50 +41,66 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Among the services that require restarting are the display managers kdm, "
-"wdm, and xdm.  If you are upgrading from within an X session started with "
-"one of these display managers, restarting that service will terminate your X "
-"session.  It is recommended that you remove that service from the list here "
-"and restart it later at your convenience."
-msgstr ""
-"Entre os serviços que precisam ser reiniciados estão os gestores de 'display' "
-"kdm, wdm, e xdm. Se você está a actualizar de dentro duma sessão X iniciada "
-"por um destes gestores de 'display', reiniciar esse serviço irá terminar a "
-"sua sessão X. É recomendado que remova esse serviço desta lista aqui e o "
-"reinicie mais tarde quando lhe for conveniente."
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
 "Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
 "cannot be restarted for you.  You will not be able to authenticate to these "
 "services until you restart them manually."
 msgstr ""
-"Outros serviços como o xscreensaver, gnome-screensaver, e xlockmore não podem "
-"ser reiniciados para si. Você não vai poder autenticar-se nestes serviços até "
-"que você os reinicie manualmente."
+"Outros serviços como o xscreensaver, gnome-screensaver, e xlockmore não "
+"podem ser reiniciados para si. Você não vai poder autenticar-se nestes "
+"serviços até que você os reinicie manualmente."
 
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but restarting these services would terminate any X session "
+"running inside.  Because the $DISPLAY variable is set in your environment, "
+"these services have not been restarted for you.  You will therefore need to "
+"restart them by hand before they will be usable again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
 msgid "Failure restarting some services for PAM upgrade"
 msgstr "Falha ao reiniciar alguns serviços para a actualização PAM"
 
 #. Type: error
 #. Description
-#: ../libpam0g.templates:2001
-msgid "The following services could not be restarted for the PAM library upgrade:"
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
 "Os seguintes serviços não puderam ser reiniciados para a actualização da "
 "biblioteca PAM:"
 
 #. Type: error
 #. Description
-#: ../libpam0g.templates:2001
+#: ../libpam0g.templates:3001
 msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr ""
 "Você precisa de iniciar manualmente estes serviços fazendo '/etc/init.d/"
 "<service> start'."
+
+#~ msgid ""
+#~ "Among the services that require restarting are the display managers kdm, "
+#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
+#~ "one of these display managers, restarting that service will terminate "
+#~ "your X session.  It is recommended that you remove that service from the "
+#~ "list here and restart it later at your convenience."
+#~ msgstr ""
+#~ "Entre os serviços que precisam ser reiniciados estão os gestores de "
+#~ "'display' kdm, wdm, e xdm. Se você está a actualizar de dentro duma "
+#~ "sessão X iniciada por um destes gestores de 'display', reiniciar esse "
+#~ "serviço irá terminar a sua sessão X. É recomendado que remova esse "
+#~ "serviço desta lista aqui e o reinicie mais tarde quando lhe for "
+#~ "conveniente."

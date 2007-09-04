@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.99.7.1-4\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-08-30 08:07-0700\n"
+"POT-Creation-Date: 2007-09-03 23:24-0700\n"
 "PO-Revision-Date: 2007-09-01 09:32+0400\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
@@ -15,7 +15,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. Type: string
 #. Description
@@ -33,25 +34,9 @@ msgid ""
 "needed."
 msgstr ""
 "Чтобы задействовать новые версии модулей из libpam нужно перезапустить "
-"большинство сервисов, использующих PAM. Внимательно просмотрите "
-"список (элементы разделяются пробелом) сценариев сервисов из init.d, которые "
-"будут перезапущены и исправьте, если что не так."
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
-"Among the services that require restarting are the display managers kdm, "
-"wdm, and xdm.  If you are upgrading from within an X session started with "
-"one of these display managers, restarting that service will terminate your X "
-"session.  It is recommended that you remove that service from the list here "
-"and restart it later at your convenience."
-msgstr ""
-"Среди перезапускаемых сервисов есть менеджеры входа в систему: kdm, "
-"wdm и xdm. Если вы выполняете обновление из X-сессии и используется "
-"один из этих менеджеров, то перезапуск сервиса прервёт вашу X-сессию. "
-"Рекомендуется удалить такой сервис из списка и перезапустить его позже "
-"когда будет удобно."
+"большинство сервисов, использующих PAM. Внимательно просмотрите список "
+"(элементы разделяются пробелом) сценариев сервисов из init.d, которые будут "
+"перезапущены и исправьте, если что не так."
 
 #. Type: string
 #. Description
@@ -68,20 +53,52 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
-msgid "Failure restarting some services for PAM upgrade"
-msgstr "При обновлении PAM перезапуск некоторых сервисов завершился неудачно"
-
-#. Type: error
-#. Description
-#: ../libpam0g.templates:2001
-msgid "The following services could not be restarted for the PAM library upgrade:"
-msgstr "При обновлении библиотеки PAM не удалось перезапустить следующие сервисы:"
+msgid "Display manager must be restarted manually"
+msgstr ""
 
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
 msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but restarting these services would terminate any X session "
+"running inside.  Because the $DISPLAY variable is set in your environment, "
+"these services have not been restarted for you.  You will therefore need to "
+"restart them by hand before they will be usable again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "При обновлении PAM перезапуск некоторых сервисов завершился неудачно"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr ""
+"При обновлении библиотеки PAM не удалось перезапустить следующие сервисы:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
-msgstr "Вам нужно перезапустить их вручную, выполнив '/etc/init.d/<серсис> start'."
+msgstr ""
+"Вам нужно перезапустить их вручную, выполнив '/etc/init.d/<серсис> start'."
 
+#~ msgid ""
+#~ "Among the services that require restarting are the display managers kdm, "
+#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
+#~ "one of these display managers, restarting that service will terminate "
+#~ "your X session.  It is recommended that you remove that service from the "
+#~ "list here and restart it later at your convenience."
+#~ msgstr ""
+#~ "Среди перезапускаемых сервисов есть менеджеры входа в систему: kdm, wdm и "
+#~ "xdm. Если вы выполняете обновление из X-сессии и используется один из "
+#~ "этих менеджеров, то перезапуск сервиса прервёт вашу X-сессию. "
+#~ "Рекомендуется удалить такой сервис из списка и перезапустить его позже "
+#~ "когда будет удобно."

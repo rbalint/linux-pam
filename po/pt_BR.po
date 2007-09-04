@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam_0.99.7.1-4\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-08-30 08:07-0700\n"
+"POT-Creation-Date: 2007-09-03 23:24-0700\n"
 "PO-Revision-Date: 2007-08-30 15:53-0300\n"
 "Last-Translator: Eder L. Marques <frolic@debian-ce.org>\n"
 "Language-Team: l10n Portuguese <debian-l10n-portuguese@lists.debian.org>\n"
@@ -41,22 +41,6 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Among the services that require restarting are the display managers kdm, "
-"wdm, and xdm.  If you are upgrading from within an X session started with "
-"one of these display managers, restarting that service will terminate your X "
-"session.  It is recommended that you remove that service from the list here "
-"and restart it later at your convenience."
-msgstr ""
-"Entre os serviços que precisam ser reiniciados estão os gerenciadores de "
-"display kdm, wdm e xdm. Se você está atualizando dentro de uma sessão X "
-"iniciada por um destes gerenciadores de display, reiniciar o servico irá "
-"terminar com a sua sessão X. É recomendado que você remova o serviço da "
-"lista e reinicie-o mais tarde de acordo com a sua conveniência."
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
 "Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
 "cannot be restarted for you.  You will not be able to authenticate to these "
 "services until you restart them manually."
@@ -68,12 +52,29 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but restarting these services would terminate any X session "
+"running inside.  Because the $DISPLAY variable is set in your environment, "
+"these services have not been restarted for you.  You will therefore need to "
+"restart them by hand before they will be usable again."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
 msgid "Failure restarting some services for PAM upgrade"
 msgstr "Falha ao reiniciar alguns serviços para a atualização da PAM"
 
 #. Type: error
 #. Description
-#: ../libpam0g.templates:2001
+#: ../libpam0g.templates:3001
 msgid ""
 "The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
@@ -82,9 +83,22 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../libpam0g.templates:2001
+#: ../libpam0g.templates:3001
 msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr ""
 "Você deverá iniciá-los manualmente executando '/etc/init.d/<serviço> start'."
+
+#~ msgid ""
+#~ "Among the services that require restarting are the display managers kdm, "
+#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
+#~ "one of these display managers, restarting that service will terminate "
+#~ "your X session.  It is recommended that you remove that service from the "
+#~ "list here and restart it later at your convenience."
+#~ msgstr ""
+#~ "Entre os serviços que precisam ser reiniciados estão os gerenciadores de "
+#~ "display kdm, wdm e xdm. Se você está atualizando dentro de uma sessão X "
+#~ "iniciada por um destes gerenciadores de display, reiniciar o servico irá "
+#~ "terminar com a sua sessão X. É recomendado que você remova o serviço da "
+#~ "lista e reinicie-o mais tarde de acordo com a sua conveniência."
