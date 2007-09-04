@@ -20,15 +20,7 @@ Index: pam/Linux-PAM/Makefile.in
  	depcomp install-sh ltmain.sh missing mkinstalldirs ylwrap
  ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
  am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
-@@ -129,6 +129,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -171,6 +172,7 @@
+@@ -171,6 +171,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -1279,15 +1271,7 @@ Index: pam/Linux-PAM/conf/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/conf/Makefile.in
 +++ pam/Linux-PAM/conf/Makefile.in
-@@ -108,6 +108,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -150,6 +151,7 @@
+@@ -150,6 +150,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -1299,15 +1283,7 @@ Index: pam/Linux-PAM/conf/pam_conv1/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/conf/pam_conv1/Makefile.in
 +++ pam/Linux-PAM/conf/pam_conv1/Makefile.in
-@@ -128,6 +128,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -170,6 +171,7 @@
+@@ -170,6 +170,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -1361,15 +1337,7 @@ Index: pam/Linux-PAM/configure
  GREP
  EGREP
  ECHO
-@@ -908,6 +909,7 @@
- LIBSELINUX
- HAVE_LIBSELINUX_TRUE
- HAVE_LIBSELINUX_FALSE
-+LIBCAP
- LIBOBJS
- HAVE_UNSHARE_TRUE
- HAVE_UNSHARE_FALSE
-@@ -4252,12 +4254,13 @@
+@@ -4252,12 +4253,13 @@
    test -z "$as_dir" && as_dir=.
    for lt_ac_prog in sed gsed; do
      for ac_exec_ext in '' $ac_executable_extensions; do
@@ -1384,7 +1352,7 @@ Index: pam/Linux-PAM/configure
  lt_ac_max=0
  lt_ac_count=0
  # Add /usr/xpg4/bin/sed as it is typically found on Solaris
-@@ -4292,6 +4295,7 @@
+@@ -4292,6 +4294,7 @@
  fi
  
  SED=$lt_cv_path_SED
@@ -1392,7 +1360,7 @@ Index: pam/Linux-PAM/configure
  { echo "$as_me:$LINENO: result: $SED" >&5
  echo "${ECHO_T}$SED" >&6; }
  
-@@ -4642,8 +4646,8 @@
+@@ -4642,8 +4645,8 @@
  echo "${ECHO_T}$lt_cv_path_NM" >&6; }
  NM="$lt_cv_path_NM"
  
@@ -1403,7 +1371,7 @@ Index: pam/Linux-PAM/configure
  if test "${lt_cv_deplibs_check_method+set}" = set; then
    echo $ECHO_N "(cached) $ECHO_C" >&6
  else
-@@ -4684,16 +4688,22 @@
+@@ -4684,16 +4687,22 @@
  
  mingw* | pw32*)
    # Base MSYS/MinGW do not provide the 'file' command needed by
@@ -1430,7 +1398,7 @@ Index: pam/Linux-PAM/configure
    if echo __ELF__ | $CC -E - | grep __ELF__ > /dev/null; then
      case $host_cpu in
      i*86 )
-@@ -4731,7 +4741,7 @@
+@@ -4731,7 +4740,7 @@
    esac
    ;;
  
@@ -1439,7 +1407,7 @@ Index: pam/Linux-PAM/configure
    # PIC code is broken on Interix 3.x, that's why |\.a not |_pic\.a here
    lt_cv_deplibs_check_method='match_pattern /lib[^/]+(\.so|\.a)$'
    ;;
-@@ -4747,11 +4757,11 @@
+@@ -4747,11 +4756,11 @@
    ;;
  
  # This must be Linux ELF.
@@ -1453,7 +1421,7 @@ Index: pam/Linux-PAM/configure
    if echo __ELF__ | $CC -E - | grep __ELF__ > /dev/null; then
      lt_cv_deplibs_check_method='match_pattern /lib[^/]+(\.so\.[0-9]+\.[0-9]+|_pic\.a)$'
    else
-@@ -4781,6 +4791,10 @@
+@@ -4781,6 +4790,10 @@
    lt_cv_deplibs_check_method=pass_all
    ;;
  
@@ -1464,16 +1432,16 @@ Index: pam/Linux-PAM/configure
  solaris*)
    lt_cv_deplibs_check_method=pass_all
    ;;
-@@ -4867,7 +4881,7 @@
+@@ -4867,7 +4880,7 @@
    ;;
  *-*-irix6*)
    # Find out which ABI we are using.
 -  echo '#line 4870 "configure"' > conftest.$ac_ext
-+  echo '#line 4884 "configure"' > conftest.$ac_ext
++  echo '#line 4883 "configure"' > conftest.$ac_ext
    if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
    ac_status=$?
-@@ -4902,7 +4916,8 @@
+@@ -4902,7 +4915,8 @@
    rm -rf conftest*
    ;;
  
@@ -1483,7 +1451,7 @@ Index: pam/Linux-PAM/configure
    # Find out which ABI we are using.
    echo 'int i;' > conftest.$ac_ext
    if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
-@@ -4913,6 +4928,9 @@
+@@ -4913,6 +4927,9 @@
      case `/usr/bin/file conftest.o` in
      *32-bit*)
        case $host in
@@ -1493,7 +1461,7 @@ Index: pam/Linux-PAM/configure
          x86_64-*linux*)
            LD="${LD-ld} -m elf_i386"
            ;;
-@@ -4929,6 +4947,9 @@
+@@ -4929,6 +4946,9 @@
        ;;
      *64-bit*)
        case $host in
@@ -1503,7 +1471,7 @@ Index: pam/Linux-PAM/configure
          x86_64-*linux*)
            LD="${LD-ld} -m elf_x86_64"
            ;;
-@@ -6716,24 +6737,27 @@
+@@ -6716,24 +6736,27 @@
      fi
      ;;
    *)
@@ -1548,7 +1516,7 @@ Index: pam/Linux-PAM/configure
      ;;
    esac
  
-@@ -6750,6 +6774,7 @@
+@@ -6750,6 +6773,7 @@
  
  
  
@@ -1556,7 +1524,7 @@ Index: pam/Linux-PAM/configure
  # Check for command to grab the raw symbol name followed by C symbol from nm.
  { echo "$as_me:$LINENO: checking command to parse $NM output from $compiler object" >&5
  echo $ECHO_N "checking command to parse $NM output from $compiler object... $ECHO_C" >&6; }
-@@ -6787,7 +6812,7 @@
+@@ -6787,7 +6811,7 @@
    lt_cv_sys_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^$symcode* .* \(.*\)$/extern char \1;/p'"
    lt_cv_sys_global_symbol_to_c_name_address="sed -n -e 's/^: \([^ ]*\) $/  {\\\"\1\\\", (lt_ptr) 0},/p' -e 's/^$symcode* \([^ ]*\) \([^ ]*\)$/  {\"\2\", (lt_ptr) \&\2},/p'"
    ;;
@@ -1565,7 +1533,7 @@ Index: pam/Linux-PAM/configure
    if test "$host_cpu" = ia64; then
      symcode='[ABCDGIRSTW]'
      lt_cv_sys_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^$symcode* .* \(.*\)$/extern char \1;/p'"
-@@ -7338,7 +7363,7 @@
+@@ -7338,7 +7362,7 @@
  test -z "$ac_objext" && ac_objext=o
  
  # Determine commands to create old-style static archives.
@@ -1574,7 +1542,7 @@ Index: pam/Linux-PAM/configure
  old_postinstall_cmds='chmod 644 $oldlib'
  old_postuninstall_cmds=
  
-@@ -7538,10 +7563,10 @@
+@@ -7538,10 +7562,10 @@
  objext=$objext
  
  # Code to be used in simple compile tests
@@ -1587,7 +1555,7 @@ Index: pam/Linux-PAM/configure
  
  
  # If no C compiler was specified, use CC.
-@@ -7556,13 +7581,13 @@
+@@ -7556,13 +7580,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -1603,7 +1571,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -7582,7 +7607,7 @@
+@@ -7582,7 +7606,7 @@
  else
    lt_cv_prog_compiler_rtti_exceptions=no
    ac_outfile=conftest.$ac_objext
@@ -1612,21 +1580,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="-fno-rtti -fno-exceptions"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -7593,11 +7618,11 @@
+@@ -7593,11 +7617,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:7596: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:7621: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:7620: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:7600: \$? = $ac_status" >&5
-+   echo "$as_me:7625: \$? = $ac_status" >&5
++   echo "$as_me:7624: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -7648,13 +7673,15 @@
+@@ -7648,13 +7672,15 @@
        lt_prog_compiler_pic='-m68020 -resident32 -malways-restore-a4'
        ;;
  
@@ -1644,7 +1612,7 @@ Index: pam/Linux-PAM/configure
        lt_prog_compiler_pic='-DDLL_EXPORT'
        ;;
  
-@@ -7664,7 +7691,7 @@
+@@ -7664,7 +7690,7 @@
        lt_prog_compiler_pic='-fno-common'
        ;;
  
@@ -1653,7 +1621,7 @@ Index: pam/Linux-PAM/configure
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -7722,7 +7749,7 @@
+@@ -7722,7 +7748,7 @@
         esac
         ;;
  
@@ -1662,7 +1630,7 @@ Index: pam/Linux-PAM/configure
        # This hack is so that the source file can tell whether it is being
        # built for inclusion in a dll (and should export symbols for example).
        lt_prog_compiler_pic='-DDLL_EXPORT'
-@@ -7755,7 +7782,7 @@
+@@ -7755,7 +7781,7 @@
        lt_prog_compiler_static='-Bstatic'
        ;;
  
@@ -1671,7 +1639,7 @@ Index: pam/Linux-PAM/configure
        case $cc_basename in
        icc* | ecc*)
  	lt_prog_compiler_wl='-Wl,'
-@@ -7774,6 +7801,22 @@
+@@ -7774,6 +7800,22 @@
          # All Alpha code is PIC.
          lt_prog_compiler_static='-non_shared'
          ;;
@@ -1694,7 +1662,7 @@ Index: pam/Linux-PAM/configure
        esac
        ;;
  
-@@ -7783,6 +7826,10 @@
+@@ -7783,6 +7825,10 @@
        lt_prog_compiler_static='-non_shared'
        ;;
  
@@ -1705,7 +1673,7 @@ Index: pam/Linux-PAM/configure
      solaris*)
        lt_prog_compiler_pic='-KPIC'
        lt_prog_compiler_static='-Bstatic'
-@@ -7850,7 +7897,7 @@
+@@ -7850,7 +7896,7 @@
  else
    lt_prog_compiler_pic_works=no
    ac_outfile=conftest.$ac_objext
@@ -1714,21 +1682,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="$lt_prog_compiler_pic -DPIC"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -7861,11 +7908,11 @@
+@@ -7861,11 +7907,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:7864: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:7911: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:7910: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:7868: \$? = $ac_status" >&5
-+   echo "$as_me:7915: \$? = $ac_status" >&5
++   echo "$as_me:7914: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -7914,7 +7961,7 @@
+@@ -7914,7 +7960,7 @@
    lt_prog_compiler_static_works=no
     save_LDFLAGS="$LDFLAGS"
     LDFLAGS="$LDFLAGS $lt_tmp_static_flag"
@@ -1737,7 +1705,7 @@ Index: pam/Linux-PAM/configure
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -7954,7 +8001,7 @@
+@@ -7954,7 +8000,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -1746,21 +1714,21 @@ Index: pam/Linux-PAM/configure
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -7965,11 +8012,11 @@
+@@ -7965,11 +8011,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:7968: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:8015: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:8014: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>out/conftest.err)
     ac_status=$?
     cat out/conftest.err >&5
 -   echo "$as_me:7972: \$? = $ac_status" >&5
-+   echo "$as_me:8019: \$? = $ac_status" >&5
++   echo "$as_me:8018: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s out/conftest2.$ac_objext
     then
       # The compiler can only warn and ignore the option if not recognized
-@@ -8161,7 +8208,7 @@
+@@ -8161,7 +8207,7 @@
        allow_undefined_flag=unsupported
        always_export_symbols=no
        enable_shared_with_static_runtimes=yes
@@ -1769,7 +1737,7 @@ Index: pam/Linux-PAM/configure
  
        if $LD --help 2>&1 | grep 'auto-import' > /dev/null; then
          archive_cmds='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-@@ -8179,7 +8226,7 @@
+@@ -8179,7 +8225,7 @@
        fi
        ;;
  
@@ -1778,7 +1746,7 @@ Index: pam/Linux-PAM/configure
        hardcode_direct=no
        hardcode_shlibpath_var=no
        hardcode_libdir_flag_spec='${wl}-rpath,$libdir'
-@@ -8194,7 +8241,7 @@
+@@ -8194,7 +8240,7 @@
        archive_expsym_cmds='sed "s,^,_," $export_symbols >$output_objdir/$soname.expsym~$CC -shared $pic_flag $libobjs $deplibs $compiler_flags ${wl}-h,$soname ${wl}--retain-symbols-file,$output_objdir/$soname.expsym ${wl}--image-base,`expr ${RANDOM-$$} % 4096 / 2 \* 262144 + 1342177280` -o $lib'
        ;;
  
@@ -1787,7 +1755,7 @@ Index: pam/Linux-PAM/configure
        if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
  	tmp_addflag=
  	case $cc_basename,$host_cpu in
-@@ -8212,20 +8259,30 @@
+@@ -8212,20 +8258,30 @@
  	ifc* | ifort*)			# Intel Fortran compiler
  	  tmp_addflag=' -nofor_main' ;;
  	esac
@@ -1821,7 +1789,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
  	wlarc=
-@@ -8377,7 +8434,7 @@
+@@ -8377,7 +8433,7 @@
    	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	  then
    	  # We have reworked collect2
@@ -1830,7 +1798,7 @@ Index: pam/Linux-PAM/configure
  	  else
    	  # We have old collect2
    	  hardcode_direct=unsupported
-@@ -8451,11 +8508,18 @@
+@@ -8451,11 +8507,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -1853,7 +1821,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -8510,11 +8574,18 @@
+@@ -8510,11 +8573,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -1876,7 +1844,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -8568,7 +8639,7 @@
+@@ -8568,7 +8638,7 @@
        # The linker will automatically build a .lib file if we build a DLL.
        old_archive_From_new_cmds='true'
        # FIXME: Should let the user specify the lib program.
@@ -1885,7 +1853,7 @@ Index: pam/Linux-PAM/configure
        fix_srcfile_path='`cygpath -w "$srcfile"`'
        enable_shared_with_static_runtimes=yes
        ;;
-@@ -8610,10 +8681,10 @@
+@@ -8610,10 +8680,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -1898,7 +1866,7 @@ Index: pam/Linux-PAM/configure
            module_expsym_cmds='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -8653,7 +8724,7 @@
+@@ -8653,7 +8723,7 @@
        ;;
  
      # FreeBSD 3 and greater uses gcc -shared to do shared libraries.
@@ -1907,7 +1875,7 @@ Index: pam/Linux-PAM/configure
        archive_cmds='$CC -shared -o $lib $libobjs $deplibs $compiler_flags'
        hardcode_libdir_flag_spec='-R$libdir'
        hardcode_direct=yes
-@@ -8755,7 +8826,7 @@
+@@ -8755,7 +8825,7 @@
        link_all_deplibs=yes
        ;;
  
@@ -1916,7 +1884,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
        else
-@@ -8775,24 +8846,28 @@
+@@ -8775,24 +8845,28 @@
        ;;
  
      openbsd*)
@@ -1962,7 +1930,7 @@ Index: pam/Linux-PAM/configure
        fi
        ;;
  
-@@ -8851,17 +8926,16 @@
+@@ -8851,17 +8925,16 @@
        case $host_os in
        solaris2.[0-5] | solaris2.[0-5].*) ;;
        *)
@@ -1989,7 +1957,7 @@ Index: pam/Linux-PAM/configure
        esac
        link_all_deplibs=yes
        ;;
-@@ -8918,7 +8992,7 @@
+@@ -8918,7 +8991,7 @@
        fi
        ;;
  
@@ -1998,7 +1966,7 @@ Index: pam/Linux-PAM/configure
        no_undefined_flag='${wl}-z,text'
        archive_cmds_need_lc=no
        hardcode_shlibpath_var=no
-@@ -8995,7 +9069,7 @@
+@@ -8995,7 +9068,7 @@
        { echo "$as_me:$LINENO: checking whether -lc should be explicitly linked in" >&5
  echo $ECHO_N "checking whether -lc should be explicitly linked in... $ECHO_C" >&6; }
        $rm conftest*
@@ -2007,7 +1975,7 @@ Index: pam/Linux-PAM/configure
  
        if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
-@@ -9053,17 +9127,55 @@
+@@ -9053,17 +9126,55 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -2067,7 +2035,7 @@ Index: pam/Linux-PAM/configure
  else
    sys_lib_search_path_spec="/lib /usr/lib /usr/local/lib"
  fi
-@@ -9223,12 +9335,8 @@
+@@ -9223,12 +9334,8 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -2082,7 +2050,7 @@ Index: pam/Linux-PAM/configure
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -9245,18 +9353,6 @@
+@@ -9245,18 +9352,6 @@
    dynamic_linker=no
    ;;
  
@@ -2101,7 +2069,7 @@ Index: pam/Linux-PAM/configure
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -9294,7 +9390,7 @@
+@@ -9294,7 +9389,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -2110,7 +2078,7 @@ Index: pam/Linux-PAM/configure
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -9357,7 +9453,7 @@
+@@ -9357,7 +9452,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -2119,7 +2087,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -9412,7 +9508,7 @@
+@@ -9412,7 +9507,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -2128,7 +2096,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -9428,7 +9524,7 @@
+@@ -9428,7 +9523,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -2137,7 +2105,7 @@ Index: pam/Linux-PAM/configure
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -9441,7 +9537,7 @@
+@@ -9441,7 +9536,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -2146,7 +2114,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -9450,7 +9546,7 @@
+@@ -9450,7 +9545,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -2155,7 +2123,7 @@ Index: pam/Linux-PAM/configure
    ;;
  
  netbsd*)
-@@ -9534,6 +9630,10 @@
+@@ -9534,6 +9629,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -2166,7 +2134,7 @@ Index: pam/Linux-PAM/configure
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -9687,6 +9787,7 @@
+@@ -9687,6 +9786,7 @@
     darwin*)
         if test -n "$STRIP" ; then
           striplib="$STRIP -x"
@@ -2174,25 +2142,25 @@ Index: pam/Linux-PAM/configure
           { echo "$as_me:$LINENO: result: yes" >&5
  echo "${ECHO_T}yes" >&6; }
         else
-@@ -10273,7 +10374,7 @@
+@@ -10273,7 +10373,7 @@
    lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
    lt_status=$lt_dlunknown
    cat > conftest.$ac_ext <<EOF
 -#line 10276 "configure"
-+#line 10377 "configure"
++#line 10376 "configure"
  #include "confdefs.h"
  
  #if HAVE_DLFCN_H
-@@ -10373,7 +10474,7 @@
+@@ -10373,7 +10473,7 @@
    lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
    lt_status=$lt_dlunknown
    cat > conftest.$ac_ext <<EOF
 -#line 10376 "configure"
-+#line 10477 "configure"
++#line 10476 "configure"
  #include "confdefs.h"
  
  #if HAVE_DLFCN_H
-@@ -10571,6 +10672,7 @@
+@@ -10571,6 +10671,7 @@
      module_cmds \
      module_expsym_cmds \
      lt_cv_prog_compiler_c_o \
@@ -2200,7 +2168,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms \
      include_expsyms; do
  
-@@ -10615,7 +10717,7 @@
+@@ -10615,7 +10716,7 @@
  # Generated automatically by $PROGRAM (GNU $PACKAGE $VERSION$TIMESTAMP)
  # NOTE: Changes made to this file will be lost: look at ltmain.sh.
  #
@@ -2209,7 +2177,7 @@ Index: pam/Linux-PAM/configure
  # Free Software Foundation, Inc.
  #
  # This file is part of GNU Libtool:
-@@ -10939,7 +11041,7 @@
+@@ -10939,7 +11040,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -2218,7 +2186,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols
-@@ -11108,10 +11210,10 @@
+@@ -11108,10 +11209,10 @@
  objext_CXX=$objext
  
  # Code to be used in simple compile tests
@@ -2231,7 +2199,7 @@ Index: pam/Linux-PAM/configure
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  
-@@ -11127,13 +11229,13 @@
+@@ -11127,13 +11228,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -2247,7 +2215,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -11392,7 +11494,7 @@
+@@ -11392,7 +11493,7 @@
  	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	then
  	  # We have reworked collect2
@@ -2256,7 +2224,7 @@ Index: pam/Linux-PAM/configure
  	else
  	  # We have old collect2
  	  hardcode_direct_CXX=unsupported
-@@ -11466,11 +11568,18 @@
+@@ -11466,11 +11567,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -2279,7 +2247,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -11526,11 +11635,18 @@
+@@ -11526,11 +11634,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -2302,7 +2270,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -11649,10 +11765,10 @@
+@@ -11649,10 +11764,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -2315,7 +2283,7 @@ Index: pam/Linux-PAM/configure
            module_expsym_cmds_CXX='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -11686,7 +11802,7 @@
+@@ -11686,7 +11801,7 @@
    freebsd-elf*)
      archive_cmds_need_lc_CXX=no
      ;;
@@ -2324,7 +2292,7 @@ Index: pam/Linux-PAM/configure
      # FreeBSD 3 and later use GNU C++ and GNU ld with standard ELF
      # conventions
      ld_shlibs_CXX=yes
-@@ -11735,9 +11851,7 @@
+@@ -11735,9 +11850,7 @@
        hardcode_libdir_separator_CXX=:
  
        case $host_cpu in
@@ -2335,7 +2303,7 @@ Index: pam/Linux-PAM/configure
        *)
  	export_dynamic_flag_spec_CXX='${wl}-E'
          ;;
-@@ -11805,7 +11919,7 @@
+@@ -11805,7 +11918,7 @@
  	;;
      esac
      ;;
@@ -2344,7 +2312,7 @@ Index: pam/Linux-PAM/configure
      hardcode_direct_CXX=no
      hardcode_shlibpath_var_CXX=no
      hardcode_libdir_flag_spec_CXX='${wl}-rpath,$libdir'
-@@ -11845,7 +11959,7 @@
+@@ -11845,7 +11958,7 @@
      hardcode_libdir_flag_spec_CXX='${wl}-rpath ${wl}$libdir'
      hardcode_libdir_separator_CXX=:
      ;;
@@ -2353,7 +2321,7 @@ Index: pam/Linux-PAM/configure
      case $cc_basename in
        KCC*)
  	# Kuck and Associates, Inc. (KAI) C++ Compiler
-@@ -11925,6 +12039,29 @@
+@@ -11925,6 +12038,29 @@
  	# dependencies.
  	output_verbose_link_cmd='templist=`$CC -shared $CFLAGS -v conftest.$objext 2>&1 | grep "ld"`; templist=`echo $templist | $SED "s/\(^.*ld.*\)\( .*ld .*$\)/\1/"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
  	;;
@@ -2383,7 +2351,7 @@ Index: pam/Linux-PAM/configure
      esac
      ;;
    lynxos*)
-@@ -11947,7 +12084,7 @@
+@@ -11947,7 +12083,7 @@
  	;;
      esac
      ;;
@@ -2392,7 +2360,7 @@ Index: pam/Linux-PAM/configure
      if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
        archive_cmds_CXX='$LD -Bshareable  -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linker_flags'
        wlarc=
-@@ -11963,16 +12100,20 @@
+@@ -11963,16 +12099,20 @@
      ld_shlibs_CXX=no
      ;;
    openbsd*)
@@ -2422,7 +2390,7 @@ Index: pam/Linux-PAM/configure
      ;;
    osf3*)
      case $cc_basename in
-@@ -12134,15 +12275,10 @@
+@@ -12134,15 +12274,10 @@
  	case $host_os in
  	  solaris2.[0-5] | solaris2.[0-5].*) ;;
  	  *)
@@ -2441,7 +2409,7 @@ Index: pam/Linux-PAM/configure
  	    ;;
  	esac
  	link_all_deplibs_CXX=yes
-@@ -12189,6 +12325,12 @@
+@@ -12189,6 +12324,12 @@
  	  fi
  
  	  hardcode_libdir_flag_spec_CXX='${wl}-R $wl$libdir'
@@ -2454,7 +2422,7 @@ Index: pam/Linux-PAM/configure
  	fi
  	;;
      esac
-@@ -12380,7 +12522,7 @@
+@@ -12380,7 +12521,7 @@
  
  # PORTME: override above test on systems where it is broken
  case $host_os in
@@ -2463,7 +2431,7 @@ Index: pam/Linux-PAM/configure
    # Interix 3.5 installs completely hosed .la files for C++, so rather than
    # hack all around it, let's just trust "g++" to DTRT.
    predep_objects_CXX=
-@@ -12388,13 +12530,46 @@
+@@ -12388,13 +12529,46 @@
    postdeps_CXX=
    ;;
  
@@ -2511,7 +2479,7 @@ Index: pam/Linux-PAM/configure
      ;;
    esac
    ;;
-@@ -12431,12 +12606,14 @@
+@@ -12431,12 +12605,14 @@
        # like `-m68040'.
        lt_prog_compiler_pic_CXX='-m68020 -resident32 -malways-restore-a4'
        ;;
@@ -2528,7 +2496,7 @@ Index: pam/Linux-PAM/configure
        lt_prog_compiler_pic_CXX='-DDLL_EXPORT'
        ;;
      darwin* | rhapsody*)
-@@ -12448,7 +12625,7 @@
+@@ -12448,7 +12624,7 @@
        # DJGPP does not support shared libraries at all
        lt_prog_compiler_pic_CXX=
        ;;
@@ -2537,7 +2505,7 @@ Index: pam/Linux-PAM/configure
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -12514,7 +12691,7 @@
+@@ -12514,7 +12690,7 @@
  	    ;;
  	esac
  	;;
@@ -2546,7 +2514,7 @@ Index: pam/Linux-PAM/configure
  	# FreeBSD uses GNU C++
  	;;
        hpux9* | hpux10* | hpux11*)
-@@ -12557,7 +12734,7 @@
+@@ -12557,7 +12733,7 @@
  	    ;;
  	esac
  	;;
@@ -2555,7 +2523,7 @@ Index: pam/Linux-PAM/configure
  	case $cc_basename in
  	  KCC*)
  	    # KAI C++ Compiler
-@@ -12584,6 +12761,14 @@
+@@ -12584,6 +12760,14 @@
  	    lt_prog_compiler_static_CXX='-non_shared'
  	    ;;
  	  *)
@@ -2570,7 +2538,7 @@ Index: pam/Linux-PAM/configure
  	    ;;
  	esac
  	;;
-@@ -12600,7 +12785,7 @@
+@@ -12600,7 +12784,7 @@
  	    ;;
  	esac
  	;;
@@ -2579,7 +2547,7 @@ Index: pam/Linux-PAM/configure
  	;;
        osf3* | osf4* | osf5*)
  	case $cc_basename in
-@@ -12698,7 +12883,7 @@
+@@ -12698,7 +12882,7 @@
  else
    lt_prog_compiler_pic_works_CXX=no
    ac_outfile=conftest.$ac_objext
@@ -2588,21 +2556,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="$lt_prog_compiler_pic_CXX -DPIC"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -12709,11 +12894,11 @@
+@@ -12709,11 +12893,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:12712: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:12897: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:12896: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:12716: \$? = $ac_status" >&5
-+   echo "$as_me:12901: \$? = $ac_status" >&5
++   echo "$as_me:12900: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -12762,7 +12947,7 @@
+@@ -12762,7 +12946,7 @@
    lt_prog_compiler_static_works_CXX=no
     save_LDFLAGS="$LDFLAGS"
     LDFLAGS="$LDFLAGS $lt_tmp_static_flag"
@@ -2611,7 +2579,7 @@ Index: pam/Linux-PAM/configure
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -12802,7 +12987,7 @@
+@@ -12802,7 +12986,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -2620,21 +2588,21 @@ Index: pam/Linux-PAM/configure
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -12813,11 +12998,11 @@
+@@ -12813,11 +12997,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:12816: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:13001: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:13000: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>out/conftest.err)
     ac_status=$?
     cat out/conftest.err >&5
 -   echo "$as_me:12820: \$? = $ac_status" >&5
-+   echo "$as_me:13005: \$? = $ac_status" >&5
++   echo "$as_me:13004: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s out/conftest2.$ac_objext
     then
       # The compiler can only warn and ignore the option if not recognized
-@@ -12883,7 +13068,10 @@
+@@ -12883,7 +13067,10 @@
      export_symbols_cmds_CXX="$ltdll_cmds"
    ;;
    cygwin* | mingw*)
@@ -2646,7 +2614,7 @@ Index: pam/Linux-PAM/configure
    ;;
    *)
      export_symbols_cmds_CXX='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
-@@ -12914,7 +13102,7 @@
+@@ -12914,7 +13101,7 @@
        { echo "$as_me:$LINENO: checking whether -lc should be explicitly linked in" >&5
  echo $ECHO_N "checking whether -lc should be explicitly linked in... $ECHO_C" >&6; }
        $rm conftest*
@@ -2655,7 +2623,7 @@ Index: pam/Linux-PAM/configure
  
        if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
-@@ -12972,20 +13160,7 @@
+@@ -12972,20 +13159,7 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -2677,7 +2645,7 @@ Index: pam/Linux-PAM/configure
  need_lib_prefix=unknown
  hardcode_into_libs=no
  
-@@ -13142,12 +13317,7 @@
+@@ -13142,12 +13316,7 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -2691,7 +2659,7 @@ Index: pam/Linux-PAM/configure
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -13164,18 +13334,6 @@
+@@ -13164,18 +13333,6 @@
    dynamic_linker=no
    ;;
  
@@ -2710,7 +2678,7 @@ Index: pam/Linux-PAM/configure
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -13213,7 +13371,7 @@
+@@ -13213,7 +13370,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -2719,7 +2687,7 @@ Index: pam/Linux-PAM/configure
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -13276,7 +13434,7 @@
+@@ -13276,7 +13433,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -2728,7 +2696,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -13331,7 +13489,7 @@
+@@ -13331,7 +13488,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -2737,7 +2705,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -13347,7 +13505,7 @@
+@@ -13347,7 +13504,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -2746,7 +2714,7 @@ Index: pam/Linux-PAM/configure
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -13360,7 +13518,7 @@
+@@ -13360,7 +13517,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -2755,7 +2723,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -13369,7 +13527,7 @@
+@@ -13369,7 +13526,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -2764,7 +2732,7 @@ Index: pam/Linux-PAM/configure
    ;;
  
  netbsd*)
-@@ -13453,6 +13611,10 @@
+@@ -13453,6 +13610,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -2775,7 +2743,7 @@ Index: pam/Linux-PAM/configure
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -13647,6 +13809,7 @@
+@@ -13647,6 +13808,7 @@
      module_cmds_CXX \
      module_expsym_cmds_CXX \
      lt_cv_prog_compiler_c_o_CXX \
@@ -2783,7 +2751,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms_CXX \
      include_expsyms_CXX; do
  
-@@ -13967,7 +14130,7 @@
+@@ -13967,7 +14129,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -2792,7 +2760,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols_CXX
-@@ -14058,10 +14221,17 @@
+@@ -14058,10 +14220,17 @@
  objext_F77=$objext
  
  # Code to be used in simple compile tests
@@ -2812,7 +2780,7 @@ Index: pam/Linux-PAM/configure
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  
-@@ -14077,13 +14247,13 @@
+@@ -14077,13 +14246,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -2828,7 +2796,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -14170,13 +14340,15 @@
+@@ -14170,13 +14339,15 @@
        lt_prog_compiler_pic_F77='-m68020 -resident32 -malways-restore-a4'
        ;;
  
@@ -2846,7 +2814,7 @@ Index: pam/Linux-PAM/configure
        lt_prog_compiler_pic_F77='-DDLL_EXPORT'
        ;;
  
-@@ -14186,7 +14358,7 @@
+@@ -14186,7 +14357,7 @@
        lt_prog_compiler_pic_F77='-fno-common'
        ;;
  
@@ -2855,7 +2823,7 @@ Index: pam/Linux-PAM/configure
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -14244,7 +14416,7 @@
+@@ -14244,7 +14415,7 @@
         esac
         ;;
  
@@ -2864,7 +2832,7 @@ Index: pam/Linux-PAM/configure
        # This hack is so that the source file can tell whether it is being
        # built for inclusion in a dll (and should export symbols for example).
        lt_prog_compiler_pic_F77='-DDLL_EXPORT'
-@@ -14277,7 +14449,7 @@
+@@ -14277,7 +14448,7 @@
        lt_prog_compiler_static_F77='-Bstatic'
        ;;
  
@@ -2873,7 +2841,7 @@ Index: pam/Linux-PAM/configure
        case $cc_basename in
        icc* | ecc*)
  	lt_prog_compiler_wl_F77='-Wl,'
-@@ -14296,6 +14468,22 @@
+@@ -14296,6 +14467,22 @@
          # All Alpha code is PIC.
          lt_prog_compiler_static_F77='-non_shared'
          ;;
@@ -2896,7 +2864,7 @@ Index: pam/Linux-PAM/configure
        esac
        ;;
  
-@@ -14305,6 +14493,10 @@
+@@ -14305,6 +14492,10 @@
        lt_prog_compiler_static_F77='-non_shared'
        ;;
  
@@ -2907,7 +2875,7 @@ Index: pam/Linux-PAM/configure
      solaris*)
        lt_prog_compiler_pic_F77='-KPIC'
        lt_prog_compiler_static_F77='-Bstatic'
-@@ -14372,7 +14564,7 @@
+@@ -14372,7 +14563,7 @@
  else
    lt_prog_compiler_pic_works_F77=no
    ac_outfile=conftest.$ac_objext
@@ -2916,21 +2884,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="$lt_prog_compiler_pic_F77"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -14383,11 +14575,11 @@
+@@ -14383,11 +14574,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:14386: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:14578: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:14577: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:14390: \$? = $ac_status" >&5
-+   echo "$as_me:14582: \$? = $ac_status" >&5
++   echo "$as_me:14581: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -14436,7 +14628,7 @@
+@@ -14436,7 +14627,7 @@
    lt_prog_compiler_static_works_F77=no
     save_LDFLAGS="$LDFLAGS"
     LDFLAGS="$LDFLAGS $lt_tmp_static_flag"
@@ -2939,7 +2907,7 @@ Index: pam/Linux-PAM/configure
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -14476,7 +14668,7 @@
+@@ -14476,7 +14667,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -2948,21 +2916,21 @@ Index: pam/Linux-PAM/configure
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -14487,11 +14679,11 @@
+@@ -14487,11 +14678,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:14490: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:14682: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:14681: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>out/conftest.err)
     ac_status=$?
     cat out/conftest.err >&5
 -   echo "$as_me:14494: \$? = $ac_status" >&5
-+   echo "$as_me:14686: \$? = $ac_status" >&5
++   echo "$as_me:14685: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s out/conftest2.$ac_objext
     then
       # The compiler can only warn and ignore the option if not recognized
-@@ -14683,7 +14875,7 @@
+@@ -14683,7 +14874,7 @@
        allow_undefined_flag_F77=unsupported
        always_export_symbols_F77=no
        enable_shared_with_static_runtimes_F77=yes
@@ -2971,7 +2939,7 @@ Index: pam/Linux-PAM/configure
  
        if $LD --help 2>&1 | grep 'auto-import' > /dev/null; then
          archive_cmds_F77='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-@@ -14701,7 +14893,7 @@
+@@ -14701,7 +14892,7 @@
        fi
        ;;
  
@@ -2980,7 +2948,7 @@ Index: pam/Linux-PAM/configure
        hardcode_direct_F77=no
        hardcode_shlibpath_var_F77=no
        hardcode_libdir_flag_spec_F77='${wl}-rpath,$libdir'
-@@ -14716,7 +14908,7 @@
+@@ -14716,7 +14907,7 @@
        archive_expsym_cmds_F77='sed "s,^,_," $export_symbols >$output_objdir/$soname.expsym~$CC -shared $pic_flag $libobjs $deplibs $compiler_flags ${wl}-h,$soname ${wl}--retain-symbols-file,$output_objdir/$soname.expsym ${wl}--image-base,`expr ${RANDOM-$$} % 4096 / 2 \* 262144 + 1342177280` -o $lib'
        ;;
  
@@ -2989,7 +2957,7 @@ Index: pam/Linux-PAM/configure
        if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
  	tmp_addflag=
  	case $cc_basename,$host_cpu in
-@@ -14734,20 +14926,30 @@
+@@ -14734,20 +14925,30 @@
  	ifc* | ifort*)			# Intel Fortran compiler
  	  tmp_addflag=' -nofor_main' ;;
  	esac
@@ -3023,7 +2991,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds_F77='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
  	wlarc=
-@@ -14899,7 +15101,7 @@
+@@ -14899,7 +15100,7 @@
    	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	  then
    	  # We have reworked collect2
@@ -3032,7 +3000,7 @@ Index: pam/Linux-PAM/configure
  	  else
    	  # We have old collect2
    	  hardcode_direct_F77=unsupported
-@@ -14963,11 +15165,18 @@
+@@ -14963,11 +15164,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -3055,7 +3023,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -15012,11 +15221,18 @@
+@@ -15012,11 +15220,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -3078,7 +3046,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -15070,7 +15286,7 @@
+@@ -15070,7 +15285,7 @@
        # The linker will automatically build a .lib file if we build a DLL.
        old_archive_From_new_cmds_F77='true'
        # FIXME: Should let the user specify the lib program.
@@ -3087,7 +3055,7 @@ Index: pam/Linux-PAM/configure
        fix_srcfile_path_F77='`cygpath -w "$srcfile"`'
        enable_shared_with_static_runtimes_F77=yes
        ;;
-@@ -15112,10 +15328,10 @@
+@@ -15112,10 +15327,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -3100,7 +3068,7 @@ Index: pam/Linux-PAM/configure
            module_expsym_cmds_F77='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -15155,7 +15371,7 @@
+@@ -15155,7 +15370,7 @@
        ;;
  
      # FreeBSD 3 and greater uses gcc -shared to do shared libraries.
@@ -3109,7 +3077,7 @@ Index: pam/Linux-PAM/configure
        archive_cmds_F77='$CC -shared -o $lib $libobjs $deplibs $compiler_flags'
        hardcode_libdir_flag_spec_F77='-R$libdir'
        hardcode_direct_F77=yes
-@@ -15257,7 +15473,7 @@
+@@ -15257,7 +15472,7 @@
        link_all_deplibs_F77=yes
        ;;
  
@@ -3118,7 +3086,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds_F77='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
        else
-@@ -15277,24 +15493,28 @@
+@@ -15277,24 +15492,28 @@
        ;;
  
      openbsd*)
@@ -3164,7 +3132,7 @@ Index: pam/Linux-PAM/configure
        fi
        ;;
  
-@@ -15353,17 +15573,16 @@
+@@ -15353,17 +15572,16 @@
        case $host_os in
        solaris2.[0-5] | solaris2.[0-5].*) ;;
        *)
@@ -3191,7 +3159,7 @@ Index: pam/Linux-PAM/configure
        esac
        link_all_deplibs_F77=yes
        ;;
-@@ -15420,7 +15639,7 @@
+@@ -15420,7 +15638,7 @@
        fi
        ;;
  
@@ -3200,7 +3168,7 @@ Index: pam/Linux-PAM/configure
        no_undefined_flag_F77='${wl}-z,text'
        archive_cmds_need_lc_F77=no
        hardcode_shlibpath_var_F77=no
-@@ -15497,7 +15716,7 @@
+@@ -15497,7 +15715,7 @@
        { echo "$as_me:$LINENO: checking whether -lc should be explicitly linked in" >&5
  echo $ECHO_N "checking whether -lc should be explicitly linked in... $ECHO_C" >&6; }
        $rm conftest*
@@ -3209,7 +3177,7 @@ Index: pam/Linux-PAM/configure
  
        if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
-@@ -15555,20 +15774,7 @@
+@@ -15555,20 +15773,7 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -3231,7 +3199,7 @@ Index: pam/Linux-PAM/configure
  need_lib_prefix=unknown
  hardcode_into_libs=no
  
-@@ -15725,12 +15931,7 @@
+@@ -15725,12 +15930,7 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -3245,7 +3213,7 @@ Index: pam/Linux-PAM/configure
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -15747,18 +15948,6 @@
+@@ -15747,18 +15947,6 @@
    dynamic_linker=no
    ;;
  
@@ -3264,7 +3232,7 @@ Index: pam/Linux-PAM/configure
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -15796,7 +15985,7 @@
+@@ -15796,7 +15984,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -3273,7 +3241,7 @@ Index: pam/Linux-PAM/configure
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -15859,7 +16048,7 @@
+@@ -15859,7 +16047,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -3282,7 +3250,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -15914,7 +16103,7 @@
+@@ -15914,7 +16102,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -3291,7 +3259,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -15930,7 +16119,7 @@
+@@ -15930,7 +16118,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -3300,7 +3268,7 @@ Index: pam/Linux-PAM/configure
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -15943,7 +16132,7 @@
+@@ -15943,7 +16131,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -3309,7 +3277,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -15952,7 +16141,7 @@
+@@ -15952,7 +16140,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -3318,7 +3286,7 @@ Index: pam/Linux-PAM/configure
    ;;
  
  netbsd*)
-@@ -16036,6 +16225,10 @@
+@@ -16036,6 +16224,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -3329,7 +3297,7 @@ Index: pam/Linux-PAM/configure
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -16230,6 +16423,7 @@
+@@ -16230,6 +16422,7 @@
      module_cmds_F77 \
      module_expsym_cmds_F77 \
      lt_cv_prog_compiler_c_o_F77 \
@@ -3337,7 +3305,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms_F77 \
      include_expsyms_F77; do
  
-@@ -16550,7 +16744,7 @@
+@@ -16550,7 +16743,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -3346,7 +3314,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols_F77
-@@ -16608,10 +16802,10 @@
+@@ -16608,10 +16801,10 @@
  objext_GCJ=$objext
  
  # Code to be used in simple compile tests
@@ -3359,7 +3327,7 @@ Index: pam/Linux-PAM/configure
  
  # ltmain only uses $CC for tagged configurations so make sure $CC is set.
  
-@@ -16627,13 +16821,13 @@
+@@ -16627,13 +16820,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -3375,7 +3343,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -16674,7 +16868,7 @@
+@@ -16674,7 +16867,7 @@
  else
    lt_cv_prog_compiler_rtti_exceptions=no
    ac_outfile=conftest.$ac_objext
@@ -3384,21 +3352,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="-fno-rtti -fno-exceptions"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -16685,11 +16879,11 @@
+@@ -16685,11 +16878,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:16688: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:16882: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:16881: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:16692: \$? = $ac_status" >&5
-+   echo "$as_me:16886: \$? = $ac_status" >&5
++   echo "$as_me:16885: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -16740,13 +16934,15 @@
+@@ -16740,13 +16933,15 @@
        lt_prog_compiler_pic_GCJ='-m68020 -resident32 -malways-restore-a4'
        ;;
  
@@ -3416,7 +3384,7 @@ Index: pam/Linux-PAM/configure
        lt_prog_compiler_pic_GCJ='-DDLL_EXPORT'
        ;;
  
-@@ -16756,7 +16952,7 @@
+@@ -16756,7 +16951,7 @@
        lt_prog_compiler_pic_GCJ='-fno-common'
        ;;
  
@@ -3425,7 +3393,7 @@ Index: pam/Linux-PAM/configure
        # Interix 3.x gcc -fpic/-fPIC options generate broken code.
        # Instead, we relocate shared libraries at runtime.
        ;;
-@@ -16814,7 +17010,7 @@
+@@ -16814,7 +17009,7 @@
         esac
         ;;
  
@@ -3434,7 +3402,7 @@ Index: pam/Linux-PAM/configure
        # This hack is so that the source file can tell whether it is being
        # built for inclusion in a dll (and should export symbols for example).
        lt_prog_compiler_pic_GCJ='-DDLL_EXPORT'
-@@ -16847,7 +17043,7 @@
+@@ -16847,7 +17042,7 @@
        lt_prog_compiler_static_GCJ='-Bstatic'
        ;;
  
@@ -3443,7 +3411,7 @@ Index: pam/Linux-PAM/configure
        case $cc_basename in
        icc* | ecc*)
  	lt_prog_compiler_wl_GCJ='-Wl,'
-@@ -16866,6 +17062,22 @@
+@@ -16866,6 +17061,22 @@
          # All Alpha code is PIC.
          lt_prog_compiler_static_GCJ='-non_shared'
          ;;
@@ -3466,7 +3434,7 @@ Index: pam/Linux-PAM/configure
        esac
        ;;
  
-@@ -16875,6 +17087,10 @@
+@@ -16875,6 +17086,10 @@
        lt_prog_compiler_static_GCJ='-non_shared'
        ;;
  
@@ -3477,7 +3445,7 @@ Index: pam/Linux-PAM/configure
      solaris*)
        lt_prog_compiler_pic_GCJ='-KPIC'
        lt_prog_compiler_static_GCJ='-Bstatic'
-@@ -16942,7 +17158,7 @@
+@@ -16942,7 +17157,7 @@
  else
    lt_prog_compiler_pic_works_GCJ=no
    ac_outfile=conftest.$ac_objext
@@ -3486,21 +3454,21 @@ Index: pam/Linux-PAM/configure
     lt_compiler_flag="$lt_prog_compiler_pic_GCJ"
     # Insert the option either (1) after the last *FLAGS variable, or
     # (2) before a word containing "conftest.", or (3) at the end.
-@@ -16953,11 +17169,11 @@
+@@ -16953,11 +17168,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:16956: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:17172: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:17171: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>conftest.err)
     ac_status=$?
     cat conftest.err >&5
 -   echo "$as_me:16960: \$? = $ac_status" >&5
-+   echo "$as_me:17176: \$? = $ac_status" >&5
++   echo "$as_me:17175: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s "$ac_outfile"; then
       # The compiler can only warn and ignore the option if not recognized
       # So say no if there are warnings other than the usual output.
-@@ -17006,7 +17222,7 @@
+@@ -17006,7 +17221,7 @@
    lt_prog_compiler_static_works_GCJ=no
     save_LDFLAGS="$LDFLAGS"
     LDFLAGS="$LDFLAGS $lt_tmp_static_flag"
@@ -3509,7 +3477,7 @@ Index: pam/Linux-PAM/configure
     if (eval $ac_link 2>conftest.err) && test -s conftest$ac_exeext; then
       # The linker can only warn and ignore the option if not recognized
       # So say no if there are warnings
-@@ -17046,7 +17262,7 @@
+@@ -17046,7 +17261,7 @@
     mkdir conftest
     cd conftest
     mkdir out
@@ -3518,21 +3486,21 @@ Index: pam/Linux-PAM/configure
  
     lt_compiler_flag="-o out/conftest2.$ac_objext"
     # Insert the option either (1) after the last *FLAGS variable, or
-@@ -17057,11 +17273,11 @@
+@@ -17057,11 +17272,11 @@
     -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
     -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
     -e 's:$: $lt_compiler_flag:'`
 -   (eval echo "\"\$as_me:17060: $lt_compile\"" >&5)
-+   (eval echo "\"\$as_me:17276: $lt_compile\"" >&5)
++   (eval echo "\"\$as_me:17275: $lt_compile\"" >&5)
     (eval "$lt_compile" 2>out/conftest.err)
     ac_status=$?
     cat out/conftest.err >&5
 -   echo "$as_me:17064: \$? = $ac_status" >&5
-+   echo "$as_me:17280: \$? = $ac_status" >&5
++   echo "$as_me:17279: \$? = $ac_status" >&5
     if (exit $ac_status) && test -s out/conftest2.$ac_objext
     then
       # The compiler can only warn and ignore the option if not recognized
-@@ -17253,7 +17469,7 @@
+@@ -17253,7 +17468,7 @@
        allow_undefined_flag_GCJ=unsupported
        always_export_symbols_GCJ=no
        enable_shared_with_static_runtimes_GCJ=yes
@@ -3541,7 +3509,7 @@ Index: pam/Linux-PAM/configure
  
        if $LD --help 2>&1 | grep 'auto-import' > /dev/null; then
          archive_cmds_GCJ='$CC -shared $libobjs $deplibs $compiler_flags -o $output_objdir/$soname ${wl}--enable-auto-image-base -Xlinker --out-implib -Xlinker $lib'
-@@ -17271,7 +17487,7 @@
+@@ -17271,7 +17486,7 @@
        fi
        ;;
  
@@ -3550,7 +3518,7 @@ Index: pam/Linux-PAM/configure
        hardcode_direct_GCJ=no
        hardcode_shlibpath_var_GCJ=no
        hardcode_libdir_flag_spec_GCJ='${wl}-rpath,$libdir'
-@@ -17286,7 +17502,7 @@
+@@ -17286,7 +17501,7 @@
        archive_expsym_cmds_GCJ='sed "s,^,_," $export_symbols >$output_objdir/$soname.expsym~$CC -shared $pic_flag $libobjs $deplibs $compiler_flags ${wl}-h,$soname ${wl}--retain-symbols-file,$output_objdir/$soname.expsym ${wl}--image-base,`expr ${RANDOM-$$} % 4096 / 2 \* 262144 + 1342177280` -o $lib'
        ;;
  
@@ -3559,7 +3527,7 @@ Index: pam/Linux-PAM/configure
        if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
  	tmp_addflag=
  	case $cc_basename,$host_cpu in
-@@ -17304,20 +17520,30 @@
+@@ -17304,20 +17519,30 @@
  	ifc* | ifort*)			# Intel Fortran compiler
  	  tmp_addflag=' -nofor_main' ;;
  	esac
@@ -3593,7 +3561,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds_GCJ='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
  	wlarc=
-@@ -17469,7 +17695,7 @@
+@@ -17469,7 +17694,7 @@
    	   strings "$collect2name" | grep resolve_lib_name >/dev/null
  	  then
    	  # We have reworked collect2
@@ -3602,7 +3570,7 @@ Index: pam/Linux-PAM/configure
  	  else
    	  # We have old collect2
    	  hardcode_direct_GCJ=unsupported
-@@ -17543,11 +17769,18 @@
+@@ -17543,11 +17768,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -3625,7 +3593,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -17602,11 +17835,18 @@
+@@ -17602,11 +17834,18 @@
         } && test -s conftest$ac_exeext &&
         $as_test_x conftest$ac_exeext; then
  
@@ -3648,7 +3616,7 @@ Index: pam/Linux-PAM/configure
  else
    echo "$as_me: failed program was:" >&5
  sed 's/^/| /' conftest.$ac_ext >&5
-@@ -17660,7 +17900,7 @@
+@@ -17660,7 +17899,7 @@
        # The linker will automatically build a .lib file if we build a DLL.
        old_archive_From_new_cmds_GCJ='true'
        # FIXME: Should let the user specify the lib program.
@@ -3657,7 +3625,7 @@ Index: pam/Linux-PAM/configure
        fix_srcfile_path_GCJ='`cygpath -w "$srcfile"`'
        enable_shared_with_static_runtimes_GCJ=yes
        ;;
-@@ -17702,10 +17942,10 @@
+@@ -17702,10 +17941,10 @@
        case $cc_basename in
          xlc*)
           output_verbose_link_cmd='echo'
@@ -3670,7 +3638,7 @@ Index: pam/Linux-PAM/configure
            module_expsym_cmds_GCJ='sed -e "s,#.*,," -e "s,^[    ]*,," -e "s,^\(..*\),_&," < $export_symbols > $output_objdir/${libname}-symbols.expsym~$CC $allow_undefined_flag  -o $lib -bundle $libobjs $deplibs$compiler_flags~nmedit -s $output_objdir/${libname}-symbols.expsym ${lib}'
            ;;
         *)
-@@ -17745,7 +17985,7 @@
+@@ -17745,7 +17984,7 @@
        ;;
  
      # FreeBSD 3 and greater uses gcc -shared to do shared libraries.
@@ -3679,7 +3647,7 @@ Index: pam/Linux-PAM/configure
        archive_cmds_GCJ='$CC -shared -o $lib $libobjs $deplibs $compiler_flags'
        hardcode_libdir_flag_spec_GCJ='-R$libdir'
        hardcode_direct_GCJ=yes
-@@ -17847,7 +18087,7 @@
+@@ -17847,7 +18086,7 @@
        link_all_deplibs_GCJ=yes
        ;;
  
@@ -3688,7 +3656,7 @@ Index: pam/Linux-PAM/configure
        if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
  	archive_cmds_GCJ='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
        else
-@@ -17867,24 +18107,28 @@
+@@ -17867,24 +18106,28 @@
        ;;
  
      openbsd*)
@@ -3734,7 +3702,7 @@ Index: pam/Linux-PAM/configure
        fi
        ;;
  
-@@ -17943,17 +18187,16 @@
+@@ -17943,17 +18186,16 @@
        case $host_os in
        solaris2.[0-5] | solaris2.[0-5].*) ;;
        *)
@@ -3761,7 +3729,7 @@ Index: pam/Linux-PAM/configure
        esac
        link_all_deplibs_GCJ=yes
        ;;
-@@ -18010,7 +18253,7 @@
+@@ -18010,7 +18252,7 @@
        fi
        ;;
  
@@ -3770,7 +3738,7 @@ Index: pam/Linux-PAM/configure
        no_undefined_flag_GCJ='${wl}-z,text'
        archive_cmds_need_lc_GCJ=no
        hardcode_shlibpath_var_GCJ=no
-@@ -18087,7 +18330,7 @@
+@@ -18087,7 +18329,7 @@
        { echo "$as_me:$LINENO: checking whether -lc should be explicitly linked in" >&5
  echo $ECHO_N "checking whether -lc should be explicitly linked in... $ECHO_C" >&6; }
        $rm conftest*
@@ -3779,7 +3747,7 @@ Index: pam/Linux-PAM/configure
  
        if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
    (eval $ac_compile) 2>&5
-@@ -18145,20 +18388,7 @@
+@@ -18145,20 +18387,7 @@
  version_type=none
  dynamic_linker="$host_os ld.so"
  sys_lib_dlsearch_path_spec="/lib /usr/lib"
@@ -3801,7 +3769,7 @@ Index: pam/Linux-PAM/configure
  need_lib_prefix=unknown
  hardcode_into_libs=no
  
-@@ -18315,12 +18545,7 @@
+@@ -18315,12 +18544,7 @@
    shlibpath_overrides_runpath=yes
    shlibpath_var=DYLD_LIBRARY_PATH
    shrext_cmds='`test .$module = .yes && echo .so || echo .dylib`'
@@ -3815,7 +3783,7 @@ Index: pam/Linux-PAM/configure
    sys_lib_dlsearch_path_spec='/usr/local/lib /lib /usr/lib'
    ;;
  
-@@ -18337,18 +18562,6 @@
+@@ -18337,18 +18561,6 @@
    dynamic_linker=no
    ;;
  
@@ -3834,7 +3802,7 @@ Index: pam/Linux-PAM/configure
  freebsd* | dragonfly*)
    # DragonFly does not have aout.  When/if they implement a new
    # versioning mechanism, adjust this.
-@@ -18386,7 +18599,7 @@
+@@ -18386,7 +18598,7 @@
      shlibpath_overrides_runpath=no
      hardcode_into_libs=yes
      ;;
@@ -3843,7 +3811,7 @@ Index: pam/Linux-PAM/configure
      shlibpath_overrides_runpath=yes
      hardcode_into_libs=yes
      ;;
-@@ -18449,7 +18662,7 @@
+@@ -18449,7 +18661,7 @@
    postinstall_cmds='chmod 555 $lib'
    ;;
  
@@ -3852,7 +3820,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -18504,7 +18717,7 @@
+@@ -18504,7 +18716,7 @@
    ;;
  
  # This must be Linux ELF.
@@ -3861,7 +3829,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -18520,7 +18733,7 @@
+@@ -18520,7 +18732,7 @@
  
    # Append ld.so.conf contents to the search path
    if test -f /etc/ld.so.conf; then
@@ -3870,7 +3838,7 @@ Index: pam/Linux-PAM/configure
      sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
    fi
  
-@@ -18533,7 +18746,7 @@
+@@ -18533,7 +18745,7 @@
    dynamic_linker='GNU/Linux ld.so'
    ;;
  
@@ -3879,7 +3847,7 @@ Index: pam/Linux-PAM/configure
    version_type=linux
    need_lib_prefix=no
    need_version=no
-@@ -18542,7 +18755,7 @@
+@@ -18542,7 +18754,7 @@
    shlibpath_var=LD_LIBRARY_PATH
    shlibpath_overrides_runpath=no
    hardcode_into_libs=yes
@@ -3888,7 +3856,7 @@ Index: pam/Linux-PAM/configure
    ;;
  
  netbsd*)
-@@ -18626,6 +18839,10 @@
+@@ -18626,6 +18838,10 @@
    sys_lib_dlsearch_path_spec="$sys_lib_search_path_spec"
    ;;
  
@@ -3899,7 +3867,7 @@ Index: pam/Linux-PAM/configure
  solaris*)
    version_type=linux
    need_lib_prefix=no
-@@ -18820,6 +19037,7 @@
+@@ -18820,6 +19036,7 @@
      module_cmds_GCJ \
      module_expsym_cmds_GCJ \
      lt_cv_prog_compiler_c_o_GCJ \
@@ -3907,7 +3875,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms_GCJ \
      include_expsyms_GCJ; do
  
-@@ -19140,7 +19358,7 @@
+@@ -19140,7 +19357,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -3916,7 +3884,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols_GCJ
-@@ -19197,7 +19415,7 @@
+@@ -19197,7 +19414,7 @@
  objext_RC=$objext
  
  # Code to be used in simple compile tests
@@ -3925,7 +3893,7 @@ Index: pam/Linux-PAM/configure
  
  # Code to be used in simple link tests
  lt_simple_link_test_code="$lt_simple_compile_test_code"
-@@ -19216,13 +19434,13 @@
+@@ -19216,13 +19433,13 @@
  
  # save warnings/boilerplate of simple test code
  ac_outfile=conftest.$ac_objext
@@ -3941,7 +3909,7 @@ Index: pam/Linux-PAM/configure
  eval "$ac_link" 2>&1 >/dev/null | $SED '/^$/d; /^ *+/d' >conftest.err
  _lt_linker_boilerplate=`cat conftest.err`
  $rm conftest*
-@@ -19300,6 +19518,7 @@
+@@ -19300,6 +19517,7 @@
      module_cmds_RC \
      module_expsym_cmds_RC \
      lt_cv_prog_compiler_c_o_RC \
@@ -3949,7 +3917,7 @@ Index: pam/Linux-PAM/configure
      exclude_expsyms_RC \
      include_expsyms_RC; do
  
-@@ -19620,7 +19839,7 @@
+@@ -19620,7 +19838,7 @@
  sys_lib_dlsearch_path_spec=$lt_sys_lib_dlsearch_path_spec
  
  # Fix the shell variable \$srcfile for the compiler.
@@ -3958,7 +3926,7 @@ Index: pam/Linux-PAM/configure
  
  # Set to yes if exported symbols are required.
  always_export_symbols=$always_export_symbols_RC
-@@ -21235,18 +21454,23 @@
+@@ -21235,18 +21453,23 @@
  fi
  
  if test x"$WITH_CRACKLIB" != xno ; then
@@ -3990,7 +3958,7 @@ Index: pam/Linux-PAM/configure
  cat >conftest.$ac_ext <<_ACEOF
  /* confdefs.h.  */
  _ACEOF
-@@ -21254,7 +21478,7 @@
+@@ -21254,7 +21477,7 @@
  cat >>conftest.$ac_ext <<_ACEOF
  /* end confdefs.h.  */
  $ac_includes_default
@@ -3999,7 +3967,7 @@ Index: pam/Linux-PAM/configure
  _ACEOF
  rm -f conftest.$ac_objext
  if { (ac_try="$ac_compile"
-@@ -21286,15 +21510,15 @@
+@@ -21286,15 +21509,15 @@
  echo "${ECHO_T}$ac_header_compiler" >&6; }
  
  # Is the header present?
@@ -4018,7 +3986,7 @@ Index: pam/Linux-PAM/configure
  _ACEOF
  if { (ac_try="$ac_cpp conftest.$ac_ext"
  case "(($ac_try" in
-@@ -21327,41 +21551,45 @@
+@@ -21327,41 +21550,45 @@
  # So?  What about this header?
  case $ac_header_compiler:$ac_header_preproc:$ac_c_preproc_warn_flag in
    yes:no: )
@@ -4088,7 +4056,7 @@ Index: pam/Linux-PAM/configure
  echo $ECHO_N "checking for FascistCheck in -lcrack... $ECHO_C" >&6; }
  if test "${ac_cv_lib_crack_FascistCheck+set}" = set; then
    echo $ECHO_N "(cached) $ECHO_C" >&6
-@@ -21430,6 +21658,7 @@
+@@ -21430,6 +21657,7 @@
  
  fi
  
@@ -4096,94 +4064,17 @@ Index: pam/Linux-PAM/configure
  
  else
  	LIBCRACK=""
-@@ -22519,6 +22748,75 @@
- 
- fi
- 
-+{ echo "$as_me:$LINENO: checking for cap_init in -lcap" >&5
-+echo $ECHO_N "checking for cap_init in -lcap... $ECHO_C" >&6; }
-+if test "${ac_cv_lib_cap_cap_init+set}" = set; then
-+  echo $ECHO_N "(cached) $ECHO_C" >&6
-+else
-+  ac_check_lib_save_LIBS=$LIBS
-+LIBS="-lcap  $LIBS"
-+cat >conftest.$ac_ext <<_ACEOF
-+/* confdefs.h.  */
-+_ACEOF
-+cat confdefs.h >>conftest.$ac_ext
-+cat >>conftest.$ac_ext <<_ACEOF
-+/* end confdefs.h.  */
-+
-+/* Override any GCC internal prototype to avoid an error.
-+   Use char because int might match the return type of a GCC
-+   builtin and then its argument prototype would still apply.  */
-+#ifdef __cplusplus
-+extern "C"
-+#endif
-+char cap_init ();
-+int
-+main ()
-+{
-+return cap_init ();
-+  ;
-+  return 0;
-+}
-+_ACEOF
-+rm -f conftest.$ac_objext conftest$ac_exeext
-+if { (ac_try="$ac_link"
-+case "(($ac_try" in
-+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-+  *) ac_try_echo=$ac_try;;
-+esac
-+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
-+  (eval "$ac_link") 2>conftest.er1
-+  ac_status=$?
-+  grep -v '^ *+' conftest.er1 >conftest.err
-+  rm -f conftest.er1
-+  cat conftest.err >&5
-+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-+  (exit $ac_status); } && {
-+	 test -z "$ac_c_werror_flag" ||
-+	 test ! -s conftest.err
-+       } && test -s conftest$ac_exeext &&
-+       $as_test_x conftest$ac_exeext; then
-+  ac_cv_lib_cap_cap_init=yes
-+else
-+  echo "$as_me: failed program was:" >&5
-+sed 's/^/| /' conftest.$ac_ext >&5
-+
-+	ac_cv_lib_cap_cap_init=no
-+fi
-+
-+rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-+      conftest$ac_exeext conftest.$ac_ext
-+LIBS=$ac_check_lib_save_LIBS
-+fi
-+{ echo "$as_me:$LINENO: result: $ac_cv_lib_cap_cap_init" >&5
-+echo "${ECHO_T}$ac_cv_lib_cap_cap_init" >&6; }
-+if test $ac_cv_lib_cap_cap_init = yes; then
-+  LIBCAP="-lcap"
-+else
-+  LIBCAP=""
-+fi
-+
-+
-+
- 
- 
- 
-@@ -23012,7 +23310,9 @@
+@@ -23012,7 +23240,8 @@
  
  
  
 -for ac_header in fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h termio.h unistd.h sys/fsuid.h inittypes.h
 +
-+
-+for ac_header in fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h net/if.h termio.h unistd.h sys/fsuid.h inittypes.h sys/capability.h
++for ac_header in fcntl.h limits.h malloc.h sys/file.h sys/ioctl.h sys/time.h syslog.h net/if.h termio.h unistd.h sys/fsuid.h inittypes.h
  do
  as_ac_Header=`echo "ac_cv_header_$ac_header" | $as_tr_sh`
  if { as_var=$as_ac_Header; eval "test \"\${$as_var+set}\" = set"; }; then
-@@ -28407,12 +28707,12 @@
+@@ -28407,12 +28636,12 @@
  LEX_OUTPUT_ROOT!$LEX_OUTPUT_ROOT$ac_delim
  LEXLIB!$LEXLIB$ac_delim
  LN_S!$LN_S$ac_delim
@@ -4197,7 +4088,7 @@ Index: pam/Linux-PAM/configure
  _ACEOF
  
    if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
-@@ -28454,6 +28754,7 @@
+@@ -28454,6 +28683,7 @@
  ac_delim='%!_!# '
  for ac_last_try in false false false false false :; do
    cat >conf$$subs.sed <<_ACEOF
@@ -4205,20 +4096,12 @@ Index: pam/Linux-PAM/configure
  CXX!$CXX$ac_delim
  CXXFLAGS!$CXXFLAGS$ac_delim
  ac_ct_CXX!$ac_ct_CXX$ac_delim
-@@ -28497,6 +28798,7 @@
- LIBSELINUX!$LIBSELINUX$ac_delim
- HAVE_LIBSELINUX_TRUE!$HAVE_LIBSELINUX_TRUE$ac_delim
- HAVE_LIBSELINUX_FALSE!$HAVE_LIBSELINUX_FALSE$ac_delim
-+LIBCAP!$LIBCAP$ac_delim
- LIBOBJS!$LIBOBJS$ac_delim
- HAVE_UNSHARE_TRUE!$HAVE_UNSHARE_TRUE$ac_delim
- HAVE_UNSHARE_FALSE!$HAVE_UNSHARE_FALSE$ac_delim
-@@ -28531,7 +28833,7 @@
+@@ -28531,7 +28761,7 @@
  LTLIBOBJS!$LTLIBOBJS$ac_delim
  _ACEOF
  
 -  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 75; then
-+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 77; then
++  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 76; then
      break
    elif $ac_last_try; then
      { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
@@ -4226,15 +4109,7 @@ Index: pam/Linux-PAM/doc/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/doc/Makefile.in
 +++ pam/Linux-PAM/doc/Makefile.in
-@@ -123,6 +123,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -165,6 +166,7 @@
+@@ -165,6 +165,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4246,15 +4121,7 @@ Index: pam/Linux-PAM/doc/adg/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/doc/adg/Makefile.in
 +++ pam/Linux-PAM/doc/adg/Makefile.in
-@@ -100,6 +100,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -142,6 +143,7 @@
+@@ -142,6 +142,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4266,15 +4133,7 @@ Index: pam/Linux-PAM/doc/man/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/doc/man/Makefile.in
 +++ pam/Linux-PAM/doc/man/Makefile.in
-@@ -107,6 +107,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -149,6 +150,7 @@
+@@ -149,6 +149,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4286,15 +4145,7 @@ Index: pam/Linux-PAM/doc/mwg/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/doc/mwg/Makefile.in
 +++ pam/Linux-PAM/doc/mwg/Makefile.in
-@@ -100,6 +100,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -142,6 +143,7 @@
+@@ -142,6 +142,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4306,15 +4157,7 @@ Index: pam/Linux-PAM/doc/sag/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/doc/sag/Makefile.in
 +++ pam/Linux-PAM/doc/sag/Makefile.in
-@@ -100,6 +100,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -142,6 +143,7 @@
+@@ -142,6 +142,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4326,15 +4169,7 @@ Index: pam/Linux-PAM/doc/specs/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/doc/specs/Makefile.in
 +++ pam/Linux-PAM/doc/specs/Makefile.in
-@@ -138,6 +138,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -180,6 +181,7 @@
+@@ -180,6 +180,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4346,15 +4181,7 @@ Index: pam/Linux-PAM/examples/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/examples/Makefile.in
 +++ pam/Linux-PAM/examples/Makefile.in
-@@ -130,6 +130,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -172,6 +173,7 @@
+@@ -172,6 +172,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4366,15 +4193,7 @@ Index: pam/Linux-PAM/libpam/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/libpam/Makefile.in
 +++ pam/Linux-PAM/libpam/Makefile.in
-@@ -148,6 +148,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -190,6 +191,7 @@
+@@ -190,6 +190,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4386,15 +4205,7 @@ Index: pam/Linux-PAM/libpam_misc/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/libpam_misc/Makefile.in
 +++ pam/Linux-PAM/libpam_misc/Makefile.in
-@@ -135,6 +135,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -177,6 +178,7 @@
+@@ -177,6 +177,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4406,15 +4217,7 @@ Index: pam/Linux-PAM/libpamc/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/libpamc/Makefile.in
 +++ pam/Linux-PAM/libpamc/Makefile.in
-@@ -145,6 +145,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -187,6 +188,7 @@
+@@ -187,6 +187,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4426,15 +4229,7 @@ Index: pam/Linux-PAM/libpamc/test/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/libpamc/test/Makefile.in
 +++ pam/Linux-PAM/libpamc/test/Makefile.in
-@@ -100,6 +100,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -142,6 +143,7 @@
+@@ -142,6 +142,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4446,15 +4241,7 @@ Index: pam/Linux-PAM/modules/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/Makefile.in
 +++ pam/Linux-PAM/modules/Makefile.in
-@@ -112,6 +112,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -154,6 +155,7 @@
+@@ -154,6 +154,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4466,15 +4253,7 @@ Index: pam/Linux-PAM/modules/pam_access/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_access/Makefile.in
 +++ pam/Linux-PAM/modules/pam_access/Makefile.in
-@@ -136,6 +136,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -178,6 +179,7 @@
+@@ -178,6 +178,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4486,15 +4265,7 @@ Index: pam/Linux-PAM/modules/pam_cracklib/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_cracklib/Makefile.in
 +++ pam/Linux-PAM/modules/pam_cracklib/Makefile.in
-@@ -134,6 +134,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -176,6 +177,7 @@
+@@ -176,6 +176,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4506,15 +4277,7 @@ Index: pam/Linux-PAM/modules/pam_debug/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_debug/Makefile.in
 +++ pam/Linux-PAM/modules/pam_debug/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4526,15 +4289,7 @@ Index: pam/Linux-PAM/modules/pam_deny/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_deny/Makefile.in
 +++ pam/Linux-PAM/modules/pam_deny/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4546,15 +4301,7 @@ Index: pam/Linux-PAM/modules/pam_echo/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_echo/Makefile.in
 +++ pam/Linux-PAM/modules/pam_echo/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4566,15 +4313,7 @@ Index: pam/Linux-PAM/modules/pam_env/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_env/Makefile.in
 +++ pam/Linux-PAM/modules/pam_env/Makefile.in
-@@ -138,6 +138,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -180,6 +181,7 @@
+@@ -180,6 +180,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4586,15 +4325,7 @@ Index: pam/Linux-PAM/modules/pam_exec/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_exec/Makefile.in
 +++ pam/Linux-PAM/modules/pam_exec/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4606,15 +4337,7 @@ Index: pam/Linux-PAM/modules/pam_faildelay/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_faildelay/Makefile.in
 +++ pam/Linux-PAM/modules/pam_faildelay/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4626,15 +4349,7 @@ Index: pam/Linux-PAM/modules/pam_filter/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_filter/Makefile.in
 +++ pam/Linux-PAM/modules/pam_filter/Makefile.in
-@@ -148,6 +148,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -190,6 +191,7 @@
+@@ -190,6 +190,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4646,15 +4361,7 @@ Index: pam/Linux-PAM/modules/pam_filter/upperLOWER/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_filter/upperLOWER/Makefile.in
 +++ pam/Linux-PAM/modules/pam_filter/upperLOWER/Makefile.in
-@@ -122,6 +122,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -164,6 +165,7 @@
+@@ -164,6 +164,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4666,15 +4373,7 @@ Index: pam/Linux-PAM/modules/pam_ftp/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_ftp/Makefile.in
 +++ pam/Linux-PAM/modules/pam_ftp/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4686,15 +4385,7 @@ Index: pam/Linux-PAM/modules/pam_group/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_group/Makefile.in
 +++ pam/Linux-PAM/modules/pam_group/Makefile.in
-@@ -136,6 +136,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -178,6 +179,7 @@
+@@ -178,6 +178,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4706,15 +4397,7 @@ Index: pam/Linux-PAM/modules/pam_issue/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_issue/Makefile.in
 +++ pam/Linux-PAM/modules/pam_issue/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4726,15 +4409,7 @@ Index: pam/Linux-PAM/modules/pam_keyinit/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_keyinit/Makefile.in
 +++ pam/Linux-PAM/modules/pam_keyinit/Makefile.in
-@@ -135,6 +135,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -177,6 +178,7 @@
+@@ -177,6 +177,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4746,15 +4421,7 @@ Index: pam/Linux-PAM/modules/pam_lastlog/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_lastlog/Makefile.in
 +++ pam/Linux-PAM/modules/pam_lastlog/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4766,24 +4433,7 @@ Index: pam/Linux-PAM/modules/pam_limits/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_limits/Makefile.in
 +++ pam/Linux-PAM/modules/pam_limits/Makefile.in
-@@ -65,7 +65,7 @@
- 	"$(DESTDIR)$(man8dir)" "$(DESTDIR)$(secureconfdir)"
- securelibLTLIBRARIES_INSTALL = $(INSTALL)
- LTLIBRARIES = $(securelib_LTLIBRARIES)
--pam_limits_la_LIBADD =
-+pam_limits_la_DEPENDENCIES =
- pam_limits_la_SOURCES = pam_limits.c
- pam_limits_la_OBJECTS = pam_limits.lo
- DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
-@@ -136,6 +136,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -178,6 +179,7 @@
+@@ -178,6 +178,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4791,27 +4441,11 @@ Index: pam/Linux-PAM/modules/pam_limits/Makefile.in
  SET_MAKE = @SET_MAKE@
  SHELL = @SHELL@
  STRIP = @STRIP@
-@@ -261,6 +263,7 @@
- 	-L$(top_builddir)/libpam -lpam $(am__append_1)
- securelib_LTLIBRARIES = pam_limits.la
- secureconf_DATA = limits.conf
-+pam_limits_la_LIBADD = @LIBCAP@
- @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README
- all: all-am
- 
 Index: pam/Linux-PAM/modules/pam_listfile/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_listfile/Makefile.in
 +++ pam/Linux-PAM/modules/pam_listfile/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4823,15 +4457,7 @@ Index: pam/Linux-PAM/modules/pam_localuser/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_localuser/Makefile.in
 +++ pam/Linux-PAM/modules/pam_localuser/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4843,15 +4469,7 @@ Index: pam/Linux-PAM/modules/pam_loginuid/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_loginuid/Makefile.in
 +++ pam/Linux-PAM/modules/pam_loginuid/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4863,15 +4481,7 @@ Index: pam/Linux-PAM/modules/pam_mail/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_mail/Makefile.in
 +++ pam/Linux-PAM/modules/pam_mail/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4883,15 +4493,7 @@ Index: pam/Linux-PAM/modules/pam_mkhomedir/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_mkhomedir/Makefile.in
 +++ pam/Linux-PAM/modules/pam_mkhomedir/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4903,15 +4505,7 @@ Index: pam/Linux-PAM/modules/pam_motd/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_motd/Makefile.in
 +++ pam/Linux-PAM/modules/pam_motd/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4923,15 +4517,7 @@ Index: pam/Linux-PAM/modules/pam_namespace/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_namespace/Makefile.in
 +++ pam/Linux-PAM/modules/pam_namespace/Makefile.in
-@@ -147,6 +147,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -189,6 +190,7 @@
+@@ -189,6 +189,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4943,15 +4529,7 @@ Index: pam/Linux-PAM/modules/pam_nologin/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_nologin/Makefile.in
 +++ pam/Linux-PAM/modules/pam_nologin/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4963,15 +4541,7 @@ Index: pam/Linux-PAM/modules/pam_permit/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_permit/Makefile.in
 +++ pam/Linux-PAM/modules/pam_permit/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -4983,15 +4553,7 @@ Index: pam/Linux-PAM/modules/pam_rhosts/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_rhosts/Makefile.in
 +++ pam/Linux-PAM/modules/pam_rhosts/Makefile.in
-@@ -136,6 +136,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -178,6 +179,7 @@
+@@ -178,6 +178,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5003,15 +4565,7 @@ Index: pam/Linux-PAM/modules/pam_rootok/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_rootok/Makefile.in
 +++ pam/Linux-PAM/modules/pam_rootok/Makefile.in
-@@ -134,6 +134,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -176,6 +177,7 @@
+@@ -176,6 +176,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5045,15 +4599,7 @@ Index: pam/Linux-PAM/modules/pam_securetty/Makefile.in
  man8dir = $(mandir)/man8
  NROFF = nroff
  MANS = $(man_MANS)
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5061,7 +4607,7 @@ Index: pam/Linux-PAM/modules/pam_securetty/Makefile.in
  SET_MAKE = @SET_MAKE@
  SHELL = @SHELL@
  STRIP = @STRIP@
-@@ -255,6 +257,10 @@
+@@ -255,6 +256,10 @@
  AM_LDFLAGS = -no-undefined -avoid-version -module \
  	-L$(top_builddir)/libpam -lpam $(am__append_1)
  securelib_LTLIBRARIES = pam_securetty.la
@@ -5072,7 +4618,7 @@ Index: pam/Linux-PAM/modules/pam_securetty/Makefile.in
  @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README
  all: all-am
  
-@@ -326,6 +332,7 @@
+@@ -326,6 +331,7 @@
  	-rm -f *.tab.c
  
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_securetty.Plo@am__quote@
@@ -5084,15 +4630,7 @@ Index: pam/Linux-PAM/modules/pam_selinux/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_selinux/Makefile.in
 +++ pam/Linux-PAM/modules/pam_selinux/Makefile.in
-@@ -148,6 +148,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -190,6 +191,7 @@
+@@ -190,6 +190,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5104,15 +4642,7 @@ Index: pam/Linux-PAM/modules/pam_shells/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_shells/Makefile.in
 +++ pam/Linux-PAM/modules/pam_shells/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5124,15 +4654,7 @@ Index: pam/Linux-PAM/modules/pam_stress/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_stress/Makefile.in
 +++ pam/Linux-PAM/modules/pam_stress/Makefile.in
-@@ -128,6 +128,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -170,6 +171,7 @@
+@@ -170,6 +170,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5144,15 +4666,7 @@ Index: pam/Linux-PAM/modules/pam_succeed_if/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_succeed_if/Makefile.in
 +++ pam/Linux-PAM/modules/pam_succeed_if/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5164,15 +4678,7 @@ Index: pam/Linux-PAM/modules/pam_tally/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_tally/Makefile.in
 +++ pam/Linux-PAM/modules/pam_tally/Makefile.in
-@@ -150,6 +150,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -192,6 +193,7 @@
+@@ -192,6 +192,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5184,15 +4690,7 @@ Index: pam/Linux-PAM/modules/pam_time/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_time/Makefile.in
 +++ pam/Linux-PAM/modules/pam_time/Makefile.in
-@@ -136,6 +136,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -178,6 +179,7 @@
+@@ -178,6 +178,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5204,15 +4702,7 @@ Index: pam/Linux-PAM/modules/pam_umask/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_umask/Makefile.in
 +++ pam/Linux-PAM/modules/pam_umask/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5247,15 +4737,7 @@ Index: pam/Linux-PAM/modules/pam_unix/Makefile.in
  pam_unix_la_OBJECTS = $(am_pam_unix_la_OBJECTS)
  pam_unix_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
  	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-@@ -167,6 +166,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -209,6 +209,7 @@
+@@ -209,6 +208,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5263,7 +4745,7 @@ Index: pam/Linux-PAM/modules/pam_unix/Makefile.in
  SET_MAKE = @SET_MAKE@
  SHELL = @SHELL@
  STRIP = @STRIP@
-@@ -289,16 +290,18 @@
+@@ -289,16 +289,18 @@
  secureconfdir = $(SCONFIGDIR)
  AM_CFLAGS = -I$(top_srcdir)/libpam/include \
  	-I$(top_srcdir)/libpamc/include \
@@ -5287,7 +4769,7 @@ Index: pam/Linux-PAM/modules/pam_unix/Makefile.in
  
  bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
  bigcrypt_CFLAGS = $(AM_CFLAGS)
-@@ -424,6 +427,7 @@
+@@ -424,6 +426,7 @@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bigcrypt.Plo@am__quote@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/md5_broken.Plo@am__quote@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/md5_good.Plo@am__quote@
@@ -5299,15 +4781,7 @@ Index: pam/Linux-PAM/modules/pam_userdb/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_userdb/Makefile.in
 +++ pam/Linux-PAM/modules/pam_userdb/Makefile.in
-@@ -137,6 +137,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -179,6 +180,7 @@
+@@ -179,6 +179,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5319,15 +4793,7 @@ Index: pam/Linux-PAM/modules/pam_warn/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_warn/Makefile.in
 +++ pam/Linux-PAM/modules/pam_warn/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5339,15 +4805,7 @@ Index: pam/Linux-PAM/modules/pam_wheel/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_wheel/Makefile.in
 +++ pam/Linux-PAM/modules/pam_wheel/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5359,15 +4817,7 @@ Index: pam/Linux-PAM/modules/pam_xauth/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_xauth/Makefile.in
 +++ pam/Linux-PAM/modules/pam_xauth/Makefile.in
-@@ -133,6 +133,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -175,6 +176,7 @@
+@@ -175,6 +175,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5379,15 +4829,7 @@ Index: pam/Linux-PAM/tests/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/tests/Makefile.in
 +++ pam/Linux-PAM/tests/Makefile.in
-@@ -182,6 +182,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -224,6 +225,7 @@
+@@ -224,6 +224,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@
@@ -5399,15 +4841,7 @@ Index: pam/Linux-PAM/xtests/Makefile.in
 ===================================================================
 --- pam.orig/Linux-PAM/xtests/Makefile.in
 +++ pam/Linux-PAM/xtests/Makefile.in
-@@ -137,6 +137,7 @@
- LEXLIB = @LEXLIB@
- LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
- LIBAUDIT = @LIBAUDIT@
-+LIBCAP = @LIBCAP@
- LIBCRACK = @LIBCRACK@
- LIBCRYPT = @LIBCRYPT@
- LIBDB = @LIBDB@
-@@ -179,6 +180,7 @@
+@@ -179,6 +179,7 @@
  RANLIB = @RANLIB@
  SCONFIGDIR = @SCONFIGDIR@
  SECUREDIR = @SECUREDIR@

@@ -11,7 +11,7 @@ Index: Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- Linux-PAM/modules/pam_limits/pam_limits.c.orig
 +++ Linux-PAM/modules/pam_limits/pam_limits.c
-@@ -646,6 +646,19 @@
+@@ -622,6 +622,19 @@
          if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
              pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
  	retval = setrlimit(i, &pl->limits[i].limit);

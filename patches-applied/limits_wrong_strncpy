@@ -11,7 +11,7 @@ Index: pam/Linux-PAM/modules/pam_limits/pam_limits.c
 ===================================================================
 --- pam.orig/Linux-PAM/modules/pam_limits/pam_limits.c
 +++ pam/Linux-PAM/modules/pam_limits/pam_limits.c
-@@ -516,8 +516,6 @@
+@@ -492,8 +492,6 @@
      }
  #undef CONF_FILE
  
@@ -20,7 +20,7 @@ Index: pam/Linux-PAM/modules/pam_limits/pam_limits.c
      /* start the show */
      while (fgets(buf, LINE_LENGTH, fil) != NULL) {
          char domain[LINE_LENGTH];
-@@ -526,46 +524,40 @@
+@@ -502,46 +500,40 @@
          char value[LINE_LENGTH];
          int i;
          size_t j;
@@ -81,7 +81,7 @@ Index: pam/Linux-PAM/modules/pam_limits/pam_limits.c
              if (strcmp(uname, domain) == 0) /* this user have a limit */
                  process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
              else if (domain[0]=='@' && !pl->root) {
-@@ -611,7 +603,7 @@
+@@ -587,7 +579,7 @@
  		return PAM_IGNORE;
  	    }
          } else {
