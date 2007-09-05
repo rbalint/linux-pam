@@ -34,7 +34,7 @@ msgstr ""
 "Project-Id-Version: pam 0.79-4\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-03 23:24-0700\n"
-"PO-Revision-Date: 2007-08-31 01:42+0200\n"
+"PO-Revision-Date: 2007-09-04 23:48+0200\n"
 "Last-Translator: Javier Fernández-Sanguino <jfs@debian.org>\n"
 "Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid "Services to restart for PAM library upgrade:"
-msgstr "Servicios a reiniciar para la actualización de la librería de PAM:"
+msgstr "Servicios a reiniciar para la actualización de la biblioteca de PAM:"
 
 #. Type: string
 #. Description
@@ -59,9 +59,9 @@ msgid ""
 "needed."
 msgstr ""
 "Es necesario reiniciar la mayoría de los servicios que utilizan PAM para que "
-"utilicen los módulos de esta versión de libpam. Por favor, revise la lista "
+"usen los módulos de esta versión de libpam. Por favor, revise la lista "
 "separada por espacios mostrada a continuación que indica los servicios a "
-"reiniciar ahora y corrígala si es necesario."
+"reiniciar ahora y corríjala si es necesario."
 
 #. Type: string
 #. Description
@@ -71,15 +71,15 @@ msgid ""
 "cannot be restarted for you.  You will not be able to authenticate to these "
 "services until you restart them manually."
 msgstr ""
-"No se podrán reiniciar algunos servicios como puedan ser «xscreensaver», "
-"«gnome-screensaver» y «xlockmore». No podrá autenticarse en estos servicios "
+"Algunos servicios, como «xscreensaver», «gnome-screensaver» y «xlockmore», "
+"no podrán reiniciarse. La autenticación no funcionará en estos servicios "
 "hasta que los reinicie manualmente."
 
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "Debe reiniciar manualmente los gestores de pantalla"
 
 #. Type: error
 #. Description
@@ -91,6 +91,11 @@ msgid ""
 "these services have not been restarted for you.  You will therefore need to "
 "restart them by hand before they will be usable again."
 msgstr ""
+"Entre los servicios que deben reiniciarse debido a la nueva versión de "
+"libpam están los gestores de pantalla kdm, wdm y xdm. El reinicio de estos "
+"servicios terminaría cualquier sesión de X en ejecución. No se van a "
+"reiniciar automáticamente dado que su entorno tiene definida la variable "
+"$DISPLAY. Debe reiniciarlos manualmente antes de que estos puedan utilizarse."
 
 #. Type: error
 #. Description
@@ -104,8 +109,8 @@ msgstr "Fallo al reiniciar alguno de los servicios en la actualización de PAM"
 msgid ""
 "The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
-"No se pudieron reiniciar los servicios indicados a continuación para la "
-"actualización de la librería de PAM:"
+"No fue posible reiniciar los servicios indicados a continuación dentro la "
+"actualización de la biblioteca de PAM:"
 
 #. Type: error
 #. Description
