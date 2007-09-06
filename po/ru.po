@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.99.7.1-4\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-03 23:24-0700\n"
-"PO-Revision-Date: 2007-09-01 09:32+0400\n"
+"PO-Revision-Date: 2007-09-05 21:38+0400\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr ""
 "Чтобы задействовать новые версии модулей из libpam нужно перезапустить "
 "большинство сервисов, использующих PAM. Внимательно просмотрите список "
 "(элементы разделяются пробелом) сценариев сервисов из init.d, которые будут "
-"перезапущены и исправьте, если что не так."
+"перезапущены и исправьте, если необходимо."
 
 #. Type: string
 #. Description
@@ -54,7 +54,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "Программу входа в систему нужно перезапустить вручную"
 
 #. Type: error
 #. Description
@@ -66,6 +66,11 @@ msgid ""
 "these services have not been restarted for you.  You will therefore need to "
 "restart them by hand before they will be usable again."
 msgstr ""
+"Для работы с новой версией libpam программы для входа в систему -- kdm, wdm "
+"и xdm, нужно перезапустить, но это прервёт все запущенные X-сессии. Так как "
+"в вашем окружении найдена переменная $DISPLAY, то эти сервисы не будут "
+"перезапущены автоматически. Чтобы они снова стали работоспособны, вам нужно "
+"перезапустить их вручную."
 
 #. Type: error
 #. Description
@@ -88,17 +93,4 @@ msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr ""
-"Вам нужно перезапустить их вручную, выполнив '/etc/init.d/<серсис> start'."
-
-#~ msgid ""
-#~ "Among the services that require restarting are the display managers kdm, "
-#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
-#~ "one of these display managers, restarting that service will terminate "
-#~ "your X session.  It is recommended that you remove that service from the "
-#~ "list here and restart it later at your convenience."
-#~ msgstr ""
-#~ "Среди перезапускаемых сервисов есть менеджеры входа в систему: kdm, wdm и "
-#~ "xdm. Если вы выполняете обновление из X-сессии и используется один из "
-#~ "этих менеджеров, то перезапуск сервиса прервёт вашу X-сессию. "
-#~ "Рекомендуется удалить такой сервис из списка и перезапустить его позже "
-#~ "когда будет удобно."
+"Вам нужно перезапустить их вручную, выполнив '/etc/init.d/<сервис> start'."
