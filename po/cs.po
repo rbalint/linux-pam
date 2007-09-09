@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-03 23:24-0700\n"
-"PO-Revision-Date: 2007-08-31 22:48+0200\n"
+"PO-Revision-Date: 2007-09-08 18:26+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "Správce displeje se musí restartovat ručně"
 
 #. Type: error
 #. Description
@@ -63,6 +63,11 @@ msgid ""
 "these services have not been restarted for you.  You will therefore need to "
 "restart them by hand before they will be usable again."
 msgstr ""
+"Správcové displejů kdm, wdm a xdm musí být s novou verzí libpam "
+"restartováni. Restart těchto služeb by však ukončil všechna stávající X "
+"sezení obsluhovaná zmíněnými správci. Protože je ve vašem prostředí "
+"nastavena proměnná $DISPLAY, nebudou tyto služby nyní restartovány a budete "
+"je muset restartovat ručně, protože do té doby nebudou použitelné."
 
 #. Type: error
 #. Description
