@@ -6,7 +6,6 @@
 # package.
 
 CFLAGS	:= -g -D_GNU_SOURCE -D_REENTRANT -fPIC -DCRACKLIB_DICTS=CRACKLIB_DICTPATH
-LDFLAGS := -Wl,-z,defs
 
 ifeq (,$(findstring noopt, ${DEB_BUILD_OPTIONS}))
 CFLAGS += -O2
