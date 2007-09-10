@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam_0.99.7.1-4\n"
+"Project-Id-Version: pam_0.99-7.1-5\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-03 23:24-0700\n"
-"PO-Revision-Date: 2007-08-30 15:53-0300\n"
+"PO-Revision-Date: 2007-09-06 12:43-0300\n"
 "Last-Translator: Eder L. Marques <frolic@debian-ce.org>\n"
 "Language-Team: l10n Portuguese <debian-l10n-portuguese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "Gerenciadores de display devem ser reiniciados manualmente"
 
 #. Type: error
 #. Description
@@ -65,6 +65,12 @@ msgid ""
 "these services have not been restarted for you.  You will therefore need to "
 "restart them by hand before they will be usable again."
 msgstr ""
+"Os gerenciadores de display kdm, wdm e xdm precisam ser reiniciados para a "
+"nova versão da libpam, mas reiniciar estes serviços pode terminar qualquer "
+"sessão X executada dentro deles. Por causa que a variável $DISPLAY está "
+"configurada em seu ambiente, estes serviços não serão reiniciados para você. "
+"Você consequentemente precisará reiniciá-los manualmente antes de eles serem "
+"utilizáveis novamente."
 
 #. Type: error
 #. Description
@@ -89,16 +95,3 @@ msgid ""
 "start'."
 msgstr ""
 "Você deverá iniciá-los manualmente executando '/etc/init.d/<serviço> start'."
-
-#~ msgid ""
-#~ "Among the services that require restarting are the display managers kdm, "
-#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
-#~ "one of these display managers, restarting that service will terminate "
-#~ "your X session.  It is recommended that you remove that service from the "
-#~ "list here and restart it later at your convenience."
-#~ msgstr ""
-#~ "Entre os serviços que precisam ser reiniciados estão os gerenciadores de "
-#~ "display kdm, wdm e xdm. Se você está atualizando dentro de uma sessão X "
-#~ "iniciada por um destes gerenciadores de display, reiniciar o servico irá "
-#~ "terminar com a sua sessão X. É recomendado que você remova o serviço da "
-#~ "lista e reinicie-o mais tarde de acordo com a sua conveniência."
