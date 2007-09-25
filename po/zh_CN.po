@@ -1,0 +1,99 @@
+# Simplified Chinese translation for debconf templates of the pam package
+#
+# The original English strings (msgid) are:
+# Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
+# The translations (msgstr) are:
+# Copyright (C) 2007 Ming Hua <minghua-guest@users.alioth.debian.org>
+#
+# This file is distributed under the same license as the pam package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pam 0.99.7.1-4+\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"PO-Revision-Date: 2007-09-21 07:36-0500\n"
+"Last-Translator: Ming Hua <minghua-guest@users.alioth.debian.org>\n"
+"Language-Team: Debian Chinese [GB] <debian-chinese-gb@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "因 PAM 库升级而需要重新启动的服务："
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"为了使用基于这个新版本 libpam 编译的模块，绝大部分使用 PAM 的服务都需要重新启"
+"动。请复查下面这个需要重新启动的服务所对应的 init.d script 列表，script 名称"
+"之间以半角空格分隔。如列表有误，请直接更正。"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"无法为您重新启动如 xscreensaver、gnome-screensaver 和 xclockmore 一类的服务。"
+"在您手动重新启动它们之前，将无法在这些服务中验证身份。"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but there are X login sessions active on your system that would "
+"be terminated by this restart.  You will therefore need to restart these "
+"services by hand before further X logins will be possible."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "为 PAM 升级重新启动某些服务失败"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr "升级 PAM 库时，下列服务无法被重新启动："
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr "您需要运行“/etc/init.d/<服务> start”来手动启动这些服务。"
+
+#~ msgid ""
+#~ "Among the services that require restarting are the display managers kdm, "
+#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
+#~ "one of these display managers, restarting that service will terminate "
+#~ "your X session.  It is recommended that you remove that service from the "
+#~ "list here and restart it later at your convenience."
+#~ msgstr ""
+#~ "在需要重新启动的服务中，包括显示管理器 kdm、wdm 和 xdm。如果您是在 X 中进"
+#~ "行升级，而 X 会话是这其中某一个显示管理器所启动的，那么重新启动该显示管理"
+#~ "器服务将会强行结束您的 X 会话。因此，推荐您从列表中去掉该服务，并在日后方"
+#~ "便的时候再重新启动它。"

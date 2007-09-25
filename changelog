@@ -9,6 +9,8 @@ pam (0.99.7.1-5) UNRELEASED; urgency=low
     - Bulgarian, thanks to Damyan Ivanov <dam@modsoftsys.com>
       (closes: #441863)
     - Finnish, thanks to Esko Arajärvi <edu@iki.fi> (closes: #443720)
+    - Simplified Chinese, thanks to Ming Hua
+      <minghua-guest@users.alioth.debian.org> (closes: #443924)
     - Updated Portuguese, thanks to Américo Monteiro <a_monteiro@netcabo.pt>
     - Updated Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
       (closes: #440800)
@@ -38,7 +40,7 @@ pam (0.99.7.1-5) UNRELEASED; urgency=low
   * Pass --build and --host args to ./configure as necessary, for
     cross-building support.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 24 Sep 2007 17:38:29 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 24 Sep 2007 17:42:52 -0700
 
 pam (0.99.7.1-4) unstable; urgency=low
 
