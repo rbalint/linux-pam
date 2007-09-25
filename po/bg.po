@@ -1,0 +1,86 @@
+# translation of bg.po to Bulgarian
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Damyan Ivanov <dam@modsoftsys.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"PO-Revision-Date: 2007-09-11 17:34+0300\n"
+"Last-Translator: Damyan Ivanov <dam@modsoftsys.com>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "Рестартиране на услуги при обновяване на PAM:"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"Повечето услуги, които използват PAM трябва да бъдат рестартирани за да "
+"могат да използват модулите за новата версия на libpam. Прегледайте списъка "
+"от init.d скриптове по-долу и го коригирайте ако е необходимо. Имената на "
+"отделните скриптове трябва да са отделени с интервал."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"Някои друго услуги като xscreensaver, gnome-screensaver и xlockmore не могат "
+"да бъдат рестартирани автоматично. Няма да можете да се идентифицирате пред "
+"тези услуги докато не ги рестартирате."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but there are X login sessions active on your system that would "
+"be terminated by this restart.  You will therefore need to restart these "
+"services by hand before further X logins will be possible."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "Грешка при рестартиране на някои услуги за обновяване на PAM"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr "Следните услуги не бяха рестартирани за обновяването на PAM:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr "Ще трябва сами да ги рестартирате чрез „/etc/init.d/<услуга> start“."

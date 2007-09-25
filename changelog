@@ -3,9 +3,11 @@ pam (0.99.7.1-5) UNRELEASED; urgency=low
   * More lintian overrides, related to debconf prompting in the postinst
   * Debconf translations:
     - Brazilian Portuguese, thanks to Eder L. Marques <frolic@debian-ce.org>
-      (closes: #440385).
+      (closes: #440385)
     - Russian, thanks to Yuri Kozlov <kozlov.y@gmail.com>
       (closes: #440390, #440953)
+    - Bulgarian, thanks to Damyan Ivanov <dam@modsoftsys.com>
+      (closes: #441863)
     - Updated Portuguese, thanks to Américo Monteiro <a_monteiro@netcabo.pt>
     - Updated Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
       (closes: #440800)
