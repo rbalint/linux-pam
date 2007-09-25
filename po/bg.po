@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
-"PO-Revision-Date: 2007-09-11 17:34+0300\n"
+"PO-Revision-Date: 2007-09-25 14:24+0300\n"
 "Last-Translator: Damyan Ivanov <dam@modsoftsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "Мениджъра на дисплеи трябва да бъде рестартиран ръчно"
 
 #. Type: error
 #. Description
@@ -63,6 +63,9 @@ msgid ""
 "be terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
+"Мениджърите на дисплеи kdm, wdm и xdm трябва да бъдат рестартирани, но това би прекъснало активните влизания и затова тази операция няма да бъде извършена автоматично. Преди "
+"да може отново да се влезе в системата "
+"чрез тези услуги, те трябва да бъдат рестартирани ръчно."
 
 #. Type: error
 #. Description
@@ -83,4 +86,4 @@ msgstr "Следните услуги не бяха рестартирани з�
 msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
-msgstr "Ще трябва сами да ги рестартирате чрез „/etc/init.d/<услуга> start“."
+msgstr "Ще трябва сами да ги стартирате чрез „/etc/init.d/<услуга> start“."
