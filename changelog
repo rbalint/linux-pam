@@ -5,7 +5,7 @@ pam (0.99.7.1-5) UNRELEASED; urgency=low
     - Brazilian Portuguese, thanks to Eder L. Marques <frolic@debian-ce.org>
       (closes: #440385)
     - Russian, thanks to Yuri Kozlov <kozlov.y@gmail.com>
-      (closes: #440390, #440953)
+      (closes: #440390, #440953, #444039)
     - Bulgarian, thanks to Damyan Ivanov <dam@modsoftsys.com>
       (closes: #441863)
     - Finnish, thanks to Esko Arajärvi <edu@iki.fi> (closes: #443720)
