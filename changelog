@@ -23,8 +23,8 @@ pam (0.99.7.1-5) UNRELEASED; urgency=low
   * Fix up the comments in /etc/pam.d/common-password to make it clear that
     the options are specific to pam_unix.  Closes: #414559.
   * Patch 038: fix another thinko in the getline handling.
-  * If $DISPLAY is set, don't restart kdm, wdm, and xdm by default; instead,
-    display a debconf error if they haven't been restarted.
+  * If there are active X logins, don't restart kdm, wdm, and xdm by default;
+    instead, display a debconf error if they haven't been restarted.
     Closes: #441843.
   * Drop the local patch for Linux capabilities in pam_limits; Linux
     capabilities are not generally useful in a PAM context, and the PAM

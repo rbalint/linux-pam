@@ -114,7 +114,8 @@ then
 	    check="$check pure-ftpd-postgresql racoon samba sasl2-bin"
 	    check="$check sfs-server solid-pop3d squid squid3 tac-plus"
 	    check="$check vsftpd wu-ftpd wzdftpd xrdp yardradius yaws"
-	    if [ -z "$DISPLAY" ]; then
+
+	    if ! who | awk '{print $2}'|grep -q ':[0-9]'; then
 		check="$check kdm wdm xdm"
 	    fi
 
@@ -184,7 +185,7 @@ then
 		echo "Nothing to restart."
 	    fi
 
-	    if [ -n "$DISPLAY" ]; then
+	    if who | awk '{print $2}' | grep -q ':[0-9]'; then
 		dms=""
 		for service in kdm wdm xdm; do
 		    case "$services" in

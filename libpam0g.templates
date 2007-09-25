@@ -14,10 +14,9 @@ Template: libpam0g/xdm-needs-restart
 Type: error
 _Description: Display manager must be restarted manually
  The kdm, wdm, and xdm display managers require a restart for the new
- version of libpam, but restarting these services would terminate any X
- session running inside.  Because the $DISPLAY variable is set in your
- environment, these services have not been restarted for you.  You will
- therefore need to restart them by hand before they will be usable again.
+ version of libpam, but there are X login sessions active on your system that
+ would be terminated by this restart.  You will therefore need to restart
+ these services by hand before further X logins will be possible.
 
 Template: libpam0g/restart-failed
 Type: error
