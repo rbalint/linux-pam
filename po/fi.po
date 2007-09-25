@@ -1,0 +1,101 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: pam 0.99.7.1-4\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"PO-Revision-Date: 2007-09-23 13:14+0200\n"
+"Last-Translator: Esko Arajärvi <edu@iki.fi>\n"
+"Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Finnish\n"
+"X-Poedit-Country: FINLAND\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "Palvelut, jotka käynnistetään uudelleen PAM-kirjastoa päivitettäessä:"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"Useimmat PAM:ia käyttävät palvelut pitää käynnistää uudelleen libpamin uuden "
+"version käyttöönottamiseksi. Tarkista seuraava välilyönnein eroteltu lista "
+"niiden palveluiden init.d-komentotiedostoista, jotka käynnistetään "
+"uudelleen, ja muokkaa listaa tarvittaessa."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"Joitain muita palveluita, kuten xscreensaver, gnome-screensaver ja xlockmore "
+"ei voida käynnistää automaattisesti. Et voi kirjautua näihin palveluihin "
+"ennen kuin olet manuaalisesti käynnistänyt ne uudelleen."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but there are X login sessions active on your system that would "
+"be terminated by this restart.  You will therefore need to restart these "
+"services by hand before further X logins will be possible."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr ""
+"Virhe PAM:in päivityksen yhteydessä käynnistettäessä uudelleen joitain "
+"palveluita"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr ""
+"Seuraavia palveluita ei voitu käynnistää uudelleen PAM-kirjastoa "
+"päivitettäessä:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr ""
+"Nämä palvelut tulee käynnistää uudelleen ajamalla '/etc/init.d/<palvelu> "
+"start'."
+
+#~ msgid ""
+#~ "Among the services that require restarting are the display managers kdm, "
+#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
+#~ "one of these display managers, restarting that service will terminate "
+#~ "your X session.  It is recommended that you remove that service from the "
+#~ "list here and restart it later at your convenience."
+#~ msgstr ""
+#~ "Näytönhallintaohjelmat kdm, wdm ja xdm ovat niiden palveluiden joukossa, "
+#~ "jotka tulee käynnistää uudelleen. Jos ajat päivitystä X-istunnosta, joka "
+#~ "on käynnistetty jollain näistä ohjelmista, kyseisen palvelun "
+#~ "käynnistäminen uudelleen lopettaa X-istuntosi. On suositeltavaa poistaa "
+#~ "kyseinen palvelu listasta ja käynnistää se uudelleen myöhemmin."
