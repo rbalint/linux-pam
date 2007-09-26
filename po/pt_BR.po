@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam_0.99-7.1-5\n"
+"Project-Id-Version: pam_0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
-"PO-Revision-Date: 2007-09-06 12:43-0300\n"
+"PO-Revision-Date: 2007-09-26 15:53-0300\n"
 "Last-Translator: Eder L. Marques <frolic@debian-ce.org>\n"
 "Language-Team: l10n Portuguese <debian-l10n-portuguese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,6 @@ msgstr "Gerenciadores de display devem ser reiniciados manualmente"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
-#, fuzzy
 msgid ""
 "The kdm, wdm, and xdm display managers require a restart for the new version "
 "of libpam, but there are X login sessions active on your system that would "
@@ -66,11 +65,10 @@ msgid ""
 "services by hand before further X logins will be possible."
 msgstr ""
 "Os gerenciadores de display kdm, wdm e xdm precisam ser reiniciados para a "
-"nova versão da libpam, mas reiniciar estes serviços pode terminar qualquer "
-"sessão X executada dentro deles. Por causa que a variável $DISPLAY está "
-"configurada em seu ambiente, estes serviços não serão reiniciados para você. "
-"Você consequentemente precisará reiniciá-los manualmente antes de eles serem "
-"utilizáveis novamente."
+"nova versão da libpam, mas existem sessões de login X ativas em seu sistema "
+"que podem ser terminadas por este reinicio. Você consequentemente "
+"necessitará reiniciar estes serviços manualmente antes que logins X "
+"adicionais sejam possíveis."
 
 #. Type: error
 #. Description
