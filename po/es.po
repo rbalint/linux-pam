@@ -94,8 +94,8 @@ msgstr ""
 "Entre los servicios que deben reiniciarse debido a la nueva versión de "
 "libpam están los gestores de pantalla kdm, wdm y xdm. El reinicio de estos "
 "servicios terminaría las sesiones de X actualmente en ejecución en su "
-"sistema, así que debe reiniciar estos servicios manualmente antes de que "
-"sea posible abrir otra sesión."
+"sistema, así que debe reiniciar estos servicios manualmente antes de que sea "
+"posible abrir otra sesión."
 
 #. Type: error
 #. Description
