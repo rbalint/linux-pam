@@ -4,7 +4,7 @@
 #
 # Changes:
 # - Initial translation
-#       Javier Fernández-Sanguino , 2007
+#       Javier Fernández-Sanguino <jfs@debian.org>, 2007
 #
 #
 #  Traductores, si no conoce el formato PO, merece la pena leer la 
@@ -35,7 +35,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
 "PO-Revision-Date: 2007-09-04 23:48+0200\n"
-"Last-Translator: Javier Fernández-Sanguino <jfs@debian.org>\n"
+"Last-Translator: Steve Langasek <vorlon@debian.org>\n"
 "Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -93,9 +93,9 @@ msgid ""
 msgstr ""
 "Entre los servicios que deben reiniciarse debido a la nueva versión de "
 "libpam están los gestores de pantalla kdm, wdm y xdm. El reinicio de estos "
-"servicios terminaría cualquier sesión de X en ejecución. No se van a "
-"reiniciar automáticamente dado que su entorno tiene definida la variable "
-"$DISPLAY. Debe reiniciarlos manualmente antes de que estos puedan utilizarse."
+"servicios terminaría las sesiones de X actualmente en ejecución en su "
+"sistema, así que debe reiniciar estos servicios manualmente antes de que "
+"sea posible abrir otra sesión."
 
 #. Type: error
 #. Description
