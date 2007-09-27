@@ -66,7 +66,7 @@ msgstr ""
 "Os gestores de display kdm, wdm, e xdm necessitam de reiniciar para a nova "
 "versão de libpam, mas existem sessões de login X activas no seu sistema que "
 "seriam terminadas por esta reiniciação. Então, você irá necessitar de "
-"reiniciar estes serviços manualmente antes que seja possível mais logins X."
+"reiniciar estes serviços manualmente antes que sejam possíveis mais logins X."
 
 #. Type: error
 #. Description
