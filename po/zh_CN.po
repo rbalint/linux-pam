@@ -9,10 +9,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 0.99.7.1-4+\n"
+"Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
-"PO-Revision-Date: 2007-09-21 07:36-0500\n"
+"PO-Revision-Date: 2007-09-25 23:06-0500\n"
 "Last-Translator: Ming Hua <minghua-guest@users.alioth.debian.org>\n"
 "Language-Team: Debian Chinese [GB] <debian-chinese-gb@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,9 +34,9 @@ msgid ""
 "list of init.d scripts for services to be restarted now, and correct it if "
 "needed."
 msgstr ""
-"为了使用基于这个新版本 libpam 编译的模块，绝大部分使用 PAM 的服务都需要重新启"
-"动。请复查下面这个需要重新启动的服务所对应的 init.d script 列表，script 名称"
-"之间以半角空格分隔。如列表有误，请直接更正。"
+"为了使用基于这个新版本 libpam 编译的模块，绝大部分使用 PAM 的服务都需要被重新"
+"启动。请复查下面这个需要重新启动的服务所对应的 init.d script 列表，script 名"
+"称之间以半角空格分隔。如列表有误，请直接更正。"
 
 #. Type: string
 #. Description
@@ -53,7 +53,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "必须手动重新启动显示管理器"
 
 #. Type: error
 #. Description
@@ -64,6 +64,10 @@ msgid ""
 "be terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
+"由于 lipam 更新到新版本，显示管理器 kdm、wdm 和 xdm 需要被重新启动。但是您的"
+"系统上有正在运行的 X 登录会话，而如果重新启动显示管理器服务，这些 X 会话就会"
+"被强行结束。因此，您需要手动重新启动这些服务，否则您将无法再登录进 X 窗口系"
+"统。"
 
 #. Type: error
 #. Description
@@ -85,15 +89,3 @@ msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr "您需要运行“/etc/init.d/<服务> start”来手动启动这些服务。"
-
-#~ msgid ""
-#~ "Among the services that require restarting are the display managers kdm, "
-#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
-#~ "one of these display managers, restarting that service will terminate "
-#~ "your X session.  It is recommended that you remove that service from the "
-#~ "list here and restart it later at your convenience."
-#~ msgstr ""
-#~ "在需要重新启动的服务中，包括显示管理器 kdm、wdm 和 xdm。如果您是在 X 中进"
-#~ "行升级，而 X 会话是这其中某一个显示管理器所启动的，那么重新启动该显示管理"
-#~ "器服务将会强行结束您的 X 会话。因此，推荐您从列表中去掉该服务，并在日后方"
-#~ "便的时候再重新启动它。"
