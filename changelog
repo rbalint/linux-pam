@@ -1,3 +1,10 @@
+pam (0.99.7.1-6) UNRELEASED; urgency=low
+
+  * Updated Vietnamese debconf translation, thanks to
+    Clytie Siddall <clytie@riverland.net.au> (closes: #444437)
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 28 Sep 2007 10:06:59 -0700
+
 pam (0.99.7.1-5) unstable; urgency=low
 
   * More lintian overrides, related to debconf prompting in the postinst

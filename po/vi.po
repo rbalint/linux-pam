@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
-"PO-Revision-Date: 2007-09-04 19:04+0930\n"
+"PO-Revision-Date: 2007-09-28 23:58+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -57,7 +57,6 @@ msgstr "Trình quản lý trình bày phải được khởi chạy bằng tay"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
-#, fuzzy
 msgid ""
 "The kdm, wdm, and xdm display managers require a restart for the new version "
 "of libpam, but there are X login sessions active on your system that would "
@@ -66,9 +65,8 @@ msgid ""
 msgstr ""
 "Trình quản lý trình bày kdm, wdm, hay xdm cần thiết được khởi chạy lại để sử "
 "dụng phiên bản mới của thư viện libpam, nhưng việc khởi chạy lại dịch vụ này "
-"sẽ cũng chấm dứt phiên chạy X đang hoạt động. Không tự động khởi chạy lại "
-"dịch vụ này cho bạn, vì biến môi trường $DISPLAY đã được đặt. Vì vậy bạn cần "
-"phải tự khởi chạy trình quản lý trình bày để có khả năng sử dụng nó lại."
+"sẽ cũng chấm dứt phiên chạy X đang hoạt động. Vì vậy bạn cần phải tự khởi "
+"chạy trình quản lý trình bày để có khả năng sử dụng nó lại."
 
 #. Type: error
 #. Description
