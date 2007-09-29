@@ -1,9 +1,12 @@
 pam (0.99.7.1-6) UNRELEASED; urgency=low
 
-  * Updated Vietnamese debconf translation, thanks to
-    Clytie Siddall <clytie@riverland.net.au> (closes: #444437)
+  * Debconf translations:
+    - Updated Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
+      (closes: #444437)
+    - Updated Spanish, thanks to Javier Fernández-Sanguino Peña
+      <jfs@debian.org> (closes: #444479)
 
- -- Steve Langasek <vorlon@debian.org>  Fri, 28 Sep 2007 10:06:59 -0700
+ -- Steve Langasek <vorlon@debian.org>  Fri, 28 Sep 2007 22:20:31 -0700
 
 pam (0.99.7.1-5) unstable; urgency=low
 
