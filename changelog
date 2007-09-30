@@ -5,8 +5,10 @@ pam (0.99.7.1-6) UNRELEASED; urgency=low
       (closes: #444437)
     - Updated Spanish, thanks to Javier Fernández-Sanguino Peña
       <jfs@debian.org> (closes: #444479)
+    - Updated German, thanks to Sven Joachim <svenjoac@gmx.de>
+      (closes: #444566)
 
- -- Steve Langasek <vorlon@debian.org>  Fri, 28 Sep 2007 22:20:31 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sat, 29 Sep 2007 23:44:04 -0700
 
 pam (0.99.7.1-5) unstable; urgency=low
 

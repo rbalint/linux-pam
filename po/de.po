@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
-"PO-Revision-Date: 2007-09-04 17:08+0200\n"
+"PO-Revision-Date: 2007-09-29 14:18+0200\n"
 "Last-Translator: Sven Joachim <svenjoac@gmx.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,6 @@ msgstr "Display-Manager müssen manuell neu gestartet werden"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
-#, fuzzy
 msgid ""
 "The kdm, wdm, and xdm display managers require a restart for the new version "
 "of libpam, but there are X login sessions active on your system that would "
@@ -66,10 +65,9 @@ msgid ""
 "services by hand before further X logins will be possible."
 msgstr ""
 "Die Display-Manager kdm, wdm und xdm erfordern einen Neustart für die neue "
-"Version von libpam, aber diese Dienste neu zu starten würde jede unter ihnen "
-"laufende X-Sitzung beenden. Weil die Variable $DISPLAY in Ihrer Umgebung "
-"gesetzt ist, sind diese Dienste nicht für Sie neu gestartet worden. Sie "
-"müssen sie daher von Hand neu starten, bevor Sie sie wieder nutzen können."
+"Version von libpam, aber auf ihrem System sind X-Loginsitzungen aktiv, die "
+"von diesem Neustart beendet werden würden. Sie müssen diese Dienste daher "
+"von Hand neu starten, bevor Logins unter X wieder möglich sind."
 
 #. Type: error
 #. Description
