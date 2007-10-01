@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
-"PO-Revision-Date: 2007-09-30 18:53+0100\n"
+"PO-Revision-Date: 2007-10-01 20:04+0100\n"
 "Last-Translator: Jacobo Tarrio <jtarrio@debian.org>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "Débese reiniciar manualmente o xestor de pantallas"
 
 #. Type: error
 #. Description
@@ -60,6 +60,10 @@ msgid ""
 "be terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
+"É necesario reiniciar os xestores de pantallas kdm, wdm e xdm para a nova "
+"versión de libpam, pero hai sesións de X activas no sistema que se pecharían "
+"co reinicio. Polo tanto, ha ter que reiniciar eses servizos manualmente para "
+"poder iniciar novas sesións mediante X."
 
 #. Type: error
 #. Description
