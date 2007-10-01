@@ -7,8 +7,9 @@ pam (0.99.7.1-6) UNRELEASED; urgency=low
       <jfs@debian.org> (closes: #444479)
     - Updated German, thanks to Sven Joachim <svenjoac@gmx.de>
       (closes: #444566)
+    - Galician, thanks to Jacobo Tarrio <jtarrio@trasno.net> (closes: #444758)
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 29 Sep 2007 23:44:04 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon,  1 Oct 2007 01:09:44 -0700
 
 pam (0.99.7.1-5) unstable; urgency=low
 

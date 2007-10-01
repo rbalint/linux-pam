@@ -1,0 +1,87 @@
+# Galician translation of pam's debconf templates
+# This file is distributed under the same license as the pam package.
+# Jacobo Tarrio <jtarrio@debian.org>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pam\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"PO-Revision-Date: 2007-09-30 18:53+0100\n"
+"Last-Translator: Jacobo Tarrio <jtarrio@debian.org>\n"
+"Language-Team: Galician <proxecto@trasno.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "Servizos a reiniciar para a actualización da biblioteca PAM:"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"É necesario reiniciar a maioría dos servizos que empregan PAM para empregar "
+"os módulos compilados para esta versión de libpam. Revise a seguinte lista "
+"de scripts de init.d que se han reiniciar agora, e corríxaa se é preciso."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"Hai outros servizos, como xscreensaver, gnome-screensaver e xlockmore, que "
+"non se poden reiniciar por vostede. Non ha poderse autenticar con estes "
+"servizos a menos que os reinicie manualmente."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but there are X login sessions active on your system that would "
+"be terminated by this restart.  You will therefore need to restart these "
+"services by hand before further X logins will be possible."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "Problemas ao reiniciar algúns servizos para a actualización de PAM"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr ""
+"Non se puido reiniciar os seguintes servizos para a actualización da "
+"biblioteca PAM:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr ""
+"Ha ter que reinicialos manualmente executando \"/etc/init.d/<servizo> start"
+"\"."
