@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
-"PO-Revision-Date: 2007-09-08 18:26+0200\n"
+"PO-Revision-Date: 2007-09-29 15:30+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -56,18 +56,17 @@ msgstr "Správce displeje se musí restartovat ručně"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
-#, fuzzy
 msgid ""
 "The kdm, wdm, and xdm display managers require a restart for the new version "
 "of libpam, but there are X login sessions active on your system that would "
 "be terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
-"Správcové displejů kdm, wdm a xdm musí být s novou verzí libpam "
-"restartováni. Restart těchto služeb by však ukončil všechna stávající X "
-"sezení obsluhovaná zmíněnými správci. Protože je ve vašem prostředí "
-"nastavena proměnná $DISPLAY, nebudou tyto služby nyní restartovány a budete "
-"je muset restartovat ručně, protože do té doby nebudou použitelné."
+"Správcové displejů kdm, wdm a xdm musí být s novou verzí knihovny libpam "
+"restartováni. Restart těchto služeb by však ukončil probíhající X sezení a "
+"proto je ponechán restart zmíněných správců displejů na vás, až určíte, že "
+"nastal vhodný okamžik. S restartem byste neměli otálet, protože do té doby "
+"se pomocí nich nebudou moci uživatelé přihlásit."
 
 #. Type: error
 #. Description
