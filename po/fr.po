@@ -1,0 +1,108 @@
+# Copyright (C) 2007 Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>
+# This file is distributed under the same license as the pam package.
+# Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>, 2007
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pam\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"PO-Revision-Date: 2007-10-03 12:07+0200\n"
+"Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
+"Language-Team: French <debian-l10n-french@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr ""
+"Services à redémarrer lors de la mise à niveau de la bibliothèque PAM :"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"La plupart des services utilisant PAM doivent être redémarrés pour utiliser "
+"les modules compilés pour cette nouvelle version de libpam. Veuillez "
+"vérifier la liste suivante de scripts de démarrage à relancer maintenant, et "
+"la corriger si nécessaire."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"D'autres services tels que xscreensaver, gnome-screensaver et xlockmore ne "
+"peuvent pas être redémarrés automatiquement. Vous ne pourrez vous identifier "
+"auprès de ces services qu'après les avoir redémarrés vous-même."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr "Pas de redémarrage automatique du gestionnaire graphique de sessions"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but there are X login sessions active on your system that would "
+"be terminated by this restart.  You will therefore need to restart these "
+"services by hand before further X logins will be possible."
+msgstr ""
+"Les gestionnaires graphiques de session kdm, wdm et xdm nécessitent un "
+"redémarrage lors de la mise à niveau de libpam, mais il existe des sessions "
+"X actives sur ce système, qui seraient fermées par ce redémarrage. Vous "
+"devez donc redémarrer ces services vous-même avant de pouvoir effectuer à "
+"nouveau une connexion au serveur graphique."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr ""
+"Erreur du redémarrage de certains services pour la mise à niveau de PAM"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr ""
+"Les services suivants n'ont pas pu être redémarrés lors de la mise à niveau "
+"de la bibliothèque PAM :"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr ""
+"Vous devez les démarrer vous-même avec la commande « /etc/init.d/<service> "
+"start »."
+
+#~ msgid ""
+#~ "Among the services that require restarting are the display managers kdm, "
+#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
+#~ "one of these display managers, restarting that service will terminate "
+#~ "your X session.  It is recommended that you remove that service from the "
+#~ "list here and restart it later at your convenience."
+#~ msgstr ""
+#~ "Parmi la liste de services nécessitant un redémarrage, on trouve les "
+#~ "gestionnaires graphiques de session comme kdm, wdm et xdm. Si la mise à "
+#~ "niveau a lieu depuis une session X démarrée par l'un de ceux-ci, le "
+#~ "redémarrer terminera cette session. Il est recommandé d'enlever ce "
+#~ "service de la liste et de le redémarrer plus tard."
