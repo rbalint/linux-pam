@@ -27,4 +27,5 @@ no_pthread_mutexes
 limits_wrong_strncpy
 misc_conv_allow_sigint.patch
 pam_env_ignore_garbage.patch
+pam_tally_audit.patch -p0
 autoconf.patch

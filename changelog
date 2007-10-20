@@ -12,8 +12,11 @@ pam (0.99.7.1-6) UNRELEASED; urgency=low
       (closes: #445022)
     - French, thanks to Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>
       (closes: #445869)
+  * Make sure the "audit" option is specified in octal instead of in decimal,
+    so that it doesn't randomly set other options.  Thanks to Corey Wright
+    <undefined@pobox.com> for the catch.  Closes: #446327.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 08 Oct 2007 14:01:40 -0700
+ -- Steve Langasek <vorlon@debian.org>  Fri, 19 Oct 2007 23:47:16 -0700
 
 pam (0.99.7.1-5) unstable; urgency=low
 
