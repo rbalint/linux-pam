@@ -1,0 +1,91 @@
+# Debconf questions for the Linux-PAM package.
+# Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
+# This file is distributed under the same license as the pam package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pam 0.99.7.1-5\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"PO-Revision-Date: 2007-10-14 16:48+0900\n"
+"Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "PAM ライブラリの更新のために再起動するサービス:"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"PAM を利用するほとんどのサービスは、この libpam の新しいバージョンでビルドさ"
+"れたモジュールを使うために再起動を必要とします。以下の、スペースで区切られた"
+"今再起動するサービスの init.d スクリプトのリストを見て、必要なら修正してくだ"
+"さい。"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"xscreensaver、gnome-screensaver、xlockmore のようなその他いくつかのサービスは"
+"再起動できません。あなたがこれらを手動で再起動するまで、これらのサービスでは"
+"認証ができないことになります。"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr "ディスプレイマネージャは手動で再起動されなければなりません"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but there are X login sessions active on your system that would "
+"be terminated by this restart.  You will therefore need to restart these "
+"services by hand before further X logins will be possible."
+msgstr ""
+"kdm、wdm、xdm といったディスプレイマネージャは libpam の新しいバージョンのた"
+"めに再起動が必要ですが、あなたのシステムには、再起動をすると強制終了してしま"
+"う実行中の X ログインセッションが存在します。そのため、さらなる X のログイン"
+"が可能になる前に、これらのサービスを手動で再起動する必要があります。"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "PAM 更新のためのいくつかのサービスの再起動で失敗"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr "PAM ライブラリ更新のための、以下のサービスの再起動ができませんでした:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr ""
+"/etc/init.d/<サービス> start' を実行することで、これらを手動で起動する必要が"
+"あります。"
