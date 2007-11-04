@@ -12,12 +12,13 @@ pam (0.99.7.1-6) UNRELEASED; urgency=low
       (closes: #445022)
     - French, thanks to Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>
       (closes: #445869)
-    - Japanese, thanks to Kenshi Muto <kmuto@debian.org> (closeS: #446584)
+    - Japanese, thanks to Kenshi Muto <kmuto@debian.org> (closes: #446584)
+    - Dutch, thanks to Bart Cornelis <cobaco@skolelinux.no> (closes: #448930)
   * Make sure the "audit" option is specified in octal instead of in decimal,
     so that it doesn't randomly set other options.  Thanks to Corey Wright
     <undefined@pobox.com> for the catch.  Closes: #446327.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 20 Oct 2007 08:37:03 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun,  4 Nov 2007 00:39:48 -0400
 
 pam (0.99.7.1-5) unstable; urgency=low
 
