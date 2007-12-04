@@ -5,6 +5,3 @@
 - Build-Depend-Indep on fop and install PDF docs, and add them to
   doc-base.  This depends on fop being patched to build using Java in
   main so it can move out of contrib.
-- drop the pam_limits capabilities patch and the dependency on libcap,
-  because this stuff is long broken on Linux with no hope of
-  resurrection.
