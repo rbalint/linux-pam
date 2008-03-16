@@ -1,4 +1,4 @@
-pam (0.99.7.1-6) UNRELEASED; urgency=low
+pam (0.99.7.1-6) unstable; urgency=low
 
   * Debconf translations:
     - Updated Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
@@ -22,7 +22,7 @@ pam (0.99.7.1-6) UNRELEASED; urgency=low
     so that it doesn't randomly set other options.  Thanks to Corey Wright
     <undefined@pobox.com> for the catch.  Closes: #446327.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 30 Dec 2007 19:34:44 -0800
+ -- Steve Langasek <vorlon@debian.org>  Sun, 16 Mar 2008 02:06:28 -0700
 
 pam (0.99.7.1-5) unstable; urgency=low
 
