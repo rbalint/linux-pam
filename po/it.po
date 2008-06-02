@@ -1,0 +1,92 @@
+# Debconf questions for the Linux-PAM package.
+# Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
+# This file is distributed under the same license as the pam package.
+# David Paleino <d.paleino@gmail.com>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pam 0.99.7.1-5\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"PO-Revision-Date: 2008-06-01 08:38+0100\n"
+"Last-Translator: David Paleino <d.paleino@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "Servizi da riavviare per l'aggiornamento della libreria PAM:"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"Molti servizi che usano PAM hanno bisogno di essere riavviati per utilizzare "
+"i moduli compilati per questa nuova versione di libpam.  Per favore, "
+"controllare la seguente lista, separata da spazi, di script di init.d per i "
+"servizi da riavviare, e correggere se necessario."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"Alcuni altri servizi come xscreensaver, gnome-screensaver e xlockmore non "
+"possono essere riavviati automaticamente.  Non sarai in grado di "
+"autenticarti a questi servizi finché non saranno riavviati manualmente."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr "Il Display Manager deve essere riavviato manualmente"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but there are X login sessions active on your system that would "
+"be terminated by this restart.  You will therefore need to restart these "
+"services by hand before further X logins will be possible."
+msgstr ""
+"I display manager kdm, wdm e xdm richiedono un riavvia per la nuova versione "
+"di libpam, ma ci sono sessioni di login X attive sul sistema che verrebbero "
+"terminate da questo riavvio.  Bisognerà riavviare questi servizi manualmente "
+"prima che qualunque altro login X sia possibile."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "Fallito riavvio di alcuni servizi per l'aggiornamento di PAM"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr ""
+"I seguenti servizi non sono stati riavviati per l'aggiornamento della "
+"libreria PAM:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr ""
+"Bisognerà avviarli manualmente eseguendo '/etc/init.d/<servizio> start'."
