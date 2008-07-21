@@ -3,15 +3,15 @@
 # Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
 # This file is distributed under the same license as the pam package.
 #
-# Piarres Beobide <pi@beobide.net>, 2007.
+# Piarres Beobide <pi@beobide.net>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: vorlon@debian.org\n"
 "POT-Creation-Date: 2007-09-24 17:06-0700\n"
-"PO-Revision-Date: 2007-12-19 10:45+0100\n"
+"PO-Revision-Date: 2008-04-02 14:26+0200\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
-"Language-Team: Euskara <Librezale@librezale.org>\n"
+"Language-Team: Euskara <debian-l10n-basque@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -54,7 +54,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr ""
+msgstr "Pantaila kudeatzailea eskuz berrabiarazi behar da"
 
 #. Type: error
 #. Description
@@ -65,6 +65,10 @@ msgid ""
 "be terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
+"Kdm, wdm, eta xdm pantaila kudeatzaileek berrabiaraztea behar dute libpam "
+"bertsio berria erabiltzeko. Baina berrabiarazteak eragin izan dezaken "
+"abiarazitako X saioak daude sistema honetan.  Zerbitzu hori beranduago eskuz "
+"berrabiarazi beharko duzu X saioak hastea posible izateko."
 
 #. Type: error
 #. Description
