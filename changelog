@@ -6,6 +6,8 @@ pam (0.99.7.1-7) UNRELEASED; urgency=low
     - Turkish, thanks to Mert Dirik <mertdirik@gmail.com> (closes: #490880)
     - Basque, thanks to Piarres Beobide <pi+debian@beobide.net>
       (closes: #473975)
+  * Drop the 'XS' from Vcs-Svn/Vcs-Browser, since these are now officially
+    recognized fields.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 02 Jun 2008 11:44:27 -0700
 
