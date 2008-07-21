@@ -1,5 +1,6 @@
-pam (0.99.7.1-7) UNRELEASED; urgency=low
+pam (0.99.7.1-7) UNRELEASED; urgency=medium
 
+  * Medium-urgency upload for RC bugfix
   * Debconf translations:
     - Italian, thanks to David Paleino <d.paleino@gmail.com> (closes: #483913)
     - Slovak, thanks to Ivan Masár <helix84@centrum.sk> (closes: #488908)
