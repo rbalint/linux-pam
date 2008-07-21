@@ -9,6 +9,7 @@ Build-Depends-Indep: xsltproc, libxml2-utils, docbook-xml, docbook-xsl, w3m
 Build-Conflicts-Indep: fop
 Vcs-Svn: svn://svn.debian.org/svn/pkg-pam/trunk/pam/
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-pam/trunk/pam/
+Homepage: http://pam.sourceforge.net/
 
 Package: libpam0g
 Priority: required
