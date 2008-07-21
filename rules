@@ -5,7 +5,7 @@
 # architecture-dependant package, as well as an architecture-independant
 # package.
 
-CFLAGS	:= -g -D_GNU_SOURCE -D_REENTRANT -fPIC -DCRACKLIB_DICTS=CRACKLIB_DICTPATH
+CFLAGS	:= -g -D_GNU_SOURCE -D_REENTRANT -fPIC
 
 ifeq (,$(findstring noopt, ${DEB_BUILD_OPTIONS}))
 CFLAGS += -O2

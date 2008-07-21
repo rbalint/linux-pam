@@ -9,6 +9,10 @@ pam (0.99.7.1-7) UNRELEASED; urgency=low
   * Drop the 'XS' from Vcs-Svn/Vcs-Browser, since these are now officially
     recognized fields.
   * Add a Homepage field.  Closes: #473338.
+  * Drop -DCRACKLIB_DICTS from CFLAGS, since the referenced define is no
+    longer provided by cracklib2-dev 2.8 and above.  This requires a
+    build-dependency on the corresponding version of libcrack2-dev.
+    Closes: #490236.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 02 Jun 2008 11:44:27 -0700
 
