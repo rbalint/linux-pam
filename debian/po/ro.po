@@ -1,0 +1,97 @@
+# translation of templates.po to Romanian
+# Debconf questions for the Linux-PAM package.
+# Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
+# This file is distributed under the same license as the pam package.
+#
+# Igor Stirbu <igor.stirbu@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: templates\n"
+"Report-Msgid-Bugs-To: vorlon@debian.org\n"
+"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"PO-Revision-Date: 2008-07-21 10:28+0300\n"
+"Last-Translator: Igor Stirbu <igor.stirbu@gmail.com>\n"
+"Language-Team: Romanian <debian-l10n-romanian@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid "Services to restart for PAM library upgrade:"
+msgstr "Serviciile repornite la actualizarea bibliotecii PAM:"
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Most services that use PAM need to be restarted to use modules built for "
+"this new version of libpam.  Please review the following space-separated "
+"list of init.d scripts for services to be restarted now, and correct it if "
+"needed."
+msgstr ""
+"Majoritatea serviciilor ce folosesc PAM trebuie repornite pentru a folosi "
+"modulele pentru noua versiune de libpam. Următoarea listă folosește ca "
+"separator spațiul și conține script-uri init.d care urmează să fie repornite "
+"acum; verificați-o și corectați-o, dacă este necesar."
+
+#. Type: string
+#. Description
+#: ../libpam0g.templates:1001
+msgid ""
+"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
+"cannot be restarted for you.  You will not be able to authenticate to these "
+"services until you restart them manually."
+msgstr ""
+"Alte servicii, de exemplu, xscreensaver, gnome-screensaver și xlockmore nu "
+"pot fi repornite automat. Autentificarea prin aceste servicii nu va mai fi "
+"posibilă, dacă nu le reporniți manual."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid "Display manager must be restarted manually"
+msgstr "Administratorul de ecran trebuie repornit manual"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:2001
+msgid ""
+"The kdm, wdm, and xdm display managers require a restart for the new version "
+"of libpam, but there are X login sessions active on your system that would "
+"be terminated by this restart.  You will therefore need to restart these "
+"services by hand before further X logins will be possible."
+msgstr ""
+"Administratorii de ecran kdm, wdm și xmd trebuie reporniți pentru ca să "
+"folosească noua versiune de libpam, dar sunt sesiuni active de X pe sistemul "
+"dumneavoastră care ar fi oprite odată cu această repornire. Drept urmare, "
+"trebuie să reporniți manual aceste servicii înainte ca autentificările X "
+"ulterioare să fie posibile."
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid "Failure restarting some services for PAM upgrade"
+msgstr "Eșec la repornirea unor servicii la actualizarea PAM"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"The following services could not be restarted for the PAM library upgrade:"
+msgstr ""
+"Umătoarele servicii nu au putut fi repornite la actualizarea bibliotecii PAM:"
+
+#. Type: error
+#. Description
+#: ../libpam0g.templates:3001
+msgid ""
+"You will need to start these manually by running '/etc/init.d/<service> "
+"start'."
+msgstr ""
+"Trebuie să reporniți manual aceste servicii rulând „/etc/init.d/<serviciu> "
+"start”"
