@@ -5,6 +5,8 @@ pam (0.99.8.1-1) UNRELEASED; urgency=low
     - pam_mail: set the MAIL variable even when .hushlogin is set.
       Closes: #421010.
     - new minclass option introduced for pam_cracklib.  Closes: #454237.
+    - use --disable-audit, to avoid libaudit being linked in
+      accidentally
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
