@@ -7,6 +7,8 @@ pam (0.99.8.1-1) UNRELEASED; urgency=low
     - new minclass option introduced for pam_cracklib.  Closes: #454237.
     - use --disable-audit, to avoid libaudit being linked in
       accidentally
+  * Replace the Vcs-Svn field with a Vcs-Bzr field; jumping ship from svn, and
+    how!
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
