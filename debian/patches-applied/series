@@ -1,31 +1,31 @@
-006_docs_cleanup -p0
-007_modules_pam_unix -p0
-008_modules_pam_limits_chroot -p0
-015_hurd_portability -p0
-019_pam_listfile_quiet -p0
-021_nis_cleanup -p0
-022_pam_unix_group_time_miscfixes -p0
-024_debian_cracklib_dict_path -p0
-026_pam_unix_passwd_unknown_user -p0
-027_pam_limits_better_init_allow_explicit_root -p0
-031_pam_include
-032_pam_limits_EPERM_NOT_FATAL -p0
-036_pam_wheel_getlogin_considered_harmful -p0
-038_support_hurd -p0
-hurd_no_setfsuid -p0
-040_pam_limits_log_failure -p0
-043_pam_unix_unknown_user_not_alert -p0
-045_pam_dispatch_jump_is_ignore -p0
-046_pam_group_example -p0
-049_pam_unix_sane_locking -p0
-054_pam_security_abstract_securetty_handling -p0
-055_pam_unix_nullok_secure -p0
-057_pam_unix_passwd_OOM_check -p0
-065_pam_unix_cracklib_disable
-PAM-manpage-section
-no_pthread_mutexes
-limits_wrong_strncpy
-misc_conv_allow_sigint.patch
-pam_env_ignore_garbage.patch
-pam_tally_audit.patch -p0
-autoconf.patch
+006_docs_cleanup
+007_modules_pam_unix
+008_modules_pam_limits_chroot
+015_hurd_portability
+019_pam_listfile_quiet
+021_nis_cleanup
+022_pam_unix_group_time_miscfixes
+024_debian_cracklib_dict_path
+026_pam_unix_passwd_unknown_user
+027_pam_limits_better_init_allow_explicit_root
+031_pam_include -p2
+032_pam_limits_EPERM_NOT_FATAL
+036_pam_wheel_getlogin_considered_harmful
+038_support_hurd
+hurd_no_setfsuid
+040_pam_limits_log_failure
+043_pam_unix_unknown_user_not_alert
+045_pam_dispatch_jump_is_ignore
+046_pam_group_example
+049_pam_unix_sane_locking
+054_pam_security_abstract_securetty_handling
+055_pam_unix_nullok_secure
+057_pam_unix_passwd_OOM_check
+065_pam_unix_cracklib_disable -p2
+PAM-manpage-section -p2
+no_pthread_mutexes -p2
+limits_wrong_strncpy -p2
+misc_conv_allow_sigint.patch -p2
+pam_env_ignore_garbage.patch -p2
+pam_tally_audit.patch
+autoconf.patch -p2
