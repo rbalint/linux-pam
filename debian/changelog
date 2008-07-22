@@ -14,6 +14,8 @@ pam (0.99.8.1-1) UNRELEASED; urgency=low
   * Debconf translations:
     - Romanian, thanks to Igor Stirbu <igor.stirbu@gmail.com>
       (closes: #491821)
+  * Add libpam0g.symbols, for finer-grained package dependencies with
+    dpkg-gensymbols.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
