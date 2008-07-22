@@ -9,8 +9,8 @@ pam (0.99.8.1-1) UNRELEASED; urgency=low
       accidentally
   * Use a pristine upstream tarball instead of repacking; requires various
     changes to debian/rules and debhelper files.
-  * Replace the Vcs-Svn field with a Vcs-Bzr field; jumping ship from svn, and
-    how!
+  * Replace the Vcs-Svn field with a Vcs-Bzr field; jumping ship from svn,
+    and how!
   * Debconf translations:
     - Romanian, thanks to Igor Stirbu <igor.stirbu@gmail.com>
       (closes: #491821)
