@@ -5,6 +5,9 @@ pam (0.99.9.0-1) UNRELEASED; urgency=low
     - pam_mail: set the MAIL variable even when .hushlogin is set.
       Closes: #421010.
     - new minclass option introduced for pam_cracklib.  Closes: #454237.
+    - fix a failure to check the string length when matching usernames in
+      pam_group.  Closes: #444427.
+    - fix setting shell security context in pam_selinux.  Closes: #451722.
     - use --disable-audit, to avoid libaudit being linked in
       accidentally
   * Drop patches 006_docs_cleanup, 015_hurd_portability,
