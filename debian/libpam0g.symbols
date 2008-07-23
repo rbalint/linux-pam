@@ -5,4 +5,4 @@ libpam.so.0 libpam0g #MINVER#
 libpam_misc.so.0 libpam0g #MINVER#
  *@LIBPAM_MISC_1.0 0.99.7.1
 libpamc.so.0 libpam0g #MINVER#
- *@LIBPAMC_.0 0.99.7.1
+ *@LIBPAMC_1.0 0.99.7.1
