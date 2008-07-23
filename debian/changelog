@@ -38,6 +38,9 @@ pam (0.99.9.0-1) UNRELEASED; urgency=low
   * 027_pam_limits_better_init_allow_explicit_root: RLIM_INFINITY is also
     invalid for RLIMIT_NOFILE, so when resetting the limits for a new session,
     use the kernel default of 1024 instead.  Closes: #404836.
+  * Create /etc/environment on initial install of libpam-modules (or on
+    upgrade from an old version), to quell warnings in the logs about it
+    being missing.  Closes: #442049.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
