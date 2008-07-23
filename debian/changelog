@@ -33,6 +33,7 @@ pam (0.99.9.0-1) UNRELEASED; urgency=low
   * Fix debian/copyright to list the known copyright holders
   * Fix up the doc-base sections for the libpam-doc documentation, to point
     to Applications instead of Apps
+  * Fix a typo in the libpam0g-dev description.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
