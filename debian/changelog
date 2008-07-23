@@ -14,6 +14,10 @@ pam (0.99.9.0-1) UNRELEASED; urgency=low
     misc_conv_allow_sigint.patch, which have been merged upstream.
   * Patch 022_pam_unix_group_time_miscfixes: partially merged upstream;
     now is really just "pam_group_miscfixes".
+  * New patch, rhosts_int32_not_bool.patch, to fix a parentheses error in
+    pam_rhosts_auth introduced upstream in 0.99.9.0: we want to cast the
+    result of inet_addr to int32_t, not the result of a boolean *comparison*
+    on inet_addr's result...
   * Use a pristine upstream tarball instead of repacking; requires various
     changes to debian/rules and debhelper files.
   * Replace the Vcs-Svn field with a Vcs-Bzr field; jumping ship from svn,

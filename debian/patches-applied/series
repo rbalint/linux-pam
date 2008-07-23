@@ -18,4 +18,5 @@ hurd_no_setfsuid
 PAM-manpage-section -p2
 pam_env_ignore_garbage.patch -p2
 pam_tally_audit.patch
+rhosts_int32_not_bool.patch
 autoconf.patch 
