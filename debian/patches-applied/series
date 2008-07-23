@@ -14,7 +14,7 @@ hurd_no_setfsuid
 054_pam_security_abstract_securetty_handling
 055_pam_unix_nullok_secure
 057_pam_unix_passwd_OOM_check
-065_pam_unix_cracklib_disable -p2
+065_pam_unix_cracklib_disable
 PAM-manpage-section -p2
 pam_env_ignore_garbage.patch -p2
 pam_tally_audit.patch

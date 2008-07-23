@@ -1,8 +1,8 @@
-Index: pam/Linux-PAM/modules/pam_unix/Makefile.am
+Index: pam.debian/modules/pam_unix/Makefile.am
 ===================================================================
---- pam.orig/Linux-PAM/modules/pam_unix/Makefile.am
-+++ pam/Linux-PAM/modules/pam_unix/Makefile.am
-@@ -21,12 +21,9 @@
+--- pam.debian.orig/modules/pam_unix/Makefile.am
++++ pam.debian/modules/pam_unix/Makefile.am
+@@ -21,15 +21,12 @@
  if HAVE_LIBSELINUX
    AM_CFLAGS += -D"WITH_SELINUX"
  endif
@@ -10,9 +10,12 @@ Index: pam/Linux-PAM/modules/pam_unix/Makefile.am
 -  AM_CFLAGS += -D"USE_CRACKLIB"
 -endif
  
- pam_unix_la_LDFLAGS = -no-undefined -avoid-version -module \
--	@LIBCRACK@ @LIBNSL@ -L$(top_builddir)/libpam -lpam \
-+	@LIBNSL@ -L$(top_builddir)/libpam -lpam \
- 	@LIBCRYPT@ @LIBSELINUX@
+ pam_unix_la_LDFLAGS = -no-undefined -avoid-version -module
  if HAVE_VERSIONING
    pam_unix_la_LDFLAGS += -Wl,--version-script=$(srcdir)/../modules.map
+ endif
+-pam_unix_la_LIBADD = @LIBCRACK@ @LIBNSL@ -L$(top_builddir)/libpam -lpam \
++pam_unix_la_LIBADD = @LIBNSL@ -L$(top_builddir)/libpam -lpam \
+ 	@LIBCRYPT@ @LIBSELINUX@ \
+ 	../pam_securetty/tty_secure.lo
+ 
