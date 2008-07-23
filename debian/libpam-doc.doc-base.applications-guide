@@ -7,7 +7,7 @@ Abstract: This manual documents what an application developer needs to know
  description of the funtions to be found in libpam_misc library, that can
  be used in general applications. Finally, it contains some comments on PAM
  related security issues for the application developer.
-Section: Applications/Programming
+Section: Programming
 
 Format: HTML
 Index: /usr/share/doc/libpam-doc/html/Linux-PAM_ADG.html

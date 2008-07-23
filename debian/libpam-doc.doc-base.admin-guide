@@ -4,7 +4,7 @@ Author: Andrew G. Morgan <morgan@linux.kernel.org>
 Abstract: This manual documents what a system administrator needs to know
  about the Linux-PAM library. It covers the correct syntax of the PAM
  configuration file and discusses strategies for maintaining a secure system.
-Section: Applications/System/Administration
+Section: System/Administration
 
 Format: HTML
 Index: /usr/share/doc/libpam-doc/html/Linux-PAM_SAG.html

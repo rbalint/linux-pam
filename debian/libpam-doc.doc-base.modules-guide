@@ -4,7 +4,7 @@ Author: ndrew G. Morgan <morgan@linux.kernel.org>
 Abstract: This manual documents what a programmer needs to know in order to
  write a module that conforms to the Linux-PAM standard. It also discusses
  some security issues from the point of view of the module programmer.
-Section: Applications/Programming
+Section: Programming
 
 Format: HTML
 Index: /usr/share/doc/libpam-doc/html/Linux-PAM_MWG.html
