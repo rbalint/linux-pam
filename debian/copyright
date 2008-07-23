@@ -3,7 +3,24 @@ Wed, 23 Sep 1998 20:29:32 +0200.
 
 It was downloaded from ftp://ftp.kernel.org/pub/linux/libs/pam/pre/
 
-Copyright:
+Copyright (C) 1994, 1995, 1996 Olaf Kirch, <okir@monad.swb.de>
+Copyright (C) 1995 Wietse Venema
+Copyright (C) 1995, 2001-2006 Red Hat, Inc.
+Copyright (C) 1996-1999, 2000-2003, 2005 Andrew G. Morgan <morgan@kernel.org>
+Copyright (C) 1996, 1997, 1999 Cristian Gafton <gafton@redhat.com>
+Copyright (C) 1996 Alexander O. Yuriev
+Copyright (C) 1996 Theodore Ts'o
+Copyright (C) 1996 Elliot Lee
+Copyright (C) 1997 Philip W. Dalrymple <pwd@mdtsoft.com>
+Copyright (C) 1999 Jan Rękorajski
+Copyright (C) 1999 Ben Collins <bcollins@debian.org>
+Copyright (C) 2000-2001, 2003, 2005, 2007 Steve Langasek
+Copyright (C) 2003, 2005 IBM Corporation
+Copyright (C) 2003, 2006 SuSE Linux AG.
+Copyright (C) 2003 Nalin Dahyabhai <nalin@redhat.com>
+Copyright (C) 2005, 2006, 2007 Thorsten Kukuk <kukuk@thkukuk.de>
+Copyright (C) 2005 Darren Tucker
+
 
 Unless otherwise *explicitly* stated the following text describes the
 licensed conditions under which the contents of this Linux-PAM release

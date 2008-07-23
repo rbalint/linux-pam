@@ -30,6 +30,7 @@ pam (0.99.9.0-1) UNRELEASED; urgency=low
       (closes: #491821)
   * Add libpam0g.symbols, for finer-grained package dependencies with
     dpkg-gensymbols.
+  * Fix debian/copyright to list the known copyright holders
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
