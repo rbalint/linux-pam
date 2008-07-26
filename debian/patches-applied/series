@@ -18,3 +18,4 @@ hurd_no_setfsuid
 PAM-manpage-section 
 pam_env_ignore_garbage.patch -p2
 autoconf.patch 
+thread-safe_save_old_password.patch
