@@ -46,6 +46,9 @@ pam (0.99.10.0-1) UNRELEASED; urgency=low
   * Create /etc/environment on initial install of libpam-modules (or on
     upgrade from an old version), to quell warnings in the logs about it
     being missing.  Closes: #442049.
+  * 026_pam_unix_passwd_unknown_user: drop a redundant, and broken, check for
+    the NSS source of our user; this was preventing password changes for NIS
+    users, which otherwise should have worked.  Closes: #203222.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
