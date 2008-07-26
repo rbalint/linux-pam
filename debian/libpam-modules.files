@@ -1,3 +1,4 @@
 etc/security/
 sbin/unix_chkpwd
+sbin/unix_update
 sbin/pam_tally
