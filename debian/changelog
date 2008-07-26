@@ -19,6 +19,8 @@ pam (0.99.10.0-1) UNRELEASED; urgency=low
     misc_conv_allow_sigint.patch, which have been merged upstream.
   * Patch 022_pam_unix_group_time_miscfixes: partially merged upstream;
     now is really just "pam_group_miscfixes".
+  * Patch 007_modules_pam_unix partially superseded upstream; stripping
+    hpux-style expiry information off of password fields is now supported.
   * The password-changing helper functionality for SELinux systems has been
     split out into a separate unix_update binary, so at long last we can
     change unix_chkpwd to be sgid shadow instead of suid root.

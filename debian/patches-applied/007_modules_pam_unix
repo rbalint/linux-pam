@@ -1,18 +1,18 @@
-Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
+Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_passwd.c.orig
-+++ Linux-PAM/modules/pam_unix/pam_unix_passwd.c
-@@ -127,6 +127,9 @@
- #define OPW_TMPFILE		"/etc/security/nopasswd"
- #define OLD_PASSWORDS_FILE	"/etc/security/opasswd"
+--- pam.deb.orig/modules/pam_unix/pam_unix_passwd.c
++++ pam.deb/modules/pam_unix/pam_unix_passwd.c
+@@ -92,6 +92,9 @@
+ 		      unsigned long versnum, unsigned int proto);
+ #endif				/* GNU libc 2.1 */
  
 +extern const char *obscure_msg(const char *, const char *, const struct passwd *,
 +			       unsigned int);
 +
  /*
-  * i64c - convert an integer to a radix 64 character
-  */
-@@ -957,7 +960,8 @@
+    How it works:
+    Gets in username (has to be done) from the calling program
+@@ -438,7 +441,8 @@
  static int _pam_unix_approve_pass(pam_handle_t * pamh
  				  ,unsigned int ctrl
  				  ,const char *pass_old
@@ -22,7 +22,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  {
  	const void *user;
  	const char *remark = NULL;
-@@ -991,11 +995,10 @@
+@@ -472,11 +476,10 @@
  #ifdef USE_CRACKLIB
  		remark = FascistCheck (pass_new, CRACKLIB_DICTS);
  		D(("called cracklib [%s]", remark));
@@ -36,7 +36,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  		if (on(UNIX_REMEMBER_PASSWD, ctrl)) {
  			if ((retval = check_old_password(user, pass_new)) == PAM_AUTHTOK_ERR)
  			  remark = _("Password has been already used. Choose another.");
-@@ -1005,6 +1008,11 @@
+@@ -486,6 +489,11 @@
  				return retval;
  			}
  		}
@@ -48,24 +48,25 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  	}
  	if (remark) {
  		_make_remark(pamh, ctrl, PAM_ERROR_MSG, remark);
-@@ -1020,6 +1028,7 @@
- 	unsigned int ctrl, lctrl;
- 	int retval, i;
+@@ -502,6 +510,7 @@
+ 	int retval;
  	int remember = -1;
+ 	int rounds = -1;
 +	int pass_min_len = 6;
  
  	/* <DO NOT free() THESE> */
  	const char *user;
-@@ -1028,7 +1037,7 @@
+@@ -510,7 +519,8 @@
  
  	D(("called."));
  
--	ctrl = _set_ctrl(pamh, flags, &remember, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, &remember, &pass_min_len, argc, argv);
+-	ctrl = _set_ctrl(pamh, flags, &remember, &rounds, argc, argv);
++	ctrl = _set_ctrl(pamh, flags, &remember, &rounds, &pass_min_len,
++	                 argc, argv);
  
  	/*
  	 * First get the name of a user
-@@ -1235,7 +1244,8 @@
+@@ -710,7 +720,8 @@
  			if (*(const char *)pass_new == '\0') {	/* "\0" password = NULL */
  				pass_new = NULL;
  			}
@@ -75,7 +76,7 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  		}
  
  		if (retval != PAM_SUCCESS) {
-@@ -1281,7 +1291,8 @@
+@@ -739,7 +750,8 @@
  			return retval;
  		}
  
@@ -85,79 +86,33 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_passwd.c
  		if (retval != PAM_SUCCESS) {
  			pam_syslog(pamh, LOG_NOTICE,
  			         "new password not acceptable 2");
-Index: Linux-PAM/modules/pam_unix/pam_unix_acct.c
+Index: pam.deb/modules/pam_unix/pam_unix_acct.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_acct.c.orig
-+++ Linux-PAM/modules/pam_unix/pam_unix_acct.c
-@@ -202,7 +202,7 @@
+--- pam.deb.orig/modules/pam_unix/pam_unix_acct.c
++++ pam.deb/modules/pam_unix/pam_unix_acct.c
+@@ -184,7 +184,7 @@
  
  	D(("called."));
  
--	ctrl = _set_ctrl(pamh, flags, NULL, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
+-	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
++	ctrl = _set_ctrl(pamh, flags, NULL, NULL, NULL, argc, argv);
  
  	retval = pam_get_item(pamh, PAM_USER, &void_uname);
  	uname = void_uname;
-@@ -266,7 +266,9 @@
- 
- 	curdays = time(NULL) / (60 * 60 * 24);
- 	D(("today is %d, last change %d", curdays, spent->sp_lstchg));
--	if ((curdays > spent->sp_expire) && (spent->sp_expire != -1)) {
-+	if ((curdays > spent->sp_expire) && (spent->sp_expire != -1)
-+	    && (spent->sp_expire != 0))
-+	{
- 		pam_syslog(pamh, LOG_NOTICE,
- 			 "account %s has expired (account expired)",
- 			 uname);
-@@ -293,7 +295,9 @@
- 	if ((curdays - spent->sp_lstchg > spent->sp_max)
- 	    && (curdays - spent->sp_lstchg > spent->sp_inact)
- 	    && (curdays - spent->sp_lstchg > spent->sp_max + spent->sp_inact)
--	    && (spent->sp_max != -1) && (spent->sp_inact != -1)) {
-+	    && (spent->sp_max != -1) && (spent->sp_max != 0)
-+	    && (spent->sp_inact != -1) && (spent->sp_inact != 0))
-+	{
- 		pam_syslog(pamh, LOG_NOTICE,
- 		    "account %s has expired (failed to change password)",
- 		    uname);
-@@ -302,7 +306,9 @@
- 		D(("account expired 2"));
- 		return PAM_ACCT_EXPIRED;
- 	}
--	if ((curdays - spent->sp_lstchg > spent->sp_max) && (spent->sp_max != -1)) {
-+	if ((curdays - spent->sp_lstchg > spent->sp_max)
-+	    && (spent->sp_max != -1) && (spent->sp_max != 0))
-+	{
- 		pam_syslog(pamh, LOG_DEBUG,
- 			 "expired password for user %s (password aged)",
- 			 uname);
-@@ -312,7 +318,9 @@
- 		return PAM_NEW_AUTHTOK_REQD;
- 	}
- 	if ((curdays - spent->sp_lstchg > spent->sp_max - spent->sp_warn)
--	    && (spent->sp_max != -1) && (spent->sp_warn != -1)) {
-+	    && (spent->sp_max != -1) && (spent->sp_warn != -1)
-+	    && (spent->sp_max != 0) && (spent->sp_warn != 0))
-+	{
- 		daysleft = (spent->sp_lstchg + spent->sp_max) - curdays;
- 		pam_syslog(pamh, LOG_DEBUG,
- 			 "password for user %s will expire in %d days",
-Index: Linux-PAM/modules/pam_unix/support.c
+Index: pam.deb/modules/pam_unix/support.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/support.c.orig
-+++ Linux-PAM/modules/pam_unix/support.c
-@@ -53,8 +53,8 @@
-  * set the control flags for the UNIX module.
+--- pam.deb.orig/modules/pam_unix/support.c
++++ pam.deb/modules/pam_unix/support.c
+@@ -53,7 +53,7 @@
   */
  
--int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int argc,
--              const char **argv)
-+int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *pass_min_len,
-+              int argc, const char **argv)
+ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *rounds,
+-	      int argc, const char **argv)
++	      int *pass_min_len, int argc, const char **argv)
  {
  	unsigned int ctrl;
  
-@@ -80,6 +80,7 @@
+@@ -79,6 +79,7 @@
  		D(("SILENT"));
  		set(UNIX__QUIET, ctrl);
  	}
@@ -165,7 +120,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
  	/* now parse the arguments to this module */
  
  	while (argc-- > 0) {
-@@ -89,7 +90,8 @@
+@@ -88,7 +89,8 @@
  
  		for (j = 0; j < UNIX_CTRLS_; ++j) {
  			if (unix_args[j].token
@@ -175,7 +130,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
  				break;
  			}
  		}
-@@ -101,20 +103,25 @@
+@@ -100,15 +102,16 @@
  			ctrl &= unix_args[j].mask;	/* for turning things off */
  			ctrl |= unix_args[j].flag;	/* for turning things on  */
  
@@ -187,6 +142,7 @@ Index: Linux-PAM/modules/pam_unix/support.c
 -					if (*remember > 400)
 -						*remember = 400;
 -				}
+-			}
 +			/* special cases */
 +			if (remember != NULL && j == UNIX_REMEMBER_PASSWD) {
 +				*remember = strtol(*argv + 9, NULL, 10);
@@ -196,46 +152,40 @@ Index: Linux-PAM/modules/pam_unix/support.c
 +					*remember = 400;
 +			} else if (pass_min_len && j == UNIX_MIN_PASS_LEN) {
 +				*pass_min_len = atoi(*argv + 4);
- 			}
- 		}
- 
++			
+ 			if (rounds != NULL) {
+ 				if (j == UNIX_ALGO_ROUNDS) {
+ 					*rounds = strtol(*argv + 7, NULL, 10);
+@@ -124,6 +127,11 @@
  		++argv;		/* step to next argument */
  	}
  
-+	if (off(UNIX_BIGCRYPT,ctrl) && off(UNIX_MD5_PASS,ctrl)
++	if (off(UNIX_BIGCRYPT|UNIX_MD5_PASS|UNIX_SHA256_PASS|UNIX_SHA512_PASS,
++	        ctrl)
 +	    && pass_min_len && *pass_min_len > 8)
 +		*pass_min_len = 8;
 +
  	if (flags & PAM_DISALLOW_NULL_AUTHTOK) {
  		D(("DISALLOW_NULL_AUTHTOK"));
  		set(UNIX__NONULL, ctrl);
-@@ -692,6 +699,8 @@
- 	    } else if (!p || (*salt == '*')) {
- 		retval = PAM_AUTH_ERR;
- 	    } else {
-+		/* Hack off sysv pw aging foo */
-+		if (strrchr(salt, ',')) *(strrchr(salt, ',')) = '\0';
- 		if (!strncmp(salt, "$1$", 3)) {
- 		    pp = Goodcrypt_md5(p, salt);
- 		    if (strcmp(pp, salt) != 0) {
-Index: Linux-PAM/modules/pam_unix/support.h
+Index: pam.deb/modules/pam_unix/support.h
 ===================================================================
---- Linux-PAM/modules/pam_unix/support.h.orig
-+++ Linux-PAM/modules/pam_unix/support.h
-@@ -84,8 +84,11 @@
- #define UNIX_NOREAP              21     /* don't reap child process */
- #define UNIX_BROKEN_SHADOW       22     /* ignore errors reading password aging
- 					 * information during acct management */
-+#define UNIX_MAX_PASS_LEN        23     /* internal, for compatibility only */
-+#define UNIX_MIN_PASS_LEN        24     /* Min length for password */
-+#define UNIX_OBSCURE_CHECKS      25     /* enable obscure checks on passwords */
+--- pam.deb.orig/modules/pam_unix/support.h
++++ pam.deb/modules/pam_unix/support.h
+@@ -88,8 +88,11 @@
+ #define UNIX_SHA512_PASS         24	/* new password hashes will use SHA512 */
+ #define UNIX_ALGO_ROUNDS         25	/* optional number of rounds for new 
+ 					   password hash algorithms */
++#define UNIX_MAX_PASS_LEN        26	/* internal, for compatibility only */
++#define UNIX_MIN_PASS_LEN        27	/* Min length for password */
++#define UNIX_OBSCURE_CHECKS      28	/* enable obscure checks on passwords */
  /* -------------- */
--#define UNIX_CTRLS_              23	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              26	/* number of ctrl arguments defined */
+-#define UNIX_CTRLS_              26	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              29	/* number of ctrl arguments defined */
  
  
  static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
-@@ -93,29 +96,32 @@
+@@ -97,32 +100,35 @@
  /* symbol                  token name          ctrl mask             ctrl     *
   * ----------------------- ------------------- --------------------- -------- */
  
@@ -262,6 +212,9 @@ Index: Linux-PAM/modules/pam_unix/support.h
 -/* UNIX_REMEMBER_PASSWD */ {"remember=",       _ALL_ON_,            02000000},
 -/* UNIX_NOREAP */          {"noreap",          _ALL_ON_,            04000000},
 -/* UNIX_BROKEN_SHADOW */   {"broken_shadow",   _ALL_ON_,           010000000},
+-/* UNIX_SHA256_PASS */     {"sha256",        _ALL_ON_^(040420000), 020000000},
+-/* UNIX_SHA512_PASS */     {"sha512",        _ALL_ON_^(020420000), 040000000},
+-/* UNIX_ALGO_ROUNDS */     {"rounds=",         _ALL_ON_,          0100000000},
 +/* UNIX__OLD_PASSWD */     {NULL,              _ALL_ON_,                  0x1},
 +/* UNIX__VERIFY_PASSWD */  {NULL,              _ALL_ON_,                  0x2},
 +/* UNIX__IAMROOT */        {NULL,              _ALL_ON_,                  0x4},
@@ -275,56 +228,39 @@ Index: Linux-PAM/modules/pam_unix/support.h
 +/* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
 +/* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
 +/* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
-+/* UNIX_MD5_PASS */        {"md5",             _ALL_ON_^(0x20000),     0x2000},
++/* UNIX_MD5_PASS */        {"md5",             _ALL_ON_^(0xC22000),    0x2000},
 +/* UNIX__NULLOK */         {"nullok",          _ALL_ON_^(0x200),            0},
 +/* UNIX_DEBUG */           {"debug",           _ALL_ON_,               0x4000},
 +/* UNIX_NODELAY */         {"nodelay",         _ALL_ON_,               0x8000},
 +/* UNIX_NIS */             {"nis",             _ALL_ON_,              0x10000},
-+/* UNIX_BIGCRYPT */        {"bigcrypt",        _ALL_ON_^(0x2000),     0x20000},
++/* UNIX_BIGCRYPT */        {"bigcrypt",        _ALL_ON_^(0xC22000),   0x20000},
 +/* UNIX_LIKE_AUTH */       {"likeauth",        _ALL_ON_,              0x40000},
 +/* UNIX_REMEMBER_PASSWD */ {"remember=",       _ALL_ON_,              0x80000},
 +/* UNIX_NOREAP */          {"noreap",          _ALL_ON_,             0x100000},
 +/* UNIX_BROKEN_SHADOW */   {"broken_shadow",   _ALL_ON_,             0x200000},
++/* UNIX_SHA256_PASS */     {"sha256",          _ALL_ON_^(0xC22000),  0x400000},
++/* UNIX_SHA512_PASS */     {"sha512",          _ALL_ON_^(0xC22000),  0x800000},
++/* UNIX_ALGO_ROUNDS */     {"rounds=",         _ALL_ON_,            0x1000000},
 +/* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
-+/* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x400000},
-+/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,             0x800000},
++/* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,            0x2000000},
++/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x4000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -131,8 +137,8 @@
- 
+@@ -139,7 +145,7 @@
  extern int _make_remark(pam_handle_t * pamh, unsigned int ctrl
  		       ,int type, const char *text);
--extern int _set_ctrl(pam_handle_t * pamh, int flags, int *remember, int argc,
--		     const char **argv);
-+extern int _set_ctrl(pam_handle_t * pamh, int flags, int *remember,
-+                     int *pass_min_len, int argc, const char **argv);
+ extern int _set_ctrl(pam_handle_t * pamh, int flags, int *remember, int *rounds,
+-		     int argc, const char **argv);
++		     int *pass_min_len, int argc, const char **argv);
  extern int _unix_getpwnam (pam_handle_t *pamh,
  			   const char *name, int files, int nis,
  			   struct passwd **ret);
-Index: Linux-PAM/modules/pam_unix/unix_chkpwd.c
+Index: pam.deb/modules/pam_unix/pam_unix.8.xml
 ===================================================================
---- Linux-PAM/modules/pam_unix/unix_chkpwd.c.orig
-+++ Linux-PAM/modules/pam_unix/unix_chkpwd.c
-@@ -192,6 +192,13 @@
- 		return PAM_AUTHTOK_ERR;
- 	}
- 
-+	/* Hack off SysVR4 password aging */
-+	{
-+	    char *tmp;
-+
-+	    if ((tmp = strrchr(salt, ',')) != NULL) *tmp = '\0';
-+	}
-+
- 	/* the moment of truth -- do we agree with the password? */
- 	retval = PAM_AUTH_ERR;
- 	if (!strncmp(salt, "$1$", 3)) {
-Index: Linux-PAM/modules/pam_unix/pam_unix.8.xml
-===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix.8.xml.orig
-+++ Linux-PAM/modules/pam_unix/pam_unix.8.xml
-@@ -269,6 +269,90 @@
+--- pam.deb.orig/modules/pam_unix/pam_unix.8.xml
++++ pam.deb/modules/pam_unix/pam_unix.8.xml
+@@ -306,6 +306,90 @@
            </para>
          </listitem>
        </varlistentry>
@@ -415,10 +351,10 @@ Index: Linux-PAM/modules/pam_unix/pam_unix.8.xml
      </variablelist>
      <para>
        Invalid arguments are logged with  <citerefentry>
-Index: Linux-PAM/modules/pam_unix/obscure.c
+Index: pam.deb/modules/pam_unix/obscure.c
 ===================================================================
 --- /dev/null
-+++ Linux-PAM/modules/pam_unix/obscure.c
++++ pam.deb/modules/pam_unix/obscure.c
 @@ -0,0 +1,198 @@
 +/*
 + * Copyright 1989 - 1994, Julianne Frances Haugh
@@ -618,363 +554,42 @@ Index: Linux-PAM/modules/pam_unix/obscure.c
 +
 +	return msg;
 +}
-Index: Linux-PAM/modules/pam_unix/pam_unix.8
+Index: pam.deb/modules/pam_unix/Makefile.am
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix.8.orig
-+++ Linux-PAM/modules/pam_unix/pam_unix.8
-@@ -1,133 +1,201 @@
- .\"     Title: pam_unix
- .\"    Author: 
--.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
--.\"      Date: 09/20/2006
--.\"    Manual: Linux\-PAM Manual
--.\"    Source: Linux\-PAM Manual
-+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2007
-+.\"    Manual: Linux-PAM Manual
-+.\"    Source: Linux-PAM Manual
- .\"
--.TH "PAM_UNIX" "8" "09/20/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_UNIX" "8" "08/31/2007" "Linux-PAM Manual" "Linux\-PAM Manual"
- .\" disable hyphenation
- .nh
- .\" disable justification (adjust text to left margin only)
- .ad l
- .SH "NAME"
--pam_unix \- Module for traditional password authentication
-+pam_unix - Module for traditional password authentication
- .SH "SYNOPSIS"
- .HP 12
--\fBpam_unix.so\fR [...]
-+\fBpam_unix\.so\fR [\.\.\.]
- .SH "DESCRIPTION"
- .PP
--This is the standard Unix authentication module. It uses standard calls from the system's libraries to retrieve and set account information as well as authentication. Usually this is obtained from the /etc/passwd and the /etc/shadow file as well if shadow is enabled.
-+This is the standard Unix authentication module\. It uses standard calls from the system\'s libraries to retrieve and set account information as well as authentication\. Usually this is obtained from the /etc/passwd and the /etc/shadow file as well if shadow is enabled\.
- .PP
--The account component performs the task of establishing the status of the user's account and password based on the following
-+The account component performs the task of establishing the status of the user\'s account and password based on the following
- \fIshadow\fR
--elements: expire, last_change, max_change, min_change, warn_change. In the case of the latter, it may offer advice to the user on changing their password or, through the
-+elements: expire, last_change, max_change, min_change, warn_change\. In the case of the latter, it may offer advice to the user on changing their password or, through the
- \fBPAM_AUTHTOKEN_REQD\fR
--return, delay giving service to the user until they have established a new password. The entries listed above are documented in the
-+return, delay giving service to the user until they have established a new password\. The entries listed above are documented in the
- \fBshadow\fR(5)
--manual page. Should the user's record not contain one or more of these entries, the corresponding
-+manual page\. Should the user\'s record not contain one or more of these entries, the corresponding
- \fIshadow\fR
--check is not performed.
-+check is not performed\.
- .PP
--The authentication component performs the task of checking the users credentials (password). The default action of this module is to not permit the user access to a service if their official password is blank.
-+The authentication component performs the task of checking the users credentials (password)\. The default action of this module is to not permit the user access to a service if their official password is blank\.
- .PP
- A helper binary,
--\fBunix_chkpwd\fR(8), is provided to check the user's password when it is stored in a read protected database. This binary is very simple and will only check the password of the user invoking it. It is called transparently on behalf of the user by the authenticating component of this module. In this way it is possible for applications like
-+\fBunix_chkpwd\fR(8), is provided to check the user\'s password when it is stored in a read protected database\. This binary is very simple and will only check the password of the user invoking it\. It is called transparently on behalf of the user by the authenticating component of this module\. In this way it is possible for applications like
- \fBxlock\fR(1)
--to work without being setuid\-root. The module, by default, will temporarily turn off SIGCHLD handling for the duration of execution of the helper binary. This is generally the right thing to do, as many applications are not prepared to handle this signal from a child they didn't know was
--\fBfork()\fRd. The
-+to work without being setuid\-root\. The module, by default, will temporarily turn off SIGCHLD handling for the duration of execution of the helper binary\. This is generally the right thing to do, as many applications are not prepared to handle this signal from a child they didn\'t know was
-+\fBfork()\fRd\. The
- \fBnoreap\fR
--module argument can be used to suppress this temporary shielding and may be needed for use with certain applications.
-+module argument can be used to suppress this temporary shielding and may be needed for use with certain applications\.
- .PP
--The password component of this module performs the task of updating the user's password.
-+The password component of this module performs the task of updating the user\'s password\.
- .PP
--The session component of this module logs when a user logins or leave the system.
-+The session component of this module logs when a user logins or leave the system\.
- .PP
--Remaining arguments, supported by others functions of this module, are silently ignored. Other arguments are logged as errors through
--\fBsyslog\fR(3).
-+Remaining arguments, supported by others functions of this module, are silently ignored\. Other arguments are logged as errors through
-+\fBsyslog\fR(3)\.
- .SH "OPTIONS"
--.TP 3n
-+.PP
- \fBdebug\fR
-+.RS 4
- Turns on debugging via
--\fBsyslog\fR(3).
--.TP 3n
-+\fBsyslog\fR(3)\.
-+.RE
-+.PP
- \fBaudit\fR
--A little more extreme than debug.
--.TP 3n
-+.RS 4
-+A little more extreme than debug\.
-+.RE
-+.PP
- \fBnullok\fR
--The default action of this module is to not permit the user access to a service if their official password is blank. The
-+.RS 4
-+The default action of this module is to not permit the user access to a service if their official password is blank\. The
- \fBnullok\fR
--argument overrides this default.
--.TP 3n
-+argument overrides this default\.
-+.RE
-+.PP
- \fBtry_first_pass\fR
--Before prompting the user for their password, the module first tries the previous stacked module's password in case that satisfies this module as well.
--.TP 3n
-+.RS 4
-+Before prompting the user for their password, the module first tries the previous stacked module\'s password in case that satisfies this module as well\.
-+.RE
-+.PP
- \fBuse_first_pass\fR
-+.RS 4
- The argument
- \fBuse_first_pass\fR
--forces the module to use a previous stacked modules password and will never prompt the user \- if no password is available or the password is not appropriate, the user will be denied access.
--.TP 3n
-+forces the module to use a previous stacked modules password and will never prompt the user \- if no password is available or the password is not appropriate, the user will be denied access\.
-+.RE
-+.PP
- \fBnodelay\fR
--This argument can be used to discourage the authentication component from requesting a delay should the authentication as a whole fail. The default action is for the module to request a delay\-on\-failure of the order of two second.
--.TP 3n
-+.RS 4
-+This argument can be used to discourage the authentication component from requesting a delay should the authentication as a whole fail\. The default action is for the module to request a delay\-on\-failure of the order of two second\.
-+.RE
-+.PP
- \fBuse_authtok\fR
-+.RS 4
- When password changing enforce the module to set the new password to the one provided by a previously stacked
- \fBpassword\fR
- module (this is used in the example of the stacking of the
- \fBpam_cracklib\fR
--module documented above).
--.TP 3n
-+module documented above)\.
-+.RE
-+.PP
- \fBnot_set_pass\fR
--This argument is used to inform the module that it is not to pay attention to/make available the old or new passwords from/to other (stacked) password modules.
--.TP 3n
-+.RS 4
-+This argument is used to inform the module that it is not to pay attention to/make available the old or new passwords from/to other (stacked) password modules\.
-+.RE
-+.PP
- \fBnis\fR
--NIS RPC is used for setting new passwords.
--.TP 3n
-+.RS 4
-+NIS RPC is used for setting new passwords\.
-+.RE
-+.PP
- \fBremember=\fR\fB\fIn\fR\fR
-+.RS 4
- The last
- \fIn\fR
- passwords for each user are saved in
- \fI/etc/security/opasswd\fR
--in order to force password change history and keep the user from alternating between the same password too frequently.
--.TP 3n
-+in order to force password change history and keep the user from alternating between the same password too frequently\.
-+.RE
-+.PP
- \fBshadow\fR
--Try to maintain a shadow based system.
--.TP 3n
-+.RS 4
-+Try to maintain a shadow based system\.
-+.RE
-+.PP
- \fBmd5\fR
--When a user changes their password next, encrypt it with the MD5 algorithm.
--.TP 3n
-+.RS 4
-+When a user changes their password next, encrypt it with the MD5 algorithm\.
-+.RE
-+.PP
- \fBbigcrypt\fR
--When a user changes their password next, encrypt it with the DEC C2 algorithm.
--.TP 3n
-+.RS 4
-+When a user changes their password next, encrypt it with the DEC C2 algorithm\.
-+.RE
-+.PP
- \fBbroken_shadow\fR
--Ignore errors reading shadow inforation for users in the account management module.
-+.RS 4
-+Ignore errors reading shadow inforation for users in the account management module\.
-+.RE
-+.PP
-+\fBmin=\fR\fB\fIn\fR\fR
-+.RS 4
-+Set a minimum password length of
-+\fIn\fR
-+characters\. The default value is 1\.
-+.RE
-+.PP
-+\fBobscure\fR
-+.RS 4
-+Enable some extra checks on password strength\. These checks are based on the "obscure" checks in the original shadow package\. The behavior is similar to the pam_cracklib module, but for non\-dictionary\-based checks\. The following checks are implemented:
-+.PP
-+\fBPalindrome\fR
-+.RS 4
-+Verifies that the new password is not a palindrome of (i\.e\., the reverse of) the previous one\.
-+.RE
-+.PP
-+\fBCase Change Only\fR
-+.RS 4
-+Verifies that the new password isn\'t the same as the old one with a change of case\.
-+.RE
-+.PP
-+\fBSimilar\fR
-+.RS 4
-+Verifies that the new password isn\'t too much like the previous one\.
-+.RE
-+.PP
-+\fBSimple\fR
-+.RS 4
-+Is the new password too simple? This is based on the length of the password and the number of different types of characters (alpha, numeric, etc\.) used\.
-+.RE
-+.PP
-+\fBRotated\fR
-+.RS 4
-+Is the new password a rotated version of the old password? (E\.g\., "billy" and "illyb")
-+.RE
-+.sp
-+.RE
- .PP
- Invalid arguments are logged with
--\fBsyslog\fR(3).
-+\fBsyslog\fR(3)\.
- .SH "MODULE SERVICES PROVIDED"
- .PP
--All service are supported.
-+All service are supported\.
- .SH "RETURN VALUES"
--.TP 3n
-+.PP
- PAM_IGNORE
--Ignore this module.
-+.RS 4
-+Ignore this module\.
-+.RE
- .SH "EXAMPLES"
- .PP
- An example usage for
--\fI/etc/pam.d/login\fR
-+\fI/etc/pam\.d/login\fR
- would be:
- .sp
--.RS 3n
-+.RS 4
- .nf
- # Authenticate the user
--auth       required   pam_unix.so
-+auth       required   pam_unix\.so
- # Ensure users account and password are still active
--account    required   pam_unix.so
-+account    required   pam_unix\.so
- # Change the users password, but at first check the strength
- # with pam_cracklib(8)
--password   required   pam_cracklib.so retry=3 minlen=6 difok=3
--password   required   pam_unix.so use_authtok nullok md5
--session    required   pam_unix.so
-+password   required   pam_cracklib\.so retry=3 minlen=6 difok=3
-+password   required   pam_unix\.so use_authtok nullok md5
-+session    required   pam_unix\.so
-       
- .fi
- .RE
-@@ -140,4 +208,4 @@
- \fBpam\fR(8)
- .SH "AUTHOR"
- .PP
--pam_unix was written by various people.
-+pam_unix was written by various people\.
-Index: Linux-PAM/modules/pam_unix/Makefile.am
-===================================================================
---- Linux-PAM/modules/pam_unix/Makefile.am.orig
-+++ Linux-PAM/modules/pam_unix/Makefile.am
-@@ -42,7 +42,7 @@
+--- pam.deb.orig/modules/pam_unix/Makefile.am
++++ pam.deb/modules/pam_unix/Makefile.am
+@@ -43,7 +43,7 @@
  
  pam_unix_la_SOURCES = bigcrypt.c pam_unix_acct.c \
  	pam_unix_auth.c pam_unix_passwd.c pam_unix_sess.c support.c \
--	yppasswd_xdr.c md5_good.c md5_broken.c
-+	yppasswd_xdr.c md5_good.c md5_broken.c obscure.c
+-	passverify.c yppasswd_xdr.c md5_good.c md5_broken.c
++	passverify.c yppasswd_xdr.c md5_good.c md5_broken.c obscure.c
  
  bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
  bigcrypt_CFLAGS = $(AM_CFLAGS)
-Index: Linux-PAM/modules/pam_unix/README
+Index: pam.deb/modules/pam_unix/pam_unix_auth.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/README.orig
-+++ Linux-PAM/modules/pam_unix/README
-@@ -119,6 +119,42 @@
-     Ignore errors reading shadow inforation for users in the account management
-     module.
- 
-+min=n
-+
-+    Set a minimum password length of n characters. The default value is 6.
-+
-+obscure
-+
-+    Enable some extra checks on password strength. These checks are based on
-+    the "obscure" checks in the original shadow package. The behavior is
-+    similar to the pam_cracklib module, but for non-dictionary-based checks.
-+    The following checks are implemented:
-+
-+    Palindrome
-+
-+        Verifies that the new password is not a palindrome of (i.e., the
-+        reverse of) the previous one.
-+
-+    Case Change Only
-+
-+        Verifies that the new password isn't the same as the old one with a
-+        change of case.
-+
-+    Similar
-+
-+        Verifies that the new password isn't too much like the previous one.
-+
-+    Simple
-+
-+        Is the new password too simple? This is based on the length of the
-+        password and the number of different types of characters (alpha,
-+        numeric, etc.) used.
-+
-+    Rotated
-+
-+        Is the new password a rotated version of the old password? (E.g.,
-+        "billy" and "illyb")
-+
- Invalid arguments are logged with syslog(3).
- 
- EXAMPLES
-Index: Linux-PAM/modules/pam_unix/pam_unix_auth.c
-===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_auth.c.orig
-+++ Linux-PAM/modules/pam_unix/pam_unix_auth.c
+--- pam.deb.orig/modules/pam_unix/pam_unix_auth.c
++++ pam.deb/modules/pam_unix/pam_unix_auth.c
 @@ -111,7 +111,7 @@
  
  	D(("called."));
  
--	ctrl = _set_ctrl(pamh, flags, NULL, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
+-	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
++	ctrl = _set_ctrl(pamh, flags, NULL, NULL, NULL, argc, argv);
  
  	/* Get a few bytes so we can pass our return value to
  	   pam_sm_setcred(). */
-Index: Linux-PAM/modules/pam_unix/pam_unix_sess.c
+Index: pam.deb/modules/pam_unix/pam_unix_sess.c
 ===================================================================
---- Linux-PAM/modules/pam_unix/pam_unix_sess.c.orig
-+++ Linux-PAM/modules/pam_unix/pam_unix_sess.c
+--- pam.deb.orig/modules/pam_unix/pam_unix_sess.c
++++ pam.deb/modules/pam_unix/pam_unix_sess.c
 @@ -73,7 +73,7 @@
  
  	D(("called."));
  
--	ctrl = _set_ctrl(pamh, flags, NULL, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
+-	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
++	ctrl = _set_ctrl(pamh, flags, NULL, NULL, NULL, argc, argv);
  
  	retval = pam_get_item(pamh, PAM_USER, (void *) &user_name);
  	if (user_name == NULL || *user_name == '\0' || retval != PAM_SUCCESS) {
@@ -982,8 +597,50 @@ Index: Linux-PAM/modules/pam_unix/pam_unix_sess.c
  
  	D(("called."));
  
--	ctrl = _set_ctrl(pamh, flags, NULL, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
+-	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
++	ctrl = _set_ctrl(pamh, flags, NULL, NULL, NULL, argc, argv);
  
  	retval = pam_get_item(pamh, PAM_USER, (void *) &user_name);
  	if (user_name == NULL || *user_name == '\0' || retval != PAM_SUCCESS) {
+Index: pam.deb/modules/pam_unix/passverify.c
+===================================================================
+--- pam.deb.orig/modules/pam_unix/passverify.c
++++ pam.deb/modules/pam_unix/passverify.c
+@@ -261,7 +261,9 @@
+ 	*daysleft = -1;
+ 	curdays = (long int)(time(NULL) / (60 * 60 * 24));
+ 	D(("today is %d, last change %d", curdays, spent->sp_lstchg));
+-	if ((curdays > spent->sp_expire) && (spent->sp_expire != -1)) {
++	if ((curdays > spent->sp_expire) && (spent->sp_expire != -1)
++	    && (spent->sp_expire != 0))
++	{
+ 		D(("account expired"));
+ 		return PAM_ACCT_EXPIRED;
+ 	}
+@@ -279,17 +281,23 @@
+ 	if ((curdays - spent->sp_lstchg > spent->sp_max)
+ 	    && (curdays - spent->sp_lstchg > spent->sp_inact)
+ 	    && (curdays - spent->sp_lstchg > spent->sp_max + spent->sp_inact)
+-	    && (spent->sp_max != -1) && (spent->sp_inact != -1)) {
++	    && (spent->sp_max != -1) && (spent->sp_max != 0)
++	    && (spent->sp_inact != -1) && spent->sp_inact != 0))
++	{
+ 		*daysleft = (int)((spent->sp_lstchg + spent->sp_max) - curdays);
+ 		D(("authtok expired"));
+ 		return PAM_AUTHTOK_EXPIRED;
+ 	}
+-	if ((curdays - spent->sp_lstchg > spent->sp_max) && (spent->sp_max != -1)) {
++	if ((curdays - spent->sp_lstchg > spent->sp_max)
++            && (spent->sp_max != -1) && (spent->sp_max != 0))
++	{
+ 		D(("need a new password 2"));
+ 		return PAM_NEW_AUTHTOK_REQD;
+ 	}
+ 	if ((curdays - spent->sp_lstchg > spent->sp_max - spent->sp_warn)
+-	    && (spent->sp_max != -1) && (spent->sp_warn != -1)) {
++	    && (spent->sp_max != -1) && (spent->sp_warn != -1)
++	    && (spent->sp_max != 0) && (spent->sp_warn != 0))
++	{
+ 		*daysleft = (int)((spent->sp_lstchg + spent->sp_max) - curdays);
+ 		D(("warn before expiry"));
+ 	}
