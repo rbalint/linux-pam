@@ -130,7 +130,7 @@ Index: pam.deb/modules/pam_unix/support.c
  				break;
  			}
  		}
-@@ -100,15 +102,16 @@
+@@ -100,15 +102,17 @@
  			ctrl &= unix_args[j].mask;	/* for turning things off */
  			ctrl |= unix_args[j].flag;	/* for turning things on  */
  
@@ -142,7 +142,6 @@ Index: pam.deb/modules/pam_unix/support.c
 -					if (*remember > 400)
 -						*remember = 400;
 -				}
--			}
 +			/* special cases */
 +			if (remember != NULL && j == UNIX_REMEMBER_PASSWD) {
 +				*remember = strtol(*argv + 9, NULL, 10);
@@ -152,11 +151,12 @@ Index: pam.deb/modules/pam_unix/support.c
 +					*remember = 400;
 +			} else if (pass_min_len && j == UNIX_MIN_PASS_LEN) {
 +				*pass_min_len = atoi(*argv + 4);
-+			
+ 			}
++
  			if (rounds != NULL) {
  				if (j == UNIX_ALGO_ROUNDS) {
  					*rounds = strtol(*argv + 7, NULL, 10);
-@@ -124,6 +127,11 @@
+@@ -124,6 +128,11 @@
  		++argv;		/* step to next argument */
  	}
  
