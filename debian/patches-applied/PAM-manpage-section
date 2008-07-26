@@ -1,33 +1,33 @@
-Index: pam/Linux-PAM/doc/man/PAM.8
+Index: pam.deb/doc/man/PAM.8
 ===================================================================
---- pam.orig/Linux-PAM/doc/man/PAM.8
-+++ pam/Linux-PAM/doc/man/PAM.8
+--- pam.deb.orig/doc/man/PAM.8
++++ pam.deb/doc/man/PAM.8
 @@ -5,7 +5,7 @@
- .\"    Manual: Linux\-PAM Manual
- .\"    Source: Linux\-PAM Manual
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
  .\"
--.TH "PAM" "8" "06/27/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM" "7" "06/27/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM" "8" "02/04/2008" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM" "7" "02/04/2008" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" disable hyphenation
  .nh
  .\" disable justification (adjust text to left margin only)
-@@ -100,4 +100,4 @@
+@@ -104,4 +104,4 @@
  \fBpam_authenticate\fR(3),
  \fBpam_sm_setcred\fR(3),
  \fBpam_strerror\fR(3),
 -\fBPAM\fR(8)
 +\fBPAM\fR(7)
-Index: pam/Linux-PAM/doc/man/pam.8
+Index: pam.deb/doc/man/pam.8
 ===================================================================
---- pam.orig/Linux-PAM/doc/man/pam.8
-+++ pam/Linux-PAM/doc/man/pam.8
+--- pam.deb.orig/doc/man/pam.8
++++ pam.deb/doc/man/pam.8
 @@ -1 +1 @@
 -.so man8/PAM.8
 +.so man7/PAM.7
-Index: pam/Linux-PAM/doc/man/pam.8.xml
+Index: pam.deb/doc/man/pam.8.xml
 ===================================================================
---- pam.orig/Linux-PAM/doc/man/pam.8.xml
-+++ pam/Linux-PAM/doc/man/pam.8.xml
+--- pam.deb.orig/doc/man/pam.8.xml
++++ pam.deb/doc/man/pam.8.xml
 @@ -6,7 +6,7 @@
  
    <refmeta>

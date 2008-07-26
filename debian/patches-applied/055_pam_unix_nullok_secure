@@ -7,11 +7,11 @@ Authors: Sam Hartman <hartmans@debian.org>,
 
 Upstream status: not yet submitted
 
-Index: pam.debian/modules/pam_unix/support.c
+Index: pam.deb/modules/pam_unix/support.c
 ===================================================================
---- pam.debian.orig/modules/pam_unix/support.c
-+++ pam.debian/modules/pam_unix/support.c
-@@ -84,15 +84,22 @@
+--- pam.deb.orig/modules/pam_unix/support.c
++++ pam.deb/modules/pam_unix/support.c
+@@ -83,15 +83,22 @@
  	/* now parse the arguments to this module */
  
  	while (argc-- > 0) {
@@ -39,7 +39,16 @@ Index: pam.debian/modules/pam_unix/support.c
  			}
  		}
  
-@@ -469,6 +476,17 @@
+@@ -456,7 +463,7 @@
+ 	/* exec binary helper */
+ 	args[0] = strdup(CHKPWD_HELPER);
+ 	args[1] = x_strdup(user);
+-	if (off(UNIX__NONULL, ctrl)) {	/* this means we've succeeded */
++	if (_unix_blankpasswd(pamh, ctrl, name)) {	/* this means we've succeeded */
+ 	  args[2]=strdup("nullok");
+ 	} else {
+ 	  args[2]=strdup("nonull");
+@@ -553,6 +560,17 @@
  	if (salt)
  		_pam_delete(salt);
  
@@ -57,31 +66,32 @@ Index: pam.debian/modules/pam_unix/support.c
  	return retval;
  }
  
-@@ -689,7 +707,7 @@
- 	    size_t salt_len = strlen(salt);
- 	    if (!salt_len) {
- 		/* the stored password is NULL */
--		if (off(UNIX__NONULL, ctrl)) {/* this means we've succeeded */
-+		if (_unix_blankpasswd(pamh, ctrl, name)) {/* this means we've succeeded */
- 		    D(("user has empty password - access granted"));
- 		    retval = PAM_SUCCESS;
- 		} else {
-Index: pam.debian/modules/pam_unix/support.h
+@@ -612,7 +630,8 @@
+ 			}
+ 		}
+ 	} else {
+-		retval = verify_pwd_hash(p, salt, off(UNIX__NONULL, ctrl));
++		retval = verify_pwd_hash(p, salt,
++		                         _unix_blankpasswd(pamh, ctrl, name));
+ 	}
+ 
+ 	if (retval == PAM_SUCCESS) {
+Index: pam.deb/modules/pam_unix/support.h
 ===================================================================
---- pam.debian.orig/modules/pam_unix/support.h
-+++ pam.debian/modules/pam_unix/support.h
-@@ -87,8 +87,9 @@
- #define UNIX_MAX_PASS_LEN        23     /* internal, for compatibility only */
- #define UNIX_MIN_PASS_LEN        24     /* Min length for password */
- #define UNIX_OBSCURE_CHECKS      25     /* enable obscure checks on passwords */
-+#define UNIX_NULLOK_SECURE       26	/* NULL passwords allowed only on secure ttys */
+--- pam.deb.orig/modules/pam_unix/support.h
++++ pam.deb/modules/pam_unix/support.h
+@@ -91,8 +91,9 @@
+ #define UNIX_MAX_PASS_LEN        26	/* internal, for compatibility only */
+ #define UNIX_MIN_PASS_LEN        27	/* Min length for password */
+ #define UNIX_OBSCURE_CHECKS      28	/* enable obscure checks on passwords */
++#define UNIX_NULLOK_SECURE       29     /* NULL passwords allowed only on secure ttys */
  /* -------------- */
--#define UNIX_CTRLS_              26	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              27	/* number of ctrl arguments defined */
+-#define UNIX_CTRLS_              29	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              30	/* number of ctrl arguments defined */
  
  
  static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
-@@ -105,7 +106,7 @@
+@@ -109,7 +110,7 @@
  /* UNIX_NOT_SET_PASS */    {"not_set_pass",    _ALL_ON_,                 0x40},
  /* UNIX__PRELIM */         {NULL,              _ALL_ON_^(0x180),         0x80},
  /* UNIX__UPDATE */         {NULL,              _ALL_ON_^(0x180),        0x100},
@@ -90,28 +100,29 @@ Index: pam.debian/modules/pam_unix/support.h
  /* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
  /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
  /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
-@@ -122,6 +123,7 @@
+@@ -129,6 +130,7 @@
  /* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
- /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,             0x400000},
- /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,             0x800000},
-+/* UNIX_NULLOK_SECURE */   {"nullok_secure",   _ALL_ON_^(0x200),    0x1000000},
+ /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,            0x2000000},
+ /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x4000000},
++/* UNIX__NULLOK */         {"nullok_secure",   _ALL_ON_^(0x200),    0x8000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -157,5 +159,8 @@
+@@ -163,6 +165,9 @@
+ 			,const char *data_name
  			,const void **pass);
- extern int _unix_shadowed(const struct passwd *pwd);
  
 +extern int _pammodutil_tty_secure(const pam_handle_t *pamh,
 +                                  const char *uttyname);
 +
- extern struct spwd *_unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl, const char *user);
+ extern int _unix_run_verify_binary(pam_handle_t *pamh,
+ 			unsigned int ctrl, const char *user, int *daysleft);
  #endif /* _PAM_UNIX_SUPPORT_H */
-Index: pam.debian/modules/pam_unix/Makefile.am
+Index: pam.deb/modules/pam_unix/Makefile.am
 ===================================================================
---- pam.debian.orig/modules/pam_unix/Makefile.am
-+++ pam.debian/modules/pam_unix/Makefile.am
-@@ -30,7 +30,8 @@
+--- pam.deb.orig/modules/pam_unix/Makefile.am
++++ pam.deb/modules/pam_unix/Makefile.am
+@@ -31,7 +31,8 @@
    pam_unix_la_LDFLAGS += -Wl,--version-script=$(srcdir)/../modules.map
  endif
  pam_unix_la_LIBADD = @LIBCRACK@ @LIBNSL@ -L$(top_builddir)/libpam -lpam \
@@ -121,10 +132,10 @@ Index: pam.debian/modules/pam_unix/Makefile.am
  
  securelib_LTLIBRARIES = pam_unix.la
  
-Index: pam.debian/modules/pam_unix/README
+Index: pam.deb/modules/pam_unix/README
 ===================================================================
---- pam.debian.orig/modules/pam_unix/README
-+++ pam.debian/modules/pam_unix/README
+--- pam.deb.orig/modules/pam_unix/README
++++ pam.deb/modules/pam_unix/README
 @@ -57,7 +57,16 @@
  
      The default action of this module is to not permit the user access to a
@@ -143,10 +154,10 @@ Index: pam.debian/modules/pam_unix/README
  
  try_first_pass
  
-Index: pam.debian/modules/pam_unix/pam_unix.8
+Index: pam.deb/modules/pam_unix/pam_unix.8
 ===================================================================
---- pam.debian.orig/modules/pam_unix/pam_unix.8
-+++ pam.debian/modules/pam_unix/pam_unix.8
+--- pam.deb.orig/modules/pam_unix/pam_unix.8
++++ pam.deb/modules/pam_unix/pam_unix.8
 @@ -62,7 +62,14 @@
  .RS 4
  The default action of this module is to not permit the user access to a service if their official password is blank\. The
@@ -163,10 +174,10 @@ Index: pam.debian/modules/pam_unix/pam_unix.8
  .RE
  .PP
  \fBtry_first_pass\fR
-Index: pam.debian/modules/pam_unix/pam_unix.8.xml
+Index: pam.deb/modules/pam_unix/pam_unix.8.xml
 ===================================================================
---- pam.debian.orig/modules/pam_unix/pam_unix.8.xml
-+++ pam.debian/modules/pam_unix/pam_unix.8.xml
+--- pam.deb.orig/modules/pam_unix/pam_unix.8.xml
++++ pam.deb/modules/pam_unix/pam_unix.8.xml
 @@ -135,7 +135,24 @@
            <para>
              The default action of this module is to not permit the
