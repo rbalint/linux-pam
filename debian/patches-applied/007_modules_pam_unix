@@ -623,7 +623,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
  	    && (curdays - spent->sp_lstchg > spent->sp_max + spent->sp_inact)
 -	    && (spent->sp_max != -1) && (spent->sp_inact != -1)) {
 +	    && (spent->sp_max != -1) && (spent->sp_max != 0)
-+	    && (spent->sp_inact != -1) && spent->sp_inact != 0))
++	    && (spent->sp_inact != -1) && (spent->sp_inact != 0))
 +	{
  		*daysleft = (int)((spent->sp_lstchg + spent->sp_max) - curdays);
  		D(("authtok expired"));
