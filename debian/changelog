@@ -10,6 +10,8 @@ pam (0.99.10.0-1) UNRELEASED; urgency=low
     - fix setting shell security context in pam_selinux.  Closes: #451722.
     - use --disable-audit, to avoid libaudit being linked in
       accidentally
+    - pam_unix now supports SHA-256 and SHA-512 password hashes.
+      Closes: #484249, LP: #245786.
   * Drop patches 006_docs_cleanup, 015_hurd_portability,
     019_pam_listfile_quiet, 024_debian_cracklib_dict_path, 038_support_hurd,
     043_pam_unix_unknown_user_not_alert, 046_pam_group_example,
