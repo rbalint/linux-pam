@@ -45,7 +45,7 @@ Index: pam.deb/libpam/pam_handlers.c
 +		       ) == PAM_SUCCESS)
 +			continue;
 +		}
-+		else if (!stat(PAM_CONFIG_D, include_dir)
++		else if (!stat(PAM_CONFIG_D, &include_dir)
 +		         && S_ISDIR(include_dir.st_mode))
 +		{
 +		    char *include_file;
