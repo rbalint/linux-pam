@@ -53,6 +53,9 @@ pam (0.99.10.0-1) UNRELEASED; urgency=low
     (set or unset) when looking up the user's password entry for password
     changes.  Thanks to Quentin Godfroy <godfroy@clipper.ens.fr> for the
     patch.  Closes: #469635.
+  * Drop patch 049_pam_unix_sane_locking, which upon review is not needed;
+    it reduces the length of time we hold the lock, but at the expense of
+    being able to enforce minimum times between password changes.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
