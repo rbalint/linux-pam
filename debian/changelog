@@ -1,4 +1,4 @@
-pam (0.99.10.0-1) UNRELEASED; urgency=low
+pam (1.0.1-1) UNRELEASED; urgency=low
 
   * New upstream version.
     - pam_limits: bound RLIMIT_NICE from below. Closes: #403718.
