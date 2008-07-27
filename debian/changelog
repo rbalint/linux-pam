@@ -23,14 +23,16 @@ pam (0.99.10.0-1) UNRELEASED; urgency=low
     now is really just "pam_group_miscfixes".
   * Patch 007_modules_pam_unix partially superseded upstream; stripping
     hpux-style expiry information off of password fields is now supported.
-  * New patch thread-safe_save_old_password.patch, to make sure all our
-    getpwnam() use in pam_unix is thread-safe (fixes an upstream regression)
-  * New patch setreuid_juggling.patch: restore the 0.99.9.0 behavior wrt uid
-    changes for NIS+, since I know the old behavior was right and don't
-    believe anyone has tested the new code.
-  * New patch no_helper_for_nis+.patch, which restores the behavior of doing
-    in-process NIS+ account checking instead of unconditionally passing it
-    off to the unix_chkpwd helper; if it wasn't broke, don't fix it.
+  * New patch pam_unix_thread-safe_save_old_password.patch, to make sure all
+    our getpwnam() use in pam_unix is thread-safe (fixes an upstream
+    regression)
+  * New patch pam_unix_setreuid_juggling.patch: restore the 0.99.9.0
+    behavior wrt uid changes for NIS+, since I know the old behavior was 
+    right and don't believe anyone has tested the new code.
+  * New patch pam_unix_no_helper_for_nis+.patch, which restores the behavior
+    of doing in-process NIS+ account checking instead of unconditionally
+    passing it off to the unix_chkpwd helper; if it wasn't broke, don't fix
+    it.
   * New patch pam_unix_fix_sgid_shadow_auth.patch, fixing an upstream
     regression which prevents sgid shadow apps from being able to authenticate
     any more because the module forces use of the helper and the helper won't
