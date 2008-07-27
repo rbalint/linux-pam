@@ -2,3 +2,4 @@
 /lib/security/pam_unix.so /lib/security/pam_unix_auth.so
 /lib/security/pam_unix.so /lib/security/pam_unix_passwd.so
 /lib/security/pam_unix.so /lib/security/pam_unix_session.so
+/lib/security/pam_rhosts.so /lib/security/pam_rhosts_auth.so
