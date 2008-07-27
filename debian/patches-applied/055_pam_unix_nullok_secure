@@ -39,16 +39,35 @@ Index: pam.deb/modules/pam_unix/support.c
  			}
  		}
  
-@@ -457,7 +464,7 @@
+@@ -430,6 +437,7 @@
+     child = fork();
+     if (child == 0) {
+         int i=0;
++        int nullok = off(UNIX__NONULL, ctrl);
+         struct rlimit rlim;
+ 	static char *envp[] = { NULL };
+ 	char *args[] = { NULL, NULL, NULL, NULL };
+@@ -457,7 +465,18 @@
  	/* exec binary helper */
  	args[0] = strdup(CHKPWD_HELPER);
  	args[1] = x_strdup(user);
 -	if (off(UNIX__NONULL, ctrl)) {	/* this means we've succeeded */
-+	if (_unix_blankpasswd(pamh, ctrl, user)) {	/* this means we've succeeded */
++
++	if (on(UNIX_NULLOK_SECURE, ctrl)) {
++	    const void *uttyname;
++	    retval = pam_get_item(pamh, PAM_TTY, &uttyname);
++	    if (retval != PAM_SUCCESS || uttyname == NULL)
++	        nullok = 0;
++
++	    if (_pammodutil_tty_secure(pamh, (const char *)uttyname) != PAM_SUCCESS)
++		nullok = 0;
++	}
++
++	if (nullok) {
  	  args[2]=strdup("nullok");
  	} else {
  	  args[2]=strdup("nonull");
-@@ -554,6 +561,17 @@
+@@ -554,6 +573,17 @@
  	if (salt)
  		_pam_delete(salt);
  
@@ -66,7 +85,7 @@ Index: pam.deb/modules/pam_unix/support.c
  	return retval;
  }
  
-@@ -613,7 +631,8 @@
+@@ -613,7 +643,8 @@
  			}
  		}
  	} else {
@@ -96,7 +115,7 @@ Index: pam.deb/modules/pam_unix/support.h
  /* UNIX__PRELIM */         {NULL,              _ALL_ON_^(0x180),         0x80},
  /* UNIX__UPDATE */         {NULL,              _ALL_ON_^(0x180),        0x100},
 -/* UNIX__NONULL */         {NULL,              _ALL_ON_,                0x200},
-+/* UNIX__NONULL */         {NULL,              _ALL_ON_^(0x1000000),    0x200},
++/* UNIX__NONULL */         {NULL,              _ALL_ON_^(0x8000000),    0x200},
  /* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
  /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
  /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
