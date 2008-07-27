@@ -1,0 +1,28 @@
+Revert upstream change that causes unix_chkpwd to assume it's ok to
+attempt authentication for any username as long as we call
+setuid(getuid()) first.  This is specifically *not* the case on Debian
+and Ubuntu, where unix_chkpwd is setgid shadow instead of setuid root.
+
+Adding an additional setgid(getgid()) call may be enough to fix this,
+but this needs further examination before pushing out such a change.
+
+Authors: Steve Langasek <vorlon@debian.org>
+
+Upstream status: Debian-specific, pending the above analysis
+
+Index: pam.deb/modules/pam_unix/unix_chkpwd.c
+===================================================================
+--- pam.deb.orig/modules/pam_unix/unix_chkpwd.c
++++ pam.deb/modules/pam_unix/unix_chkpwd.c
+@@ -101,10 +101,7 @@
+ 	  /* if the caller specifies the username, verify that user
+ 	     matches it */
+ 	  if (strcmp(user, argv[1])) {
+-	    user = argv[1];
+-	    /* no match -> permanently change to the real user and proceed */
+-	    if (setuid(getuid()) != 0)
+-		return PAM_AUTH_ERR;
++	    return PAM_AUTH_ERR;
+ 	  }
+ 	}
+ 

@@ -43,6 +43,10 @@ pam (1.0.1-1) UNRELEASED; urgency=low
     allow authentication of arbitrary users.  This change does mean we're
     going to be noisier for the time being in an SELinux environment, which
     should be addressed but is not a regression on Debian.
+  * New patch pam_unix_dont_trust_chkpwd_caller.patch, rolling back an
+    upstream change that causes unix_chkpwd to assume that setuid(getuid())
+    is sufficient to drop permissions and attempt any authentication on
+    behalf of the user.
   * The password-changing helper functionality for SELinux systems has been
     split out into a separate unix_update binary, so at long last we can
     change unix_chkpwd to be sgid shadow instead of suid root.
