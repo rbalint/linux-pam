@@ -12,8 +12,9 @@ pam (0.99.10.0-1) UNRELEASED; urgency=low
       accidentally
     - pam_unix now supports SHA-256 and SHA-512 password hashes.
       Closes: #484249, LP: #245786.
-    - pam_rhosts_auth is dropped upstream; add a compat symlink to pam_rhosts
-      to support upgrades for a release, and give a warning in NEWS.Debian.
+    - pam_rhosts_auth is dropped upstream (closes: #382987); add a compat
+      symlink to pam_rhosts to support upgrades for a release, and give a
+      warning in NEWS.Debian.
     - new symbol in libpam.so.0, pam_modutil_audit_write; shlibs bump, and
       do another round of service restarts on upgrade.
   * Drop patches 006_docs_cleanup, 015_hurd_portability,
