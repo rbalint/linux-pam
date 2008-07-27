@@ -17,6 +17,8 @@ pam (1.0.1-1) UNRELEASED; urgency=low
       warning in NEWS.Debian.
     - new symbol in libpam.so.0, pam_modutil_audit_write; shlibs bump, and
       do another round of service restarts on upgrade.
+    - pam_unix helper is now called whenever an unprivileged process
+      tries and fails to query a user's account status.  Closes: #367834.
   * Drop patches 006_docs_cleanup, 015_hurd_portability,
     019_pam_listfile_quiet, 024_debian_cracklib_dict_path, 038_support_hurd,
     043_pam_unix_unknown_user_not_alert, 046_pam_group_example,
