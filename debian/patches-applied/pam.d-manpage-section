@@ -1,0 +1,997 @@
+Patch for Debian bug #470137
+
+pam.d is a directory, so it's in section 5, not in section 8.  Update
+the manpage references.
+
+Authors: Steve Langasek <vorlon@debian.org>
+
+Upstream status: committed to CVS
+
+Index: pam.deb/modules/pam_access/pam_access.8
+===================================================================
+--- pam.deb.orig/modules/pam_access/pam_access.8
++++ pam.deb/modules/pam_access/pam_access.8
+@@ -105,7 +105,7 @@
+ .PP
+ 
+ \fBaccess.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)\&.
+ .SH "AUTHORS"
+ .PP
+Index: pam.deb/modules/pam_access/pam_access.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_access/pam_access.8.xml
++++ pam.deb/modules/pam_access/pam_access.8.xml
+@@ -231,7 +231,7 @@
+         <refentrytitle>access.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+         <refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_cracklib/pam_cracklib.8
+===================================================================
+--- pam.deb.orig/modules/pam_cracklib/pam_cracklib.8
++++ pam.deb/modules/pam_cracklib/pam_cracklib.8
+@@ -302,7 +302,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_cracklib/pam_cracklib.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_cracklib/pam_cracklib.8.xml
++++ pam.deb/modules/pam_cracklib/pam_cracklib.8.xml
+@@ -495,7 +495,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_debug/pam_debug.8
+===================================================================
+--- pam.deb.orig/modules/pam_debug/pam_debug.8
++++ pam.deb/modules/pam_debug/pam_debug.8
+@@ -119,7 +119,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_debug/pam_debug.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_debug/pam_debug.8.xml
++++ pam.deb/modules/pam_debug/pam_debug.8.xml
+@@ -213,7 +213,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_deny/pam_deny.8
+===================================================================
+--- pam.deb.orig/modules/pam_deny/pam_deny.8
++++ pam.deb/modules/pam_deny/pam_deny.8
+@@ -75,7 +75,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_deny/pam_deny.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_deny/pam_deny.8.xml
++++ pam.deb/modules/pam_deny/pam_deny.8.xml
+@@ -117,7 +117,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_echo/pam_echo.8
+===================================================================
+--- pam.deb.orig/modules/pam_echo/pam_echo.8
++++ pam.deb/modules/pam_echo/pam_echo.8
+@@ -101,7 +101,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(8),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_echo/pam_echo.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_echo/pam_echo.8.xml
++++ pam.deb/modules/pam_echo/pam_echo.8.xml
+@@ -154,7 +154,7 @@
+       <refentrytitle>pam.conf</refentrytitle><manvolnum>8</manvolnum>
+     </citerefentry>,
+     <citerefentry>
+-      <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++      <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+     </citerefentry>,
+     <citerefentry>
+       <refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_env/pam_env.8
+===================================================================
+--- pam.deb.orig/modules/pam_env/pam_env.8
++++ pam.deb/modules/pam_env/pam_env.8
+@@ -102,7 +102,7 @@
+ .PP
+ 
+ \fBpam_env.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)\&.
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_env/pam_env.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_env/pam_env.8.xml
++++ pam.deb/modules/pam_env/pam_env.8.xml
+@@ -189,7 +189,7 @@
+         <refentrytitle>pam_env.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+         <refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_exec/pam_exec.8
+===================================================================
+--- pam.deb.orig/modules/pam_exec/pam_exec.8
++++ pam.deb/modules/pam_exec/pam_exec.8
+@@ -109,7 +109,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_exec/pam_exec.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_exec/pam_exec.8.xml
++++ pam.deb/modules/pam_exec/pam_exec.8.xml
+@@ -199,7 +199,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_faildelay/pam_faildelay.8
+===================================================================
+--- pam.deb.orig/modules/pam_faildelay/pam_faildelay.8
++++ pam.deb/modules/pam_faildelay/pam_faildelay.8
+@@ -66,7 +66,7 @@
+ 
+ \fBpam_fail_delay\fR(3),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_faildelay/pam_faildelay.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_faildelay/pam_faildelay.8.xml
++++ pam.deb/modules/pam_faildelay/pam_faildelay.8.xml
+@@ -118,7 +118,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_filter/pam_filter.8
+===================================================================
+--- pam.deb.orig/modules/pam_filter/pam_filter.8
++++ pam.deb/modules/pam_filter/pam_filter.8
+@@ -147,7 +147,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_filter/pam_filter.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_filter/pam_filter.8.xml
++++ pam.deb/modules/pam_filter/pam_filter.8.xml
+@@ -243,7 +243,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_ftp/pam_ftp.8
+===================================================================
+--- pam.deb.orig/modules/pam_ftp/pam_ftp.8
++++ pam.deb/modules/pam_ftp/pam_ftp.8
+@@ -98,7 +98,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_ftp/pam_ftp.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_ftp/pam_ftp.8.xml
++++ pam.deb/modules/pam_ftp/pam_ftp.8.xml
+@@ -165,7 +165,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_group/pam_group.8
+===================================================================
+--- pam.deb.orig/modules/pam_group/pam_group.8
++++ pam.deb/modules/pam_group/pam_group.8
+@@ -87,7 +87,7 @@
+ .PP
+ 
+ \fBgroup.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)\&.
+ .SH "AUTHORS"
+ .PP
+Index: pam.deb/modules/pam_group/pam_group.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_group/pam_group.8.xml
++++ pam.deb/modules/pam_group/pam_group.8.xml
+@@ -145,7 +145,7 @@
+         <refentrytitle>group.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+         <refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_issue/pam_issue.8
+===================================================================
+--- pam.deb.orig/modules/pam_issue/pam_issue.8
++++ pam.deb/modules/pam_issue/pam_issue.8
+@@ -131,7 +131,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_issue/pam_issue.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_issue/pam_issue.8.xml
++++ pam.deb/modules/pam_issue/pam_issue.8.xml
+@@ -216,7 +216,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_keyinit/pam_keyinit.8
+===================================================================
+--- pam.deb.orig/modules/pam_keyinit/pam_keyinit.8
++++ pam.deb/modules/pam_keyinit/pam_keyinit.8
+@@ -110,7 +110,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ \fBkeyctl\fR(1)
+ .SH "AUTHOR"
+Index: pam.deb/modules/pam_keyinit/pam_keyinit.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_keyinit/pam_keyinit.8.xml
++++ pam.deb/modules/pam_keyinit/pam_keyinit.8.xml
+@@ -220,7 +220,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_lastlog/pam_lastlog.8
+===================================================================
+--- pam.deb.orig/modules/pam_lastlog/pam_lastlog.8
++++ pam.deb/modules/pam_lastlog/pam_lastlog.8
+@@ -106,7 +106,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_lastlog/pam_lastlog.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_lastlog/pam_lastlog.8.xml
++++ pam.deb/modules/pam_lastlog/pam_lastlog.8.xml
+@@ -213,7 +213,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_limits/pam_limits.8
+===================================================================
+--- pam.deb.orig/modules/pam_limits/pam_limits.8
++++ pam.deb/modules/pam_limits/pam_limits.8
+@@ -125,7 +125,7 @@
+ .PP
+ 
+ \fBlimits.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)\&.
+ .SH "AUTHORS"
+ .PP
+Index: pam.deb/modules/pam_limits/pam_limits.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_limits/pam_limits.8.xml
++++ pam.deb/modules/pam_limits/pam_limits.8.xml
+@@ -239,7 +239,7 @@
+         <refentrytitle>limits.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+         <refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_listfile/pam_listfile.8
+===================================================================
+--- pam.deb.orig/modules/pam_listfile/pam_listfile.8
++++ pam.deb/modules/pam_listfile/pam_listfile.8
+@@ -182,7 +182,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_listfile/pam_listfile.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_listfile/pam_listfile.8.xml
++++ pam.deb/modules/pam_listfile/pam_listfile.8.xml
+@@ -278,7 +278,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_localuser/pam_localuser.8
+===================================================================
+--- pam.deb.orig/modules/pam_localuser/pam_localuser.8
++++ pam.deb/modules/pam_localuser/pam_localuser.8
+@@ -81,7 +81,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_localuser/pam_localuser.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_localuser/pam_localuser.8.xml
++++ pam.deb/modules/pam_localuser/pam_localuser.8.xml
+@@ -155,7 +155,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_loginuid/pam_loginuid.8
+===================================================================
+--- pam.deb.orig/modules/pam_loginuid/pam_loginuid.8
++++ pam.deb/modules/pam_loginuid/pam_loginuid.8
+@@ -54,7 +54,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7),
+ \fBauditctl\fR(8),
+ \fBauditd\fR(8)
+Index: pam.deb/modules/pam_loginuid/pam_loginuid.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_loginuid/pam_loginuid.8.xml
++++ pam.deb/modules/pam_loginuid/pam_loginuid.8.xml
+@@ -101,7 +101,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_mail/pam_mail.8
+===================================================================
+--- pam.deb.orig/modules/pam_mail/pam_mail.8
++++ pam.deb/modules/pam_mail/pam_mail.8
+@@ -132,7 +132,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_mail/pam_mail.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_mail/pam_mail.8.xml
++++ pam.deb/modules/pam_mail/pam_mail.8.xml
+@@ -261,7 +261,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8
+===================================================================
+--- pam.deb.orig/modules/pam_mkhomedir/pam_mkhomedir.8
++++ pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8
+@@ -102,7 +102,7 @@
+ .SH "SEE ALSO"
+ .PP
+ 
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)\&.
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_mkhomedir/pam_mkhomedir.8.xml
++++ pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8.xml
+@@ -186,7 +186,7 @@
+     <title>SEE ALSO</title>
+     <para>
+       <citerefentry>
+-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+         <refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_motd/pam_motd.8
+===================================================================
+--- pam.deb.orig/modules/pam_motd/pam_motd.8
++++ pam.deb/modules/pam_motd/pam_motd.8
+@@ -57,7 +57,7 @@
+ 
+ \fBmotd\fR(5),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_motd/pam_motd.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_motd/pam_motd.8.xml
++++ pam.deb/modules/pam_motd/pam_motd.8.xml
+@@ -96,7 +96,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_namespace/pam_namespace.8
+===================================================================
+--- pam.deb.orig/modules/pam_namespace/pam_namespace.8
++++ pam.deb/modules/pam_namespace/pam_namespace.8
+@@ -149,7 +149,7 @@
+ .PP
+ 
+ \fBnamespace.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBmount\fR(8),
+ \fBpam\fR(7)\&.
+ .SH "AUTHORS"
+Index: pam.deb/modules/pam_namespace/pam_namespace.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_namespace/pam_namespace.8.xml
++++ pam.deb/modules/pam_namespace/pam_namespace.8.xml
+@@ -365,7 +365,7 @@
+         <refentrytitle>namespace.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+         <refentrytitle>mount</refentrytitle><manvolnum>8</manvolnum>
+Index: pam.deb/modules/pam_nologin/pam_nologin.8
+===================================================================
+--- pam.deb.orig/modules/pam_nologin/pam_nologin.8
++++ pam.deb/modules/pam_nologin/pam_nologin.8
+@@ -103,7 +103,7 @@
+ 
+ \fBnologin\fR(5),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_nologin/pam_nologin.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_nologin/pam_nologin.8.xml
++++ pam.deb/modules/pam_nologin/pam_nologin.8.xml
+@@ -156,7 +156,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_permit/pam_permit.8
+===================================================================
+--- pam.deb.orig/modules/pam_permit/pam_permit.8
++++ pam.deb/modules/pam_permit/pam_permit.8
+@@ -57,7 +57,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_permit/pam_permit.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_permit/pam_permit.8.xml
++++ pam.deb/modules/pam_permit/pam_permit.8.xml
+@@ -87,7 +87,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_rhosts/pam_rhosts.8
+===================================================================
+--- pam.deb.orig/modules/pam_rhosts/pam_rhosts.8
++++ pam.deb/modules/pam_rhosts/pam_rhosts.8
+@@ -101,7 +101,7 @@
+ \fBhosts.equiv\fR(5),
+ \fBrhosts\fR(5),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_rhosts/pam_rhosts.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_rhosts/pam_rhosts.8.xml
++++ pam.deb/modules/pam_rhosts/pam_rhosts.8.xml
+@@ -153,7 +153,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_rootok/pam_rootok.8
+===================================================================
+--- pam.deb.orig/modules/pam_rootok/pam_rootok.8
++++ pam.deb/modules/pam_rootok/pam_rootok.8
+@@ -76,7 +76,7 @@
+ 
+ \fBsu\fR(1),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_rootok/pam_rootok.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_rootok/pam_rootok.8.xml
++++ pam.deb/modules/pam_rootok/pam_rootok.8.xml
+@@ -112,7 +112,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_securetty/pam_securetty.8
+===================================================================
+--- pam.deb.orig/modules/pam_securetty/pam_securetty.8
++++ pam.deb/modules/pam_securetty/pam_securetty.8
+@@ -90,7 +90,7 @@
+ 
+ \fBsecuretty\fR(5),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_securetty/pam_securetty.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_securetty/pam_securetty.8.xml
++++ pam.deb/modules/pam_securetty/pam_securetty.8.xml
+@@ -149,7 +149,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_selinux/pam_selinux.8
+===================================================================
+--- pam.deb.orig/modules/pam_selinux/pam_selinux.8
++++ pam.deb/modules/pam_selinux/pam_selinux.8
+@@ -94,7 +94,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_selinux/pam_selinux.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_selinux/pam_selinux.8.xml
++++ pam.deb/modules/pam_selinux/pam_selinux.8.xml
+@@ -202,7 +202,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_sepermit/pam_sepermit.8
+===================================================================
+--- pam.deb.orig/modules/pam_sepermit/pam_sepermit.8
++++ pam.deb/modules/pam_sepermit/pam_sepermit.8
+@@ -103,7 +103,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_sepermit/pam_sepermit.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_sepermit/pam_sepermit.8.xml
++++ pam.deb/modules/pam_sepermit/pam_sepermit.8.xml
+@@ -171,7 +171,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_shells/pam_shells.8
+===================================================================
+--- pam.deb.orig/modules/pam_shells/pam_shells.8
++++ pam.deb/modules/pam_shells/pam_shells.8
+@@ -66,7 +66,7 @@
+ 
+ \fBshells\fR(5),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_shells/pam_shells.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_shells/pam_shells.8.xml
++++ pam.deb/modules/pam_shells/pam_shells.8.xml
+@@ -99,7 +99,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_tally/pam_tally.8
+===================================================================
+--- pam.deb.orig/modules/pam_tally/pam_tally.8
++++ pam.deb/modules/pam_tally/pam_tally.8
+@@ -214,7 +214,7 @@
+ 
+ \fBfaillog\fR(8),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_tally/pam_tally.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_tally/pam_tally.8.xml
++++ pam.deb/modules/pam_tally/pam_tally.8.xml
+@@ -409,7 +409,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_time/pam_time.8
+===================================================================
+--- pam.deb.orig/modules/pam_time/pam_time.8
++++ pam.deb/modules/pam_time/pam_time.8
+@@ -88,7 +88,7 @@
+ .PP
+ 
+ \fBtime.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)\&.
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_time/pam_time.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_time/pam_time.8.xml
++++ pam.deb/modules/pam_time/pam_time.8.xml
+@@ -166,7 +166,7 @@
+         <refentrytitle>time.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+         <refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_umask/pam_umask.8
+===================================================================
+--- pam.deb.orig/modules/pam_umask/pam_umask.8
++++ pam.deb/modules/pam_umask/pam_umask.8
+@@ -109,7 +109,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_umask/pam_umask.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_umask/pam_umask.8.xml
++++ pam.deb/modules/pam_umask/pam_umask.8.xml
+@@ -202,7 +202,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_unix/pam_unix.8
+===================================================================
+--- pam.deb.orig/modules/pam_unix/pam_unix.8
++++ pam.deb/modules/pam_unix/pam_unix.8
+@@ -227,7 +227,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_unix/pam_unix.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_unix/pam_unix.8.xml
++++ pam.deb/modules/pam_unix/pam_unix.8.xml
+@@ -462,7 +462,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_userdb/pam_userdb.8
+===================================================================
+--- pam.deb.orig/modules/pam_userdb/pam_userdb.8
++++ pam.deb/modules/pam_userdb/pam_userdb.8
+@@ -129,7 +129,7 @@
+ 
+ \fBcrypt\fR(3),
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_userdb/pam_userdb.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_userdb/pam_userdb.8.xml
++++ pam.deb/modules/pam_userdb/pam_userdb.8.xml
+@@ -274,7 +274,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_warn/pam_warn.8
+===================================================================
+--- pam.deb.orig/modules/pam_warn/pam_warn.8
++++ pam.deb/modules/pam_warn/pam_warn.8
+@@ -62,7 +62,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_warn/pam_warn.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_warn/pam_warn.8.xml
++++ pam.deb/modules/pam_warn/pam_warn.8.xml
+@@ -86,7 +86,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_wheel/pam_wheel.8
+===================================================================
+--- pam.deb.orig/modules/pam_wheel/pam_wheel.8
++++ pam.deb/modules/pam_wheel/pam_wheel.8
+@@ -115,7 +115,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_wheel/pam_wheel.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_wheel/pam_wheel.8.xml
++++ pam.deb/modules/pam_wheel/pam_wheel.8.xml
+@@ -209,7 +209,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+Index: pam.deb/modules/pam_xauth/pam_xauth.8
+===================================================================
+--- pam.deb.orig/modules/pam_xauth/pam_xauth.8
++++ pam.deb/modules/pam_xauth/pam_xauth.8
+@@ -156,7 +156,7 @@
+ .PP
+ 
+ \fBpam.conf\fR(5),
+-\fBpam.d\fR(8),
++\fBpam.d\fR(5),
+ \fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+Index: pam.deb/modules/pam_xauth/pam_xauth.8.xml
+===================================================================
+--- pam.deb.orig/modules/pam_xauth/pam_xauth.8.xml
++++ pam.deb/modules/pam_xauth/pam_xauth.8.xml
+@@ -273,7 +273,7 @@
+ 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+ 	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>

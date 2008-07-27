@@ -20,4 +20,5 @@ hurd_no_setfsuid
 055_pam_unix_nullok_secure
 PAM-manpage-section 
 pam_env_ignore_garbage.patch -p2
+pam.d-manpage-section
 autoconf.patch 

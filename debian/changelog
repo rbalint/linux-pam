@@ -87,6 +87,10 @@ pam (1.0.1-1) UNRELEASED; urgency=low
     directory.  Fix up the regex for uscan.
   * Fix the libpam0g-dev examples directory to not include a gratuitous
     .cvsignore file.
+  * New patch, pam.d-manpage-section, to fix the manpage references to
+    point to section 5 instead of section 8.
+  * Update patch PAM-manpage-section to fix the references to pam(7) from
+    other manpages.  Closes: #470137.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
