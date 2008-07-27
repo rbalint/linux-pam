@@ -31,6 +31,12 @@ pam (0.99.10.0-1) UNRELEASED; urgency=low
   * New patch no_helper_for_nis+.patch, which restores the behavior of doing
     in-process NIS+ account checking instead of unconditionally passing it
     off to the unix_chkpwd helper; if it wasn't broke, don't fix it.
+  * New patch pam_unix_fix_sgid_shadow_auth.patch, fixing an upstream
+    regression which prevents sgid shadow apps from being able to authenticate
+    any more because the module forces use of the helper and the helper won't
+    allow authentication of arbitrary users.  This change does mean we're
+    going to be noisier for the time being in an SELinux environment, which
+    should be addressed but is not a regression on Debian.
   * The password-changing helper functionality for SELinux systems has been
     split out into a separate unix_update binary, so at long last we can
     change unix_chkpwd to be sgid shadow instead of suid root.
