@@ -26,6 +26,9 @@ pam (0.99.10.0-1) UNRELEASED; urgency=low
   * New patch setreuid_juggling.patch: restore the 0.99.9.0 behavior wrt uid
     changes for NIS+, since I know the old behavior was right and don't
     believe anyone has tested the new code.
+  * New patch no_helper_for_nis+.patch, which restores the behavior of doing
+    in-process NIS+ account checking instead of unconditionally passing it
+    off to the unix_chkpwd helper; if it wasn't broke, don't fix it.
   * The password-changing helper functionality for SELinux systems has been
     split out into a separate unix_update binary, so at long last we can
     change unix_chkpwd to be sgid shadow instead of suid root.

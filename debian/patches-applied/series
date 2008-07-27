@@ -1,5 +1,6 @@
 thread-safe_save_old_password.patch
 setreuid_juggling.patch
+no_helper_for_nis+.patch
 007_modules_pam_unix
 008_modules_pam_limits_chroot
 021_nis_cleanup
