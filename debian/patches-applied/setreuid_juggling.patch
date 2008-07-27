@@ -1,7 +1,7 @@
 This particular setreuid() is only needed if we don't have any root
 privs at all, so make it conditional like it was pre-1.0.
 
-Authors: Steve Langasek <steve.langasek@canonical.com>
+Authors: Steve Langasek <vorlon@debian.org>
 
 Upstream status: to be submitted
 

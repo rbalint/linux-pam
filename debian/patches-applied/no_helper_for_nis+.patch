@@ -2,7 +2,7 @@ Don't force use of the helper for account verification with NIS+; the
 previous code already works robustly for any non-threaded caller, and
 will fall back to use of the helper anyway.
 
-Authors: Steve Langasek <steve.langasek@canonical.com>
+Authors: Steve Langasek <vorlon@debian.org>
 
 Upstream status: to be discussed
 
