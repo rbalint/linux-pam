@@ -17,7 +17,6 @@ hurd_no_setfsuid
 045_pam_dispatch_jump_is_ignore
 054_pam_security_abstract_securetty_handling
 055_pam_unix_nullok_secure
-065_pam_unix_cracklib_disable
 PAM-manpage-section 
 pam_env_ignore_garbage.patch -p2
 autoconf.patch 

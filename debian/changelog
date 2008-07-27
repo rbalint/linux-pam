@@ -21,8 +21,8 @@ pam (1.0.1-1) UNRELEASED; urgency=low
     019_pam_listfile_quiet, 024_debian_cracklib_dict_path, 038_support_hurd,
     043_pam_unix_unknown_user_not_alert, 046_pam_group_example,
     no_pthread_mutexes, limits_wrong_strncpy, misc_conv_allow_sigint.patch,
-    pam_tally_audit.patch, and 057_pam_unix_passwd_OOM_check, which have been
-    merged upstream.
+    pam_tally_audit.patch, 057_pam_unix_passwd_OOM_check, and
+    065_pam_unix_cracklib_disable which have been merged upstream.
   * Patch 022_pam_unix_group_time_miscfixes: partially merged upstream;
     now is really just "pam_group_miscfixes".
   * Patch 007_modules_pam_unix partially superseded upstream; stripping
