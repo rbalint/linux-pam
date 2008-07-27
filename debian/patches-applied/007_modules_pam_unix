@@ -2,7 +2,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/pam_unix_passwd.c
 +++ pam.deb/modules/pam_unix/pam_unix_passwd.c
-@@ -92,6 +92,9 @@
+@@ -88,6 +88,9 @@
  		      unsigned long versnum, unsigned int proto);
  #endif				/* GNU libc 2.1 */
  
@@ -12,7 +12,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  /*
     How it works:
     Gets in username (has to be done) from the calling program
-@@ -438,7 +441,8 @@
+@@ -431,7 +434,8 @@
  static int _pam_unix_approve_pass(pam_handle_t * pamh
  				  ,unsigned int ctrl
  				  ,const char *pass_old
@@ -22,21 +22,16 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  {
  	const void *user;
  	const char *remark = NULL;
-@@ -472,11 +476,10 @@
- #ifdef USE_CRACKLIB
- 		remark = FascistCheck (pass_new, CRACKLIB_DICTS);
- 		D(("called cracklib [%s]", remark));
--#else
+@@ -462,7 +466,7 @@
+ 		}
+ 	}
+ 	if (off(UNIX__IAMROOT, ctrl)) {
 -		if (strlen(pass_new) < 6)
-+#endif
 +		if (strlen(pass_new) < pass_min_len)
  		  remark = _("You must choose a longer password");
  		D(("length check [%s]", remark));
--#endif
  		if (on(UNIX_REMEMBER_PASSWD, ctrl)) {
- 			if ((retval = check_old_password(user, pass_new)) == PAM_AUTHTOK_ERR)
- 			  remark = _("Password has been already used. Choose another.");
-@@ -486,6 +489,11 @@
+@@ -474,6 +478,11 @@
  				return retval;
  			}
  		}
@@ -48,7 +43,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  	}
  	if (remark) {
  		_make_remark(pamh, ctrl, PAM_ERROR_MSG, remark);
-@@ -502,6 +510,7 @@
+@@ -490,6 +499,7 @@
  	int retval;
  	int remember = -1;
  	int rounds = -1;
@@ -56,7 +51,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  
  	/* <DO NOT free() THESE> */
  	const char *user;
-@@ -510,7 +519,8 @@
+@@ -498,7 +508,8 @@
  
  	D(("called."));
  
@@ -66,7 +61,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  
  	/*
  	 * First get the name of a user
-@@ -710,7 +720,8 @@
+@@ -698,7 +709,8 @@
  			if (*(const char *)pass_new == '\0') {	/* "\0" password = NULL */
  				pass_new = NULL;
  			}
@@ -76,7 +71,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  		}
  
  		if (retval != PAM_SUCCESS) {
-@@ -739,7 +750,8 @@
+@@ -727,7 +739,8 @@
  			return retval;
  		}
  
@@ -558,7 +553,7 @@ Index: pam.deb/modules/pam_unix/Makefile.am
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/Makefile.am
 +++ pam.deb/modules/pam_unix/Makefile.am
-@@ -43,7 +43,7 @@
+@@ -40,7 +40,7 @@
  
  pam_unix_la_SOURCES = bigcrypt.c pam_unix_acct.c \
  	pam_unix_auth.c pam_unix_passwd.c pam_unix_sess.c support.c \
@@ -606,7 +601,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/passverify.c
 +++ pam.deb/modules/pam_unix/passverify.c
-@@ -261,7 +261,9 @@
+@@ -256,7 +256,9 @@
  	*daysleft = -1;
  	curdays = (long int)(time(NULL) / (60 * 60 * 24));
  	D(("today is %d, last change %d", curdays, spent->sp_lstchg));
@@ -617,7 +612,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
  		D(("account expired"));
  		return PAM_ACCT_EXPIRED;
  	}
-@@ -279,17 +281,23 @@
+@@ -274,17 +276,23 @@
  	if ((curdays - spent->sp_lstchg > spent->sp_max)
  	    && (curdays - spent->sp_lstchg > spent->sp_inact)
  	    && (curdays - spent->sp_lstchg > spent->sp_max + spent->sp_inact)
