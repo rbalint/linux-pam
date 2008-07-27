@@ -91,6 +91,7 @@ pam (1.0.1-1) UNRELEASED; urgency=low
     point to section 5 instead of section 8.
   * Update patch PAM-manpage-section to fix the references to pam(7) from
     other manpages.  Closes: #470137.
+  * Add debian/README.source documenting that this package uses quilt.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
 
