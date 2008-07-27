@@ -141,10 +141,10 @@ Index: pam.deb/modules/pam_unix/Makefile.am
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/Makefile.am
 +++ pam.deb/modules/pam_unix/Makefile.am
-@@ -31,7 +31,8 @@
+@@ -28,7 +28,8 @@
    pam_unix_la_LDFLAGS += -Wl,--version-script=$(srcdir)/../modules.map
  endif
- pam_unix_la_LIBADD = @LIBCRACK@ @LIBNSL@ -L$(top_builddir)/libpam -lpam \
+ pam_unix_la_LIBADD = @LIBNSL@ -L$(top_builddir)/libpam -lpam \
 -	@LIBCRYPT@ @LIBSELINUX@
 +	@LIBCRYPT@ @LIBSELINUX@ \
 +	../pam_securetty/tty_secure.lo

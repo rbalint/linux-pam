@@ -109,14 +109,14 @@ Index: pam.deb/modules/pam_wheel/pam_wheel.8
  .\"     Title: pam_wheel
  .\"    Author: 
 -.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
--.\"      Date: 01/08/2008
+-.\"      Date: 04/16/2008
 +.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
-+.\"      Date: 07/26/2008
++.\"      Date: 07/27/2008
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"
--.TH "PAM_WHEEL" "8" "01/08/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_WHEEL" "8" "07/26/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_WHEEL" "8" "04/16/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_WHEEL" "8" "07/27/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" disable hyphenation
  .nh
  .\" disable justification (adjust text to left margin only)

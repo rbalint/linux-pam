@@ -1,7 +1,7 @@
-Index: Linux-PAM/modules/pam_securetty/pam_securetty.c
+Index: pam.deb/modules/pam_securetty/pam_securetty.c
 ===================================================================
---- Linux-PAM/modules/pam_securetty/pam_securetty.c.orig
-+++ Linux-PAM/modules/pam_securetty/pam_securetty.c
+--- pam.deb.orig/modules/pam_securetty/pam_securetty.c
++++ pam.deb/modules/pam_securetty/pam_securetty.c
 @@ -1,8 +1,5 @@
  /* pam_securetty module */
  
@@ -101,10 +101,10 @@ Index: Linux-PAM/modules/pam_securetty/pam_securetty.c
      }
  
      return retval;
-Index: Linux-PAM/modules/pam_securetty/tty_secure.c
+Index: pam.deb/modules/pam_securetty/tty_secure.c
 ===================================================================
 --- /dev/null
-+++ Linux-PAM/modules/pam_securetty/tty_secure.c
++++ pam.deb/modules/pam_securetty/tty_secure.c
 @@ -0,0 +1,92 @@
 +/*
 + * A function to determine if a particular line is in /etc/securetty
@@ -198,13 +198,13 @@ Index: Linux-PAM/modules/pam_securetty/tty_secure.c
 +
 +    return retval;
 +}
-Index: Linux-PAM/modules/pam_securetty/Makefile.am
+Index: pam.deb/modules/pam_securetty/Makefile.am
 ===================================================================
---- Linux-PAM/modules/pam_securetty/Makefile.am.orig
-+++ Linux-PAM/modules/pam_securetty/Makefile.am
+--- pam.deb.orig/modules/pam_securetty/Makefile.am
++++ pam.deb/modules/pam_securetty/Makefile.am
 @@ -23,6 +23,10 @@
- 
  securelib_LTLIBRARIES = pam_securetty.la
+ pam_securetty_la_LIBADD = -L$(top_builddir)/libpam -lpam
  
 +pam_securetty_la_SOURCES =	\
 +	pam_securetty.c		\

@@ -1,10 +1,10 @@
   * Add support for credential reinitialization in pam_group, closes: #108697
 
-Index: Linux-PAM/modules/pam_group/pam_group.c
+Index: pam.deb/modules/pam_group/pam_group.c
 ===================================================================
---- Linux-PAM/modules/pam_group/pam_group.c.orig
-+++ Linux-PAM/modules/pam_group/pam_group.c
-@@ -758,9 +758,12 @@
+--- pam.deb.orig/modules/pam_group/pam_group.c
++++ pam.deb/modules/pam_group/pam_group.c
+@@ -765,9 +765,12 @@
      unsigned setting;
  
      /* only interested in establishing credentials */

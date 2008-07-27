@@ -6,8 +6,8 @@ Index: pam.deb/doc/man/PAM.8
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"
--.TH "PAM" "8" "02/04/2008" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM" "7" "02/04/2008" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM" "8" "04/16/2008" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM" "7" "04/16/2008" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" disable hyphenation
  .nh
  .\" disable justification (adjust text to left margin only)

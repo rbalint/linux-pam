@@ -4,7 +4,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/passverify.c
 +++ pam.deb/modules/pam_unix/passverify.c
-@@ -714,7 +714,7 @@
+@@ -715,7 +715,7 @@
      struct passwd *tmpent = NULL;
      struct stat st;
      FILE *pwfile, *opwfile;
@@ -13,7 +13,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
      int oldmask;
  #ifdef WITH_SELINUX
      security_context_t prev_context=NULL;
-@@ -785,6 +785,7 @@
+@@ -786,6 +786,7 @@
  
  	    tmpent->pw_passwd = assigned_passwd.charp;
  	    err = 0;
@@ -21,7 +21,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
  	}
  	if (putpwent(tmpent, pwfile)) {
  	    D(("error writing entry to password file: %m"));
-@@ -826,7 +827,7 @@
+@@ -827,7 +828,7 @@
  	return PAM_SUCCESS;
      } else {
  	unlink(PW_TMPFILE);
@@ -30,7 +30,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
      }
  }
  
-@@ -841,7 +842,7 @@
+@@ -842,7 +843,7 @@
      struct spwd *spwdent = NULL, *stmpent = NULL;
      struct stat st;
      FILE *pwfile, *opwfile;
@@ -39,7 +39,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
      int oldmask;
  #ifdef WITH_SELINUX
      security_context_t prev_context=NULL;
-@@ -912,6 +913,7 @@
+@@ -913,6 +914,7 @@
  	    stmpent->sp_pwdp = towhat;
  	    stmpent->sp_lstchg = time(NULL) / (60 * 60 * 24);
  	    err = 0;
@@ -47,7 +47,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
  	    D(("Set password %s for %s", stmpent->sp_pwdp, forwho));
  	}
  
-@@ -958,7 +960,7 @@
+@@ -959,7 +961,7 @@
  	return PAM_SUCCESS;
      } else {
  	unlink(SH_TMPFILE);
