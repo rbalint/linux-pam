@@ -55,7 +55,7 @@ Index: Linux-PAM/modules/pam_xauth/pam_xauth.c
 +	if (uid == pwd->pw_uid)
 +		setreuid(uid, euid);
 +	else {
-+		if (setreuid(-1, 0) == -1)
++		if (setreuid(-1, 0) != -1)
 +			setreuid(uid, -1);
 +		setreuid(-1, euid);
 +	}
