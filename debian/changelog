@@ -1,4 +1,4 @@
-pam (1.0.1-1) UNRELEASED; urgency=low
+pam (1.0.1-1) unstable; urgency=low
 
   * New upstream version.
     - pam_limits: bound RLIMIT_NICE from below. Closes: #403718.
@@ -92,7 +92,7 @@ pam (1.0.1-1) UNRELEASED; urgency=low
     to Tomas Mraz <tmraz@redhat.com> for indirectly bringing this to my
     attention
 
- -- Steve Langasek <vorlon@debian.org>  Tue, 22 Jul 2008 10:55:45 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 28 Jul 2008 13:56:26 -0700
 
 pam (0.99.7.1-7) unstable; urgency=medium
 
