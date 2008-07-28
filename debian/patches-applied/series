@@ -1,5 +1,4 @@
 pam_unix_thread-safe_save_old_password.patch
-pam_unix_setreuid_juggling.patch
 pam_unix_fix_sgid_shadow_auth.patch
 pam_unix_dont_trust_chkpwd_caller.patch
 007_modules_pam_unix

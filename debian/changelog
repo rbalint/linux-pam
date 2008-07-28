@@ -32,9 +32,6 @@ pam (1.0.1-1) UNRELEASED; urgency=low
   * New patch pam_unix_thread-safe_save_old_password.patch, to make sure all
     our getpwnam() use in pam_unix is thread-safe (fixes an upstream
     regression)
-  * New patch pam_unix_setreuid_juggling.patch: restore the 0.99.9.0
-    behavior wrt uid changes for NIS+, since I know the old behavior was 
-    right and don't believe anyone has tested the new code.
   * New patch pam_unix_fix_sgid_shadow_auth.patch, fixing an upstream
     regression which prevents sgid shadow apps from being able to authenticate
     any more because the module forces use of the helper and the helper won't
