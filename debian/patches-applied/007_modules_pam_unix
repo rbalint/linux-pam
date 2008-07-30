@@ -266,7 +266,7 @@ Index: pam.deb/modules/pam_unix/pam_unix.8.xml
 +        <listitem>
 +          <para>
 +            Set a minimum password length of <replaceable>n</replaceable>
-+            characters.  The default value is 1.
++            characters.  The default value is 6.
 +          </para>
 +        </listitem>
 +      </varlistentry>
