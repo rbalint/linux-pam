@@ -57,41 +57,15 @@ to reference the basename (eg. "pam_unix.so"). This will ensure that the
 program continues to work even if the module location changes, since
 libpam itself will resolve the location.
 
-Under no circumstances should any program in Debian use the pam_pwdb.so
-module by default. Instead the pam_unix.so module should be used. Most
-programs with RedHat support/default files will reference pam_pwdb.so in
-their example files. Do not use this. There are several problems with
-regard to pam_pwdb.so:
-
-  1) It attempts to reimplement glibc's NSS code. For example, if your
-  program uses pam_pwdb.so, and the user changes /etc/nsswitch.conf to use
-  NIS, NIS+, or LDAP, then your program will fail to work unless the user
-  also knows to edit /etc/pwdb.conf (which is not necessary for
-  pam_unix.so). In the case of LDAP, the program would become absolutely
-  useless until the user modifies the pam.d file themselves to use
-  pam_unix.so.
-
-  2) It adds to the layer of glibc function calls making it harder to
-  debug problems. Because libpwdb masks glibc native calls, it requires
-  being able to debug libpwdb, libpam, libc and the offending program.
-
-Note that pam_unix.so takes the same module arguments as pam_pwdb.so, so
-you can just replace the references. If you are not sure if the pam.d
-files is correctly setup, please feel free to email it to me, and I will
-glance it over.
-
-UPDATE: libpwdb and this libpam-pwdb have been removed from Debian as of
-Woody. So even if you decided to use pam_pwdb, it will be broken, so HAHA
-:)
-
-You should also not use the pam_stack module in the pam config file.
+You should not use the pam_stack module in the pam config file.
 It's not currently in Debian so it won't work.  While I cannot stop
 someone from packaging pam_stack for Debian, I will try to convince
 them that it is not the direction we want.  Pam_stack (among other
 faults) uses different pam handles for each step in the process--the
 handle used for session management is not the same as the handle used
-for authentication.  This breaks several modules.  We will have an
-alternate solution for shared PAM configuration across modules.
+for authentication.  This breaks several modules.  We have an alternate
+solution for shared PAM configuration across modules, in the form of
+the @include directive.
 
 
 Currently libpam-modules is in the base setup, so it's dependency is not

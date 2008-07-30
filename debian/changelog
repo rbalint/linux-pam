@@ -5,6 +5,9 @@ pam (1.0.1-2) UNRELEASED; urgency=low
   * Look for cups instead of cupsys as an init script name when restarting
     services; thanks to Stephen Olander-Waters for pointing this out.
     Closes: #492977.
+  * Update the Debian PAM mini-policy to remove references to the
+    long-obsolete pam_pwdb, and clarify the relationship between pam_stack
+    and @include.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 30 Jul 2008 00:55:10 -0700
 
