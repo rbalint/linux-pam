@@ -102,7 +102,7 @@ then
 	    echo -n "Checking for services that may need to be restarted..."
 
 	    check="apache2-common at bayonne cherokee courier-authdaemon"
-	    check="$check cron cupsys"
+	    check="$check cron cups"
 	    check="$check dante-server diald dovecot-common exim exim4-base"
 	    check="$check fcron fireflier-server freeradius gdm heartbeat"
 	    check="$check heartbeat-2 hylafax-server iiimf-server inn2"
