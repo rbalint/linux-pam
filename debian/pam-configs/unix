@@ -1,0 +1,13 @@
+Name: Unix authentication
+Default: yes
+Priority: 1
+Conflicts: unix-zany
+Auth-Type: Primary
+Auth-Initial:
+  auth	[success=end default=ignore]	pam_unix.so nullok_secure
+Auth-Medial:
+  auth	[success=end default=ignore]	pam_unix.so nullok_secure try_first_pass
+Auth-Final:
+  auth	[success=end default=ignore]	pam_unix.so nullok_secure try_first_pass
+Auth-Isolate:
+  auth	[success=end default=ignore]	pam_unix.so nullok_secure
