@@ -11,3 +11,18 @@ Auth-Final:
   auth	[success=end default=ignore]	pam_unix.so nullok_secure try_first_pass
 Auth-Isolate:
   auth	[success=end default=ignore]	pam_unix.so nullok_secure
+Acct-Type: Primary
+Acct-Initial:
+  acct	[success=end default=ignore]	pam_unix.so
+Acct-Final:
+  acct	[success=end default=ignore]	pam_unix.so
+Session-Type: Additional
+Session-Initial:
+  session	required	pam_unix.so
+Session-Final:
+  session	required	pam_unix.so
+Password-Type: Additional
+Password-Initial:
+  password	requisite	pam_unix.so nullok obscure md5
+Password-Final:
+  password	requisite	pam_unix.so nullok obscure use_authtok try_first_pass md5
