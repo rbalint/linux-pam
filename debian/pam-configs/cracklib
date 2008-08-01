@@ -1,6 +1,6 @@
 Name: Cracklib password strength checking
 Default: yes
-Priority: 1
+Priority: 1024
 Conflicts: unix-zany
 Password-Type: Additional
 Password-Initial:

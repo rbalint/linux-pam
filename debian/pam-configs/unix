@@ -1,6 +1,6 @@
 Name: Unix authentication
 Default: yes
-Priority: 1
+Priority: 256
 Conflicts: unix-zany
 Auth-Type: Primary
 Auth-Initial:
