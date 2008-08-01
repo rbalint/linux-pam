@@ -1,0 +1,9 @@
+Name: Cracklib password strength checking
+Default: yes
+Priority: 1
+Conflicts: unix-zany
+Password-Type: Additional
+Password-Initial:
+  password	requisite	pam_cracklib.so retry=3 minlen=8 difok=3
+Password-Final:
+  password	requisite	pam_cracklib.so retry=3 minlen=8 difok=3
