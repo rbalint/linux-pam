@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"Report-Msgid-Bugs-To: pam@packages.debian.org\n"
+"POT-Creation-Date: 2008-08-03 03:58-0700\n"
 "PO-Revision-Date: 2007-09-25 14:24+0300\n"
 "Last-Translator: Damyan Ivanov <dam@modsoftsys.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
@@ -87,3 +87,28 @@ msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr "Ще трябва сами да ги стартирате чрез „/etc/init.d/<услуга> start“."
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid "PAM profiles to enable:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid ""
+"Pluggable Authentication Modules (PAM) determine how authentication, "
+"authorization, and password changing are handled on the system, as well as "
+"allowing configuration of additional actions to take when starting user "
+"sessions."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid ""
+"Some PAM module packages provide profiles that can be used to automatically "
+"adjust the behavior of all PAM-using applications on the system.  Please "
+"indicate which of these behaviors you wish to enable."
+msgstr ""

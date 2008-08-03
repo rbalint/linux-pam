@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.99.7.1-4\n"
-"Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"Report-Msgid-Bugs-To: pam@packages.debian.org\n"
+"POT-Creation-Date: 2008-08-03 03:58-0700\n"
 "PO-Revision-Date: 2007-09-25 20:51+0400\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
@@ -92,3 +92,28 @@ msgid ""
 "start'."
 msgstr ""
 "Вам нужно перезапустить их вручную, выполнив '/etc/init.d/<сервис> start'."
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid "PAM profiles to enable:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid ""
+"Pluggable Authentication Modules (PAM) determine how authentication, "
+"authorization, and password changing are handled on the system, as well as "
+"allowing configuration of additional actions to take when starting user "
+"sessions."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid ""
+"Some PAM module packages provide profiles that can be used to automatically "
+"adjust the behavior of all PAM-using applications on the system.  Please "
+"indicate which of these behaviors you wish to enable."
+msgstr ""

@@ -1,0 +1,80 @@
+#!/usr/bin/perl -w
+
+# pam-auth-update: update /etc/pam.d/common-* from /usr/share/pam-configs
+#
+# Update the /etc/pam.d/common-* files based on the per-package profiles
+# provided in /usr/share/pam-configs/ taking into consideration user's
+# preferences (as determined via debconf prompting).
+#
+# Written by Steve Langasek <steve.langasek@canonical.com>
+#
+# Copyright (C) 2008 Canonical Ltd.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of version 3 of the GNU General Public License as
+# published by the Free Software Foundation.
+#
+# # This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,
+# USA.
+
+use strict;
+use Debconf::Client::ConfModule ':all';
+
+version('2.0');
+my $capb=capb('backup');
+
+my $inputdir = '/usr/share/pam-configs';
+my $template = 'libpam-runtime/profiles';
+my (%profiles, @sorted, @enabled);
+
+opendir(DIR, $inputdir) || die "could not open config directory: $!";
+while (my $profile = readdir(DIR)) {
+	next if ($profile eq '.' || $profile eq '..');
+	%{$profiles{$profile}} = parse_pam_profile($inputdir . '/' . $profile);
+}
+closedir DIR;
+
+x_loadtemplatefile('/var/lib/dpkg/info/libpam-runtime.templates','libpam-runtime');
+@sorted = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'} }
+	keys(%profiles);
+subst($template, 'profile_names', join(', ',@sorted));
+subst($template, 'profiles',
+	join(', ', map { $profiles{$_}->{'Name'} } @sorted));
+
+# this needs to be replaced by proper detection of any profiles that are
+# already enabled.
+fset($template,'seen','false');
+set($template,
+	join(', ', grep { $profiles{$_}->{'Default'} eq 'yes' } @sorted));
+input('high',$template);
+go();
+
+@enabled = split(/, /, get($template));
+
+# simple function to parse a provided config file, in pseudo-RFC822
+# format,
+sub parse_pam_profile
+{
+	my ($profile) = $_[0];
+	my $fieldname;
+	my %profile;
+	open(PROFILE, $profile) || die "could not read profile $profile: $!";
+	while (<PROFILE>) {
+		if (/^(\S+):\s+(.*)$/) {
+			$fieldname = $1;
+			$profile{$1} = $2;
+		} else {
+			chomp;
+			$profile{$fieldname} .= "\n$_";
+		}
+	}
+	close(PROFILE);
+	return %profile;
+}

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
-"Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"Report-Msgid-Bugs-To: pam@packages.debian.org\n"
+"POT-Creation-Date: 2008-08-03 03:58-0700\n"
 "PO-Revision-Date: 2007-10-03 12:07+0200\n"
 "Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -93,6 +93,31 @@ msgid ""
 msgstr ""
 "Vous devez les démarrer vous-même avec la commande « /etc/init.d/<service> "
 "start »."
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid "PAM profiles to enable:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid ""
+"Pluggable Authentication Modules (PAM) determine how authentication, "
+"authorization, and password changing are handled on the system, as well as "
+"allowing configuration of additional actions to take when starting user "
+"sessions."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid ""
+"Some PAM module packages provide profiles that can be used to automatically "
+"adjust the behavior of all PAM-using applications on the system.  Please "
+"indicate which of these behaviors you wish to enable."
+msgstr ""
 
 #~ msgid ""
 #~ "Among the services that require restarting are the display managers kdm, "
