@@ -11,6 +11,9 @@ pam (1.0.1-2) UNRELEASED; urgency=low
   * Drop various bits of unused cruft from the debian/ directory.
   * Drop libpam-runtime.preinst, only used for upgrades from woody to sarge
     to deal with modified conffiles.
+  * Build-Conflict with libdb4.2-dev, which satisfies the libdb-dev
+    build-dependency but causes pam_userdb to be silently omitted.
+    Closes: #493574.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 30 Jul 2008 00:55:10 -0700
 
