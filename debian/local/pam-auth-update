@@ -32,7 +32,8 @@ my $capb=capb('backup');
 
 my $inputdir = '/usr/share/pam-configs';
 my $template = 'libpam-runtime/profiles';
-my (%profiles, @sorted, @enabled);
+my $errtemplate = 'libpam-runtime/conflicts';
+my (%profiles, @sorted, @enabled, @conflicts);
 
 opendir(DIR, $inputdir) || die "could not open config directory: $!";
 while (my $profile = readdir(DIR)) {
@@ -42,6 +43,9 @@ while (my $profile = readdir(DIR)) {
 closedir DIR;
 
 x_loadtemplatefile('/var/lib/dpkg/info/libpam-runtime.templates','libpam-runtime');
+
+# always sort by priority, so we have consistency and don't have to
+# shuffle later
 @sorted = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'} }
 	keys(%profiles);
 subst($template, 'profile_names', join(', ',@sorted));
@@ -53,10 +57,36 @@ subst($template, 'profiles',
 fset($template,'seen','false');
 set($template,
 	join(', ', grep { $profiles{$_}->{'Default'} eq 'yes' } @sorted));
-input('high',$template);
-go();
 
-@enabled = split(/, /, get($template));
+do {
+	@conflicts = ();
+	input('high',$template);
+	go();
+
+	@enabled = split(/, /, get($template));
+
+	# in case of conflicts, automatically unset the lower priority
+	# item of each pair
+	foreach my $elem (@enabled)
+	{
+		for (my $i=$#enabled; $i >= 0; $i--)
+		{
+			my $conflict = $enabled[$i];
+			if ($profiles{$elem}->{'Conflicts'}->{$conflict}) {
+				splice(@enabled,$i,1);
+				my $desc = $profiles{$elem}->{'Name'}
+					. ', ' . $profiles{$conflict}->{'Name'};
+				push(@conflicts,$desc);
+			}
+		}
+	}
+	if (@conflicts) {
+		subst($errtemplate, 'conflicts', join("\n", @conflicts));
+		input('high',$errtemplate);
+	}
+	fset($template,'seen','false');
+	set($template, join(', ', @enabled));
+} while (@conflicts);
 
 # simple function to parse a provided config file, in pseudo-RFC822
 # format,
@@ -70,7 +100,9 @@ sub parse_pam_profile
 		if (/^(\S+):\s+(.*)$/) {
 			$fieldname = $1;
 			if ($fieldname eq 'Conflicts') {
-				@{$profile{1}} = split(/, /, $2);
+				foreach my $elem (split(/, /, $2)) {
+					$profile{'Conflicts'}->{$elem} = 1;
+				}
 			} else {
 				$profile{$1} = $2;
 			}

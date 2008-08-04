@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2008-08-03 03:58-0700\n"
+"POT-Creation-Date: 2008-08-03 22:43-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,4 +101,28 @@ msgid ""
 "Some PAM module packages provide profiles that can be used to automatically "
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:2001
+msgid "Incompatible PAM profiles selected."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:2001
+msgid "The following PAM profiles cannot be used together:"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:2001
+msgid "${conflicts}"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:2001
+msgid "Please select a different set of modules to enable."
 msgstr ""

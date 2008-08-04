@@ -11,3 +11,12 @@ _Description: PAM profiles to enable:
  Some PAM module packages provide profiles that can be used to
  automatically adjust the behavior of all PAM-using applications on the
  system.  Please indicate which of these behaviors you wish to enable.
+
+Template: libpam-runtime/conflicts
+Type: error
+_Description: Incompatible PAM profiles selected.
+ The following PAM profiles cannot be used together:
+ .
+ ${conflicts}
+ .
+ Please select a different set of modules to enable.
