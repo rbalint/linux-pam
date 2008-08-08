@@ -1,4 +1,4 @@
-pam (1.0.1-2) UNRELEASED; urgency=low
+pam (1.0.1-2) unstable; urgency=low
 
   * 007_modules_pam_unix: update the documentation to correctly document
     the default minimum password length is 6, not 1.
@@ -14,14 +14,13 @@ pam (1.0.1-2) UNRELEASED; urgency=low
   * Build-Conflict with libdb4.2-dev, which satisfies the libdb-dev
     build-dependency but causes pam_userdb to be silently omitted.
     Closes: #493574.
-  * debian/patches/054_pam_security_abstract_securetty_handling: move the
-    warning log about an insecure tty back to pam_securetty proper; we
-    don't want to generate log messages every time pam_unix is called as
-    non-root.  Closes: #493283.  As a side-effect, pam_unix no longer
-    logs any warnings about NULL password + insecure tty, but I don't
-    think this is critical.
+  * 054_pam_security_abstract_securetty_handling: move the warning log about
+    an insecure tty back to pam_securetty proper; we don't want to generate
+    log messages every time pam_unix is called as non-root.
+    Closes: #493283.  As a side-effect, pam_unix no longer logs any warnings
+    about NULL password + insecure tty, but I don't think this is critical.
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 30 Jul 2008 00:55:10 -0700
+ -- Steve Langasek <vorlon@debian.org>  Fri, 08 Aug 2008 10:47:26 -0700
 
 pam (1.0.1-1) unstable; urgency=low
 
