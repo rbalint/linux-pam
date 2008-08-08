@@ -33,7 +33,7 @@ Index: pam.deb/modules/pam_securetty/pam_securetty.c
  
      /* log a trail for debugging */
      if (ctrl & PAM_DEBUG_ARG) {
-@@ -101,63 +97,10 @@
+@@ -101,63 +97,13 @@
  	return PAM_SERVICE_ERR;
      }
  
@@ -98,6 +98,9 @@ Index: pam.deb/modules/pam_securetty/pam_securetty.c
 +    if ((retval == PAM_SUCCESS) && (ctrl & PAM_DEBUG_ARG)) {
 +	pam_syslog(pamh, LOG_DEBUG, "access allowed for '%s' on '%s'",
 +	           username, uttyname);
++    } else if (retval != PAM_SUCCESS) {
++	pam_syslog(pamh, LOG_WARNING, "access denied: tty '%s' is not secure !",
++	           uttyname);
      }
  
      return retval;
@@ -105,7 +108,7 @@ Index: pam.deb/modules/pam_securetty/tty_secure.c
 ===================================================================
 --- /dev/null
 +++ pam.deb/modules/pam_securetty/tty_secure.c
-@@ -0,0 +1,92 @@
+@@ -0,0 +1,90 @@
 +/*
 + * A function to determine if a particular line is in /etc/securetty
 + */
@@ -191,8 +194,6 @@ Index: pam.deb/modules/pam_securetty/tty_secure.c
 +    fclose(ttyfile);
 +
 +    if(retval) {
-+	pam_syslog(pamh, LOG_WARNING, "access denied: tty '%s' is not secure !",
-+		   uttyname);
 +	retval = PAM_AUTH_ERR;
 +    }
 +
