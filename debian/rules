@@ -98,6 +98,7 @@ binary-indep: install
 
 	dh_installman -i
 	dh_installdocs -i
+	dh_installdebconf -i
 	dh_installchangelogs -i $(BUILD_TREE)/ChangeLog
 	dh_compress -i -X.html
 	dh_link -i
