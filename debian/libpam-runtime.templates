@@ -20,3 +20,14 @@ _Description: Incompatible PAM profiles selected.
  ${conflicts}
  .
  Please select a different set of modules to enable.
+
+Template: libpam-runtime/override
+Type: boolean
+Default: false
+_Description: Override local changes to /etc/pam.d/common-*?
+ One or more of the files /etc/pam.d/common-{auth,account,password,session}
+ have been locally modified.  Should these local changes be overridden
+ using the system-provided configuration?  If you decline this option,
+ you will need to manage your system's authentication configuration by
+ hand.
+
