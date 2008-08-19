@@ -72,6 +72,7 @@ subst($template, 'profile_names', join(', ',@sorted));
 subst($template, 'profiles',
 	join(', ', map { $profiles{$_}->{'Name'} } @sorted));
 
+# FIXME:
 # this needs to be replaced by proper detection of any profiles that are
 # already enabled; i.e., use diff_profiles() to figure out what's
 # currently selected
@@ -126,6 +127,8 @@ do {
 	}
 	if (@conflicts) {
 		subst($errtemplate, 'conflicts', join("\n", @conflicts));
+		# FIXME: we don't want this to always be 'high', only when
+		# called by the user
 		input('high',$errtemplate);
 	}
 	fset($template,'seen','false');
