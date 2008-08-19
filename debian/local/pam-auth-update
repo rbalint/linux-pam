@@ -61,7 +61,8 @@ while ($#ARGV >= 0) {
 	}
 }
 
-x_loadtemplatefile('/var/lib/dpkg/info/libpam-runtime.templates','libpam-runtime');
+#x_loadtemplatefile('/var/lib/dpkg/info/libpam-runtime.templates','libpam-runtime');
+#x_loadtemplatefile('./debian/libpam-runtime.templates','libpam-runtime');
 
 # always sort by priority, so we have consistency and don't have to
 # shuffle later

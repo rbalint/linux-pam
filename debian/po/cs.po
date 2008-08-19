@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
-"Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2008-08-03 22:43-0700\n"
+"Report-Msgid-Bugs-To: Source: pam@packages.debian.org\n"
+"POT-Creation-Date: 2008-08-19 14:07-0700\n"
 "PO-Revision-Date: 2007-09-29 15:30+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -138,6 +138,22 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libpam-runtime.templates:3001
+msgid "Override local changes to /etc/pam.d/common-*?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libpam-runtime.templates:3001
+msgid ""
+"One or more of the files /etc/pam.d/common-{auth,account,password,session} "
+"have been locally modified.  Should these local changes be overridden using "
+"the system-provided configuration?  If you decline this option, you will "
+"need to manage your system's authentication configuration by hand."
 msgstr ""
 
 #~ msgid ""
