@@ -1,7 +1,6 @@
 Name: Unix authentication
 Default: yes
 Priority: 256
-Conflicts: unix-zany
 Auth-Type: Primary
 Auth-Initial:
 	[success=end default=ignore]	pam_unix.so nullok_secure
