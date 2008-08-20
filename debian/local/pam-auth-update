@@ -77,15 +77,32 @@ subst($template, 'profile_names', join(', ',@sorted));
 subst($template, 'profiles',
 	join(', ', map { $profiles{$_}->{'Name'} } @sorted));
 
-# FIXME:
-# this needs to be replaced by proper detection of any profiles that are
-# already enabled; i.e., use diff_profiles() to figure out what's
-# currently selected
-fset($template,'seen','false');
-set($template,
-	join(', ', grep { $profiles{$_}->{'Default'} eq 'yes' } @sorted));
-
 my $diff = diff_profiles($confdir,$savedir);
+
+if ($diff) {
+	@enabled = @{$diff->{'mods'}};
+} else {
+	@enabled = split(/, /,get($template));
+}
+
+# an empty module set is an error, so grab the defaults instead
+if (!@enabled) {
+	@enabled = grep { $profiles{$_}->{'Default'} eq 'yes' } @sorted;
+} elsif (-e $savedir . '/seen') {
+	# add any previously-unseen configs
+	my %seen;
+	open(SEEN,$savedir . '/seen');
+	while (<SEEN>) {
+		chomp;
+		$seen{$_} = 1;
+	}
+	close(SEEN);
+	push(@enabled,
+	     grep { $profiles{$_}->{'Default'} eq 'yes' && !$seen{$_} } @sorted);
+}
+
+fset($template,'seen','false');
+set($template,join(', ', @enabled));
 
 # if diff_profiles() fails, and we weren't passed a 'force' argument
 # (because this isn't an upgrade from an old version, or the checksum
@@ -139,6 +156,15 @@ do {
 	fset($template,'seen','false');
 	set($template, join(', ', @enabled));
 } while (@conflicts);
+
+# the decision has been made about what configs to use, so even if
+# something fails after this, we shouldn't go munging the default
+# options again.  Save the list of known configs to /var/lib/pam.
+open(SEEN,"> $savedir/seen");
+for my $i (@sorted) {
+	print SEEN "$i\n";
+}
+close(SEEN);
 
 # @enabled now contains our list of profiles to use for piecing together
 # a config
@@ -448,8 +474,7 @@ sub diff_profiles
 				if ($_ =~ /^\Q$curmod\E\s*(.*)$/) {
 					$found = 1;
 					$curopts = $1;
-				} else {
-					push(@{$diff{$type}{'del'}},$modname);
+					push(@{$diff{'mods'}},$modname);
 				}
 			}
 
