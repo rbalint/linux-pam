@@ -3,6 +3,8 @@
 if [ "$1" = "purge" ]; then
 	rm -f /etc/pam.d/common-auth /etc/pam.d/common-account \
 	      /etc/pam.d/common-session /etc/pam.d/common-password
+	rm -f /var/lib/pam/auth /var/lib/pam/account /var/lib/pam/session \
+	      /var/lib/pam/password
 fi
 
 #DEBHELPER#
