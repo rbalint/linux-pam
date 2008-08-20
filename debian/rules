@@ -73,8 +73,6 @@ install: build
 
 	$(MAKE) -C $(BUILD_TREE) DESTDIR=$(CURDIR)/debian/tmp install
 
-	# Provided in libpam-cracklib
-	rm -f $(CURDIR)/debian/libpam-modules/lib/security/pam_cracklib.so
 	# .la files are teh devil
 	rm -f $(CURDIR)/debian/tmp/lib/*.la
 	# for modules, we only want the .so
