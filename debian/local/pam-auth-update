@@ -436,7 +436,8 @@ sub diff_profiles
 				# FIXME: the key isn't derived from the config
 				# name, so collisions are possible if more
 				# than one config references the same module
-				$_ =~ s/=[0-9]+/=/g;
+
+				$_ =~ s/(\[[^0-9]*)[0-9]+(.*\])/$1$2/g;
 				# check if this is a match for the current line
 				if ($_ =~ /^\Q$curmod\E\s*(.*)$/) {
 					$found = 1;
