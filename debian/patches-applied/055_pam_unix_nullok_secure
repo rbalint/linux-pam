@@ -56,11 +56,11 @@ Index: pam.deb/modules/pam_unix/support.c
 +	if (on(UNIX_NULLOK_SECURE, ctrl)) {
 +	    const void *uttyname;
 +	    retval = pam_get_item(pamh, PAM_TTY, &uttyname);
-+	    if (retval != PAM_SUCCESS || uttyname == NULL)
++	    if (retval != PAM_SUCCESS || uttyname == NULL
++	        || _pammodutil_tty_secure(pamh, (const char *)uttyname) != PAM_SUCCESS)
++	    {
 +	        nullok = 0;
-+
-+	    if (_pammodutil_tty_secure(pamh, (const char *)uttyname) != PAM_SUCCESS)
-+		nullok = 0;
++	    }
 +	}
 +
 +	if (nullok) {
