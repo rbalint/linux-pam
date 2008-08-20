@@ -392,8 +392,8 @@ sub write_profiles
 
 	# at the end of a successful write, reset the 'seen' flag and the
 	# value of the debconf override question.
-	fset($errtemplate,'seen','false');
-	set($errtemplate,'false');
+	fset($overridetemplate,'seen','false');
+	set($overridetemplate,'false');
 }
 
 # reconcile the current config in /etc/pam.d with the saved ones in
