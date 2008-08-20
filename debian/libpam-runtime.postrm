@@ -5,6 +5,7 @@ if [ "$1" = "purge" ]; then
 	      /etc/pam.d/common-session /etc/pam.d/common-password
 	rm -f /var/lib/pam/auth /var/lib/pam/account /var/lib/pam/session \
 	      /var/lib/pam/password
+	rmdir --ignore-fail-on-non-empty /var/lib/pam
 fi
 
 #DEBHELPER#
