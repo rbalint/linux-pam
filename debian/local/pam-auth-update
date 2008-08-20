@@ -35,6 +35,7 @@ my $template = 'libpam-runtime/profiles';
 my $errtemplate = 'libpam-runtime/conflicts';
 my $overridetemplate = 'libpam-runtime/override';
 my $confdir = '/etc/pam.d';
+my $savedir = '/var/lib/pam';
 my (%profiles, @sorted, @enabled, @conflicts);
 my $force = 0;
 
@@ -79,7 +80,7 @@ fset($template,'seen','false');
 set($template,
 	join(', ', grep { $profiles{$_}->{'Default'} eq 'yes' } @sorted));
 
-my $diff = diff_profiles($confdir);
+my $diff = diff_profiles($confdir,$savedir);
 
 # if diff_profiles() fails, and we weren't passed a 'force' argument
 # (because this isn't an upgrade from an old version, or the checksum
@@ -149,16 +150,215 @@ do {
 #   config; these are always preserved unless manually overridden with
 #   the --force option
 
-write_profiles(\%profiles, \@enabled, $diff, $force);
+write_profiles(\%profiles, \@enabled, $confdir, $savedir, $diff, $force);
+
+
+# take a single line from a stock config, and merge it with the
+# information about local admin edits
+sub merge_one_line
+{
+	my ($line,$diff,$count) = @_;
+	my (@opts,$modline);
+
+	my ($adds,$removes);
+
+	$line =~ /^((\[[^]]+\]|\w+)\s+\S+)\s*(.*)/;
+
+	@opts = split(/\s+/,$3);
+	$modline = $1;
+	$modline =~ s/end/$count/g;
+	if ($diff) {
+		my $mod = $modline;
+		$mod =~ s/[0-9]+//g;
+		$adds = \%{$diff->{'add'}{$mod}};
+		$removes = \%{$diff->{'remove'}{$mod}};
+	} else {
+		$adds = $removes = undef;
+	}
+
+	for (my $i = 0; $i <= $#opts; $i++) {
+		if ($removes->{$opts[$i]}) {
+			splice(@opts,$i,1);
+		}
+		if ($adds->{$opts[$i]}) {
+			delete $adds->{$opts[$i]};
+		}
+	}
+	return $modline . " " . join(' ',@opts,keys(%{$adds})) . "\n";
+}
+
+# create a single PAM config from the indicated template and selections,
+# writing to a new file
+sub create_from_template
+{
+	my($template,$dest,$profiles,$enabled,$diff,$type) = @_;
+	my $state = 0;
+	my $uctype = ucfirst($type);
+
+	open(INPUT,$template) || return 0;
+	open(OUTPUT,">$dest") || return 0;
+
+	while (<INPUT>) {
+		if ($state == 1) {
+			if (/^# here's the fallback if no module succeeds/) {
+				print OUTPUT;
+				$state++;
+			}
+			next;
+		}
+		if ($state == 3) {
+			if (/^# end of pam-auth-update config/) {
+				print OUTPUT;
+				$state++;
+			}
+			next;
+		}
+
+		print OUTPUT;
+
+		my ($pattern,$val);
+		if ($state == 0) {
+			$pattern = '^# here are the per-package modules \(the "Primary" block\)';
+			$val = 'Primary';
+		} elsif ($state == 2) {
+			$pattern = '^# and here are more per-package modules \(the "Additional" block\)';
+			$val = 'Additional';
+		}
+
+		if (/$pattern/) {
+			my $i = 0;
+			my $count = 0;
+			# first we need to get a count of lines that we're
+			# going to output, so we can fix up the jumps correctly
+			for my $mod (@{$enabled}) {
+				my $output;
+				next if (!$profiles->{$mod}{$uctype . '-Type'});
+				next if $profiles->{$mod}{$uctype . '-Type'} ne $val;
+				if ($i == 0
+				    && $profiles->{$mod}{$uctype . '-Initial'})
+				{
+					$output = $profiles->{$mod}{$uctype . '-Initial'};
+					$i++;
+				} else {
+					$output = $profiles->{$mod}{$uctype . '-Final'};
+				}
+				# bypasses a perl warning about @_, sigh
+				my @tmparr = split("\n+",$output);
+				$count += @tmparr;
+			}
+
+			# in case anything tries to jump in the 'additional'
+			# block, let's try not to jump off the stack...
+			$count-- if ($val eq 'Additional');
+
+			$i = 0;
+			for my $mod (@{$enabled}) {
+				my $output;
+				my @output;
+				next if (!$profiles->{$mod}{$uctype . '-Type'});
+				next if $profiles->{$mod}{$uctype . '-Type'} ne $val;
+				if ($i == 0
+				    && $profiles->{$mod}{$uctype . '-Initial'})
+				{
+					$output = $profiles->{$mod}{$uctype . '-Initial'};
+					$i++;
+				} else {
+					$output = $profiles->{$mod}{$uctype . '-Final'};
+				}
+				for my $line (split("\n",$output)) {
+					$line = merge_one_line($line,$diff,
+					                       $count);
+					print OUTPUT "$type\t$line";
+					$count--;
+				}
+			}
+			$state++;
+		}
+	}
+	close(INPUT);
+	close(OUTPUT);
+
+	if ($state < 4) {
+		unlink($dest);
+		return 0;
+	}
+	return 1;
+}
 
 # merge a set of module declarations into a set of new config files,
 # using the information returned from diff_profiles().
 sub write_profiles
 {
-	my($profiles,$enabled,$diff,$force) = @_;
+	my($profiles,$enabled,$confdir,$savedir,$diff,$force) = @_;
+
+	if (! -d $savedir) {
+		mkdir($savedir);
+	}
+		
+	# because we can't atomically replace both /var/lib/pam/$foo and
+	# /etc/pam.d/common-$foo at the same time, take steps to make this
+	# somewhat robust
+	for my $type ('auth','account','password','session') {
+		my $target = $confdir . '/common-' . $type;
+		my $template = $target;
+		my $dest = $template . '.pam-new';
+
+		my $diff = $diff;
+		if ($diff) {
+			$diff = \%{$diff->{$type}};
+		}
+
+		# first, write out the new config
+		if (!create_from_template($template,$dest,$profiles,$enabled,
+		                          $diff,$type))
+		{
+			if (!$force) {
+				return 0;
+			}
+			$template = '/usr/share/pam/common-' . $type;
+			if (!create_from_template($template,$dest,$profiles,
+			                          $enabled,$diff,$type))
+			{
+				return 0;
+			}
+		}
+
+		# then write out the saved config
+		if (!open(OUTPUT, "> $savedir/$type.new")) {
+			unlink($dest);
+			return 0;
+		}
+		my $i = 0;
+		my $uctype = ucfirst($type);
+		for my $mod (@enabled) {
+			my $output;
+			if ($i == 0 && $profiles->{$mod}{$uctype . '-Initial'})
+			{
+				$output = $profiles->{$mod}{$uctype . '-Initial'};
+				$i++;
+			} else {
+				$output = $profiles->{$mod}{$uctype . '-Final'};
+			}
+			if ($output) {
+				print OUTPUT "Module: $mod\n";
+				print OUTPUT $output . "\n";
+			}
+		}
+
+		close(OUTPUT);
+
+		# then do the renames, back-to-back
+		# we have to use system because File::Copy is in
+		# perl-modules, not perl-base
+		system('cp','-f',$target,$target . '.pam-old');
+		rename($dest,$target);
+		rename("$savedir/$type.new","$savedir/$type");
+	}
 
 	# at the end of a successful write, reset the 'seen' flag and the
 	# value of the debconf override question.
+	fset($errtemplate,'seen','false');
+	set($errtemplate,'false');
 }
 
 # reconcile the current config in /etc/pam.d with the saved ones in
@@ -168,8 +368,7 @@ sub write_profiles
 # or on any other failure.
 sub diff_profiles
 {
-	my ($sourcedir) = @_;
-	my $savedir = '/var/lib/pam';
+	my ($sourcedir,$savedir) = @_;
 	my (%diff);
 
 	# Load the saved config from /var/lib/pam, then iterate through all
@@ -191,7 +390,7 @@ sub diff_profiles
 			# us from having to re-parse everything just to fix
 			# up the jump lengths, when changes to these will
 			# already show up as inconsistencies elsewhere
-			s/(end|[0-9]+)//;
+			s/(end|[0-9]+)//g;
 			my (@temp) = ($modname,$_);
 			push(@saved,\@temp);
 		}
@@ -225,20 +424,24 @@ sub diff_profiles
 			}
 
 			my $found = 0;
-			do {
+			while (!$found && $#saved >= 0) {
 				my $line;
-				($modname,$line) = shift(@saved);
+				($modname,$line) = @{$saved[0]};
+				shift(@saved);
 				$line =~ /^((\[[^]]+\]|\w+)\s+\S+)\s*(.*)/;
 				@prev_opts = split(/\s+/,$3);
 				$curmod = $1;
-				$curmod =~ s/(end|[0-9]+)//;
+				# FIXME: the key isn't derived from the config
+				# name, so collisions are possible if more
+				# than one config references the same module
+				$curmod =~ s/(end|[0-9]+)//g;
 				# check if this is a match for the current line
 				if ($_ =~ /^$curmod\s*(.*)$/) {
 					$found = 1;
 				} else {
 					push(@{$diff{$type}{'del'}},$modname);
 				}
-			} while (!$found && $#saved >= 0);
+			}
 
 			# there's a line in the live config that doesn't
 			# correspond to anything from the saved config.
@@ -252,10 +455,10 @@ sub diff_profiles
 				for (my $i = 0; $i <= $#prev_opts; $i++) {
 					if ($prev_opts[$i] eq $opt) {
 						$found = 1;
-						splice(@prev_opts,$i,0);
+						splice(@prev_opts,$i,1);
 					}
 				}
-				push(@{$diff{$type}{'add'}{$curmod}},$opt) if (!$found);
+				$diff{$type}{'add'}{$curmod}{$opt} = 1 if (!$found);
 			}
 			for my $opt (@prev_opts) {
 				$diff{$type}{'remove'}{$curmod}{$opt} = 1;
@@ -290,6 +493,7 @@ sub parse_pam_profile
 		} else {
 			chomp;
 			$profile{$fieldname} .= "\n$_";
+			$profile{$fieldname} =~ s/^[\n\s]+//;
 		}
 	}
 	close(PROFILE);
