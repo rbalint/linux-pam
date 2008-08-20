@@ -177,11 +177,12 @@ sub merge_one_line
 	}
 
 	for (my $i = 0; $i <= $#opts; $i++) {
-		if ($removes->{$opts[$i]}) {
-			splice(@opts,$i,1);
-		}
 		if ($adds->{$opts[$i]}) {
 			delete $adds->{$opts[$i]};
+		}
+		if ($removes->{$opts[$i]}) {
+			splice(@opts,$i,1);
+			$i--;
 		}
 	}
 	return $modline . " " . join(' ',@opts,keys(%{$adds})) . "\n";
@@ -424,6 +425,7 @@ sub diff_profiles
 			}
 
 			my $found = 0;
+			my $curopts;
 			while (!$found && $#saved >= 0) {
 				my $line;
 				($modname,$line) = @{$saved[0]};
@@ -434,10 +436,11 @@ sub diff_profiles
 				# FIXME: the key isn't derived from the config
 				# name, so collisions are possible if more
 				# than one config references the same module
-				$curmod =~ s/(end|[0-9]+)//g;
+				$_ =~ s/=[0-9]+/=/g;
 				# check if this is a match for the current line
-				if ($_ =~ /^$curmod\s*(.*)$/) {
+				if ($_ =~ /^\Q$curmod\E\s*(.*)$/) {
 					$found = 1;
+					$curopts = $1;
 				} else {
 					push(@{$diff{$type}{'del'}},$modname);
 				}
@@ -450,7 +453,7 @@ sub diff_profiles
 			# didn't come from a package.
 			return 0 if (!$found);
 
-			for my $opt (split(/\s+/,$1)) {
+			for my $opt (split(/\s+/,$curopts)) {
 				my $found = 0;
 				for (my $i = 0; $i <= $#prev_opts; $i++) {
 					if ($prev_opts[$i] eq $opt) {
