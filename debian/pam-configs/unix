@@ -11,10 +11,10 @@ Auth-Final:
 	[success=end default=ignore]	pam_unix.so nullok_secure try_first_pass
 Auth-Isolate:
 	[success=end default=ignore]	pam_unix.so nullok_secure
-Acct-Type: Primary
-Acct-Initial:
+Account-Type: Primary
+Account-Initial:
 	[success=end default=ignore]	pam_unix.so
-Acct-Final:
+Account-Final:
 	[success=end default=ignore]	pam_unix.so
 Session-Type: Additional
 Session-Initial:
