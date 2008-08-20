@@ -21,4 +21,11 @@ fi
 
 pam-auth-update $force
 
+if [ -n "$force" ]; then
+	rm -f /etc/pam.d/common-auth.pam-old \
+	      /etc/pam.d/common-account.pam-old \
+	      /etc/pam.d/common-password.pam-old \
+	      /etc/pam.d/common-session.pam-old
+fi
+
 #DEBHELPER#
