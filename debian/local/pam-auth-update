@@ -88,6 +88,7 @@ if ($diff) {
 # an empty module set is an error, so grab the defaults instead
 if (!@enabled) {
 	@enabled = grep { $profiles{$_}->{'Default'} eq 'yes' } @sorted;
+	$priority = 'high';
 } elsif (-e $savedir . '/seen') {
 	# add any previously-unseen configs
 	my %seen;
@@ -127,8 +128,6 @@ EOF
 
 do {
 	@conflicts = ();
-	# FIXME: we probably need this priority to be 'high' in the
-	# case that we've managed to get an empty set of packages
 	input($priority,$template);
 	go();
 
