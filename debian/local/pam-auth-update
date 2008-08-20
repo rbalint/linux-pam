@@ -88,7 +88,7 @@ if ($diff) {
 # an empty module set is an error, so grab the defaults instead
 if (!@enabled) {
 	@enabled = grep { $profiles{$_}->{'Default'} eq 'yes' } @sorted;
-	$priority = 'high';
+	$priority = 'high' unless ($force);
 } elsif (-e $savedir . '/seen') {
 	# add any previously-unseen configs
 	my %seen;
