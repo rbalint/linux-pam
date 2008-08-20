@@ -404,6 +404,7 @@ sub diff_profiles
 	my ($sourcedir,$savedir) = @_;
 	my (%diff);
 
+	@{$diff{'mods'}} = ();
 	# Load the saved config from /var/lib/pam, then iterate through all
 	# lines in the current config that are in the managed block.
 	# If anything fails here, just return immediately since we then
