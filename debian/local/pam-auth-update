@@ -63,6 +63,8 @@ while ($#ARGV >= 0) {
 	} elsif ($opt eq '--package') {
 		$priority = 'medium';
 	}
+	# FIXME: we need an option that will permit us to remove configs in
+	# prerm remove, to avoid having a broken config at any point.
 }
 
 x_loadtemplatefile('/var/lib/dpkg/info/libpam-runtime.templates','libpam-runtime');
@@ -108,7 +110,9 @@ EOF
 
 do {
 	@conflicts = ();
-	input('high',$template);
+	# FIXME: we probably need this priority to be 'high' in the
+	# case that we've managed to get an empty set of packages
+	input($priority,$template);
 	go();
 
 	@enabled = split(/, /, get($template));
@@ -130,7 +134,7 @@ do {
 	}
 	if (@conflicts) {
 		subst($errtemplate, 'conflicts', join("\n", @conflicts));
-		input($priority,$errtemplate);
+		input('high',$errtemplate);
 	}
 	fset($template,'seen','false');
 	set($template, join(', ', @enabled));
