@@ -5,12 +5,8 @@ Conflicts: unix-zany
 Auth-Type: Primary
 Auth-Initial:
 	[success=end default=ignore]	pam_unix.so nullok_secure
-Auth-Medial:
-	[success=end default=ignore]	pam_unix.so nullok_secure try_first_pass
 Auth-Final:
 	[success=end default=ignore]	pam_unix.so nullok_secure try_first_pass
-Auth-Isolate:
-	[success=end default=ignore]	pam_unix.so nullok_secure
 Account-Type: Primary
 Account-Initial:
 	[success=end default=ignore]	pam_unix.so
