@@ -354,6 +354,7 @@ sub write_profiles
 		system('cp','-f',$target,$target . '.pam-old');
 		rename($dest,$target);
 		rename("$savedir/$type.new","$savedir/$type");
+		unlink($target . '.pam-old') if (!$force);
 	}
 
 	# at the end of a successful write, reset the 'seen' flag and the
