@@ -4,3 +4,4 @@ debian/tmp/usr/share/pam	usr/share
 debian/tmp/usr/sbin/pam_getenv	usr/sbin
 debian/tmp/usr/share/locale	usr/share
 debian/local/pam-auth-update	usr/sbin
+debian/pam-configs/unix		usr/share/pam-configs/
