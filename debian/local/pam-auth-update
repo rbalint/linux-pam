@@ -101,6 +101,9 @@ if (!@enabled) {
 	push(@enabled,
 	     grep { $profiles{$_}->{'Default'} eq 'yes' && !$seen{$_} } @sorted);
 }
+@enabled = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'} } @enabled;
+my $prev = '';
+@enabled = grep { $_ ne $prev && (($prev) = $_) } @enabled;
 
 fset($template,'seen','false');
 set($template,join(', ', @enabled));
