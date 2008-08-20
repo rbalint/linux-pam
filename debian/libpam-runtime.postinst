@@ -19,7 +19,7 @@ then
 	done
 fi
 
-pam-auth-update $force
+pam-auth-update --package $force
 
 if [ -n "$force" ]; then
 	rm -f /etc/pam.d/common-auth.pam-old \
