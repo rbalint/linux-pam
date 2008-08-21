@@ -100,10 +100,12 @@ if (!@enabled) {
 	close(SEEN);
 	push(@enabled,
 	     grep { $profiles{$_}->{'Default'} eq 'yes' && !$seen{$_} } @sorted);
+	# filter out any options that are no longer available for any reason
+	@enabled = grep { $profiles{$_} } @enabled;
+	@enabled = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'} } @enabled;
+	my $prev = '';
+	@enabled = grep { $_ ne $prev && (($prev) = $_) } @enabled;
 }
-@enabled = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'} } @enabled;
-my $prev = '';
-@enabled = grep { $_ ne $prev && (($prev) = $_) } @enabled;
 
 fset($template,'seen','false');
 set($template,join(', ', @enabled));
