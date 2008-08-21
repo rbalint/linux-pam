@@ -65,7 +65,7 @@ while ($#ARGV >= 0) {
 	} elsif ($opt eq '--remove') {
 		while ($#ARGV >= 0) {
 			last if ($ARGV[0] =~ /^--/);
-			${removals{shift} = 1;
+			$removals{shift} = 1;
 		}
 		# --remove implies --package
 		$priority = 'medium' if (keys(%removals));
