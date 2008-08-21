@@ -123,7 +123,7 @@ if (!$diff && !$force) {
 	print STDERR <<EOF;
 
 pam-auth-update: Local modifications to /etc/pam.d/common-*, not updating.
-pam-auth-update: Run pam-auth-config --force to override.
+pam-auth-update: Run pam-auth-update --force to override.
 
 EOF
 	exit;
