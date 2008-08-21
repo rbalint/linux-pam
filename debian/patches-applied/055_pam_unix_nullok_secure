@@ -179,17 +179,17 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
 +++ pam.deb/modules/pam_unix/pam_unix.8
 @@ -62,7 +62,14 @@
  .RS 4
- The default action of this module is to not permit the user access to a service if their official password is blank\. The
+ The default action of this module is to not permit the user access to a service if their official password is blank\&. The
  \fBnullok\fR
--argument overrides this default\.
-+argument overrides this default and allows any user with a blank password to access the service\.
+-argument overrides this default\&.
++argument overrides this default and allows any user with a blank password to access the service\&.
 +.RE
 +.PP
 +\fBnullok_secure\fR
 +.RS 4
-+The default action of this module is to not permit the user access to a service if their official password is blank\. The
++The default action of this module is to not permit the user access to a service if their official password is blank\&. The
 +\fBnullok_secure\fR
-+argument overrides this default and allows any user with a blank password to access the service as long as the value of PAM_TTY is set to one of the values found in /etc/securetty\.
++argument overrides this default and allows any user with a blank password to access the service as long as the value of PAM_TTY is set to one of the values found in /etc/securetty\&.
  .RE
  .PP
  \fBtry_first_pass\fR
