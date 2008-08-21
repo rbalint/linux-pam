@@ -74,13 +74,13 @@ while ($#ARGV >= 0) {
 
 x_loadtemplatefile('/var/lib/dpkg/info/libpam-runtime.templates','libpam-runtime');
 
-# If we're being called for package removal, filter out those options here
-@sorted = grep { !$removals{$_} } @sorted;
-
 # always sort by priority, so we have consistency and don't have to
 # shuffle later
 @sorted = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'} }
 	keys(%profiles);
+# If we're being called for package removal, filter out those options here
+@sorted = grep { !$removals{$_} } @sorted;
+
 subst($template, 'profile_names', join(', ',@sorted));
 subst($template, 'profiles',
 	join(', ', map { $profiles{$_}->{'Name'} } @sorted));
@@ -88,7 +88,7 @@ subst($template, 'profiles',
 my $diff = diff_profiles($confdir,$savedir);
 
 if ($diff) {
-	@enabled = @{$diff->{'mods'}};
+	@enabled = grep { !$removals{$_} } @{$diff->{'mods'}};
 } else {
 	@enabled = split(/, /,get($template));
 }
