@@ -384,7 +384,9 @@ sub write_profiles
 		# then do the renames, back-to-back
 		# we have to use system because File::Copy is in
 		# perl-modules, not perl-base
-		system('cp','-f',$target,$target . '.pam-old');
+		if (-e "$target") {
+			system('cp','-f',$target,$target . '.pam-old');
+		}
 		rename($dest,$target);
 		rename("$savedir/$type.new","$savedir/$type");
 		unlink($target . '.pam-old') if (!$force);
