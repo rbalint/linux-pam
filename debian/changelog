@@ -2,7 +2,7 @@ pam (1.0.1-4) UNRELEASED; urgency=low
 
   * pam_unix-chkpwd-wait: don't assume that the unix_chkpwd process exits
     normally; if it was killed by a signal, we don't want to accept the
-    password.
+    password.  Closes: #495879.
 
  -- Julien Cristau <jcristau@debian.org>  Thu, 21 Aug 2008 00:03:56 +0200
 
