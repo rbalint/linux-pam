@@ -11,7 +11,7 @@ Index: pam.deb/modules/pam_unix/support.c
 +		retval = WEXITSTATUS(retval);
 +	    else {
 +		if (WIFSIGNALED(retval))
-+		    pam_syslog(pamh, LOG_ERR, "unix_chkpwd got signal %d",
++		    pam_syslog(pamh, LOG_ERR, "unix_chkpwd exited on signal %d",
 +			       WTERMSIG(retval));
 +		else
 +		    pam_syslog(pamh, LOG_ERR, "unix_chkpwd died unexpectedly");
