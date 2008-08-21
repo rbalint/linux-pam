@@ -36,7 +36,7 @@ my $errtemplate = 'libpam-runtime/conflicts';
 my $overridetemplate = 'libpam-runtime/override';
 my $confdir = '/etc/pam.d';
 my $savedir = '/var/lib/pam';
-my (%profiles, @sorted, @enabled, @conflicts);
+my (%profiles, @sorted, @enabled, @conflicts, %removals);
 my $force = 0;
 my $priority = 'high';
 
@@ -62,12 +62,20 @@ while ($#ARGV >= 0) {
 		$force = 1;
 	} elsif ($opt eq '--package') {
 		$priority = 'medium';
+	} elsif ($opt eq '--remove') {
+		while ($#ARGV >= 0) {
+			last if ($ARGV[0] =~ /^--/);
+			${removals{shift} = 1;
+		}
+		# --remove implies --package
+		$priority = 'medium' if (keys(%removals));
 	}
-	# FIXME: we need an option that will permit us to remove configs in
-	# prerm remove, to avoid having a broken config at any point.
 }
 
 x_loadtemplatefile('/var/lib/dpkg/info/libpam-runtime.templates','libpam-runtime');
+
+# If we're being called for package removal, filter out those options here
+@sorted = grep { !$removals{$_} } @sorted;
 
 # always sort by priority, so we have consistency and don't have to
 # shuffle later
