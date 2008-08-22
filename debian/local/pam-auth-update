@@ -76,8 +76,9 @@ x_loadtemplatefile('/var/lib/dpkg/info/libpam-runtime.templates','libpam-runtime
 
 # always sort by priority, so we have consistency and don't have to
 # shuffle later
-@sorted = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'} }
-	keys(%profiles);
+@sorted = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'}
+                 || $b cmp $a }
+               keys(%profiles);
 # If we're being called for package removal, filter out those options here
 @sorted = grep { !$removals{$_} } @sorted;
 
@@ -110,7 +111,9 @@ if (!@enabled) {
 	close(SEEN);
 	push(@enabled,
 	     grep { $profiles{$_}->{'Default'} eq 'yes' && !$seen{$_} } @sorted);
-	@enabled = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'} } @enabled;
+	@enabled = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'}
+	                  || $b cmp $a }
+	                @enabled;
 	my $prev = '';
 	@enabled = grep { $_ ne $prev && (($prev) = $_) } @enabled;
 }
