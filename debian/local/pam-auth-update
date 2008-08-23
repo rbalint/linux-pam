@@ -397,6 +397,9 @@ sub write_profiles
 		# then do the renames, back-to-back
 		# we have to use system because File::Copy is in
 		# perl-modules, not perl-base
+		# FIXME: if there was already a .pam-old file, and we're
+		# going to unlink the old version afterwards, we've clobbered
+		# the user's old version for no reason!
 		if (-e "$target") {
 			system('cp','-f',$target,$target . '.pam-old');
 		}
