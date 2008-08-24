@@ -397,15 +397,11 @@ sub write_profiles
 		# then do the renames, back-to-back
 		# we have to use system because File::Copy is in
 		# perl-modules, not perl-base
-		# FIXME: if there was already a .pam-old file, and we're
-		# going to unlink the old version afterwards, we've clobbered
-		# the user's old version for no reason!
-		if (-e "$target") {
+		if (-e "$target" && $force) {
 			system('cp','-f',$target,$target . '.pam-old');
 		}
 		rename($dest,$target);
 		rename("$savedir/$type.new","$savedir/$type");
-		unlink($target . '.pam-old') if (!$force);
 	}
 
 	# at the end of a successful write, reset the 'seen' flag and the
