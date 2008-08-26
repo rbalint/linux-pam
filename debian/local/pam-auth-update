@@ -47,8 +47,11 @@ my %md5sums = (
 		'21e152635b16ff793e4a7941396545dd',
 		'fc5dbae197ddcafdbce8617f3bdce559',
 	],
-	'session' => ['06cffe624c9bb7d9a7b5891c8a0f94b2'],
-	 );
+	'session' => [
+		'06cffe624c9bb7d9a7b5891c8a0f94b2',
+		'1a1bda3d417991dd366984ca7382f787',
+	],
+);
 
 opendir(DIR, $inputdir) || die "could not open config directory: $!";
 while (my $profile = readdir(DIR)) {
