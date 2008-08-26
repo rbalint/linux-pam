@@ -26,6 +26,7 @@
 
 use strict;
 use Debconf::Client::ConfModule ':all';
+use IPC::Open2 'open2';
 
 version('2.0');
 my $capb=capb('backup');
@@ -39,6 +40,15 @@ my $savedir = '/var/lib/pam';
 my (%profiles, @sorted, @enabled, @conflicts, %removals);
 my $force = 0;
 my $priority = 'high';
+my %md5sums = (
+	'auth' => ['47d644e88e541aac55da46bc99c2bf3e'],
+	'account' => ['e3a19a1729166046c0bd2222e70142e6'],
+	'password' => [
+		'21e152635b16ff793e4a7941396545dd',
+		'fc5dbae197ddcafdbce8617f3bdce559',
+	],
+	'session' => ['06cffe624c9bb7d9a7b5891c8a0f94b2'],
+	 );
 
 opendir(DIR, $inputdir) || die "could not open config directory: $!";
 while (my $profile = readdir(DIR)) {
@@ -332,6 +342,58 @@ sub create_from_template
 	return 1;
 }
 
+# take a template file, strip out everything between the markers, and
+# return the md5sum of the remaining contents.  Used for testing for
+# local modifications of the boilerplate.
+sub get_template_md5sum
+{
+	my($template) = @_;
+	my $state = 0;
+
+	open(INPUT,$template) || return '';
+	my($md5sum_fd,$output_fd);
+	my $pid = open2($md5sum_fd, $output_fd, 'md5sum');
+	return '' if (!$pid);
+
+	while (<INPUT>) {
+		if ($state == 1) {
+			if (/^# here's the fallback if no module succeeds/) {
+				print $output_fd $_;
+				$state++;
+			}
+			next;
+		}
+		if ($state == 3) {
+			if (/^# end of pam-auth-update config/) {
+				print $output_fd $_;
+				$state++;
+			}
+			next;
+		}
+
+		print $output_fd $_;
+
+		my ($pattern,$val);
+		if ($state == 0) {
+			$pattern = '^# here are the per-package modules \(the "Primary" block\)';
+		} elsif ($state == 2) {
+			$pattern = '^# and here are more per-package modules \(the "Additional" block\)';
+		}
+
+		if (/$pattern/) {
+			$state++;
+		}
+	}
+	close(INPUT);
+	close($output_fd);
+	my $md5sum = <$md5sum_fd>;
+	close($md5sum_fd);
+	waitpid $pid, 0;
+
+	$md5sum = (split(/\s+/,$md5sum))[0];
+	return $md5sum;
+}
+
 # merge a set of module declarations into a set of new config files,
 # using the information returned from diff_profiles().
 sub write_profiles
@@ -353,6 +415,17 @@ sub write_profiles
 		my $diff = $diff;
 		if ($diff) {
 			$diff = \%{$diff->{$type}};
+		}
+
+		# Detect if the template is unmodified, and if so, use
+		# the version from /usr/share.  Depends on knowing the
+		# md5sums of the originals.
+		my $md5sum = get_template_md5sum($template);
+		for my $i (@{$md5sums{$type}}) {
+			if ($md5sum eq $i) {
+				$template = '/usr/share/pam/common-' . $type;
+				last;
+			}
 		}
 
 		# first, write out the new config
