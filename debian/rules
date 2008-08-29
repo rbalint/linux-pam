@@ -135,8 +135,8 @@ binary-arch: install
 	dh_strip -a
 	dh_compress -a
 	dh_fixperms -a
-	chmod 02755 $(d)/libpam-modules/sbin/unix_chkpwd
 	chgrp shadow $(d)/libpam-modules/sbin/unix_chkpwd
+	chmod 02755 $(d)/libpam-modules/sbin/unix_chkpwd
 	dh_makeshlibs -plibpam0g -V "libpam0g (>= 0.99.10.0)"
 	dh_installdeb -a
 	dh_shlibdeps -a -L libpam0g -l$(CURDIR)/debian/libpam0g/lib

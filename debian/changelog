@@ -12,6 +12,9 @@ pam (1.0.1-4) UNRELEASED; urgency=low
     _unix_blankpasswd when we can detect that null passwords are disallowed,
     to avoid causing spammy logs on successful authentications.
     Closes: #496620.
+  * debian/rules: call chgrp *before* calling chmod, lest the sgid bit
+    on unix_chkpwd be cleared during the build when using -rsudo.
+    Closes: #496983.
 
  -- Julien Cristau <jcristau@debian.org>  Thu, 21 Aug 2008 00:03:56 +0200
 
