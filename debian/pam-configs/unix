@@ -16,8 +16,8 @@ Session-Initial:
 	required	pam_unix.so
 Session-Final:
 	required	pam_unix.so
-Password-Type: Additional
+Password-Type: Primary
 Password-Initial:
-	requisite	pam_unix.so obscure md5
+	[success=end default=ignore]	pam_unix.so obscure md5
 Password-Final:
-	requisite	pam_unix.so obscure use_authtok try_first_pass md5
+	[success=end default=ignore]	pam_unix.so obscure use_authtok try_first_pass md5
