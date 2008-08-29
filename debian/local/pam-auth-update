@@ -41,13 +41,13 @@ my (%profiles, @sorted, @enabled, @conflicts, %removals);
 my $force = 0;
 my $priority = 'high';
 my %md5sums = (
-	'auth' => ['47d644e88e541aac55da46bc99c2bf3e'],
-	'account' => ['e3a19a1729166046c0bd2222e70142e6'],
+	'auth' => ['1fd1e8e87cef1c13898410d830229122'],
+	'account' => ['8a29dc79152ce8441aa90a8f8650d076'],
 	'password' => [
-		'21e152635b16ff793e4a7941396545dd',
+		'3532cbabf533d59f0b64218ad82f1446',
 	],
 	'session' => [
-		'06cffe624c9bb7d9a7b5891c8a0f94b2',
+		'1bd2f3e86f552c57f5ee013b93ffca2b',
 		'1a1bda3d417991dd366984ca7382f787',
 	],
 );
