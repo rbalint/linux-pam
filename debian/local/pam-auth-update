@@ -452,8 +452,30 @@ sub write_profiles
 		}
 		my $i = 0;
 		my $uctype = ucfirst($type);
-		for my $mod (@enabled) {
+		for my $mod (@{$enabled}) {
 			my $output;
+			next if (!$profiles->{$mod}{$uctype . '-Type'});
+			next if ($profiles->{$mod}{$uctype . '-Type'} eq 'Additional');
+
+			if ($i == 0 && $profiles->{$mod}{$uctype . '-Initial'})
+			{
+				$output = $profiles->{$mod}{$uctype . '-Initial'};
+				$i++;
+			} else {
+				$output = $profiles->{$mod}{$uctype};
+			}
+			if ($output) {
+				print OUTPUT "Module: $mod\n";
+				print OUTPUT $output . "\n";
+			}
+		}
+
+		$i = 0;
+		for my $mod (@{$enabled}) {
+			my $output;
+			next if (!$profiles->{$mod}{$uctype . '-Type'});
+			next if ($profiles->{$mod}{$uctype . '-Type'} eq 'Primary');
+
 			if ($i == 0 && $profiles->{$mod}{$uctype . '-Initial'})
 			{
 				$output = $profiles->{$mod}{$uctype . '-Initial'};
