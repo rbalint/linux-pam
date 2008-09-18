@@ -282,6 +282,8 @@ sub create_from_template
 		} elsif ($state == 2) {
 			$pattern = '^# and here are more per-package modules \(the "Additional" block\)';
 			$val = 'Additional';
+		} else {
+			next;
 		}
 
 		if (/$pattern/) {
@@ -380,6 +382,8 @@ sub get_template_md5sum
 			$pattern = '^# here are the per-package modules \(the "Primary" block\)';
 		} elsif ($state == 2) {
 			$pattern = '^# and here are more per-package modules \(the "Additional" block\)';
+		} else {
+			next;
 		}
 
 		if (/$pattern/) {
