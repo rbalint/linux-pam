@@ -466,10 +466,9 @@ sub write_profiles
 			next if (!$profiles->{$mod}{$uctype . '-Type'});
 			next if ($profiles->{$mod}{$uctype . '-Type'} eq 'Additional');
 
-			if ($i == 0 && $profiles->{$mod}{$uctype . '-Initial'})
+			if ($i++ == 0 && $profiles->{$mod}{$uctype . '-Initial'})
 			{
 				$output = $profiles->{$mod}{$uctype . '-Initial'};
-				$i++;
 			} else {
 				$output = $profiles->{$mod}{$uctype};
 			}
@@ -485,10 +484,9 @@ sub write_profiles
 			next if (!$profiles->{$mod}{$uctype . '-Type'});
 			next if ($profiles->{$mod}{$uctype . '-Type'} eq 'Primary');
 
-			if ($i == 0 && $profiles->{$mod}{$uctype . '-Initial'})
+			if ($i++ == 0 && $profiles->{$mod}{$uctype . '-Initial'})
 			{
 				$output = $profiles->{$mod}{$uctype . '-Initial'};
-				$i++;
 			} else {
 				$output = $profiles->{$mod}{$uctype};
 			}
