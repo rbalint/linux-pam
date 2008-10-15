@@ -478,6 +478,13 @@ sub write_profiles
 			}
 		}
 
+		# no primary block, so output a stock pam_permit line
+		if ($i == 0)
+		{
+			print OUTPUT "Module: null\n";
+			print OUTPUT "required\t\tpam_permit.so\n";
+		}
+
 		$i = 0;
 		for my $mod (@{$enabled}) {
 			my $output;
