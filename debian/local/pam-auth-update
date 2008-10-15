@@ -295,11 +295,10 @@ sub create_from_template
 				my $output;
 				next if (!$profiles->{$mod}{$uctype . '-Type'});
 				next if $profiles->{$mod}{$uctype . '-Type'} ne $val;
-				if ($i == 0
+				if ($i++ == 0
 				    && $profiles->{$mod}{$uctype . '-Initial'})
 				{
 					$output = $profiles->{$mod}{$uctype . '-Initial'};
-					$i++;
 				} else {
 					$output = $profiles->{$mod}{$uctype};
 				}
@@ -318,11 +317,10 @@ sub create_from_template
 				my @output;
 				next if (!$profiles->{$mod}{$uctype . '-Type'});
 				next if $profiles->{$mod}{$uctype . '-Type'} ne $val;
-				if ($i == 0
+				if ($i++ == 0
 				    && $profiles->{$mod}{$uctype . '-Initial'})
 				{
 					$output = $profiles->{$mod}{$uctype . '-Initial'};
-					$i++;
 				} else {
 					$output = $profiles->{$mod}{$uctype};
 				}
