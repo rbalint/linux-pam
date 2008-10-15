@@ -311,6 +311,13 @@ sub create_from_template
 			# block, let's try not to jump off the stack...
 			$count-- if ($val eq 'Additional');
 
+			# no primary block, so output a stock pam_permit line
+			# to keep the stack intact
+			if ($val eq 'Primary' && $count == 0)
+			{
+				print OUTPUT "$type\trequired\t\tpam_permit.so\n";
+			}
+
 			$i = 0;
 			for my $mod (@{$enabled}) {
 				my $output;
