@@ -315,7 +315,7 @@ sub create_from_template
 			# to keep the stack intact
 			if ($val eq 'Primary' && $count == 0)
 			{
-				print OUTPUT "$type\trequired\t\tpam_permit.so\n";
+				print OUTPUT "$type\trequired\t\t\tpam_permit.so\n";
 			}
 
 			$i = 0;
@@ -482,7 +482,7 @@ sub write_profiles
 		if ($i == 0)
 		{
 			print OUTPUT "Module: null\n";
-			print OUTPUT "required\t\tpam_permit.so\n";
+			print OUTPUT "required\t\t\tpam_permit.so\n";
 		}
 
 		$i = 0;
