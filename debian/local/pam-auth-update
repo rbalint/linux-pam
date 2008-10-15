@@ -47,6 +47,7 @@ my %md5sums = (
 		'3532cbabf533d59f0b64218ad82f1446',
 	],
 	'session' => [
+		'4a25673e8b36f1805219027d3be02cd2',
 		'1bd2f3e86f552c57f5ee013b93ffca2b',
 		'1a1bda3d417991dd366984ca7382f787',
 	],
