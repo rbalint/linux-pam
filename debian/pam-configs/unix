@@ -8,9 +8,9 @@ Auth-Initial:
 	[success=end default=ignore]	pam_unix.so nullok_secure
 Account-Type: Primary
 Account:
-	[success=end default=ignore]	pam_unix.so
+	[success=end new_authtok_reqd=done default=ignore]	pam_unix.so
 Account-Initial:
-	[success=end default=ignore]	pam_unix.so
+	[success=end new_authtok_reqd=done default=ignore]	pam_unix.so
 Session-Type: Additional
 Session:
 	required	pam_unix.so
