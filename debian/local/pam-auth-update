@@ -108,29 +108,33 @@ if ($diff) {
 	@enabled = split(/, /,get($template));
 }
 
-# an empty module set is an error, so grab the defaults instead
-if (!@enabled) {
-	@enabled = grep { $profiles{$_}->{'Default'} eq 'yes' } @sorted;
-	$priority = 'high' unless ($force);
-} elsif (-e $savedir . '/seen') {
-	# filter out any options that are no longer available for any reason
-	@enabled = grep { $profiles{$_} } @enabled;
-	# add any previously-unseen configs
-	my %seen;
+# find out what we've seen, so we can ignore those defaults
+my %seen;
+if (-e $savedir . '/seen') {
 	open(SEEN,$savedir . '/seen');
 	while (<SEEN>) {
 		chomp;
 		$seen{$_} = 1;
 	}
 	close(SEEN);
-	push(@enabled,
-	     grep { $profiles{$_}->{'Default'} eq 'yes' && !$seen{$_} } @sorted);
-	@enabled = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'}
-	                  || $b cmp $a }
-	                @enabled;
-	my $prev = '';
-	@enabled = grep { $_ ne $prev && (($prev) = $_) } @enabled;
 }
+# an empty module set is an error, so in that case grab all the defaults
+if (!@enabled) {
+	%seen = ();
+	$priority = 'high' unless ($force);
+}
+
+# filter out any options that are no longer available for any reason
+@enabled = grep { $profiles{$_} } @enabled;
+# add any previously-unseen configs
+push(@enabled,
+     grep { $profiles{$_}->{'Default'} eq 'yes' && !$seen{$_} } @sorted);
+@enabled = sort { $profiles{$b}->{'Priority'} <=> $profiles{$a}->{'Priority'}
+                  || $b cmp $a }
+                @enabled;
+my $prev = '';
+@enabled = grep { $_ ne $prev && (($prev) = $_) } @enabled;
+
 
 fset($template,'seen','false');
 set($template,join(', ', @enabled));
