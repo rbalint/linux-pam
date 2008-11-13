@@ -667,6 +667,7 @@ sub parse_pam_profile
 			}
 		} else {
 			chomp;
+			s/^\s+//;
 			$profile{$fieldname} .= "\n$_";
 			$profile{$fieldname} =~ s/^[\n\s]+//;
 		}
