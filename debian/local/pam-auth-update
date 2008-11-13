@@ -118,14 +118,16 @@ if (-e $savedir . '/seen') {
 	}
 	close(SEEN);
 }
+
+# filter out any options that are no longer available for any reason
+@enabled = grep { $profiles{$_} } @enabled;
+
 # an empty module set is an error, so in that case grab all the defaults
 if (!@enabled) {
 	%seen = ();
 	$priority = 'high' unless ($force);
 }
 
-# filter out any options that are no longer available for any reason
-@enabled = grep { $profiles{$_} } @enabled;
 # add any previously-unseen configs
 push(@enabled,
      grep { $profiles{$_}->{'Default'} eq 'yes' && !$seen{$_} } @sorted);
