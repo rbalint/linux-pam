@@ -6,9 +6,9 @@ _Description: Services to restart for PAM library upgrade:
  list of init.d scripts for services to be restarted now, and correct it
  if needed.
  .
- Some other services such as xscreensaver, gnome-screensaver, and xlockmore
- cannot be restarted for you.  You will not be able to authenticate to these
- services until you restart them manually.
+ Some other services such as xscreensaver and xlockmore cannot be restarted
+ for you.  You will not be able to authenticate to these services until
+ you restart them manually.
 
 Template: libpam0g/xdm-needs-restart
 Type: error

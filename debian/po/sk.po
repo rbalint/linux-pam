@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
-"Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"Report-Msgid-Bugs-To: pam@packages.debian.org\n"
+"POT-Creation-Date: 2008-11-15 23:51-0800\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -39,13 +39,13 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
-"cannot be restarted for you.  You will not be able to authenticate to these "
-"services until you restart them manually."
+"Some other services such as xscreensaver and xlockmore cannot be restarted "
+"for you.  You will not be able to authenticate to these services until you "
+"restart them manually."
 msgstr ""
-"Niektoré ďalšie služby ako xscreensaver, gnome-screensaver a xlockmore nie "
-"je možné automaticky reštartovať. Pokým tieto služby nereštartujete ručne, "
-"nebudete sa voči nim môcť overovať."
+"Niektoré ďalšie služby ako xscreensaver a xlockmore nie je možné automaticky "
+"reštartovať. Pokým tieto služby nereštartujete ručne, nebudete sa voči nim "
+"môcť overovať."
 
 #. Type: error
 #. Description

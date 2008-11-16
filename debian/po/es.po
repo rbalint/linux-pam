@@ -32,8 +32,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.79-4\n"
-"Report-Msgid-Bugs-To: vorlon@debian.org\n"
-"POT-Creation-Date: 2007-09-24 17:06-0700\n"
+"Report-Msgid-Bugs-To: pam@packages.debian.org\n"
+"POT-Creation-Date: 2008-11-15 23:51-0800\n"
 "PO-Revision-Date: 2007-09-29 02:28+0200\n"
 "Last-Translator: Javier Fernández-Sanguino <jfs@debian.org>\n"
 "Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
@@ -67,13 +67,13 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid ""
-"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
-"cannot be restarted for you.  You will not be able to authenticate to these "
-"services until you restart them manually."
+"Some other services such as xscreensaver and xlockmore cannot be restarted "
+"for you.  You will not be able to authenticate to these services until you "
+"restart them manually."
 msgstr ""
-"Algunos servicios, como «xscreensaver», «gnome-screensaver» y «xlockmore», "
-"no podrán reiniciarse. La autenticación no funcionará en estos servicios "
-"hasta que los reinicie manualmente."
+"Algunos servicios, como «xscreensaver» y «xlockmore», no podrán reiniciarse. "
+"La autenticación no funcionará en estos servicios hasta que los reinicie "
+"manualmente."
 
 #. Type: error
 #. Description
