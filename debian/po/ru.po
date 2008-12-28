@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.99.7.1-4\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2008-11-15 23:51-0800\n"
+"POT-Creation-Date: 2008-12-28 01:17-0600\n"
 "PO-Revision-Date: 2007-09-25 20:51+0400\n"
 "Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
@@ -37,18 +37,6 @@ msgstr ""
 "большинство сервисов, использующих PAM. Внимательно просмотрите и "
 "отредактируйте (если необходимо) список (элементы разделяются пробелом) "
 "сценариев сервисов из init.d, которые будут перезапущены."
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
-"Some other services such as xscreensaver and xlockmore cannot be restarted "
-"for you.  You will not be able to authenticate to these services until you "
-"restart them manually."
-msgstr ""
-"Есть несколько сервисов, которые нельзя перезапустить автоматически: "
-"xscreensaver и xlockmore. Вы не сможете ввести правильный пароль в этих "
-"сервисах, пока не перезапустите их вручную."
 
 #. Type: error
 #. Description
@@ -92,3 +80,21 @@ msgid ""
 "start'."
 msgstr ""
 "Вам нужно перезапустить их вручную, выполнив '/etc/init.d/<сервис> start'."
+
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid "xscreensaver and xlockmore must be restarted before upgrading"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid ""
+"One or more running instances of xscreensaver or xlockmore have been "
+"detected on this system.  Because of incompatible library changes, the "
+"upgrade of the libpam-modules package will leave you unable to authenticate "
+"to these programs.  You should arrange for these programs to be restarted or "
+"stopped before continuing this upgrade, to avoid locking your users out of "
+"their current sessions."
+msgstr ""

@@ -33,7 +33,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.79-4\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2008-11-15 23:51-0800\n"
+"POT-Creation-Date: 2008-12-28 01:17-0600\n"
 "PO-Revision-Date: 2007-09-29 02:28+0200\n"
 "Last-Translator: Javier Fernández-Sanguino <jfs@debian.org>\n"
 "Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
@@ -62,18 +62,6 @@ msgstr ""
 "usen los módulos de esta versión de libpam. Por favor, revise la lista "
 "separada por espacios mostrada a continuación que indica los servicios a "
 "reiniciar ahora y corríjala si es necesario."
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
-"Some other services such as xscreensaver and xlockmore cannot be restarted "
-"for you.  You will not be able to authenticate to these services until you "
-"restart them manually."
-msgstr ""
-"Algunos servicios, como «xscreensaver» y «xlockmore», no podrán reiniciarse. "
-"La autenticación no funcionará en estos servicios hasta que los reinicie "
-"manualmente."
 
 #. Type: error
 #. Description
@@ -121,15 +109,20 @@ msgstr ""
 "Deberá arrancar manualmente estos servicios ejecutando «/etc/init.d/"
 "<servicio> start»."
 
-#~ msgid ""
-#~ "Among the services that require restarting are the display managers kdm, "
-#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
-#~ "one of these display managers, restarting that service will terminate "
-#~ "your X session.  It is recommended that you remove that service from the "
-#~ "list here and restart it later at your convenience."
-#~ msgstr ""
-#~ "Entre los servicios que deben reiniciarse están los gestores de pantalla "
-#~ "kdm, wdm y xdm. El reinicio del servicio terminará su sesión de X si está "
-#~ "actualizando desde una sesión de X arrancada desde alguno de estos "
-#~ "gestores. Se le recomienda eliminar el servicio de la lista y reiniciarlo "
-#~ "más adelante cuando lo considere oportuno."
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid "xscreensaver and xlockmore must be restarted before upgrading"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid ""
+"One or more running instances of xscreensaver or xlockmore have been "
+"detected on this system.  Because of incompatible library changes, the "
+"upgrade of the libpam-modules package will leave you unable to authenticate "
+"to these programs.  You should arrange for these programs to be restarted or "
+"stopped before continuing this upgrade, to avoid locking your users out of "
+"their current sessions."
+msgstr ""

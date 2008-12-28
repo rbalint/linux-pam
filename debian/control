@@ -30,7 +30,7 @@ Description: Pluggable Authentication Modules library
 Package: libpam-modules
 Priority: required
 Architecture: any
-Pre-Depends: ${shlibs:Depends}
+Pre-Depends: ${shlibs:Depends}, ${misc:Depends}
 Conflicts: libpam0g-modules (= 0.66-1), libpam-motd, libpam-mkhomedir, libpam-umask, suidmanager (<< 0.50)
 Replaces: libpam0g-util, libpam-umask
 Provides: libpam-motd, libpam-mkhomedir, libpam-umask
