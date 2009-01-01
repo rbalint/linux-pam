@@ -2,14 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Damyan Ivanov <dam@modsoftsys.com>, 2007.
+# Damyan Ivanov <dmn@debian.org>, 2007, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: bg\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2008-12-28 01:17-0600\n"
-"PO-Revision-Date: 2007-09-25 14:24+0300\n"
-"Last-Translator: Damyan Ivanov <dam@modsoftsys.com>\n"
+"PO-Revision-Date: 2009-01-02 00:17+0200\n"
+"Last-Translator: Damyan Ivanov <dmn@debian.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,7 +80,7 @@ msgstr "Ще трябва сами да ги стартирате чрез „/e
 #. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
-msgstr ""
+msgstr "xscreensaver и xlockmore трябва да бъдат рестартирани"
 
 #. Type: error
 #. Description
@@ -93,3 +93,8 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"Открити са работещи процеси xscreensaver или xlockmore. Поради несъвместими "
+"промени в библиотеката, обновяването на пакета libpam-modules ще направи "
+"невъзможно идентифицирането с тези програми. Трябва да осигурите "
+"рестартирането или спирането на xscreensaver и xlockmore за да избегнете "
+"проблеми с идентификацията при потребителите, които ги използват."
