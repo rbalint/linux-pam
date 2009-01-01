@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 0.99.7.1-5\n"
+"Project-Id-Version: pam 1.0.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2008-12-28 01:17-0600\n"
-"PO-Revision-Date: 2007-10-14 16:48+0900\n"
+"PO-Revision-Date: 2009-01-01 19:09+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +82,7 @@ msgstr ""
 #. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
-msgstr ""
+msgstr "xscreensaver と xlockmore を更新前に再起動する必要があります"
 
 #. Type: error
 #. Description
@@ -95,3 +95,8 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"このシステムで 1 つ以上の xscreensaver あるいは xlockmore の動作が検出されま"
+"した。非互換のライブラリ変更のため、libpam-modules パッケージの更新はこれらの"
+"プログラムでの認証ができなくなるという事態にあなたを追いやります。ユーザが現"
+"在のセッションの外に締め出されるのを避けるため、このパッケージの更新を継続す"
+"る前に、これらのプログラムを再起動するか停止するように手配すべきです。"
