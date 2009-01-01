@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: pam 0.99.7.1-4\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2008-12-28 01:17-0600\n"
-"PO-Revision-Date: 2007-12-30 00:14+0200\n"
+"PO-Revision-Date: 2009-01-01 12:27+0200\n"
 "Last-Translator: Esko Arajärvi <edu@iki.fi>\n"
 "Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,8 +50,8 @@ msgstr ""
 "Näytönhallintaohjelmat kdm, wdm ja zdm tulee käynnistää uudelleen, jotta "
 "libpamin uusi versio tulee käyttöön. Järjestelmässä on kuitenkin aktiivisia "
 "X-istuntoja, jotka lopetettaisiin tämän uudelleenkäynnistyksen yhteydessä. "
-"Niinpä nämä palvelut tulee käynnistää uudelleen käsin ennen kuin uusia X-"
-"istuntoja voidaan avata."
+"Tästä syystä nämä palvelut tulee käynnistää uudelleen käsin ennen kuin uusia "
+"X-istuntoja voidaan avata."
 
 #. Type: error
 #. Description
@@ -84,7 +84,7 @@ msgstr ""
 #. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
-msgstr ""
+msgstr "xscreensaver ja xlockmore täytyy käynnistää uudelleen ennen päivitystä"
 
 #. Type: error
 #. Description
@@ -97,3 +97,9 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"Järjestelmässä ajetaan parhaillaan yhtä tai useampaa xscreensaverin tai "
+"xlockmoren instanssia. Paketin libpam-modules kirjastot ovat muuttuneet "
+"niin, että päivityksen jälkeen näihin ohjelmiin ei voitaisi "
+"yhteensopivuussyistä enää tunnistautua. Nämä ohjelmat tulisi pysäyttää tai "
+"käynnistää uudelleen ennen päivityksen jatkamista, jotta käyttäjät eivät "
+"lukitse itseään ulos nykyisistä istunnoistaan."
