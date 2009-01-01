@@ -13,6 +13,7 @@ pam (1.0.1-5) UNRELEASED; urgency=low
     - Italian, thanks to David Paleino <d.paleino@gmail.com>
     - Simplified Chinese, thanks to Deng Xiyue
       <manphiz-guest@users.alioth.debian.org> (closes: #510371)
+    - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #510379)
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 29 Aug 2008 13:08:41 -0700
 
