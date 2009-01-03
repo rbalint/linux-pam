@@ -21,6 +21,8 @@ pam (1.0.1-5) UNRELEASED; urgency=low
     - Galician, thanks to Marce Villarino <mvillarino@gmail.com>
     - Slovak, thanks to helix84 <helix84@centrum.sk> (closes: #510412)
     - Bulgarian, thanks to Damyan Ivanov <dmn@debian.org>
+    - Czech, thanks to Miroslav Kure <<kurem@upcase.inf.upol.cz>
+      (closes: #510608)
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 29 Aug 2008 13:08:41 -0700
 
