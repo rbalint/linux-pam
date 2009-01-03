@@ -87,6 +87,7 @@ msgstr ""
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
 msgstr ""
+"xscreensaver et xlockmore doivent être redémarrés avant la mise à niveau"
 
 #. Type: error
 #. Description
@@ -99,3 +100,9 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"Une ou plusieurs instances de xscreensaver et/ou de xlockmore ont été "
+"détectées sur le système. À cause de la modification de certaines "
+"bibliothèques, la mise à niveau du paquet libpam-modules entrainera "
+"l'impossibilité de s'authentifier. Avant de poursuivre la mise à niveau, ces "
+"programmes doivent être redémarrés ou arrêtés pour éviter que des "
+"utilisateurs ne puissent plus accéder à leurs sessions."
