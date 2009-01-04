@@ -2,13 +2,13 @@
 # Copyright (C) 2007 Américo Monteiro
 # This file is distributed under the same license as the pam package.
 #
-# Américo Monteiro <a_monteiro@netcabo.pt>, 2007.
+# Américo Monteiro <a_monteiro@netcabo.pt>, 2007, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 0.99.7.1-5\n"
+"Project-Id-Version: pam 1.0.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2008-12-28 01:17-0600\n"
-"PO-Revision-Date: 2007-09-25 19:04+0100\n"
+"PO-Revision-Date: 2009-01-01 02:01+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@netcabo.pt>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr ""
 #. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
-msgstr ""
+msgstr "xscreensaver e xlockmore têm que ser reiniciados antes da actualização"
 
 #. Type: error
 #. Description
@@ -98,3 +98,9 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"Uma ou mais instâncias do xscreensaver ou xlockmore foram detectadas a "
+"funcionar neste sistema. Devido a alterações incompatíveis da biblioteca, a "
+"actualização do pacote libpam-modules irá deixá-lo incapaz de se autenticar "
+"nestes programas. Você deve fazer com que estes programas sejam reiniciados "
+"ou parados antes de continuar com esta actualização, para evitar trancar os "
+"seus utilizadores fora das suas sessões correntes."
