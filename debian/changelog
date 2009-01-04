@@ -25,6 +25,8 @@ pam (1.0.1-5) UNRELEASED; urgency=low
       (closes: #510608)
     - French, thanks to Steve Petruzzello <dlist@bluewin.ch>
     - German, thanks to Sven Joachim <svenjoac@gmx.de> (closes: #510617)  
+    - Basque, thanks to Piarres Beobide <pi+debian@beobide.net>
+      (closes: #510699)
     - Russian, thanks to Yuri Kozlov <yuray@komyakino.ru> (closes: #510701)
     - Turkish, thanks to Mert Dirik <mertdirik@gmail.com> (closes: #510707)
 

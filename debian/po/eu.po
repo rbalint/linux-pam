@@ -1,21 +1,23 @@
-# translation of eu.po to Euskara
+# translation of pam_1.0.1-5_eu.po to Basque
 # Debconf questions for the Linux-PAM package.
 # Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
 # This file is distributed under the same license as the pam package.
 #
 # Piarres Beobide <pi@beobide.net>, 2007, 2008.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
+"Project-Id-Version: pam_1.0.1-5_eu\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2008-12-28 01:17-0600\n"
-"PO-Revision-Date: 2008-04-02 14:26+0200\n"
-"Last-Translator: Piarres Beobide <pi@beobide.net>\n"
-"Language-Team: Euskara <debian-l10n-basque@lists.debian.org>\n"
+"PO-Revision-Date: 2009-01-02 12:30+0100\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #. Type: string
 #. Description
@@ -33,7 +35,7 @@ msgid ""
 "list of init.d scripts for services to be restarted now, and correct it if "
 "needed."
 msgstr ""
-"PAM erabiltzen duten zerbitzu gehieneak berrabiarazi egin behar dira libpam "
+"PAM erabiltzen duten zerbitzu gehienak berrabiarazi egin behar dira libpam "
 "bertsio honetako moduluak erabiltzeko. Mesedez gainbegiratu berrabiaraziko "
 "diren hurrengo zuriunez bereiziriko init.d script zerrenda hau eta zuzendu "
 "behar izanez gero."
@@ -62,7 +64,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:3001
 msgid "Failure restarting some services for PAM upgrade"
-msgstr "Huts PAM bertsio-berritzerako zenbait zerbitzu berrabiaraztean."
+msgstr "Huts egin du zenbait zerbitzu berrabiaraztean PAM bertsio-berritzeko."
 
 #. Type: error
 #. Description
@@ -70,7 +72,7 @@ msgstr "Huts PAM bertsio-berritzerako zenbait zerbitzu berrabiaraztean."
 msgid ""
 "The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
-"Hurrengo zerbitzuak ezin izan dira berrabiarazi PAM liburutegi bertsio-"
+"Hurrengo zerbitzuak ezin izan dira berrabiarazi PAM liburutegia bertsio-"
 "berritzean:"
 
 #. Type: error
@@ -80,14 +82,16 @@ msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr ""
-"Hauek zure kabuz berrabiarazi beharko dituzu '/etc/init.d/<zerbitzua> start' "
-"eginaz."
+"Hauek eskuz berrabiarazi beharko dituzu '/etc/init.d/<zerbitzua> start' "
+"exekutatuz."
 
 #. Type: error
 #. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
 msgstr ""
+"xscreensaver eta xlockmore berrabiarazi egin behar dira bertsio-berritu "
+"aurretik."
 
 #. Type: error
 #. Description
@@ -100,3 +104,10 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"xscreensaver edo xlockmore-ren instantzia bat edo gehiago exekutatzen "
+"dagoela detektatu  da sisteman. Liburutegiaren aldaketaren "
+"bateraezintasunagatik libpam-modules paketearen bertsio-berritzeak programa "
+"horiekin ezin autentifikatzea eragingo dizu. Programa horiek berrabiarazi "
+"edop gelditu egin beharko zenituzke bertsio-berritzearekin jarraitu "
+"aurretik, sistemako erabiltzaileak beraien uneko saioan blokeatzea "
+"saihesteko."
