@@ -42,7 +42,7 @@ Package: libpam-runtime
 Section: admin
 Priority: required
 Architecture: all
-Depends: debconf (>= 1.5.19) | cdebconf
+Depends: debconf (>= 1.5.19)
 Replaces: libpam0g-util, libpam0g-dev
 Conflicts: libpam0g-util, libpam0g (<< 0.66-0)
 Description: Runtime support for the PAM library
