@@ -72,7 +72,7 @@ Package: libpam-cracklib
 Priority: optional
 Architecture: any
 Replaces: libpam0g-cracklib
-Depends: ${shlibs:Depends}, libpam-runtime (>= 1.0.1-5), cracklib-runtime, wamerican | wordlist
+Depends: ${shlibs:Depends}, libpam-runtime (>= 1.0.1-6), cracklib-runtime, wamerican | wordlist
 Description: PAM module to enable cracklib support
  This package includes libpam_cracklib, a PAM module that tests
  passwords to make sure they are not too weak during password change.
