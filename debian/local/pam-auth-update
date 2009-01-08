@@ -254,6 +254,16 @@ sub merge_one_line
 	return $modline . " " . join(' ',@opts,keys(%{$adds})) . "\n";
 }
 
+# return the lines for a given config name, type, and position in the stack
+sub lines_for_module_and_type
+{
+	my ($profiles, $mod, $type, $modpos) = @_;
+	if ($modpos == 0 && $profiles->{$mod}{$type . '-Initial'}) {
+		return $profiles->{$mod}{$type . '-Initial'};
+	}
+	return $profiles->{$mod}{$type};
+}
+
 # create a single PAM config from the indicated template and selections,
 # writing to a new file
 sub create_from_template
@@ -303,13 +313,7 @@ sub create_from_template
 				my $output;
 				next if (!$profiles->{$mod}{$uctype . '-Type'});
 				next if $profiles->{$mod}{$uctype . '-Type'} ne $val;
-				if ($i++ == 0
-				    && $profiles->{$mod}{$uctype . '-Initial'})
-				{
-					$output = $profiles->{$mod}{$uctype . '-Initial'};
-				} else {
-					$output = $profiles->{$mod}{$uctype};
-				}
+				$output = lines_for_module_and_type($profiles, $mod, $uctype, $i++);
 				# bypasses a perl warning about @_, sigh
 				my @tmparr = split("\n+",$output);
 				$count += @tmparr;
@@ -332,13 +336,7 @@ sub create_from_template
 				my @output;
 				next if (!$profiles->{$mod}{$uctype . '-Type'});
 				next if $profiles->{$mod}{$uctype . '-Type'} ne $val;
-				if ($i++ == 0
-				    && $profiles->{$mod}{$uctype . '-Initial'})
-				{
-					$output = $profiles->{$mod}{$uctype . '-Initial'};
-				} else {
-					$output = $profiles->{$mod}{$uctype};
-				}
+				$output = lines_for_module_and_type($profiles, $mod, $uctype, $i++);
 				for my $line (split("\n",$output)) {
 					$line = merge_one_line($line,$diff,
 					                       $count);
@@ -474,12 +472,7 @@ sub write_profiles
 			next if (!$profiles->{$mod}{$uctype . '-Type'});
 			next if ($profiles->{$mod}{$uctype . '-Type'} eq 'Additional');
 
-			if ($i++ == 0 && $profiles->{$mod}{$uctype . '-Initial'})
-			{
-				$output = $profiles->{$mod}{$uctype . '-Initial'};
-			} else {
-				$output = $profiles->{$mod}{$uctype};
-			}
+			$output = lines_for_module_and_type($profiles, $mod, $uctype, $i++);
 			if ($output) {
 				print OUTPUT "Module: $mod\n";
 				print OUTPUT $output . "\n";
@@ -499,12 +492,7 @@ sub write_profiles
 			next if (!$profiles->{$mod}{$uctype . '-Type'});
 			next if ($profiles->{$mod}{$uctype . '-Type'} eq 'Primary');
 
-			if ($i++ == 0 && $profiles->{$mod}{$uctype . '-Initial'})
-			{
-				$output = $profiles->{$mod}{$uctype . '-Initial'};
-			} else {
-				$output = $profiles->{$mod}{$uctype};
-			}
+			$output = lines_for_module_and_type($profiles, $mod, $uctype, $i++);
 			if ($output) {
 				print OUTPUT "Module: $mod\n";
 				print OUTPUT $output . "\n";
