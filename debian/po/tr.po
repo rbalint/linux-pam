@@ -1,5 +1,5 @@
 # Debconf questions for the Linux-PAM package.
-# Copyright (C) 2008 Mert Dirik <mertdirik@gmail.com>
+# Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
 # This file is distributed under the same license as the pam package.
 # Mert Dirik <mertdirik@gmail.com>, 2008.
 #
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2008-08-19 23:00-0700\n"
-"PO-Revision-Date: 2008-07-15 01:39+0200\n"
+"POT-Creation-Date: 2008-12-28 01:17-0600\n"
+"PO-Revision-Date: 2009-01-01 19:20+0200\n"
 "Last-Translator: Mert Dirik <mertdirik@gmail.com>\n"
 "Language-Team: Debian L10n Turkish <debian-l10n-turkish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,20 +35,8 @@ msgid ""
 msgstr ""
 "PAM kullanan çoğu hizmet, libpam'ın bu yeni sürümü için derlenmiş "
 "modüllerden yararlanabilmek için yeniden başlatılmak zorunda.  Lütfen "
-"yeniden başlatılacak hizmetlerin init.d betiklerinin aşağıdaki boşluklarla "
-"ayrılmış listesini inceleyin ve gerekliyse listeyi düzeltin."
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
-"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
-"cannot be restarted for you.  You will not be able to authenticate to these "
-"services until you restart them manually."
-msgstr ""
-"xscreensaver, gnome-screensaver ve xlockmore gibi bazı hizmetler sizin için "
-"yeniden başlatılamaz.  Siz bu hizmetleri elle yeniden başlatana kadar bu "
-"hizmetlere kimlik doğrulaması yapılamayacak."
+"yeniden başlatılacak hizmetlere ilişkin init.d betiklerinin boşluklarla "
+"ayrılmış aşağıdaki listesini inceleyin ve gerekliyse listeyi düzeltin."
 
 #. Type: error
 #. Description
@@ -160,3 +148,27 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid "xscreensaver and xlockmore must be restarted before upgrading"
+msgstr ""
+"Yükseltme işleminden önce xscreensaver ve xlockmore yeniden başlatılmalı"
+
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid ""
+"One or more running instances of xscreensaver or xlockmore have been "
+"detected on this system.  Because of incompatible library changes, the "
+"upgrade of the libpam-modules package will leave you unable to authenticate "
+"to these programs.  You should arrange for these programs to be restarted or "
+"stopped before continuing this upgrade, to avoid locking your users out of "
+"their current sessions."
+msgstr ""
+"Sisteminizde çalışmakta olan birden fazla xscreensaver ya da xlockmore "
+"örneğine rastlandı. Uyumsuz kitaplık değişiklikleri yüzünden, libpam-modules "
+"paketinin yükseltilmesi bu programlarda kimlik doğrulamasını olanaksız hale "
+"getirecek. Mevcut oturumların kilitlenmesi önlemek için, yükseltme işlemine "
+"devam etmeden önce bu programları durdurmalı ya da yeniden başlatmalısınız."

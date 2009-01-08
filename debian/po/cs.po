@@ -1,14 +1,14 @@
 # Czech translation of pam debconf mesages.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pam package.
-# Miroslav Kure <kurem@debian.cz>, 2007.
+# Miroslav Kure <kurem@debian.cz>, 2007-2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2008-08-19 23:00-0700\n"
-"PO-Revision-Date: 2007-09-29 15:30+0200\n"
+"POT-Creation-Date: 2008-12-28 01:17-0600\n"
+"PO-Revision-Date: 2009-01-03 16:49+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,18 +34,6 @@ msgstr ""
 "služeb používajících PAM restartovat. Zkontrolujte prosím následující seznam "
 "služeb (init.d skriptů), které se mají nyní restartovat a v případě potřeby "
 "seznam opravte."
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
-"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
-"cannot be restarted for you.  You will not be able to authenticate to these "
-"services until you restart them manually."
-msgstr ""
-"Některé služby (např. xscreensaver, gnome-screensaver a xlockmore) nemohou "
-"být restartovány automaticky. Dokud je nerestartujete ručně, nebudete se "
-"moci vůči nim autentizovat."
 
 #. Type: error
 #. Description
@@ -157,15 +145,27 @@ msgid ""
 "configuration by hand."
 msgstr ""
 
-#~ msgid ""
-#~ "Among the services that require restarting are the display managers kdm, "
-#~ "wdm, and xdm.  If you are upgrading from within an X session started with "
-#~ "one of these display managers, restarting that service will terminate "
-#~ "your X session.  It is recommended that you remove that service from the "
-#~ "list here and restart it later at your convenience."
-#~ msgstr ""
-#~ "Mezi službami vyžadujícími restart jsou i správci displejů kdm, wdm a "
-#~ "xdm. Aktualizujete-li z X sezení spuštěného některým ze zmíněných "
-#~ "programů, znamená to, že restart příslušné služby ukončí stávající X "
-#~ "sezení.  V takovém případě doporučujeme službu ze seznamu odstranit a "
-#~ "restartovat později, až pro to nastane vhodnější příležitost."
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid "xscreensaver and xlockmore must be restarted before upgrading"
+msgstr ""
+"Programy xscreensaver a xlockmore musí být před aktualizací restartovány"
+
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid ""
+"One or more running instances of xscreensaver or xlockmore have been "
+"detected on this system.  Because of incompatible library changes, the "
+"upgrade of the libpam-modules package will leave you unable to authenticate "
+"to these programs.  You should arrange for these programs to be restarted or "
+"stopped before continuing this upgrade, to avoid locking your users out of "
+"their current sessions."
+msgstr ""
+"Zdá se, že v systému běží jedna nebo více instancí programu xscreensaver "
+"resp. xlockmore. Z důvodu nekompatibilních změn v knihovnách se po "
+"aktualizaci balíku libpam-modules nebudete moci pomocí těchto programů "
+"autentizovat. To jinými slovy znamená, že se uživatelé nedostanou ke svým "
+"uzamčeným sezením. Abyste tomu předešli, měli byste před aktualizací zmíněné "
+"programy zastavit, nebo je ve vhodný čas restartovat."

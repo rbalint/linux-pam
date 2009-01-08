@@ -7,7 +7,7 @@ Standards-Version: 3.8.0
 Build-Depends: libcrack2-dev (>= 2.8), bzip2, debhelper, quilt, flex, libdb-dev, libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64 !netbsd-i386], po-debconf
 Build-Depends-Indep: xsltproc, libxml2-utils, docbook-xml, docbook-xsl, w3m
 Build-Conflicts-Indep: fop
-Build-Conflicts: libdb4.2-dev
+Build-Conflicts: libdb4.2-dev, libxcrypt-dev
 Vcs-Bzr: http://bzr.debian.org/bzr/pkg-pam/debian/sid/
 Homepage: http://pam.sourceforge.net/
 
@@ -30,7 +30,7 @@ Description: Pluggable Authentication Modules library
 Package: libpam-modules
 Priority: required
 Architecture: any
-Depends: ${shlibs:Depends}
+Pre-Depends: ${shlibs:Depends}, ${misc:Depends}
 Conflicts: libpam0g-modules (= 0.66-1), libpam-motd, libpam-mkhomedir, libpam-umask, suidmanager (<< 0.50)
 Replaces: libpam0g-util, libpam-umask
 Provides: libpam-motd, libpam-mkhomedir, libpam-umask

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2008-08-19 23:00-0700\n"
+"POT-Creation-Date: 2008-12-28 01:17-0600\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -34,18 +34,6 @@ msgstr ""
 "používať moduly zostavené pre túto novú verziu libpam. Prosím, skontrolujte "
 "nasledovný zoznam init.d skriptov (oddelené čiarkami), ktoré sa majú teraz "
 "reštartovať a ak je to potrebné, opravte ho."
-
-#. Type: string
-#. Description
-#: ../libpam0g.templates:1001
-msgid ""
-"Some other services such as xscreensaver, gnome-screensaver, and xlockmore "
-"cannot be restarted for you.  You will not be able to authenticate to these "
-"services until you restart them manually."
-msgstr ""
-"Niektoré ďalšie služby ako xscreensaver, gnome-screensaver a xlockmore nie "
-"je možné automaticky reštartovať. Pokým tieto služby nereštartujete ručne, "
-"nebudete sa voči nim môcť overovať."
 
 #. Type: error
 #. Description
@@ -155,3 +143,28 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid "xscreensaver and xlockmore must be restarted before upgrading"
+msgstr "Pred aktualizáciou je potrebné reštartovať xscreensaver a xlockmore"
+
+#. Type: error
+#. Description
+#: ../libpam-modules.templates:1001
+msgid ""
+"One or more running instances of xscreensaver or xlockmore have been "
+"detected on this system.  Because of incompatible library changes, the "
+"upgrade of the libpam-modules package will leave you unable to authenticate "
+"to these programs.  You should arrange for these programs to be restarted or "
+"stopped before continuing this upgrade, to avoid locking your users out of "
+"their current sessions."
+msgstr ""
+"Na tomto systéme bola zistená jedna alebo viacero bežiacich inštancií "
+"programov xscreensaver alebo xlockmore. Z dôvodu nekomaptibilných zmien v "
+"knižniciach balíka libpam-modules by ste po aktualizácii neboli schopní "
+"overiť sa týmto programom. Mali by ste zariadiť, aby sa tieto programy "
+"reštartovali alebo zastavili predtým, než budete v tejto aktualizácii "
+"pokračovať, aby ste predišli tomu, že používatelia sa nebudú môcť prihlásiť "
+"zo svojich súčasných relácií."

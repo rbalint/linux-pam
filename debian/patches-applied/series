@@ -19,4 +19,5 @@ hurd_no_setfsuid
 PAM-manpage-section 
 pam_env_ignore_garbage.patch -p2
 pam.d-manpage-section
+pam_unix-chkpwd-wait
 autoconf.patch 
