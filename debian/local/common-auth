@@ -7,7 +7,7 @@
 # (e.g., /etc/shadow, LDAP, Kerberos, etc.).  The default is to use the
 # traditional Unix authentication mechanisms.
 #
-# As of pam 1.0.1-5, this file is managed by pam-auth-update by default.
+# As of pam 1.0.1-6, this file is managed by pam-auth-update by default.
 # To take advantage of this, it is recommended that you configure any
 # local modules either before or after the default block, and use
 # pam-auth-update to manage selection of other modules.  See
