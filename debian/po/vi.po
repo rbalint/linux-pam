@@ -1,26 +1,26 @@
 # Vietnamese translation for PAM.
-# Copyright © 2007 Free Software Foundation, Inc.
-# Clytie Siddall <clytie@riverland.net.au>, 2007
+# Copyright © 2009 Free Software Foundation, Inc.
+# Clytie Siddall <clytie@riverland.net.au>, 2007-2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 0.99.7.1-5\n"
+"Project-Id-Version: pam 1.0.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2008-12-28 01:17-0600\n"
-"PO-Revision-Date: 2007-09-28 23:58+0930\n"
+"PO-Revision-Date: 2009-01-26 23:08+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: LocFactoryEditor 1.7b1\n"
+"X-Generator: LocFactoryEditor 1.8\n"
 
 #. Type: string
 #. Description
 #: ../libpam0g.templates:1001
 msgid "Services to restart for PAM library upgrade:"
-msgstr "Dịch vụ cần khởi chạy lại khi nâng cấp thư viện PAM:"
+msgstr "Dịch vụ cần khởi chạy lại để nâng cấp thư viện PAM:"
 
 #. Type: string
 #. Description
@@ -31,10 +31,11 @@ msgid ""
 "list of init.d scripts for services to be restarted now, and correct it if "
 "needed."
 msgstr ""
-"Phần lớn dịch vụ sử dụng PAM cũng cần phải được khởi chạy lại để sử dụng các "
-"mô-đun được xây dựng cho phân vùng libpam mới này. Hãy xem lại danh sách "
-"định giới bằng dấu cách theo đây hiển thị các dịch vụ cần khởi chạy lại ngay "
-"bây giờ, và sửa chữa nếu cần thiết."
+"Phần lớn dịch vụ sử dụng PAM thì cũng cần phải được khởi chạy lại để sử dụng "
+"những mô-đun được xây dựng cho phiên bản libpam mới này. Hãy xem lại danh "
+"sách định giới bằng dấu cách theo đây hiển thị những văn lệnh khởi động "
+"(init.d) cho dịch vụ cần khởi chạy lại ngay bây giờ, và sửa chữa nếu cần "
+"thiết."
 
 #. Type: error
 #. Description
@@ -52,9 +53,9 @@ msgid ""
 "services by hand before further X logins will be possible."
 msgstr ""
 "Trình quản lý trình bày kdm, wdm, hay xdm cần thiết được khởi chạy lại để sử "
-"dụng phiên bản mới của thư viện libpam, nhưng việc khởi chạy lại dịch vụ này "
-"sẽ cũng chấm dứt phiên chạy X đang hoạt động. Vì vậy bạn cần phải tự khởi "
-"chạy trình quản lý trình bày để có khả năng sử dụng nó lại."
+"dụng phiên bản mới của thư viện libpam, nhưng việc khởi chạy lại sẽ cũng "
+"chấm dứt một số buổi hợp đang nhập X đang chạy. Sau đó thì bạn cần phải tự "
+"khởi chạy lại những dịch vụ này để đăng nhập lại vào X."
 
 #. Type: error
 #. Description
@@ -77,14 +78,14 @@ msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr ""
-"Bạn cần phải tự khởi chạy lại chúng bằng cách chạy lệnh « /etc/init.d/"
+"Bạn cần phải tự khởi chạy lại chúng bằng cách chạy câu lệnh « /etc/init.d/"
 "<tên_dịch_vụ> start »."
 
 #. Type: error
 #. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
-msgstr ""
+msgstr "xscreensaver và xlockmore phải được khởi chạy lại trước khi nâng cấp"
 
 #. Type: error
 #. Description
@@ -97,3 +98,9 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"Một hai nhiều tiến trình xscreensaver hay xlockmore được phát hiện trên hệ "
+"thống này. Do thay đổi thư viện không tương thích, việc nâng cấp gói libpam-"
+"modules sẽ để lại trường hợp người dùng không thể xác thực với những chương "
+"trình này. Vì thế bạn nên khởi chạy lại hoặc ngừng chạy những chương trình "
+"này trước khi tiếp tục tiến trình nâng cấp, để tránh chặn người dùng đăng "
+"nhập vào buổi hợp đang chạy."
