@@ -2,8 +2,14 @@ pam (1.0.1-6) UNRELEASED; urgency=low
 
   * Updated debconf translations:
     - Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
+  * New patch dont_freeze_password_chain, cherry-picked from upstream:
+    don't always follow the same path through the password stack on
+    the PAM_UPDATE_AUTHTOK pass as was used in the PAM_PRELIM_CHECK
+    pass; this Linux-PAM deviation from the original PAM spec causes a
+    number of problems, in particular causing wrong return values when
+    using the refactored pam-auth-update stack.  LP: #303515, #305882.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 26 Jan 2009 21:09:16 -0800
+ -- Steve Langasek <vorlon@debian.org>  Fri, 27 Feb 2009 16:20:24 -0800
 
 pam (1.0.1-5) unstable; urgency=low
 

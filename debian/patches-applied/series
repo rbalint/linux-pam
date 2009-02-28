@@ -21,3 +21,4 @@ pam_env_ignore_garbage.patch -p2
 pam.d-manpage-section
 pam_unix-chkpwd-wait
 autoconf.patch 
+dont_freeze_password_chain -p0
