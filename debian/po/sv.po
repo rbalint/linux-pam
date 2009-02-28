@@ -79,6 +79,72 @@ msgstr ""
 "Du behöver starta om dessa manuellt genom att köra \"/etc/init.d/<tjänst> "
 "start\"."
 
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid "PAM profiles to enable:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid ""
+"Pluggable Authentication Modules (PAM) determine how authentication, "
+"authorization, and password changing are handled on the system, as well as "
+"allowing configuration of additional actions to take when starting user "
+"sessions."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:1001
+msgid ""
+"Some PAM module packages provide profiles that can be used to automatically "
+"adjust the behavior of all PAM-using applications on the system.  Please "
+"indicate which of these behaviors you wish to enable."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:2001
+msgid "Incompatible PAM profiles selected."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:2001
+msgid "The following PAM profiles cannot be used together:"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:2001
+msgid "${conflicts}"
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:2001
+msgid "Please select a different set of modules to enable."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libpam-runtime.templates:3001
+msgid "Override local changes to /etc/pam.d/common-*?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libpam-runtime.templates:3001
+msgid ""
+"One or more of the files /etc/pam.d/common-{auth,account,password,session} "
+"have been locally modified.  Please indicate whether these local changes "
+"should be overridden using the system-provided configuration.  If you "
+"decline this option, you will need to manage your system's authentication "
+"configuration by hand."
+msgstr ""
+
 #. Type: error
 #. Description
 #: ../libpam-modules.templates:1001

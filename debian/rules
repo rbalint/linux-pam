@@ -96,6 +96,7 @@ binary-indep: install
 
 	dh_installman -i
 	dh_installdocs -i
+	dh_installdebconf -i
 	dh_installchangelogs -i $(BUILD_TREE)/ChangeLog
 	dh_compress -i -X.html
 	dh_link -i
@@ -113,6 +114,8 @@ binary-arch: install
 	mv debian/tmp/lib/*.a debian/tmp/usr/lib
 	dh_movefiles  -plibpam0g-dev -plibpam-cracklib -plibpam0g
 	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*.so`
+	mkdir -p debian/libpam-cracklib/usr/share/pam-configs
+	$(i) $(d)/pam-configs/cracklib debian/libpam-cracklib/usr/share/pam-configs/cracklib
 	dh_link -a
 	dh_installman -a
 	rm -rf $(d)/libpam-modules/usr/share/man/man7
@@ -128,7 +131,7 @@ binary-arch: install
 	dh_installcron -a
 
 	dh_installchangelogs -a $(BUILD_TREE)/ChangeLog
-	for pkg in libpam0g libpam-modules; do \
+	for pkg in libpam0g libpam-modules libpam-runtime; do \
 		install -m 0644 -D $(d)/$$pkg.lintian $(d)/$$pkg/usr/share/lintian/overrides/$$pkg || exit; \
 	done
 
