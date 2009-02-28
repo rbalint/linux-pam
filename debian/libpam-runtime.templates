@@ -14,6 +14,10 @@ _Description: PAM profiles to enable:
 
 Template: libpam-runtime/conflicts
 Type: error
+#flag:translate!:3
+#flag:comment:2
+# This paragraph is followed by a (currently) non-translatable list of
+# PAM profile names.
 _Description: Incompatible PAM profiles selected.
  The following PAM profiles cannot be used together:
  .
