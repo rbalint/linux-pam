@@ -49,10 +49,14 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      for(i = 0; i < RLIM_NLIMITS; i++) {
  	int r = getrlimit(i, &pl->limits[i].limit);
  	if (r == -1) {
-@@ -242,6 +263,41 @@
+@@ -240,8 +261,47 @@
+ 	    }
+ 	} else {
  	    pl->limits[i].supported = 1;
- 	    pl->limits[i].src_soft = LIMITS_DEF_NONE;
- 	    pl->limits[i].src_hard = LIMITS_DEF_NONE;
+-	    pl->limits[i].src_soft = LIMITS_DEF_NONE;
+-	    pl->limits[i].src_hard = LIMITS_DEF_NONE;
++	    pl->limits[i].src_soft = LIMITS_DEF_ALL;
++	    pl->limits[i].src_hard = LIMITS_DEF_ALL;
 +	    switch(i) {
 +		case RLIMIT_CPU:
 +		case RLIMIT_FSIZE:
@@ -87,11 +91,15 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
 +		    pl->limits[i].limit.rlim_cur = 1024;
 +		    pl->limits[i].limit.rlim_max = nofiles_max;
 +		    break;
++		default:
++		    pl->limits[i].src_soft = LIMITS_DEF_NONE;
++		    pl->limits[i].src_hard = LIMITS_DEF_NONE;
++		    break;
 +	    }
  	}
      }
  
-@@ -524,7 +580,7 @@
+@@ -524,7 +584,7 @@
  
              if (strcmp(uname, domain) == 0) /* this user have a limit */
                  process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
@@ -100,7 +108,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -533,7 +589,7 @@
+@@ -533,7 +593,7 @@
                  if (pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1))
                      process_limit(pamh, LIMITS_DEF_GROUP, ltype, item, value, ctrl,
  				  pl);
@@ -109,7 +117,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -547,7 +603,7 @@
+@@ -547,7 +607,7 @@
                      process_limit(pamh, LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
  				  pl);
  		}
@@ -118,7 +126,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
                  process_limit(pamh, LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -582,6 +638,12 @@
+@@ -582,6 +642,12 @@
      int status;
      int retval = LIMITED_OK;
  
@@ -131,7 +139,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
  	if (!pl->limits[i].supported) {
  	    /* skip it if its not known to the system */
-@@ -675,6 +737,8 @@
+@@ -675,6 +741,8 @@
          return PAM_ABORT;
      }
  

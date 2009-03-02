@@ -5,6 +5,9 @@ pam (1.0.1-7) UNRELEASED; urgency=low
     of 1024 by default; try to set this limit to the value of
     /proc/sys/fs/nr_open if we can, or fall back to RLIM_INFINITY.
     Closes: #515673, LP: #327597.
+  * 027_pam_limits_better_init_allow_explicit_root: also fix the patch so
+    that our limit resets are actually *applied*, which has apparently been
+    broken for who knows how long!
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 02 Mar 2009 01:07:43 -0800
 
