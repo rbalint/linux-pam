@@ -8,6 +8,9 @@ pam (1.0.1-7) UNRELEASED; urgency=low
   * 027_pam_limits_better_init_allow_explicit_root: also fix the patch so
     that our limit resets are actually *applied*, which has apparently been
     broken for who knows how long!
+    - shadow the finite kernel defaults for RLIMIT_SIGPENDING and
+      RLIMIT_MSGQUEUE as well, so that the preceding changes don't suddenly
+      expose systems to DoS or other issues.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 02 Mar 2009 01:07:43 -0800
 
