@@ -1,13 +1,13 @@
 pam (1.0.1-7) UNRELEASED; urgency=low
 
-  * 027_pam_limits_better_init_allow_explicit_root: RLIM_INFINITY may or may
-    not be invalid for RLIMIT_NOFILE, but we don't want to set a hard limit
-    of 1024 by default; try to set this limit to the value of
-    /proc/sys/fs/nr_open if we can, or fall back to RLIM_INFINITY.
-    Closes: #515673, LP: #327597.
-  * 027_pam_limits_better_init_allow_explicit_root: also fix the patch so
-    that our limit resets are actually *applied*, which has apparently been
-    broken for who knows how long!
+  * 027_pam_limits_better_init_allow_explicit_root:
+    - RLIM_INFINITY may or may not be invalid for RLIMIT_NOFILE, but we
+      don't want to set a hard limit of 1024 by default; try to set this
+      limit to the value of /proc/sys/fs/nr_open if we can, or fall back
+      to RLIM_INFINITY.  Closes: #515673, LP: #327597.
+    - also fix the patch so that our limit resets are actually
+      *applied*, which has apparently been broken for who knows how
+      long!
     - shadow the finite kernel defaults for RLIMIT_SIGPENDING and
       RLIMIT_MSGQUEUE as well, so that the preceding changes don't suddenly
       expose systems to DoS or other issues.
