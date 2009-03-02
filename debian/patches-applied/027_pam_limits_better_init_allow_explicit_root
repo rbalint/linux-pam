@@ -4,18 +4,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
 ===================================================================
 --- pam.deb.orig/modules/pam_limits/pam_limits.c
 +++ pam.deb/modules/pam_limits/pam_limits.c
-@@ -55,6 +55,10 @@
- #define LIMITS_DEF_DEFAULT  4 /* limit was set by an default entry */
- #define LIMITS_DEF_NONE     5 /* this limit was not set yet */
- 
-+/* file in /proc on Linux that we read to get the total number of open
-+   files allowed on the system */
-+#define NR_OPEN_FILES "/proc/sys/fs/nr_open"
-+
- static const char *limits_def_names[] = {
-        "USER",
-        "GROUP",
-@@ -74,6 +78,7 @@
+@@ -74,6 +74,7 @@
  
  /* internal data */
  struct pam_limit_s {
@@ -23,33 +12,15 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      int login_limit;     /* the max logins limit */
      int login_limit_def; /* which entry set the login limit */
      int flag_numsyslogins; /* whether to limit logins only for a
-@@ -228,9 +233,25 @@
- {
-     int i;
-     int retval = PAM_SUCCESS;
-+    static rlim_t nofiles_max = RLIM_INFINITY;
-+    static int nofiles_init = 0;
+@@ -231,6 +232,7 @@
  
      D(("called."));
  
-+    if (nofiles_init == 0) {
-+	FILE *nr_open;
-+	unsigned long long ull_nofiles = 0;
-+
-+	nofiles_init = 1;
-+	nr_open = fopen(NR_OPEN_FILES, "r");
-+	if (nr_open != NULL) {
-+	    if (fscanf(nr_open, "%Lu", &ull_nofiles) == 1)
-+		nofiles_max = ull_nofiles;
-+	    fclose(nr_open);
-+	}
-+    }
-+
 +    pl->root = 0;
      for(i = 0; i < RLIM_NLIMITS; i++) {
  	int r = getrlimit(i, &pl->limits[i].limit);
  	if (r == -1) {
-@@ -240,8 +261,53 @@
+@@ -240,8 +242,53 @@
  	    }
  	} else {
  	    pl->limits[i].supported = 1;
@@ -95,7 +66,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
 +		    break;
 +		case RLIMIT_NOFILE:
 +		    pl->limits[i].limit.rlim_cur = 1024;
-+		    pl->limits[i].limit.rlim_max = nofiles_max;
++		    pl->limits[i].limit.rlim_max = 1024;
 +		    break;
 +		default:
 +		    pl->limits[i].src_soft = LIMITS_DEF_NONE;
@@ -105,7 +76,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  	}
      }
  
-@@ -524,7 +590,7 @@
+@@ -524,7 +571,7 @@
  
              if (strcmp(uname, domain) == 0) /* this user have a limit */
                  process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
@@ -114,7 +85,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -533,7 +599,7 @@
+@@ -533,7 +580,7 @@
                  if (pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1))
                      process_limit(pamh, LIMITS_DEF_GROUP, ltype, item, value, ctrl,
  				  pl);
@@ -123,7 +94,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -547,7 +613,7 @@
+@@ -547,7 +594,7 @@
                      process_limit(pamh, LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
  				  pl);
  		}
@@ -132,7 +103,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
                  process_limit(pamh, LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -582,6 +648,12 @@
+@@ -582,6 +629,12 @@
      int status;
      int retval = LIMITED_OK;
  
@@ -145,7 +116,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
  	if (!pl->limits[i].supported) {
  	    /* skip it if its not known to the system */
-@@ -675,6 +747,8 @@
+@@ -675,6 +728,8 @@
          return PAM_ABORT;
      }
  
