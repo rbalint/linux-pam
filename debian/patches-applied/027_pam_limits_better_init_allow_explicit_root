@@ -125,3 +125,87 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      retval = parse_config_file(pamh, pwd->pw_name, ctrl, pl);
      if (retval == PAM_IGNORE) {
  	D(("the configuration file ('%s') has an applicable '<domain> -' entry", CONF_FILE));
+Index: pam.deb/modules/pam_limits/limits.conf
+===================================================================
+--- pam.deb.orig/modules/pam_limits/limits.conf
++++ pam.deb/modules/pam_limits/limits.conf
+@@ -11,6 +11,9 @@
+ #        - the wildcard *, for default entry
+ #        - the wildcard %, can be also used with %group syntax,
+ #                 for maxlogin limit
++#        - NOTE: group and wildcard limits are not applied to root.
++#          To apply a limit to the root user, <domain> must be
++#          the literal username root.
+ #
+ #<type> can have the two values:
+ #        - "soft" for enforcing the soft limits
+@@ -41,6 +44,7 @@
+ #
+ 
+ #*               soft    core            0
++#root            hard    core            100000
+ #*               hard    rss             10000
+ #@student        hard    nproc           20
+ #@faculty        soft    nproc           20
+Index: pam.deb/modules/pam_limits/limits.conf.5.xml
+===================================================================
+--- pam.deb.orig/modules/pam_limits/limits.conf.5.xml
++++ pam.deb/modules/pam_limits/limits.conf.5.xml
+@@ -57,6 +57,11 @@
+               </para>
+             </listitem>
+           </itemizedlist>
++	  <para>
++	    <emphasis remap='B'>NOTE:</emphasis> group and wildcard limits are not
++	    applied to the root user.  To set a limit for the root user, this field
++	    must contain the literal username <emphasis remap='B'>root</emphasis>.
++	  </para>
+         </listitem>
+       </varlistentry>
+ 
+@@ -266,6 +271,7 @@
+     </para>
+     <programlisting>
+ *               soft    core            0
++root            hard    core            100000
+ *               hard    rss             10000
+ @student        hard    nproc           20
+ @faculty        soft    nproc           20
+Index: pam.deb/modules/pam_limits/limits.conf.5
+===================================================================
+--- pam.deb.orig/modules/pam_limits/limits.conf.5
++++ pam.deb/modules/pam_limits/limits.conf.5
+@@ -1,11 +1,11 @@
+ .\"     Title: limits.conf
+ .\"    Author: 
+ .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+-.\"      Date: 07/27/2008
++.\"      Date: 11/09/2008
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"
+-.TH "LIMITS\&.CONF" "5" "07/27/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "LIMITS\&.CONF" "5" "11/09/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
+ .\" disable hyphenation
+ .nh
+ .\" disable justification (adjust text to left margin only)
+@@ -48,6 +48,11 @@
+ \fI%group\fR
+ syntax\&.
+ .RE
++.IP "" 4
++
++\fBNOTE:\fR
++group and wildcard limits are not applied to the root user\&. To set a limit for the root user, this field must contain the literal username
++\fBroot\fR\&.
+ .RE
+ .PP
+ \fB<type>\fR
+@@ -204,6 +209,7 @@
+ .RS 4
+ .nf
+ *               soft    core            0
++root            hard    core            100000
+ *               hard    rss             10000
+ @student        hard    nproc           20
+ @faculty        soft    nproc           20
