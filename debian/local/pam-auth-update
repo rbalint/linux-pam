@@ -45,12 +45,13 @@ my %md5sums = (
 	'account' => ['3c0c362eaf3421848b679d63fd48c3fa'],
 	'password' => [
 		'4bd7610f2e85f8ddaef79c7db7cb49eb',
+		'9ba753d0824276b44bcadfee1f87b6bc',
 		'3532cbabf533d59f0b64218ad82f1446',
 	],
 	'session' => [
 		'240fb92986c885b327cdb21dd641da8c',
 		'1bd2f3e86f552c57f5ee013b93ffca2b',
-		'1a1bda3d417991dd366984ca7382f787',
+		'4a25673e8b36f1805219027d3be02cd2',
 	],
 );
 

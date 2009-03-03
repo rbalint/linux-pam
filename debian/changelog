@@ -8,6 +8,8 @@ pam (1.0.1-7) UNRELEASED; urgency=low
       suddenly expose systems to DoS or other issues.
     - include documentation in the patch, giving examples of how to set 
       limits for root.  Thanks to Jonathan Marsden.
+  * pam-auth-update: swap out known md5sums from intrepid pre-release 
+    versions with the md5sums from the released intrepid version
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 02 Mar 2009 01:07:43 -0800
 
