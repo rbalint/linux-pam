@@ -1,3 +1,10 @@
+pam (1.0.1-8) UNRELEASED; urgency=low
+
+  * Updated debconf translations:
+    - Bulgarian, thanks to Damyan Ivanov <dmn@debian.org> (closes: #518121)
+
+ -- Steve Langasek <vorlon@debian.org>  Wed, 04 Mar 2009 11:37:27 -0800
+
 pam (1.0.1-7) unstable; urgency=low
 
   * 027_pam_limits_better_init_allow_explicit_root:
