@@ -163,6 +163,8 @@ EOF
 	exit;
 }
 
+umask(0022);
+
 do {
 	@conflicts = ();
 	input($priority,$template);

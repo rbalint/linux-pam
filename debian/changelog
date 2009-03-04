@@ -10,6 +10,9 @@ pam (1.0.1-7) UNRELEASED; urgency=low
       limits for root.  Thanks to Jonathan Marsden.
   * pam-auth-update: swap out known md5sums from intrepid pre-release 
     versions with the md5sums from the released intrepid version
+  * pam-auth-update: set the umask, so we don't accidentally mark
+    /etc/pam.d/common-* unreadable.  Thanks to Martin Krafft for catching.
+    Closes: #518042.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 02 Mar 2009 01:07:43 -0800
 
