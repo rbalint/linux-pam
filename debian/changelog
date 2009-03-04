@@ -2,6 +2,8 @@ pam (1.0.1-8) UNRELEASED; urgency=low
 
   * Updated debconf translations:
     - Bulgarian, thanks to Damyan Ivanov <dmn@debian.org> (closes: #518121)
+    - Spanish, thanks to Javier Fernandez-Sanguino Peña <jfs@debian.org>
+      (closes: #518214)
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 04 Mar 2009 11:37:27 -0800
 
