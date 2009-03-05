@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-5\n"
+"Project-Id-Version: pam 1.0.1-7\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-02-28 13:06-0800\n"
-"PO-Revision-Date: 2009-01-26 23:08+1030\n"
+"PO-Revision-Date: 2009-03-06 00:05+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Các hồ sơ PAM cần bật:"
 
 #. Type: multiselect
 #. Description
@@ -96,6 +96,9 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Mô-đun Xác thực Dễ kết hợp (PAM) quyết định quá trình xác thực, cho phép và "
+"thay đổi mật khẩu được quản lý như thế nào trên hệ thống, cũng như cho phép "
+"cấu hình các hành vi bổ sung cần làm khi khởi chạy buổi hợp người dùng."
 
 #. Type: multiselect
 #. Description
@@ -105,12 +108,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Một số mô-đun PAM nào đó cũng cung cấp các hồ sơ có thể được dùng để tự động "
+"điều chỉnh ứng xử của tất cả các ứng dụng dùng PAM trên hệ thống. Hãy ngụ ý "
+"những ứng xử nào bạn muốn hiệu lực."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Bạn đã chọn một số hồ sơ PAM không tương thích với nhau."
 
 #. Type: error
 #. Description
@@ -118,19 +124,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Không thể sử dụng với nhau những hồ sơ PAM theo đây:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Hãy chọn một tập hợp mô-đun khác để hiệu lực."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Có quyền cao hơn thay đổi cục bộ trong « /etc/pam.d/common-* » không?"
 
 #. Type: boolean
 #. Description
@@ -142,6 +148,10 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Một hay nhiều tập tin « /etc/pam.d/common-{auth,account,password,session} » "
+"đã bị sửa đổi cục bộ. Hãy ngụ ý có nên ghi đè lên các thay đổi cục bộ này "
+"dùng cấu hình được hệ thống cung cấp, hay không. Không bật tuỳ chọn này thì "
+"bạn cần phải tự quản lý cấu hình xác thực của hệ thống này."
 
 #. Type: error
 #. Description

@@ -5,6 +5,8 @@ pam (1.0.1-8) UNRELEASED; urgency=low
     - Spanish, thanks to Javier Fernandez-Sanguino Peña <jfs@debian.org>
       (closes: #518214)
     - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #518324)
+    - Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
+      (closes: #518329)
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 04 Mar 2009 11:37:27 -0800
 
