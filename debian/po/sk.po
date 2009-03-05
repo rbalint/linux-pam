@@ -1,7 +1,6 @@
-# Slovak translation of pam
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pam package.
-# Ivan Masár <helix84@centrum.sk>, 2008.
+# Ivan Masár <helix84@centrum.sk>, 2008, 2009.
 #
 msgid ""
 msgstr ""
@@ -82,7 +81,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Zapnúř nasledovné profily PAM:"
 
 #. Type: multiselect
 #. Description
@@ -93,6 +92,9 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Zásuvné autentifikačné moduly (PAM) určujú ako systém pracuje s "
+"autentifikáciou, autorizáciou, zmenou hesiel a umožňuje tiež nastavenie "
+"ďalších operácií, ktoré sa majú vykonať pri prihlásení používateľa."
 
 #. Type: multiselect
 #. Description
@@ -102,12 +104,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Niektoré balíky modulov PAM poskytujú profily, ktorými možno automaticky "
+"prisôpsobiť správanie všetkých aplikácií v systéme, ktoré používajú PAM. "
+"Prosím označte tie z nich, ktoré chcete zapnúť."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Boli vybrané nekompatibilné profily PAM."
 
 #. Type: error
 #. Description
@@ -115,19 +120,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Nasledovné profily PAM nemožno použiť súčasne:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Prosím, zmeňte množinu modulov, ktoré sa majú zapnúť."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Prepísať lokálne zmeny v /etc/pam.d/common-*?"
 
 #. Type: boolean
 #. Description
@@ -139,6 +144,11 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Jeden alebo viac zo súborov /etc/pam.d/common-{auth,account,password,"
+"session} bolo na lokálnom systéme zmenených. Uveďte prosím, či sa majú tieto "
+"lokálne zmeny prepísať štandardnými konfiguračnými voľbami. Ak túto možnosť "
+"zamietnete, budete musieť spravovať nastavenia autentifikácie tohto systému "
+"ručne."
 
 #. Type: error
 #. Description

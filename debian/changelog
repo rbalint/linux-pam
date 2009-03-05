@@ -8,6 +8,7 @@ pam (1.0.1-8) UNRELEASED; urgency=low
     - Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
       (closes: #518329)
     - Japanese, thanks to Kenshi Muto <kmuto@debian.org> (closes: #518335) 
+    - Slovak, thanks to Ivan Masár <helix84@centrum.sk> (closes: #518341)
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 04 Mar 2009 11:37:27 -0800
 
