@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-02-28 13:06-0800\n"
-"PO-Revision-Date: 2009-01-01 10:59+0100\n"
+"PO-Revision-Date: 2009-03-05 13:51+0100\n"
 "Last-Translator: Martin Bagge <brother@bsnet.se>\n"
 "Language-Team: Swedish <debian-l10n-swedish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -83,7 +83,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Aktivera följande PAM-profiler:"
 
 #. Type: multiselect
 #. Description
@@ -94,6 +94,10 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Pluggable Authentication Modules (PAM) hanterar hur autentisering, "
+"identifiering och byte av lösenord ska utföras på systemet. Dessutom "
+"hanteras särskilda åtgärder som ska vidtas vid uppstarta av "
+"användarsessioner."
 
 #. Type: multiselect
 #. Description
@@ -103,12 +107,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Vissa paket med PAM-moduler tillhandahåller profiler som kan användas för "
+"att automatiskt justera hur applikationer som använder PAM fungerar på "
+"systemet. Ange vilka av dessa funkitoner du önskar aktivera."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Inkompatibla PAM-profiler har valdes."
 
 #. Type: error
 #. Description
@@ -116,19 +123,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Följande PAM-profiler kan inte användas tillsammans:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Ange en annan uppsättning med moduler som ska aktiveras."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Skriva över lokala förändringar i /etc/pam.d/common-*?"
 
 #. Type: boolean
 #. Description
@@ -140,6 +147,10 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"En eller flera av filerna /etc/pam.d/common-{auth,account.password,session} "
+"har förändrats. Ange om dessa lokala förändringar ska skrivas över med "
+"standardinställningarna. Om du avböjer detta alternativ kommer du behöva "
+"hantera inställningarna för systemets autentisering manuellt."
 
 #. Type: error
 #. Description
