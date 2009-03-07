@@ -9,6 +9,8 @@ pam (1.0.1-8) UNRELEASED; urgency=low
       (closes: #518329)
     - Japanese, thanks to Kenshi Muto <kmuto@debian.org> (closes: #518335) 
     - Slovak, thanks to Ivan Masár <helix84@centrum.sk> (closes: #518341)
+  * 027_pam_limits_better_init_allow_explicit_root: set the RLIMIT_MEMLOCK
+    limit correctly to match the kernel default, which is not RLIM_INFINITY.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 04 Mar 2009 11:37:27 -0800
 
