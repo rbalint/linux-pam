@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-02-28 13:06-0800\n"
-"PO-Revision-Date: 2009-01-03 16:49+0100\n"
+"PO-Revision-Date: 2009-03-09 19:58+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -83,7 +83,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "PAM profily, které se mají povolit:"
 
 #. Type: multiselect
 #. Description
@@ -94,6 +94,9 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Moduly PAM (Pluggable Authentication Modules) určují, jakým způsobem je na "
+"systému řešena autentizace, autorizace, změna hesel a také umožňují nastavit "
+"dodatečné akce při spouštění uživatelských sezení."
 
 #. Type: multiselect
 #. Description
@@ -103,12 +106,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Některé balíky s PAM moduly poskytují profily, které mohou automaticky "
+"upravit chování všech aplikací používajících PAM. Vyberte si, která chování "
+"chcete povolit."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Vybrány nekompatibilní PAM profily."
 
 #. Type: error
 #. Description
@@ -116,19 +122,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Následující PAM profily nelze používat současně:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Povolte prosím jinou sadu modulů."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Přepsat místní změny v /etc/pam.d/common-*?"
 
 #. Type: boolean
 #. Description
@@ -140,6 +146,9 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Některé ze souborů /etc/pam.d/common-{auth,account,password,session} "
+"obsahují místní úpravy. Vyberte si, zda se mají tyto změny přepsat verzí z "
+"balíku. Zamítnete-li tuto možnost, budete muset spravovat tyto soubory ručně."
 
 #. Type: error
 #. Description
