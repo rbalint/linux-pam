@@ -5,10 +5,10 @@
 # Américo Monteiro <a_monteiro@netcabo.pt>, 2007, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-5\n"
+"Project-Id-Version: pam 1.0.1-7\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-02-28 13:06-0800\n"
-"PO-Revision-Date: 2009-01-01 02:01+0000\n"
+"PO-Revision-Date: 2009-03-10 22:53+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@netcabo.pt>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,14 +33,14 @@ msgid ""
 msgstr ""
 "A maioria dos serviços que usam PAM precisam ser reiniciados para usarem os "
 "módulos construidos para esta nova versão do libpam.  Por favor, reveja a "
-"seguinte lista de scripts init.d de serviços para serem reiniciados agora "
-"(separados por espaços), e corrija-a se for necessário."
+"seguinte lista de scripts init.d de serviços, separados por espaços, para "
+"serem reiniciados agora e corrija-a se for necessário."
 
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr "O gestor de display tem que ser reiniciado manualmente"
+msgstr "O gestor de sessão gráfica tem que ser reiniciado manualmente"
 
 #. Type: error
 #. Description
@@ -51,9 +51,9 @@ msgid ""
 "be terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
-"Os gestores de display kdm, wdm, e xdm necessitam de reiniciar para a nova "
-"versão de libpam, mas existem sessões de login X activas no seu sistema que "
-"seriam terminadas por esta reiniciação. Então, você irá necessitar de "
+"Os gestores de sessão gráfica kdm, wdm, e xdm necessitam de reiniciar para a "
+"nova versão de libpam, mas existem sessões de login X activas no seu sistema "
+"que seriam terminadas por esta operação. Então, você irá necessitar de "
 "reiniciar estes serviços manualmente antes que sejam possíveis mais logins X."
 
 #. Type: error
@@ -79,13 +79,13 @@ msgid ""
 "start'."
 msgstr ""
 "Você precisa de iniciar manualmente estes serviços fazendo '/etc/init.d/"
-"<service> start'."
+"<serviço> start'."
 
 #. Type: multiselect
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Perfis PAM para activar:"
 
 #. Type: multiselect
 #. Description
@@ -96,6 +96,10 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"O PAM (Pluggable Authentication Modules) determina como a autenticação, a "
+"autorização, e a mudança de palavras-chave são manuseadas no sistema, assim "
+"como permitir a configuração de acções adicionais a tomar quando arrancam "
+"sessões de utilizador."
 
 #. Type: multiselect
 #. Description
@@ -105,12 +109,16 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Alguns pacotes de módulos do PAM disponibilizam perfis que podem ser usados "
+"para ajustar automaticamente o comportamento de todas as aplicações no "
+"sistema que usam o PAM. Por favor indique quais destes comportamentos deseja "
+"activar."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Perfis PAM incompatíveis seleccionados."
 
 #. Type: error
 #. Description
@@ -118,19 +126,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Os seguintes perfis do PAM não podem ser usados juntamente:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Por favor seleccione um conjunto diferente de módulos para activar."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Sobreescrever as alterações locais em /etc/pam.d/common-*?"
 
 #. Type: boolean
 #. Description
@@ -142,6 +150,11 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Um ou mais dos ficheiros /etc/pam.d/common-{auth,account,password,session} "
+"foi modificado localmente. Por favor indique se estas alterações locais "
+"deverão ser sobreescritas usando a configuração disponibilizada pelo "
+"sistema. Se você recusar esta opção, irá precisar de gerir a configuração de "
+"autenticação do sistema manualmente."
 
 #. Type: error
 #. Description
