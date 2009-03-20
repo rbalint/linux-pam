@@ -1,16 +1,17 @@
-# translation of templates.po to Romanian
+# Romanian translation of pam debconf templates
 # Debconf questions for the Linux-PAM package.
 # Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
 # This file is distributed under the same license as the pam package.
 #
 # Igor Stirbu <igor.stirbu@gmail.com>, 2008.
+# Eddy Petrișor <eddy.petrisor@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: templates\n"
+"Project-Id-Version: pam 1.0.1-7\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-02-28 13:06-0800\n"
-"PO-Revision-Date: 2008-07-21 10:28+0300\n"
-"Last-Translator: Igor Stirbu <igor.stirbu@gmail.com>\n"
+"PO-Revision-Date: 2009-03-12 01:49+0200\n"
+"Last-Translator: Eddy Petrișor <eddy.petrisor@gmail.com>\n"
 "Language-Team: Romanian <debian-l10n-romanian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,7 +73,8 @@ msgstr "Eșec la repornirea unor servicii la actualizarea PAM"
 msgid ""
 "The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
-"Umătoarele servicii nu au putut fi repornite la actualizarea bibliotecii PAM:"
+"Următoarele servicii nu au putut fi repornite la actualizarea bibliotecii "
+"PAM:"
 
 #. Type: error
 #. Description
@@ -88,7 +90,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Profile PAM de activat:"
 
 #. Type: multiselect
 #. Description
@@ -99,6 +101,10 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Modulele de autentificare conectabile (PAM) definesc cum se manevrează în "
+"sistem autentificările, autorizațiile și schimbările de parole, dar permite "
+"și adăugarea de diverse acțiuni ce se vor efectua la pornirea sesiunilor "
+"utilizatorilor."
 
 #. Type: multiselect
 #. Description
@@ -108,12 +114,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Unele pachete de module PAM furnizează profile care pot fi folosite pentru "
+"ajustarea automată a comportamentului aplicațiilor din sistem care folosesc "
+"PAM. Indicați pe care dintre aceste comportamente le doriți activate."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Selecție de profile PAM incompatibile."
 
 #. Type: error
 #. Description
@@ -121,19 +130,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Următoarele profile PAM nu pot fi folosite împreună:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Selectați un alt set de module de activat."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Se ignoră schimbările locale făcute în /etc/pam.d/common-*?"
 
 #. Type: boolean
 #. Description
@@ -145,12 +154,16 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Există modificari locale într-unul sau mai multe dintre fișierele /etc/pam.d/"
+"common-{auth,account,password,session}. Precizați dacă aceste schimbări "
+"locale trebuie suprascrise cu configurația oferită de sistem. Dacă refuzați, "
+"va trebui să administrați manual configurația de autentificare a sistemului."
 
 #. Type: error
 #. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
-msgstr ""
+msgstr "xscreensaver și xlockmore trebuie repornite înainte de înnoire"
 
 #. Type: error
 #. Description
@@ -163,3 +176,9 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"în sistem s-a detectat cel puțin o instanță activa de xscreensaver sau "
+"xlockmore. Datorită unor schimbări de compatibilitate în biblioteci, "
+"înnoirea pachetului libpam-modules nu vă va mai permite să vă autentificați "
+"în aceste programe. Va trebui să aranjați lucrurile în așa fel încât aceste "
+"programe să fie repornite sau oprite înainte de a continua înnoirea pentru a "
+"evita blocarea utilizatorilor în afara sesiunilor lor curente."
