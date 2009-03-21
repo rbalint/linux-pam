@@ -28,6 +28,7 @@ Description: Pluggable Authentication Modules library
  applications themselves.
 
 Package: libpam-modules
+Section: admin
 Priority: required
 Architecture: any
 Pre-Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -69,6 +70,7 @@ Description: Development files for PAM
  rewriting the applications.
 
 Package: libpam-cracklib
+Section: admin
 Priority: optional
 Architecture: any
 Replaces: libpam0g-cracklib
