@@ -1,4 +1,4 @@
-pam (1.0.1-8) UNRELEASED; urgency=low
+pam (1.0.1-8) unstable; urgency=low
 
   * Updated debconf translations:
     - Bulgarian, thanks to Damyan Ivanov <dmn@debian.org> (closes: #518121)
@@ -20,7 +20,7 @@ pam (1.0.1-8) UNRELEASED; urgency=low
     limit correctly to match the kernel default, which is not RLIM_INFINITY.
     Closes: #472629.
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 04 Mar 2009 11:37:27 -0800
+ -- Steve Langasek <vorlon@debian.org>  Fri, 20 Mar 2009 18:15:07 -0700
 
 pam (1.0.1-7) unstable; urgency=low
 
