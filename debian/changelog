@@ -1,11 +1,11 @@
-pam (1.0.1-9) UNRELEASED; urgency=low
+pam (1.0.1-9) unstable; urgency=low
 
   * Move the pam module packages to section 'admin'.
   * 027_pam_limits_better_init_allow_explicit_root: defaults need to be
     declared as LIMITS_DEF_DEFAULT instead of LIMITS_DEF_ALL, otherwise
     global limits will fail to be applied.  LP: #314222.
 
- -- Steve Langasek <vorlon@debian.org>  Fri, 20 Mar 2009 19:17:30 -0700
+ -- Steve Langasek <vorlon@debian.org>  Fri, 20 Mar 2009 19:48:47 -0700
 
 pam (1.0.1-8) unstable; urgency=low
 
