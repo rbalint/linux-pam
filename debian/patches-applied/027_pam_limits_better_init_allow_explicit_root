@@ -48,8 +48,8 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  	    pl->limits[i].supported = 1;
 -	    pl->limits[i].src_soft = LIMITS_DEF_NONE;
 -	    pl->limits[i].src_hard = LIMITS_DEF_NONE;
-+	    pl->limits[i].src_soft = LIMITS_DEF_ALL;
-+	    pl->limits[i].src_hard = LIMITS_DEF_ALL;
++	    pl->limits[i].src_soft = LIMITS_DEF_DEFAULT;
++	    pl->limits[i].src_hard = LIMITS_DEF_DEFAULT;
 +	    switch(i) {
 +		case RLIMIT_CPU:
 +		case RLIMIT_FSIZE:
