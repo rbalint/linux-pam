@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: pam 0.99.7.1-4\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-02-28 13:06-0800\n"
-"PO-Revision-Date: 2009-01-01 12:27+0200\n"
+"PO-Revision-Date: 2009-03-22 19:57+0200\n"
 "Last-Translator: Esko Arajärvi <edu@iki.fi>\n"
 "Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgid ""
 "needed."
 msgstr ""
 "Useimmat PAMia käyttävät palvelut pitää käynnistää uudelleen libpamin uuden "
-"version käyttöönottamiseksi. Tarkista seuraava välilyönnein eroteltu lista "
+"version käyttöön ottamiseksi. Tarkista seuraava välilyönnein eroteltu lista "
 "niiden palveluiden init.d-komentotiedostoista, jotka käynnistetään "
 "uudelleen, ja muokkaa listaa tarvittaessa."
 
@@ -47,19 +47,17 @@ msgid ""
 "be terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
-"Näytönhallintaohjelmat kdm, wdm ja zdm tulee käynnistää uudelleen, jotta "
+"Näytönhallintaohjelma kdm, wdm tai xdm tulee käynnistää uudelleen, jotta "
 "libpamin uusi versio tulee käyttöön. Järjestelmässä on kuitenkin aktiivisia "
-"X-istuntoja, jotka lopetettaisiin tämän uudelleenkäynnistyksen yhteydessä. "
-"Tästä syystä nämä palvelut tulee käynnistää uudelleen käsin ennen kuin uusia "
-"X-istuntoja voidaan avata."
+"X-istuntoja, jotka lopetettaisiin uudelleenkäynnistyksen yhteydessä. Tästä "
+"syystä palvelu tulee käynnistää uudelleen käsin ennen kuin uusia X-istuntoja "
+"voidaan avata."
 
 #. Type: error
 #. Description
 #: ../libpam0g.templates:3001
 msgid "Failure restarting some services for PAM upgrade"
-msgstr ""
-"Virhe PAM:in päivityksen yhteydessä käynnistettäessä uudelleen joitain "
-"palveluita"
+msgstr "Virhe käynnistettäessä uudelleen palveluita PAMin päivitystä varten"
 
 #. Type: error
 #. Description
@@ -77,14 +75,14 @@ msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr ""
-"Nämä palvelut tulee käynnistää uudelleen ajamalla '/etc/init.d/<palvelu> "
-"start'."
+"Nämä palvelut tulee käynnistää uudelleen ajamalla ”/etc/init.d/<palvelu> "
+"start”."
 
 #. Type: multiselect
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Käyttöön otettavat PAM-profiilit:"
 
 #. Type: multiselect
 #. Description
@@ -95,6 +93,10 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Pluggable Authentication Modules (PAM) määrittää kuinka tunnistautuminen, "
+"oikeuksien hallinta ja salasanan vaihto tehdään järjestelmässä. Se "
+"mahdollistaa myös käyttäjäistuntojen käynnistyksen yhdessä suoritettavien "
+"lisätoimintojen asetusten muokkaamisen."
 
 #. Type: multiselect
 #. Description
@@ -104,12 +106,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Eräiden PAMin moduulipakettien tarjoamien profiilien avulla voidaan "
+"automaattisesti muokata järjestelmän kaikkien PAMia käyttävien ohjelmien "
+"toimintaa. Valitse mitkä näistä toiminnoista otetaan käyttöön."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Epäyhteensopivia PAM-profiileita valittu"
 
 #. Type: error
 #. Description
@@ -117,19 +122,21 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Seuraavia PAM-profiileita ei voida käyttää yhdessä:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Valitse uusi käyttöön otettavien moduulien joukko."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
 msgstr ""
+"Kirjoitetaanko paikallisten muutosten päälle tiedostoissa /etc/pam.d/common-"
+"*?"
 
 #. Type: boolean
 #. Description
@@ -141,6 +148,10 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Joitain tiedostoista /etc/pam.d/common-{auth,account,password,session} on "
+"muokattu paikallisesti. Valitse tulisiko paikalliset muutokset korvata "
+"järjestelmän tarjoamilla asetuksilla. Jos et valitse tätä vaihtoehtoa, "
+"järjestelmän tunnistautumisasetuksia täytyy hallinnoida käsin."
 
 #. Type: error
 #. Description

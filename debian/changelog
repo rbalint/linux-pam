@@ -1,3 +1,10 @@
+pam (1.0.1-10) UNRELEASED; urgency=low
+
+  * Updated debconf translations:
+    - Finnish, thanks to Esko Arajärvi <edu@iki.fi> (closes: #520785)
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 22 Mar 2009 20:36:14 -0700
+
 pam (1.0.1-9) unstable; urgency=low
 
   * Move the pam module packages to section 'admin'.
