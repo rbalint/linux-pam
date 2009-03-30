@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Yuri Kozlov <kozlov.y@gmail.com>, 2007.
+# Max Kosmach <max@tcen.ru>, 2009.
 # Yuri Kozlov <yuray@komyakino.ru>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-5\n"
+"Project-Id-Version: pam 1.0.1-7\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-02-28 13:06-0800\n"
-"PO-Revision-Date: 2009-01-01 13:11+0300\n"
+"PO-Revision-Date: 2009-03-29 11:19+0400\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,9 +36,9 @@ msgid ""
 "needed."
 msgstr ""
 "Чтобы задействовать новые версии модулей из libpam нужно перезапустить "
-"большинство служб, использующих PAM. Внимательно просмотрите и при "
-"необходимости отредактируйте список (элементы разделяются пробелом) "
-"сценариев из init.d для служб, которые будут перезапущены."
+"большинство служб, использующих PAM. Внимательно просмотрите и, при "
+"необходимости, отредактируйте список сценариев из init.d для служб, которые "
+"будут перезапущены. Элементы списка разделяются пробелом."
 
 #. Type: error
 #. Description
@@ -85,7 +86,7 @@ msgstr "Вам нужно запустить их вручную, выполни
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Активируемые профили PAM:"
 
 #. Type: multiselect
 #. Description
@@ -96,6 +97,10 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Через подключаемые модули аутентификации (PAM) указывается как нужно "
+"проводить аутентификацию, авторизацию и смену пароля в системе, а также "
+"можно назначать запуск дополнительных действий при старте пользовательского "
+"сеанса."
 
 #. Type: multiselect
 #. Description
@@ -105,12 +110,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Некоторые пакеты модулей PAM предоставляют профили, которые можно "
+"использовать для автоматического регулирования поведения всех использующих "
+"PAM программ в системе. Выберите профили, которые нужно применить."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Выбраны несовместимые профили PAM."
 
 #. Type: error
 #. Description
@@ -118,19 +126,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Следующие профили PAM нельзя использовать одновременно:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Выберите другой набор активируемых модулей."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Переопределить локальные изменения в /etc/pam.d/common-*?"
 
 #. Type: boolean
 #. Description
@@ -142,6 +150,10 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Один или более файлов в /etc/pam.d/common-{auth,account,password,session} "
+"был изменён вручную. Заметьте, что данные локальные изменения должны быть "
+"переопределены через системные настройки. Если вы ответите отрицательно, то "
+"вам придётся управлять настройками аутентификации системы вручную."
 
 #. Type: error
 #. Description

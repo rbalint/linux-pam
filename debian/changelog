@@ -2,6 +2,7 @@ pam (1.0.1-10) UNRELEASED; urgency=low
 
   * Updated debconf translations:
     - Finnish, thanks to Esko Arajärvi <edu@iki.fi> (closes: #520785)
+    - Russian, thanks to Yuri Kozlov <yuray@komyakino.ru> (closes: #521874)
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 22 Mar 2009 20:36:14 -0700
 
