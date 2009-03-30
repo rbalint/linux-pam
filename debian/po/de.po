@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-5\n"
+"Project-Id-Version: pam 1.0.1-9\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-02-28 13:06-0800\n"
-"PO-Revision-Date: 2009-01-03 09:17+0100\n"
+"PO-Revision-Date: 2009-03-25 20:51+0100\n"
 "Last-Translator: Sven Joachim <svenjoac@gmx.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,8 +53,8 @@ msgid ""
 msgstr ""
 "Die Display-Manager kdm, wdm und xdm erfordern einen Neustart für die neue "
 "Version von libpam, aber auf Ihrem System sind X-Login-Sitzungen aktiv, die "
-"von diesem Neustart beendet werden würden. Sie müssen diese Dienste daher "
-"von Hand neu starten, bevor Logins unter X wieder möglich sind."
+"durch diesen Neustart beendet würden. Sie müssen diese Dienste daher von "
+"Hand neu starten, bevor Logins unter X wieder möglich sind."
 
 #. Type: error
 #. Description
@@ -85,7 +85,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Zu aktivierende PAM-Profile:"
 
 #. Type: multiselect
 #. Description
@@ -96,6 +96,10 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Pluggable Authentication Modules (PAM) bestimmen, wie Authentifizierung, "
+"Berechtigung und Passwort-Änderung auf dem System gehandhabt werden. Ebenso "
+"erlauben sie die Konfiguration zusätzlicher Maßnahmen, die beim Start von "
+"Benutzersitzungen vorgenommen werden."
 
 #. Type: multiselect
 #. Description
@@ -105,12 +109,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Einige Pakete mit PAM-Modulen stellen Profile bereit, die das Verhalten "
+"aller Anwendungen, die PAM verwenden, automatisch anpassen können. Bitte "
+"geben Sie an, welche dieser Verhaltensweisen Sie aktivieren möchten."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Inkompatible PAM-Profile ausgewählt."
 
 #. Type: error
 #. Description
@@ -118,19 +125,20 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Die folgenden PAM-Profile können nicht gemeinsam verwendet werden:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
 msgstr ""
+"Bitte wählen Sie eine andere Zusammenstellung zu aktivierender Module aus."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Lokale Änderungen an /etc/pam.d/common-* außer Kraft setzen?"
 
 #. Type: boolean
 #. Description
@@ -142,6 +150,11 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Eine oder mehrere der Dateien /etc/pam.d/common-{auth,account,password,"
+"session} sind lokal verändert worden. Bitte geben Sie an, ob diese "
+"Änderungen durch die mitgelieferte Konfiguration außer Kraft gesetzt werden "
+"sollen. Falls Sie diese Option ablehnen, müssen Sie die Authentifizierungs-"
+"Konfiguration Ihres Systems von Hand verwalten."
 
 #. Type: error
 #. Description
