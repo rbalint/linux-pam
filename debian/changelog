@@ -9,6 +9,7 @@ pam (1.0.1-10) UNRELEASED; urgency=low
   [ Kees Cook ]
   * Add debian/patches/pam_1.0.4_mindays: backport upstream 1.0.4 fixes
     for MINDAYS-Field regression (closes: #514437).
+  * debian/control: add missing misc:Depends for packages that need it.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 22 Mar 2009 20:36:14 -0700
 
