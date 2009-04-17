@@ -7,11 +7,11 @@ Authors: Sam Hartman <hartmans@debian.org>
 
 Upstream status: submitted in <20070830171918.GB30563@dario.dodds.net>
 
-Index: pam.deb/modules/pam_limits/pam_limits.c
+Index: debian-pkg-pam/modules/pam_limits/pam_limits.c
 ===================================================================
---- pam.deb.orig/modules/pam_limits/pam_limits.c
-+++ pam.deb/modules/pam_limits/pam_limits.c
-@@ -639,6 +639,19 @@
+--- debian-pkg-pam.orig/modules/pam_limits/pam_limits.c	2009-04-17 12:47:06.000000000 -0700
++++ debian-pkg-pam/modules/pam_limits/pam_limits.c	2009-04-17 12:47:13.000000000 -0700
+@@ -664,6 +664,19 @@
          if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
              pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
  	retval = setrlimit(i, &pl->limits[i].limit);

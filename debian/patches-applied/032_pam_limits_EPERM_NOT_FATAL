@@ -7,11 +7,11 @@ Authors: ?
 
 Upstream status: submitted in <20070830171918.GB30563@dario.dodds.net>
 
-Index: pam.deb/modules/pam_limits/pam_limits.c
+Index: debian-pkg-pam/modules/pam_limits/pam_limits.c
 ===================================================================
---- pam.deb.orig/modules/pam_limits/pam_limits.c
-+++ pam.deb/modules/pam_limits/pam_limits.c
-@@ -626,6 +626,7 @@
+--- debian-pkg-pam.orig/modules/pam_limits/pam_limits.c	2009-04-17 12:47:04.000000000 -0700
++++ debian-pkg-pam/modules/pam_limits/pam_limits.c	2009-04-17 12:47:06.000000000 -0700
+@@ -651,6 +651,7 @@
      }
  
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
@@ -19,7 +19,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  	if (!pl->limits[i].supported) {
  	    /* skip it if its not known to the system */
  	    continue;
-@@ -637,7 +638,10 @@
+@@ -662,7 +663,10 @@
  	}
          if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
              pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;

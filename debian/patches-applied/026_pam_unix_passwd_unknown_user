@@ -1,10 +1,10 @@
 Patch from Martin Schwenke <martin@meltin.net>
 
-Index: pam.deb/modules/pam_unix/passverify.c
+Index: debian-pkg-pam/modules/pam_unix/passverify.c
 ===================================================================
---- pam.deb.orig/modules/pam_unix/passverify.c
-+++ pam.deb/modules/pam_unix/passverify.c
-@@ -715,7 +715,7 @@
+--- debian-pkg-pam.orig/modules/pam_unix/passverify.c	2009-04-17 12:46:54.000000000 -0700
++++ debian-pkg-pam/modules/pam_unix/passverify.c	2009-04-17 12:46:58.000000000 -0700
+@@ -720,7 +720,7 @@
      struct passwd *tmpent = NULL;
      struct stat st;
      FILE *pwfile, *opwfile;
@@ -13,7 +13,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
      int oldmask;
  #ifdef WITH_SELINUX
      security_context_t prev_context=NULL;
-@@ -786,6 +786,7 @@
+@@ -791,6 +791,7 @@
  
  	    tmpent->pw_passwd = assigned_passwd.charp;
  	    err = 0;
@@ -21,7 +21,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
  	}
  	if (putpwent(tmpent, pwfile)) {
  	    D(("error writing entry to password file: %m"));
-@@ -827,7 +828,7 @@
+@@ -832,7 +833,7 @@
  	return PAM_SUCCESS;
      } else {
  	unlink(PW_TMPFILE);
@@ -30,7 +30,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
      }
  }
  
-@@ -842,7 +843,7 @@
+@@ -847,7 +848,7 @@
      struct spwd *spwdent = NULL, *stmpent = NULL;
      struct stat st;
      FILE *pwfile, *opwfile;
@@ -39,7 +39,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
      int oldmask;
  #ifdef WITH_SELINUX
      security_context_t prev_context=NULL;
-@@ -913,6 +914,7 @@
+@@ -918,6 +919,7 @@
  	    stmpent->sp_pwdp = towhat;
  	    stmpent->sp_lstchg = time(NULL) / (60 * 60 * 24);
  	    err = 0;
@@ -47,7 +47,7 @@ Index: pam.deb/modules/pam_unix/passverify.c
  	    D(("Set password %s for %s", stmpent->sp_pwdp, forwho));
  	}
  
-@@ -959,7 +961,7 @@
+@@ -964,7 +966,7 @@
  	return PAM_SUCCESS;
      } else {
  	unlink(SH_TMPFILE);

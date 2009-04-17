@@ -5,10 +5,10 @@ Authors: Steve Langasek <vorlon@debian.org>
 
 Upstream status: maybe provide a backwards-compatibility link first?
 
-Index: pam.deb/doc/man/PAM.8
+Index: debian-pkg-pam/doc/man/PAM.8
 ===================================================================
---- pam.deb.orig/doc/man/PAM.8
-+++ pam.deb/doc/man/PAM.8
+--- debian-pkg-pam.orig/doc/man/PAM.8	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/PAM.8	2009-04-17 12:47:20.000000000 -0700
 @@ -5,7 +5,7 @@
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
@@ -24,17 +24,17 @@ Index: pam.deb/doc/man/PAM.8
  \fBpam_strerror\fR(3),
 -\fBPAM\fR(8)
 +\fBPAM\fR(7)
-Index: pam.deb/doc/man/pam.8
+Index: debian-pkg-pam/doc/man/pam.8
 ===================================================================
---- pam.deb.orig/doc/man/pam.8
-+++ pam.deb/doc/man/pam.8
+--- debian-pkg-pam.orig/doc/man/pam.8	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1 +1 @@
 -.so man8/PAM.8
 +.so man7/PAM.7
-Index: pam.deb/doc/man/pam.8.xml
+Index: debian-pkg-pam/doc/man/pam.8.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam.8.xml
-+++ pam.deb/doc/man/pam.8.xml
+--- debian-pkg-pam.orig/doc/man/pam.8.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -6,7 +6,7 @@
  
    <refmeta>
@@ -53,10 +53,10 @@ Index: pam.deb/doc/man/pam.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_access/access.conf.5
+Index: debian-pkg-pam/modules/pam_access/access.conf.5
 ===================================================================
---- pam.deb.orig/modules/pam_access/access.conf.5
-+++ pam.deb/modules/pam_access/access.conf.5
+--- debian-pkg-pam.orig/modules/pam_access/access.conf.5	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_access/access.conf.5	2009-04-17 12:47:20.000000000 -0700
 @@ -1,32 +1,32 @@
  .\"     Title: access.conf
  .\"    Author: 
@@ -272,10 +272,10 @@ Index: pam.deb/modules/pam_access/access.conf.5
  .PP
 -Network address / netmask description and example text was introduced by Mike Becher <mike\.becher@lrz\-muenchen\.de>\.
 +Network address / netmask description and example text was introduced by Mike Becher <mike\&.becher@lrz\-muenchen\&.de>\&.
-Index: pam.deb/modules/pam_access/access.conf.5.xml
+Index: debian-pkg-pam/modules/pam_access/access.conf.5.xml
 ===================================================================
---- pam.deb.orig/modules/pam_access/access.conf.5.xml
-+++ pam.deb/modules/pam_access/access.conf.5.xml
+--- debian-pkg-pam.orig/modules/pam_access/access.conf.5.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_access/access.conf.5.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -183,7 +183,7 @@
      <para>
        <citerefentry><refentrytitle>pam_access</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
@@ -285,10 +285,10 @@ Index: pam.deb/modules/pam_access/access.conf.5.xml
      </para>
    </refsect1>
  
-Index: pam.deb/modules/pam_env/pam_env.conf.5
+Index: debian-pkg-pam/modules/pam_env/pam_env.conf.5
 ===================================================================
---- pam.deb.orig/modules/pam_env/pam_env.conf.5
-+++ pam.deb/modules/pam_env/pam_env.conf.5
+--- debian-pkg-pam.orig/modules/pam_env/pam_env.conf.5	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_env/pam_env.conf.5	2009-04-17 12:47:20.000000000 -0700
 @@ -1,37 +1,37 @@
  .\"     Title: pam_env.conf
  .\"    Author: 
@@ -365,10 +365,10 @@ Index: pam.deb/modules/pam_env/pam_env.conf.5
  .PP
 -pam_env was written by Dave Kinchlea <kinch@kinch\.ark\.com>\.
 +pam_env was written by Dave Kinchlea <kinch@kinch\&.ark\&.com>\&.
-Index: pam.deb/modules/pam_env/pam_env.conf.5.xml
+Index: debian-pkg-pam/modules/pam_env/pam_env.conf.5.xml
 ===================================================================
---- pam.deb.orig/modules/pam_env/pam_env.conf.5.xml
-+++ pam.deb/modules/pam_env/pam_env.conf.5.xml
+--- debian-pkg-pam.orig/modules/pam_env/pam_env.conf.5.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_env/pam_env.conf.5.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -110,7 +110,7 @@
      <para>
        <citerefentry><refentrytitle>pam_env</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
@@ -378,10 +378,10 @@ Index: pam.deb/modules/pam_env/pam_env.conf.5.xml
      </para>
    </refsect1>
  
-Index: pam.deb/modules/pam_group/group.conf.5
+Index: debian-pkg-pam/modules/pam_group/group.conf.5
 ===================================================================
---- pam.deb.orig/modules/pam_group/group.conf.5
-+++ pam.deb/modules/pam_group/group.conf.5
+--- debian-pkg-pam.orig/modules/pam_group/group.conf.5	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_group/group.conf.5	2009-04-17 12:47:20.000000000 -0700
 @@ -1,24 +1,24 @@
  .\"     Title: group.conf
  .\"    Author: 
@@ -476,10 +476,10 @@ Index: pam.deb/modules/pam_group/group.conf.5
  .PP
 -pam_group was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_group was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_group/group.conf.5.xml
+Index: debian-pkg-pam/modules/pam_group/group.conf.5.xml
 ===================================================================
---- pam.deb.orig/modules/pam_group/group.conf.5.xml
-+++ pam.deb/modules/pam_group/group.conf.5.xml
+--- debian-pkg-pam.orig/modules/pam_group/group.conf.5.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_group/group.conf.5.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -118,7 +118,7 @@
      <para>
        <citerefentry><refentrytitle>pam_group</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
@@ -489,11 +489,11 @@ Index: pam.deb/modules/pam_group/group.conf.5.xml
      </para>
    </refsect1>
  
-Index: pam.deb/modules/pam_limits/limits.conf.5
+Index: debian-pkg-pam/modules/pam_limits/limits.conf.5
 ===================================================================
---- pam.deb.orig/modules/pam_limits/limits.conf.5
-+++ pam.deb/modules/pam_limits/limits.conf.5
-@@ -218,7 +218,7 @@
+--- debian-pkg-pam.orig/modules/pam_limits/limits.conf.5	2009-04-17 12:47:04.000000000 -0700
++++ debian-pkg-pam/modules/pam_limits/limits.conf.5	2009-04-17 12:47:20.000000000 -0700
+@@ -224,7 +224,7 @@
  
  \fBpam_limits\fR(8),
  \fBpam.d\fR(5),
@@ -502,11 +502,11 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  .SH "AUTHOR"
  .PP
  pam_limits was initially written by Cristian Gafton <gafton@redhat\&.com>
-Index: pam.deb/modules/pam_limits/limits.conf.5.xml
+Index: debian-pkg-pam/modules/pam_limits/limits.conf.5.xml
 ===================================================================
---- pam.deb.orig/modules/pam_limits/limits.conf.5.xml
-+++ pam.deb/modules/pam_limits/limits.conf.5.xml
-@@ -280,7 +280,7 @@
+--- debian-pkg-pam.orig/modules/pam_limits/limits.conf.5.xml	2009-04-17 12:47:04.000000000 -0700
++++ debian-pkg-pam/modules/pam_limits/limits.conf.5.xml	2009-04-17 12:47:20.000000000 -0700
+@@ -286,7 +286,7 @@
      <para>
        <citerefentry><refentrytitle>pam_limits</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
        <citerefentry><refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
@@ -515,10 +515,10 @@ Index: pam.deb/modules/pam_limits/limits.conf.5.xml
      </para>
    </refsect1>
  
-Index: pam.deb/modules/pam_namespace/namespace.conf.5
+Index: debian-pkg-pam/modules/pam_namespace/namespace.conf.5
 ===================================================================
---- pam.deb.orig/modules/pam_namespace/namespace.conf.5
-+++ pam.deb/modules/pam_namespace/namespace.conf.5
+--- debian-pkg-pam.orig/modules/pam_namespace/namespace.conf.5	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/modules/pam_namespace/namespace.conf.5	2009-04-17 12:47:20.000000000 -0700
 @@ -1,40 +1,40 @@
  .\"     Title: namespace.conf
  .\"    Author: 
@@ -704,10 +704,10 @@ Index: pam.deb/modules/pam_namespace/namespace.conf.5
  .PP
 -The namespace\.conf manual page was written by Janak Desai <janak@us\.ibm\.com>\. More features added by Tomas Mraz <tmraz@redhat\.com>\.
 +The namespace\&.conf manual page was written by Janak Desai <janak@us\&.ibm\&.com>\&. More features added by Tomas Mraz <tmraz@redhat\&.com>\&.
-Index: pam.deb/modules/pam_namespace/namespace.conf.5.xml
+Index: debian-pkg-pam/modules/pam_namespace/namespace.conf.5.xml
 ===================================================================
---- pam.deb.orig/modules/pam_namespace/namespace.conf.5.xml
-+++ pam.deb/modules/pam_namespace/namespace.conf.5.xml
+--- debian-pkg-pam.orig/modules/pam_namespace/namespace.conf.5.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/modules/pam_namespace/namespace.conf.5.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -196,7 +196,7 @@
      <para>
        <citerefentry><refentrytitle>pam_namespace</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
@@ -717,10 +717,10 @@ Index: pam.deb/modules/pam_namespace/namespace.conf.5.xml
      </para>
    </refsect1>
  
-Index: pam.deb/modules/pam_time/time.conf.5
+Index: debian-pkg-pam/modules/pam_time/time.conf.5
 ===================================================================
---- pam.deb.orig/modules/pam_time/time.conf.5
-+++ pam.deb/modules/pam_time/time.conf.5
+--- debian-pkg-pam.orig/modules/pam_time/time.conf.5	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_time/time.conf.5	2009-04-17 12:47:20.000000000 -0700
 @@ -1,62 +1,62 @@
  .\"     Title: time.conf
  .\"    Author: 
@@ -821,10 +821,10 @@ Index: pam.deb/modules/pam_time/time.conf.5
  .PP
 -pam_time was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_time was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_time/time.conf.5.xml
+Index: debian-pkg-pam/modules/pam_time/time.conf.5.xml
 ===================================================================
---- pam.deb.orig/modules/pam_time/time.conf.5.xml
-+++ pam.deb/modules/pam_time/time.conf.5.xml
+--- debian-pkg-pam.orig/modules/pam_time/time.conf.5.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_time/time.conf.5.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -130,7 +130,7 @@
      <para>
        <citerefentry><refentrytitle>pam_time</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
@@ -834,10 +834,10 @@ Index: pam.deb/modules/pam_time/time.conf.5.xml
      </para>
    </refsect1>
  
-Index: pam.deb/modules/pam_access/pam_access.8
+Index: debian-pkg-pam/modules/pam_access/pam_access.8
 ===================================================================
---- pam.deb.orig/modules/pam_access/pam_access.8
-+++ pam.deb/modules/pam_access/pam_access.8
+--- debian-pkg-pam.orig/modules/pam_access/pam_access.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_access/pam_access.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,103 +1,103 @@
  .\"     Title: pam_access
  .\"    Author: 
@@ -979,10 +979,10 @@ Index: pam.deb/modules/pam_access/pam_access.8
  .PP
 -The logdaemon style login access control scheme was designed and implemented by Wietse Venema\. The pam_access PAM module was developed by Alexei Nogin <alexei@nogin\.dnttm\.ru>\. The IPv6 support and the network(address) / netmask feature was developed and provided by Mike Becher <mike\.becher@lrz\-muenchen\.de>\.
 +The logdaemon style login access control scheme was designed and implemented by Wietse Venema\&. The pam_access PAM module was developed by Alexei Nogin <alexei@nogin\&.dnttm\&.ru>\&. The IPv6 support and the network(address) / netmask feature was developed and provided by Mike Becher <mike\&.becher@lrz\-muenchen\&.de>\&.
-Index: pam.deb/modules/pam_access/pam_access.8.xml
+Index: debian-pkg-pam/modules/pam_access/pam_access.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_access/pam_access.8.xml
-+++ pam.deb/modules/pam_access/pam_access.8.xml
+--- debian-pkg-pam.orig/modules/pam_access/pam_access.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_access/pam_access.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -234,7 +234,7 @@
          <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -992,10 +992,10 @@ Index: pam.deb/modules/pam_access/pam_access.8.xml
        </citerefentry>.
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_cracklib/pam_cracklib.8
+Index: debian-pkg-pam/modules/pam_cracklib/pam_cracklib.8
 ===================================================================
---- pam.deb.orig/modules/pam_cracklib/pam_cracklib.8
-+++ pam.deb/modules/pam_cracklib/pam_cracklib.8
+--- debian-pkg-pam.orig/modules/pam_cracklib/pam_cracklib.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_cracklib/pam_cracklib.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,33 +1,33 @@
  .\"     Title: pam_cracklib
  .\"    Author: 
@@ -1355,10 +1355,10 @@ Index: pam.deb/modules/pam_cracklib/pam_cracklib.8
  .PP
 -pam_cracklib was written by Cristian Gafton <gafton@redhat\.com>
 +pam_cracklib was written by Cristian Gafton <gafton@redhat\&.com>
-Index: pam.deb/modules/pam_cracklib/pam_cracklib.8.xml
+Index: debian-pkg-pam/modules/pam_cracklib/pam_cracklib.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_cracklib/pam_cracklib.8.xml
-+++ pam.deb/modules/pam_cracklib/pam_cracklib.8.xml
+--- debian-pkg-pam.orig/modules/pam_cracklib/pam_cracklib.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_cracklib/pam_cracklib.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -498,7 +498,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -1368,10 +1368,10 @@ Index: pam.deb/modules/pam_cracklib/pam_cracklib.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_debug/pam_debug.8
+Index: debian-pkg-pam/modules/pam_debug/pam_debug.8
 ===================================================================
---- pam.deb.orig/modules/pam_debug/pam_debug.8
-+++ pam.deb/modules/pam_debug/pam_debug.8
+--- debian-pkg-pam.orig/modules/pam_debug/pam_debug.8	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/modules/pam_debug/pam_debug.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,23 +1,23 @@
  .\"     Title: pam_debug
  .\"    Author: 
@@ -1513,10 +1513,10 @@ Index: pam.deb/modules/pam_debug/pam_debug.8
  .PP
 -pam_debug was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_debug was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_debug/pam_debug.8.xml
+Index: debian-pkg-pam/modules/pam_debug/pam_debug.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_debug/pam_debug.8.xml
-+++ pam.deb/modules/pam_debug/pam_debug.8.xml
+--- debian-pkg-pam.orig/modules/pam_debug/pam_debug.8.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/modules/pam_debug/pam_debug.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -216,7 +216,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -1526,10 +1526,10 @@ Index: pam.deb/modules/pam_debug/pam_debug.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_deny/pam_deny.8
+Index: debian-pkg-pam/modules/pam_deny/pam_deny.8
 ===================================================================
---- pam.deb.orig/modules/pam_deny/pam_deny.8
-+++ pam.deb/modules/pam_deny/pam_deny.8
+--- debian-pkg-pam.orig/modules/pam_deny/pam_deny.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_deny/pam_deny.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,73 +1,73 @@
  .\"     Title: pam_deny
  .\"    Author: 
@@ -1638,10 +1638,10 @@ Index: pam.deb/modules/pam_deny/pam_deny.8
  .PP
 -pam_deny was written by Andrew G\. Morgan <morgan@kernel\.org>
 +pam_deny was written by Andrew G\&. Morgan <morgan@kernel\&.org>
-Index: pam.deb/modules/pam_deny/pam_deny.8.xml
+Index: debian-pkg-pam/modules/pam_deny/pam_deny.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_deny/pam_deny.8.xml
-+++ pam.deb/modules/pam_deny/pam_deny.8.xml
+--- debian-pkg-pam.orig/modules/pam_deny/pam_deny.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_deny/pam_deny.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -120,7 +120,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -1651,10 +1651,10 @@ Index: pam.deb/modules/pam_deny/pam_deny.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_echo/pam_echo.8
+Index: debian-pkg-pam/modules/pam_echo/pam_echo.8
 ===================================================================
---- pam.deb.orig/modules/pam_echo/pam_echo.8
-+++ pam.deb/modules/pam_echo/pam_echo.8
+--- debian-pkg-pam.orig/modules/pam_echo/pam_echo.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_echo/pam_echo.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,89 +1,89 @@
  .\"     Title: pam_echo
  .\"    Author: 
@@ -1784,10 +1784,10 @@ Index: pam.deb/modules/pam_echo/pam_echo.8
  .PP
 -Thorsten Kukuk <kukuk@thkukuk\.de>
 +Thorsten Kukuk <kukuk@thkukuk\&.de>
-Index: pam.deb/modules/pam_echo/pam_echo.8.xml
+Index: debian-pkg-pam/modules/pam_echo/pam_echo.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_echo/pam_echo.8.xml
-+++ pam.deb/modules/pam_echo/pam_echo.8.xml
+--- debian-pkg-pam.orig/modules/pam_echo/pam_echo.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_echo/pam_echo.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -157,7 +157,7 @@
        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
      </citerefentry>,
@@ -1797,10 +1797,10 @@ Index: pam.deb/modules/pam_echo/pam_echo.8.xml
      </citerefentry></para>
    </refsect1>
  
-Index: pam.deb/modules/pam_env/pam_env.8
+Index: debian-pkg-pam/modules/pam_env/pam_env.8
 ===================================================================
---- pam.deb.orig/modules/pam_env/pam_env.8
-+++ pam.deb/modules/pam_env/pam_env.8
+--- debian-pkg-pam.orig/modules/pam_env/pam_env.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_env/pam_env.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,63 +1,63 @@
  .\"     Title: pam_env
  .\"    Author: 
@@ -1930,10 +1930,10 @@ Index: pam.deb/modules/pam_env/pam_env.8
  .PP
 -pam_env was written by Dave Kinchlea <kinch@kinch\.ark\.com>\.
 +pam_env was written by Dave Kinchlea <kinch@kinch\&.ark\&.com>\&.
-Index: pam.deb/modules/pam_env/pam_env.8.xml
+Index: debian-pkg-pam/modules/pam_env/pam_env.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_env/pam_env.8.xml
-+++ pam.deb/modules/pam_env/pam_env.8.xml
+--- debian-pkg-pam.orig/modules/pam_env/pam_env.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_env/pam_env.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -192,7 +192,7 @@
          <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -1943,10 +1943,10 @@ Index: pam.deb/modules/pam_env/pam_env.8.xml
        </citerefentry>.
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_exec/pam_exec.8
+Index: debian-pkg-pam/modules/pam_exec/pam_exec.8
 ===================================================================
---- pam.deb.orig/modules/pam_exec/pam_exec.8
-+++ pam.deb/modules/pam_exec/pam_exec.8
+--- debian-pkg-pam.orig/modules/pam_exec/pam_exec.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_exec/pam_exec.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,23 +1,23 @@
  .\"     Title: pam_exec
  .\"    Author: 
@@ -2073,10 +2073,10 @@ Index: pam.deb/modules/pam_exec/pam_exec.8
  .PP
 -pam_exec was written by Thorsten Kukuk <kukuk@thkukuk\.de>\.
 +pam_exec was written by Thorsten Kukuk <kukuk@thkukuk\&.de>\&.
-Index: pam.deb/modules/pam_exec/pam_exec.8.xml
+Index: debian-pkg-pam/modules/pam_exec/pam_exec.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_exec/pam_exec.8.xml
-+++ pam.deb/modules/pam_exec/pam_exec.8.xml
+--- debian-pkg-pam.orig/modules/pam_exec/pam_exec.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_exec/pam_exec.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -202,7 +202,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -2086,10 +2086,10 @@ Index: pam.deb/modules/pam_exec/pam_exec.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_faildelay/pam_faildelay.8
+Index: debian-pkg-pam/modules/pam_faildelay/pam_faildelay.8
 ===================================================================
---- pam.deb.orig/modules/pam_faildelay/pam_faildelay.8
-+++ pam.deb/modules/pam_faildelay/pam_faildelay.8
+--- debian-pkg-pam.orig/modules/pam_faildelay/pam_faildelay.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_faildelay/pam_faildelay.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,54 +1,54 @@
  .\"     Title: pam_faildelay
  .\"    Author: 
@@ -2176,10 +2176,10 @@ Index: pam.deb/modules/pam_faildelay/pam_faildelay.8
  .PP
 -pam_faildelay was written by Darren Tucker <dtucker@zip\.com\.au>\.
 +pam_faildelay was written by Darren Tucker <dtucker@zip\&.com\&.au>\&.
-Index: pam.deb/modules/pam_faildelay/pam_faildelay.8.xml
+Index: debian-pkg-pam/modules/pam_faildelay/pam_faildelay.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_faildelay/pam_faildelay.8.xml
-+++ pam.deb/modules/pam_faildelay/pam_faildelay.8.xml
+--- debian-pkg-pam.orig/modules/pam_faildelay/pam_faildelay.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_faildelay/pam_faildelay.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -121,7 +121,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -2189,10 +2189,10 @@ Index: pam.deb/modules/pam_faildelay/pam_faildelay.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_filter/pam_filter.8
+Index: debian-pkg-pam/modules/pam_filter/pam_filter.8
 ===================================================================
---- pam.deb.orig/modules/pam_filter/pam_filter.8
-+++ pam.deb/modules/pam_filter/pam_filter.8
+--- debian-pkg-pam.orig/modules/pam_filter/pam_filter.8	2009-04-17 12:44:12.000000000 -0700
++++ debian-pkg-pam/modules/pam_filter/pam_filter.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,73 +1,73 @@
  .\"     Title: pam_filter
  .\"    Author: 
@@ -2368,10 +2368,10 @@ Index: pam.deb/modules/pam_filter/pam_filter.8
  .PP
 -pam_filter was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_filter was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_filter/pam_filter.8.xml
+Index: debian-pkg-pam/modules/pam_filter/pam_filter.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_filter/pam_filter.8.xml
-+++ pam.deb/modules/pam_filter/pam_filter.8.xml
+--- debian-pkg-pam.orig/modules/pam_filter/pam_filter.8.xml	2009-04-17 12:44:12.000000000 -0700
++++ debian-pkg-pam/modules/pam_filter/pam_filter.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -246,7 +246,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -2381,10 +2381,10 @@ Index: pam.deb/modules/pam_filter/pam_filter.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_ftp/pam_ftp.8
+Index: debian-pkg-pam/modules/pam_ftp/pam_ftp.8
 ===================================================================
---- pam.deb.orig/modules/pam_ftp/pam_ftp.8
-+++ pam.deb/modules/pam_ftp/pam_ftp.8
+--- debian-pkg-pam.orig/modules/pam_ftp/pam_ftp.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_ftp/pam_ftp.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,25 +1,25 @@
  .\"     Title: pam_ftp
  .\"    Author: 
@@ -2513,10 +2513,10 @@ Index: pam.deb/modules/pam_ftp/pam_ftp.8
  .PP
 -pam_ftp was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_ftp was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_ftp/pam_ftp.8.xml
+Index: debian-pkg-pam/modules/pam_ftp/pam_ftp.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_ftp/pam_ftp.8.xml
-+++ pam.deb/modules/pam_ftp/pam_ftp.8.xml
+--- debian-pkg-pam.orig/modules/pam_ftp/pam_ftp.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_ftp/pam_ftp.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -168,7 +168,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -2526,10 +2526,10 @@ Index: pam.deb/modules/pam_ftp/pam_ftp.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_group/pam_group.8
+Index: debian-pkg-pam/modules/pam_group/pam_group.8
 ===================================================================
---- pam.deb.orig/modules/pam_group/pam_group.8
-+++ pam.deb/modules/pam_group/pam_group.8
+--- debian-pkg-pam.orig/modules/pam_group/pam_group.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_group/pam_group.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,85 +1,85 @@
  .\"     Title: pam_group
  .\"    Author: 
@@ -2648,10 +2648,10 @@ Index: pam.deb/modules/pam_group/pam_group.8
  .PP
 -pam_group was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_group was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_group/pam_group.8.xml
+Index: debian-pkg-pam/modules/pam_group/pam_group.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_group/pam_group.8.xml
-+++ pam.deb/modules/pam_group/pam_group.8.xml
+--- debian-pkg-pam.orig/modules/pam_group/pam_group.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_group/pam_group.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -148,7 +148,7 @@
          <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -2661,10 +2661,10 @@ Index: pam.deb/modules/pam_group/pam_group.8.xml
        </citerefentry>.
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_issue/pam_issue.8
+Index: debian-pkg-pam/modules/pam_issue/pam_issue.8
 ===================================================================
---- pam.deb.orig/modules/pam_issue/pam_issue.8
-+++ pam.deb/modules/pam_issue/pam_issue.8
+--- debian-pkg-pam.orig/modules/pam_issue/pam_issue.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_issue/pam_issue.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,23 +1,23 @@
  .\"     Title: pam_issue
  .\"    Author: 
@@ -2773,10 +2773,10 @@ Index: pam.deb/modules/pam_issue/pam_issue.8
  .PP
 -pam_issue was written by Ben Collins <bcollins@debian\.org>\.
 +pam_issue was written by Ben Collins <bcollins@debian\&.org>\&.
-Index: pam.deb/modules/pam_issue/pam_issue.8.xml
+Index: debian-pkg-pam/modules/pam_issue/pam_issue.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_issue/pam_issue.8.xml
-+++ pam.deb/modules/pam_issue/pam_issue.8.xml
+--- debian-pkg-pam.orig/modules/pam_issue/pam_issue.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_issue/pam_issue.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -219,7 +219,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -2786,10 +2786,10 @@ Index: pam.deb/modules/pam_issue/pam_issue.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_keyinit/pam_keyinit.8
+Index: debian-pkg-pam/modules/pam_keyinit/pam_keyinit.8
 ===================================================================
---- pam.deb.orig/modules/pam_keyinit/pam_keyinit.8
-+++ pam.deb/modules/pam_keyinit/pam_keyinit.8
+--- debian-pkg-pam.orig/modules/pam_keyinit/pam_keyinit.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_keyinit/pam_keyinit.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,38 +1,38 @@
  .\"     Title: pam_keyinit
  .\"    Author: 
@@ -2936,10 +2936,10 @@ Index: pam.deb/modules/pam_keyinit/pam_keyinit.8
  .SH "NOTES"
  .IP " 1." 4
  Keyutils
-Index: pam.deb/modules/pam_keyinit/pam_keyinit.8.xml
+Index: debian-pkg-pam/modules/pam_keyinit/pam_keyinit.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_keyinit/pam_keyinit.8.xml
-+++ pam.deb/modules/pam_keyinit/pam_keyinit.8.xml
+--- debian-pkg-pam.orig/modules/pam_keyinit/pam_keyinit.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_keyinit/pam_keyinit.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -223,7 +223,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -2949,10 +2949,10 @@ Index: pam.deb/modules/pam_keyinit/pam_keyinit.8.xml
        </citerefentry>
        <citerefentry>
  	<refentrytitle>keyctl</refentrytitle><manvolnum>1</manvolnum>
-Index: pam.deb/modules/pam_lastlog/pam_lastlog.8
+Index: debian-pkg-pam/modules/pam_lastlog/pam_lastlog.8
 ===================================================================
---- pam.deb.orig/modules/pam_lastlog/pam_lastlog.8
-+++ pam.deb/modules/pam_lastlog/pam_lastlog.8
+--- debian-pkg-pam.orig/modules/pam_lastlog/pam_lastlog.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_lastlog/pam_lastlog.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,98 +1,98 @@
  .\"     Title: pam_lastlog
  .\"    Author: 
@@ -3083,10 +3083,10 @@ Index: pam.deb/modules/pam_lastlog/pam_lastlog.8
  .PP
 -pam_lastlog was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_lastlog was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_lastlog/pam_lastlog.8.xml
+Index: debian-pkg-pam/modules/pam_lastlog/pam_lastlog.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_lastlog/pam_lastlog.8.xml
-+++ pam.deb/modules/pam_lastlog/pam_lastlog.8.xml
+--- debian-pkg-pam.orig/modules/pam_lastlog/pam_lastlog.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_lastlog/pam_lastlog.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -216,7 +216,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -3096,10 +3096,10 @@ Index: pam.deb/modules/pam_lastlog/pam_lastlog.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_limits/pam_limits.8
+Index: debian-pkg-pam/modules/pam_limits/pam_limits.8
 ===================================================================
---- pam.deb.orig/modules/pam_limits/pam_limits.8
-+++ pam.deb/modules/pam_limits/pam_limits.8
+--- debian-pkg-pam.orig/modules/pam_limits/pam_limits.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_limits/pam_limits.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,132 +1,132 @@
  .\"     Title: pam_limits
  .\"    Author: 
@@ -3267,10 +3267,10 @@ Index: pam.deb/modules/pam_limits/pam_limits.8
  .PP
 -pam_limits was initially written by Cristian Gafton <gafton@redhat\.com>
 +pam_limits was initially written by Cristian Gafton <gafton@redhat\&.com>
-Index: pam.deb/modules/pam_limits/pam_limits.8.xml
+Index: debian-pkg-pam/modules/pam_limits/pam_limits.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_limits/pam_limits.8.xml
-+++ pam.deb/modules/pam_limits/pam_limits.8.xml
+--- debian-pkg-pam.orig/modules/pam_limits/pam_limits.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_limits/pam_limits.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -242,7 +242,7 @@
          <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -3280,10 +3280,10 @@ Index: pam.deb/modules/pam_limits/pam_limits.8.xml
        </citerefentry>.
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_listfile/pam_listfile.8
+Index: debian-pkg-pam/modules/pam_listfile/pam_listfile.8
 ===================================================================
---- pam.deb.orig/modules/pam_listfile/pam_listfile.8
-+++ pam.deb/modules/pam_listfile/pam_listfile.8
+--- debian-pkg-pam.orig/modules/pam_listfile/pam_listfile.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_listfile/pam_listfile.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,23 +1,23 @@
  .\"     Title: pam_listfile
  .\"    Author: 
@@ -3498,10 +3498,10 @@ Index: pam.deb/modules/pam_listfile/pam_listfile.8
  .PP
 -pam_listfile was written by Michael K\. Johnson <johnsonm@redhat\.com> and Elliot Lee <sopwith@cuc\.edu>\.
 +pam_listfile was written by Michael K\&. Johnson <johnsonm@redhat\&.com> and Elliot Lee <sopwith@cuc\&.edu>\&.
-Index: pam.deb/modules/pam_listfile/pam_listfile.8.xml
+Index: debian-pkg-pam/modules/pam_listfile/pam_listfile.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_listfile/pam_listfile.8.xml
-+++ pam.deb/modules/pam_listfile/pam_listfile.8.xml
+--- debian-pkg-pam.orig/modules/pam_listfile/pam_listfile.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_listfile/pam_listfile.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -281,7 +281,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -3511,10 +3511,10 @@ Index: pam.deb/modules/pam_listfile/pam_listfile.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_localuser/pam_localuser.8
+Index: debian-pkg-pam/modules/pam_localuser/pam_localuser.8
 ===================================================================
---- pam.deb.orig/modules/pam_localuser/pam_localuser.8
-+++ pam.deb/modules/pam_localuser/pam_localuser.8
+--- debian-pkg-pam.orig/modules/pam_localuser/pam_localuser.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_localuser/pam_localuser.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,37 +1,37 @@
  .\"     Title: pam_localuser
  .\"    Author: 
@@ -3623,10 +3623,10 @@ Index: pam.deb/modules/pam_localuser/pam_localuser.8
  .PP
 -pam_localuser was written by Nalin Dahyabhai <nalin@redhat\.com>\.
 +pam_localuser was written by Nalin Dahyabhai <nalin@redhat\&.com>\&.
-Index: pam.deb/modules/pam_localuser/pam_localuser.8.xml
+Index: debian-pkg-pam/modules/pam_localuser/pam_localuser.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_localuser/pam_localuser.8.xml
-+++ pam.deb/modules/pam_localuser/pam_localuser.8.xml
+--- debian-pkg-pam.orig/modules/pam_localuser/pam_localuser.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_localuser/pam_localuser.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -158,7 +158,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -3636,10 +3636,10 @@ Index: pam.deb/modules/pam_localuser/pam_localuser.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_loginuid/pam_loginuid.8
+Index: debian-pkg-pam/modules/pam_loginuid/pam_loginuid.8
 ===================================================================
---- pam.deb.orig/modules/pam_loginuid/pam_loginuid.8
-+++ pam.deb/modules/pam_loginuid/pam_loginuid.8
+--- debian-pkg-pam.orig/modules/pam_loginuid/pam_loginuid.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_loginuid/pam_loginuid.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,52 +1,52 @@
  .\"     Title: pam_loginuid
  .\"    Author: 
@@ -3721,10 +3721,10 @@ Index: pam.deb/modules/pam_loginuid/pam_loginuid.8
  .PP
 -pam_loginuid was written by Steve Grubb <sgrubb@redhat\.com>
 +pam_loginuid was written by Steve Grubb <sgrubb@redhat\&.com>
-Index: pam.deb/modules/pam_loginuid/pam_loginuid.8.xml
+Index: debian-pkg-pam/modules/pam_loginuid/pam_loginuid.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_loginuid/pam_loginuid.8.xml
-+++ pam.deb/modules/pam_loginuid/pam_loginuid.8.xml
+--- debian-pkg-pam.orig/modules/pam_loginuid/pam_loginuid.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_loginuid/pam_loginuid.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -104,7 +104,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -3734,10 +3734,10 @@ Index: pam.deb/modules/pam_loginuid/pam_loginuid.8.xml
        </citerefentry>,
        <citerefentry>
  	<refentrytitle>auditctl</refentrytitle><manvolnum>8</manvolnum>
-Index: pam.deb/modules/pam_mail/pam_mail.8
+Index: debian-pkg-pam/modules/pam_mail/pam_mail.8
 ===================================================================
---- pam.deb.orig/modules/pam_mail/pam_mail.8
-+++ pam.deb/modules/pam_mail/pam_mail.8
+--- debian-pkg-pam.orig/modules/pam_mail/pam_mail.8	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/modules/pam_mail/pam_mail.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,26 +1,26 @@
  .\"     Title: pam_mail
  .\"    Author: 
@@ -3908,10 +3908,10 @@ Index: pam.deb/modules/pam_mail/pam_mail.8
  .PP
 -pam_mail was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_mail was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_mail/pam_mail.8.xml
+Index: debian-pkg-pam/modules/pam_mail/pam_mail.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_mail/pam_mail.8.xml
-+++ pam.deb/modules/pam_mail/pam_mail.8.xml
+--- debian-pkg-pam.orig/modules/pam_mail/pam_mail.8.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/modules/pam_mail/pam_mail.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -264,7 +264,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -3921,10 +3921,10 @@ Index: pam.deb/modules/pam_mail/pam_mail.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8
+Index: debian-pkg-pam/modules/pam_mkhomedir/pam_mkhomedir.8
 ===================================================================
---- pam.deb.orig/modules/pam_mkhomedir/pam_mkhomedir.8
-+++ pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8
+--- debian-pkg-pam.orig/modules/pam_mkhomedir/pam_mkhomedir.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_mkhomedir/pam_mkhomedir.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,37 +1,37 @@
  .\"     Title: pam_mkhomedir
  .\"    Author: 
@@ -4063,10 +4063,10 @@ Index: pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8
  .PP
 -pam_mkhomedir was written by Jason Gunthorpe <jgg@debian\.org>\.
 +pam_mkhomedir was written by Jason Gunthorpe <jgg@debian\&.org>\&.
-Index: pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8.xml
+Index: debian-pkg-pam/modules/pam_mkhomedir/pam_mkhomedir.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_mkhomedir/pam_mkhomedir.8.xml
-+++ pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8.xml
+--- debian-pkg-pam.orig/modules/pam_mkhomedir/pam_mkhomedir.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_mkhomedir/pam_mkhomedir.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -189,7 +189,7 @@
          <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -4076,10 +4076,10 @@ Index: pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8.xml
        </citerefentry>.
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_motd/pam_motd.8
+Index: debian-pkg-pam/modules/pam_motd/pam_motd.8
 ===================================================================
---- pam.deb.orig/modules/pam_motd/pam_motd.8
-+++ pam.deb/modules/pam_motd/pam_motd.8
+--- debian-pkg-pam.orig/modules/pam_motd/pam_motd.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_motd/pam_motd.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,53 +1,53 @@
  .\"     Title: pam_motd
  .\"    Author: 
@@ -4156,10 +4156,10 @@ Index: pam.deb/modules/pam_motd/pam_motd.8
  .PP
 -pam_motd was written by Ben Collins <bcollins@debian\.org>\.
 +pam_motd was written by Ben Collins <bcollins@debian\&.org>\&.
-Index: pam.deb/modules/pam_motd/pam_motd.8.xml
+Index: debian-pkg-pam/modules/pam_motd/pam_motd.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_motd/pam_motd.8.xml
-+++ pam.deb/modules/pam_motd/pam_motd.8.xml
+--- debian-pkg-pam.orig/modules/pam_motd/pam_motd.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_motd/pam_motd.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -99,7 +99,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -4169,10 +4169,10 @@ Index: pam.deb/modules/pam_motd/pam_motd.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_namespace/pam_namespace.8
+Index: debian-pkg-pam/modules/pam_namespace/pam_namespace.8
 ===================================================================
---- pam.deb.orig/modules/pam_namespace/pam_namespace.8
-+++ pam.deb/modules/pam_namespace/pam_namespace.8
+--- debian-pkg-pam.orig/modules/pam_namespace/pam_namespace.8	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/modules/pam_namespace/pam_namespace.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,27 +1,27 @@
  .\"     Title: pam_namespace
  .\"    Author: 
@@ -4360,10 +4360,10 @@ Index: pam.deb/modules/pam_namespace/pam_namespace.8
  .PP
 -The namespace setup scheme was designed by Stephen Smalley, Janak Desai and Chad Sellers\. The pam_namespace PAM module was developed by Janak Desai <janak@us\.ibm\.com>, Chad Sellers <csellers@tresys\.com> and Steve Grubb <sgrubb@redhat\.com>\. Additional improvements by Xavier Toth <txtoth@gmail\.com> and Tomas Mraz <tmraz@redhat\.com>\.
 +The namespace setup scheme was designed by Stephen Smalley, Janak Desai and Chad Sellers\&. The pam_namespace PAM module was developed by Janak Desai <janak@us\&.ibm\&.com>, Chad Sellers <csellers@tresys\&.com> and Steve Grubb <sgrubb@redhat\&.com>\&. Additional improvements by Xavier Toth <txtoth@gmail\&.com> and Tomas Mraz <tmraz@redhat\&.com>\&.
-Index: pam.deb/modules/pam_namespace/pam_namespace.8.xml
+Index: debian-pkg-pam/modules/pam_namespace/pam_namespace.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_namespace/pam_namespace.8.xml
-+++ pam.deb/modules/pam_namespace/pam_namespace.8.xml
+--- debian-pkg-pam.orig/modules/pam_namespace/pam_namespace.8.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/modules/pam_namespace/pam_namespace.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -371,7 +371,7 @@
          <refentrytitle>mount</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -4373,10 +4373,10 @@ Index: pam.deb/modules/pam_namespace/pam_namespace.8.xml
        </citerefentry>.
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_nologin/pam_nologin.8
+Index: debian-pkg-pam/modules/pam_nologin/pam_nologin.8
 ===================================================================
---- pam.deb.orig/modules/pam_nologin/pam_nologin.8
-+++ pam.deb/modules/pam_nologin/pam_nologin.8
+--- debian-pkg-pam.orig/modules/pam_nologin/pam_nologin.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_nologin/pam_nologin.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,38 +1,38 @@
  .\"     Title: pam_nologin
  .\"    Author: 
@@ -4510,10 +4510,10 @@ Index: pam.deb/modules/pam_nologin/pam_nologin.8
  .PP
 -pam_nologin was written by Michael K\. Johnson <johnsonm@redhat\.com>\.
 +pam_nologin was written by Michael K\&. Johnson <johnsonm@redhat\&.com>\&.
-Index: pam.deb/modules/pam_nologin/pam_nologin.8.xml
+Index: debian-pkg-pam/modules/pam_nologin/pam_nologin.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_nologin/pam_nologin.8.xml
-+++ pam.deb/modules/pam_nologin/pam_nologin.8.xml
+--- debian-pkg-pam.orig/modules/pam_nologin/pam_nologin.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_nologin/pam_nologin.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -159,7 +159,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -4523,10 +4523,10 @@ Index: pam.deb/modules/pam_nologin/pam_nologin.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_permit/pam_permit.8
+Index: debian-pkg-pam/modules/pam_permit/pam_permit.8
 ===================================================================
---- pam.deb.orig/modules/pam_permit/pam_permit.8
-+++ pam.deb/modules/pam_permit/pam_permit.8
+--- debian-pkg-pam.orig/modules/pam_permit/pam_permit.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_permit/pam_permit.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,32 +1,32 @@
  .\"     Title: pam_permit
  .\"    Author: 
@@ -4604,10 +4604,10 @@ Index: pam.deb/modules/pam_permit/pam_permit.8
  .PP
 -pam_permit was written by Andrew G\. Morgan, <morgan@kernel\.org>\.
 +pam_permit was written by Andrew G\&. Morgan, <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_permit/pam_permit.8.xml
+Index: debian-pkg-pam/modules/pam_permit/pam_permit.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_permit/pam_permit.8.xml
-+++ pam.deb/modules/pam_permit/pam_permit.8.xml
+--- debian-pkg-pam.orig/modules/pam_permit/pam_permit.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_permit/pam_permit.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -90,7 +90,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -4617,10 +4617,10 @@ Index: pam.deb/modules/pam_permit/pam_permit.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_rhosts/pam_rhosts.8
+Index: debian-pkg-pam/modules/pam_rhosts/pam_rhosts.8
 ===================================================================
---- pam.deb.orig/modules/pam_rhosts/pam_rhosts.8
-+++ pam.deb/modules/pam_rhosts/pam_rhosts.8
+--- debian-pkg-pam.orig/modules/pam_rhosts/pam_rhosts.8	2009-04-17 12:44:12.000000000 -0700
++++ debian-pkg-pam/modules/pam_rhosts/pam_rhosts.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,95 +1,95 @@
  .\"     Title: pam_rhosts
  .\"    Author: 
@@ -4754,10 +4754,10 @@ Index: pam.deb/modules/pam_rhosts/pam_rhosts.8
  .PP
 -pam_rhosts was written by Thorsten Kukuk <kukuk@thkukuk\.de>
 +pam_rhosts was written by Thorsten Kukuk <kukuk@thkukuk\&.de>
-Index: pam.deb/modules/pam_rhosts/pam_rhosts.8.xml
+Index: debian-pkg-pam/modules/pam_rhosts/pam_rhosts.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_rhosts/pam_rhosts.8.xml
-+++ pam.deb/modules/pam_rhosts/pam_rhosts.8.xml
+--- debian-pkg-pam.orig/modules/pam_rhosts/pam_rhosts.8.xml	2009-04-17 12:44:12.000000000 -0700
++++ debian-pkg-pam/modules/pam_rhosts/pam_rhosts.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -156,7 +156,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -4767,10 +4767,10 @@ Index: pam.deb/modules/pam_rhosts/pam_rhosts.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_rootok/pam_rootok.8
+Index: debian-pkg-pam/modules/pam_rootok/pam_rootok.8
 ===================================================================
---- pam.deb.orig/modules/pam_rootok/pam_rootok.8
-+++ pam.deb/modules/pam_rootok/pam_rootok.8
+--- debian-pkg-pam.orig/modules/pam_rootok/pam_rootok.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_rootok/pam_rootok.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,41 +1,41 @@
  .\"     Title: pam_rootok
  .\"    Author: 
@@ -4870,10 +4870,10 @@ Index: pam.deb/modules/pam_rootok/pam_rootok.8
  .PP
 -pam_rootok was written by Andrew G\. Morgan, <morgan@kernel\.org>\.
 +pam_rootok was written by Andrew G\&. Morgan, <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_rootok/pam_rootok.8.xml
+Index: debian-pkg-pam/modules/pam_rootok/pam_rootok.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_rootok/pam_rootok.8.xml
-+++ pam.deb/modules/pam_rootok/pam_rootok.8.xml
+--- debian-pkg-pam.orig/modules/pam_rootok/pam_rootok.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_rootok/pam_rootok.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -115,7 +115,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -4883,10 +4883,10 @@ Index: pam.deb/modules/pam_rootok/pam_rootok.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_securetty/pam_securetty.8
+Index: debian-pkg-pam/modules/pam_securetty/pam_securetty.8
 ===================================================================
---- pam.deb.orig/modules/pam_securetty/pam_securetty.8
-+++ pam.deb/modules/pam_securetty/pam_securetty.8
+--- debian-pkg-pam.orig/modules/pam_securetty/pam_securetty.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_securetty/pam_securetty.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,77 +1,77 @@
  .\"     Title: pam_securetty
  .\"    Author: 
@@ -5003,10 +5003,10 @@ Index: pam.deb/modules/pam_securetty/pam_securetty.8
  .PP
 -pam_securetty was written by Elliot Lee <sopwith@cuc\.edu>\.
 +pam_securetty was written by Elliot Lee <sopwith@cuc\&.edu>\&.
-Index: pam.deb/modules/pam_securetty/pam_securetty.8.xml
+Index: debian-pkg-pam/modules/pam_securetty/pam_securetty.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_securetty/pam_securetty.8.xml
-+++ pam.deb/modules/pam_securetty/pam_securetty.8.xml
+--- debian-pkg-pam.orig/modules/pam_securetty/pam_securetty.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_securetty/pam_securetty.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -152,7 +152,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -5016,10 +5016,10 @@ Index: pam.deb/modules/pam_securetty/pam_securetty.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_selinux/pam_selinux.8
+Index: debian-pkg-pam/modules/pam_selinux/pam_selinux.8
 ===================================================================
---- pam.deb.orig/modules/pam_selinux/pam_selinux.8
-+++ pam.deb/modules/pam_selinux/pam_selinux.8
+--- debian-pkg-pam.orig/modules/pam_selinux/pam_selinux.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_selinux/pam_selinux.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,92 +1,92 @@
  .\"     Title: pam_selinux
  .\"    Author: 
@@ -5145,10 +5145,10 @@ Index: pam.deb/modules/pam_selinux/pam_selinux.8
  .PP
 -pam_selinux was written by Dan Walsh <dwalsh@redhat\.com>\.
 +pam_selinux was written by Dan Walsh <dwalsh@redhat\&.com>\&.
-Index: pam.deb/modules/pam_selinux/pam_selinux.8.xml
+Index: debian-pkg-pam/modules/pam_selinux/pam_selinux.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_selinux/pam_selinux.8.xml
-+++ pam.deb/modules/pam_selinux/pam_selinux.8.xml
+--- debian-pkg-pam.orig/modules/pam_selinux/pam_selinux.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_selinux/pam_selinux.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -205,7 +205,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -5158,10 +5158,10 @@ Index: pam.deb/modules/pam_selinux/pam_selinux.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_sepermit/pam_sepermit.8
+Index: debian-pkg-pam/modules/pam_sepermit/pam_sepermit.8
 ===================================================================
---- pam.deb.orig/modules/pam_sepermit/pam_sepermit.8
-+++ pam.deb/modules/pam_sepermit/pam_sepermit.8
+--- debian-pkg-pam.orig/modules/pam_sepermit/pam_sepermit.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_sepermit/pam_sepermit.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,53 +1,53 @@
  .\"     Title: pam_sepermit
  .\"    Author: 
@@ -5299,10 +5299,10 @@ Index: pam.deb/modules/pam_sepermit/pam_sepermit.8
  .PP
 -pam_sepermit was written by Tomas Mraz <tmraz@redhat\.com>\.
 +pam_sepermit was written by Tomas Mraz <tmraz@redhat\&.com>\&.
-Index: pam.deb/modules/pam_sepermit/pam_sepermit.8.xml
+Index: debian-pkg-pam/modules/pam_sepermit/pam_sepermit.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_sepermit/pam_sepermit.8.xml
-+++ pam.deb/modules/pam_sepermit/pam_sepermit.8.xml
+--- debian-pkg-pam.orig/modules/pam_sepermit/pam_sepermit.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_sepermit/pam_sepermit.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -174,7 +174,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -5312,10 +5312,10 @@ Index: pam.deb/modules/pam_sepermit/pam_sepermit.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_shells/pam_shells.8
+Index: debian-pkg-pam/modules/pam_shells/pam_shells.8
 ===================================================================
---- pam.deb.orig/modules/pam_shells/pam_shells.8
-+++ pam.deb/modules/pam_shells/pam_shells.8
+--- debian-pkg-pam.orig/modules/pam_shells/pam_shells.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_shells/pam_shells.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,54 +1,54 @@
  .\"     Title: pam_shells
  .\"    Author: 
@@ -5402,10 +5402,10 @@ Index: pam.deb/modules/pam_shells/pam_shells.8
  .PP
 -pam_shells was written by Erik Troan <ewt@redhat\.com>\.
 +pam_shells was written by Erik Troan <ewt@redhat\&.com>\&.
-Index: pam.deb/modules/pam_shells/pam_shells.8.xml
+Index: debian-pkg-pam/modules/pam_shells/pam_shells.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_shells/pam_shells.8.xml
-+++ pam.deb/modules/pam_shells/pam_shells.8.xml
+--- debian-pkg-pam.orig/modules/pam_shells/pam_shells.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_shells/pam_shells.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -102,7 +102,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -5415,10 +5415,10 @@ Index: pam.deb/modules/pam_shells/pam_shells.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_succeed_if/pam_succeed_if.8
+Index: debian-pkg-pam/modules/pam_succeed_if/pam_succeed_if.8
 ===================================================================
---- pam.deb.orig/modules/pam_succeed_if/pam_succeed_if.8
-+++ pam.deb/modules/pam_succeed_if/pam_succeed_if.8
+--- debian-pkg-pam.orig/modules/pam_succeed_if/pam_succeed_if.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_succeed_if/pam_succeed_if.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,25 +1,25 @@
  .\"     Title: pam_succeed_if
  .\"    Author: 
@@ -5646,10 +5646,10 @@ Index: pam.deb/modules/pam_succeed_if/pam_succeed_if.8
  .PP
 -Nalin Dahyabhai <nalin@redhat\.com>
 +Nalin Dahyabhai <nalin@redhat\&.com>
-Index: pam.deb/modules/pam_succeed_if/pam_succeed_if.8.xml
+Index: debian-pkg-pam/modules/pam_succeed_if/pam_succeed_if.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_succeed_if/pam_succeed_if.8.xml
-+++ pam.deb/modules/pam_succeed_if/pam_succeed_if.8.xml
+--- debian-pkg-pam.orig/modules/pam_succeed_if/pam_succeed_if.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_succeed_if/pam_succeed_if.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -285,7 +285,7 @@
          <refentrytitle>glob</refentrytitle><manvolnum>7</manvolnum>
        </citerefentry>,
@@ -5659,10 +5659,10 @@ Index: pam.deb/modules/pam_succeed_if/pam_succeed_if.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_tally/pam_tally.8
+Index: debian-pkg-pam/modules/pam_tally/pam_tally.8
 ===================================================================
---- pam.deb.orig/modules/pam_tally/pam_tally.8
-+++ pam.deb/modules/pam_tally/pam_tally.8
+--- debian-pkg-pam.orig/modules/pam_tally/pam_tally.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_tally/pam_tally.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,34 +1,34 @@
  .\"     Title: pam_tally
  .\"    Author: 
@@ -5931,10 +5931,10 @@ Index: pam.deb/modules/pam_tally/pam_tally.8
  .PP
 -pam_tally was written by Tim Baverstock and Tomas Mraz\.
 +pam_tally was written by Tim Baverstock and Tomas Mraz\&.
-Index: pam.deb/modules/pam_tally/pam_tally.8.xml
+Index: debian-pkg-pam/modules/pam_tally/pam_tally.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_tally/pam_tally.8.xml
-+++ pam.deb/modules/pam_tally/pam_tally.8.xml
+--- debian-pkg-pam.orig/modules/pam_tally/pam_tally.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_tally/pam_tally.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -412,7 +412,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -5944,10 +5944,10 @@ Index: pam.deb/modules/pam_tally/pam_tally.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_time/pam_time.8
+Index: debian-pkg-pam/modules/pam_time/pam_time.8
 ===================================================================
---- pam.deb.orig/modules/pam_time/pam_time.8
-+++ pam.deb/modules/pam_time/pam_time.8
+--- debian-pkg-pam.orig/modules/pam_time/pam_time.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_time/pam_time.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,74 +1,74 @@
  .\"     Title: pam_time
  .\"    Author: 
@@ -6064,10 +6064,10 @@ Index: pam.deb/modules/pam_time/pam_time.8
  .PP
 -pam_time was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_time was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_time/pam_time.8.xml
+Index: debian-pkg-pam/modules/pam_time/pam_time.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_time/pam_time.8.xml
-+++ pam.deb/modules/pam_time/pam_time.8.xml
+--- debian-pkg-pam.orig/modules/pam_time/pam_time.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_time/pam_time.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -169,7 +169,7 @@
          <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -6077,10 +6077,10 @@ Index: pam.deb/modules/pam_time/pam_time.8.xml
        </citerefentry>.
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_umask/pam_umask.8
+Index: debian-pkg-pam/modules/pam_umask/pam_umask.8
 ===================================================================
---- pam.deb.orig/modules/pam_umask/pam_umask.8
-+++ pam.deb/modules/pam_umask/pam_umask.8
+--- debian-pkg-pam.orig/modules/pam_umask/pam_umask.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_umask/pam_umask.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,23 +1,23 @@
  .\"     Title: pam_umask
  .\"    Author: 
@@ -6197,10 +6197,10 @@ Index: pam.deb/modules/pam_umask/pam_umask.8
  .PP
 -pam_umask was written by Thorsten Kukuk <kukuk@thkukuk\.de>\.
 +pam_umask was written by Thorsten Kukuk <kukuk@thkukuk\&.de>\&.
-Index: pam.deb/modules/pam_umask/pam_umask.8.xml
+Index: debian-pkg-pam/modules/pam_umask/pam_umask.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_umask/pam_umask.8.xml
-+++ pam.deb/modules/pam_umask/pam_umask.8.xml
+--- debian-pkg-pam.orig/modules/pam_umask/pam_umask.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_umask/pam_umask.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -205,7 +205,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -6210,10 +6210,10 @@ Index: pam.deb/modules/pam_umask/pam_umask.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_unix/pam_unix.8
+Index: debian-pkg-pam/modules/pam_unix/pam_unix.8
 ===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix.8
-+++ pam.deb/modules/pam_unix/pam_unix.8
+--- debian-pkg-pam.orig/modules/pam_unix/pam_unix.8	2009-04-17 12:47:19.000000000 -0700
++++ debian-pkg-pam/modules/pam_unix/pam_unix.8	2009-04-17 12:47:20.000000000 -0700
 @@ -228,7 +228,7 @@
  
  \fBpam.conf\fR(5),
@@ -6223,10 +6223,10 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
  .SH "AUTHOR"
  .PP
  pam_unix was written by various people\&.
-Index: pam.deb/modules/pam_unix/pam_unix.8.xml
+Index: debian-pkg-pam/modules/pam_unix/pam_unix.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix.8.xml
-+++ pam.deb/modules/pam_unix/pam_unix.8.xml
+--- debian-pkg-pam.orig/modules/pam_unix/pam_unix.8.xml	2009-04-17 12:47:19.000000000 -0700
++++ debian-pkg-pam/modules/pam_unix/pam_unix.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -465,7 +465,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -6236,10 +6236,10 @@ Index: pam.deb/modules/pam_unix/pam_unix.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/misc_conv.3
+Index: debian-pkg-pam/doc/man/misc_conv.3
 ===================================================================
---- pam.deb.orig/doc/man/misc_conv.3
-+++ pam.deb/doc/man/misc_conv.3
+--- debian-pkg-pam.orig/doc/man/misc_conv.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/misc_conv.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: misc_conv
  .\"    Author: 
@@ -6374,10 +6374,10 @@ Index: pam.deb/doc/man/misc_conv.3
  \fBlibpam_misc\fR
 -Library and not defined in any standard\.
 +Library and not defined in any standard\&.
-Index: pam.deb/doc/man/misc_conv.3.xml
+Index: debian-pkg-pam/doc/man/misc_conv.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/misc_conv.3.xml
-+++ pam.deb/doc/man/misc_conv.3.xml
+--- debian-pkg-pam.orig/doc/man/misc_conv.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/misc_conv.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -171,7 +171,7 @@
          <refentrytitle>pam_conv</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -6387,10 +6387,10 @@ Index: pam.deb/doc/man/misc_conv.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_acct_mgmt.3
+Index: debian-pkg-pam/doc/man/pam_acct_mgmt.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_acct_mgmt.3
-+++ pam.deb/doc/man/pam_acct_mgmt.3
+--- debian-pkg-pam.orig/doc/man/pam_acct_mgmt.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_acct_mgmt.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_acct_mgmt
  .\"    Author: 
@@ -6491,10 +6491,10 @@ Index: pam.deb/doc/man/pam_acct_mgmt.3
  \fBpam_strerror\fR(3),
 -\fBpam\fR(8)
 +\fBpam\fR(7)
-Index: pam.deb/doc/man/pam_acct_mgmt.3.xml
+Index: debian-pkg-pam/doc/man/pam_acct_mgmt.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_acct_mgmt.3.xml
-+++ pam.deb/doc/man/pam_acct_mgmt.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_acct_mgmt.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_acct_mgmt.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -138,7 +138,7 @@
          <refentrytitle>pam_strerror</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -6504,10 +6504,10 @@ Index: pam.deb/doc/man/pam_acct_mgmt.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_authenticate.3
+Index: debian-pkg-pam/doc/man/pam_authenticate.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_authenticate.3
-+++ pam.deb/doc/man/pam_authenticate.3
+--- debian-pkg-pam.orig/doc/man/pam_authenticate.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_authenticate.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_authenticate
  .\"    Author: 
@@ -6620,10 +6620,10 @@ Index: pam.deb/doc/man/pam_authenticate.3
  \fBpam_strerror\fR(3),
 -\fBpam\fR(8)
 +\fBpam\fR(7)
-Index: pam.deb/doc/man/pam_authenticate.3.xml
+Index: debian-pkg-pam/doc/man/pam_authenticate.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_authenticate.3.xml
-+++ pam.deb/doc/man/pam_authenticate.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_authenticate.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_authenticate.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -162,7 +162,7 @@
          <refentrytitle>pam_strerror</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -6633,10 +6633,10 @@ Index: pam.deb/doc/man/pam_authenticate.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_chauthtok.3
+Index: debian-pkg-pam/doc/man/pam_chauthtok.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_chauthtok.3
-+++ pam.deb/doc/man/pam_chauthtok.3
+--- debian-pkg-pam.orig/doc/man/pam_chauthtok.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_chauthtok.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_chauthtok
  .\"    Author: 
@@ -6745,10 +6745,10 @@ Index: pam.deb/doc/man/pam_chauthtok.3
  \fBpam_strerror\fR(3),
 -\fBpam\fR(8)
 +\fBpam\fR(7)
-Index: pam.deb/doc/man/pam_chauthtok.3.xml
+Index: debian-pkg-pam/doc/man/pam_chauthtok.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_chauthtok.3.xml
-+++ pam.deb/doc/man/pam_chauthtok.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_chauthtok.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_chauthtok.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -157,7 +157,7 @@
          <refentrytitle>pam_strerror</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -6758,10 +6758,10 @@ Index: pam.deb/doc/man/pam_chauthtok.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_conv.3
+Index: debian-pkg-pam/doc/man/pam_conv.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_conv.3
-+++ pam.deb/doc/man/pam_conv.3
+--- debian-pkg-pam.orig/doc/man/pam_conv.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_conv.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_conv
  .\"    Author: 
@@ -6913,10 +6913,10 @@ Index: pam.deb/doc/man/pam_conv.3
  \fBpam_strerror\fR(3),
 -\fBpam\fR(8)
 +\fBpam\fR(7)
-Index: pam.deb/doc/man/pam_conv.3.xml
+Index: debian-pkg-pam/doc/man/pam_conv.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_conv.3.xml
-+++ pam.deb/doc/man/pam_conv.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_conv.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_conv.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -221,7 +221,7 @@
          <refentrytitle>pam_strerror</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -6926,10 +6926,10 @@ Index: pam.deb/doc/man/pam_conv.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_error.3
+Index: debian-pkg-pam/doc/man/pam_error.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_error.3
-+++ pam.deb/doc/man/pam_error.3
+--- debian-pkg-pam.orig/doc/man/pam_error.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_error.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,33 +1,33 @@
  .\"     Title: pam_error
  .\"    Author: 
@@ -7018,10 +7018,10 @@ Index: pam.deb/doc/man/pam_error.3
  \fBpam_verror\fR
 -functions are Linux\-PAM extensions\.
 +functions are Linux\-PAM extensions\&.
-Index: pam.deb/doc/man/pam_error.3.xml
+Index: debian-pkg-pam/doc/man/pam_error.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_error.3.xml
-+++ pam.deb/doc/man/pam_error.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_error.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_error.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -105,7 +105,7 @@
          <refentrytitle>pam_vprompt</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -7031,10 +7031,10 @@ Index: pam.deb/doc/man/pam_error.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_getenv.3
+Index: debian-pkg-pam/doc/man/pam_getenv.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_getenv.3
-+++ pam.deb/doc/man/pam_getenv.3
+--- debian-pkg-pam.orig/doc/man/pam_getenv.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_getenv.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_getenv
  .\"    Author: 
@@ -7083,10 +7083,10 @@ Index: pam.deb/doc/man/pam_getenv.3
  \fBpam_putenv\fR(3),
 -\fBpam\fR(8)
 +\fBpam\fR(7)
-Index: pam.deb/doc/man/pam_getenv.3.xml
+Index: debian-pkg-pam/doc/man/pam_getenv.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_getenv.3.xml
-+++ pam.deb/doc/man/pam_getenv.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_getenv.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_getenv.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -59,7 +59,7 @@
          <refentrytitle>pam_putenv</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -7096,10 +7096,10 @@ Index: pam.deb/doc/man/pam_getenv.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_getenvlist.3
+Index: debian-pkg-pam/doc/man/pam_getenvlist.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_getenvlist.3
-+++ pam.deb/doc/man/pam_getenvlist.3
+--- debian-pkg-pam.orig/doc/man/pam_getenvlist.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_getenvlist.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_getenvlist
  .\"    Author: 
@@ -7161,10 +7161,10 @@ Index: pam.deb/doc/man/pam_getenvlist.3
  \fBpam_putenv\fR(3),
 -\fBpam\fR(8)
 +\fBpam\fR(7)
-Index: pam.deb/doc/man/pam_getenvlist.3.xml
+Index: debian-pkg-pam/doc/man/pam_getenvlist.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_getenvlist.3.xml
-+++ pam.deb/doc/man/pam_getenvlist.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_getenvlist.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_getenvlist.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -78,7 +78,7 @@
          <refentrytitle>pam_putenv</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -7174,10 +7174,10 @@ Index: pam.deb/doc/man/pam_getenvlist.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_info.3
+Index: debian-pkg-pam/doc/man/pam_info.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_info.3
-+++ pam.deb/doc/man/pam_info.3
+--- debian-pkg-pam.orig/doc/man/pam_info.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_info.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,33 +1,33 @@
  .\"     Title: pam_info
  .\"    Author: 
@@ -7263,10 +7263,10 @@ Index: pam.deb/doc/man/pam_info.3
  \fBpam_vinfo\fR
 -functions are Linux\-PAM extensions\.
 +functions are Linux\-PAM extensions\&.
-Index: pam.deb/doc/man/pam_info.3.xml
+Index: debian-pkg-pam/doc/man/pam_info.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_info.3.xml
-+++ pam.deb/doc/man/pam_info.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_info.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_info.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -93,7 +93,7 @@
      <title>SEE ALSO</title>
      <para>
@@ -7276,10 +7276,10 @@ Index: pam.deb/doc/man/pam_info.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_misc_drop_env.3
+Index: debian-pkg-pam/doc/man/pam_misc_drop_env.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_misc_drop_env.3
-+++ pam.deb/doc/man/pam_misc_drop_env.3
+--- debian-pkg-pam.orig/doc/man/pam_misc_drop_env.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_misc_drop_env.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_misc_drop_env
  .\"    Author: 
@@ -7335,10 +7335,10 @@ Index: pam.deb/doc/man/pam_misc_drop_env.3
  \fBlibpam_misc\fR
 -Library and not defined in any standard\.
 +Library and not defined in any standard\&.
-Index: pam.deb/doc/man/pam_misc_drop_env.3.xml
+Index: debian-pkg-pam/doc/man/pam_misc_drop_env.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_misc_drop_env.3.xml
-+++ pam.deb/doc/man/pam_misc_drop_env.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_misc_drop_env.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_misc_drop_env.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -46,7 +46,7 @@
          <refentrytitle>pam_getenvlist</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -7348,10 +7348,10 @@ Index: pam.deb/doc/man/pam_misc_drop_env.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_misc_paste_env.3
+Index: debian-pkg-pam/doc/man/pam_misc_paste_env.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_misc_paste_env.3
-+++ pam.deb/doc/man/pam_misc_paste_env.3
+--- debian-pkg-pam.orig/doc/man/pam_misc_paste_env.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_misc_paste_env.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_misc_paste_env
  .\"    Author: 
@@ -7402,10 +7402,10 @@ Index: pam.deb/doc/man/pam_misc_paste_env.3
  \fBlibpam_misc\fR
 -Library and not defined in any standard\.
 +Library and not defined in any standard\&.
-Index: pam.deb/doc/man/pam_misc_paste_env.3.xml
+Index: debian-pkg-pam/doc/man/pam_misc_paste_env.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_misc_paste_env.3.xml
-+++ pam.deb/doc/man/pam_misc_paste_env.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_misc_paste_env.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_misc_paste_env.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -44,7 +44,7 @@
          <refentrytitle>pam_putenv</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -7415,10 +7415,10 @@ Index: pam.deb/doc/man/pam_misc_paste_env.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_misc_setenv.3
+Index: debian-pkg-pam/doc/man/pam_misc_setenv.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_misc_setenv.3
-+++ pam.deb/doc/man/pam_misc_setenv.3
+--- debian-pkg-pam.orig/doc/man/pam_misc_setenv.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_misc_setenv.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_misc_setenv
  .\"    Author: 
@@ -7475,10 +7475,10 @@ Index: pam.deb/doc/man/pam_misc_setenv.3
  \fBlibpam_misc\fR
 -Library and not defined in any standard\.
 +Library and not defined in any standard\&.
-Index: pam.deb/doc/man/pam_misc_setenv.3.xml
+Index: debian-pkg-pam/doc/man/pam_misc_setenv.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_misc_setenv.3.xml
-+++ pam.deb/doc/man/pam_misc_setenv.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_misc_setenv.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_misc_setenv.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -51,7 +51,7 @@
          <refentrytitle>pam_putenv</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -7488,10 +7488,10 @@ Index: pam.deb/doc/man/pam_misc_setenv.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_prompt.3
+Index: debian-pkg-pam/doc/man/pam_prompt.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_prompt.3
-+++ pam.deb/doc/man/pam_prompt.3
+--- debian-pkg-pam.orig/doc/man/pam_prompt.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_prompt.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,26 +1,26 @@
  .\"     Title: pam_prompt
  .\"    Author: 
@@ -7564,10 +7564,10 @@ Index: pam.deb/doc/man/pam_prompt.3
  \fBpam_vprompt\fR
 -functions are Linux\-PAM extensions\.
 +functions are Linux\-PAM extensions\&.
-Index: pam.deb/doc/man/pam_prompt.3.xml
+Index: debian-pkg-pam/doc/man/pam_prompt.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_prompt.3.xml
-+++ pam.deb/doc/man/pam_prompt.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_prompt.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_prompt.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -91,7 +91,7 @@
      <title>SEE ALSO</title>
      <para>
@@ -7577,10 +7577,10 @@ Index: pam.deb/doc/man/pam_prompt.3.xml
        </citerefentry>,
        <citerefentry>
          <refentrytitle>pam_conv</refentrytitle><manvolnum>3</manvolnum>
-Index: pam.deb/doc/man/pam_putenv.3
+Index: debian-pkg-pam/doc/man/pam_putenv.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_putenv.3
-+++ pam.deb/doc/man/pam_putenv.3
+--- debian-pkg-pam.orig/doc/man/pam_putenv.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_putenv.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_putenv
  .\"    Author: 
@@ -7691,10 +7691,10 @@ Index: pam.deb/doc/man/pam_putenv.3
  \fBpam_strerror\fR(3),
 -\fBpam\fR(8)
 +\fBpam\fR(7)
-Index: pam.deb/doc/man/pam_putenv.3.xml
+Index: debian-pkg-pam/doc/man/pam_putenv.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_putenv.3.xml
-+++ pam.deb/doc/man/pam_putenv.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_putenv.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_putenv.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -145,7 +145,7 @@
          <refentrytitle>pam_strerror</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
@@ -7704,10 +7704,10 @@ Index: pam.deb/doc/man/pam_putenv.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_strerror.3
+Index: debian-pkg-pam/doc/man/pam_strerror.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_strerror.3
-+++ pam.deb/doc/man/pam_strerror.3
+--- debian-pkg-pam.orig/doc/man/pam_strerror.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_strerror.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,22 +1,22 @@
  .\"     Title: pam_strerror
  .\"    Author: 
@@ -7751,10 +7751,10 @@ Index: pam.deb/doc/man/pam_strerror.3
  
 -\fBpam\fR(8)
 +\fBpam\fR(7)
-Index: pam.deb/doc/man/pam_strerror.3.xml
+Index: debian-pkg-pam/doc/man/pam_strerror.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_strerror.3.xml
-+++ pam.deb/doc/man/pam_strerror.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_strerror.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_strerror.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -51,7 +51,7 @@
      <title>SEE ALSO</title>
      <para>
@@ -7764,10 +7764,10 @@ Index: pam.deb/doc/man/pam_strerror.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/doc/man/pam_syslog.3
+Index: debian-pkg-pam/doc/man/pam_syslog.3
 ===================================================================
---- pam.deb.orig/doc/man/pam_syslog.3
-+++ pam.deb/doc/man/pam_syslog.3
+--- debian-pkg-pam.orig/doc/man/pam_syslog.3	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_syslog.3	2009-04-17 12:47:20.000000000 -0700
 @@ -1,32 +1,32 @@
  .\"     Title: pam_syslog
  .\"    Author: 
@@ -7841,10 +7841,10 @@ Index: pam.deb/doc/man/pam_syslog.3
  \fBpam_vsyslog\fR
 -functions are Linux\-PAM extensions\.
 +functions are Linux\-PAM extensions\&.
-Index: pam.deb/doc/man/pam_syslog.3.xml
+Index: debian-pkg-pam/doc/man/pam_syslog.3.xml
 ===================================================================
---- pam.deb.orig/doc/man/pam_syslog.3.xml
-+++ pam.deb/doc/man/pam_syslog.3.xml
+--- debian-pkg-pam.orig/doc/man/pam_syslog.3.xml	2009-04-17 12:44:14.000000000 -0700
++++ debian-pkg-pam/doc/man/pam_syslog.3.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -66,7 +66,7 @@
      <title>SEE ALSO</title>
      <para>
@@ -7854,10 +7854,10 @@ Index: pam.deb/doc/man/pam_syslog.3.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_userdb/pam_userdb.8
+Index: debian-pkg-pam/modules/pam_userdb/pam_userdb.8
 ===================================================================
---- pam.deb.orig/modules/pam_userdb/pam_userdb.8
-+++ pam.deb/modules/pam_userdb/pam_userdb.8
+--- debian-pkg-pam.orig/modules/pam_userdb/pam_userdb.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_userdb/pam_userdb.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,77 +1,77 @@
  .\"     Title: pam_userdb
  .\"    Author: 
@@ -8022,10 +8022,10 @@ Index: pam.deb/modules/pam_userdb/pam_userdb.8
  .PP
 -pam_userdb was written by Cristian Gafton >gafton@redhat\.com<\.
 +pam_userdb was written by Cristian Gafton >gafton@redhat\&.com<\&.
-Index: pam.deb/modules/pam_userdb/pam_userdb.8.xml
+Index: debian-pkg-pam/modules/pam_userdb/pam_userdb.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_userdb/pam_userdb.8.xml
-+++ pam.deb/modules/pam_userdb/pam_userdb.8.xml
+--- debian-pkg-pam.orig/modules/pam_userdb/pam_userdb.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_userdb/pam_userdb.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -277,7 +277,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -8035,10 +8035,10 @@ Index: pam.deb/modules/pam_userdb/pam_userdb.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_warn/pam_warn.8
+Index: debian-pkg-pam/modules/pam_warn/pam_warn.8
 ===================================================================
---- pam.deb.orig/modules/pam_warn/pam_warn.8
-+++ pam.deb/modules/pam_warn/pam_warn.8
+--- debian-pkg-pam.orig/modules/pam_warn/pam_warn.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_warn/pam_warn.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,28 +1,28 @@
  .\"     Title: pam_warn
  .\"    Author: 
@@ -8130,10 +8130,10 @@ Index: pam.deb/modules/pam_warn/pam_warn.8
  .PP
 -pam_warn was written by Andrew G\. Morgan <morgan@kernel\.org>\.
 +pam_warn was written by Andrew G\&. Morgan <morgan@kernel\&.org>\&.
-Index: pam.deb/modules/pam_warn/pam_warn.8.xml
+Index: debian-pkg-pam/modules/pam_warn/pam_warn.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_warn/pam_warn.8.xml
-+++ pam.deb/modules/pam_warn/pam_warn.8.xml
+--- debian-pkg-pam.orig/modules/pam_warn/pam_warn.8.xml	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_warn/pam_warn.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -89,7 +89,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -8143,10 +8143,10 @@ Index: pam.deb/modules/pam_warn/pam_warn.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_wheel/pam_wheel.8
+Index: debian-pkg-pam/modules/pam_wheel/pam_wheel.8
 ===================================================================
---- pam.deb.orig/modules/pam_wheel/pam_wheel.8
-+++ pam.deb/modules/pam_wheel/pam_wheel.8
+--- debian-pkg-pam.orig/modules/pam_wheel/pam_wheel.8	2009-04-17 12:47:11.000000000 -0700
++++ debian-pkg-pam/modules/pam_wheel/pam_wheel.8	2009-04-17 12:47:20.000000000 -0700
 @@ -116,7 +116,7 @@
  
  \fBpam.conf\fR(5),
@@ -8156,10 +8156,10 @@ Index: pam.deb/modules/pam_wheel/pam_wheel.8
  .SH "AUTHOR"
  .PP
  pam_wheel was written by Cristian Gafton <gafton@redhat\&.com>\&.
-Index: pam.deb/modules/pam_wheel/pam_wheel.8.xml
+Index: debian-pkg-pam/modules/pam_wheel/pam_wheel.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_wheel/pam_wheel.8.xml
-+++ pam.deb/modules/pam_wheel/pam_wheel.8.xml
+--- debian-pkg-pam.orig/modules/pam_wheel/pam_wheel.8.xml	2009-04-17 12:47:11.000000000 -0700
++++ debian-pkg-pam/modules/pam_wheel/pam_wheel.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -212,7 +212,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
@@ -8169,10 +8169,10 @@ Index: pam.deb/modules/pam_wheel/pam_wheel.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam.deb/modules/pam_xauth/pam_xauth.8
+Index: debian-pkg-pam/modules/pam_xauth/pam_xauth.8
 ===================================================================
---- pam.deb.orig/modules/pam_xauth/pam_xauth.8
-+++ pam.deb/modules/pam_xauth/pam_xauth.8
+--- debian-pkg-pam.orig/modules/pam_xauth/pam_xauth.8	2009-04-17 12:44:13.000000000 -0700
++++ debian-pkg-pam/modules/pam_xauth/pam_xauth.8	2009-04-17 12:47:20.000000000 -0700
 @@ -1,67 +1,67 @@
  .\"     Title: pam_xauth
  .\"    Author: 
@@ -8377,10 +8377,10 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.8
  .PP
 -pam_xauth was written by Nalin Dahyabhai <nalin@redhat\.com>, based on original version by Michael K\. Johnson <johnsonm@redhat\.com>\.
 +pam_xauth was written by Nalin Dahyabhai <nalin@redhat\&.com>, based on original version by Michael K\&. Johnson <johnsonm@redhat\&.com>\&.
-Index: pam.deb/modules/pam_xauth/pam_xauth.8.xml
+Index: debian-pkg-pam/modules/pam_xauth/pam_xauth.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_xauth/pam_xauth.8.xml
-+++ pam.deb/modules/pam_xauth/pam_xauth.8.xml
+--- debian-pkg-pam.orig/modules/pam_xauth/pam_xauth.8.xml	2009-04-17 12:44:12.000000000 -0700
++++ debian-pkg-pam/modules/pam_xauth/pam_xauth.8.xml	2009-04-17 12:47:20.000000000 -0700
 @@ -276,7 +276,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
        </citerefentry>,
