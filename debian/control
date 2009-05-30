@@ -14,7 +14,6 @@ Homepage: http://pam.sourceforge.net/
 Package: libpam0g
 Priority: required
 Architecture: any
-Conflicts: libpam0 (<= 0.56-2), libpam
 Replaces: libpam0g-util
 Depends: ${shlibs:Depends}, ${misc:Depends}, libpam-runtime
 Suggests: libpam-doc
@@ -32,7 +31,7 @@ Section: admin
 Priority: required
 Architecture: any
 Pre-Depends: ${shlibs:Depends}, ${misc:Depends}
-Conflicts: libpam0g-modules (= 0.66-1), libpam-motd, libpam-mkhomedir, libpam-umask, suidmanager (<< 0.50)
+Conflicts: libpam-motd, libpam-mkhomedir, libpam-umask
 Replaces: libpam0g-util, libpam-umask
 Provides: libpam-motd, libpam-mkhomedir, libpam-umask
 Description: Pluggable Authentication Modules for PAM
@@ -45,7 +44,7 @@ Priority: required
 Architecture: all
 Depends: ${misc:Depends}, debconf (>= 1.5.19)
 Replaces: libpam0g-util, libpam0g-dev
-Conflicts: libpam0g-util, libpam0g (<< 0.66-0)
+Conflicts: libpam0g-util
 Description: Runtime support for the PAM library
  Contains configuration files and  directories required for
  authentication  to work on Debian systems.  This package is required
@@ -56,8 +55,6 @@ Section: libdevel
 Priority: optional
 Architecture: any
 Depends: ${misc:Depends}, libpam0g (= ${binary:Version}), libc6-dev|libc-dev
-Conflicts: libpam-dev, libpam-dbg
-Replaces: libpam0g (<= 0.65)
 Provides: libpam-dev
 Description: Development files for PAM
  Contains C header files and development shared libraries for libpam, the

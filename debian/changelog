@@ -11,7 +11,10 @@ pam (1.0.1-10) UNRELEASED; urgency=low
     for MINDAYS-Field regression (closes: #514437).
   * debian/control: add missing misc:Depends for packages that need it.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 22 Mar 2009 20:36:14 -0700
+  [ Sam Hartman ]
+  * Remove conflicts information for transitions prior to woody release
+
+ -- Sam Hartman <hartmans@debian.org>  Sat, 30 May 2009 13:47:20 -0400
 
 pam (1.0.1-9) unstable; urgency=low
 
