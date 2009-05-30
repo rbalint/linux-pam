@@ -15,8 +15,10 @@ pam (1.0.1-10) UNRELEASED; urgency=low
   * Remove conflicts information for transitions prior to woody release
   * Fix lintian overrides for libpam-runtime
   * Overrides for lintian finding quilt patches
+  * pam_mail-fix-quiet: patch from Andreas Henriksson
+    applied upstream to fix quiet option of pam_mail, Closes: #439268 
 
- -- Sam Hartman <hartmans@debian.org>  Sat, 30 May 2009 17:00:46 -0400
+ -- Sam Hartman <hartmans@debian.org>  Sat, 30 May 2009 17:26:14 -0400
 
 pam (1.0.1-9) unstable; urgency=low
 
