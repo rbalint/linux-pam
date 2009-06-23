@@ -5,6 +5,8 @@ pam (1.0.1-10) UNRELEASED; urgency=low
     - Finnish, thanks to Esko Arajärvi <edu@iki.fi> (closes: #520785)
     - Russian, thanks to Yuri Kozlov <yuray@komyakino.ru> (closes: #521874)
     - German, thanks to Sven Joachim <svenjoac@gmx.de> (closes: #521530)
+    - Basque, thanks to Piarres Beobide <pi+debian@beobide.net>
+      (closes: #524285)
 
   [ Kees Cook ]
   * Add debian/patches/pam_1.0.4_mindays: backport upstream 1.0.4 fixes
