@@ -13,6 +13,10 @@ pam (1.0.1-10) UNRELEASED; urgency=low
     for MINDAYS-Field regression (closes: #514437).
   * debian/control: add missing misc:Depends for packages that need it.
 
+  [ Dustin Kirkland ]
+  * pam_motd: run the update-motd scripts in pam_motd; render update-motd
+    obsolete, LP: #399071
+
  -- Steve Langasek <vorlon@debian.org>  Sun, 22 Mar 2009 20:36:14 -0700
 
 pam (1.0.1-9) unstable; urgency=low
