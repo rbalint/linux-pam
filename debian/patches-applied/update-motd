@@ -6,15 +6,15 @@ Authors: Dustin Kirkland <kirkland@canonical.com>
 
 Upstream status: not yet submitted
 
-Index: pam.deb/modules/pam_motd/pam_motd.c
+Index: pam-1.0.1/modules/pam_motd/pam_motd.c
 ===================================================================
---- pam.deb.orig/modules/pam_motd/pam_motd.c
-+++ pam.deb/modules/pam_motd/pam_motd.c
+--- pam-1.0.1.orig/modules/pam_motd/pam_motd.c
++++ pam-1.0.1/modules/pam_motd/pam_motd.c
 @@ -48,14 +48,38 @@
  
  static char default_motd[] = DEFAULT_MOTD;
  
-+void display_file(pam_handle_t *pamh, const char *motd_path)
++static void display_file(pam_handle_t *pamh, const char *motd_path)
 +{
 +    int fd;
 +    char *mtmp = NULL;
@@ -79,7 +79,7 @@ Index: pam.deb/modules/pam_motd/pam_motd.c
 +       If /etc/motd -> /var/run/motd, the displayed MOTD will be dynamic.
 +       Otherwise, the admin can force a static MOTD by breaking that symlink
 +       and publishing into an /etc/motd text file. */
-+    if ((stat("/etc/update-motd.d", &st) == 0) && S_IDIR(st.st_mode)) {
++    if ((stat("/etc/update-motd.d", &st) == 0) && S_ISDIR(st.st_mode)) {
 +	if (!system("run-parts --lsbsysinit /etc/update-motd.d > /var/run/motd.new"))
 +	    rename("/var/run/motd.new", "/var/run/motd");
      }
