@@ -5,6 +5,8 @@ pam (1.0.1-10) UNRELEASED; urgency=low
     - Finnish, thanks to Esko Arajärvi <edu@iki.fi> (closes: #520785)
     - Russian, thanks to Yuri Kozlov <yuray@komyakino.ru> (closes: #521874)
     - German, thanks to Sven Joachim <svenjoac@gmx.de> (closes: #521530)
+    - Basque, thanks to Piarres Beobide <pi+debian@beobide.net>
+      (closes: #524285)
 
   [ Kees Cook ]
   * Add debian/patches/pam_1.0.4_mindays: backport upstream 1.0.4 fixes
@@ -18,7 +20,11 @@ pam (1.0.1-10) UNRELEASED; urgency=low
   * pam_mail-fix-quiet: patch from Andreas Henriksson
     applied upstream to fix quiet option of pam_mail, Closes: #439268 
 
- -- Sam Hartman <hartmans@debian.org>  Sat, 30 May 2009 17:26:14 -0400
+  [ Dustin Kirkland ]
+  * debian/patches/update-motd: run the update-motd scripts in pam_motd;
+    render update-motd obsolete, LP: #399071
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 22 Mar 2009 20:36:14 -0700
 
 pam (1.0.1-9) unstable; urgency=low
 

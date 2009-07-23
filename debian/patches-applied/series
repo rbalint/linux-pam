@@ -23,4 +23,6 @@ pam_unix-chkpwd-wait
 autoconf.patch 
 dont_freeze_password_chain -p0
 pam_1.0.4_mindays
+update-motd
 pam_mail-fix-quiet
+
