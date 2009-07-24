@@ -26,3 +26,4 @@ pam_1.0.4_mindays
 update-motd
 pam_mail-fix-quiet
 
+cve-2009-0887-libpam-pam_misc.patch

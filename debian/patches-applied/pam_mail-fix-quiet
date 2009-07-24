@@ -5,8 +5,8 @@ Upstream status: applied in upstream CVS September 2008
 
 Index: sid/modules/pam_mail/pam_mail.c
 ===================================================================
---- sid.orig/modules/pam_mail/pam_mail.c	2009-05-30 17:02:33.000000000 -0400
-+++ sid/modules/pam_mail/pam_mail.c	2009-05-30 17:20:28.000000000 -0400
+--- sid.orig/modules/pam_mail/pam_mail.c	2009-07-21 04:31:54.000000000 -0400
++++ sid/modules/pam_mail/pam_mail.c	2009-07-24 12:16:47.000000000 -0400
 @@ -303,8 +303,13 @@
  {
      int retval;

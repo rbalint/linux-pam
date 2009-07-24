@@ -24,7 +24,11 @@ pam (1.0.1-10) UNRELEASED; urgency=low
   * debian/patches/update-motd: run the update-motd scripts in pam_motd;
     render update-motd obsolete, LP: #399071
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 22 Mar 2009 20:36:14 -0700
+  [ Sam Hartman ]
+  * cve-2009-0887-libpam-pam_misc.patch: avoid integer signedness problem
+    (CVE-2009-0887) (Closes: #520115) 
+
+ -- Sam Hartman <hartmans@debian.org>  Fri, 24 Jul 2009 12:24:01 -0400
 
 pam (1.0.1-9) unstable; urgency=low
 
