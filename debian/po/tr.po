@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-02-28 13:06-0800\n"
+"POT-Creation-Date: 2009-07-27 16:09+0200\n"
 "PO-Revision-Date: 2009-01-01 19:20+0200\n"
 "Last-Translator: Mert Dirik <mertdirik@gmail.com>\n"
 "Language-Team: Debian L10n Turkish <debian-l10n-turkish@lists.debian.org>\n"
@@ -143,6 +143,21 @@ msgid ""
 "should be overridden using the system-provided configuration.  If you "
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:4001
+msgid "No PAM profiles have been selected."
+msgstr ""
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:4001
+msgid ""
+"No PAM profiles have been selected for use on this system.  This would grant "
+"all users access without authenticating, and is not allowed.  Please select "
+"at least one PAM profile from the available list."
 msgstr ""
 
 #. Type: error
