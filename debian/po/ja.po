@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 1.0.1-7\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-02-28 13:06-0800\n"
+"POT-Creation-Date: 2009-07-27 16:09+0200\n"
 "PO-Revision-Date: 2009-03-05 23:03+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -149,6 +149,23 @@ msgstr ""
 "がローカルで変更されています。これらのローカルの変更をシステムで提供される設"
 "定を使って上書きすべきかどうかを指示してください。この選択肢で「いいえ」と答"
 "える場合、あなたのシステムの認証設定を手動で管理する必要があります。"
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:4001
+#, fuzzy
+#| msgid "Incompatible PAM profiles selected."
+msgid "No PAM profiles have been selected."
+msgstr "矛盾する PAM プロファイルが選択されました。"
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:4001
+msgid ""
+"No PAM profiles have been selected for use on this system.  This would grant "
+"all users access without authenticating, and is not allowed.  Please select "
+"at least one PAM profile from the available list."
+msgstr ""
 
 #. Type: error
 #. Description

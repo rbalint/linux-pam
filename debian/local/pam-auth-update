@@ -35,6 +35,7 @@ my $inputdir = '/usr/share/pam-configs';
 my $template = 'libpam-runtime/profiles';
 my $errtemplate = 'libpam-runtime/conflicts';
 my $overridetemplate = 'libpam-runtime/override';
+my $blanktemplate = 'libpam-runtime/no_profiles_chosen';
 my $confdir = '/etc/pam.d';
 my $savedir = '/var/lib/pam';
 my (%profiles, @sorted, @enabled, @conflicts, %removals);
@@ -193,7 +194,10 @@ do {
 	}
 	fset($template,'seen','false');
 	set($template, join(', ', @enabled));
-} while (@conflicts);
+	if (!@enabled) {
+		input('high',$blanktemplate);
+	}
+} while (@conflicts || !@enabled);
 
 # the decision has been made about what configs to use, so even if
 # something fails after this, we shouldn't go munging the default

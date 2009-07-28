@@ -35,3 +35,9 @@ _Description: Override local changes to /etc/pam.d/common-*?
  decline this option, you will need to manage your system's
  authentication configuration by hand.
 
+Template: libpam-runtime/no_profiles_chosen
+Type: error
+_Description: No PAM profiles have been selected.
+ No PAM profiles have been selected for use on this system.  This would grant
+ all users access without authenticating, and is not allowed.  Please select
+ at least one PAM profile from the available list.

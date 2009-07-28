@@ -7,6 +7,9 @@ pam (1.0.1-10) UNRELEASED; urgency=low
     - German, thanks to Sven Joachim <svenjoac@gmx.de> (closes: #521530)
     - Basque, thanks to Piarres Beobide <pi+debian@beobide.net>
       (closes: #524285)
+  * When no profiles are chosen in pam-auth-update, throw an error message
+    and prompt again instead of letting the user end up with an insecure
+    system.  This introduces a new debconf template.  Closes: #519927.
 
   [ Kees Cook ]
   * Add debian/patches/pam_1.0.4_mindays: backport upstream 1.0.4 fixes

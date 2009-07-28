@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-02-28 13:06-0800\n"
+"POT-Creation-Date: 2009-07-27 16:09+0200\n"
 "PO-Revision-Date: 2009-03-12 21:43+0100\n"
 "Last-Translator: Marce Villarino <mvillarino@users.sourceforge.net>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -153,6 +153,23 @@ msgstr ""
 "sobrescribirse empregando a configuración fornecida polo sistema. Se rexeita "
 "esta opción deberá xestionar manualmente a configuración da autenticación do "
 "sistema."
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:4001
+#, fuzzy
+#| msgid "Incompatible PAM profiles selected."
+msgid "No PAM profiles have been selected."
+msgstr "Escolléronse perfís de PAM incompatíbeis."
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:4001
+msgid ""
+"No PAM profiles have been selected for use on this system.  This would grant "
+"all users access without authenticating, and is not allowed.  Please select "
+"at least one PAM profile from the available list."
+msgstr ""
 
 #. Type: error
 #. Description

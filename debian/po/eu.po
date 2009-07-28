@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam_1.0.1-5_eu\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-02-28 13:06-0800\n"
+"POT-Creation-Date: 2009-07-27 16:09+0200\n"
 "PO-Revision-Date: 2009-01-02 12:30+0100\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: debian-eu <debian-l10n-eu@lists.debian.org>\n"
@@ -101,8 +101,9 @@ msgid ""
 "sessions."
 msgstr ""
 "Autentifikazio modulu txertagarriak (PAM) ezartzen du zein autentifikazio, "
-"autorizazio eta psahitz aldaketa kudeatzen diren sisteman, baita erabiltzaile "
-"saioak hastekoan ekintza gehigarrien konfigurazioaren onarpena du."
+"autorizazio eta psahitz aldaketa kudeatzen diren sisteman, baita "
+"erabiltzaile saioak hastekoan ekintza gehigarrien konfigurazioaren onarpena "
+"du."
 
 #. Type: multiselect
 #. Description
@@ -153,10 +154,27 @@ msgid ""
 "configuration by hand."
 msgstr ""
 "/etc/pam.d/common-{auth,account,password,session} fitxategietako bat edo "
-"gehiago lokalki eraldatua izan da. Mesedez zehaztu aldaketa horiek "
-"sistemak-hornitutako konfigurazioaz gainidatzi behar diren ala ez. Aukera "
-"hau baztertzea hautatzen baduzu sistemaren autentifikazio konfigurazioa "
-"eskuz kudeatu behar duzu."
+"gehiago lokalki eraldatua izan da. Mesedez zehaztu aldaketa horiek sistemak-"
+"hornitutako konfigurazioaz gainidatzi behar diren ala ez. Aukera hau "
+"baztertzea hautatzen baduzu sistemaren autentifikazio konfigurazioa eskuz "
+"kudeatu behar duzu."
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:4001
+#, fuzzy
+#| msgid "Incompatible PAM profiles selected."
+msgid "No PAM profiles have been selected."
+msgstr "PAM profil bateraezinak hautatuak."
+
+#. Type: error
+#. Description
+#: ../libpam-runtime.templates:4001
+msgid ""
+"No PAM profiles have been selected for use on this system.  This would grant "
+"all users access without authenticating, and is not allowed.  Please select "
+"at least one PAM profile from the available list."
+msgstr ""
 
 #. Type: error
 #. Description
