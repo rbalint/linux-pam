@@ -41,3 +41,22 @@ _Description: No PAM profiles have been selected.
  No PAM profiles have been selected for use on this system.  This would grant
  all users access without authenticating, and is not allowed.  Please select
  at least one PAM profile from the available list.
+
+Template: libpam-runtime/you-had-no-auth
+Type: note
+_Description: Your system allows access with no password!
+ When you configured PAM on this system, you elected to disable all
+ PAM profiles.  As a result, any password will be accepted to gain
+ access to the system; even incorrect passwords will gain
+ access. Especially if this system can be accessed from the Internet,
+ it is likely that malicious software has been installed and the
+ system compromised.  Unless you are familiar with recovering from
+ security failures, viruses, and malicious software you should
+ re-install this system from scratch or obtain the services of a
+ skilled system administrator.  For more information see
+ http://www.debian.org/xxx 
+ .
+ The PAM packaging has been improved and the automated PAM
+ configuration tool no longer permits this configuration.  We
+ apologize that previous versions of the PAM configuration did not
+ detect and prevent this situation.
