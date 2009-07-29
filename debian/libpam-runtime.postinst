@@ -1,9 +1,21 @@
 #!/bin/sh -e
 
-# If the user has removed the config file, respect this sign of dementia
-# -- only create on package install.
 . /usr/share/debconf/confmodule
 
+# pam-auth-update is introduced in 1.0.1-6
+# Between 1.0.1-6 and 1.0.1-10 it is possible to get empty profiles
+if [ "x$2" != "x" ] ;then
+    if dpkg --compare-versions $2 lt 1.0.1-10 && dpkg --compare-versions $2 ge 1.0.1-6 ; then
+	db_get libpam-runtime/profiles
+	if [ "x$ret" = "x" ] ; then
+	    db_input critical libpam-runtime/you-had-no-auth ||true
+	    db_go
+	fi
+    fi
+fi
+
+# If the user has removed the config file, respect this sign of dementia
+# -- only create on package install.
 force=
 if [ -z "$2" ] || dpkg --compare-versions "$2" lt 1.0.1-6
 then
