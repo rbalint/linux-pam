@@ -54,7 +54,7 @@ _Description: Your system allows access with no password!
  security failures, viruses, and malicious software you should
  re-install this system from scratch or obtain the services of a
  skilled system administrator.  For more information see
- http://www.debian.org/xxx 
+ http://www.debian.org/security/pam-auth
  .
  The PAM packaging has been improved and the automated PAM
  configuration tool no longer permits this configuration.  We
