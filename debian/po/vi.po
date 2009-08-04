@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 1.0.1-7\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-08-04 16:31+0100\n"
+"POT-Creation-Date: 2009-08-04 16:34+0100\n"
 "PO-Revision-Date: 2009-03-06 00:05+0930\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
@@ -170,13 +170,13 @@ msgid ""
 "at least one PAM profile from the available list."
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid ""
@@ -190,13 +190,13 @@ msgid ""
 "administrator.  For more information, see:"
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "http://www.debian.org/security/pam-auth"
 msgstr ""
 
-#. Type: note
+#. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid ""
