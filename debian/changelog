@@ -1,4 +1,4 @@
-pam (1.0.1-10) UNRELEASED; urgency=low
+pam (1.0.1-10) UNRELEASED; urgency=high
 
   [ Steve Langasek ]
   * Updated debconf translations:
