@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-07-27 16:09+0200\n"
+"POT-Creation-Date: 2009-08-04 16:31+0100\n"
 "PO-Revision-Date: 2007-10-03 12:07+0200\n"
 "Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -157,6 +157,42 @@ msgid ""
 "No PAM profiles have been selected for use on this system.  This would grant "
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../libpam-runtime.templates:5001
+msgid "Your system allowed access without a password!"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../libpam-runtime.templates:5001
+msgid ""
+"A bug in a previous version of libpam-runtime resulted in no PAM profiles "
+"being selected for use on this system.  As a result, access was allowed for "
+"a time to all accounts on your system, with or without a correct password. "
+"Especially if this system can be accessed from the Internet, it is likely "
+"that it has been compromised.  Unless you are familiar with recovering from "
+"security failures, viruses, and malicious software, you should re-install "
+"this system from scratch or obtain the services of a skilled system "
+"administrator.  For more information, see:"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../libpam-runtime.templates:5001
+msgid "http://www.debian.org/security/pam-auth"
+msgstr ""
+
+#. Type: note
+#. Description
+#: ../libpam-runtime.templates:5001
+msgid ""
+"The bug that allowed this wrong configuration is fixed in the current "
+"version of libpam-runtime, and your configuration has now been corrected. We "
+"apologize that previous versions of libpam-runtime did not detect and "
+"prevent this situation."
 msgstr ""
 
 #. Type: error
