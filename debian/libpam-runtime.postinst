@@ -7,7 +7,7 @@
 if [ "x$2" != "x" ] ;then
     if dpkg --compare-versions $2 lt 1.0.1-10 && dpkg --compare-versions $2 ge 1.0.1-6 ; then
 	db_get libpam-runtime/profiles
-	if [ "x$ret" = "x" ] ; then
+	if [ "x$RET" = "x" ] ; then
 	    UHOH=1
 	fi
     fi

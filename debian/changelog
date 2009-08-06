@@ -1,4 +1,4 @@
-pam (1.0.1-10) UNRELEASED; urgency=high
+pam (1.0.1-10) unstable; urgency=high
 
   [ Steve Langasek ]
   * Updated debconf translations:
@@ -9,7 +9,8 @@ pam (1.0.1-10) UNRELEASED; urgency=high
       (closes: #524285)
   * When no profiles are chosen in pam-auth-update, throw an error message
     and prompt again instead of letting the user end up with an insecure
-    system.  This introduces a new debconf template.  Closes: #519927.
+    system.  This introduces a new debconf template.  Closes: #519927,
+    LP: #410171.
 
   [ Kees Cook ]
   * Add debian/patches/pam_1.0.4_mindays: backport upstream 1.0.4 fixes
@@ -31,7 +32,7 @@ pam (1.0.1-10) UNRELEASED; urgency=high
   * cve-2009-0887-libpam-pam_misc.patch: avoid integer signedness problem
     (CVE-2009-0887) (Closes: #520115) 
 
- -- Sam Hartman <hartmans@debian.org>  Fri, 24 Jul 2009 12:24:01 -0400
+ -- Steve Langasek <vorlon@debian.org>  Thu, 06 Aug 2009 17:54:32 +0100
 
 pam (1.0.1-9) unstable; urgency=low
 
