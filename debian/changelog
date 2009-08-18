@@ -11,6 +11,8 @@ pam (1.0.1-11) UNRELEASED; urgency=low
     file, so that we can at last distinguish between interactive and
     non-interactive PAM sessions at a policy level.  Closes: #169930,
     LP: #287715.
+  * debian/local/pam-auth-update: prune md5sums for unsupported upgrade
+    paths (intrepid pre-release -> karmic/lenny)
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 18 Aug 2009 12:58:52 -0700
 
