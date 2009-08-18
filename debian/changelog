@@ -4,6 +4,8 @@ pam (1.0.1-11) UNRELEASED; urgency=low
     1.0.1-11, to allow for a new common-session-noninteractive config file;
     and include md5sum checking logic that will work the same with old
     unmanaged and new managed /etc/pam.d/common-* files.
+  * debian/local/common-{auth,account,session,password}.md5sums: document
+    the known md5sums for the new managed files.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 18 Aug 2009 12:58:52 -0700
 
