@@ -54,6 +54,9 @@ my %md5sums = (
 		'1bd2f3e86f552c57f5ee013b93ffca2b',
 		'4a25673e8b36f1805219027d3be02cd2',
 	],
+	'session-noninteractive' => [
+		'ad2b78ce1498dd637ef36469430b6ac6',
+	],
 );
 
 opendir(DIR, $inputdir) || die "could not open config directory: $!";
@@ -278,6 +281,7 @@ sub create_from_template
 	my($template,$dest,$profiles,$enabled,$diff,$type) = @_;
 	my $state = 0;
 	my $uctype = ucfirst($type);
+	$type =~ s/-noninteractive//;
 
 	open(INPUT,$template) || return 0;
 	open(OUTPUT,">$dest") || return 0;
@@ -431,7 +435,9 @@ sub write_profiles
 	# because we can't atomically replace both /var/lib/pam/$foo and
 	# /etc/pam.d/common-$foo at the same time, take steps to make this
 	# somewhat robust
-	for my $type ('auth','account','password','session') {
+	for my $type ('auth','account','password','session',
+	              'session-noninteractive')
+	{
 		my $target = $confdir . '/common-' . $type;
 		my $template = $target;
 		my $dest = $template . '.pam-new';
@@ -540,7 +546,9 @@ sub diff_profiles
 	# If anything fails here, just return immediately since we then
 	# have nothing to merge; instead, the caller will decide later
 	# whether to force an overwrite.
-	for my $type ('auth','account','password','session') {
+	for my $type ('auth','account','password','session',
+	              'session-noninteractive')
+	{
 		my (@saved,$modname);
 
 		open(SAVED,$savedir . '/' . $type) || return 0;
@@ -563,6 +571,8 @@ sub diff_profiles
 
 		my $state = 0;
 		my (@prev_opts,$curmod);
+		my $realtype = $type;
+		$realtype =~ s/-noninteractive//;
 
 		open(CURRENT,$sourcedir . '/common-' . $type) || return 0;
 		while (<CURRENT>) {
@@ -572,7 +582,7 @@ sub diff_profiles
 				next;
 			}
 			if ($state == 1) {
-				s/^$type\s+//;
+				s/^$realtype\s+//;
 				if (/^# here's the fallback if no module succeeds/) {
 					$state = 2;
 					next;
@@ -585,7 +595,7 @@ sub diff_profiles
 			}
 			if ($state == 3) {
 				last if (/^# end of pam-auth-update config/);
-				s/^$type\s+//;
+				s/^$realtype\s+//;
 			}
 
 			my $found = 0;
@@ -668,5 +678,10 @@ sub parse_pam_profile
 		}
 	}
 	close(PROFILE);
+	if (!defined($profile{'Session-Interactive-Only'})) {
+			$profile{'Session-noninteractive-Type'} = $profile{'Session-Type'};
+			$profile{'Session-noninteractive'} = $profile{'Session'};
+			$profile{'Session-noninteractive-Initial'} = $profile{'Session-Initial'};
+	}
 	return %profile;
 }
