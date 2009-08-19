@@ -7,10 +7,10 @@
 # Yuri Kozlov <yuray@komyakino.ru>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-7\n"
+"Project-Id-Version: pam 1.0.1-10\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2009-03-29 11:19+0400\n"
+"PO-Revision-Date: 2009-08-11 21:21+0400\n"
 "Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
 "Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -158,10 +158,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Выбраны несовместимые профили PAM."
+msgstr "Профили PAM не выбраны."
 
 #. Type: error
 #. Description
@@ -171,12 +169,15 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"В системе для работы не выбрано ни одного профиля PAM. Это предоставит "
+"полный доступ всем пользователям без аутентификации, что нежелательно. "
+"Выберите, по крайней мере, один профиль PAM из доступных."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
-msgstr ""
+msgstr "К вашей системе возможен доступ без пароля!"
 
 #. Type: error
 #. Description
@@ -191,6 +192,15 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
+"Ошибка в предыдущей версии libpam-runtime привела к тому, что в данной "
+"системе не выбрано ни одного профиля PAM. В результате, в системе был "
+"разрешён доступ ко всем учётным записям с паролем и без. Особенно плохо, "
+"если данная система была доступна из интернета, в этом случае, она, скорее "
+"всего, была взломана. Если вы не знакомы с процедурами восстановления "
+"работоспособности после обнаружения проблем с безопасностью, вирусами и "
+"вредноносным ПО, то переустановите данную операционную систему с нуля или "
+"обратитесь за помощью к квалифицированному системному администратору. "
+"Подробности:"
 
 #. Type: error
 #. Description
@@ -201,6 +211,10 @@ msgid ""
 "apologize that previous versions of libpam-runtime did not detect and "
 "prevent this situation."
 msgstr ""
+"Ошибка, в результате которой была возможна неверная настройка, исправлена в "
+"текущей версии libpam-runtime, и текущая настройка теперь исправлена. Мы "
+"извиняемся, что предыдущая версия libpam-runtime не обнаруживала и не "
+"предотвращала такую ситуацию."
 
 #. Type: error
 #. Description
