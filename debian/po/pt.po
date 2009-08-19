@@ -5,16 +5,16 @@
 # Américo Monteiro <a_monteiro@netcabo.pt>, 2007, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-7\n"
+"Project-Id-Version: pam 1.0.1-10\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2009-03-10 22:53+0000\n"
+"PO-Revision-Date: 2009-08-10 13:58+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@netcabo.pt>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
 
 #. Type: string
 #. Description
@@ -32,7 +32,7 @@ msgid ""
 "needed."
 msgstr ""
 "A maioria dos serviços que usam PAM precisam ser reiniciados para usarem os "
-"módulos construidos para esta nova versão do libpam.  Por favor, reveja a "
+"módulos construídos para esta nova versão do libpam. Por favor, reveja a "
 "seguinte lista de scripts init.d de serviços, separados por espaços, para "
 "serem reiniciados agora e corrija-a se for necessário."
 
@@ -40,7 +40,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:2001
 msgid "Display manager must be restarted manually"
-msgstr "O gestor de sessão gráfica tem que ser reiniciado manualmente"
+msgstr "O gestor de sessão gráfica deverá ser reiniciado manualmente"
 
 #. Type: error
 #. Description
@@ -53,8 +53,8 @@ msgid ""
 msgstr ""
 "Os gestores de sessão gráfica kdm, wdm, e xdm necessitam de reiniciar para a "
 "nova versão de libpam, mas existem sessões de login X activas no seu sistema "
-"que seriam terminadas por esta operação. Então, você irá necessitar de "
-"reiniciar estes serviços manualmente antes que sejam possíveis mais logins X."
+"que seriam terminadas por esta operação. Deverá deste modo reiniciar estes "
+"serviços manualmente antes que futuros logins X sejam possíveis."
 
 #. Type: error
 #. Description
@@ -78,7 +78,7 @@ msgid ""
 "You will need to start these manually by running '/etc/init.d/<service> "
 "start'."
 msgstr ""
-"Você precisa de iniciar manualmente estes serviços fazendo '/etc/init.d/"
+"Você precisa iniciar manualmente estes serviços fazendo '/etc/init.d/"
 "<serviço> start'."
 
 #. Type: multiselect
@@ -118,7 +118,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr "Perfis PAM incompatíveis seleccionados."
+msgstr "Seleccionados perfis PAM incompatíveis."
 
 #. Type: error
 #. Description
@@ -138,7 +138,7 @@ msgstr "Por favor seleccione um conjunto diferente de módulos para activar."
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr "Sobreescrever as alterações locais em /etc/pam.d/common-*?"
+msgstr "Sobre-escrever as alterações locais em /etc/pam.d/common-*?"
 
 #. Type: boolean
 #. Description
@@ -152,17 +152,15 @@ msgid ""
 msgstr ""
 "Um ou mais dos ficheiros /etc/pam.d/common-{auth,account,password,session} "
 "foi modificado localmente. Por favor indique se estas alterações locais "
-"deverão ser sobreescritas usando a configuração disponibilizada pelo "
-"sistema. Se você recusar esta opção, irá precisar de gerir a configuração de "
+"deverão ser sobre-escritas usando a configuração disponibilizada pelo "
+"sistema. Se você recusar esta opção, terá que gerir a configuração de "
 "autenticação do sistema manualmente."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Perfis PAM incompatíveis seleccionados."
+msgstr "Nenhum perfil do PAM foi seleccionado."
 
 #. Type: error
 #. Description
@@ -172,12 +170,16 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Não foram seleccionados perfis do PAM para utilização neste sistema. Isto "
+"irá permitir acesso sem autenticação ao todos os utilizadores, e não é "
+"permitido. Por favor seleccione pelo menos um perfil PAM a partir da lista "
+"disponível."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
-msgstr ""
+msgstr "O seu sistema permitiu acesso sem uma palavra-passe!"
 
 #. Type: error
 #. Description
@@ -192,6 +194,15 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
+"Um 'bug' na versão anterior do libpam-runtime permitiu que nenhum perfil PAM "
+"fosse seleccionado para utilização neste sistema. Como resultado, o acesso "
+"foi permitido durante algum tempo a todas as contas no seu sistema, com ou "
+"sem uma palavra-passe. Especialmente se este sistema puder ser acedido a "
+"partir da Internet, é provável que tenha sido comprometido. A menos que "
+"esteja familiarizado com recuperações de falhas de segurança, vírus, e "
+"software malicioso, você deve fazer uma reinstalação limpa este sistema ou "
+"obter os serviços de um hábil administrador de sistemas. Para mais "
+"informações, veja:"
 
 #. Type: error
 #. Description
@@ -202,6 +213,10 @@ msgid ""
 "apologize that previous versions of libpam-runtime did not detect and "
 "prevent this situation."
 msgstr ""
+"O bug que permitiu esta configuração errada foi corrigido na versão actual "
+"do libpam-runtime, e a sua configuração foi agora corrigida. Pedimos "
+"desculpa pelas versões anteriores do libpam-runtime não terem detectado e "
+"prevenido esta situação."
 
 #. Type: error
 #. Description
@@ -224,5 +239,5 @@ msgstr ""
 "funcionar neste sistema. Devido a alterações incompatíveis em bibliotecas, a "
 "actualização do pacote libpam-modules irá deixá-lo incapaz de se autenticar "
 "nestes programas. Você deve fazer com que estes programas sejam reiniciados "
-"ou parados antes de continuar com esta actualização, para evitar trancar os "
+"ou parados antes de continuar com esta actualização, para evitar bloquear os "
 "seus utilizadores fora das suas sessões correntes."

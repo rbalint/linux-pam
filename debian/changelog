@@ -19,6 +19,8 @@ pam (1.0.1-11) UNRELEASED; urgency=low
     non-translatable string.
   * Updated debconf translations:
     - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #541399)
+    - Portuguese, thanks to Américo Monteiro <a_monteiro@netcabo.pt>
+      (closes: #541108)
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 18 Aug 2009 12:58:52 -0700
 
