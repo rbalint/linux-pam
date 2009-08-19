@@ -73,16 +73,6 @@ to reference the basename (eg. "pam_unix.so"). This will ensure that the
 program continues to work even if the module location changes, since
 libpam itself will resolve the location.
 
-You should not use the pam_stack module in the pam config file.
-It's not currently in Debian so it won't work.  While I cannot stop
-someone from packaging pam_stack for Debian, I will try to convince
-them that it is not the direction we want.  Pam_stack (among other
-faults) uses different pam handles for each step in the process--the
-handle used for session management is not the same as the handle used
-for authentication.  This breaks several modules.  We have an alternate
-solution for shared PAM configuration across modules, in the form of
-the @include directive.
-
 
 Currently libpam-modules is in the base setup, so its dependency is not
 needed (since the library depends on the correct version). However, if any
