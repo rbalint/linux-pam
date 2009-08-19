@@ -17,6 +17,8 @@ pam (1.0.1-11) UNRELEASED; urgency=low
     years and was looking a bit crufty
   * debian/libpam-runtime.templates:  correctly tag the URL as a
     non-translatable string.
+  * Updated debconf translations:
+    - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #541399)
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 18 Aug 2009 12:58:52 -0700
 
