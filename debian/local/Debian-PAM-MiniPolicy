@@ -1,5 +1,6 @@
 Author: Ben Collins <bcollins@debian.org>
-Modified by: Sam Hartman <hartmans@debian.org>
+Modified by: Sam Hartman <hartmans@debian.org>,
+	Steve Langasek <vorlon@debian.org>
 
 Objective: To document a base set of policies regarding PAM (Pluggable
 Authentication Modules) usage in Debian packages.
@@ -23,10 +24,22 @@ Each application that uses PAM also must contain a file in
 /etc/pam.d/.  This file specifies which PAM modules will be used for
 the common PAM functions in that application. There are several notes
 concerning what modules to use in this file. Most commonly, this file
-should use the @include directive to include common-auth,
-common-session, common-account and common-password.  Under some
-circumstances (such as ftp auth, or auth based on tty) other modules
-will be required.
+should use the @include directive to include common-auth, common-account,
+and common-password, and one of either common-session or
+common-session-noninteractive.
+
+The selection of common-session or common-session-noninteractive is based
+on whether the service provides "shell-like" interactive capabilities to
+the user (e.g.: login, ssh, gdm) or is a non-interactive session or a
+session mediated by a structured protocol (e.g.: cron, cups, samba, ppp).
+This allows a service to avoid calling some modules, such as
+pam_ck_connector, that only make sense in an interactive context and should
+be avoided otherwise.  It is expected that the modules used for
+noninteractive sessions will always be a subset of those used for
+interactive sessions.
+
+Under some circumstances (such as ftp auth, or auth based on tty) other
+modules will be required.
 
 Here is an example of a PAM configuration file that just includes the common module fragments:
     #
@@ -76,6 +89,8 @@ must be depended on.
 Applications need to depend on libpam-runtime (>= 0.76-14) to
 guarantee that /etc/pam.d/common-* exist.
 
+Applications that use common-session-noninteractive must depend
+on libpam-runtime (>= 1.0.1-11) for this file.
 
 The pam_unix.so module allows programs to verify the authentication of the
 uid of the calling process without any set bits (uid or gid). NOTE: this
