@@ -122,7 +122,7 @@ state in some cases) allocated in the earlier calls.
  PAM Modules
 =============
 
-Separately packaged pam modules should adhere to a few basic setup rules:
+Separately packaged PAM modules should adhere to a few basic setup rules:
 
   1) Packages should use the naming scheme of `libpam-<name>' (eg.
   libpam-ldap).
