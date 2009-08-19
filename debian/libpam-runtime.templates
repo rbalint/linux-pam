@@ -44,6 +44,7 @@ _Description: No PAM profiles have been selected.
 
 Template: libpam-runtime/you-had-no-auth
 Type: error
+#flag:translate!:3
 _Description: Your system allowed access without a password!
  A bug in a previous version of libpam-runtime resulted in no PAM profiles
  being selected for use on this system.  As a result, access was allowed for

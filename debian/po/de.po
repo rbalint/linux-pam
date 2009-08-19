@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 1.0.1-9\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-08-04 16:34+0100\n"
+"POT-Creation-Date: 2009-08-18 18:30-0700\n"
 "PO-Revision-Date: 2009-03-25 20:51+0100\n"
 "Last-Translator: Sven Joachim <svenjoac@gmx.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -191,12 +191,6 @@ msgid ""
 "security failures, viruses, and malicious software, you should re-install "
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
-msgstr ""
-
-#. Type: error
-#. Description
-#: ../libpam-runtime.templates:5001
-msgid "http://www.debian.org/security/pam-auth"
 msgstr ""
 
 #. Type: error
