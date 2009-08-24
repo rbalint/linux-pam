@@ -9,6 +9,7 @@ pam (1.1.0-1) UNRELEASED; urgency=low
     cve-2009-0887-libpam-pam_misc.patch, which are included upstream.
   * Trim pam.d-manpage-section patch, which was mostly but not completely
     applied upstream.
+  * Update debian/libpam0g.symbols for new extension.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 24 Aug 2009 01:23:18 -0700
 
