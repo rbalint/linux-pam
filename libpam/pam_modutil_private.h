@@ -2,7 +2,7 @@
 #define PAMMODUTIL_PRIVATE_H
 
 /*
- * $Id: pam_modutil_private.h,v 1.1 2005/09/21 10:00:58 t8m Exp $
+ * $Id: pam_modutil_private.h,v 1.2 2008/05/14 12:55:02 t8m Exp $
  *
  * Copyright (c) 2001 Andrew Morgan <morgan@kernel.org>
  */
@@ -13,8 +13,9 @@
 #include <security/pam_modules.h>
 #include <security/pam_modutil.h>
 
-#define PWD_INITIAL_LENGTH     0x100
-#define PWD_ABSURD_PWD_LENGTH  0x8000
+#define PWD_INITIAL_LENGTH     0x400
+#define PWD_ABSURD_PWD_LENGTH  0x40001
+#define PWD_LENGTH_SHIFT 4 /* 2^4 == 16 */
 
 extern void
 pam_modutil_cleanup(pam_handle_t *pamh, void *data,

@@ -22,6 +22,9 @@
 	debug
       </arg>
       <arg choice="opt">
+         expose_authtok
+      </arg>
+      <arg choice="opt">
         seteuid
       </arg>
       <arg choice="opt">
@@ -57,7 +60,11 @@
      In addition, the following PAM items are
      exported as environment variables: <emphasis>PAM_RHOST</emphasis>,
      <emphasis>PAM_RUSER</emphasis>, <emphasis>PAM_SERVICE</emphasis>,
-     <emphasis>PAM_TTY</emphasis>, and <emphasis>PAM_USER</emphasis>.
+     <emphasis>PAM_TTY</emphasis>, <emphasis>PAM_USER</emphasis> and
+     <emphasis>PAM_TYPE</emphasis>, which contains one of the module
+     types: <option>account</option>, <option>auth</option>,
+     <option>password</option>, <option>open_session</option> and
+     <option>close_session</option>.
     </para>
 
   </refsect1>
@@ -75,6 +82,20 @@
           <listitem>
             <para>
 	      Print debug information.
+            </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>
+            <option>expose_authtok</option>
+          </term>
+          <listitem>
+            <para>
+              During authentication the calling command can read
+              the password from <citerefentry>
+              <refentrytitle>stdin</refentrytitle><manvolnum>3</manvolnum>
+              </citerefentry>.
             </para>
           </listitem>
         </varlistentry>
@@ -123,11 +144,11 @@
     </para>
   </refsect1>
 
-  <refsect1 id="pam_exec-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_exec-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      The services <option>auth</option>, <option>account</option>,
-      <option>password</option> and <option>session</option> are supported.
+      All module types (<option>auth</option>, <option>account</option>,
+      <option>password</option> and <option>session</option>) are provided.
     </para>
   </refsect1>
 
@@ -140,7 +161,7 @@
           <term>PAM_SUCCESS</term>
           <listitem>
             <para>
-              The external command runs successfull.
+              The external command was run successfully.
             </para>
           </listitem>
         </varlistentry>
@@ -158,7 +179,7 @@
           <term>PAM_SYSTEM_ERR</term>
           <listitem>
             <para>
-	      A system error occured or the command to execute failed.
+	      A system error occurred or the command to execute failed.
             </para>
           </listitem>
         </varlistentry>
@@ -199,7 +220,7 @@
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

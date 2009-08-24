@@ -23,7 +23,7 @@ not the case an additional set of strength checks is done. These checks are:
 
 Palindrome
 
-    Is the new password a palindrome of the old one?
+    Is the new password a palindrome?
 
 Case Change Only
 
@@ -51,10 +51,13 @@ Rotated
 
     Is the new password a rotated version of the old password?
 
-Already used
+Same consecutive characters
 
-    Was the password used in the past? Previously used passwords are to be
-    found in /etc/security/opasswd.
+    Optional check for same consecutive characters.
+
+Contains user name
+
+    Optional check whether the password contains the user's name in some form.
 
 This module with no arguments will work well for standard unix password
 encryption. With md5 encryption, passwords can be longer than 8 characters and
@@ -77,15 +80,16 @@ debug
     behavior of the module (this option does not write password information to
     the log file).
 
-type=XXX
+authtok_type=XXX
 
     The default action is for the module to use the following prompts when
     requesting passwords: "New UNIX password: " and "Retype UNIX password: ".
-    The default word UNIX can be replaced with this option.
+    The example word UNIX can be replaced with this option, by default it is
+    empty.
 
 retry=N
 
-    Prompt user at most N times before returning with error. The default is 1
+    Prompt user at most N times before returning with error. The default is 1.
 
 difok=N
 
@@ -129,7 +133,7 @@ ucredit=N
     will count +1 towards meeting the current minlen value. The default for
     ucredit is 1 which is the recommended value for minlen less than 10.
 
-    (N > 0) This is the minimum number of upper case letters that must be met
+    (N < 0) This is the minimum number of upper case letters that must be met
     for a new password.
 
 lcredit=N
@@ -159,6 +163,16 @@ minclass=N
     letters and other characters. The difference to the credit check is that a
     specific class if of characters is not required. Instead N out of four of
     the classes are required.
+
+maxrepeat=N
+
+    Reject passwords which contain more than N same consecutive characters. The
+    default is 0 which means that this check is disabled.
+
+reject_username
+
+    Check whether the name of the user in straight or reversed form is
+    contained in the new password. If it is found the new password is rejected.
 
 use_authtok
 

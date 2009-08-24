@@ -1,7 +1,7 @@
 /* pam_ftp module */
 
 /*
- * $Id: pam_ftp.c,v 1.12 2008/03/05 20:21:38 t8m Exp $
+ * $Id: pam_ftp.c,v 1.14 2009/03/27 10:46:11 kukuk Exp $
  *
  * Written by Andrew Morgan <morgan@linux.kernel.org> 1996/3/11
  *
@@ -79,7 +79,7 @@ static int lookup(const char *name, const char *list, const char **_user)
     if (list && *list) {
 	const char *l;
 	char *list_copy, *x;
-	char *sptr;
+	char *sptr = NULL;
 
 	list_copy = x_strdup(list);
 	x = list_copy;
@@ -172,7 +172,7 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 	  /* XXX: Some effort should be made to verify this email address! */
 
 	    if (!(ctrl & PAM_IGNORE_EMAIL)) {
-		char *sptr;
+		char *sptr = NULL;
 		token = strtok_r(resp, "@", &sptr);
 		retval = pam_set_item(pamh, PAM_RUSER, token);
 

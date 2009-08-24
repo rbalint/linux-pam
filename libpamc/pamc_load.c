@@ -1,5 +1,5 @@
 /*
- * $Id: pamc_load.c,v 1.1.1.1 2000/06/20 22:11:26 agmorgan Exp $
+ * $Id: pamc_load.c,v 1.2 2009/04/03 00:36:25 ldv Exp $
  *
  * Copyright (c) 1999 Andrew G. Morgan <morgan@ftp.kernel.org>
  *
@@ -121,7 +121,7 @@ static int __pamc_exec_agent(pamc_handle_t pch, pamc_agent_t *agent)
 	execle(full_path, "pam-agent", NULL, NULL);
 
 	D(("exec failed"));
-	exit(1);
+	_exit(1);
 
     }
 

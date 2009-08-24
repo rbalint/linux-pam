@@ -1,5 +1,5 @@
 /*
- * $Id: pam_modutil_getpwuid.c,v 1.2 2007/08/30 04:00:39 vorlon Exp $
+ * $Id: pam_modutil_getpwuid.c,v 1.3 2008/05/14 12:55:02 t8m Exp $
  *
  * This function provides a thread safer version of getpwuid() for use
  * with PAM modules that care about this sort of thing.
@@ -115,7 +115,7 @@ pam_modutil_getpwuid(pam_handle_t *pamh, uid_t uid)
                 break;
         }
 	
-	length <<= 2;
+	length <<= PWD_LENGTH_SHIFT;
 
     } while (length < PWD_ABSURD_PWD_LENGTH);
 

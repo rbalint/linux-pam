@@ -89,10 +89,10 @@
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_rhosts-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_rhosts-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      Only the <option>auth</option> service is supported.
+      Only the <option>auth</option> module type is provided.
     </para>
   </refsect1>
 
@@ -153,7 +153,7 @@ auth     required       pam_unix.so
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

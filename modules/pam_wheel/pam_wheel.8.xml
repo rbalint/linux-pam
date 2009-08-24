@@ -130,11 +130,11 @@
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_wheel-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_wheel-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
       The <emphasis remap='B'>auth</emphasis> and
-      <emphasis remap='B'>account</emphasis> services are supported.
+      <emphasis remap='B'>account</emphasis> module types are provided.
     </para>
   </refsect1>
 
@@ -224,7 +224,7 @@ su      auth     required       pam_unix.so
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

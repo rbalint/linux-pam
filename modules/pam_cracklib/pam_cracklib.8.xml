@@ -59,7 +59,7 @@
         <term>Palindrome</term>
         <listitem>
           <para>
-            Is the new password a palindrome of the old one?
+            Is the new password a palindrome?
           </para>
         </listitem>
       </varlistentry>
@@ -112,11 +112,19 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>Already used</term>
+        <term>Same consecutive characters</term>
         <listitem>
           <para>
-            Was the password used in the past? Previously used passwords
-            are to be found in <filename>/etc/security/opasswd</filename>.
+            Optional check for same consecutive characters.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Contains user name</term>
+        <listitem>
+          <para>
+            Optional check whether the password contains the user's name
+            in some form.
           </para>
         </listitem>
       </varlistentry>
@@ -163,15 +171,15 @@
 
         <varlistentry>
           <term>
-            <option>type=<replaceable>XXX</replaceable></option>
+            <option>authtok_type=<replaceable>XXX</replaceable></option>
           </term>
           <listitem>
             <para>
               The default action is for the module to use the
               following prompts when requesting passwords:
               "New UNIX password: " and "Retype UNIX password: ".
-              The default word <emphasis>UNIX</emphasis> can
-              be replaced with this option.
+              The example word <emphasis>UNIX</emphasis> can
+              be replaced with this option, by default it is empty.
             </para>
           </listitem>
         </varlistentry>
@@ -184,7 +192,7 @@
             <para>
               Prompt user at most <replaceable>N</replaceable> times
               before returning with error. The default is
-              <emphasis>1</emphasis>
+              <emphasis>1</emphasis>.
             </para>
           </listitem>
         </varlistentry>
@@ -281,7 +289,7 @@
               than 10.
             </para>
             <para>
-              (N &gt; 0) This is the minimum number of upper
+              (N &lt; 0) This is the minimum number of upper
               case letters that must be met for a new password.
             </para>
           </listitem>
@@ -349,6 +357,32 @@
 
         <varlistentry>
           <term>
+            <option>maxrepeat=<replaceable>N</replaceable></option>
+          </term>
+          <listitem>
+            <para>
+              Reject passwords which contain more than N same consecutive
+              characters. The default is 0 which means that this check
+              is disabled.
+            </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>
+            <option>reject_username</option>
+          </term>
+          <listitem>
+            <para>
+              Check whether the name of the user in straight or reversed
+              form is contained in the new password. If it is found the
+              new password is rejected.
+            </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>
             <option>use_authtok</option>
           </term>
           <listitem>
@@ -376,10 +410,10 @@
     </para>
   </refsect1>
 
-  <refsect1 id="pam_cracklib-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_cracklib-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      Only he <option>password</option> service is supported.
+      Only the <option>password</option> module type is provided.
     </para>
   </refsect1>
 
@@ -424,7 +458,7 @@
           <term>PAM_SERVICE_ERR</term>
           <listitem>
             <para>
-              A internal error occured.
+              A internal error occurred.
             </para>
           </listitem>
         </varlistentry>
@@ -495,7 +529,7 @@ password  required pam_unix.so use_authtok nullok md5
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

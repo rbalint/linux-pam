@@ -85,7 +85,7 @@
     </para>
 
     <para>
-      The session component of this module logs when a user logins 
+      The session component of this module logs when a user logins
       or leave the system.
     </para>
 
@@ -187,7 +187,7 @@
             password to the one provided by a previously stacked
             <option>password</option> module (this is used in the
             example of the stacking of the <command>pam_cracklib</command>
-            module documented above).
+            module documented below).
           </para>
         </listitem>
       </varlistentry>
@@ -266,7 +266,9 @@
           <para>
             When a user changes their password next,
             encrypt it with the SHA256 algorithm. If the
-            SHA256 algorithm is not known to the libcrypt,
+            SHA256 algorithm is not known to the <citerefentry>
+	    <refentrytitle>crypt</refentrytitle><manvolnum>3</manvolnum>
+            </citerefentry> function,
             fall back to MD5.
           </para>
         </listitem>
@@ -279,7 +281,24 @@
           <para>
             When a user changes their password next,
             encrypt it with the SHA512 algorithm. If the
-            SHA512 algorithm is not known to the libcrypt,
+            SHA512 algorithm is not known to the <citerefentry>
+	    <refentrytitle>crypt</refentrytitle><manvolnum>3</manvolnum>
+            </citerefentry> function,
+            fall back to MD5.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          <option>blowfish</option>
+        </term>
+        <listitem>
+          <para>
+            When a user changes their password next,
+            encrypt it with the blowfish algorithm. If the
+            SHA512 algorithm is not known to the <citerefentry>
+	    <refentrytitle>crypt</refentrytitle><manvolnum>3</manvolnum>
+            </citerefentry> function,
             fall back to MD5.
           </para>
         </listitem>
@@ -290,8 +309,9 @@
         </term>
         <listitem>
           <para>
-            Set the optional number of rounds of the SHA256 and SHA512
-            password hashing algorithms to <replaceable>n</replaceable>.
+            Set the optional number of rounds of the SHA256, SHA512
+            and blowfish password hashing algorithms to
+            <replaceable>n</replaceable>.
           </para>
         </listitem>
       </varlistentry>
@@ -301,7 +321,7 @@
         </term>
         <listitem>
           <para>
-            Ignore errors reading shadow inforation for
+            Ignore errors reading shadow information for
             users in the account management module.
           </para>
         </listitem>
@@ -314,10 +334,11 @@
     </para>
   </refsect1>
 
-  <refsect1 id="pam_unix-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_unix-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      All service are supported.
+      All module types (<option>account</option>, <option>auth</option>,
+      <option>password</option> and <option>session</option>) are provided.
     </para>
   </refsect1>
 
@@ -361,7 +382,7 @@ session    required   pam_unix.so
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

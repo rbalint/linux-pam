@@ -1,7 +1,7 @@
 /* pam_password.c - PAM Password Management */
 
 /*
- * $Id: pam_password.c,v 1.5 2006/07/24 15:47:40 kukuk Exp $
+ * $Id: pam_password.c,v 1.6 2009/02/18 21:25:51 kukuk Exp $
  */
 
 /* #define DEBUG */
@@ -22,6 +22,13 @@ int pam_chauthtok(pam_handle_t *pamh, int flags)
     if (__PAM_FROM_MODULE(pamh)) {
 	D(("called from module!?"));
 	return PAM_SYSTEM_ERR;
+    }
+
+    /* applications are not allowed to set this flags */
+    if (flags & (PAM_PRELIM_CHECK | PAM_UPDATE_AUTHTOK)) {
+      pam_syslog (pamh, LOG_ERR,
+		  "PAM_PRELIM_CHECK or PAM_UPDATE_AUTHTOK set by application");
+      return PAM_SYSTEM_ERR;
     }
 
     if (pamh->former.choice == PAM_NOT_STACKED) {
@@ -58,4 +65,3 @@ int pam_chauthtok(pam_handle_t *pamh, int flags)
 
     return retval;
 }
-

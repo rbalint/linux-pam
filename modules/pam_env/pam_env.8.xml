@@ -34,6 +34,12 @@
       <arg choice="opt">
         readenv=<replaceable>0|1</replaceable>
       </arg>
+      <arg choice="opt">
+        user_envfile=<replaceable>env-file</replaceable>
+      </arg>
+      <arg choice="opt">
+        user_readenv=<replaceable>0|1</replaceable>
+      </arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -53,7 +59,7 @@
     </para>
     <para>
       This module can also parse a file with simple
-      <emphasis>KEY=VAL</emphasis> pairs on seperate lines
+      <emphasis>KEY=VAL</emphasis> pairs on separate lines
       (<filename>/etc/environment</filename> by default). You can
       change the default file to parse, with the <emphasis>envfile</emphasis>
       flag and turn it on or off by setting the <emphasis>readenv</emphasis>
@@ -84,7 +90,7 @@
         </term>
         <listitem>
           <para>
-            A lot of debug informations are printed with
+            A lot of debug information is printed with
             <citerefentry><refentrytitle>syslog</refentrytitle><manvolnum>3</manvolnum></citerefentry>.
           </para>
         </listitem>
@@ -115,14 +121,41 @@
         </listitem>
       </varlistentry>
 
+
+      <varlistentry>
+        <term>
+          <option>user_envfile=<replaceable>filename</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Indicate an alternative <filename>.pam_environment</filename>
+            file to override the default. This can be useful when different
+            services need different environments. The filename is relative to
+            the user home directory.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>user_readenv=<replaceable>0|1</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Turns on or off the reading of the user specific environment
+            file. 0 is off, 1 is on. By default this option is on.
+          </para>
+        </listitem>
+      </varlistentry>
+
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_env-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_env-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      The <option>auth</option> and <option>session</option> services
-      are supported.
+      The <option>auth</option> and <option>session</option> module
+      types are provided.
     </para>
   </refsect1>
 
@@ -179,6 +212,12 @@
           <para>Default environment file</para>
         </listitem>
       </varlistentry>
+      <varlistentry>
+        <term><filename>$HOME/.pam_environment</filename></term>
+        <listitem>
+          <para>User specific environment file</para>
+        </listitem>
+      </varlistentry>
     </variablelist>
   </refsect1>
 
@@ -189,7 +228,7 @@
         <refentrytitle>pam_env.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
         <refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

@@ -189,11 +189,11 @@
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_userdb-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_userdb-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      The services <option>auth</option> and <option>account</option>
-      are supported.
+      The <option>auth</option> and <option>account</option> module
+      types are provided.
     </para>
   </refsect1>
 
@@ -274,7 +274,7 @@ auth  sufficient pam_userdb.so icase db=/etc/dbtest.db
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

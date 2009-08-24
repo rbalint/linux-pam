@@ -12,6 +12,7 @@
 ./libpam/pam_dynamic.c
 ./libpam/pam_end.c
 ./libpam/pam_env.c
+./libpam/pam_get_authtok.c
 ./libpam/pam_handlers.c
 ./libpam/pam_item.c
 ./libpam/pam_misc.c
@@ -58,6 +59,8 @@
 ./modules/pam_namespace/pam_namespace.c
 ./modules/pam_nologin/pam_nologin.c
 ./modules/pam_permit/pam_permit.c
+./modules/pam_pwhistory/opasswd.c
+./modules/pam_pwhistory/pam_pwhistory.c
 ./modules/pam_rhosts/pam_rhosts.c
 ./modules/pam_rootok/pam_rootok.c
 ./modules/pam_securetty/pam_securetty.c
@@ -69,7 +72,11 @@
 ./modules/pam_succeed_if/pam_succeed_if.c
 ./modules/pam_tally/pam_tally_app.c
 ./modules/pam_tally/pam_tally.c
+./modules/pam_tally2/pam_tally2_app.c
+./modules/pam_tally2/pam_tally2.c
 ./modules/pam_time/pam_time.c
+./modules/pam_timestamp/pam_timestamp.c
+./modules/pam_timestamp/pam_timestamp_check.c
 ./modules/pam_tty_audit/pam_tty_audit.c
 ./modules/pam_umask/pam_umask.c
 ./modules/pam_unix/bigcrypt.c

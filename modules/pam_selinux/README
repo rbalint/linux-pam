@@ -48,10 +48,21 @@ select_context
     Attempt to ask the user for a custom security context role. If MLS is on
     ask also for sensitivity level.
 
+env_params
+
+    Attempt to obtain a custom security context role from PAM environment. If
+    MLS is on obtain also sensitivity level. This option and the select_context
+    option are mutually exclusive. The respective PAM environment variables are
+    SELINUX_ROLE_REQUESTED, SELINUX_LEVEL_REQUESTED, and
+    SELINUX_USE_CURRENT_RANGE. The first two variables are self describing and
+    the last one if set to 1 makes the PAM module behave as if the
+    use_current_range was specified on the command line of the module.
+
 use_current_range
 
-    Use the sensitivity range of the process for the user context. This option
-    and the select_context option are mutually exclusive.
+    Use the sensitivity level of the current process for the user context
+    instead of the default level. Also suppresses asking of the sensitivity
+    level from the user or obtaining it from PAM environment.
 
 EXAMPLES
 

@@ -1,7 +1,7 @@
 /* pam_item.c */
 
 /*
- * $Id: pam_item.c,v 1.16.2.1 2008/04/08 08:55:01 t8m Exp $
+ * $Id: pam_item.c,v 1.18 2008/12/11 19:41:49 kukuk Exp $
  */
 
 #include "pam_private.h"
@@ -151,7 +151,7 @@ int pam_set_item (pam_handle_t *pamh, int item_type, const void *item)
 	if ((pamh->xauth.name=_pam_strdup(pamh->xauth.name)) == NULL) {
 	    memset(&pamh->xauth, '\0', sizeof(pamh->xauth));
 	    return PAM_BUF_ERR;
-	}	
+	}
 	if ((pamh->xauth.data=_pam_memdup(pamh->xauth.data,
 	    pamh->xauth.datalen)) == NULL) {
 	    _pam_overwrite(pamh->xauth.name);
@@ -159,6 +159,10 @@ int pam_set_item (pam_handle_t *pamh, int item_type, const void *item)
 	    memset(&pamh->xauth, '\0', sizeof(pamh->xauth));
 	    return PAM_BUF_ERR;
 	}
+	break;
+
+    case PAM_AUTHTOK_TYPE:
+	TRY_SET(pamh->authtok_type, item);
 	break;
 
     default:
@@ -249,6 +253,10 @@ int pam_get_item (const pam_handle_t *pamh, int item_type, const void **item)
 
     case PAM_XAUTHDATA:
 	*item = &pamh->xauth;
+	break;
+
+    case PAM_AUTHTOK_TYPE:
+	*item = pamh->authtok_type;
 	break;
 
     default:

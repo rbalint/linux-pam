@@ -59,7 +59,7 @@
     </para>
     <para>
       If Linux PAM is compiled with audit support the module will report
-      when it denies access based on origin (host or tty). 
+      when it denies access based on origin (host or tty).
     </para>
   </refsect1>
 
@@ -86,7 +86,7 @@
         </term>
         <listitem>
           <para>
-            A lot of debug informations are printed with
+            A lot of debug information is printed with
             <citerefentry><refentrytitle>syslog</refentrytitle><manvolnum>3</manvolnum></citerefentry>.
           </para>
         </listitem>
@@ -115,7 +115,7 @@
             <emphasis remap='B'>fieldsep=|</emphasis> will cause the
             default `:' character to be treated as part of a field value
             and `|' becomes the field separator. Doing this may be
-            useful in conjuction with a system that wants to use
+            useful in conjunction with a system that wants to use
             pam_access with X based applications, since the
             <emphasis remap='B'>PAM_TTY</emphasis> item is likely to be
             of the form "hostname:0" which includes a `:' character in
@@ -150,8 +150,10 @@
         </term>
         <listitem>
           <para>
-            The group database will not be used for tokens not
-            identified as account name.
+            User tokens which are not enclosed in parentheses will not be
+	    matched against the group database. The backwards compatible default is
+            to try the group database match even for tokens not enclosed
+            in parentheses.
           </para>
         </listitem>
       </varlistentry>
@@ -159,10 +161,11 @@
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_access-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_access-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      All services are supported.
+      All module types (<option>auth</option>, <option>account</option>,
+      <option>password</option> and <option>session</option>) are provided.
     </para>
   </refsect1>
 
@@ -231,7 +234,7 @@
         <refentrytitle>access.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
         <refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

@@ -11,7 +11,7 @@ PAM_ITEMs such as PAM_RHOST.
 By default rules for (un)setting of variables is taken from the config file /
 etc/security/pam_env.conf if no other file is specified.
 
-This module can also parse a file with simple KEY=VAL pairs on seperate lines
+This module can also parse a file with simple KEY=VAL pairs on separate lines
 (/etc/environment by default). You can change the default file to parse, with
 the envfile flag and turn it on or off by setting the readenv flag to 1 or 0
 respectively.
@@ -26,7 +26,7 @@ conffile=/path/to/pam_env.conf
 
 debug
 
-    A lot of debug informations are printed with syslog(3).
+    A lot of debug information is printed with syslog(3).
 
 envfile=/path/to/environment
 
@@ -37,6 +37,17 @@ readenv=0|1
 
     Turns on or off the reading of the file specified by envfile (0 is off, 1
     is on). By default this option is on.
+
+user_envfile=filename
+
+    Indicate an alternative .pam_environment file to override the default. This
+    can be useful when different services need different environments. The
+    filename is relative to the user home directory.
+
+user_readenv=0|1
+
+    Turns on or off the reading of the user specific environment file. 0 is
+    off, 1 is on. By default this option is on.
 
 EXAMPLES
 

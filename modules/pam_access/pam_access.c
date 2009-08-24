@@ -48,7 +48,7 @@
 
 #ifdef HAVE_LIBAUDIT
 #include <libaudit.h>
-#endif                                                                                                                                         
+#endif
 
 /*
  * here, we make definitions for the externally accessible functions
@@ -98,11 +98,13 @@ struct login_info {
     const struct passwd *user;
     const char *from;
     const char *config_file;
+    const char *hostname;
     int debug;              		/* Print debugging messages. */
     int only_new_group_syntax;		/* Only allow group entries of the form "(xyz)" */
     int noaudit;			/* Do not audit denials */
     const char *fs;			/* field separator */
     const char *sep;			/* list-element separator */
+    int from_remote_host;               /* If PAM_RHOST was used for from */
 };
 
 /* Parse module config arguments */
@@ -112,7 +114,7 @@ parse_args(pam_handle_t *pamh, struct login_info *loginfo,
            int argc, const char **argv)
 {
     int i;
-    
+
     loginfo->noaudit = NO;
     loginfo->debug = NO;
     loginfo->only_new_group_syntax = NO;
@@ -457,19 +459,6 @@ list_match(pam_handle_t *pamh, char *list, char *sptr,
     return (NO);
 }
 
-/* myhostname - figure out local machine name */
-
-static char *myhostname(void)
-{
-    static char name[MAXHOSTNAMELEN + 1];
-
-    if (gethostname(name, MAXHOSTNAMELEN) == 0) {
-      name[MAXHOSTNAMELEN] = 0;
-      return (name);
-    }
-    return NULL;
-}
-
 /* netgroup_match - match group against machine or user */
 
 static int
@@ -515,15 +504,17 @@ user_match (pam_handle_t *pamh, char *tok, struct login_info *item)
      */
 
     if ((at = strchr(tok + 1, '@')) != 0) {	/* split user@host pattern */
+	if (item->hostname == NULL)
+	    return NO;
+	fake_item.from = item->hostname;
 	*at = 0;
-	fake_item.from = myhostname();
-	if (fake_item.from == NULL)
-	  return NO;
 	return (user_match (pamh, tok, item) &&
 		from_match (pamh, at + 1, &fake_item));
-    } else if (tok[0] == '@') /* netgroup */
-      return (netgroup_match (pamh, tok + 1, (char *) 0, string, item->debug));
-    else if (tok[0] == '(' && tok[strlen(tok) - 1] == ')')
+    } else if (tok[0] == '@') {			/* netgroup */
+	if (item->hostname == NULL)
+	    return NO;
+        return (netgroup_match (pamh, tok + 1, item->hostname, string, item->debug));
+    } else if (tok[0] == '(' && tok[strlen(tok) - 1] == ')')
       return (group_match (pamh, tok, string, item->debug));
     else if ((rv=string_match (pamh, tok, string, item->debug)) != NO) /* ALL or exact match */
       return rv;
@@ -581,8 +572,8 @@ from_match (pam_handle_t *pamh UNUSED, char *tok, struct login_info *item)
      * If a token has the magic value "ALL" the match always succeeds. Return
      * YES if the token fully matches the string. If the token is a domain
      * name, return YES if it matches the last fields of the string. If the
-     * token has the magic value "LOCAL", return YES if the string does not
-     * contain a "." character. If the token is a network number, return YES
+     * token has the magic value "LOCAL", return YES if the from field was
+     * not taken by PAM_RHOST. If the token is a network number, return YES
      * if it matches the head of the string.
      */
 
@@ -597,8 +588,8 @@ from_match (pam_handle_t *pamh UNUSED, char *tok, struct login_info *item)
 	if ((str_len = strlen(string)) > (tok_len = strlen(tok))
 	    && strcasecmp(tok, string + str_len - tok_len) == 0)
 	    return (YES);
-    } else if (strcasecmp(tok, "LOCAL") == 0) {	/* local: no dots */
-	if (strchr(string, '.') == 0)
+    } else if (strcasecmp(tok, "LOCAL") == 0) {	/* local: no PAM_RHOSTS */
+	if (item->from_remote_host == 0)
 	    return (YES);
     } else if (tok[(tok_len = strlen(tok)) - 1] == '.') {
       struct addrinfo *res;
@@ -636,44 +627,10 @@ from_match (pam_handle_t *pamh UNUSED, char *tok, struct login_info *item)
 	    }
 	  freeaddrinfo (res);
 	}
-    } else  if (isipaddr(string, NULL, NULL) == YES) {
+    } else {
       /* Assume network/netmask with a IP of a host.  */
       if (network_netmask_match(pamh, tok, string, item->debug))
 	return YES;
-    } else {
-      /* Assume network/netmask with a name of a host.  */
-      struct addrinfo *res;
-      struct addrinfo hint;
-
-      memset (&hint, '\0', sizeof (hint));
-      hint.ai_flags = AI_CANONNAME;
-      hint.ai_family = AF_UNSPEC;
-
-      if (getaddrinfo (string, NULL, &hint, &res) != 0)
-	return NO;
-      else
-	{
-	  struct addrinfo *runp = res;
-
-          while (runp != NULL)
-	    {
-	      char buf[INET6_ADDRSTRLEN];
-
-	      inet_ntop (runp->ai_family,
-			 runp->ai_family == AF_INET
-			 ? (void *) &((struct sockaddr_in *) runp->ai_addr)->sin_addr
-			 : (void *) &((struct sockaddr_in6 *) runp->ai_addr)->sin6_addr,
-			 buf, sizeof (buf));
-
-	      if (network_netmask_match(pamh, tok, buf, item->debug))
-		{
-		  freeaddrinfo (res);
-		  return YES;
-		}
-	      runp = runp->ai_next;
-	    }
-	  freeaddrinfo (res);
-	}
     }
 
     return NO;
@@ -710,69 +667,99 @@ string_match (pam_handle_t *pamh, const char *tok, const char *string,
 
 
 /* network_netmask_match - match a string against one token
- * where string is an ip (v4,v6) address and tok represents
- * whether a single ip (v4,v6) address or a network/netmask
+ * where string is a hostname or ip (v4,v6) address and tok
+ * represents either a single ip (v4,v6) address or a network/netmask
  */
 static int
 network_netmask_match (pam_handle_t *pamh,
 		       const char *tok, const char *string, int debug)
 {
-  if (debug)
+    char *netmask_ptr;
+    char netmask_string[MAXHOSTNAMELEN + 1];
+    int addr_type;
+
+    if (debug)
     pam_syslog (pamh, LOG_DEBUG,
 		"network_netmask_match: tok=%s, item=%s", tok, string);
+    /* OK, check if tok is of type addr/mask */
+    if ((netmask_ptr = strchr(tok, '/')) != NULL)
+      {
+	long netmask = 0;
 
-  if (isipaddr(string, NULL, NULL) == YES)
-    {
-      char *netmask_ptr = NULL;
-      static char netmask_string[MAXHOSTNAMELEN + 1] = "";
-      int addr_type;
+	/* YES */
+	*netmask_ptr = 0;
+	netmask_ptr++;
 
-      /* OK, check if tok is of type addr/mask */
-      if ((netmask_ptr = strchr(tok, '/')) != NULL)
-	{
-	  long netmask = 0;
-
-	  /* YES */
-	  *netmask_ptr = 0;
-	  netmask_ptr++;
-
-	  if (isipaddr(tok, &addr_type, NULL) == NO)
-	    { /* no netaddr */
-	      return(NO);
-	    }
-
-	  /* check netmask */
-	  if (isipaddr(netmask_ptr, NULL, NULL) == NO)
-	    { /* netmask as integre value */
-	      char *endptr = NULL;
-	      netmask = strtol(netmask_ptr, &endptr, 0);
-	      if ((endptr == NULL) || (*endptr != '\0'))
-		{ /* invalid netmask value */
-		  return(NO);
-		}
-	      if ((netmask < 0) || (netmask >= 128))
-		{ /* netmask value out of range */
-		  return(NO);
-		}
-
-	      netmask_ptr = number_to_netmask(netmask, addr_type,
-					      netmask_string, MAXHOSTNAMELEN);
-	    }
-
-	  /* Netmask is now an ipv4/ipv6 address.
-	   * This works also if netmask_ptr is NULL.
-	   */
-	  return (are_addresses_equal(string, tok, netmask_ptr));
-	}
-      else
-	/* NO, then check if it is only an addr */
-	if (isipaddr(tok, NULL, NULL) == YES)
-	  { /* check if they are the same, no netmask */
-	    return(are_addresses_equal(string, tok, NULL));
+	if (isipaddr(tok, &addr_type, NULL) == NO)
+	  { /* no netaddr */
+	    return NO;
 	  }
-    }
 
-  return (NO);
+	/* check netmask */
+	if (isipaddr(netmask_ptr, NULL, NULL) == NO)
+	  { /* netmask as integre value */
+	    char *endptr = NULL;
+	    netmask = strtol(netmask_ptr, &endptr, 0);
+	    if ((endptr == NULL) || (*endptr != '\0'))
+		{ /* invalid netmask value */
+		  return NO;
+		}
+	    if ((netmask < 0) || (netmask >= 128))
+		{ /* netmask value out of range */
+		  return NO;
+		}
+
+	    netmask_ptr = number_to_netmask(netmask, addr_type,
+		netmask_string, MAXHOSTNAMELEN);
+	  }
+	}
+    else
+	/* NO, then check if it is only an addr */
+	if (isipaddr(tok, NULL, NULL) != YES)
+	  {
+	    return NO;
+	  }
+
+    if (isipaddr(string, NULL, NULL) != YES)
+      {
+	/* Assume network/netmask with a name of a host.  */
+	struct addrinfo *res;
+	struct addrinfo hint;
+
+	memset (&hint, '\0', sizeof (hint));
+	hint.ai_flags = AI_CANONNAME;
+	hint.ai_family = AF_UNSPEC;
+
+	if (getaddrinfo (string, NULL, &hint, &res) != 0)
+	    return NO;
+        else
+	  {
+	    struct addrinfo *runp = res;
+
+	    while (runp != NULL)
+	      {
+		char buf[INET6_ADDRSTRLEN];
+
+		inet_ntop (runp->ai_family,
+			runp->ai_family == AF_INET
+			? (void *) &((struct sockaddr_in *) runp->ai_addr)->sin_addr
+			: (void *) &((struct sockaddr_in6 *) runp->ai_addr)->sin6_addr,
+			buf, sizeof (buf));
+
+		if (are_addresses_equal(buf, tok, netmask_ptr))
+		  {
+		    freeaddrinfo (res);
+		    return YES;
+		  }
+		runp = runp->ai_next;
+	      }
+	    freeaddrinfo (res);
+	  }
+      }
+    else
+      return (are_addresses_equal(string, tok, netmask_ptr));
+
+  return NO;
 }
 
 
@@ -787,6 +774,8 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
     const void *void_from=NULL;
     const char *from;
     struct passwd *user_pw;
+    char hostname[MAXHOSTNAMELEN + 1];
+
 
     /* set username */
 
@@ -825,6 +814,8 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 
         /* local login, set tty name */
 
+        loginfo.from_remote_host = 0;
+
         if (pam_get_item(pamh, PAM_TTY, &void_from) != PAM_SUCCESS
             || void_from == NULL) {
             D(("PAM_TTY not set, probing stdin"));
@@ -857,8 +848,18 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 	    }
 	}
     }
+    else
+      loginfo.from_remote_host = 1;
 
     loginfo.from = from;
+
+    hostname[sizeof(hostname)-1] = '\0';
+    if (gethostname(hostname, sizeof(hostname)-1) == 0)
+	loginfo.hostname = hostname;
+    else {
+	pam_syslog (pamh, LOG_ERR, "gethostname failed: %m");
+	loginfo.hostname = NULL;
+    }
 
     if (login_access(pamh, &loginfo)) {
 	return (PAM_SUCCESS);

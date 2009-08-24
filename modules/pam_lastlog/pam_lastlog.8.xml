@@ -39,6 +39,12 @@
       <arg choice="opt">
         nowtmp
       </arg>
+      <arg choice="opt">
+        noupdate
+      </arg>
+      <arg choice="opt">
+        showfailed
+      </arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -78,7 +84,7 @@
         <listitem>
           <para>
             Don't inform the user about any previous login,
-            just upate the <filename>/var/log/lastlog</filename> file.
+            just update the <filename>/var/log/lastlog</filename> file.
           </para>
         </listitem>
       </varlistentry>
@@ -137,13 +143,35 @@
           </para>
         </listitem>
       </varlistentry>
+      <varlistentry>
+        <term>
+          <option>noupdate</option>
+        </term>
+        <listitem>
+          <para>
+            Don't update any file.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          <option>showfailed</option>
+        </term>
+        <listitem>
+          <para>
+            Display number of failed login attempts and the date of the
+            last failed attempt from btmp. The date is not displayed
+            when <option>nodate</option> is specified.
+          </para>
+        </listitem>
+      </varlistentry>
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_lastlog-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_lastlog-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      Only the <option>session</option> service is supported.
+      Only the <option>session</option> module type is provided.
     </para>
   </refsect1>
 
@@ -156,7 +184,7 @@
           <term>PAM_SUCCESS</term>
           <listitem>
             <para>
-              Everything was successfull.
+              Everything was successful.
             </para>
           </listitem>
         </varlistentry>
@@ -213,7 +241,7 @@
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

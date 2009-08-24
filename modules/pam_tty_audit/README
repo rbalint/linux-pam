@@ -12,7 +12,7 @@ OPTIONS
 disable=patterns
 
     For each user matching one of comma-separated glob patterns, disable TTY
-    auditing. This overrides any previous enable option matchin the same user
+    auditing. This overrides any previous enable option matching the same user
     name on the command line.
 
 enable=patterns
