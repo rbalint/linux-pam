@@ -39,7 +39,7 @@ Index: pam.deb/modules/pam_unix/support.c
  			}
  		}
  
-@@ -430,6 +437,7 @@
+@@ -443,6 +450,7 @@
      child = fork();
      if (child == 0) {
          int i=0;
@@ -47,7 +47,7 @@ Index: pam.deb/modules/pam_unix/support.c
          struct rlimit rlim;
  	static char *envp[] = { NULL };
  	char *args[] = { NULL, NULL, NULL, NULL };
-@@ -457,7 +465,18 @@
+@@ -470,7 +478,18 @@
  	/* exec binary helper */
  	args[0] = strdup(CHKPWD_HELPER);
  	args[1] = x_strdup(user);
@@ -67,7 +67,7 @@ Index: pam.deb/modules/pam_unix/support.c
  	  args[2]=strdup("nullok");
  	} else {
  	  args[2]=strdup("nonull");
-@@ -527,6 +546,17 @@
+@@ -551,6 +570,17 @@
  	if (on(UNIX__NONULL, ctrl))
  		return 0;	/* will fail but don't let on yet */
  
@@ -85,7 +85,7 @@ Index: pam.deb/modules/pam_unix/support.c
  	/* UNIX passwords area */
  
  	retval = get_pwd_hash(pamh, name, &pwd, &salt);
-@@ -613,7 +643,8 @@
+@@ -637,7 +667,8 @@
  			}
  		}
  	} else {
@@ -99,17 +99,17 @@ Index: pam.deb/modules/pam_unix/support.h
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/support.h
 +++ pam.deb/modules/pam_unix/support.h
-@@ -91,8 +91,9 @@
- #define UNIX_MAX_PASS_LEN        26	/* internal, for compatibility only */
- #define UNIX_MIN_PASS_LEN        27	/* Min length for password */
- #define UNIX_OBSCURE_CHECKS      28	/* enable obscure checks on passwords */
-+#define UNIX_NULLOK_SECURE       29     /* NULL passwords allowed only on secure ttys */
+@@ -92,8 +92,9 @@
+ #define UNIX_MAX_PASS_LEN        27	/* internal, for compatibility only */
+ #define UNIX_MIN_PASS_LEN        28	/* min length for password */
+ #define UNIX_OBSCURE_CHECKS      29	/* enable obscure checks on passwords */
++#define UNIX_NULLOK_SECURE       30	/* NULL passwords allowed only on secure ttys */
  /* -------------- */
--#define UNIX_CTRLS_              29	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              30	/* number of ctrl arguments defined */
- 
+-#define UNIX_CTRLS_              30	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              31	/* number of ctrl arguments defined */
  
  static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
+ {
 @@ -109,7 +110,7 @@
  /* UNIX_NOT_SET_PASS */    {"not_set_pass",    _ALL_ON_,                 0x40},
  /* UNIX__PRELIM */         {NULL,              _ALL_ON_^(0x180),         0x80},
@@ -119,15 +119,15 @@ Index: pam.deb/modules/pam_unix/support.h
  /* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
  /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
  /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
-@@ -129,6 +130,7 @@
+@@ -130,6 +131,7 @@
  /* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
- /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,            0x2000000},
- /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x4000000},
-+/* UNIX__NULLOK */         {"nullok_secure",   _ALL_ON_^(0x200),    0x8000000},
+ /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,            0x4000000},
+ /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x8000000},
++/* UNIX__NULLOK */         {"nullok_secure",   _ALL_ON_^(0x200),   0x10000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -163,6 +165,9 @@
+@@ -165,6 +167,9 @@
  			,const char *data_name
  			,const void **pass);
  

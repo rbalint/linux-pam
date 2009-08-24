@@ -5,7 +5,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
 --- pam.deb.orig/modules/pam_limits/pam_limits.c
 +++ pam.deb/modules/pam_limits/pam_limits.c
 @@ -45,6 +45,10 @@
- #include <libaudit.h>                                                                                                                                            
+ #include <libaudit.h>
  #endif
  
 +#ifndef MLOCK_LIMIT
@@ -23,7 +23,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      int login_limit;     /* the max logins limit */
      int login_limit_def; /* which entry set the login limit */
      int flag_numsyslogins; /* whether to limit logins only for a
-@@ -228,9 +233,18 @@
+@@ -295,9 +300,18 @@
  {
      int i;
      int retval = PAM_SUCCESS;
@@ -42,7 +42,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      for(i = 0; i < RLIM_NLIMITS; i++) {
  	int r = getrlimit(i, &pl->limits[i].limit);
  	if (r == -1) {
-@@ -240,8 +254,56 @@
+@@ -307,8 +321,56 @@
  	    }
  	} else {
  	    pl->limits[i].supported = 1;
@@ -101,7 +101,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  	}
      }
  
-@@ -524,7 +586,7 @@
+@@ -591,7 +653,7 @@
  
              if (strcmp(uname, domain) == 0) /* this user have a limit */
                  process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
@@ -110,7 +110,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -533,7 +595,7 @@
+@@ -600,7 +662,7 @@
                  if (pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1))
                      process_limit(pamh, LIMITS_DEF_GROUP, ltype, item, value, ctrl,
  				  pl);
@@ -119,7 +119,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -547,7 +609,7 @@
+@@ -614,7 +676,7 @@
                      process_limit(pamh, LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
  				  pl);
  		}
@@ -128,7 +128,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
                  process_limit(pamh, LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -582,6 +644,12 @@
+@@ -649,6 +711,12 @@
      int status;
      int retval = LIMITED_OK;
  
@@ -139,9 +139,9 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
 +    }
 +
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
- 	if (!pl->limits[i].supported) {
- 	    /* skip it if its not known to the system */
-@@ -675,6 +743,8 @@
+       int res;
+ 
+@@ -749,6 +817,8 @@
          return PAM_ABORT;
      }
  
@@ -188,7 +188,7 @@ Index: pam.deb/modules/pam_limits/limits.conf.5.xml
          </listitem>
        </varlistentry>
  
-@@ -266,6 +271,7 @@
+@@ -278,6 +283,7 @@
      </para>
      <programlisting>
  *               soft    core            0
@@ -200,25 +200,11 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
 ===================================================================
 --- pam.deb.orig/modules/pam_limits/limits.conf.5
 +++ pam.deb/modules/pam_limits/limits.conf.5
-@@ -1,11 +1,11 @@
- .\"     Title: limits.conf
- .\"    Author: 
- .\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
--.\"      Date: 07/27/2008
-+.\"      Date: 11/09/2008
- .\"    Manual: Linux-PAM Manual
- .\"    Source: Linux-PAM Manual
- .\"
--.TH "LIMITS\&.CONF" "5" "07/27/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "LIMITS\&.CONF" "5" "11/09/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
- .\" disable hyphenation
- .nh
- .\" disable justification (adjust text to left margin only)
-@@ -48,6 +48,11 @@
+@@ -84,6 +84,11 @@
  \fI%group\fR
  syntax\&.
  .RE
-+.IP "" 4
++.RS 4
 +
 +\fBNOTE:\fR
 +group and wildcard limits are not applied to the root user\&. To set a limit for the root user, this field must contain the literal username
@@ -226,8 +212,8 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  .RE
  .PP
  \fB<type>\fR
-@@ -204,6 +209,7 @@
- .RS 4
+@@ -256,6 +261,7 @@
+ .\}
  .nf
  *               soft    core            0
 +root            hard    core            100000

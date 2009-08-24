@@ -1,33 +1,22 @@
-setrlimit will sometimes return EPERM for example if youp try to
-increase the number  of open files too much.  This is not something we
-want to consider fatal.     This also happens if you use non-root and
-try to decrease a limit.  Running PAM as non-root is not so great.
+setrlimit will sometimes return EPERM for example if you try to increase the
+number of open files too much.  This is not something we want to consider
+fatal.  This also happens if you use non-root and try to decrease a limit.
+Running PAM as non-root is not so great.
 
 Authors: ?
 
 Upstream status: submitted in <20070830171918.GB30563@dario.dodds.net>
 
-Index: debian-pkg-pam/modules/pam_limits/pam_limits.c
+Index: pam.deb/modules/pam_limits/pam_limits.c
 ===================================================================
---- debian-pkg-pam.orig/modules/pam_limits/pam_limits.c	2009-04-17 12:47:04.000000000 -0700
-+++ debian-pkg-pam/modules/pam_limits/pam_limits.c	2009-04-17 12:47:06.000000000 -0700
-@@ -651,6 +651,7 @@
-     }
- 
-     for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
-+	int retval;
- 	if (!pl->limits[i].supported) {
- 	    /* skip it if its not known to the system */
- 	    continue;
-@@ -662,7 +663,10 @@
- 	}
-         if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
-             pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
--	status |= setrlimit(i, &pl->limits[i].limit);
-+	retval = setrlimit(i, &pl->limits[i].limit);
-+        if (retval == -1 && errno==EPERM)
+--- pam.deb.orig/modules/pam_limits/pam_limits.c
++++ pam.deb/modules/pam_limits/pam_limits.c
+@@ -735,6 +735,8 @@
+ 	if (res != 0)
+ 	  pam_syslog(pamh, LOG_ERR, "Could not set limit for '%s': %m",
+ 		     rlimit2str(i));
++	if (res == -1 && errno == EPERM)
 +	    continue;
-+	status |= retval;
+ 	status |= res;
      }
  
-     if (status) {

@@ -88,7 +88,7 @@ Index: pam.deb/modules/pam_securetty/pam_securetty.c
 -
 -	    retval = PAM_AUTH_ERR;
 -    } else {
--	if ((retval == PAM_SUCCESS) && (ctrl & PAM_DEBUG_ARG)) {
+-	if (ctrl & PAM_DEBUG_ARG) {
 -	    pam_syslog(pamh, LOG_DEBUG, "access allowed for '%s' on '%s'",
 -		     username, uttyname);
 -	}

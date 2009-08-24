@@ -8,18 +8,18 @@ Index: pam.deb/libpam/pam_handlers.c
 ===================================================================
 --- pam.deb.orig/libpam/pam_handlers.c
 +++ pam.deb/libpam/pam_handlers.c
-@@ -117,6 +117,10 @@
- 		module_type = PAM_T_ACCT;
- 	    } else if (!strcasecmp("password", tok)) {
- 		module_type = PAM_T_PASS;
-+	    } else if (!strcasecmp("@include", tok)) {
-+		pam_include = 1;
-+		module_type = requested_module_type;
-+		goto parsing_done;
- 	    } else {
- 		/* Illegal module type */
- 		D(("_pam_init_handlers: bad module type: %s", tok));
-@@ -186,8 +190,10 @@
+@@ -122,6 +122,10 @@
+ 		    module_type = PAM_T_ACCT;
+ 		} else if (!strcasecmp("password", tok)) {
+ 		    module_type = PAM_T_PASS;
++		} else if (!strcasecmp("@include", tok)) {
++		    pam_include = 1;
++		    module_type = requested_module_type;
++		    goto parsing_done;
+ 		} else {
+ 		    /* Illegal module type */
+ 		    D(("_pam_init_handlers: bad module type: %s", tok));
+@@ -192,8 +196,10 @@
  		_pam_set_default_control(actions, _PAM_ACTION_BAD);
  	    }
  
@@ -30,7 +30,7 @@ Index: pam.deb/libpam/pam_handlers.c
  	    	if (substack) {
  		    res = _pam_add_handler(pamh, PAM_HT_SUBSTACK, other,
  		    		stack_level, module_type, actions, tok,
-@@ -198,13 +204,35 @@
+@@ -204,13 +210,35 @@
  			return PAM_ABORT;
  		    }  	    
  	    	}
