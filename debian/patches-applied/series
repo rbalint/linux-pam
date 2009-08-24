@@ -1,4 +1,3 @@
-pam_unix_thread-safe_save_old_password.patch
 pam_unix_fix_sgid_shadow_auth.patch
 pam_unix_dont_trust_chkpwd_caller.patch
 007_modules_pam_unix
@@ -17,13 +16,7 @@ hurd_no_setfsuid
 054_pam_security_abstract_securetty_handling
 055_pam_unix_nullok_secure
 PAM-manpage-section 
-pam_env_ignore_garbage.patch -p2
 pam.d-manpage-section
 pam_unix-chkpwd-wait
 autoconf.patch 
-dont_freeze_password_chain -p0
-pam_1.0.4_mindays
 update-motd
-pam_mail-fix-quiet
-
-cve-2009-0887-libpam-pam_misc.patch

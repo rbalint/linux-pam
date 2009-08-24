@@ -1,3 +1,15 @@
+pam (1.1.0-1) UNRELEASED; urgency=low
+
+  * New upstream version.
+    - pam_access no longer does DNS lookups when we know we're comparing
+      with a tty name or a service name.  Closes: #376209.
+  * Drop patches pam_unix_thread-safe_save_old_password.patch,
+    pam_env_ignore_garbage.patch, dont_freeze_password_chain,
+    pam_1.0.4_mindays, pam_mail-fix-quiet, and
+    cve-2009-0887-libpam-pam_misc.patch, which are included upstream.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 24 Aug 2009 01:23:18 -0700
+
 pam (1.0.1-11) unstable; urgency=low
 
   * debian/libpam-runtime.postinst: bump the --force version check to
