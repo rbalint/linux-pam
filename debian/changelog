@@ -4,6 +4,8 @@ pam (1.1.0-1) UNRELEASED; urgency=low
     - pam_access no longer does DNS lookups when we know we're comparing
       with a tty name or a service name.  Closes: #376209.
     - fixes for manpage spelling.  Closes: #488690.
+    - fix evaluation of or'ed list of users in time.conf and group.conf.
+      Closes: #326407.
   * Drop patches pam_unix_thread-safe_save_old_password.patch,
     pam_env_ignore_garbage.patch, dont_freeze_password_chain,
     pam_1.0.4_mindays, pam_mail-fix-quiet, and
