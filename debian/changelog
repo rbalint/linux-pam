@@ -19,6 +19,7 @@ pam (1.1.0-1) UNRELEASED; urgency=low
     symbols.
   * Add /sbin/mkhomedir_helper to libpam-modules.
   * Document that pam_cracklib no longer checks /etc/security/opasswd.
+    Closes: #263767.
   * debian/patches/007_modules_pam_unix: drop divergence from upstream
     that treats "0" as a special value in various fields in /etc/shadow,
     and document this in debian/NEWS.  Thanks to Nicolas François
