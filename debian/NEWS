@@ -9,6 +9,25 @@ pam (1.1.0-1) unstable; urgency=low
     The pam_unix module still does its own check of /etc/security/opasswd,
     so if you are using this module you should not need to change anything.
 
+  * Change in handling of /etc/shadow fields
+
+    The Debian PAM package included a patch to treat a value of 0 in certain
+    fields in /etc/shadow as the same as an empty field.  This patch has
+    been dropped, since it caused the behavior of pam_unix to differ from
+    both that of PAM upstream and that of the shadow package.
+
+    The main consequences of this change are that:
+
+    - a "0" in the sp_expire field will be treated as a date of Jan 1, 1970
+      instead of a "never expires" value, so users with this set will be
+      unable to log in
+
+    - a "0" in the sp_inact field will indicate that the user should not be
+      allowed to change an expired password at all, instead of being allowed
+      to change an expired at any time after the expiry.
+
+    See Debian bug #308229 for more information about this change.
+
  -- Steve Langasek <vorlon@debian.org>  Tue, 25 Aug 2009 00:13:57 -0700
 
 pam (0.99.10.0-1) unstable; urgency=low
