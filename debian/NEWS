@@ -1,3 +1,16 @@
+pam (1.1.0-1) unstable; urgency=low
+
+  * pam_cracklib no longer checks for reuse of old passwords
+
+    The pam_cracklib module no longer checks /etc/security/opasswd to see
+    if the proposed password is one that was previously used.  This
+    functionality has been split out into a new module, pam_pwhistory.
+
+    The pam_unix module still does its own check of /etc/security/opasswd,
+    so if you are using this module you should not need to change anything.
+
+ -- Steve Langasek <vorlon@debian.org>  Tue, 25 Aug 2009 00:13:57 -0700
+
 pam (0.99.10.0-1) unstable; urgency=low
 
   * pam_rhosts_auth module obsolete
