@@ -11,6 +11,9 @@ pam (1.1.0-1) UNRELEASED; urgency=low
     applied upstream.
   * Update debian/libpam0g.symbols for new extension.
   * Bump the shlibs version as well, for our dpkg-shlibdeps fallback.
+  * And bump the version checks in the libpam-modules {pre,post}inst, so that
+    the necessary services get restarted for any modules that need the new
+    symbols.
   * Add /sbin/mkhomedir_helper to libpam-modules.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 24 Aug 2009 01:23:18 -0700
