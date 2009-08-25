@@ -8,7 +8,7 @@ pam (1.1.0-1) UNRELEASED; urgency=low
       Closes: #326407, #514423.
   * Drop patches pam_unix_thread-safe_save_old_password.patch,
     pam_env_ignore_garbage.patch, dont_freeze_password_chain,
-    pam_1.0.4_mindays, pam_mail-fix-quiet, and
+    pam_1.0.4_mindays, pam_mail-fix-quiet, pam_unix-chkpwd-wait, and
     cve-2009-0887-libpam-pam_misc.patch, which are included upstream.
   * Trim pam.d-manpage-section patch, which was mostly but not completely
     applied upstream.
