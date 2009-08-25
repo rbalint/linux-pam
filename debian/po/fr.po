@@ -1,18 +1,23 @@
+# Translation of pam to French
 # Copyright (C) 2007 Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>
+# Copyright (C) 2009 Jean-Baka Domelevo Entfellner <domelevo@gmail.com>
 # This file is distributed under the same license as the pam package.
+# Translators:
 # Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>, 2007
+# Jean-Baka Domelevo Entfellner <domelevo@gmail.com>, 2009
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2007-10-03 12:07+0200\n"
-"Last-Translator: Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>\n"
+"PO-Revision-Date: 2009-03-26 11:21+0100\n"
+"Last-Translator: Jean-Baka Domelevo Entfellner <domelevo@gmail.com>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Country: FRANCE\n"
 
 #. Type: string
 #. Description
@@ -86,7 +91,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "Profils PAM à activer :"
 
 #. Type: multiselect
 #. Description
@@ -97,6 +102,10 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Les modules d'authentification PAM déterminent la façon dont le système gère "
+"l'authentification, les autorisations et les changements de mots de passe. "
+"PAM permet aussi de configurer des actions supplémentaires à effectuer au "
+"démarrage des sessions utilisateur."
 
 #. Type: multiselect
 #. Description
@@ -106,12 +115,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Certains paquets de modules PAM fournissent des profils, lesquels peuvent "
+"être utilisés pour ajuster automatiquement le comportement de toutes les "
+"applications utilisant PAM qui sont présentes sur le système."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Profils PAM incompatibles"
 
 #. Type: error
 #. Description
@@ -119,19 +131,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "Les profils PAM suivants sont en conflit :"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Veuillez choisir un autre jeu de modules à activer."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Écraser les modifications locales sur /etc/pam.d/common-* ?"
 
 #. Type: boolean
 #. Description
@@ -143,12 +155,18 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"L'un au moins des fichiers /etc/pam.d/common-{auth,account,password,session} "
+"a été modifié localement. Veuillez indiquer s'il faut abandonner ces "
+"changements locaux et revenir à la configuration standard du système. Dans "
+"le cas contraire, vous devrez configurer vous-même le système "
+"d'authentification."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
+#, fuzzy
 msgid "No PAM profiles have been selected."
-msgstr ""
+msgstr "Profils PAM incompatibles"
 
 #. Type: error
 #. Description
@@ -194,7 +212,7 @@ msgstr ""
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
 msgstr ""
-"xscreensaver et xlockmore doivent être redémarrés avant la mise à niveau"
+"Redémarrage indispensable de xscreensaver et xlockmore avant la mise à niveau"
 
 #. Type: error
 #. Description

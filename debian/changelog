@@ -24,6 +24,9 @@ pam (1.1.0-1) UNRELEASED; urgency=low
     and document this in debian/NEWS.  Thanks to Nicolas François
     <nicolas.francois@centraliens.net> for the detailed analysis.
     Closes: #308229.
+  * Updated debconf translations:
+    - French, thanks to Jean-Baka Domelevo Entfellner <domelevo@gmail.com>
+      (closes: #521266)
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 24 Aug 2009 01:23:18 -0700
 
