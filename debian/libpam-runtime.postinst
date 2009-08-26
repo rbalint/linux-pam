@@ -47,6 +47,10 @@ if [ -n "$force" ]; then
 	      /etc/pam.d/common-account.pam-old \
 	      /etc/pam.d/common-password.pam-old \
 	      /etc/pam.d/common-session.pam-old
+elif dpkg --compare-versions "$2" lt-nl 1.1.0-1 \
+        && [ ! -e /etc/pam.d/common-session-noninteractive ]
+then
+	cp -a /etc/pam.d/common-session /etc/pam.d/common-session-noninteractive
 fi
 
 if [ -n "$UHOH" ]; then

@@ -31,6 +31,10 @@ pam (1.1.0-1) UNRELEASED; urgency=low
   * Build with LDFLAGS=-Wl,-z,defs to guard against the possibility of
     any undefined symbols (due to typos or otherwise) at build time.
     Closes: #10231.
+  * On upgrade from versions before 1.1.0-1, if
+    /etc/pam.d/common-session-noninteractive has not been created (because
+    the user declined use of pam-auth-update), create it by copying
+    /etc/pam.d/common-session.  Closes: #543401.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 24 Aug 2009 01:23:18 -0700
 
