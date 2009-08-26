@@ -44,6 +44,7 @@ file.
 
 Here is an example of a PAM configuration file that just includes the
 common module fragments:
+
     #
     # /etc/pam.d/other - specify the PAM fallback behaviour
     #
@@ -61,7 +62,6 @@ common module fragments:
     @include common-password
     @include common-session
 
-
 The name of this file is determined by the call to pam_start() in the
 application source code. The first parameter will be a string containing
 the "service" name (eg. "login", "httpd", etc..). Please make sure that
@@ -74,16 +74,21 @@ program continues to work even if the module location changes, since
 libpam itself will resolve the location.
 
 
-Currently libpam-modules is in the base setup, so its dependency is not
-needed (since the library depends on the correct version). However, if any
-modules other than the base set in libpam-modules are used, that package
-must be depended on.
+Packages which configure their services by default to use modules other than
+those provided by /etc/pam.d/common-* must depend on the package providing
+those modules.  E.g., /etc/pam.d/login includes the line:
+
+   session    required   pam_limits.so
+
+therefore it must depend on libpam-modules, which provides
+/lib/security/pam_limits.so.
 
 Applications need to depend on libpam-runtime (>= 0.76-14) to
 guarantee that /etc/pam.d/common-* exist.
 
 Applications that use common-session-noninteractive must depend
 on libpam-runtime (>= 1.0.1-11) for this file.
+
 
 The pam_unix.so module allows programs to authenticate the uid of the
 calling process without being setuid or setgid. NOTE: this means the user

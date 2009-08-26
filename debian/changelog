@@ -5,6 +5,8 @@ pam (1.1.0-2) UNRELEASED; urgency=low
     mismatch in unix_chkpwd, needed in the SELinux case and in some corner
     cases with the broken_shadow option.  Thanks to Michael Spang for the
     analysis.  Closes: #543589.
+  * fix the PAM mini-policy to not tell app maintainers that they don't need
+    to depend on libpam-modules if they reference modules from there.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 26 Aug 2009 09:23:57 -0700
 
