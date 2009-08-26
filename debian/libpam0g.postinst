@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # postinst based heavily on the postinst of libssl0.9.8, courtesy of 
 # Christoph Martin.
