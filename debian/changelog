@@ -11,6 +11,8 @@ pam (1.1.0-2) UNRELEASED; urgency=low
     guarantees that we have pam_unix available for use by pam-auth-update.
   * Use /bin/sh instead of /bin/bash for libpam0g.postinst, since we've
     confirmed there are no longer any bashisms there.  Closes: #519973.
+  * Clean up the libpam0g postinst a bit; invoke-rc.d has been a guaranteed
+    interface for two stable release cycles now
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 26 Aug 2009 09:23:57 -0700
 
