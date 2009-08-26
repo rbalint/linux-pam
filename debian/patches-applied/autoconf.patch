@@ -20152,3 +20152,17 @@ Index: pam.deb/modules/pam_unix/Makefile.in
  # Tell versions [3.59,3.63) of GNU make to not export all variables.
  # Otherwise a system limit (for SysV at least) may be exceeded.
  .NOEXPORT:
+Index: pam.deb/config.h.in
+===================================================================
+--- pam.deb.orig/config.h.in
++++ pam.deb/config.h.in
+@@ -270,6 +270,9 @@
+ /* Define to the one symbol short name of this package. */
+ #undef PACKAGE_TARNAME
+ 
++/* Define to the home page for this package. */
++#undef PACKAGE_URL
++
+ /* Define to the version of this package. */
+ #undef PACKAGE_VERSION
+ 
