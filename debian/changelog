@@ -30,7 +30,7 @@ pam (1.1.0-1) unstable; urgency=low
       (closes: #521266)
   * Build with LDFLAGS=-Wl,-z,defs to guard against the possibility of
     any undefined symbols (due to typos or otherwise) at build time.
-    Closes: #10231.
+    Closes: #102311.
   * On upgrade from versions before 1.1.0-1, if
     /etc/pam.d/common-session-noninteractive has not been created (because
     the user declined use of pam-auth-update), create it by copying
