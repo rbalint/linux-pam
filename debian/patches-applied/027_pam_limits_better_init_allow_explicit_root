@@ -220,3 +220,16 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  *               hard    rss             10000
  @student        hard    nproc           20
  @faculty        soft    nproc           20
+Index: pam.deb/modules/pam_limits/README
+===================================================================
+--- pam.deb.orig/modules/pam_limits/README	2009-08-24 20:18:05 +0000
++++ pam.deb/modules/pam_limits/README	2009-08-26 00:32:41 +0000
+@@ -55,6 +55,7 @@
+ limits.conf.
+ 
+ *               soft    core            0
++root            hard    core            100000
+ *               hard    rss             10000
+ @student        hard    nproc           20
+ @faculty        soft    nproc           20
+
