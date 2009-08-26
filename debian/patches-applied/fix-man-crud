@@ -4658,3 +4658,1009 @@ Index: pam.deb/modules/pam_timestamp/pam_timestamp_check.8
  .RS 4
  timestamp files and directories
  .RE
+Index: pam.deb/doc/man/pam_open_session.3
+===================================================================
+--- pam.deb.orig/doc/man/pam_open_session.3
++++ pam.deb/doc/man/pam_open_session.3
+@@ -1,161 +1,13 @@
++'\" t
+ .\"     Title: pam_open_session
+ .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+-.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
+-.\"      Date: 03/02/2009
++.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
++.\"      Date: 08/25/2009
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"  Language: English
+ .\"
+-.TH "PAM_OPEN_SESSION" "3" "03/02/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+-.\" -----------------------------------------------------------------
+-.\" * (re)Define some macros
+-.\" -----------------------------------------------------------------
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" toupper - uppercase a string (locale-aware)
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de toupper
+-.tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
+-\\$*
+-.tr aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH-xref - format a cross-reference to an SH section
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de SH-xref
+-.ie n \{\
+-.\}
+-.toupper \\$*
+-.el \{\
+-\\$*
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH - level-one heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SH
+-.\" put an extra blank line of space above the head in non-TTY output
+-.if t \{\
+-.sp 1
+-.\}
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[an-margin]u
+-.ti 0
+-.HTML-TAG ".NH \\n[an-level]"
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-\." make the size of the head bigger
+-.ps +3
+-.ft B
+-.ne (2v + 1u)
+-.ie n \{\
+-.\" if n (TTY output), use uppercase
+-.toupper \\$*
+-.\}
+-.el \{\
+-.nr an-break-flag 0
+-.\" if not n (not TTY), use normal case (not uppercase)
+-\\$1
+-.in \\n[an-margin]u
+-.ti 0
+-.\" if not n (not TTY), put a border/line under subheading
+-.sp -.6
+-\l'\n(.lu'
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SS - level-two heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SS
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[IN]u
+-.ti \\n[SN]u
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-.ps \\n[PS-SS]u
+-\." make the size of the head bigger
+-.ps +2
+-.ft B
+-.ne (2v + 1u)
+-.if \\n[.$] \&\\$*
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BB/BE - put background/screen (filled box) around block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BB
+-.if t \{\
+-.sp -.5
+-.br
+-.in +2n
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EB
+-.if t \{\
+-.if "\\$2"adjust-for-leading-newline" \{\
+-.sp -1
+-.\}
+-.br
+-.di
+-.in
+-.ll
+-.gcolor
+-.nr BW \\n(.lu-\\n(.i
+-.nr BH \\n(dn+.5v
+-.ne \\n(BHu+.5v
+-.ie "\\$2"adjust-for-leading-newline" \{\
+-\M[\\$1]\h'1n'\v'+.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.el \{\
+-\M[\\$1]\h'1n'\v'-.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.in 0
+-.sp -.5v
+-.nf
+-.BX
+-.in
+-.sp .5v
+-.fi
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BM/EM - put colored marker in margin next to block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BM
+-.if t \{\
+-.br
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EM
+-.if t \{\
+-.br
+-.di
+-.ll
+-.gcolor
+-.nr BH \\n(dn
+-.ne \\n(BHu
+-\M[\\$1]\D'P -.75n 0 0 \\n(BHu -(\\n[.i]u - \\n(INu - .75n) 0 0 -\\n(BHu'\M[]
+-.in 0
+-.nf
+-.BX
+-.in
+-.fi
+-.\}
+-..
++.TH "PAM_OPEN_SESSION" "3" "08/25/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+ .\" -----------------------------------------------------------------
+ .\" * set default formatting
+ .\" -----------------------------------------------------------------
+@@ -166,23 +18,17 @@
+ .\" -----------------------------------------------------------------
+ .\" * MAIN CONTENT STARTS HERE *
+ .\" -----------------------------------------------------------------
+-.SH "Name"
++.SH "NAME"
+ pam_open_session \- start PAM session management
+-.SH "Synopsis"
++.SH "SYNOPSIS"
+ .sp
+ .ft B
+-.fam C
+-.ps -1
+ .nf
+ #include <security/pam_appl\&.h>
+ .fi
+-.fam
+-.ps +1
+ .ft
+-.fam C
+ .HP \w'int\ pam_open_session('u
+ .BI "int pam_open_session(pam_handle_t\ *" "pamh" ", int\ " "flags" ");"
+-.fam
+ .SH "DESCRIPTION"
+ .PP
+ The
+Index: pam.deb/doc/man/pam_set_item.3
+===================================================================
+--- pam.deb.orig/doc/man/pam_set_item.3
++++ pam.deb/doc/man/pam_set_item.3
+@@ -1,161 +1,13 @@
++'\" t
+ .\"     Title: pam_set_item
+ .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+-.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
+-.\"      Date: 03/02/2009
++.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
++.\"      Date: 08/25/2009
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"  Language: English
+ .\"
+-.TH "PAM_SET_ITEM" "3" "03/02/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+-.\" -----------------------------------------------------------------
+-.\" * (re)Define some macros
+-.\" -----------------------------------------------------------------
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" toupper - uppercase a string (locale-aware)
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de toupper
+-.tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
+-\\$*
+-.tr aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH-xref - format a cross-reference to an SH section
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de SH-xref
+-.ie n \{\
+-.\}
+-.toupper \\$*
+-.el \{\
+-\\$*
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH - level-one heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SH
+-.\" put an extra blank line of space above the head in non-TTY output
+-.if t \{\
+-.sp 1
+-.\}
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[an-margin]u
+-.ti 0
+-.HTML-TAG ".NH \\n[an-level]"
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-\." make the size of the head bigger
+-.ps +3
+-.ft B
+-.ne (2v + 1u)
+-.ie n \{\
+-.\" if n (TTY output), use uppercase
+-.toupper \\$*
+-.\}
+-.el \{\
+-.nr an-break-flag 0
+-.\" if not n (not TTY), use normal case (not uppercase)
+-\\$1
+-.in \\n[an-margin]u
+-.ti 0
+-.\" if not n (not TTY), put a border/line under subheading
+-.sp -.6
+-\l'\n(.lu'
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SS - level-two heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SS
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[IN]u
+-.ti \\n[SN]u
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-.ps \\n[PS-SS]u
+-\." make the size of the head bigger
+-.ps +2
+-.ft B
+-.ne (2v + 1u)
+-.if \\n[.$] \&\\$*
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BB/BE - put background/screen (filled box) around block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BB
+-.if t \{\
+-.sp -.5
+-.br
+-.in +2n
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EB
+-.if t \{\
+-.if "\\$2"adjust-for-leading-newline" \{\
+-.sp -1
+-.\}
+-.br
+-.di
+-.in
+-.ll
+-.gcolor
+-.nr BW \\n(.lu-\\n(.i
+-.nr BH \\n(dn+.5v
+-.ne \\n(BHu+.5v
+-.ie "\\$2"adjust-for-leading-newline" \{\
+-\M[\\$1]\h'1n'\v'+.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.el \{\
+-\M[\\$1]\h'1n'\v'-.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.in 0
+-.sp -.5v
+-.nf
+-.BX
+-.in
+-.sp .5v
+-.fi
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BM/EM - put colored marker in margin next to block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BM
+-.if t \{\
+-.br
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EM
+-.if t \{\
+-.br
+-.di
+-.ll
+-.gcolor
+-.nr BH \\n(dn
+-.ne \\n(BHu
+-\M[\\$1]\D'P -.75n 0 0 \\n(BHu -(\\n[.i]u - \\n(INu - .75n) 0 0 -\\n(BHu'\M[]
+-.in 0
+-.nf
+-.BX
+-.in
+-.fi
+-.\}
+-..
++.TH "PAM_SET_ITEM" "3" "08/25/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+ .\" -----------------------------------------------------------------
+ .\" * set default formatting
+ .\" -----------------------------------------------------------------
+@@ -166,23 +18,17 @@
+ .\" -----------------------------------------------------------------
+ .\" * MAIN CONTENT STARTS HERE *
+ .\" -----------------------------------------------------------------
+-.SH "Name"
++.SH "NAME"
+ pam_set_item \- set and update PAM informations
+-.SH "Synopsis"
++.SH "SYNOPSIS"
+ .sp
+ .ft B
+-.fam C
+-.ps -1
+ .nf
+ #include <security/pam_modules\&.h>
+ .fi
+-.fam
+-.ps +1
+ .ft
+-.fam C
+ .HP \w'int\ pam_set_item('u
+ .BI "int pam_set_item(pam_handle_t\ *" "pamh" ", int\ " "item_type" ", const\ void\ *" "item" ");"
+-.fam
+ .SH "DESCRIPTION"
+ .PP
+ The
+@@ -215,7 +61,7 @@
+ PAM_TTY
+ .RS 4
+ The terminal name: prefixed by
+-\FC/dev/\F[]
++/dev/
+ if it is a device file; for graphical, X\-based, applications the value for this item should be the
+ \fI$DISPLAY\fR
+ variable\&.
+Index: pam.deb/modules/pam_mkhomedir/mkhomedir_helper.8
+===================================================================
+--- pam.deb.orig/modules/pam_mkhomedir/mkhomedir_helper.8
++++ pam.deb/modules/pam_mkhomedir/mkhomedir_helper.8
+@@ -1,161 +1,13 @@
++'\" t
+ .\"     Title: mkhomedir_helper
+ .\"    Author: [see the "AUTHOR" section]
+-.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
+-.\"      Date: 03/02/2009
++.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
++.\"      Date: 08/25/2009
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"  Language: English
+ .\"
+-.TH "MKHOMEDIR_HELPER" "8" "03/02/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.\" -----------------------------------------------------------------
+-.\" * (re)Define some macros
+-.\" -----------------------------------------------------------------
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" toupper - uppercase a string (locale-aware)
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de toupper
+-.tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
+-\\$*
+-.tr aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH-xref - format a cross-reference to an SH section
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de SH-xref
+-.ie n \{\
+-.\}
+-.toupper \\$*
+-.el \{\
+-\\$*
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH - level-one heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SH
+-.\" put an extra blank line of space above the head in non-TTY output
+-.if t \{\
+-.sp 1
+-.\}
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[an-margin]u
+-.ti 0
+-.HTML-TAG ".NH \\n[an-level]"
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-\." make the size of the head bigger
+-.ps +3
+-.ft B
+-.ne (2v + 1u)
+-.ie n \{\
+-.\" if n (TTY output), use uppercase
+-.toupper \\$*
+-.\}
+-.el \{\
+-.nr an-break-flag 0
+-.\" if not n (not TTY), use normal case (not uppercase)
+-\\$1
+-.in \\n[an-margin]u
+-.ti 0
+-.\" if not n (not TTY), put a border/line under subheading
+-.sp -.6
+-\l'\n(.lu'
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SS - level-two heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SS
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[IN]u
+-.ti \\n[SN]u
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-.ps \\n[PS-SS]u
+-\." make the size of the head bigger
+-.ps +2
+-.ft B
+-.ne (2v + 1u)
+-.if \\n[.$] \&\\$*
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BB/BE - put background/screen (filled box) around block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BB
+-.if t \{\
+-.sp -.5
+-.br
+-.in +2n
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EB
+-.if t \{\
+-.if "\\$2"adjust-for-leading-newline" \{\
+-.sp -1
+-.\}
+-.br
+-.di
+-.in
+-.ll
+-.gcolor
+-.nr BW \\n(.lu-\\n(.i
+-.nr BH \\n(dn+.5v
+-.ne \\n(BHu+.5v
+-.ie "\\$2"adjust-for-leading-newline" \{\
+-\M[\\$1]\h'1n'\v'+.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.el \{\
+-\M[\\$1]\h'1n'\v'-.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.in 0
+-.sp -.5v
+-.nf
+-.BX
+-.in
+-.sp .5v
+-.fi
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BM/EM - put colored marker in margin next to block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BM
+-.if t \{\
+-.br
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EM
+-.if t \{\
+-.br
+-.di
+-.ll
+-.gcolor
+-.nr BH \\n(dn
+-.ne \\n(BHu
+-\M[\\$1]\D'P -.75n 0 0 \\n(BHu -(\\n[.i]u - \\n(INu - .75n) 0 0 -\\n(BHu'\M[]
+-.in 0
+-.nf
+-.BX
+-.in
+-.fi
+-.\}
+-..
++.TH "MKHOMEDIR_HELPER" "8" "08/25/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
+ .\" -----------------------------------------------------------------
+ .\" * set default formatting
+ .\" -----------------------------------------------------------------
+@@ -166,13 +18,11 @@
+ .\" -----------------------------------------------------------------
+ .\" * MAIN CONTENT STARTS HERE *
+ .\" -----------------------------------------------------------------
+-.SH "Name"
++.SH "NAME"
+ mkhomedir_helper \- Helper binary that creates home directories
+-.SH "Synopsis"
+-.fam C
++.SH "SYNOPSIS"
+ .HP \w'\fBmkhomedir_helper\fR\ 'u
+ \fBmkhomedir_helper\fR {\fIuser\fR} [\fIumask\fR\ [\ \fIpath\-to\-skel\fR\ ]]
+-.fam
+ .SH "DESCRIPTION"
+ .PP
+ 
+Index: pam.deb/doc/man/pam.3
+===================================================================
+--- pam.deb.orig/doc/man/pam.3
++++ pam.deb/doc/man/pam.3
+@@ -1,161 +1,13 @@
++'\" t
+ .\"     Title: pam
+ .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+-.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
+-.\"      Date: 03/02/2009
++.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
++.\"      Date: 08/25/2009
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"  Language: English
+ .\"
+-.TH "PAM" "3" "03/02/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+-.\" -----------------------------------------------------------------
+-.\" * (re)Define some macros
+-.\" -----------------------------------------------------------------
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" toupper - uppercase a string (locale-aware)
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de toupper
+-.tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
+-\\$*
+-.tr aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH-xref - format a cross-reference to an SH section
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de SH-xref
+-.ie n \{\
+-.\}
+-.toupper \\$*
+-.el \{\
+-\\$*
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH - level-one heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SH
+-.\" put an extra blank line of space above the head in non-TTY output
+-.if t \{\
+-.sp 1
+-.\}
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[an-margin]u
+-.ti 0
+-.HTML-TAG ".NH \\n[an-level]"
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-\." make the size of the head bigger
+-.ps +3
+-.ft B
+-.ne (2v + 1u)
+-.ie n \{\
+-.\" if n (TTY output), use uppercase
+-.toupper \\$*
+-.\}
+-.el \{\
+-.nr an-break-flag 0
+-.\" if not n (not TTY), use normal case (not uppercase)
+-\\$1
+-.in \\n[an-margin]u
+-.ti 0
+-.\" if not n (not TTY), put a border/line under subheading
+-.sp -.6
+-\l'\n(.lu'
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SS - level-two heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SS
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[IN]u
+-.ti \\n[SN]u
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-.ps \\n[PS-SS]u
+-\." make the size of the head bigger
+-.ps +2
+-.ft B
+-.ne (2v + 1u)
+-.if \\n[.$] \&\\$*
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BB/BE - put background/screen (filled box) around block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BB
+-.if t \{\
+-.sp -.5
+-.br
+-.in +2n
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EB
+-.if t \{\
+-.if "\\$2"adjust-for-leading-newline" \{\
+-.sp -1
+-.\}
+-.br
+-.di
+-.in
+-.ll
+-.gcolor
+-.nr BW \\n(.lu-\\n(.i
+-.nr BH \\n(dn+.5v
+-.ne \\n(BHu+.5v
+-.ie "\\$2"adjust-for-leading-newline" \{\
+-\M[\\$1]\h'1n'\v'+.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.el \{\
+-\M[\\$1]\h'1n'\v'-.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.in 0
+-.sp -.5v
+-.nf
+-.BX
+-.in
+-.sp .5v
+-.fi
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BM/EM - put colored marker in margin next to block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BM
+-.if t \{\
+-.br
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EM
+-.if t \{\
+-.br
+-.di
+-.ll
+-.gcolor
+-.nr BH \\n(dn
+-.ne \\n(BHu
+-\M[\\$1]\D'P -.75n 0 0 \\n(BHu -(\\n[.i]u - \\n(INu - .75n) 0 0 -\\n(BHu'\M[]
+-.in 0
+-.nf
+-.BX
+-.in
+-.fi
+-.\}
+-..
++.TH "PAM" "3" "08/25/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+ .\" -----------------------------------------------------------------
+ .\" * set default formatting
+ .\" -----------------------------------------------------------------
+@@ -166,38 +18,26 @@
+ .\" -----------------------------------------------------------------
+ .\" * MAIN CONTENT STARTS HERE *
+ .\" -----------------------------------------------------------------
+-.SH "Name"
++.SH "NAME"
+ pam \- Pluggable Authentication Modules Library
+-.SH "Synopsis"
++.SH "SYNOPSIS"
+ .sp
+ .ft B
+-.fam C
+-.ps -1
+ .nf
+ #include <security/pam_appl\&.h>
+ .fi
+-.fam
+-.ps +1
+ .ft
+ .sp
+ .ft B
+-.fam C
+-.ps -1
+ .nf
+ #include <security/pam_modules\&.h>
+ .fi
+-.fam
+-.ps +1
+ .ft
+ .sp
+ .ft B
+-.fam C
+-.ps -1
+ .nf
+ #include <security/pam_ext\&.h>
+ .fi
+-.fam
+-.ps +1
+ .ft
+ .SH "DESCRIPTION"
+ .PP
+Index: pam.deb/doc/man/pam_start.3
+===================================================================
+--- pam.deb.orig/doc/man/pam_start.3
++++ pam.deb/doc/man/pam_start.3
+@@ -1,161 +1,13 @@
++'\" t
+ .\"     Title: pam_start
+ .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+-.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
+-.\"      Date: 03/02/2009
++.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
++.\"      Date: 08/25/2009
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"  Language: English
+ .\"
+-.TH "PAM_START" "3" "03/02/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+-.\" -----------------------------------------------------------------
+-.\" * (re)Define some macros
+-.\" -----------------------------------------------------------------
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" toupper - uppercase a string (locale-aware)
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de toupper
+-.tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
+-\\$*
+-.tr aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH-xref - format a cross-reference to an SH section
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de SH-xref
+-.ie n \{\
+-.\}
+-.toupper \\$*
+-.el \{\
+-\\$*
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH - level-one heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SH
+-.\" put an extra blank line of space above the head in non-TTY output
+-.if t \{\
+-.sp 1
+-.\}
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[an-margin]u
+-.ti 0
+-.HTML-TAG ".NH \\n[an-level]"
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-\." make the size of the head bigger
+-.ps +3
+-.ft B
+-.ne (2v + 1u)
+-.ie n \{\
+-.\" if n (TTY output), use uppercase
+-.toupper \\$*
+-.\}
+-.el \{\
+-.nr an-break-flag 0
+-.\" if not n (not TTY), use normal case (not uppercase)
+-\\$1
+-.in \\n[an-margin]u
+-.ti 0
+-.\" if not n (not TTY), put a border/line under subheading
+-.sp -.6
+-\l'\n(.lu'
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SS - level-two heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SS
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[IN]u
+-.ti \\n[SN]u
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-.ps \\n[PS-SS]u
+-\." make the size of the head bigger
+-.ps +2
+-.ft B
+-.ne (2v + 1u)
+-.if \\n[.$] \&\\$*
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BB/BE - put background/screen (filled box) around block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BB
+-.if t \{\
+-.sp -.5
+-.br
+-.in +2n
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EB
+-.if t \{\
+-.if "\\$2"adjust-for-leading-newline" \{\
+-.sp -1
+-.\}
+-.br
+-.di
+-.in
+-.ll
+-.gcolor
+-.nr BW \\n(.lu-\\n(.i
+-.nr BH \\n(dn+.5v
+-.ne \\n(BHu+.5v
+-.ie "\\$2"adjust-for-leading-newline" \{\
+-\M[\\$1]\h'1n'\v'+.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.el \{\
+-\M[\\$1]\h'1n'\v'-.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.in 0
+-.sp -.5v
+-.nf
+-.BX
+-.in
+-.sp .5v
+-.fi
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BM/EM - put colored marker in margin next to block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BM
+-.if t \{\
+-.br
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EM
+-.if t \{\
+-.br
+-.di
+-.ll
+-.gcolor
+-.nr BH \\n(dn
+-.ne \\n(BHu
+-\M[\\$1]\D'P -.75n 0 0 \\n(BHu -(\\n[.i]u - \\n(INu - .75n) 0 0 -\\n(BHu'\M[]
+-.in 0
+-.nf
+-.BX
+-.in
+-.fi
+-.\}
+-..
++.TH "PAM_START" "3" "08/25/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+ .\" -----------------------------------------------------------------
+ .\" * set default formatting
+ .\" -----------------------------------------------------------------
+@@ -166,23 +18,17 @@
+ .\" -----------------------------------------------------------------
+ .\" * MAIN CONTENT STARTS HERE *
+ .\" -----------------------------------------------------------------
+-.SH "Name"
++.SH "NAME"
+ pam_start \- initialization of PAM transaction
+-.SH "Synopsis"
++.SH "SYNOPSIS"
+ .sp
+ .ft B
+-.fam C
+-.ps -1
+ .nf
+ #include <security/pam_appl\&.h>
+ .fi
+-.fam
+-.ps +1
+ .ft
+-.fam C
+ .HP \w'int\ pam_start('u
+ .BI "int pam_start(const\ char\ *" "service_name" ", const\ char\ *" "user" ", const\ struct\ pam_conv\ *" "pam_conversation" ", pam_handle_t\ **" "pamh" ");"
+-.fam
+ .SH "DESCRIPTION"
+ .PP
+ The
+@@ -192,9 +38,9 @@
+ The
+ \fIservice_name\fR
+ argument specifies the name of the service to apply and will be stored as PAM_SERVICE item in the new context\&. The policy for the service will be read from the file
+-\FC/etc/pam\&.d/service_name\F[]
++/etc/pam\&.d/service_name
+ or, if that file does not exist, from
+-\FC/etc/pam\&.conf\F[]\&.
++/etc/pam\&.conf\&.
+ .PP
+ The
+ \fIuser\fR
