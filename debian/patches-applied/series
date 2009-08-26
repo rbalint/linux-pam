@@ -19,3 +19,4 @@ PAM-manpage-section
 pam.d-manpage-section
 autoconf.patch 
 update-motd
+fix-man-crud

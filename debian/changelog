@@ -35,6 +35,9 @@ pam (1.1.0-1) UNRELEASED; urgency=low
     /etc/pam.d/common-session-noninteractive has not been created (because
     the user declined use of pam-auth-update), create it by copying
     /etc/pam.d/common-session.  Closes: #543401.
+  * debian/patches/fix-man-crud: new patch, fix "undefined macro" errors in
+    manpages caused by oddities of toolchain used when generating them
+    upstream.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 24 Aug 2009 01:23:18 -0700
 
