@@ -1,4 +1,4 @@
-pam (1.1.0-1) UNRELEASED; urgency=low
+pam (1.1.0-1) unstable; urgency=low
 
   * New upstream version.
     - pam_access no longer does DNS lookups when we know we're comparing
@@ -39,7 +39,7 @@ pam (1.1.0-1) UNRELEASED; urgency=low
     manpages caused by oddities of toolchain used when generating them
     upstream.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 24 Aug 2009 01:23:18 -0700
+ -- Steve Langasek <vorlon@debian.org>  Tue, 25 Aug 2009 20:35:26 -0700
 
 pam (1.0.1-11) unstable; urgency=low
 
