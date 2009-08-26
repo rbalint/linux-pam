@@ -1,3 +1,13 @@
+pam (1.1.0-2) UNRELEASED; urgency=low
+
+  * debian/patches/pam_unix_dont_trust_chkpwd_caller.patch: fix this patch
+    to call setregid() instead of always returning an error on username
+    mismatch in unix_chkpwd, needed in the SELinux case and in some corner
+    cases with the broken_shadow option.  Thanks to Michael Spang for the
+    analysis.  Closes: #543589.
+
+ -- Steve Langasek <vorlon@debian.org>  Wed, 26 Aug 2009 09:23:57 -0700
+
 pam (1.1.0-1) unstable; urgency=low
 
   * New upstream version.
