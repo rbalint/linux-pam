@@ -20,3 +20,4 @@ pam.d-manpage-section
 autoconf.patch 
 update-motd
 fix-man-crud
+namespace_with_awk_not_gawk
