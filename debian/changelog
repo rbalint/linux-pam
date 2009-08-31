@@ -1,4 +1,4 @@
-pam (1.1.0-2) UNRELEASED; urgency=low
+pam (1.1.0-2) unstable; urgency=low
 
   [ Steve Langasek ]
   * debian/patches/pam_unix_dont_trust_chkpwd_caller.patch: fix this patch
@@ -24,7 +24,7 @@ pam (1.1.0-2) UNRELEASED; urgency=low
   * debian/local/common-password, debian/pam-configs/unix: switch from "md5"
     to "sha512" as password crypt default.
 
- -- Kees Cook <kees@debian.org>  Mon, 31 Aug 2009 12:31:42 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 31 Aug 2009 14:21:27 -0700
 
 pam (1.1.0-1) unstable; urgency=low
 
