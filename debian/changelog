@@ -1,5 +1,6 @@
 pam (1.1.0-2) UNRELEASED; urgency=low
 
+  [ Steve Langasek ]
   * debian/patches/pam_unix_dont_trust_chkpwd_caller.patch: fix this patch
     to call setregid() instead of always returning an error on username
     mismatch in unix_chkpwd, needed in the SELinux case and in some corner
@@ -19,7 +20,11 @@ pam (1.1.0-2) UNRELEASED; urgency=low
   * Updated debconf translations:
     - German, thanks to Sven Joachim <svenjoac@gmx.de> (closes: #544464)
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 26 Aug 2009 09:23:57 -0700
+  [ Kees Cook ]
+  * debian/local/common-password, debian/pam-configs/unix: switch from "md5"
+    to "sha512" as password crypt default.
+
+ -- Kees Cook <kees@debian.org>  Mon, 31 Aug 2009 12:31:42 -0700
 
 pam (1.1.0-1) unstable; urgency=low
 
