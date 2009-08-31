@@ -45,6 +45,7 @@ my %md5sums = (
 	'auth' => ['8d4fe17e66ba25de16a117035d1396aa'],
 	'account' => ['3c0c362eaf3421848b679d63fd48c3fa'],
 	'password' => [
+		'50fce2113dfda83ac8bdd5a6e706caec',
 		'4bd7610f2e85f8ddaef79c7db7cb49eb',
 		'9ba753d0824276b44bcadfee1f87b6bc',
 	],
