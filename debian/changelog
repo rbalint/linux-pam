@@ -16,7 +16,7 @@ pam (1.1.0-2) unstable; urgency=low
     interface for two stable release cycles now
   * debian/patches/namespace_with_awk_not_gawk: fix the sample
     namespace.init script's dependency on non-POSIX features of gawk, since
-    we don't use gawk by default.  Closes; #518908.
+    we don't use gawk by default.  Closes: #518908.
   * Updated debconf translations:
     - German, thanks to Sven Joachim <svenjoac@gmx.de> (closes: #544464)
 
