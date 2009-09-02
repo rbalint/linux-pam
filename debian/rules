@@ -60,8 +60,6 @@ clean-patched:
 	dh_testdir
 	dh_testroot
 	[ ! -f $(BUILD_TREE)/Makefile ] || $(MAKE) -C $(BUILD_TREE) distclean
-	rm -f $(dl)/pam_getenv.8
-	rm -f build-stamp configure-stamp
 	dh_clean
 
 install: build
