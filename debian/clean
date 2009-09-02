@@ -1,1 +1,2 @@
 debian/local/pam_getenv.8
+debian/libpam0g-dev.links

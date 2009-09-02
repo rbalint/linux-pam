@@ -48,7 +48,7 @@ configure-stamp:
 	cd $(BUILD_TREE) && \
 	./configure $(conf_args) \
 	--sysconfdir=/etc --prefix=/usr --enable-static --enable-shared \
-	--libdir=/lib --sbindir=/sbin --disable-audit
+	--libdir=/lib/$(DEB_HOST_GNU_TYPE) --sbindir=/sbin --disable-audit
 	touch configure-stamp
 
 
@@ -92,6 +92,7 @@ binary-arch: install
 
 	dh_install -a -Nlibpam-cracklib -X pam_cracklib
 	dh_install -plibpam-cracklib
+	sed -e"s,^/lib,/lib/$(DEB_HOST_GNU_TYPE)," $(d)/libpam0g-dev.links.in > $(d)/libpam0g-dev.links
 	dh_link -a
 	dh_installman -a
 	rm -f $(d)/libpam-modules/usr/share/man/man5/pam.conf.5
