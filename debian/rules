@@ -48,9 +48,7 @@ configure-stamp:
 	cd $(BUILD_TREE) && \
 	./configure $(conf_args) \
 	--sysconfdir=/etc --prefix=/usr --enable-static --enable-shared \
-	--mandir=/usr/share/man --infodir=/usr/share/info --libdir=/lib \
-	--sbindir=/sbin --enable-docdir=/usr/share/doc/libpam-doc \
-	--with-mailspool=/var/mail --disable-audit
+	--libdir=/lib --sbindir=/sbin --disable-audit
 	touch configure-stamp
 
 
