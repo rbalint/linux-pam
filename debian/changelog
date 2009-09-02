@@ -10,6 +10,8 @@ pam (1.1.0-3) UNRELEASED; urgency=low
   * Drop ./configure options that are no-ops
   * Drop the /lib/security/pam_unix_*.so symlinks, which have been deprecated
     now for 10 years and are not used at all if pam-auth-update is in play.
+  * Drop the pam_rhosts_auth.so symlink as well, and document in NEWS.Debian
+    that this is now obsolete.
   * Drop stale content from README.debian: some of this should have been in
     NEWS.Debian instead (but is so old it's not worth putting it there now),
     some of it is obsolete by the change in package VCS.

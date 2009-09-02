@@ -1,3 +1,18 @@
+pam (1.1.0-3) unstable; urgency=low
+
+  * pam_rhosts_auth module obsolete, symlink removed
+
+    The pam_rhosts_auth module was dropped upstream prior to the lenny
+    release and a compatibility symlink provided in the libpam-modules
+    package, pointing at the new (and not 100% compatible) pam_rhosts
+    module.  This symlink has now been dropped.  If you still have
+    references to pam_rhosts_auth in your /etc/pam.d/* config files, you
+    will need to fix these, since they no longer work.
+
+    For information on using pam_rhosts, see the pam_rhosts(8) manpage.
+
+ -- Steve Langasek <vorlon@debian.org>  Wed, 02 Sep 2009 16:17:16 -0700
+
 pam (1.1.0-1) unstable; urgency=low
 
   * pam_cracklib no longer checks for reuse of old passwords
@@ -29,22 +44,6 @@ pam (1.1.0-1) unstable; urgency=low
     See Debian bug #308229 for more information about this change.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 25 Aug 2009 00:13:57 -0700
-
-pam (0.99.10.0-1) unstable; urgency=low
-
-  * pam_rhosts_auth module obsolete
-
-    The pam_rhosts_auth module has been dropped upstream in favor of the
-    more featureful and better-maintained pam_rhosts module.  To ease the
-    transition to pam_rhosts, a compatibility symlink has been provided to
-    map pam_rhosts_auth to pam_rhosts on your system; however, pam_rhosts
-    doesn't support all of the same module options and the compatibility
-    symlink will be dropped in a future release.  You should update any
-    configs to use pam_rhosts instead of pam_rhosts_auth as soon as possible.
-
-    For information on using pam_rhosts, see the pam_rhosts(8) manpage.
-
- -- Steve Langasek <vorlon@debian.org>  Sat, 26 Jul 2008 22:01:22 -0700
 
 pam (0.99.7.1-5) unstable; urgency=low
 
