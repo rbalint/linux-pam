@@ -5,6 +5,7 @@ pam (1.1.0-3) UNRELEASED; urgency=low
   * Rename debian/*.lintian to debian/*.lintian-overrides and use dh_lintian
   * Move installation logic out of debian/rules into individual .install
     files
+  * Drop superfluous options to dh_installchangelogs, dh_shlibdeps
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 01 Sep 2009 22:23:47 -0700
 
