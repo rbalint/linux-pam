@@ -96,10 +96,7 @@ binary-arch: install
 	dh_install -plibpam-cracklib
 	dh_link -a
 	dh_installman -a
-	rm -rf $(d)/libpam-modules/usr/share/man/man7
-	rm -f $(d)/libpam-modules/usr/share/man/man8/pam.8
 	rm -f $(d)/libpam-modules/usr/share/man/man5/pam.conf.5
-	rm -f $(d)/libpam-modules/usr/share/man/man5/pam.d.5
 
 	dh_installdebconf -a
 	dh_installdocs -a $(BUILD_TREE)/README
