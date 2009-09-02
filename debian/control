@@ -1,7 +1,7 @@
 Source: pam
 Section: libs
 Priority: optional
-Uploaders: Karl Ramm <kcr@debian.org>, Sam Hartman <hartmans@debian.org>, Roger Leigh <rleigh@debian.org>
+Uploaders: Sam Hartman <hartmans@debian.org>, Roger Leigh <rleigh@debian.org>
 Maintainer: Steve Langasek <vorlon@debian.org>
 Standards-Version: 3.8.0
 Build-Depends: libcrack2-dev (>= 2.8), bzip2, debhelper (>= 7), quilt, flex, libdb-dev, libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64 !netbsd-i386], po-debconf
