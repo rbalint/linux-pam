@@ -94,10 +94,7 @@ binary-indep: install
 	dh_installdebconf -i
 	dh_installchangelogs -i $(BUILD_TREE)/ChangeLog
 	dh_compress -i -X.html
-	for pkg in  libpam-runtime; do \
-		install -m 0644 -D $(d)/$$pkg.lintian $(d)/$$pkg/usr/share/lintian/overrides/$$pkg || exit; \
-	done
-
+	dh_lintian -i
 	dh_link -i
 	dh_fixperms -i
 	dh_installdeb -i
@@ -128,9 +125,7 @@ binary-arch: install
 	dh_installcron -a
 
 	dh_installchangelogs -a $(BUILD_TREE)/ChangeLog
-	for pkg in libpam0g libpam-modules ; do \
-		install -m 0644 -D $(d)/$$pkg.lintian $(d)/$$pkg/usr/share/lintian/overrides/$$pkg || exit; \
-	done
+	dh_lintian -a
 
 	dh_strip -a
 	dh_compress -a
