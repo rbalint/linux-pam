@@ -1,4 +1,3 @@
-examples/Makefile
 examples/blank.c
 examples/check_user.c
 examples/vpass.c
