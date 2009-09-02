@@ -74,12 +74,6 @@ install: build
 
 	$(MAKE) -C $(BUILD_TREE) DESTDIR=$(CURDIR)/debian/tmp install
 
-	# .la files are teh devil
-	rm -f $(CURDIR)/debian/tmp/lib/*.la
-	# for modules, we only want the .so
-	rm -f $(CURDIR)/debian/tmp/lib/security/*.la \
-	      $(CURDIR)/debian/tmp/lib/security/*.a
-
 # Build architecture-independent files here.
 binary-indep: install
 	dh_testdir -i
@@ -115,7 +109,6 @@ binary-arch: install
 	dh_testdir -a
 	dh_testroot -a
 
-	mkdir -p debian/tmp/usr/lib
 	dh_install -a -Nlibpam-cracklib -X pam_cracklib
 	dh_install -plibpam-cracklib
 	mkdir -p debian/libpam-cracklib/usr/share/pam-configs
