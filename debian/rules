@@ -31,8 +31,6 @@ BUILD_TREE=$(CURDIR)
 
 d = $(CURDIR)/debian
 dl = $(d)/local
-i = install -p -m 0644
-ie = install -p -m 0755
 
 build: configure build-stamp
 build-stamp:
@@ -98,8 +96,6 @@ binary-arch: install
 
 	dh_install -a -Nlibpam-cracklib -X pam_cracklib
 	dh_install -plibpam-cracklib
-	mkdir -p debian/libpam-cracklib/usr/share/pam-configs
-	$(i) $(d)/pam-configs/cracklib debian/libpam-cracklib/usr/share/pam-configs/cracklib
 	dh_link -a
 	dh_installman -a
 	rm -rf $(d)/libpam-modules/usr/share/man/man7
