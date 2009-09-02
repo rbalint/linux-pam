@@ -1,6 +1,7 @@
 pam (1.1.0-3) UNRELEASED; urgency=low
 
   * Bump debian/compat to 7, so we can use sane contents in debian/*.install
+  * Switch libpam-modules over to dh_install
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 01 Sep 2009 22:23:47 -0700
 

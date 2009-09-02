@@ -118,7 +118,7 @@ binary-arch: install
 	mkdir -p debian/tmp/usr/lib
 	mv debian/tmp/lib/*.a debian/tmp/usr/lib
 	dh_movefiles  -plibpam0g-dev -plibpam-cracklib -plibpam0g
-	dh_movefiles -plibpam-modules `cd $(d)/tmp && ls lib/security/*.so`
+	dh_install -plibpam-modules
 	mkdir -p debian/libpam-cracklib/usr/share/pam-configs
 	$(i) $(d)/pam-configs/cracklib debian/libpam-cracklib/usr/share/pam-configs/cracklib
 	dh_link -a
