@@ -32,13 +32,25 @@ Section: admin
 Priority: required
 Architecture: any
 Multi-Arch: same
-Pre-Depends: ${shlibs:Depends}, ${misc:Depends}
+Pre-Depends: ${shlibs:Depends}, ${misc:Depends},
+	libpam-modules-bin (= ${binary:Version})
 Conflicts: libpam-motd, libpam-mkhomedir, libpam-umask
 Replaces: libpam0g-util, libpam-umask
 Provides: libpam-motd, libpam-mkhomedir, libpam-umask
 Description: Pluggable Authentication Modules for PAM
  This package completes the set of modules for PAM. It includes the
   pam_unix_*.so module as well as some specialty modules.
+
+Package: libpam-modules-bin
+Section: admin
+Priority: required
+Architecture: any
+Multi-Arch: foreign
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Replaces: libpam-modules (<< 1.1.0-3)
+Description: Pluggable Authentication Modules for PAM - helper binaries
+ This package contains helper binaries used by the standard set of PAM
+ modules in the libpam-modules package.
 
 Package: libpam-runtime
 Section: admin

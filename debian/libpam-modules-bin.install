@@ -1,0 +1,4 @@
+sbin/unix_chkpwd	sbin
+sbin/unix_update	sbin
+sbin/pam_tally		sbin
+sbin/mkhomedir_helper	sbin
