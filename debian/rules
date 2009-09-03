@@ -57,8 +57,8 @@ override_dh_link:
 override_dh_fixperms:
 	dh_fixperms
 ifeq (,$(findstring -i, $(DH_INTERNAL_OPTIONS)))
-	chgrp shadow $(d)/libpam-modules/sbin/unix_chkpwd
-	chmod 02755 $(d)/libpam-modules/sbin/unix_chkpwd
+	chgrp shadow $(d)/libpam-modules-bin/sbin/unix_chkpwd
+	chmod 02755 $(d)/libpam-modules-bin/sbin/unix_chkpwd
 endif
 
 # ideally, dh_makeshlibs could compute this from the symbols file; or we
