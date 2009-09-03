@@ -4,7 +4,7 @@ Priority: optional
 Uploaders: Sam Hartman <hartmans@debian.org>, Roger Leigh <rleigh@debian.org>
 Maintainer: Steve Langasek <vorlon@debian.org>
 Standards-Version: 3.8.0
-Build-Depends: libcrack2-dev (>= 2.8), bzip2, debhelper (>= 7), quilt, flex, libdb-dev, libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64 !netbsd-i386], po-debconf
+Build-Depends: libcrack2-dev (>= 2.8), bzip2, debhelper (>= 7.0.50), quilt (>= 0.48-1), flex, libdb-dev, libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64 !netbsd-i386], po-debconf
 Build-Depends-Indep: xsltproc, libxml2-utils, docbook-xml, docbook-xsl, w3m
 Build-Conflicts-Indep: fop
 Build-Conflicts: libdb4.2-dev, libxcrypt-dev
@@ -86,7 +86,7 @@ Section: admin
 Priority: optional
 Architecture: any
 Multi-Arch: same
-Replaces: libpam0g-cracklib
+Replaces: libpam0g-cracklib, libpam-modules (<< 1.1.0-3)
 Depends: ${misc:Depends}, ${shlibs:Depends}, libpam-runtime (>= 1.0.1-6), cracklib-runtime, wamerican | wordlist
 Description: PAM module to enable cracklib support
  This package includes libpam_cracklib, a PAM module that tests
