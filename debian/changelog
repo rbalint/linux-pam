@@ -22,6 +22,8 @@ pam (1.1.0-3) UNRELEASED; urgency=low
   * Explicitly add -O0 to CFLAGS when noopt is set.
   * debian/patches/autoconf.patch: pull ltmain.sh in, to fix some spurious
     library linkage in the modules.
+  * Move pam_cracklib manpage to the libpam-cracklib package, and add the
+    requisite Replaces
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 01 Sep 2009 22:23:47 -0700
 

@@ -70,7 +70,7 @@ Package: libpam-cracklib
 Section: admin
 Priority: optional
 Architecture: any
-Replaces: libpam0g-cracklib
+Replaces: libpam0g-cracklib, libpam-modules (<< 1.1.0-3)
 Depends: ${misc:Depends}, ${shlibs:Depends}, libpam-runtime (>= 1.0.1-6), cracklib-runtime, wamerican | wordlist
 Description: PAM module to enable cracklib support
  This package includes libpam_cracklib, a PAM module that tests
