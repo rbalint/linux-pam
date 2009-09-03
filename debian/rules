@@ -53,9 +53,3 @@ ifeq (,$(findstring libpam-modules, $(shell dh_listpackages)))
 	chgrp shadow $(d)/libpam-modules/sbin/unix_chkpwd
 	chmod 02755 $(d)/libpam-modules/sbin/unix_chkpwd
 endif
-
-# ideally, dh_makeshlibs could compute this from the symbols file; or we
-# could drop it since anyone building against this package should have a
-# dpkg-shlibdeps available that knows about symbols files?
-override_dh_makeshlibs:
-	dh_makeshlibs -V "libpam0g (>= 1.1.0)"
