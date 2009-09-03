@@ -17,6 +17,8 @@ pam (1.1.0-3) UNRELEASED; urgency=low
     some of it is obsolete by the change in package VCS.
   * Convert debian/rules to debhelper 7 and add versioned build-dependencies
     on debhelper and quilt to suit.
+  * Drop CFLAGS that we don't need anymore (-fPIC, -D_REENTRANT,
+    -D_GNU_SOURCE).
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 01 Sep 2009 22:23:47 -0700
 
