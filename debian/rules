@@ -48,7 +48,8 @@ configure-stamp:
 	cd $(BUILD_TREE) && \
 	./configure $(conf_args) \
 	--sysconfdir=/etc --prefix=/usr --enable-static --enable-shared \
-	--libdir=/lib/$(DEB_HOST_GNU_TYPE) --sbindir=/sbin --disable-audit
+	--libdir=/lib/$(DEB_HOST_GNU_TYPE) --enable-isadir=/lib/security \
+	--sbindir=/sbin --disable-audit
 	touch configure-stamp
 
 
