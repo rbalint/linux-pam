@@ -21,3 +21,4 @@ autoconf.patch
 update-motd
 fix-man-crud
 namespace_with_awk_not_gawk
+lib_security_multiarch_compat
