@@ -34,7 +34,9 @@ override_dh_compress:
 # .install files don't have "except for" handling, so we need to exclude
 # our module that doesn't match right here
 override_dh_install:
+ifneq (,$(findstring libpam-modules, $(shell dh_listpackages)))
 	dh_install -plibpam-modules -Xpam_cracklib
+endif
 	dh_install -Nlibpam-modules
 
 # again, excluding files by hand; also, build our local manpage for pam_getenv
@@ -49,7 +51,7 @@ override_dh_installman:
 # dh_fixperms doesn't want
 override_dh_fixperms:
 	dh_fixperms
-ifeq (,$(findstring libpam-modules, $(shell dh_listpackages)))
+ifneq (,$(findstring libpam-modules, $(shell dh_listpackages)))
 	chgrp shadow $(d)/libpam-modules/sbin/unix_chkpwd
 	chmod 02755 $(d)/libpam-modules/sbin/unix_chkpwd
 endif
