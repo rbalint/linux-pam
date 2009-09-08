@@ -1,4 +1,4 @@
-pam (1.1.0-3) UNRELEASED; urgency=low
+pam (1.1.0-3) unstable; urgency=low
 
   * Bump debian/compat to 7, so we can use sane contents in debian/*.install
   * Switch all packages over to dh_install
@@ -28,7 +28,7 @@ pam (1.1.0-3) UNRELEASED; urgency=low
     file instead, making the shlibs redundant so we don't need to care what
     version gets listed there.
 
- -- Steve Langasek <vorlon@debian.org>  Tue, 01 Sep 2009 22:23:47 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 07 Sep 2009 18:47:45 -0700
 
 pam (1.1.0-2) unstable; urgency=low
 
