@@ -1,3 +1,12 @@
+pam (1.1.0-4) UNRELEASED; urgency=low
+
+  * debian/patches/pam_securetty_tty_check_before_user_check: new patch,
+    to make pam_securetty always return success on a secure tty regardless
+    of what username was passed.  Thanks to Nicolas François
+    <nicolas.francois@centraliens.net> for the patch.  Closes: #537848
+
+ -- Steve Langasek <vorlon@debian.org>  Thu, 10 Sep 2009 03:20:33 -0700
+
 pam (1.1.0-3) unstable; urgency=low
 
   * Bump debian/compat to 7, so we can use sane contents in debian/*.install
