@@ -4,6 +4,10 @@ pam (1.1.0-4) UNRELEASED; urgency=low
     to make pam_securetty always return success on a secure tty regardless
     of what username was passed.  Thanks to Nicolas François
     <nicolas.francois@centraliens.net> for the patch.  Closes: #537848
+  * debian/local/pam-auth-update: only reset the seen flag on the template
+    when there's new information; this avoids reprompting users for the same
+    information on upgrade, regardless of the debconf priority used.
+    Closes: #544805.
 
  -- Steve Langasek <vorlon@debian.org>  Thu, 10 Sep 2009 03:20:33 -0700
 
