@@ -3,6 +3,9 @@ pam (1.1.0-5) UNRELEASED; urgency=low
   * Updated debconf translations:
     - French, thanks to Jean-Baka Domelevo Entfellner <domelevo@gmail.com>
       (closes: #547039)
+  * debian/patches/sys-types-include.patch: fix pam_modutil.h so that it can
+    be included directly, without having to include sys/types.h first.
+    Closes: #556203.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 16 Sep 2009 15:25:40 -0700
 
