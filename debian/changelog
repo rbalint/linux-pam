@@ -7,6 +7,8 @@ pam (1.1.0-5) UNRELEASED; urgency=low
   * debian/patches/sys-types-include.patch: fix pam_modutil.h so that it can
     be included directly, without having to include sys/types.h first.
     Closes: #556203.
+  * Add postgresql-8.3 to the list of services in need of restart on upgrade.
+    Closes: #563674.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 16 Sep 2009 15:25:40 -0700
 
