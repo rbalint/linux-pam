@@ -9,6 +9,8 @@ pam (1.1.0-5) UNRELEASED; urgency=low
     Closes: #556203.
   * Add postgresql-8.3 to the list of services in need of restart on upgrade.
     Closes: #563674.
+  * And drop postgresql-{7.4,8.1} from the list, neither of which is present
+    in stable.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 16 Sep 2009 15:25:40 -0700
 
