@@ -11,6 +11,9 @@ pam (1.1.0-5) UNRELEASED; urgency=low
     Closes: #563674.
   * And drop postgresql-{7.4,8.1} from the list, neither of which is present
     in stable.
+  * debian/patches/007_modules_pam_unix: recognize that *all* of the password
+    hashes other than traditional crypt handle passwords >8 chars in length.
+    LP: #356766.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 16 Sep 2009 15:25:40 -0700
 

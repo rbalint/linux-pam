@@ -1,7 +1,7 @@
-Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
+Index: pam.debian/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix_passwd.c
-+++ pam.deb/modules/pam_unix/pam_unix_passwd.c
+--- pam.debian.orig/modules/pam_unix/pam_unix_passwd.c
++++ pam.debian/modules/pam_unix/pam_unix_passwd.c
 @@ -88,6 +88,9 @@
  		      unsigned long versnum, unsigned int proto);
  #endif				/* GNU libc 2.1 */
@@ -81,10 +81,10 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  		if (retval != PAM_SUCCESS) {
  			pam_syslog(pamh, LOG_NOTICE,
  			         "new password not acceptable 2");
-Index: pam.deb/modules/pam_unix/pam_unix_acct.c
+Index: pam.debian/modules/pam_unix/pam_unix_acct.c
 ===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix_acct.c
-+++ pam.deb/modules/pam_unix/pam_unix_acct.c
+--- pam.debian.orig/modules/pam_unix/pam_unix_acct.c
++++ pam.debian/modules/pam_unix/pam_unix_acct.c
 @@ -191,7 +191,7 @@
  
  	D(("called."));
@@ -94,10 +94,10 @@ Index: pam.deb/modules/pam_unix/pam_unix_acct.c
  
  	retval = pam_get_item(pamh, PAM_USER, &void_uname);
  	uname = void_uname;
-Index: pam.deb/modules/pam_unix/support.c
+Index: pam.debian/modules/pam_unix/support.c
 ===================================================================
---- pam.deb.orig/modules/pam_unix/support.c
-+++ pam.deb/modules/pam_unix/support.c
+--- pam.debian.orig/modules/pam_unix/support.c
++++ pam.debian/modules/pam_unix/support.c
 @@ -53,7 +53,7 @@
   */
  
@@ -151,23 +151,22 @@ Index: pam.deb/modules/pam_unix/support.c
  			if (rounds != NULL && j == UNIX_ALGO_ROUNDS)
  				*rounds = strtol(*argv + 7, NULL, 10);
  		}
-@@ -116,6 +119,11 @@
+@@ -116,6 +119,10 @@
  		++argv;		/* step to next argument */
  	}
  
-+	if (off(UNIX_BIGCRYPT|UNIX_MD5_PASS|UNIX_SHA256_PASS|UNIX_SHA512_PASS,
-+	        ctrl)
++	if (off(UNIX_HASH_MASK,ctrl)
 +	    && pass_min_len && *pass_min_len > 8)
 +		*pass_min_len = 8;
 +
  	if (flags & PAM_DISALLOW_NULL_AUTHTOK) {
  		D(("DISALLOW_NULL_AUTHTOK"));
  		set(UNIX__NONULL, ctrl);
-Index: pam.deb/modules/pam_unix/support.h
+Index: pam.debian/modules/pam_unix/support.h
 ===================================================================
---- pam.deb.orig/modules/pam_unix/support.h
-+++ pam.deb/modules/pam_unix/support.h
-@@ -89,41 +89,47 @@
+--- pam.debian.orig/modules/pam_unix/support.h
++++ pam.debian/modules/pam_unix/support.h
+@@ -89,41 +89,49 @@
  #define UNIX_ALGO_ROUNDS         25	/* optional number of rounds for new 
  					   password hash algorithms */
  #define UNIX_BLOWFISH_PASS       26	/* new password hashes will use blowfish */
@@ -177,6 +176,8 @@ Index: pam.deb/modules/pam_unix/support.h
  /* -------------- */
 -#define UNIX_CTRLS_              27	/* number of ctrl arguments defined */
 +#define UNIX_CTRLS_              30	/* number of ctrl arguments defined */
++
++#define UNIX_HASH_MASK	(UNIX_MD5_PASS|UNIX_BIGCRYPT|UNIX_SHA256_PASS|UNIX_SHA512_PASS|UNIX_BLOWFISH_PASS)
  
  static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
  {
@@ -243,7 +244,7 @@ Index: pam.deb/modules/pam_unix/support.h
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -141,7 +147,7 @@
+@@ -141,7 +149,7 @@
  extern int _make_remark(pam_handle_t * pamh, unsigned int ctrl
  		       ,int type, const char *text);
  extern int _set_ctrl(pam_handle_t * pamh, int flags, int *remember, int *rounds,
@@ -252,10 +253,10 @@ Index: pam.deb/modules/pam_unix/support.h
  extern int _unix_getpwnam (pam_handle_t *pamh,
  			   const char *name, int files, int nis,
  			   struct passwd **ret);
-Index: pam.deb/modules/pam_unix/pam_unix.8.xml
+Index: pam.debian/modules/pam_unix/pam_unix.8.xml
 ===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix.8.xml
-+++ pam.deb/modules/pam_unix/pam_unix.8.xml
+--- pam.debian.orig/modules/pam_unix/pam_unix.8.xml
++++ pam.debian/modules/pam_unix/pam_unix.8.xml
 @@ -326,6 +326,90 @@
            </para>
          </listitem>
@@ -347,10 +348,10 @@ Index: pam.deb/modules/pam_unix/pam_unix.8.xml
      </variablelist>
      <para>
        Invalid arguments are logged with  <citerefentry>
-Index: pam.deb/modules/pam_unix/obscure.c
+Index: pam.debian/modules/pam_unix/obscure.c
 ===================================================================
 --- /dev/null
-+++ pam.deb/modules/pam_unix/obscure.c
++++ pam.debian/modules/pam_unix/obscure.c
 @@ -0,0 +1,198 @@
 +/*
 + * Copyright 1989 - 1994, Julianne Frances Haugh
@@ -534,7 +535,7 @@ Index: pam.deb/modules/pam_unix/obscure.c
 +	   Example: "password$%^&*123".  So check it again, this time
 +	   truncated to the maximum length.  Idea from npasswd.  --marekm */
 +
-+	if (on(UNIX_MD5_PASS,ctrl) || on(UNIX_BIGCRYPT,ctrl))
++	if (on(UNIX_HASH_MASK,ctrl))
 +		return NULL;  /* unlimited password length */
 +
 +	if (oldlen <= 8 && newlen <= 8)
@@ -550,10 +551,10 @@ Index: pam.deb/modules/pam_unix/obscure.c
 +
 +	return msg;
 +}
-Index: pam.deb/modules/pam_unix/Makefile.am
+Index: pam.debian/modules/pam_unix/Makefile.am
 ===================================================================
---- pam.deb.orig/modules/pam_unix/Makefile.am
-+++ pam.deb/modules/pam_unix/Makefile.am
+--- pam.debian.orig/modules/pam_unix/Makefile.am
++++ pam.debian/modules/pam_unix/Makefile.am
 @@ -40,7 +40,7 @@
  
  pam_unix_la_SOURCES = bigcrypt.c pam_unix_acct.c \
@@ -563,10 +564,10 @@ Index: pam.deb/modules/pam_unix/Makefile.am
  
  bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
  bigcrypt_CFLAGS = $(AM_CFLAGS)
-Index: pam.deb/modules/pam_unix/pam_unix_auth.c
+Index: pam.debian/modules/pam_unix/pam_unix_auth.c
 ===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix_auth.c
-+++ pam.deb/modules/pam_unix/pam_unix_auth.c
+--- pam.debian.orig/modules/pam_unix/pam_unix_auth.c
++++ pam.debian/modules/pam_unix/pam_unix_auth.c
 @@ -111,7 +111,7 @@
  
  	D(("called."));
@@ -576,10 +577,10 @@ Index: pam.deb/modules/pam_unix/pam_unix_auth.c
  
  	/* Get a few bytes so we can pass our return value to
  	   pam_sm_setcred(). */
-Index: pam.deb/modules/pam_unix/pam_unix_sess.c
+Index: pam.debian/modules/pam_unix/pam_unix_sess.c
 ===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix_sess.c
-+++ pam.deb/modules/pam_unix/pam_unix_sess.c
+--- pam.debian.orig/modules/pam_unix/pam_unix_sess.c
++++ pam.debian/modules/pam_unix/pam_unix_sess.c
 @@ -73,7 +73,7 @@
  
  	D(("called."));
@@ -598,10 +599,10 @@ Index: pam.deb/modules/pam_unix/pam_unix_sess.c
  
  	retval = pam_get_item(pamh, PAM_USER, (void *) &user_name);
  	if (user_name == NULL || *user_name == '\0' || retval != PAM_SUCCESS) {
-Index: pam.deb/modules/pam_unix/pam_unix.8
+Index: pam.debian/modules/pam_unix/pam_unix.8
 ===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix.8
-+++ pam.deb/modules/pam_unix/pam_unix.8
+--- pam.debian.orig/modules/pam_unix/pam_unix.8
++++ pam.debian/modules/pam_unix/pam_unix.8
 @@ -1,161 +1,13 @@
 +'\" t
  .\"     Title: pam_unix
