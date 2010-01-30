@@ -1,5 +1,10 @@
-pam (1.1.0-5) UNRELEASED; urgency=low
+pam (1.1.1-1) UNRELEASED; urgency=low
 
+  * New upstream version.
+    - restore proper netgroup handling in pam_access.
+      Closes: #567385, LP: #513955.
+  * Drop patches pam.d-manpage-section, namespace_with_awk_not_gawk, and
+    pam_securetty_tty_check_before_user_check, which are included upstream.
   * Updated debconf translations:
     - French, thanks to Jean-Baka Domelevo Entfellner <domelevo@gmail.com>
       (closes: #547039)

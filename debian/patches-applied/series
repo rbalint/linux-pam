@@ -16,10 +16,7 @@ hurd_no_setfsuid
 054_pam_security_abstract_securetty_handling
 055_pam_unix_nullok_secure
 PAM-manpage-section 
-pam.d-manpage-section
 autoconf.patch 
 update-motd
 fix-man-crud
-namespace_with_awk_not_gawk
-pam_securetty_tty_check_before_user_check
 sys-types-include.patch
