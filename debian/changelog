@@ -1,4 +1,4 @@
-pam (1.1.1-1) UNRELEASED; urgency=low
+pam (1.1.1-1) unstable; urgency=low
 
   * New upstream version.
     - restore proper netgroup handling in pam_access.
@@ -23,7 +23,7 @@ pam (1.1.1-1) UNRELEASED; urgency=low
     hashes other than traditional crypt handle passwords >8 chars in length.
     LP: #356766.
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 16 Sep 2009 15:25:40 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 01 Feb 2010 02:04:33 -0800
 
 pam (1.1.0-4) unstable; urgency=low
 
