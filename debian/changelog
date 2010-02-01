@@ -5,6 +5,9 @@ pam (1.1.1-1) UNRELEASED; urgency=low
       Closes: #567385, LP: #513955.
   * Drop patches pam.d-manpage-section, namespace_with_awk_not_gawk, and
     pam_securetty_tty_check_before_user_check, which are included upstream.
+  * debian/patches/026_pam_unix_passwd_unknown_user: don't return
+    PAM_USER_UNKNOWN on password change of a user that has no shadow entry,
+    upstream now implements auto-creating the shadow entry in this case.
   * Updated debconf translations:
     - French, thanks to Jean-Baka Domelevo Entfellner <domelevo@gmail.com>
       (closes: #547039)
