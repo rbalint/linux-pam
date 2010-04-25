@@ -1,3 +1,11 @@
+pam (1.1.1-3) UNRELEASED; urgency=low
+
+  * pam-auth-update: fix a bug in our handling of module options when the
+    module name contains digits, caused by a buggy regexp. :/  Partially
+    addresses LP #369575.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 25 Apr 2010 06:26:31 +0200
+
 pam (1.1.1-2) unstable; urgency=low
 
   * Document the new symbols added in 1.1.1 in debian/libpam0g.symbols, and

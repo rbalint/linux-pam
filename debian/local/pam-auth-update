@@ -255,7 +255,7 @@ sub merge_one_line
 	$modline =~ s/end/$count/g;
 	if ($diff) {
 		my $mod = $modline;
-		$mod =~ s/[0-9]+//g;
+		$mod =~ s/(\[[^0-9]*)[0-9]+(.*\])/$1$2/g;
 		$adds = \%{$diff->{'add'}{$mod}};
 		$removes = \%{$diff->{'remove'}{$mod}};
 	} else {
