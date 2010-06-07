@@ -3,6 +3,7 @@ Description: don't install manpage for pam_tty_audit if the module isn't built
  shouldn't install the manpage either.
 Author: Steve Langasek <steve.langasek@canonical.com>
 Bug-Ubuntu: https://bugs.launchpad.net/bugs/588547
+Forwarded: <20100607181348.GA28895@dario.dodds.net>
 
 Index: pam.deb/modules/pam_tty_audit/Makefile.am
 ===================================================================
