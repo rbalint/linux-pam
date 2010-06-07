@@ -17072,3 +17072,43 @@ Index: pam.deb/modules/pam_unix/Makefile.in
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_unix_acct.Plo@am__quote@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_unix_auth.Plo@am__quote@
  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_unix_passwd.Plo@am__quote@
+Index: pam.deb/modules/pam_tty_audit/Makefile.in
+===================================================================
+--- pam.deb.orig/modules/pam_tty_audit/Makefile.in
++++ pam.deb/modules/pam_tty_audit/Makefile.in
+@@ -45,7 +45,6 @@
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+ am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
+ 	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/intlmacosx.m4 \
+-	$(top_srcdir)/m4/japhar_grep_cflags.m4 \
+ 	$(top_srcdir)/m4/jh_path_xml_catalog.m4 \
+ 	$(top_srcdir)/m4/ld-O1.m4 $(top_srcdir)/m4/ld-as-needed.m4 \
+ 	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
+@@ -54,7 +53,7 @@
+ 	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+ 	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/nls.m4 \
+ 	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/progtest.m4 \
+-	$(top_srcdir)/configure.in
++	$(top_srcdir)/acinclude.m4 $(top_srcdir)/configure.in
+ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
+ 	$(ACLOCAL_M4)
+ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+@@ -193,6 +192,7 @@
+ PACKAGE_NAME = @PACKAGE_NAME@
+ PACKAGE_STRING = @PACKAGE_STRING@
+ PACKAGE_TARNAME = @PACKAGE_TARNAME@
++PACKAGE_URL = @PACKAGE_URL@
+ PACKAGE_VERSION = @PACKAGE_VERSION@
+ PATH_SEPARATOR = @PATH_SEPARATOR@
+ PIE_CFLAGS = @PIE_CFLAGS@
+@@ -273,8 +273,8 @@
+ top_srcdir = @top_srcdir@
+ CLEANFILES = *~
+ MAINTAINERCLEANFILES = $(MANS) README
+-EXTRA_DIST = README $(MANS) $(XMLS)
+-man_MANS = pam_tty_audit.8
++EXTRA_DIST = README pam_tty_audit.8 $(XMLS)
++@HAVE_AUDIT_TTY_STATUS_TRUE@man_MANS = pam_tty_audit.8
+ XMLS = README.xml pam_tty_audit.8.xml
+ securelibdir = $(SECUREDIR)
+ AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include
