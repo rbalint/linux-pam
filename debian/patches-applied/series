@@ -17,6 +17,7 @@ hurd_no_setfsuid
 055_pam_unix_nullok_secure
 PAM-manpage-section 
 conditional_module,_conditional_man
+mkhomedir_linking.patch
 autoconf.patch 
 update-motd
 fix-man-crud
