@@ -16,9 +16,10 @@ hurd_no_setfsuid
 054_pam_security_abstract_securetty_handling
 055_pam_unix_nullok_secure
 PAM-manpage-section 
-pam.d-manpage-section
+conditional_module,_conditional_man
+mkhomedir_linking.patch
 autoconf.patch 
 update-motd
 fix-man-crud
-namespace_with_awk_not_gawk
+sys-types-include.patch
 lib_security_multiarch_compat

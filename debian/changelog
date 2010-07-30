@@ -1,4 +1,80 @@
-pam (1.1.0-3) UNRELEASED; urgency=low
+pam (1.1.1-4) UNRELEASED; urgency=low
+
+  * debian/patches/conditional_module,_conditional_man: if we don't have the
+    libraries required for building pam_tty_audit, we shouldn't install the
+    manpage either. LP: #588547.
+  * Updated debconf translations:
+    - Portuguese, thanks to Eder L. Marques <eder@edermarques.net>
+      (closes: #581746)
+  * Don't pass --version-script options when linking executables,
+    only when linking libraries.  Thanks to Julien Cristau
+    <jcristau@debian.org> for the fix.  Closes: #582362.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 07 Jun 2010 10:53:48 -0700
+
+pam (1.1.1-3) unstable; urgency=low
+
+  * pam-auth-update: fix a bug in our handling of module options when the
+    module name contains digits, caused by a buggy regexp. :/  Partially
+    addresses LP #369575.
+  * Install /sbin/pam_tally2 in the libpam-modules package; thanks to
+    Olivier BONHOMME <obonhomme@nerim.net> for reporting.  Closes: #554010.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 25 Apr 2010 05:53:44 -0700
+
+pam (1.1.1-2) unstable; urgency=low
+
+  * Document the new symbols added in 1.1.1 in debian/libpam0g.symbols, and
+    raise the minimum version for the service restarting code.
+    Closes: #568480.
+
+ -- Steve Langasek <vorlon@debian.org>  Wed, 17 Feb 2010 23:21:23 -0800
+
+pam (1.1.1-1) unstable; urgency=low
+
+  * New upstream version.
+    - restore proper netgroup handling in pam_access.
+      Closes: #567385, LP: #513955.
+  * Drop patches pam.d-manpage-section, namespace_with_awk_not_gawk, and
+    pam_securetty_tty_check_before_user_check, which are included upstream.
+  * debian/patches/026_pam_unix_passwd_unknown_user: don't return
+    PAM_USER_UNKNOWN on password change of a user that has no shadow entry,
+    upstream now implements auto-creating the shadow entry in this case.
+  * Updated debconf translations:
+    - French, thanks to Jean-Baka Domelevo Entfellner <domelevo@gmail.com>
+      (closes: #547039)
+    - Bulgarian, thanks to Damyan Ivanov <dmn@debian.org> (closes: #562835)
+  * debian/patches/sys-types-include.patch: fix pam_modutil.h so that it can
+    be included directly, without having to include sys/types.h first.
+    Closes: #556203.
+  * Add postgresql-8.3 to the list of services in need of restart on upgrade.
+    Closes: #563674.
+  * And drop postgresql-{7.4,8.1} from the list, neither of which is present
+    in stable.
+  * debian/patches/007_modules_pam_unix: recognize that *all* of the password
+    hashes other than traditional crypt handle passwords >8 chars in length.
+    LP: #356766.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 01 Feb 2010 02:04:33 -0800
+
+pam (1.1.0-4) unstable; urgency=low
+
+  * debian/patches/pam_securetty_tty_check_before_user_check: new patch,
+    to make pam_securetty always return success on a secure tty regardless
+    of what username was passed.  Thanks to Nicolas François
+    <nicolas.francois@centraliens.net> for the patch.  Closes: #537848
+  * debian/local/pam-auth-update: only reset the seen flag on the template
+    when there's new information; this avoids reprompting users for the same
+    information on upgrade, regardless of the debconf priority used.
+    Closes: #544805.
+  * libpam0g no longer depends on libpam-runtime; packages that use
+    /etc/pam.d/common-* must depend directly on libpam-runtime, and most do
+    (including the Essential: yes ones), so let's break this circular
+    dependency.  Closes: #545086, LP: #424566.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 14 Sep 2009 18:47:25 -0700
+
+pam (1.1.0-3) unstable; urgency=low
 
   * Bump debian/compat to 7, so we can use sane contents in debian/*.install
   * Switch all packages over to dh_install
@@ -24,8 +100,11 @@ pam (1.1.0-3) UNRELEASED; urgency=low
     library linkage in the modules.
   * Move pam_cracklib manpage to the libpam-cracklib package, and add the
     requisite Replaces
+  * Drop dh_makeshlibs -V; everything from lenny on should use the .symbols
+    file instead, making the shlibs redundant so we don't need to care what
+    version gets listed there.
 
- -- Steve Langasek <vorlon@debian.org>  Tue, 01 Sep 2009 22:23:47 -0700
+ -- Steve Langasek <vorlon@debian.org>  Mon, 07 Sep 2009 18:47:45 -0700
 
 pam (1.1.0-2) unstable; urgency=low
 

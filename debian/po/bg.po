@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bg\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2009-03-04 22:54+0200\n"
+"PO-Revision-Date: 2009-12-28 14:57+0200\n"
 "Last-Translator: Damyan Ivanov <dmn@debian.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -152,10 +152,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Избрани са несъвместими PAM профили."
+msgstr "Не са избрани PAM профили."
 
 #. Type: error
 #. Description
@@ -165,12 +163,15 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Няма избрани PAM профили. Това ще разреши достъпа на всички потребители без "
+"удостоверяване на самоличността и не е позволено. Изберете поне един профил "
+"от списъка."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
-msgstr ""
+msgstr "Системата е била достъпна без парола!"
 
 #. Type: error
 #. Description
@@ -185,6 +186,13 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
+"Грешка в предишна версия на пакета libpam-runtime е изключила PAM профилите "
+"на системата. В резултат на това, системата е била достъпна и без "
+"предоставяне на валидна парола. Има вероятноств системата да е било "
+"проникнато, особено ако е достъпна от Интернет. Ако нямате опит във "
+"възстановяване след пробив в сигурността или проникване на вируси е най-"
+"добре да инсталирате цялата операционна система на чисто или да потърсите "
+"услугите на опитен системен администратор. За повече информация вижте:"
 
 #. Type: error
 #. Description
@@ -195,6 +203,8 @@ msgid ""
 "apologize that previous versions of libpam-runtime did not detect and "
 "prevent this situation."
 msgstr ""
+"Грешката, която позволява неправилната настройка е поправена в текущата "
+"версия на libpam-runtime. Приемете извиненията ни."
 
 #. Type: error
 #. Description

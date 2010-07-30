@@ -7,7 +7,7 @@
  * This file was written from a "hint" provided by the people at SUN.
  * and the X/Open XSSO draft of March 1997.
  *
- * $Id: pam_env.c,v 1.6 2005/09/04 20:32:25 kukuk Exp $
+ * $Id: pam_env.c,v 1.7 2009/12/08 14:41:41 kukuk Exp $
  */
 
 #include "pam_private.h"
@@ -21,7 +21,7 @@
 
 /* helper functions */
 
-#ifdef DEBUG
+#ifdef PAM_DEBUG
 static void _pam_dump_env(pam_handle_t *pamh)
 {
     int i;

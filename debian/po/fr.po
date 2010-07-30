@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2009-03-26 11:21+0100\n"
-"Last-Translator: Jean-Baka Domelevo Entfellner <domelevo@gmail.com>\n"
+"PO-Revision-Date: 2009-09-16 22:59+0100\n"
+"Last-Translator: Jean-Baka Domelevo-Entfellner <domelevo@gmail.com>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -164,9 +164,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
 msgid "No PAM profiles have been selected."
-msgstr "Profils PAM incompatibles"
+msgstr "Aucun profil PAM n'a été choisi."
 
 #. Type: error
 #. Description
@@ -176,12 +175,16 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Aucun profil PAM n'a été mis en place pour ce système. N'en utiliser aucun "
+"donnerait à tous les utilisateurs un accès sans authentification, ce qui "
+"n'est pas autorisé. Merci de bien vouloir choisir au moins un profil PAM "
+"dans la liste proposée."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
-msgstr ""
+msgstr "Votre système a autorisé un accès sans mot de passe !"
 
 #. Type: error
 #. Description
@@ -196,6 +199,16 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
+"À cause d'un bogue dans une version précédente de libpam-runtime, aucun "
+"profil PAM n'a été mis en place sur ce système. Ainsi, pendant un certain "
+"temps, l'accès à votre machine a été autorisé pour tous les utilisateurs, "
+"avec ou sans mot de passe valide. Tout spécialement si ce système est "
+"accessible depuis Internet, il est vraisemblable qu'il aura été l'objet "
+"d'une attaque. À moins que vous ne soyez à l'aise avec la récupération d'un "
+"système victime d'une faille de sécurité, de virus ou de logiciels "
+"malveillants, nous vous recommandons de réinstaller complètement le système "
+"ou de recourir aux services d'un administrateur système compétent. Pour plus "
+"d'informations, lire :"
 
 #. Type: error
 #. Description
@@ -206,6 +219,10 @@ msgid ""
 "apologize that previous versions of libpam-runtime did not detect and "
 "prevent this situation."
 msgstr ""
+"Le bogue autorisant cette configuration erronée a été corrigé dans la "
+"version actuelle de libpam-runtime, et votre configuration a maintenant été "
+"rétablie. Nous tenons à nous excuser pour le fait que les versions "
+"précédentes de libpam-runtime n'aient pas détecté et empêché cette situation."
 
 #. Type: error
 #. Description

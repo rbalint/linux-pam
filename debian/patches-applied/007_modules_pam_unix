@@ -2,7 +2,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/pam_unix_passwd.c
 +++ pam.deb/modules/pam_unix/pam_unix_passwd.c
-@@ -88,6 +88,9 @@
+@@ -87,6 +87,9 @@
  		      unsigned long versnum, unsigned int proto);
  #endif				/* GNU libc 2.1 */
  
@@ -12,7 +12,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  /*
     How it works:
     Gets in username (has to be done) from the calling program
-@@ -430,7 +433,8 @@
+@@ -457,7 +460,8 @@
  static int _pam_unix_approve_pass(pam_handle_t * pamh
  				  ,unsigned int ctrl
  				  ,const char *pass_old
@@ -22,7 +22,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  {
  	const void *user;
  	const char *remark = NULL;
-@@ -461,7 +465,7 @@
+@@ -488,7 +492,7 @@
  		}
  	}
  	if (off(UNIX__IAMROOT, ctrl)) {
@@ -31,7 +31,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  		  remark = _("You must choose a longer password");
  		D(("length check [%s]", remark));
  		if (on(UNIX_REMEMBER_PASSWD, ctrl)) {
-@@ -473,6 +477,11 @@
+@@ -500,6 +504,11 @@
  				return retval;
  			}
  		}
@@ -43,7 +43,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  	}
  	if (remark) {
  		_make_remark(pamh, ctrl, PAM_ERROR_MSG, remark);
-@@ -489,6 +498,7 @@
+@@ -516,6 +525,7 @@
  	int retval;
  	int remember = -1;
  	int rounds = -1;
@@ -51,7 +51,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  
  	/* <DO NOT free() THESE> */
  	const char *user;
-@@ -497,7 +507,8 @@
+@@ -524,7 +534,8 @@
  
  	D(("called."));
  
@@ -61,17 +61,17 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  
  	/*
  	 * First get the name of a user
-@@ -697,7 +708,8 @@
+@@ -724,7 +735,8 @@
  			if (*(const char *)pass_new == '\0') {	/* "\0" password = NULL */
  				pass_new = NULL;
  			}
 -			retval = _pam_unix_approve_pass(pamh, ctrl, pass_old, pass_new);
 +			retval = _pam_unix_approve_pass(pamh, ctrl, pass_old,
 +			                                pass_new, pass_min_len);
- 			
+ 
  			if (retval != PAM_SUCCESS && off(UNIX_NOT_SET_PASS, ctrl)) {
  				pam_set_item(pamh, PAM_AUTHTOK, NULL);
-@@ -730,7 +742,8 @@
+@@ -757,7 +769,8 @@
  			return retval;
  		}
  
@@ -98,7 +98,7 @@ Index: pam.deb/modules/pam_unix/support.c
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/support.c
 +++ pam.deb/modules/pam_unix/support.c
-@@ -53,7 +53,7 @@
+@@ -55,7 +55,7 @@
   */
  
  int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *rounds,
@@ -107,7 +107,7 @@ Index: pam.deb/modules/pam_unix/support.c
  {
  	unsigned int ctrl;
  
-@@ -79,6 +79,7 @@
+@@ -81,6 +81,7 @@
  		D(("SILENT"));
  		set(UNIX__QUIET, ctrl);
  	}
@@ -115,7 +115,7 @@ Index: pam.deb/modules/pam_unix/support.c
  	/* now parse the arguments to this module */
  
  	while (argc-- > 0) {
-@@ -88,7 +89,8 @@
+@@ -90,7 +91,8 @@
  
  		for (j = 0; j < UNIX_CTRLS_; ++j) {
  			if (unix_args[j].token
@@ -125,7 +125,7 @@ Index: pam.deb/modules/pam_unix/support.c
  				break;
  			}
  		}
-@@ -100,15 +102,16 @@
+@@ -102,15 +104,16 @@
  			ctrl &= unix_args[j].mask;	/* for turning things off */
  			ctrl |= unix_args[j].flag;	/* for turning things on  */
  
@@ -151,12 +151,11 @@ Index: pam.deb/modules/pam_unix/support.c
  			if (rounds != NULL && j == UNIX_ALGO_ROUNDS)
  				*rounds = strtol(*argv + 7, NULL, 10);
  		}
-@@ -116,6 +119,11 @@
+@@ -118,6 +121,10 @@
  		++argv;		/* step to next argument */
  	}
  
-+	if (off(UNIX_BIGCRYPT|UNIX_MD5_PASS|UNIX_SHA256_PASS|UNIX_SHA512_PASS,
-+	        ctrl)
++	if (off(UNIX_HASH_MASK,ctrl)
 +	    && pass_min_len && *pass_min_len > 8)
 +		*pass_min_len = 8;
 +
@@ -167,7 +166,7 @@ Index: pam.deb/modules/pam_unix/support.h
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/support.h
 +++ pam.deb/modules/pam_unix/support.h
-@@ -89,41 +89,47 @@
+@@ -89,41 +89,49 @@
  #define UNIX_ALGO_ROUNDS         25	/* optional number of rounds for new 
  					   password hash algorithms */
  #define UNIX_BLOWFISH_PASS       26	/* new password hashes will use blowfish */
@@ -177,6 +176,8 @@ Index: pam.deb/modules/pam_unix/support.h
  /* -------------- */
 -#define UNIX_CTRLS_              27	/* number of ctrl arguments defined */
 +#define UNIX_CTRLS_              30	/* number of ctrl arguments defined */
++
++#define UNIX_HASH_MASK	(UNIX_MD5_PASS|UNIX_BIGCRYPT|UNIX_SHA256_PASS|UNIX_SHA512_PASS|UNIX_BLOWFISH_PASS)
  
  static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
  {
@@ -243,7 +244,7 @@ Index: pam.deb/modules/pam_unix/support.h
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -141,7 +147,7 @@
+@@ -141,7 +149,7 @@
  extern int _make_remark(pam_handle_t * pamh, unsigned int ctrl
  		       ,int type, const char *text);
  extern int _set_ctrl(pam_handle_t * pamh, int flags, int *remember, int *rounds,
@@ -534,7 +535,7 @@ Index: pam.deb/modules/pam_unix/obscure.c
 +	   Example: "password$%^&*123".  So check it again, this time
 +	   truncated to the maximum length.  Idea from npasswd.  --marekm */
 +
-+	if (on(UNIX_MD5_PASS,ctrl) || on(UNIX_BIGCRYPT,ctrl))
++	if (on(UNIX_HASH_MASK,ctrl))
 +		return NULL;  /* unlimited password length */
 +
 +	if (oldlen <= 8 && newlen <= 8)
@@ -554,7 +555,7 @@ Index: pam.deb/modules/pam_unix/Makefile.am
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/Makefile.am
 +++ pam.deb/modules/pam_unix/Makefile.am
-@@ -40,7 +40,7 @@
+@@ -41,7 +41,7 @@
  
  pam_unix_la_SOURCES = bigcrypt.c pam_unix_acct.c \
  	pam_unix_auth.c pam_unix_passwd.c pam_unix_sess.c support.c \
@@ -567,7 +568,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_auth.c
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/pam_unix_auth.c
 +++ pam.deb/modules/pam_unix/pam_unix_auth.c
-@@ -111,7 +111,7 @@
+@@ -109,7 +109,7 @@
  
  	D(("called."));
  
@@ -602,173 +603,7 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/pam_unix.8
 +++ pam.deb/modules/pam_unix/pam_unix.8
-@@ -1,161 +1,13 @@
-+'\" t
- .\"     Title: pam_unix
- .\"    Author: [see the "AUTHOR" section]
--.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 06/16/2009
-+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/24/2009
- .\"    Manual: Linux-PAM Manual
- .\"    Source: Linux-PAM Manual
- .\"  Language: English
- .\"
--.TH "PAM_UNIX" "8" "06/16/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
--.\" -----------------------------------------------------------------
--.\" * (re)Define some macros
--.\" -----------------------------------------------------------------
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.\" toupper - uppercase a string (locale-aware)
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.de toupper
--.tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
--\\$*
--.tr aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
--..
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.\" SH-xref - format a cross-reference to an SH section
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.de SH-xref
--.ie n \{\
--.\}
--.toupper \\$*
--.el \{\
--\\$*
--.\}
--..
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.\" SH - level-one heading that works better for non-TTY output
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.de1 SH
--.\" put an extra blank line of space above the head in non-TTY output
--.if t \{\
--.sp 1
--.\}
--.sp \\n[PD]u
--.nr an-level 1
--.set-an-margin
--.nr an-prevailing-indent \\n[IN]
--.fi
--.in \\n[an-margin]u
--.ti 0
--.HTML-TAG ".NH \\n[an-level]"
--.it 1 an-trap
--.nr an-no-space-flag 1
--.nr an-break-flag 1
--\." make the size of the head bigger
--.ps +3
--.ft B
--.ne (2v + 1u)
--.ie n \{\
--.\" if n (TTY output), use uppercase
--.toupper \\$*
--.\}
--.el \{\
--.nr an-break-flag 0
--.\" if not n (not TTY), use normal case (not uppercase)
--\\$1
--.in \\n[an-margin]u
--.ti 0
--.\" if not n (not TTY), put a border/line under subheading
--.sp -.6
--\l'\n(.lu'
--.\}
--..
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.\" SS - level-two heading that works better for non-TTY output
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.de1 SS
--.sp \\n[PD]u
--.nr an-level 1
--.set-an-margin
--.nr an-prevailing-indent \\n[IN]
--.fi
--.in \\n[IN]u
--.ti \\n[SN]u
--.it 1 an-trap
--.nr an-no-space-flag 1
--.nr an-break-flag 1
--.ps \\n[PS-SS]u
--\." make the size of the head bigger
--.ps +2
--.ft B
--.ne (2v + 1u)
--.if \\n[.$] \&\\$*
--..
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.\" BB/BE - put background/screen (filled box) around block of text
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.de BB
--.if t \{\
--.sp -.5
--.br
--.in +2n
--.ll -2n
--.gcolor red
--.di BX
--.\}
--..
--.de EB
--.if t \{\
--.if "\\$2"adjust-for-leading-newline" \{\
--.sp -1
--.\}
--.br
--.di
--.in
--.ll
--.gcolor
--.nr BW \\n(.lu-\\n(.i
--.nr BH \\n(dn+.5v
--.ne \\n(BHu+.5v
--.ie "\\$2"adjust-for-leading-newline" \{\
--\M[\\$1]\h'1n'\v'+.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
--.\}
--.el \{\
--\M[\\$1]\h'1n'\v'-.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
--.\}
--.in 0
--.sp -.5v
--.nf
--.BX
--.in
--.sp .5v
--.fi
--.\}
--..
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.\" BM/EM - put colored marker in margin next to block of text
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--.de BM
--.if t \{\
--.br
--.ll -2n
--.gcolor red
--.di BX
--.\}
--..
--.de EM
--.if t \{\
--.br
--.di
--.ll
--.gcolor
--.nr BH \\n(dn
--.ne \\n(BHu
--\M[\\$1]\D'P -.75n 0 0 \\n(BHu -(\\n[.i]u - \\n(INu - .75n) 0 0 -\\n(BHu'\M[]
--.in 0
--.nf
--.BX
--.in
--.fi
--.\}
--..
-+.TH "PAM_UNIX" "8" "08/24/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
- .\" -----------------------------------------------------------------
- .\" * set default formatting
- .\" -----------------------------------------------------------------
-@@ -166,13 +18,11 @@
+@@ -166,13 +166,11 @@
  .\" -----------------------------------------------------------------
  .\" * MAIN CONTENT STARTS HERE *
  .\" -----------------------------------------------------------------
@@ -784,7 +619,7 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
  .SH "DESCRIPTION"
  .PP
  This is the standard Unix authentication module\&. It uses standard calls from the system\'s libraries to retrieve and set account information as well as authentication\&. Usually this is obtained from the /etc/passwd and the /etc/shadow file as well if shadow is enabled\&.
-@@ -264,7 +114,7 @@
+@@ -264,7 +262,7 @@
  The last
  \fIn\fR
  passwords for each user are saved in
@@ -793,7 +628,7 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
  in order to force password change history and keep the user from alternating between the same password too frequently\&.
  .RE
  .PP
-@@ -315,6 +165,44 @@
+@@ -315,6 +313,44 @@
  Ignore errors reading shadow information for users in the account management module\&.
  .RE
  .PP
@@ -838,7 +673,7 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
  Invalid arguments are logged with
  \fBsyslog\fR(3)\&.
  .SH "MODULE TYPES PROVIDED"
-@@ -333,21 +221,13 @@
+@@ -333,21 +369,13 @@
  .SH "EXAMPLES"
  .PP
  An example usage for
@@ -861,7 +696,7 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
  # Authenticate the user
  auth       required   pam_unix\&.so
  # Ensure users account and password are still active
-@@ -358,13 +238,7 @@
+@@ -358,13 +386,7 @@
  password   required   pam_unix\&.so use_authtok nullok md5
  session    required   pam_unix\&.so
        

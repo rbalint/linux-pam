@@ -85,7 +85,7 @@ installed_services() {
 if [ "$1" = "configure" ]
 then
     if [ ! -z "$2" ]; then
-	if dpkg --compare-versions "$2" lt 1.1.0; then
+	if dpkg --compare-versions "$2" lt 1.1.1-2; then
 	    db_version 2.0
 
 	    echo -n "Checking for services that may need to be restarted..."
@@ -97,8 +97,8 @@ then
 	    check="$check heartbeat-2 hylafax-server iiimf-server inn2"
 	    check="$check kannel linesrv linesrv-mysql lsh-server"
 	    check="$check muddleftpd netatalk nuauth partimage-server"
-	    check="$check perdition pgpool popa3d postgresql-7.4"
-	    check="$check postgresql-8.1 postgresql-8.2 proftpd pure-ftpd"
+	    check="$check perdition pgpool popa3d"
+	    check="$check postgresql-8.2 postgresql-8.3 proftpd pure-ftpd"
 	    check="$check pure-ftpd-ldap pure-ftpd-mysql"
 	    check="$check pure-ftpd-postgresql racoon samba sasl2-bin"
 	    check="$check sfs-server solid-pop3d squid squid3 tac-plus"
@@ -186,7 +186,7 @@ then
 	    # Shut down the frontend, to make sure none of the
 	    # restarted services keep a connection open to it
 	    db_stop
-	fi # end upgrading and $2 lt 1.1.0
+	fi # end upgrading and $2 lt 1.1.1-2
     fi # Upgrading
 fi
 
