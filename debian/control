@@ -47,7 +47,7 @@ Priority: required
 Architecture: any
 Multi-Arch: foreign
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Replaces: libpam-modules (<< 1.1.0-3)
+Replaces: libpam-modules (<< 1.1.1-4)
 Description: Pluggable Authentication Modules for PAM - helper binaries
  This package contains helper binaries used by the standard set of PAM
  modules in the libpam-modules package.
