@@ -36,14 +36,16 @@ msgstr ""
 "Project-Id-Version: pam 0.79-4\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2009-03-04 21:36+0100\n"
+"PO-Revision-Date: 2010-08-08 01:40+0200\n"
 "Last-Translator: Javier Fernandez-Sanguino <jfs@debian.org>\n"
 "Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-POFile-SpellExtra: kdm gnome xscreensaver xdm xlockmore wdm start init\n"
-"X-POFile-SpellExtra: screensaver PAM libpam corríjala\n"
+"X-POFile-SpellExtra: screensaver PAM libpam corríjala account vd runtime\n"
+"X-POFile-SpellExtra: Authentication auth Pluggable session insertables\n"
+"X-POFile-SpellExtra: password pam common\n"
 
 #. Type: string
 #. Description
@@ -128,7 +130,7 @@ msgid ""
 msgstr ""
 "Los «Pluggable Authentication Modules» (PAM, o Módulos de autenticación "
 "insertables, N. del T.) determinan cómo se gestiona dentro del sistema la "
-"autenticación, autorización y modificación de contraseñas. Tambien permiten "
+"autenticación, autorización y modificación de contraseñas. También permiten "
 "la definición de acciones adicionales a realizar cuando se inicia la sesión "
 "de un usuario."
 
@@ -193,10 +195,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Se han seleccionado perfiles PAM incompatibles."
+msgstr "No ha seleccionado ningún perfil PAM."
 
 #. Type: error
 #. Description
@@ -206,12 +206,15 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"No ha seleccionado ningún perfil de PAM para este sistema. Esto podría "
+"permitir que cualquier usuario accediera sin autenticación, lo que no está "
+"permitido. Debe seleccionar al menos un perfil de PAM de la lista."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
-msgstr ""
+msgstr "¡Su sistema permitía el acceso sin contraseña!"
 
 #. Type: error
 #. Description
@@ -226,6 +229,16 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
+"Una errata en la versión anterior de «libpam-runtime» dió lugar a que no se "
+"seleccionara ningún perfil de PAM para su sistema. Como consecuencia de "
+"esto, durante un tiempo el acceso a su sistema estaba permitido para las "
+"cuentas de su sistema, sin ser necesario que se introdujera la contraseña "
+"correcta. Específicamente, si este sistema estaba accesible desde Internet "
+"es posible que haya sido comprometido. A no ser que vd. esté familiarizado "
+"con los mecanismos para recuperarse de un fallo de seguridad, incluyendo "
+"código malicioso y virus, debería reinstalar el sistema partiendo de cero o "
+"solicitar los servicios de un administrador de sistemas experto. Para más "
+"información, consulte:"
 
 #. Type: error
 #. Description
@@ -236,6 +249,10 @@ msgid ""
 "apologize that previous versions of libpam-runtime did not detect and "
 "prevent this situation."
 msgstr ""
+"La errata que permitía esta configuración errónea ha sido arreglada en la "
+"versión más reciente de «libpam-runtime» y su configuración ha sido "
+"corregida. Le pedimos disculpas por el error que hizo que las versiones "
+"anteriores no detectaran y previnieran esta situación."
 
 #. Type: error
 #. Description
