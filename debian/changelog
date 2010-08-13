@@ -8,6 +8,8 @@ pam (1.1.1-4) UNRELEASED; urgency=low
       (closes: #581746)
     - Spanish, thanks to Javier Fernandez-Sanguino Peña <jfs@debian.org>
       (closes: #592172)
+    - Galician, thanks to Jorge Barreiro <yortx.barry@gmail.com>
+      (closes: #592808)
   * Don't pass --version-script options when linking executables,
     only when linking libraries.  Thanks to Julien Cristau
     <jcristau@debian.org> for the fix.  Closes: #582362.
