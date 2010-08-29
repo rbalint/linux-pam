@@ -1,3 +1,10 @@
+pam (1.1.1-5) UNRELEASED; urgency=low
+
+  * debian/rules: pass getconf LFS_CFLAGS so that we get a 64-bit rlimit
+    interface.  Closes: #579402.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
+
 pam (1.1.1-4) unstable; urgency=low
 
   * debian/patches/conditional_module,_conditional_man: if we don't have the
