@@ -39,7 +39,7 @@ Index: pam.deb/modules/pam_unix/support.c
  			}
  		}
  
-@@ -455,6 +462,7 @@
+@@ -452,6 +459,7 @@
      child = fork();
      if (child == 0) {
          int i=0;
@@ -47,7 +47,7 @@ Index: pam.deb/modules/pam_unix/support.c
          struct rlimit rlim;
  	static char *envp[] = { NULL };
  	char *args[] = { NULL, NULL, NULL, NULL };
-@@ -482,7 +490,18 @@
+@@ -479,7 +487,18 @@
  	/* exec binary helper */
  	args[0] = strdup(CHKPWD_HELPER);
  	args[1] = x_strdup(user);
@@ -67,7 +67,7 @@ Index: pam.deb/modules/pam_unix/support.c
  	  args[2]=strdup("nullok");
  	} else {
  	  args[2]=strdup("nonull");
-@@ -563,6 +582,17 @@
+@@ -560,6 +579,17 @@
  	if (on(UNIX__NONULL, ctrl))
  		return 0;	/* will fail but don't let on yet */
  
@@ -85,7 +85,7 @@ Index: pam.deb/modules/pam_unix/support.c
  	/* UNIX passwords area */
  
  	retval = get_pwd_hash(pamh, name, &pwd, &salt);
-@@ -649,7 +679,8 @@
+@@ -646,7 +676,8 @@
  			}
  		}
  	} else {
@@ -99,35 +99,35 @@ Index: pam.deb/modules/pam_unix/support.h
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/support.h
 +++ pam.deb/modules/pam_unix/support.h
-@@ -93,8 +93,9 @@
- #define UNIX_MIN_PASS_LEN        28	/* min length for password */
- #define UNIX_MIN_PASS_COMPAT     29	/* min length for password */
- #define UNIX_OBSCURE_CHECKS      30	/* enable obscure checks on passwords */
-+#define UNIX_NULLOK_SECURE       31	/* NULL passwords allowed only on secure ttys */
+@@ -91,8 +91,9 @@
+ #define UNIX_BLOWFISH_PASS       26	/* new password hashes will use blowfish */
+ #define UNIX_MIN_PASS_LEN        27	/* min length for password */
+ #define UNIX_OBSCURE_CHECKS      28	/* enable obscure checks on passwords */
++#define UNIX_NULLOK_SECURE       29	/* NULL passwords allowed only on secure ttys */
  /* -------------- */
--#define UNIX_CTRLS_              31	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              32	/* number of ctrl arguments defined */
+-#define UNIX_CTRLS_              29	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              30	/* number of ctrl arguments defined */
  
  #define UNIX_DES_CRYPT(ctrl)	(off(UNIX_MD5_PASS,ctrl)&&off(UNIX_BIGCRYPT,ctrl)&&off(UNIX_SHA256_PASS,ctrl)&&off(UNIX_SHA512_PASS,ctrl)&&off(UNIX_BLOWFISH_PASS,ctrl))
  
-@@ -112,7 +113,7 @@
+@@ -110,7 +111,7 @@
  /* UNIX_NOT_SET_PASS */    {"not_set_pass",    _ALL_ON_,                 0x40},
  /* UNIX__PRELIM */         {NULL,              _ALL_ON_^(0x180),         0x80},
  /* UNIX__UPDATE */         {NULL,              _ALL_ON_^(0x180),        0x100},
 -/* UNIX__NONULL */         {NULL,              _ALL_ON_,                0x200},
-+/* UNIX__NONULL */         {NULL,              _ALL_ON_^(0x8000000),    0x200},
++/* UNIX__NONULL */         {NULL,              _ALL_ON_^(0x10000000),   0x200},
  /* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
  /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
  /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
-@@ -134,6 +135,7 @@
+@@ -130,6 +131,7 @@
+ /* UNIX_BLOWFISH_PASS */   {"blowfish",        _ALL_ON_^(0x2C22000),0x2000000},
  /* UNIX_MIN_PASS_LEN */    {"minlen=",         _ALL_ON_,            0x4000000},
- /* UNIX_MIN_PASS_COMPAT */ {"min=",            _ALL_ON_,            0x8000000},
- /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,           0x10000000},
-+/* UNIX__NULLOK */         {"nullok_secure",   _ALL_ON_^(0x200),   0x20000000},
+ /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x8000000},
++/* UNIX_NULLOK_SECURE */   {"nullok_secure",   _ALL_ON_^(0x200),   0x10000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -169,6 +171,9 @@
+@@ -165,6 +167,9 @@
  			,const char *data_name
  			,const void **pass);
  

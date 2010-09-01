@@ -55,36 +55,22 @@ Index: pam.deb/modules/pam_unix/support.c
  				break;
  			}
  		}
-@@ -112,6 +114,9 @@
- 			} else if (pass_min_len && j == UNIX_MIN_PASS_LEN) {
- 				*pass_min_len = atoi(*argv + 7);
-  			}
-+			} else if (pass_min_len && j == UNIX_MIN_PASS_COMPAT) {
-+				*pass_min_len = atoi(*argv + 4);
-+ 			}
- 			if (rounds != NULL && j == UNIX_ALGO_ROUNDS)
- 				*rounds = strtol(*argv + 7, NULL, 10);
- 		}
 Index: pam.deb/modules/pam_unix/support.h
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/support.h
 +++ pam.deb/modules/pam_unix/support.h
-@@ -89,9 +89,12 @@
- #define UNIX_ALGO_ROUNDS         25	/* optional number of rounds for new
+@@ -90,8 +90,9 @@
  					   password hash algorithms */
  #define UNIX_BLOWFISH_PASS       26	/* new password hashes will use blowfish */
--#define UNIX_MIN_PASS_LEN        27	/* min length for password */
-+#define UNIX_MAX_PASS_LEN        27	/* internal, for compatibility only */
-+#define UNIX_MIN_PASS_LEN        28	/* min length for password */
-+#define UNIX_MIN_PASS_COMPAT     29	/* min length for password */
-+#define UNIX_OBSCURE_CHECKS      30	/* enable obscure checks on passwords */
+ #define UNIX_MIN_PASS_LEN        27	/* min length for password */
++#define UNIX_OBSCURE_CHECKS      28	/* enable obscure checks on passwords */
  /* -------------- */
 -#define UNIX_CTRLS_              28	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              31	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              29	/* number of ctrl arguments defined */
  
  #define UNIX_DES_CRYPT(ctrl)	(off(UNIX_MD5_PASS,ctrl)&&off(UNIX_BIGCRYPT,ctrl)&&off(UNIX_SHA256_PASS,ctrl)&&off(UNIX_SHA512_PASS,ctrl)&&off(UNIX_BLOWFISH_PASS,ctrl))
  
-@@ -100,34 +103,37 @@
+@@ -100,34 +101,35 @@
  /* symbol                  token name          ctrl mask             ctrl     *
   * ----------------------- ------------------- --------------------- -------- */
  
@@ -143,10 +129,8 @@ Index: pam.deb/modules/pam_unix/support.h
 +/* UNIX_SHA512_PASS */     {"sha512",          _ALL_ON_^(0x2C22000), 0x800000},
 +/* UNIX_ALGO_ROUNDS */     {"rounds=",         _ALL_ON_,            0x1000000},
 +/* UNIX_BLOWFISH_PASS */   {"blowfish",        _ALL_ON_^(0x2C22000),0x2000000},
-+/* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
 +/* UNIX_MIN_PASS_LEN */    {"minlen=",         _ALL_ON_,            0x4000000},
-+/* UNIX_MIN_PASS_COMPAT */ {"min=",            _ALL_ON_,            0x8000000},
-+/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,           0x10000000},
++/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x8000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
