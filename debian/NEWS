@@ -1,4 +1,4 @@
-pam (1.1.2-1) UNRELEASED; urgency=low
+pam (1.1.2-1) unstable; urgency=low
 
   * Name of option for minimum Unix password length has changed
 
