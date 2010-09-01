@@ -8,6 +8,8 @@ pam (1.1.1-5) UNRELEASED; urgency=low
     mkhomedir_linking.patch, which are included upstream.
   * debian/patches/hurd_no_setfsuid: pam_env and pam_mail now also use
     setfsuid, so patch them to be likewise Hurd-safe.
+  * Update debian/source.lintian-overrides to clean up some spurious
+    warnings.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
 
