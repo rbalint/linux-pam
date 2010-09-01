@@ -4,6 +4,8 @@ pam (1.1.1-5) UNRELEASED; urgency=low
     interface.  Closes: #579402.
   * debian/patches-applied/007_modules_pam_unix: fix up patch for new
     upstream version which now implements minlen=, not min=.
+  * Drop patches conditional_module,_conditional_man and
+    mkhomedir_linking.patch, which are included upstream.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
 
