@@ -267,8 +267,9 @@ Index: pam.deb/doc/man/pam.8
 ===================================================================
 --- pam.deb.orig/doc/man/pam.8
 +++ /dev/null
-@@ -1 +0,0 @@
+@@ -1,1 +1,1 @@
 -.so man8/PAM.8
++.so man7/PAM.7
 Index: pam.deb/doc/man/pam.8.xml
 ===================================================================
 --- pam.deb.orig/doc/man/pam.8.xml
