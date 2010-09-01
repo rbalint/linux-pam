@@ -18,9 +18,9 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.c
  #include <sys/wait.h>
  #include <errno.h>
  #include <fnmatch.h>
-@@ -218,6 +220,9 @@
+@@ -235,6 +237,9 @@
  	FILE *fp;
- 	int i;
+ 	int i, save_errno;
  	uid_t euid;
 +#ifndef HAVE_SYS_FSUID_H
 +	uid_t uid;
@@ -28,7 +28,7 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.c
  	/* Check this user's <sense> file. */
  	pwd = pam_modutil_getpwnam(pamh, this_user);
  	if (pwd == NULL) {
-@@ -234,9 +239,34 @@
+@@ -251,10 +256,35 @@
  		return PAM_SESSION_ERR;
  	}
  	euid = geteuid();
@@ -49,6 +49,7 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.c
 +	}
 +#endif
  	fp = fopen(path, "r");
+ 	save_errno = errno;
 +#ifdef HAVE_SYS_FSUID_H
  	setfsuid(euid);
 +#else
@@ -63,7 +64,7 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.c
  	if (fp != NULL) {
  		char buf[LINE_MAX], *tmp;
  		/* Scan the file for a list of specs of users to "trust". */
-@@ -306,6 +336,9 @@
+@@ -325,6 +355,9 @@
  	int fd, i, debug = 0;
  	int retval = PAM_SUCCESS;
  	uid_t systemuser = 499, targetuser = 0, euid;
@@ -73,7 +74,7 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.c
  
  	/* Parse arguments.  We don't understand many, so no sense in breaking
  	 * this into a separate function. */
-@@ -554,7 +587,22 @@
+@@ -573,7 +606,22 @@
  
  		/* Generate a new file to hold the data. */
  		euid = geteuid();
@@ -93,10 +94,10 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.c
 +			}
 +		}
 +#endif
- 		
+ 
  #ifdef WITH_SELINUX
  		if (is_selinux_enabled() > 0) {
-@@ -584,7 +632,17 @@
+@@ -603,7 +651,17 @@
  		save_errno = errno;
  #endif
  
@@ -114,3 +115,107 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.c
  		if (fd == -1) {
  			errno = save_errno;
  			pam_syslog(pamh, LOG_ERR,
+Index: pam.deb/modules/pam_env/pam_env.c
+===================================================================
+--- pam.deb.orig/modules/pam_env/pam_env.c
++++ pam.deb/modules/pam_env/pam_env.c
+@@ -23,7 +23,9 @@
+ #include <string.h>
+ #include <syslog.h>
+ #include <sys/stat.h>
++#ifdef HAVE_SYS_FSUID_H
+ #include <sys/fsuid.h>
++#endif
+ #include <sys/types.h>
+ #include <unistd.h>
+ 
+@@ -792,9 +794,37 @@
+ 	}
+       if (stat(envpath, &statbuf) == 0) {
+ 	uid_t euid = geteuid();
++
++#ifdef HAVE_SYS_FSUID_H
+         setfsuid (user_entry->pw_uid);
++#else
++	uid_t uid = getuid();
++	if (uid == user_entry->pw_uid)
++	  setreuid(euid, uid);
++	else {
++	  setreuid(0, -1);
++	  if (setreuid(-1, uid) == -1) {
++	    setreuid(-1, 0);
++	    setreuid(0, -1);
++	    setreuid(-1, user_entry->pw_uid);
++	    /* If this fails we didn't have root privs anyway, so we fall
++	       through; not the safest, but no different from what we do in
++	       the setfsuid() case. */
++	  }
++	}
++#endif
+         retval = _parse_config_file(pamh, envpath);
++#ifdef HAVE_SYS_FSUID_H
+ 	setfsuid (euid);
++#else
++	if (uid == user_entry->pw_uid)
++	  setreuid(uid, euid);
++	else {
++	  if (setreuid(-1, 0) == 0)
++	    setreuid(uid, -1);
++	  setreuid(-1, euid);
++	}
++#endif
+         if (retval == PAM_IGNORE)
+           retval = PAM_SUCCESS;
+       }
+Index: pam.deb/modules/pam_mail/pam_mail.c
+===================================================================
+--- pam.deb.orig/modules/pam_mail/pam_mail.c
++++ pam.deb/modules/pam_mail/pam_mail.c
+@@ -17,7 +17,9 @@
+ #include <syslog.h>
+ #include <sys/stat.h>
+ #include <sys/types.h>
++#ifdef HAVE_SYS_FSUID_H
+ #include <sys/fsuid.h>
++#endif
+ #include <unistd.h>
+ #include <dirent.h>
+ #include <errno.h>
+@@ -446,9 +448,37 @@
+ 	|| (!est && (ctrl & PAM_LOGOUT_TOO))) {
+         uid_t euid = geteuid();
+ 
++ifdef HAVE_SYS_FSUID_H
+         setfsuid (pwd->pw_uid);
++#else
++	uid_t uid = getuid();
++
++	if (uid == pwd->pw_uid)
++	  setreuid(euid, uid);
++	else {
++	  setreuid(0, -1);
++	  if (setreuid(-1, uid) == -1) {
++	    setreuid(-1, 0);
++	    setreuid(0, -1);
++	    setreuid(-1, pwd->pw_uid);
++	    /* If this fails we didn't have root privs anyway, so we fall
++	       through; not the safest, but no different from what we do in
++	       the setfsuid() case. */
++	  }
++	}
++#endif
+ 	type = get_mail_status(pamh, ctrl, folder);
++#ifdef HAVE_SYS_FSUID_H
+ 	setfsuid (euid);
++#else
++	if (uid == pwd->pw_uid)
++	  setreuid(uid, euid);
++	else {
++	  if (setreuid(-1, 0) == 0)
++	    setreuid(uid, -1);
++	  setreuid(-1, euid);
++	}
++#endif
+ 
+ 	if (type != 0) {
+ 	    retval = report_mail(pamh, ctrl, type, folder);

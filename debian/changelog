@@ -6,6 +6,8 @@ pam (1.1.1-5) UNRELEASED; urgency=low
     upstream version which now implements minlen=, not min=.
   * Drop patches conditional_module,_conditional_man and
     mkhomedir_linking.patch, which are included upstream.
+  * debian/patches/hurd_no_setfsuid: pam_env and pam_mail now also use
+    setfsuid, so patch them to be likewise Hurd-safe.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
 
