@@ -16,6 +16,7 @@ pam (1.1.1-5) UNRELEASED; urgency=low
   * debian/patches/007_modules_pam_unix: drop compatibility handling of
     'max=' no-op; use of this option will now log an error, as warned three
     years ago.
+  * Bump Standards-Version to 3.9.1.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
 
