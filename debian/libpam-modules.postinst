@@ -17,4 +17,12 @@ then
 	touch /etc/environment
 fi
 
+if dpkg --compare-versions "$2" lt-nl 1.1.2-1 \
+   && grep -q 'pam_unix.*\bmin=[0-9]\+' /etc/pam.d/common-password
+then
+	echo "'min=' option to pam_unix is obsolete."
+	echo "replacing with 'minlen=' in /etc/pam.d/common-password."
+	sed -i -e'/pam_unix/ s/\bmin=/minlen=/' /etc/pam.d/common-password
+fi
+
 #DEBHELPER#
