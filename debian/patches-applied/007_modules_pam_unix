@@ -409,7 +409,7 @@ Index: pam.deb/modules/pam_unix/obscure.c
 +	   Example: "password$%^&*123".  So check it again, this time
 +	   truncated to the maximum length.  Idea from npasswd.  --marekm */
 +
-+	if (on(UNIX_HASH_MASK,ctrl))
++	if (!UNIX_DES_CRYPT(ctrl))
 +		return NULL;  /* unlimited password length */
 +
 +	if (oldlen <= 8 && newlen <= 8)
