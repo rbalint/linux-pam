@@ -1,12 +1,12 @@
 .\"     Title: pam_exec
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 06/16/2009
+.\"      Date: 07/08/2010
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "PAM_EXEC" "8" "06/16/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_EXEC" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -271,7 +271,7 @@ to rebuild the NIS database after each local password change:
 .BB lightgray adjust-for-leading-newline
 .sp -1
 
-        passwd optional pam_exec\&.so seteuid make \-C /var/yp
+        password optional pam_exec\&.so seteuid /usr/bin/make \-C /var/yp
       
 .EB lightgray adjust-for-leading-newline
 .if t \{\

@@ -1,7 +1,197 @@
-2009-12-16  Thorsten Kukuk  <kukuk@suse.de>
+2010-08-31  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* release version 1.1.2
+
+	* configure.in: Bump version number.
+	* NEWS: Document changes since 1.1.1.
+	* doc/adg/Linux-PAM_ADG.xml: Bump version number.
+	* doc/mwg/Linux-PAM_MWG.xml: Likewise.
+	* doc/sag/Linux-PAM_SAG.xml: Likewise.
+	* libpam/Makefile.am: Bump revision of shared library.
+	* po/*.po: Regenerate.
+
+2010-08-26  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_nologin/pam_nologin.c (perform_check): Try first
+	 /var/run/nologin if the nologin file is not explicitly specified.
+	* modules/pam_nologin/pam_nologin.8.xml: Document that /var/run/nologin
+	is tried first.
+
+2010-08-26  Sweta Kothari  <swkothar@redhat.com>
+
+	* po/gu.po: Updated translations.
+
+2010-08-26  Geert Warrink  <geert.warrink@onsnet.nu>
+
+	* po/nl.po: Updated translations.
+
+2010-08-26  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* doc/specs/Makefile.am: Use CC_FOR_BUILD as compiler (cross
+	compile support).
+	* configure.in: Check for host compiler if cross compiling.
+	Bug #2315432, debian#284854#42.
+
+2010-08-17  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/pam_unix_passwd.c: Implement minlen option.
+	* modules/pam_unix/support.c: Likewise.
+	* modules/pam_unix/support.h: Likewise.
+
+	* modules/pam_unix/pam_unix_acct.c (pam_sm_acct_mgmt): Adjust
+	arguments for _set_ctrl call.
+	* modules/pam_unix/pam_unix_auth.c (pam_sm_authenticate): Likewise.
+	* modules/pam_unix/pam_unix_session.c: Likewise.
+
+	* modules/pam_unix/pam_unix.8.xml: Document minlen option.
+	Based on patch by Steve Langasek.
+
+2010-08-12  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_mail/pam_mail.c: Check for mail only with user
+	privilegs.
+
+	* modules/pam_xauth/pam_xauth.c (run_coprocess): Check return
+	value of setgid, setgroups and setuid.
+
+	* modules/pam_xauth/pam_xauth.c (check_acl): Save errno for
+	later usage.
+
+	* modules/pam_env/pam_env.c (handle_env): Check if user exists,
+	read local user config only with user privilegs.`
+
+2010-08-09  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_tally/pam_tally.8.xml: Document that pam_tally is
+	deprecated.
+
+	* modules/pam_tty_audit/Makefile.am (EXTRA_DIST): Fix make dist.
+
+	* modules/pam_unix/passverify.c (check_shadow_expiry): Correct
+	check for expired date.
+
+	* modules/pam_unix/pam_unix_passwd.c (_pam_unix_approve_pass): Remove
+	check for password length. Bug #2923437.
+
+2010-08-04  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_tally2/pam_tally2.c (get_tally): Create file
+	with correct permissions. Patch by Diego Elio “Flameeyes” Pettenò.
+
+	* modules/pam_unix/passverify.c (PAMH_ARG_DECL): Don't request
+	password change if time is not yet set (1.1.1970). Bug #2730965.
+
+	* modules/pam_access/pam_access.c (user_match): Make sure
+	that user@host will not match @@netgroup. Bug #3035919.
+
+	* modules/pam_group/pam_group.c (check_account): Add '%' for
+	UNIX groups.
+	* modules/pam_group/group.conf: Add example for '%'.
+	* modules/pam_group/group.conf.5.xml: Document '%' syntax.
+	Bug #3002340, #3037155.
+
+2010-08-02  Steve Langasek  <vorlon@debian.org>
+
+	* modules/pam_mkhomedir/Makefile.am: don't pass --version-script
+	options when linking executables, only when linking libraries
+	Patch from Julien Cristau <jcristau@debian.org>
+
+2010-07-12  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_succeed_if/pam_succeed_if.c (pam_sm_authenticate): Add
+	audit flag to enable logging about unknown user (#2917257).
+	* modules/pam_succeed_if/pam_succeed_if.8.xml: Document audit.
+	* modules/pam_succeed_if/pam_succeed_if.8: Regenerated from xml.
+	* modules/pam_succeed_if/README: Regenerated from xml.
+
+2010-06-22  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_umask/pam_umask.8.xml: Remove comparisation of
+	gid and uid for usergroups.
+	* modules/pam_umask/pam_umask.c (setup_limits_from_gecos): Likewise.
+	Bug #3004656
+
+	* configure.in: Don't check for libxcrypt if no xcrypt.h exists,
+	fix typo introduced with 1.1.1.
+	Reported by Diego Elio “Flameeyes” Pettenò.
+
+2010-06-15  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_xauth/pam_xauth.c (pam_sm_close_session): Call
+	setfsuid to be allowed to remove temporary files (#3010705).
+	(pam_sm_open_session): Call fchown with correct permissions.
+
+2010-06-09  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_tty_audit/Makefile.am (TESTS): Add tst-pam_tty_audit.
+	* modules/pam_tty_audit/tst-pam_tty_audit: New.
+
+2010-06-07  Steve Langasek  <vorlon@debian.org>
+
+	* modules/pam_tty_audit/Makefile.am: If we don't have the libraries
+	required for building pam_tty_audit, we shouldn't install the manpage
+	either.
+
+2010-05-27  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_userdb/pam_userdb.c: Define HAVE_DBM
+	for BerkDB 5.0 support. Patch by Diego Elio Pettenò.
+
+2010-04-15  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_exec/pam_exec.8.xml: Fix example.
+
+2010-04-13  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_pwhistory/opasswd.c: Fix compilation if
+	cyprt_r() is not available.
+	* configure.in: check for getutent_r.
+	* modules/pam_timestamp/pam_timestamp.c: Use getutent()
+	if getutent_r() does not exist.
+	Patch from Diego Elio “Flameeyes” Pettenò.
+
+2010-04-12  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* doc/man/pam.conf-syntax.xml: Better documentation of
+	"actionN". Patch from Michal Soltys <soltys@ziu.info>.
+
+2010-04-06  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_rootok/pam_rootok.c: Add support for acct_mgmt
+	and chauthtok.
+	* modules/pam_rootok/pam_rootok.8.xml: Document new module
+	types.
+
+2010-03-29  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* po/ar.po: Add missing Plural-Forms entry to header.
+
+2010-03-25  Daniel Nylander <po@danielnylander.se>
+
+	* po/sv.po: Updated translations.
+
+2010-03-24  Ani Peter  <anipeter@fedoraproject.org>
+
+	* po/ml.po: Updated translations.
+
+2010-03-08  Yuri Chornoivan  <yurchor@ukr.net>
+
+	* po/uk.po: Updated translations.
+
+2010-02-09  Tomas Mraz  <t8m@centrum.cz>
+
+	* libpam/pam_get_authtok.c (pam_get_authtok_internal): Fix
+	regression in the new password prompt.
+
+2010-01-04  Elad <el.il@doom.co.il>
+
+	* po/he.po: New translation to Hebrew.
+	* po/LINGUAS: Add Hebrew to the list.
+
+2009-12-16  Thorsten Kukuk  <kukuk@thkukuk.de>
 
 	* release version 1.1.1
-	
+
 	* NEWS: Adjust for 1.1.1
 	* configure.in: Likewise.
 	* doc/adg/Linux-PAM_ADG.xml: Likewise.

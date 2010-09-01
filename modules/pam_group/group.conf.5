@@ -1,12 +1,12 @@
 .\"     Title: group.conf
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 03/02/2009
+.\"      Date: 08/04/2010
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "GROUP\&.CONF" "5" "03/02/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "GROUP\&.CONF" "5" "08/04/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -191,9 +191,9 @@ field, is a logic list of terminal names that this rule applies to\&.
 .PP
 The third field, the
 \fIusers\fR
-field, is a logic list of users or a netgroup of users to whom this rule applies\&.
+field, is a logic list of users, or a UNIX group, or a netgroup of users to whom this rule applies\&. Group names are preceded by a \'%\' symbol, while netgroup names are preceded by a \'@\' symbol\&.
 .PP
-For these items the simple wildcard \'*\' may be used only once\&. With netgroups no wildcards or logic operators are allowed\&.
+For these items the simple wildcard \'*\' may be used only once\&. With UNIX groups or netgroups no wildcards or logic operators are allowed\&.
 .PP
 The
 \fItimes\fR
@@ -246,6 +246,33 @@ Running \'xsh\' on tty* (any ttyXXX device), the user \'sword\' is given access 
 xsh; tty* ;sword;!Wk0900\-1800;games, sound
 xsh; tty* ;*;Al0900\-1800;floppy
     
+.EB lightgray adjust-for-leading-newline
+.if t \{\
+.sp 1
+.\}
+.fi
+.fam
+.ps +1
+.if n \{\
+.RE
+.\}
+.PP
+Any member of the group \'admin\' running \'xsh\' on tty*, is granted access (at any time) to the group \'plugdev\'
+.sp
+.if n \{\
+.RS 4
+.\}
+.fam C
+.ps -1
+.nf
+.if t \{\
+.sp -1
+.\}
+.BB lightgray adjust-for-leading-newline
+.sp -1
+
+xsh; tty* ;%admin;Al0000\-2400;plugdev
+     
 .EB lightgray adjust-for-leading-newline
 .if t \{\
 .sp 1

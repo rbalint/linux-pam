@@ -1,12 +1,12 @@
 .\"     Title: pam_tally
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 06/16/2009
+.\"      Date: 08/09/2010
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "PAM_TALLY" "8" "06/16/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_TALLY" "8" "08/09/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -180,6 +180,8 @@ pam_tally \- The login counter (tallying) module
 .SH "DESCRIPTION"
 .PP
 This module maintains a count of attempted accesses, can reset count on success, can deny access if too many attempts fail\&.
+.PP
+pam_tally has several limitations, which are solved with pam_tally2\&. For this reason pam_tally is deprecated and will be removed in a future release\&.
 .PP
 pam_tally comes in two parts:
 \fBpam_tally\&.so\fR

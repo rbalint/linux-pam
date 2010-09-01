@@ -87,7 +87,7 @@ static const char * const xauthpaths[] = {
 /* Run a given command (with a NULL-terminated argument list), feeding it the
  * given input on stdin, and storing any output it generates. */
 static int
-run_coprocess(const char *input, char **output,
+run_coprocess(pam_handle_t *pamh, const char *input, char **output,
 	      uid_t uid, gid_t gid, const char *command, ...)
 {
 	int ipipe[2], opipe[2], i;
@@ -126,9 +126,26 @@ run_coprocess(const char *input, char **output,
 		const char *tmp;
 		int maxopened;
 		/* Drop privileges. */
-		setgid(gid);
-		setgroups(0, NULL);
-		setuid(uid);
+		if (setgid(gid) == -1)
+		  {
+		    int err = errno;
+		    pam_syslog (pamh, LOG_ERR, "setgid(%lu) failed: %m",
+				(unsigned long) getegid ());
+		    _exit (err);
+		  }
+		if (setgroups(0, NULL) == -1)
+		  {
+		    int err = errno;
+		    pam_syslog (pamh, LOG_ERR, "setgroups() failed: %m");
+		    _exit (err);
+		  }
+		if (setuid(uid) == -1)
+		  {
+		    int err = errno;
+		    pam_syslog (pamh, LOG_ERR, "setuid(%lu) failed: %m",
+				(unsigned long) geteuid ());
+		    _exit (err);
+		  }
 		/* Initialize the argument list. */
 		memset(args, 0, sizeof(args));
 		/* Set the pipe descriptors up as stdin and stdout, and close
@@ -216,7 +233,7 @@ check_acl(pam_handle_t *pamh,
 	char path[PATH_MAX];
 	struct passwd *pwd;
 	FILE *fp;
-	int i;
+	int i, save_errno;
 	uid_t euid;
 	/* Check this user's <sense> file. */
 	pwd = pam_modutil_getpwnam(pamh, this_user);
@@ -236,6 +253,7 @@ check_acl(pam_handle_t *pamh,
 	euid = geteuid();
 	setfsuid(pwd->pw_uid);
 	fp = fopen(path, "r");
+	save_errno = errno;
 	setfsuid(euid);
 	if (fp != NULL) {
 		char buf[LINE_MAX], *tmp;
@@ -268,6 +286,7 @@ check_acl(pam_handle_t *pamh,
 		return PAM_PERM_DENIED;
 	} else {
 		/* Default to okay if the file doesn't exist. */
+	        errno = save_errno;
 		switch (errno) {
 		case ENOENT:
 			if (noent_code == PAM_SUCCESS) {
@@ -463,7 +482,7 @@ pam_sm_open_session (pam_handle_t *pamh, int flags UNUSED,
 			   xauth, "-f", cookiefile, "nlist", display,
 			   (unsigned long) getuid(), (unsigned long) getgid());
 	}
-	if (run_coprocess(NULL, &cookie,
+	if (run_coprocess(pamh, NULL, &cookie,
 			  getuid(), getgid(),
 			  xauth, "-f", cookiefile, "nlist", display,
 			  NULL) == 0) {
@@ -521,7 +540,7 @@ pam_sm_open_session (pam_handle_t *pamh, int flags UNUSED,
 						       (unsigned long) getuid(),
 						       (unsigned long) getgid());
 					}
-					run_coprocess(NULL, &cookie,
+					run_coprocess(pamh, NULL, &cookie,
 						      getuid(), getgid(),
 						      xauth, "-f", cookiefile,
 						      "nlist", t, NULL);
@@ -555,7 +574,7 @@ pam_sm_open_session (pam_handle_t *pamh, int flags UNUSED,
 		/* Generate a new file to hold the data. */
 		euid = geteuid();
 		setfsuid(tpwd->pw_uid);
-		
+
 #ifdef WITH_SELINUX
 		if (is_selinux_enabled() > 0) {
 			struct selabel_handle *ctx = selabel_open(SELABEL_CTX_FILE, NULL, 0);
@@ -595,8 +614,10 @@ pam_sm_open_session (pam_handle_t *pamh, int flags UNUSED,
 		}
 		/* Set permissions on the new file and dispose of the
 		 * descriptor. */
+		setfsuid(tpwd->pw_uid);
 		if (fchown(fd, tpwd->pw_uid, tpwd->pw_gid) < 0)
 		  pam_syslog (pamh, LOG_ERR, "fchown: %m");
+		setfsuid(euid);
 		close(fd);
 
 		/* Get a copy of the filename to save as a data item for
@@ -669,7 +690,7 @@ pam_sm_open_session (pam_handle_t *pamh, int flags UNUSED,
 				  (unsigned long) tpwd->pw_uid,
 				  (unsigned long) tpwd->pw_gid);
 		}
-		run_coprocess(cookie, &tmp,
+		run_coprocess(pamh, cookie, &tmp,
 			      tpwd->pw_uid, tpwd->pw_gid,
 			      xauth, "-f", cookiefile, "nmerge", "-", NULL);
 
@@ -693,6 +714,20 @@ pam_sm_close_session (pam_handle_t *pamh, int flags UNUSED,
 {
 	void *cookiefile;
 	int i, debug = 0;
+	const char* user;
+	struct passwd *tpwd;
+	uid_t unlinkuid, euid;
+	unlinkuid = euid = geteuid ();
+
+	if (pam_get_user(pamh, &user, NULL) != PAM_SUCCESS)
+		pam_syslog(pamh, LOG_ERR, "error determining target user's name");
+	else {
+	  tpwd = pam_modutil_getpwnam(pamh, user);
+	  if (!tpwd)
+	    pam_syslog(pamh, LOG_ERR, "error determining target user's UID");
+	  else
+	    unlinkuid = tpwd->pw_uid;
+	}
 
 	/* Parse arguments.  We don't understand many, so no sense in breaking
 	 * this into a separate function. */
@@ -723,7 +758,10 @@ pam_sm_close_session (pam_handle_t *pamh, int flags UNUSED,
 				pam_syslog(pamh, LOG_DEBUG, "removing `%s'",
 				       (char*)cookiefile);
 			}
+			/* NFS with root_squash requires non-root user */
+			setfsuid (unlinkuid);
 			unlink((char*)cookiefile);
+			setfsuid (euid);
 			*((char*)cookiefile) = '\0';
 		}
 	}

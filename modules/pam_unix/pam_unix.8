@@ -1,12 +1,12 @@
 .\"     Title: pam_unix
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 06/29/2009
+.\"      Date: 08/17/2010
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "PAM_UNIX" "8" "06/29/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_UNIX" "8" "08/17/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -313,6 +313,13 @@ Set the optional number of rounds of the SHA256, SHA512 and blowfish password ha
 \fBbroken_shadow\fR
 .RS 4
 Ignore errors reading shadow information for users in the account management module\&.
+.RE
+.PP
+\fBminlen=\fR\fB\fIn\fR\fR
+.RS 4
+Set a minimum password length of
+\fIn\fR
+characters\&. The max\&. for DES crypt based passwords are 8 characters\&.
 .RE
 .PP
 Invalid arguments are logged with
