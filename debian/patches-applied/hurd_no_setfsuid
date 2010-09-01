@@ -185,7 +185,7 @@ Index: pam.deb/modules/pam_mail/pam_mail.c
  	|| (!est && (ctrl & PAM_LOGOUT_TOO))) {
          uid_t euid = geteuid();
  
-+ifdef HAVE_SYS_FSUID_H
++#ifdef HAVE_SYS_FSUID_H
          setfsuid (pwd->pw_uid);
 +#else
 +	uid_t uid = getuid();
