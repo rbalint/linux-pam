@@ -12,26 +12,7 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  /*
     How it works:
     Gets in username (has to be done) from the calling program
-@@ -457,7 +460,8 @@
- static int _pam_unix_approve_pass(pam_handle_t * pamh
- 				  ,unsigned int ctrl
- 				  ,const char *pass_old
--				  ,const char *pass_new)
-+				  ,const char *pass_new,
-+                                  int pass_min_len)
- {
- 	const void *user;
- 	const char *remark = NULL;
-@@ -488,7 +492,7 @@
- 		}
- 	}
- 	if (off(UNIX__IAMROOT, ctrl)) {
--		if (strlen(pass_new) < 6)
-+		if (strlen(pass_new) < pass_min_len)
- 		  remark = _("You must choose a longer password");
- 		D(("length check [%s]", remark));
- 		if (on(UNIX_REMEMBER_PASSWD, ctrl)) {
-@@ -500,6 +504,11 @@
+@@ -501,6 +504,11 @@
  				return retval;
  			}
  		}
@@ -43,70 +24,19 @@ Index: pam.deb/modules/pam_unix/pam_unix_passwd.c
  	}
  	if (remark) {
  		_make_remark(pamh, ctrl, PAM_ERROR_MSG, remark);
-@@ -516,6 +525,7 @@
+@@ -517,7 +525,7 @@
  	int retval;
  	int remember = -1;
  	int rounds = -1;
+-	int pass_min_len = 0;
 +	int pass_min_len = 6;
  
  	/* <DO NOT free() THESE> */
  	const char *user;
-@@ -524,7 +534,8 @@
- 
- 	D(("called."));
- 
--	ctrl = _set_ctrl(pamh, flags, &remember, &rounds, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, &remember, &rounds, &pass_min_len,
-+	                 argc, argv);
- 
- 	/*
- 	 * First get the name of a user
-@@ -724,7 +735,8 @@
- 			if (*(const char *)pass_new == '\0') {	/* "\0" password = NULL */
- 				pass_new = NULL;
- 			}
--			retval = _pam_unix_approve_pass(pamh, ctrl, pass_old, pass_new);
-+			retval = _pam_unix_approve_pass(pamh, ctrl, pass_old,
-+			                                pass_new, pass_min_len);
- 
- 			if (retval != PAM_SUCCESS && off(UNIX_NOT_SET_PASS, ctrl)) {
- 				pam_set_item(pamh, PAM_AUTHTOK, NULL);
-@@ -757,7 +769,8 @@
- 			return retval;
- 		}
- 
--		retval = _pam_unix_approve_pass(pamh, ctrl, pass_old, pass_new);
-+		retval = _pam_unix_approve_pass(pamh, ctrl, pass_old, pass_new,
-+		                                pass_min_len);
- 		if (retval != PAM_SUCCESS) {
- 			pam_syslog(pamh, LOG_NOTICE,
- 			         "new password not acceptable 2");
-Index: pam.deb/modules/pam_unix/pam_unix_acct.c
-===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix_acct.c
-+++ pam.deb/modules/pam_unix/pam_unix_acct.c
-@@ -191,7 +191,7 @@
- 
- 	D(("called."));
- 
--	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, NULL, argc, argv);
- 
- 	retval = pam_get_item(pamh, PAM_USER, &void_uname);
- 	uname = void_uname;
 Index: pam.deb/modules/pam_unix/support.c
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/support.c
 +++ pam.deb/modules/pam_unix/support.c
-@@ -55,7 +55,7 @@
-  */
- 
- int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *rounds,
--	      int argc, const char **argv)
-+	      int *pass_min_len, int argc, const char **argv)
- {
- 	unsigned int ctrl;
- 
 @@ -81,6 +81,7 @@
  		D(("SILENT"));
  		set(UNIX__QUIET, ctrl);
@@ -125,62 +55,36 @@ Index: pam.deb/modules/pam_unix/support.c
  				break;
  			}
  		}
-@@ -102,15 +104,16 @@
- 			ctrl &= unix_args[j].mask;	/* for turning things off */
- 			ctrl |= unix_args[j].flag;	/* for turning things on  */
- 
--			if (remember != NULL) {
--				if (j == UNIX_REMEMBER_PASSWD) {
--					*remember = strtol(*argv + 9, NULL, 10);
--					if ((*remember == INT_MIN) || (*remember == INT_MAX))
--						*remember = -1;
--					if (*remember > 400)
--						*remember = 400;
--				}
--			}
-+			/* special cases */
-+			if (remember != NULL && j == UNIX_REMEMBER_PASSWD) {
-+				*remember = strtol(*argv + 9, NULL, 10);
-+				if ((*remember == INT_MIN) || (*remember == INT_MAX))
-+					*remember = -1;
-+				if (*remember > 400)
-+					*remember = 400;
-+			} else if (pass_min_len && j == UNIX_MIN_PASS_LEN) {
+@@ -112,6 +114,9 @@
+ 			} else if (pass_min_len && j == UNIX_MIN_PASS_LEN) {
+ 				*pass_min_len = atoi(*argv + 7);
+  			}
++			} else if (pass_min_len && j == UNIX_MIN_PASS_COMPAT) {
 +				*pass_min_len = atoi(*argv + 4);
 + 			}
  			if (rounds != NULL && j == UNIX_ALGO_ROUNDS)
  				*rounds = strtol(*argv + 7, NULL, 10);
  		}
-@@ -118,6 +121,10 @@
- 		++argv;		/* step to next argument */
- 	}
- 
-+	if (off(UNIX_HASH_MASK,ctrl)
-+	    && pass_min_len && *pass_min_len > 8)
-+		*pass_min_len = 8;
-+
- 	if (flags & PAM_DISALLOW_NULL_AUTHTOK) {
- 		D(("DISALLOW_NULL_AUTHTOK"));
- 		set(UNIX__NONULL, ctrl);
 Index: pam.deb/modules/pam_unix/support.h
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/support.h
 +++ pam.deb/modules/pam_unix/support.h
-@@ -89,41 +89,49 @@
- #define UNIX_ALGO_ROUNDS         25	/* optional number of rounds for new 
+@@ -89,9 +89,12 @@
+ #define UNIX_ALGO_ROUNDS         25	/* optional number of rounds for new
  					   password hash algorithms */
  #define UNIX_BLOWFISH_PASS       26	/* new password hashes will use blowfish */
+-#define UNIX_MIN_PASS_LEN        27	/* min length for password */
 +#define UNIX_MAX_PASS_LEN        27	/* internal, for compatibility only */
 +#define UNIX_MIN_PASS_LEN        28	/* min length for password */
-+#define UNIX_OBSCURE_CHECKS      29	/* enable obscure checks on passwords */
++#define UNIX_MIN_PASS_COMPAT     29	/* min length for password */
++#define UNIX_OBSCURE_CHECKS      30	/* enable obscure checks on passwords */
  /* -------------- */
--#define UNIX_CTRLS_              27	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              30	/* number of ctrl arguments defined */
-+
-+#define UNIX_HASH_MASK	(UNIX_MD5_PASS|UNIX_BIGCRYPT|UNIX_SHA256_PASS|UNIX_SHA512_PASS|UNIX_BLOWFISH_PASS)
+-#define UNIX_CTRLS_              28	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              31	/* number of ctrl arguments defined */
  
- static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
- {
+ #define UNIX_DES_CRYPT(ctrl)	(off(UNIX_MD5_PASS,ctrl)&&off(UNIX_BIGCRYPT,ctrl)&&off(UNIX_SHA256_PASS,ctrl)&&off(UNIX_SHA512_PASS,ctrl)&&off(UNIX_BLOWFISH_PASS,ctrl))
+ 
+@@ -100,34 +103,37 @@
  /* symbol                  token name          ctrl mask             ctrl     *
   * ----------------------- ------------------- --------------------- -------- */
  
@@ -211,6 +115,7 @@ Index: pam.deb/modules/pam_unix/support.h
 -/* UNIX_SHA512_PASS */     {"sha512",       _ALL_ON_^(0260420000), 040000000},
 -/* UNIX_ALGO_ROUNDS */     {"rounds=",         _ALL_ON_,          0100000000},
 -/* UNIX_BLOWFISH_PASS */   {"blowfish",    _ALL_ON_^(0260420000), 0200000000},
+-/* UNIX_MIN_PASS_LEN */    {"minlen=",		_ALL_ON_,          0400000000},
 +/* UNIX__OLD_PASSWD */     {NULL,              _ALL_ON_,                  0x1},
 +/* UNIX__VERIFY_PASSWD */  {NULL,              _ALL_ON_,                  0x2},
 +/* UNIX__IAMROOT */        {NULL,              _ALL_ON_,                  0x4},
@@ -239,36 +144,24 @@ Index: pam.deb/modules/pam_unix/support.h
 +/* UNIX_ALGO_ROUNDS */     {"rounds=",         _ALL_ON_,            0x1000000},
 +/* UNIX_BLOWFISH_PASS */   {"blowfish",        _ALL_ON_^(0x2C22000),0x2000000},
 +/* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
-+/* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,            0x4000000},
-+/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x8000000},
++/* UNIX_MIN_PASS_LEN */    {"minlen=",         _ALL_ON_,            0x4000000},
++/* UNIX_MIN_PASS_COMPAT */ {"min=",            _ALL_ON_,            0x8000000},
++/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,           0x10000000}
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -141,7 +149,7 @@
- extern int _make_remark(pam_handle_t * pamh, unsigned int ctrl
- 		       ,int type, const char *text);
- extern int _set_ctrl(pam_handle_t * pamh, int flags, int *remember, int *rounds,
--		     int argc, const char **argv);
-+		     int *pass_min_len, int argc, const char **argv);
- extern int _unix_getpwnam (pam_handle_t *pamh,
- 			   const char *name, int files, int nis,
- 			   struct passwd **ret);
 Index: pam.deb/modules/pam_unix/pam_unix.8.xml
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/pam_unix.8.xml
 +++ pam.deb/modules/pam_unix/pam_unix.8.xml
-@@ -326,6 +326,90 @@
-           </para>
-         </listitem>
-       </varlistentry>
-+      <varlistentry>
-+        <term>
-+          <option>min=<replaceable>n</replaceable></option>
-+        </term>
-+        <listitem>
-+          <para>
-+            Set a minimum password length of <replaceable>n</replaceable>
-+            characters.  The default value is 6.
+@@ -333,8 +333,81 @@
+         <listitem>
+           <para>
+             Set a minimum password length of <replaceable>n</replaceable>
+-            characters. The max. for DES crypt based passwords are 8
+-            characters.
++            characters.  The default value is 6.  The maximum for DES
++            crypt-based passwords is 8 characters.
 +          </para>
 +        </listitem>
 +      </varlistentry>
@@ -342,12 +235,9 @@ Index: pam.deb/modules/pam_unix/pam_unix.8.xml
 +                </listitem>
 +              </varlistentry>
 +            </variablelist>
-+          </para>
-+        </listitem>
-+      </varlistentry>
-     </variablelist>
-     <para>
-       Invalid arguments are logged with  <citerefentry>
+           </para>
+         </listitem>
+       </varlistentry>
 Index: pam.deb/modules/pam_unix/obscure.c
 ===================================================================
 --- /dev/null
@@ -564,46 +454,182 @@ Index: pam.deb/modules/pam_unix/Makefile.am
  
  bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
  bigcrypt_CFLAGS = $(AM_CFLAGS)
-Index: pam.deb/modules/pam_unix/pam_unix_auth.c
-===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix_auth.c
-+++ pam.deb/modules/pam_unix/pam_unix_auth.c
-@@ -109,7 +109,7 @@
- 
- 	D(("called."));
- 
--	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, NULL, argc, argv);
- 
- 	/* Get a few bytes so we can pass our return value to
- 	   pam_sm_setcred(). */
-Index: pam.deb/modules/pam_unix/pam_unix_sess.c
-===================================================================
---- pam.deb.orig/modules/pam_unix/pam_unix_sess.c
-+++ pam.deb/modules/pam_unix/pam_unix_sess.c
-@@ -73,7 +73,7 @@
- 
- 	D(("called."));
- 
--	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, NULL, argc, argv);
- 
- 	retval = pam_get_item(pamh, PAM_USER, (void *) &user_name);
- 	if (user_name == NULL || *user_name == '\0' || retval != PAM_SUCCESS) {
-@@ -107,7 +107,7 @@
- 
- 	D(("called."));
- 
--	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
-+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, NULL, argc, argv);
- 
- 	retval = pam_get_item(pamh, PAM_USER, (void *) &user_name);
- 	if (user_name == NULL || *user_name == '\0' || retval != PAM_SUCCESS) {
 Index: pam.deb/modules/pam_unix/pam_unix.8
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/pam_unix.8
 +++ pam.deb/modules/pam_unix/pam_unix.8
-@@ -166,13 +166,11 @@
+@@ -1,161 +1,22 @@
++'\" t
+ .\"     Title: pam_unix
+ .\"    Author: [see the "AUTHOR" section]
+-.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
+-.\"      Date: 08/17/2010
++.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
++.\"      Date: 08/31/2010
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"  Language: English
+ .\"
+-.TH "PAM_UNIX" "8" "08/17/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_UNIX" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+ .\" -----------------------------------------------------------------
+-.\" * (re)Define some macros
++.\" * Define some portability stuff
+ .\" -----------------------------------------------------------------
+ .\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" toupper - uppercase a string (locale-aware)
++.\" http://bugs.debian.org/507673
++.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+ .\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de toupper
+-.tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
+-\\$*
+-.tr aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH-xref - format a cross-reference to an SH section
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de SH-xref
+-.ie n \{\
+-.\}
+-.toupper \\$*
+-.el \{\
+-\\$*
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SH - level-one heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SH
+-.\" put an extra blank line of space above the head in non-TTY output
+-.if t \{\
+-.sp 1
+-.\}
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[an-margin]u
+-.ti 0
+-.HTML-TAG ".NH \\n[an-level]"
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-\." make the size of the head bigger
+-.ps +3
+-.ft B
+-.ne (2v + 1u)
+-.ie n \{\
+-.\" if n (TTY output), use uppercase
+-.toupper \\$*
+-.\}
+-.el \{\
+-.nr an-break-flag 0
+-.\" if not n (not TTY), use normal case (not uppercase)
+-\\$1
+-.in \\n[an-margin]u
+-.ti 0
+-.\" if not n (not TTY), put a border/line under subheading
+-.sp -.6
+-\l'\n(.lu'
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" SS - level-two heading that works better for non-TTY output
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de1 SS
+-.sp \\n[PD]u
+-.nr an-level 1
+-.set-an-margin
+-.nr an-prevailing-indent \\n[IN]
+-.fi
+-.in \\n[IN]u
+-.ti \\n[SN]u
+-.it 1 an-trap
+-.nr an-no-space-flag 1
+-.nr an-break-flag 1
+-.ps \\n[PS-SS]u
+-\." make the size of the head bigger
+-.ps +2
+-.ft B
+-.ne (2v + 1u)
+-.if \\n[.$] \&\\$*
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BB/BE - put background/screen (filled box) around block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BB
+-.if t \{\
+-.sp -.5
+-.br
+-.in +2n
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EB
+-.if t \{\
+-.if "\\$2"adjust-for-leading-newline" \{\
+-.sp -1
+-.\}
+-.br
+-.di
+-.in
+-.ll
+-.gcolor
+-.nr BW \\n(.lu-\\n(.i
+-.nr BH \\n(dn+.5v
+-.ne \\n(BHu+.5v
+-.ie "\\$2"adjust-for-leading-newline" \{\
+-\M[\\$1]\h'1n'\v'+.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.el \{\
+-\M[\\$1]\h'1n'\v'-.5v'\D'P \\n(BWu 0 0 \\n(BHu -\\n(BWu 0 0 -\\n(BHu'\M[]
+-.\}
+-.in 0
+-.sp -.5v
+-.nf
+-.BX
+-.in
+-.sp .5v
+-.fi
+-.\}
+-..
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.\" BM/EM - put colored marker in margin next to block of text
+-.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-.de BM
+-.if t \{\
+-.br
+-.ll -2n
+-.gcolor red
+-.di BX
+-.\}
+-..
+-.de EM
+-.if t \{\
+-.br
+-.di
+-.ll
+-.gcolor
+-.nr BH \\n(dn
+-.ne \\n(BHu
+-\M[\\$1]\D'P -.75n 0 0 \\n(BHu -(\\n[.i]u - \\n(INu - .75n) 0 0 -\\n(BHu'\M[]
+-.in 0
+-.nf
+-.BX
+-.in
+-.fi
+-.\}
+-..
++.ie \n(.g .ds Aq \(aq
++.el       .ds Aq '
+ .\" -----------------------------------------------------------------
+ .\" * set default formatting
+ .\" -----------------------------------------------------------------
+@@ -166,38 +27,36 @@
  .\" -----------------------------------------------------------------
  .\" * MAIN CONTENT STARTS HERE *
  .\" -----------------------------------------------------------------
@@ -618,8 +644,48 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
 -.fam
  .SH "DESCRIPTION"
  .PP
- This is the standard Unix authentication module\&. It uses standard calls from the system\'s libraries to retrieve and set account information as well as authentication\&. Usually this is obtained from the /etc/passwd and the /etc/shadow file as well if shadow is enabled\&.
-@@ -264,7 +262,7 @@
+-This is the standard Unix authentication module\&. It uses standard calls from the system\'s libraries to retrieve and set account information as well as authentication\&. Usually this is obtained from the /etc/passwd and the /etc/shadow file as well if shadow is enabled\&.
++This is the standard Unix authentication module\&. It uses standard calls from the system\*(Aqs libraries to retrieve and set account information as well as authentication\&. Usually this is obtained from the /etc/passwd and the /etc/shadow file as well if shadow is enabled\&.
+ .PP
+-The account component performs the task of establishing the status of the user\'s account and password based on the following
++The account component performs the task of establishing the status of the user\*(Aqs account and password based on the following
+ \fIshadow\fR
+ elements: expire, last_change, max_change, min_change, warn_change\&. In the case of the latter, it may offer advice to the user on changing their password or, through the
+ \fBPAM_AUTHTOKEN_REQD\fR
+ return, delay giving service to the user until they have established a new password\&. The entries listed above are documented in the
+ \fBshadow\fR(5)
+-manual page\&. Should the user\'s record not contain one or more of these entries, the corresponding
++manual page\&. Should the user\*(Aqs record not contain one or more of these entries, the corresponding
+ \fIshadow\fR
+ check is not performed\&.
+ .PP
+ The authentication component performs the task of checking the users credentials (password)\&. The default action of this module is to not permit the user access to a service if their official password is blank\&.
+ .PP
+ A helper binary,
+-\fBunix_chkpwd\fR(8), is provided to check the user\'s password when it is stored in a read protected database\&. This binary is very simple and will only check the password of the user invoking it\&. It is called transparently on behalf of the user by the authenticating component of this module\&. In this way it is possible for applications like
++\fBunix_chkpwd\fR(8), is provided to check the user\*(Aqs password when it is stored in a read protected database\&. This binary is very simple and will only check the password of the user invoking it\&. It is called transparently on behalf of the user by the authenticating component of this module\&. In this way it is possible for applications like
+ \fBxlock\fR(1)
+-to work without being setuid\-root\&. The module, by default, will temporarily turn off SIGCHLD handling for the duration of execution of the helper binary\&. This is generally the right thing to do, as many applications are not prepared to handle this signal from a child they didn\'t know was
++to work without being setuid\-root\&. The module, by default, will temporarily turn off SIGCHLD handling for the duration of execution of the helper binary\&. This is generally the right thing to do, as many applications are not prepared to handle this signal from a child they didn\*(Aqt know was
+ \fBfork()\fRd\&. The
+ \fBnoreap\fR
+ module argument can be used to suppress this temporary shielding and may be needed for use with certain applications\&.
+ .PP
+-The password component of this module performs the task of updating the user\'s password\&.
++The password component of this module performs the task of updating the user\*(Aqs password\&.
+ .PP
+ The session component of this module logs when a user logins or leave the system\&.
+ .PP
+@@ -225,7 +84,7 @@
+ .PP
+ \fBtry_first_pass\fR
+ .RS 4
+-Before prompting the user for their password, the module first tries the previous stacked module\'s password in case that satisfies this module as well\&.
++Before prompting the user for their password, the module first tries the previous stacked module\*(Aqs password in case that satisfies this module as well\&.
+ .RE
+ .PP
+ \fBuse_first_pass\fR
+@@ -264,7 +123,7 @@
  The last
  \fIn\fR
  passwords for each user are saved in
@@ -628,15 +694,12 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
  in order to force password change history and keep the user from alternating between the same password too frequently\&.
  .RE
  .PP
-@@ -315,6 +313,44 @@
- Ignore errors reading shadow information for users in the account management module\&.
- .RE
- .PP
-+\fBmin=\fR\fB\fIn\fR\fR
-+.RS 4
-+Set a minimum password length of
-+\fIn\fR
-+characters\&. The default value is 6\&.
+@@ -319,7 +178,38 @@
+ .RS 4
+ Set a minimum password length of
+ \fIn\fR
+-characters\&. The max\&. for DES crypt based passwords are 8 characters\&.
++characters\&. The default value is 6\&. The maximum for DES crypt\-based passwords is 8 characters\&.
 +.RE
 +.PP
 +\fBobscure\fR
@@ -650,12 +713,12 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
 +.PP
 +\fBCase Change Only\fR
 +.RS 4
-+Verifies that the new password isn\'t the same as the old one with a change of case\&.
++Verifies that the new password isn\*(Aqt the same as the old one with a change of case\&.
 +.RE
 +.PP
 +\fBSimilar\fR
 +.RS 4
-+Verifies that the new password isn\'t too much like the previous one\&.
++Verifies that the new password isn\*(Aqt too much like the previous one\&.
 +.RE
 +.PP
 +\fBSimple\fR
@@ -668,12 +731,10 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
 +Is the new password a rotated version of the old password? (E\&.g\&., "billy" and "illyb")
 +.RE
 +.sp
-+.RE
-+.PP
+ .RE
+ .PP
  Invalid arguments are logged with
- \fBsyslog\fR(3)\&.
- .SH "MODULE TYPES PROVIDED"
-@@ -333,21 +369,13 @@
+@@ -340,21 +230,13 @@
  .SH "EXAMPLES"
  .PP
  An example usage for
@@ -696,7 +757,7 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
  # Authenticate the user
  auth       required   pam_unix\&.so
  # Ensure users account and password are still active
-@@ -358,13 +386,7 @@
+@@ -365,13 +247,7 @@
  password   required   pam_unix\&.so use_authtok nullok md5
  session    required   pam_unix\&.so
        
