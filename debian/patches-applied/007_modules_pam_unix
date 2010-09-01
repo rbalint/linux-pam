@@ -146,7 +146,7 @@ Index: pam.deb/modules/pam_unix/support.h
 +/* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
 +/* UNIX_MIN_PASS_LEN */    {"minlen=",         _ALL_ON_,            0x4000000},
 +/* UNIX_MIN_PASS_COMPAT */ {"min=",            _ALL_ON_,            0x8000000},
-+/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,           0x10000000}
++/* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,           0x10000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
