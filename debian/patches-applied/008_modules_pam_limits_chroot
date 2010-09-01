@@ -94,25 +94,29 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
 ===================================================================
 --- pam.deb.orig/modules/pam_limits/limits.conf.5
 +++ pam.deb/modules/pam_limits/limits.conf.5
-@@ -1,161 +1,13 @@
+@@ -1,161 +1,22 @@
 +'\" t
  .\"     Title: limits.conf
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 03/02/2009
+-.\"      Date: 07/08/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/24/2009
++.\"      Date: 08/31/2010
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "LIMITS\&.CONF" "5" "03/02/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
--.\" -----------------------------------------------------------------
+-.TH "LIMITS\&.CONF" "5" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "LIMITS\&.CONF" "5" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+ .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
--.\" -----------------------------------------------------------------
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++.\" * Define some portability stuff
+ .\" -----------------------------------------------------------------
+ .\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -.\" toupper - uppercase a string (locale-aware)
--.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++.\" http://bugs.debian.org/507673
++.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+ .\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -.de toupper
 -.tr aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ
 -\\$*
@@ -256,11 +260,12 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
 -.fi
 -.\}
 -..
-+.TH "LIMITS\&.CONF" "5" "08/24/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
++.ie \n(.g .ds Aq \(aq
++.el       .ds Aq '
  .\" -----------------------------------------------------------------
  .\" * set default formatting
  .\" -----------------------------------------------------------------
-@@ -166,7 +18,7 @@
+@@ -166,7 +27,7 @@
  .\" -----------------------------------------------------------------
  .\" * MAIN CONTENT STARTS HERE *
  .\" -----------------------------------------------------------------
@@ -269,7 +274,16 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  limits.conf \- configuration file for the pam_limits module
  .SH "DESCRIPTION"
  .PP
-@@ -360,6 +212,11 @@
+@@ -263,7 +124,7 @@
+ \fBhard\fR
+ resource limits together\&.
+ .sp
+-Note, if you specify a type of \'\-\' but neglect to supply the item and value fields then the module will never enforce any limits on the specified user/group etc\&. \&.
++Note, if you specify a type of \*(Aq\-\*(Aq but neglect to supply the item and value fields then the module will never enforce any limits on the specified user/group etc\&. \&.
+ .RE
+ .RE
+ .PP
+@@ -360,6 +221,11 @@
  .RS 4
  maximum realtime priority allowed for non\-privileged processes (Linux 2\&.6\&.12 and higher)
  .RE
@@ -281,7 +295,15 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  .RE
  .PP
  All items support the values
-@@ -392,20 +249,12 @@
+@@ -385,27 +251,19 @@
+ .PP
+ In the
+ \fIlimits\fR
+-configuration file, the \'\fB#\fR\' character introduces a comment \- after which the rest of the line is ignored\&.
++configuration file, the \*(Aq\fB#\fR\*(Aq character introduces a comment \- after which the rest of the line is ignored\&.
+ .PP
+ The pam_limits module does report configuration problems found in its configuration file and errors via
+ \fBsyslog\fR(3)\&.
  .SH "EXAMPLES"
  .PP
  These are some example lines which might be specified in
@@ -303,7 +325,7 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  *               soft    core            0
  *               hard    rss             10000
  @student        hard    nproc           20
-@@ -414,13 +263,7 @@
+@@ -414,13 +272,7 @@
  ftp             hard    nproc           0
  @student        \-       maxlogins       4
      

@@ -39,7 +39,7 @@ Index: pam.deb/modules/pam_unix/support.c
  			}
  		}
  
-@@ -449,6 +456,7 @@
+@@ -455,6 +462,7 @@
      child = fork();
      if (child == 0) {
          int i=0;
@@ -47,7 +47,7 @@ Index: pam.deb/modules/pam_unix/support.c
          struct rlimit rlim;
  	static char *envp[] = { NULL };
  	char *args[] = { NULL, NULL, NULL, NULL };
-@@ -476,7 +484,18 @@
+@@ -482,7 +490,18 @@
  	/* exec binary helper */
  	args[0] = strdup(CHKPWD_HELPER);
  	args[1] = x_strdup(user);
@@ -67,7 +67,7 @@ Index: pam.deb/modules/pam_unix/support.c
  	  args[2]=strdup("nullok");
  	} else {
  	  args[2]=strdup("nonull");
-@@ -557,6 +576,17 @@
+@@ -563,6 +582,17 @@
  	if (on(UNIX__NONULL, ctrl))
  		return 0;	/* will fail but don't let on yet */
  
@@ -85,7 +85,7 @@ Index: pam.deb/modules/pam_unix/support.c
  	/* UNIX passwords area */
  
  	retval = get_pwd_hash(pamh, name, &pwd, &salt);
-@@ -643,7 +673,8 @@
+@@ -649,7 +679,8 @@
  			}
  		}
  	} else {
@@ -99,18 +99,18 @@ Index: pam.deb/modules/pam_unix/support.h
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/support.h
 +++ pam.deb/modules/pam_unix/support.h
-@@ -92,8 +92,9 @@
- #define UNIX_MAX_PASS_LEN        27	/* internal, for compatibility only */
+@@ -93,8 +93,9 @@
  #define UNIX_MIN_PASS_LEN        28	/* min length for password */
- #define UNIX_OBSCURE_CHECKS      29	/* enable obscure checks on passwords */
-+#define UNIX_NULLOK_SECURE       30	/* NULL passwords allowed only on secure ttys */
+ #define UNIX_MIN_PASS_COMPAT     29	/* min length for password */
+ #define UNIX_OBSCURE_CHECKS      30	/* enable obscure checks on passwords */
++#define UNIX_NULLOK_SECURE       31	/* NULL passwords allowed only on secure ttys */
  /* -------------- */
--#define UNIX_CTRLS_              30	/* number of ctrl arguments defined */
-+#define UNIX_CTRLS_              31	/* number of ctrl arguments defined */
+-#define UNIX_CTRLS_              31	/* number of ctrl arguments defined */
++#define UNIX_CTRLS_              32	/* number of ctrl arguments defined */
  
- #define UNIX_HASH_MASK	(UNIX_MD5_PASS|UNIX_BIGCRYPT|UNIX_SHA256_PASS|UNIX_SHA512_PASS|UNIX_BLOWFISH_PASS)
+ #define UNIX_DES_CRYPT(ctrl)	(off(UNIX_MD5_PASS,ctrl)&&off(UNIX_BIGCRYPT,ctrl)&&off(UNIX_SHA256_PASS,ctrl)&&off(UNIX_SHA512_PASS,ctrl)&&off(UNIX_BLOWFISH_PASS,ctrl))
  
-@@ -111,7 +112,7 @@
+@@ -112,7 +113,7 @@
  /* UNIX_NOT_SET_PASS */    {"not_set_pass",    _ALL_ON_,                 0x40},
  /* UNIX__PRELIM */         {NULL,              _ALL_ON_^(0x180),         0x80},
  /* UNIX__UPDATE */         {NULL,              _ALL_ON_^(0x180),        0x100},
@@ -119,15 +119,15 @@ Index: pam.deb/modules/pam_unix/support.h
  /* UNIX__QUIET */          {NULL,              _ALL_ON_,                0x400},
  /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,                0x800},
  /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,               0x1000},
-@@ -132,6 +133,7 @@
- /* UNIX_MAX_PASS_LEN */    {"max=",            _ALL_ON_,                    0},
- /* UNIX_MIN_PASS_LEN */    {"min=",            _ALL_ON_,            0x4000000},
- /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,            0x8000000},
-+/* UNIX__NULLOK */         {"nullok_secure",   _ALL_ON_^(0x200),   0x10000000},
+@@ -134,6 +135,7 @@
+ /* UNIX_MIN_PASS_LEN */    {"minlen=",         _ALL_ON_,            0x4000000},
+ /* UNIX_MIN_PASS_COMPAT */ {"min=",            _ALL_ON_,            0x8000000},
+ /* UNIX_OBSCURE_CHECKS */  {"obscure",         _ALL_ON_,           0x10000000},
++/* UNIX__NULLOK */         {"nullok_secure",   _ALL_ON_^(0x200),   0x20000000},
  };
  
  #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
-@@ -167,6 +169,9 @@
+@@ -169,6 +171,9 @@
  			,const char *data_name
  			,const void **pass);
  
@@ -177,7 +177,7 @@ Index: pam.deb/modules/pam_unix/pam_unix.8
 ===================================================================
 --- pam.deb.orig/modules/pam_unix/pam_unix.8
 +++ pam.deb/modules/pam_unix/pam_unix.8
-@@ -218,7 +218,14 @@
+@@ -79,7 +79,14 @@
  .RS 4
  The default action of this module is to not permit the user access to a service if their official password is blank\&. The
  \fBnullok\fR
