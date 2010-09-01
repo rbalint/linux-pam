@@ -17,6 +17,7 @@ pam (1.1.1-5) UNRELEASED; urgency=low
     'max=' no-op; use of this option will now log an error, as warned three
     years ago.
   * Bump Standards-Version to 3.9.1.
+  * Add lintian overrides for a few more spurious warnings.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
 
