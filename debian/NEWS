@@ -1,3 +1,18 @@
+pam (1.1.2-1) UNRELEASED; urgency=low
+
+  * Name of option for minimum Unix password length has changed
+
+    The Debian-specific 'min=n' option to pam_unix for specifying minimum
+    lengths for new passwords has been replaced by a new upstream option
+    called 'minlen=n'.  If you are using 'min=n' in
+    /etc/pam.d/common-password, this will be migrated to the new option name
+    for you on upgrade.  If you have configured pam_unix password changing
+    elsewhere on your system, such as in a PAM profile under
+    /usr/share/pam-configs or in other files in /etc/pam.d, you will need to
+    update them by hand for this change.
+
+ -- Steve Langasek <vorlon@debian.org>  Tue, 31 Aug 2010 23:09:30 -0700
+
 pam (1.1.0-3) unstable; urgency=low
 
   * pam_rhosts_auth module obsolete, symlink removed
