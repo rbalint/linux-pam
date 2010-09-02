@@ -1,5 +1,10 @@
-pam (1.1.1-5) UNRELEASED; urgency=low
+pam (1.1.2-1) UNRELEASED; urgency=low
 
+  * New upstream release.
+    - Add support for NSS groups to pam_group.  Closes: #589019,
+      LP: #297408.
+    - Support cross-building the package.  Thanks to Neil Williams
+      <codehelp@debian.org> for the patch.  Closes: #284854.   
   * debian/rules: pass getconf LFS_CFLAGS so that we get a 64-bit rlimit
     interface.  Closes: #579402.
   * Drop patches conditional_module,_conditional_man and
@@ -18,8 +23,10 @@ pam (1.1.1-5) UNRELEASED; urgency=low
     years ago.
   * Bump Standards-Version to 3.9.1.
   * Add lintian overrides for a few more spurious warnings.
+  * debian/patches-applied/no_PATH_MAX_on_hurd: define PATH_MAX for
+    compatibility when it's not already set.  Closes: #552043.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
+ -- Steve Langasek <vorlon@debian.org>  Thu, 02 Sep 2010 10:23:42 -0700
 
 pam (1.1.1-4) unstable; urgency=low
 
