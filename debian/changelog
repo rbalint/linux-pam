@@ -25,6 +25,8 @@ pam (1.1.2-1) UNRELEASED; urgency=low
   * Add lintian overrides for a few more spurious warnings.
   * debian/patches-applied/no_PATH_MAX_on_hurd: define PATH_MAX for
     compatibility when it's not already set.  Closes: #552043.
+  * debian/local/pam-auth-update: Don't try to pass embedded newlines to
+    debconf; backslash-escape them instead and use CAPB escape.
 
  -- Steve Langasek <vorlon@debian.org>  Thu, 02 Sep 2010 10:23:42 -0700
 

@@ -29,7 +29,7 @@ use Debconf::Client::ConfModule ':all';
 use IPC::Open2 'open2';
 
 version('2.0');
-my $capb=capb('backup');
+my $capb=capb('backup escape');
 
 my $inputdir = '/usr/share/pam-configs';
 my $template = 'libpam-runtime/profiles';
@@ -200,7 +200,7 @@ do {
 		}
 	}
 	if (@conflicts) {
-		subst($errtemplate, 'conflicts', join("\n", @conflicts));
+		subst($errtemplate, 'conflicts', join("\\n", @conflicts));
 		input('high',$errtemplate);
 	}
 	set($template, join(', ', @enabled));
