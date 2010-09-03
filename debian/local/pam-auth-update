@@ -271,7 +271,7 @@ sub merge_one_line
 			$i--;
 		}
 	}
-	return $modline . " " . join(' ',@opts,keys(%{$adds})) . "\n";
+	return $modline . " " . join(' ',@opts,sort keys(%{$adds})) . "\n";
 }
 
 # return the lines for a given config name, type, and position in the stack

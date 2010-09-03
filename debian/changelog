@@ -27,6 +27,10 @@ pam (1.1.2-1) UNRELEASED; urgency=low
     compatibility when it's not already set.  Closes: #552043.
   * debian/local/pam-auth-update: Don't try to pass embedded newlines to
     debconf; backslash-escape them instead and use CAPB escape.
+  * debian/local/pam-auth-update: sort additional module options before
+    writing them out, so that we don't wind up with a different config file
+    on every invocation.  Thanks to Jim Paris <jim@jtan.com> for the patch.
+    Closes: #594123.
 
  -- Steve Langasek <vorlon@debian.org>  Thu, 02 Sep 2010 10:23:42 -0700
 
