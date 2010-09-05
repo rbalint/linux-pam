@@ -1,4 +1,4 @@
-pam (1.1.1-5) UNRELEASED; urgency=low
+pam (1.1.1-5) unstable; urgency=low
 
   * debian/rules: pass getconf LFS_CFLAGS so that we get a 64-bit rlimit
     interface.  Closes: #579402.
@@ -15,7 +15,7 @@ pam (1.1.1-5) UNRELEASED; urgency=low
     on every invocation.  Thanks to Jim Paris <jim@jtan.com> for the patch.
     Closes: #594123.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 05 Sep 2010 12:42:34 -0700
 
 pam (1.1.1-4) unstable; urgency=low
 
