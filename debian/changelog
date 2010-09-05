@@ -4,6 +4,7 @@ pam (1.1.1-5) UNRELEASED; urgency=low
     interface.  Closes: #579402.
   * Update debian/source.lintian-overrides to clean up some spurious
     warnings.
+  * Bump Standards-Version to 3.9.1.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 29 Aug 2010 00:56:28 -0700
 
