@@ -31,6 +31,11 @@ pam (1.1.2-1) UNRELEASED; urgency=low
     writing them out, so that we don't wind up with a different config file
     on every invocation.  Thanks to Jim Paris <jim@jtan.com> for the patch.
     Closes: #594123.
+  * debian/libpam-runtime.{postinst,templates}: since 1.1.2-1 is targeted
+    for post-squeeze, we don't need to support upgrades from 1.0.1-6 to
+    1.0.1-10 anymore.  Drop the debconf error note about having configured
+    your system with a lack of authentication, so that translators don't
+    spend any more time on it.
 
  -- Steve Langasek <vorlon@debian.org>  Thu, 02 Sep 2010 10:23:42 -0700
 

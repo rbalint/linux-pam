@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 1.0.1-10\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-08-18 18:30-0700\n"
+"POT-Creation-Date: 2010-09-05 23:50-0700\n"
 "PO-Revision-Date: 2009-08-20 14:05+0100\n"
 "Last-Translator: Américo Monteiro <a_monteiro@netcabo.pt>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -177,49 +178,6 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../libpam-runtime.templates:5001
-msgid "Your system allowed access without a password!"
-msgstr "O seu sistema permitiu acesso sem uma palavra-passe!"
-
-#. Type: error
-#. Description
-#: ../libpam-runtime.templates:5001
-msgid ""
-"A bug in a previous version of libpam-runtime resulted in no PAM profiles "
-"being selected for use on this system.  As a result, access was allowed for "
-"a time to all accounts on your system, with or without a correct password. "
-"Especially if this system can be accessed from the Internet, it is likely "
-"that it has been compromised.  Unless you are familiar with recovering from "
-"security failures, viruses, and malicious software, you should re-install "
-"this system from scratch or obtain the services of a skilled system "
-"administrator.  For more information, see:"
-msgstr ""
-"Um 'bug' na versão anterior do libpam-runtime permitiu que nenhum perfil PAM "
-"fosse seleccionado para utilização neste sistema. Como resultado, o acesso "
-"foi permitido durante algum tempo a todas as contas no seu sistema, com ou "
-"sem uma palavra-passe. Especialmente se este sistema puder ser acedido a "
-"partir da Internet, é provável que tenha sido comprometido. A menos que "
-"esteja familiarizado com recuperações de falhas de segurança, vírus, e "
-"software malicioso, você deve fazer uma reinstalação limpa este sistema ou "
-"obter os serviços de um hábil administrador de sistemas. Para mais "
-"informações, veja:"
-
-#. Type: error
-#. Description
-#: ../libpam-runtime.templates:5001
-msgid ""
-"The bug that allowed this wrong configuration is fixed in the current "
-"version of libpam-runtime, and your configuration has now been corrected. We "
-"apologize that previous versions of libpam-runtime did not detect and "
-"prevent this situation."
-msgstr ""
-"O bug que permitiu esta configuração errada foi corrigido na versão actual "
-"do libpam-runtime, e a sua configuração foi agora corrigida. Pedimos "
-"desculpa pelas versões anteriores do libpam-runtime não terem detectado e "
-"prevenido esta situação."
-
-#. Type: error
-#. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
 msgstr "xscreensaver e xlockmore têm que ser reiniciados antes da actualização"
@@ -241,3 +199,4 @@ msgstr ""
 "nestes programas. Você deve fazer com que estes programas sejam reiniciados "
 "ou parados antes de continuar com esta actualização, para evitar trancar os "
 "seus utilizadores fora das suas sessões correntes."
+

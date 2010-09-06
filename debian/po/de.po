@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 1.1.0-1\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-08-18 18:30-0700\n"
+"POT-Creation-Date: 2010-09-05 23:50-0700\n"
 "PO-Revision-Date: 2009-08-28 22:27+0200\n"
 "Last-Translator: Sven Joachim <svenjoac@gmx.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -174,49 +175,6 @@ msgstr ""
 "Dies würde allen Benutzern Zugang ohne Authentifizierung gestatten und ist "
 "nicht erlaubt. Bitte wählen Sie mindestens ein PAM-Profil aus der "
 "verfügbaren Liste aus."
-
-#. Type: error
-#. Description
-#: ../libpam-runtime.templates:5001
-msgid "Your system allowed access without a password!"
-msgstr "Ihr System gewährte Zugang ohne ein Passwort!"
-
-#. Type: error
-#. Description
-#: ../libpam-runtime.templates:5001
-msgid ""
-"A bug in a previous version of libpam-runtime resulted in no PAM profiles "
-"being selected for use on this system.  As a result, access was allowed for "
-"a time to all accounts on your system, with or without a correct password. "
-"Especially if this system can be accessed from the Internet, it is likely "
-"that it has been compromised.  Unless you are familiar with recovering from "
-"security failures, viruses, and malicious software, you should re-install "
-"this system from scratch or obtain the services of a skilled system "
-"administrator.  For more information, see:"
-msgstr ""
-"Ein Fehler in einer früheren Version von libpam-runtime führte dazu, dass "
-"keine PAM-Profile für die Verwendung auf diesem System ausgewählt wurden. "
-"Als Resultat wurde eine Zeit lang für alle Konten auf Ihrem System Zugang "
-"gewährt, mit oder ohne korrektes Passwort. Falls dieses System insbesondere "
-"aus dem Internet zugänglich ist, ist es wahrscheinlich, dass es "
-"kompromittiert wurde. Falls Sie nicht vertraut mit der Beseitigung von "
-"Sicherheitsfehlern, Viren und bösartiger Software sind, sollten Sie dieses "
-"System von Grund auf neu installieren oder die Dienste eines fähigen "
-"Systemadministrators in Anspruch nehmen. Für weitere Informationen siehe:"
-
-#. Type: error
-#. Description
-#: ../libpam-runtime.templates:5001
-msgid ""
-"The bug that allowed this wrong configuration is fixed in the current "
-"version of libpam-runtime, and your configuration has now been corrected. We "
-"apologize that previous versions of libpam-runtime did not detect and "
-"prevent this situation."
-msgstr ""
-"Der Fehler, der diese verkehrte Konfiguration erlaubte, ist in der aktuellen "
-"Version von libpam-runtime behoben, und Ihre Konfiguration ist nunmehr "
-"korrigiert worden. Wir bitten zu entschuldigen, dass frühere Versionen von "
-"libpam-runtime diese Situation nicht erkannt und verhindert hatten."
 
 #. Type: error
 #. Description
