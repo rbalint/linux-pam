@@ -36,6 +36,8 @@ pam (1.1.2-1) UNRELEASED; urgency=low
     1.0.1-10 anymore.  Drop the debconf error note about having configured
     your system with a lack of authentication, so that translators don't
     spend any more time on it.
+  * Updated debconf translations:
+    - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #575875)
 
  -- Steve Langasek <vorlon@debian.org>  Thu, 02 Sep 2010 10:23:42 -0700
 
