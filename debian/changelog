@@ -1,3 +1,10 @@
+pam (1.1.1-6) UNRELEASED; urgency=low
+
+  * Updated debconf translations:
+    - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #575875)
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 05 Sep 2010 23:35:10 -0700
+
 pam (1.1.1-5) unstable; urgency=low
 
   * debian/rules: pass getconf LFS_CFLAGS so that we get a 64-bit rlimit
