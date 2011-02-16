@@ -1,4 +1,4 @@
-pam (1.1.2-1) UNRELEASED; urgency=low
+pam (1.1.2-1) unstable; urgency=low
 
   * New upstream release.
     - Add support for NSS groups to pam_group.  Closes: #589019,
@@ -39,7 +39,7 @@ pam (1.1.2-1) UNRELEASED; urgency=low
   * Updated debconf translations:
     - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #575875)
 
- -- Steve Langasek <vorlon@debian.org>  Thu, 02 Sep 2010 10:23:42 -0700
+ -- Steve Langasek <vorlon@debian.org>  Tue, 15 Feb 2011 23:21:41 -0800
 
 pam (1.1.1-7) UNRELEASED; urgency=low
 
