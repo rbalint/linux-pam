@@ -41,6 +41,50 @@ pam (1.1.2-1) UNRELEASED; urgency=low
 
  -- Steve Langasek <vorlon@debian.org>  Thu, 02 Sep 2010 10:23:42 -0700
 
+pam (1.1.1-7) UNRELEASED; urgency=low
+
+  * Updated debconf translations:
+    - Italian, thanks to Nicole B. <damn3dg1rl@gmail.com> (closes: #602112)
+
+ -- Steve Langasek <vorlon@debian.org>  Wed, 17 Nov 2010 16:53:46 -0800
+
+pam (1.1.1-6.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix pending l10n issues. Debconf translations:
+    - Czech (Miroslav Kure).  Closes: #598329
+    - Slovak (Ivan Masár).  Closes: #600164
+    - Japanese (Kenshi Muto).  Closes: #600247
+    - Finnish (Esko Arajärvi).  Closes: #600641
+
+ -- Christian Perrier <bubulle@debian.org>  Tue, 19 Oct 2010 07:30:49 +0200
+
+pam (1.1.1-6) unstable; urgency=low
+
+  * Updated debconf translations:
+    - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #575875)
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 05 Sep 2010 23:36:35 -0700
+
+pam (1.1.1-5) unstable; urgency=low
+
+  * debian/rules: pass getconf LFS_CFLAGS so that we get a 64-bit rlimit
+    interface.  Closes: #579402.
+  * Update debian/source.lintian-overrides to clean up some spurious
+    warnings.
+  * Bump Standards-Version to 3.9.1.
+  * Add lintian overrides for a few more spurious warnings.
+  * debian/patches-applied/no_PATH_MAX_on_hurd: define PATH_MAX for
+    compatibility when it's not already set.  Closes: #552043.
+  * debian/local/pam-auth-update: Don't try to pass embedded newlines to
+    debconf; backslash-escape them instead and use CAPB escape.
+  * debian/local/pam-auth-update: sort additional module options before
+    writing them out, so that we don't wind up with a different config file
+    on every invocation.  Thanks to Jim Paris <jim@jtan.com> for the patch.
+    Closes: #594123.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 05 Sep 2010 12:42:34 -0700
+
 pam (1.1.1-4) unstable; urgency=low
 
   * debian/patches/conditional_module,_conditional_man: if we don't have the

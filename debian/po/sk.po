@@ -1,6 +1,6 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pam package.
-# Ivan Masár <helix84@centrum.sk>, 2008, 2009.
+# Ivan Masár <helix84@centrum.sk>, 2008, 2009, 2010.
 #
 msgid ""
 msgstr ""
@@ -154,10 +154,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Boli vybrané nekompatibilné profily PAM."
+msgstr "Neboli vybrané žiadne profily PAM."
 
 #. Type: error
 #. Description
@@ -167,6 +165,9 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Pre tento systém neboli vybrané žiadne profily PAM. To by udelilo všetkým "
+"používateľom prístup bez overovania a to nie je povolené. Prosím, vyberte "
+"aspoň jeden profil PAM zo zoznamu dostupných profilov."
 
 #. Type: error
 #. Description

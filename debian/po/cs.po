@@ -1,14 +1,14 @@
 # Czech translation of pam debconf mesages.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pam package.
-# Miroslav Kure <kurem@debian.cz>, 2007-2009.
+# Miroslav Kure <kurem@debian.cz>, 2007-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2010-09-05 23:50-0700\n"
-"PO-Revision-Date: 2009-03-09 19:58+0100\n"
+"PO-Revision-Date: 2010-09-28 11:36+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "Language: cs\n"
@@ -154,10 +154,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Vybrány nekompatibilní PAM profily."
+msgstr "Nebyly vybrány žádné PAM profily."
 
 #. Type: error
 #. Description
@@ -167,6 +165,9 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Pro tento systém nebyly vybrány žádné PAM profily, což znamená, že všem "
+"uživatelům umožňujete přístup bez autentizace. To není dovoleno. Vyberte "
+"prosím ze seznamu alespoň jeden PAM profil."
 
 #. Type: error
 #. Description

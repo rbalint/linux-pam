@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-7\n"
+"Project-Id-Version: pam 1.1.1-6\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2010-09-05 23:50-0700\n"
-"PO-Revision-Date: 2009-03-05 23:03+0900\n"
+"PO-Revision-Date: 2010-10-15 09:22+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
 "Language: ja\n"
@@ -154,10 +154,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "矛盾する PAM プロファイルが選択されました。"
+msgstr "PAM プロファイルが何も選択されていません。"
 
 #. Type: error
 #. Description
@@ -167,6 +165,9 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"このシステムで利用する PAM プロファイルが何も選択されていません。これは、すべ"
+"てのユーザが認証なしにアクセスできてしまうことになるので、認められません。利"
+"用可能な一覧から少なくとも 1 つの PAM プロファイルを選んでください。"
 
 #. Type: error
 #. Description
