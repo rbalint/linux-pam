@@ -1,16 +1,17 @@
 # Czech translation of pam debconf mesages.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pam package.
-# Miroslav Kure <kurem@debian.cz>, 2007-2009.
+# Miroslav Kure <kurem@debian.cz>, 2007-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2009-03-09 19:58+0100\n"
+"PO-Revision-Date: 2010-09-28 11:36+0200\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -153,10 +154,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Vybrány nekompatibilní PAM profily."
+msgstr "Nebyly vybrány žádné PAM profily."
 
 #. Type: error
 #. Description
@@ -166,12 +165,15 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Pro tento systém nebyly vybrány žádné PAM profily, což znamená, že všem "
+"uživatelům umožňujete přístup bez autentizace. To není dovoleno. Vyberte "
+"prosím ze seznamu alespoň jeden PAM profil."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
-msgstr ""
+msgstr "Váš systém umožňoval přístup bez hesla!"
 
 #. Type: error
 #. Description
@@ -186,6 +188,13 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
+"Chyba v předchozí verzi libpam-runtime způsobila, že se na tomto systému "
+"nevybraly žádné PAM profily. V důsledku toho se po nějakou dobu mohl do "
+"systému přihlásit jakýkoliv účet i bez znalosti hesla. Obzvláště pokud byl "
+"systém přístupný z Internetu, je pravděpodobné, že byl kompromitován. Pokud "
+"nemáte zkušenosti s obnovou systému po bezpečnostních chybách, virech a "
+"škodlivém softwaru, měli byste systém kompletně přeinstalovat, nebo využít "
+"služeb zkušeného systémového správce. Více informací naleznete v:"
 
 #. Type: error
 #. Description
@@ -196,6 +205,9 @@ msgid ""
 "apologize that previous versions of libpam-runtime did not detect and "
 "prevent this situation."
 msgstr ""
+"Chyba, která způsobila toto nebezpečné nastavení, byla v aktuální verzi "
+"libpam-runtime vyřešena a konfigurace byla opravena. Omlouváme se, že "
+"předchozí verze libpam-runtime tuto situaci nezjistily a nezabránili jí."
 
 #. Type: error
 #. Description

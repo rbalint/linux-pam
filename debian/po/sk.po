@@ -1,6 +1,6 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pam package.
-# Ivan Masár <helix84@centrum.sk>, 2008, 2009.
+# Ivan Masár <helix84@centrum.sk>, 2008, 2009, 2010.
 #
 msgid ""
 msgstr ""
@@ -10,6 +10,7 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -153,10 +154,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Boli vybrané nekompatibilné profily PAM."
+msgstr "Neboli vybrané žiadne profily PAM."
 
 #. Type: error
 #. Description
@@ -166,12 +165,15 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Pre tento systém neboli vybrané žiadne profily PAM. To by udelilo všetkým "
+"používateľom prístup bez overovania a to nie je povolené. Prosím, vyberte "
+"aspoň jeden profil PAM zo zoznamu dostupných profilov."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
-msgstr ""
+msgstr "Váš systém povolil prístup bez hesla!"
 
 #. Type: error
 #. Description
@@ -186,6 +188,14 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
+"Chyba v predošlých verziách libpam-runtime spôsobila, že pre tento systém "
+"neboli vybrané žiadne profily PAM. V dôsledku toho bol na určitý čas "
+"povolený prístup ku všetkým účtom na vašom systéme, s alebo bez správneho "
+"hesla. Obzvlášť ak je tento systém prístupný z internetu, je pravdepodobné, "
+"že bol napadnutý. Ak nemáte skúsenosti s obnovou po bezpečnostných "
+"zlyhaniach, vírusoch a zákernom softvéri, mali by ste tento systém od "
+"začiatku znovu nainštalovať alebo sa obrátiť na služby skúseného správcu. "
+"Ďalšie informácie nájdete na:"
 
 #. Type: error
 #. Description
@@ -196,6 +206,10 @@ msgid ""
 "apologize that previous versions of libpam-runtime did not detect and "
 "prevent this situation."
 msgstr ""
+"Chyba, ktorá umožnila túto nesprávnu konfiguráciu je opravená v aktuálnej "
+"verzii libpam-runtime a vaša konfigurácia bola teraz opravená. "
+"Ospravedlňujeme sa, že predošlé verzie libpam-runtime nezisťovali a "
+"nezabraňovali tejto situácii."
 
 #. Type: error
 #. Description

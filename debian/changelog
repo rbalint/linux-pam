@@ -1,3 +1,14 @@
+pam (1.1.1-6.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix pending l10n issues. Debconf translations:
+    - Czech (Miroslav Kure).  Closes: #598329
+    - Slovak (Ivan Masár).  Closes: #600164
+    - Japanese (Kenshi Muto).  Closes: #600247
+    - Finnish (Esko Arajärvi).  Closes: #600641
+
+ -- Christian Perrier <bubulle@debian.org>  Tue, 19 Oct 2010 07:30:49 +0200
+
 pam (1.1.1-6) unstable; urgency=low
 
   * Updated debconf translations:

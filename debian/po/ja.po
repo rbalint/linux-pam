@@ -5,12 +5,13 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-7\n"
+"Project-Id-Version: pam 1.1.1-6\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2009-03-05 23:03+0900\n"
+"PO-Revision-Date: 2010-10-15 09:22+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -153,10 +154,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "矛盾する PAM プロファイルが選択されました。"
+msgstr "PAM プロファイルが何も選択されていません。"
 
 #. Type: error
 #. Description
@@ -166,12 +165,15 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"このシステムで利用する PAM プロファイルが何も選択されていません。これは、すべ"
+"てのユーザが認証なしにアクセスできてしまうことになるので、認められません。利"
+"用可能な一覧から少なくとも 1 つの PAM プロファイルを選んでください。"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "Your system allowed access without a password!"
-msgstr ""
+msgstr "あなたのシステムはパスワードなしでのアクセスを許可していました!"
 
 #. Type: error
 #. Description
@@ -186,6 +188,14 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
+"libpam-runtime の前バージョンのバグにより、このシステムで利用する PAM プロ"
+"ファイルが選択されていない状態となりました。この結果、あなたのシステムのすべ"
+"てのアカウントへのアクセスは一時的に、パスワードが正しいか正しくないかにかか"
+"わらず、許可されていました。特に、このシステムがインターネットからアクセス可"
+"能になっている場合には、侵害された恐れがあります。セキュリティ障害、ウイル"
+"ス、マルウェアからの復旧に詳しくないのなら、このシステムを最初からインストー"
+"ルし直すか、技術のあるシステム管理者の助力を仰ぐべきです。より詳しい情報は、"
+"下記を参照してください:"
 
 #. Type: error
 #. Description
@@ -196,6 +206,9 @@ msgid ""
 "apologize that previous versions of libpam-runtime did not detect and "
 "prevent this situation."
 msgstr ""
+"この誤った設定を許してしまうバグは、libpam-runtime の現バージョンで修正されて"
+"おり、あなたの設定も正しくなっています。libpam-runtime の前バージョンでこの問"
+"題に気付き防げなかったことをおわびいたします。"
 
 #. Type: error
 #. Description
