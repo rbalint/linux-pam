@@ -4,10 +4,10 @@ Authors: Steve Langasek <vorlon@debian.org>
 
 Upstream status: superseded by pam_modutil_set_euid proposal
 
-Index: pam.deb/modules/pam_xauth/pam_xauth.c
+Index: pam.debian/modules/pam_xauth/pam_xauth.c
 ===================================================================
---- pam.deb.orig/modules/pam_xauth/pam_xauth.c
-+++ pam.deb/modules/pam_xauth/pam_xauth.c
+--- pam.debian.orig/modules/pam_xauth/pam_xauth.c
++++ pam.debian/modules/pam_xauth/pam_xauth.c
 @@ -35,7 +35,9 @@
  
  #include "config.h"
@@ -115,10 +115,91 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.c
  		if (fd == -1) {
  			errno = save_errno;
  			pam_syslog(pamh, LOG_ERR,
-Index: pam.deb/modules/pam_env/pam_env.c
+@@ -614,10 +672,35 @@
+ 		}
+ 		/* Set permissions on the new file and dispose of the
+ 		 * descriptor. */
++#ifdef HAVE_SYS_FSUID_H
+ 		setfsuid(tpwd->pw_uid);
++#endif
++		uid = getuid();
++		if (uid == tpwd->pw_uid)
++			setreuid(euid, uid);
++		else {
++			setreuid(0, -1);
++			if (setreuid(-1, uid) == -1) {
++				setreuid(-1, 0);
++				setreuid(0, -1);
++				if (setreuid(-1, tpwd->pw_uid))
++					return PAM_CRED_INSUFFICIENT;
++			}
++		}
++#endif
+ 		if (fchown(fd, tpwd->pw_uid, tpwd->pw_gid) < 0)
+ 		  pam_syslog (pamh, LOG_ERR, "fchown: %m");
++#ifdef HAVE_SYS_FSUID_H
+ 		setfsuid(euid);
++#else
++		if (uid == tpwd->pw_uid)
++			setreuid(uid, euid);
++		else {
++			if (setreuid(-1, 0) == -1)
++				setreuid(uid, -1);
++			setreuid(-1, euid);
++		}
++#endif
+ 		close(fd);
+ 
+ 		/* Get a copy of the filename to save as a data item for
+@@ -718,6 +801,9 @@
+ 	struct passwd *tpwd;
+ 	uid_t unlinkuid, euid;
+ 	unlinkuid = euid = geteuid ();
++#ifndef HAVE_SYS_FSUID_H
++	uid_t uid;
++#endif
+ 
+ 	if (pam_get_user(pamh, &user, NULL) != PAM_SUCCESS)
+ 		pam_syslog(pamh, LOG_ERR, "error determining target user's name");
+@@ -759,9 +845,34 @@
+ 				       (char*)cookiefile);
+ 			}
+ 			/* NFS with root_squash requires non-root user */
++#ifdef HAVE_SYS_FSUID_H
+ 			setfsuid (unlinkuid);
++#endif
++			uid = getuid();
++			if (uid == unlinkuid)
++				setreuid(euid, uid);
++			else {
++				setreuid(0, -1);
++				if (setreuid(-1, uid) == -1) {
++					setreuid(-1, 0);
++					setreuid(0, -1);
++					if (setreuid(-1, unlinkuid))
++						return PAM_CRED_INSUFFICIENT;
++				}
++			}
++#endif
+ 			unlink((char*)cookiefile);
++#ifdef HAVE_SYS_FSUID_H
+ 			setfsuid (euid);
++#else
++			if (uid == unlinkuid)
++				setreuid(uid, euid);
++			else {
++				if (setreuid(-1, 0) == -1)
++					setreuid(uid, -1);
++				setreuid(-1, euid);
++			}
++#endif
+ 			*((char*)cookiefile) = '\0';
+ 		}
+ 	}
+Index: pam.debian/modules/pam_env/pam_env.c
 ===================================================================
---- pam.deb.orig/modules/pam_env/pam_env.c
-+++ pam.deb/modules/pam_env/pam_env.c
+--- pam.debian.orig/modules/pam_env/pam_env.c
++++ pam.debian/modules/pam_env/pam_env.c
 @@ -23,7 +23,9 @@
  #include <string.h>
  #include <syslog.h>
@@ -167,10 +248,10 @@ Index: pam.deb/modules/pam_env/pam_env.c
          if (retval == PAM_IGNORE)
            retval = PAM_SUCCESS;
        }
-Index: pam.deb/modules/pam_mail/pam_mail.c
+Index: pam.debian/modules/pam_mail/pam_mail.c
 ===================================================================
---- pam.deb.orig/modules/pam_mail/pam_mail.c
-+++ pam.deb/modules/pam_mail/pam_mail.c
+--- pam.debian.orig/modules/pam_mail/pam_mail.c
++++ pam.debian/modules/pam_mail/pam_mail.c
 @@ -17,7 +17,9 @@
  #include <syslog.h>
  #include <sys/stat.h>
