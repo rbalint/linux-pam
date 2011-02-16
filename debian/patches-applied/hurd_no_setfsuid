@@ -121,7 +121,7 @@ Index: pam.debian/modules/pam_xauth/pam_xauth.c
  		 * descriptor. */
 +#ifdef HAVE_SYS_FSUID_H
  		setfsuid(tpwd->pw_uid);
-+#endif
++#else
 +		uid = getuid();
 +		if (uid == tpwd->pw_uid)
 +			setreuid(euid, uid);
@@ -167,7 +167,7 @@ Index: pam.debian/modules/pam_xauth/pam_xauth.c
  			/* NFS with root_squash requires non-root user */
 +#ifdef HAVE_SYS_FSUID_H
  			setfsuid (unlinkuid);
-+#endif
++#else
 +			uid = getuid();
 +			if (uid == unlinkuid)
 +				setreuid(euid, uid);
