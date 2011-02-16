@@ -1,17 +1,18 @@
-# Debconf questions for the Linux-PAM package translated to Swedish.
+# Debconf questions for the pam package translated to Swedish.
 # Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
 # This file is distributed under the same license as the pam package.
 #
-# Martin Bagge <brother@bsnet.se>, 2009
+# Martin Bagge <brother@bsnet.se>, 2009, 2010
 # Christer Andersson <klamm@comhem.se>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2009-08-13 23:05+0100\n"
+"PO-Revision-Date: 2010-03-30 02:31+0100\n"
 "Last-Translator: Martin Bagge <brother@bsnet.se>\n"
 "Language-Team: Swedish <debian-l10n-swedish@lists.debian.org>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,7 +23,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:1001
 msgid "Services to restart for PAM library upgrade:"
-msgstr "Tjänster att starta om för PAM-biblioteksuppgradering:"
+msgstr "Tjänster att starta om efter uppgradering av PAM-biblioteket:"
 
 #. Type: string
 #. Description
@@ -70,7 +71,8 @@ msgstr "Misslyckades med att starta om vissa tjänster för PAM-uppgradering"
 msgid ""
 "The following services could not be restarted for the PAM library upgrade:"
 msgstr ""
-"Följande tjänster kunde inte startas om efter PAM-biblioteksuppgradering:"
+"Följande tjänster kunde inte startas om efter uppgraderingen av PAM-"
+"biblioteket:"
 
 #. Type: error
 #. Description
@@ -112,13 +114,13 @@ msgid ""
 msgstr ""
 "Vissa paket med PAM-moduler tillhandahåller profiler som kan användas för "
 "att automatiskt justera hur applikationer som använder PAM fungerar på "
-"systemet. Ange vilka av dessa funkitoner du önskar aktivera."
+"systemet. Ange vilka av dessa funktioner du önskar aktivera."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr "Inkompatibla PAM-profiler har valdes."
+msgstr "Inkompatibla PAM-profiler valdes."
 
 #. Type: error
 #. Description
@@ -138,7 +140,7 @@ msgstr "Ange en annan uppsättning med moduler som ska aktiveras."
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr "Skriva över lokala förändringar i /etc/pam.d/common-*?"
+msgstr "Skriv över lokala förändringar i /etc/pam.d/common-*?"
 
 #. Type: boolean
 #. Description
@@ -159,7 +161,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:4001
 msgid "No PAM profiles have been selected."
-msgstr "Ingaa PAM-profiler valdes."
+msgstr "Inga PAM-profiler valdes."
 
 #. Type: error
 #. Description
@@ -193,14 +195,14 @@ msgid ""
 "this system from scratch or obtain the services of a skilled system "
 "administrator.  For more information, see:"
 msgstr ""
-"Ett fel i en tidigare version av libpam-runtime innebar att inga valet av "
-"PAM-profiler att använda på systemet inte utfördes. Detta betyder i sin tur "
-"att alla konton på systemet kunde använda skal, med eller utan ett korrekt "
-"lösenord. Om detta system är åtkomligt via nätet är det mycket troligt att "
-"det kan ha infiltrerats. Om du inte är säker på hur du ska återställa "
-"eventuella fel på grund av intrång, virus eller skadlig programvara bör du "
-"installera om systemet från grunden eller inhämta hjälp av en erfaren "
-"systemadministratör. Läs mer om detta på:"
+"Ett fel i en tidigare version av libpam-runtime innebar att inga PAM-"
+"profiler användes på systemet. Detta betydde i sin tur att alla konton på "
+"systemet kunde använda skal, med eller utan ett korrekt lösenord. Om detta "
+"system är åtkomligt via nätet är det mycket troligt att det kan ha "
+"infiltrerats. Om du inte är säker på hur du ska återställa eventuella fel på "
+"grund av intrång, virus eller skadlig programvara bör du installera om "
+"systemet från grunden eller inhämta hjälp av en erfaren systemadministratör. "
+"Läs mer om detta på:"
 
 #. Type: error
 #. Description

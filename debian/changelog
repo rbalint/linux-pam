@@ -1,4 +1,41 @@
-pam (1.1.1-4) UNRELEASED; urgency=low
+pam (1.1.1-6.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix pending l10n issues. Debconf translations:
+    - Czech (Miroslav Kure).  Closes: #598329
+    - Slovak (Ivan Masár).  Closes: #600164
+    - Japanese (Kenshi Muto).  Closes: #600247
+    - Finnish (Esko Arajärvi).  Closes: #600641
+
+ -- Christian Perrier <bubulle@debian.org>  Tue, 19 Oct 2010 07:30:49 +0200
+
+pam (1.1.1-6) unstable; urgency=low
+
+  * Updated debconf translations:
+    - Swedish, thanks to Martin Bagge <brother@bsnet.se> (closes: #575875)
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 05 Sep 2010 23:36:35 -0700
+
+pam (1.1.1-5) unstable; urgency=low
+
+  * debian/rules: pass getconf LFS_CFLAGS so that we get a 64-bit rlimit
+    interface.  Closes: #579402.
+  * Update debian/source.lintian-overrides to clean up some spurious
+    warnings.
+  * Bump Standards-Version to 3.9.1.
+  * Add lintian overrides for a few more spurious warnings.
+  * debian/patches-applied/no_PATH_MAX_on_hurd: define PATH_MAX for
+    compatibility when it's not already set.  Closes: #552043.
+  * debian/local/pam-auth-update: Don't try to pass embedded newlines to
+    debconf; backslash-escape them instead and use CAPB escape.
+  * debian/local/pam-auth-update: sort additional module options before
+    writing them out, so that we don't wind up with a different config file
+    on every invocation.  Thanks to Jim Paris <jim@jtan.com> for the patch.
+    Closes: #594123.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 05 Sep 2010 12:42:34 -0700
+
+pam (1.1.1-4) unstable; urgency=low
 
   * debian/patches/conditional_module,_conditional_man: if we don't have the
     libraries required for building pam_tty_audit, we shouldn't install the
@@ -6,11 +43,15 @@ pam (1.1.1-4) UNRELEASED; urgency=low
   * Updated debconf translations:
     - Portuguese, thanks to Eder L. Marques <eder@edermarques.net>
       (closes: #581746)
+    - Spanish, thanks to Javier Fernandez-Sanguino Peña <jfs@debian.org>
+      (closes: #592172)
+    - Galician, thanks to Jorge Barreiro <yortx.barry@gmail.com>
+      (closes: #592808)
   * Don't pass --version-script options when linking executables,
     only when linking libraries.  Thanks to Julien Cristau
     <jcristau@debian.org> for the fix.  Closes: #582362.
 
- -- Steve Langasek <vorlon@debian.org>  Mon, 07 Jun 2010 10:53:48 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 15 Aug 2010 21:53:46 -0700
 
 pam (1.1.1-3) unstable; urgency=low
 

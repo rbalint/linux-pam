@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 LDFLAGS	:= -Wl,-z,defs
-CFLAGS	:= -g 
+CFLAGS	:= -g $(shell getconf LFS_CFLAGS)
 
 ifeq (,$(findstring noopt, ${DEB_BUILD_OPTIONS}))
 CFLAGS += -O2
