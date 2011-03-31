@@ -1,3 +1,12 @@
+pam (1.1.2-3) UNRELEASED; urgency=low
+
+  * debian/patches-applied/parse-kernel-rlimits.patch: load rlimit defaults
+    from the kernel (via /proc/1/limits), instead of continuing to hardcode
+    the settings internally. Fall back to internal defaults when the kernel
+    rlimits are not found.  Closes: #620302. (LP: #746655, #391761)
+
+ -- Kees Cook <kees@debian.org>  Thu, 31 Mar 2011 14:37:35 -0700
+
 pam (1.1.2-2) unstable; urgency=low
 
   * debian/patches-applied/hurd_no_setfsuid: handle some new calls to
