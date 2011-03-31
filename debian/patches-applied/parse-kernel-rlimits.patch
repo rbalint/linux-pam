@@ -4,7 +4,7 @@ Description: Since the kernel sets a number of dynamic rlimits based on the
 Author: Kees Cook <kees@ubuntu.com>
 Bug-Ubuntu: https://launchpad.net/bugs/746655
 Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=620302
-Forwarded: no
+Forwarded: https://fedorahosted.org/pipermail/pam-developers/2011-March/000017.html
 
 Index: pam-debian/modules/pam_limits/pam_limits.c
 ===================================================================
