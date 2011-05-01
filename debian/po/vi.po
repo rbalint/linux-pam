@@ -1,13 +1,13 @@
 # Vietnamese translation for PAM.
-# Copyright © 2009 Free Software Foundation, Inc.
-# Clytie Siddall <clytie@riverland.net.au>, 2007-2009.
+# Copyright © 2010 Free Software Foundation, Inc.
+# Clytie Siddall <clytie@riverland.net.au>, 2007-2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.0.1-7\n"
+"Project-Id-Version: pam 1.1.1-6.1\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2010-09-05 23:50-0700\n"
-"PO-Revision-Date: 2009-03-06 00:05+0930\n"
+"PO-Revision-Date: 2010-10-24 20:46+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "Language: vi\n"
@@ -157,10 +157,8 @@ msgstr ""
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
-#, fuzzy
-#| msgid "Incompatible PAM profiles selected."
 msgid "No PAM profiles have been selected."
-msgstr "Bạn đã chọn một số hồ sơ PAM không tương thích với nhau."
+msgstr "Chưa chọn hồ sơ PAM."
 
 #. Type: error
 #. Description
@@ -170,6 +168,9 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Chưa chọn hồ sơ PAM nào để sử dụng trên hệ thống này. Trường hợp này cho "
+"phép mọi người dùng truy cập đến hệ thống mà không xác thực: không tốt ! Xin "
+"hãy chọn ít nhất một hồ sơ PAM trong danh sách sẵn sàng."
 
 #. Type: error
 #. Description
@@ -194,3 +195,37 @@ msgstr ""
 "trình này. Vì thế bạn nên khởi chạy lại hoặc ngừng chạy những chương trình "
 "này trước khi tiếp tục tiến trình nâng cấp, để tránh chặn người dùng đăng "
 "nhập vào buổi hợp đang chạy."
+
+#~ msgid "Your system allowed access without a password!"
+#~ msgstr "Hệ thống này cho phép truy cập mà không nhập mật khẩu !"
+
+#~ msgid ""
+#~ "A bug in a previous version of libpam-runtime resulted in no PAM profiles "
+#~ "being selected for use on this system.  As a result, access was allowed "
+#~ "for a time to all accounts on your system, with or without a correct "
+#~ "password. Especially if this system can be accessed from the Internet, it "
+#~ "is likely that it has been compromised.  Unless you are familiar with "
+#~ "recovering from security failures, viruses, and malicious software, you "
+#~ "should re-install this system from scratch or obtain the services of a "
+#~ "skilled system administrator.  For more information, see:"
+#~ msgstr ""
+#~ "Một phiên bản libpam-runtime trước chứa một lỗi dẫn đến không có hồ sơ "
+#~ "PAM nào được lựa chọn để sử dụng trên hệ thống này. Kết quả là trong một "
+#~ "thời gian nào đó truy cập được phép đến mọi tài khoản trên hệ thống này, "
+#~ "bất chấp nhập mật khẩu đúng hay không. Đặc biệt nếu hệ thống này cho phép "
+#~ "truy cập từ Internet, rất có thể là hệ thống này bị hại thậm. Nếu bạn "
+#~ "không quen với tiến trình phục hồi sau sự thất bại bảo mật, vi-rút và "
+#~ "phần mềm hiểm độc, bạn nên cài đặt lại hệ thống này từ số không, hoặc yêu "
+#~ "cầu dịch vụ của một quản trị hệ thống thành thạo. Để tìm thêm thông tin, "
+#~ "xem:"
+
+#~ msgid ""
+#~ "The bug that allowed this wrong configuration is fixed in the current "
+#~ "version of libpam-runtime, and your configuration has now been corrected. "
+#~ "We apologize that previous versions of libpam-runtime did not detect and "
+#~ "prevent this situation."
+#~ msgstr ""
+#~ "Lỗi cho phép cấu hình sai này đã được sửa chữa trong phiên bản libpam-"
+#~ "runtime hiện thời, và cấu hình của bạn giờ được sửa chữa. Chúng tôi xin "
+#~ "lỗi vì phiên bản libpam-runtime trước không phát hiện và ngăn cản trường "
+#~ "hợp này."
