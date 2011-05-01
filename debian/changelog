@@ -1,4 +1,4 @@
-pam (1.1.2-3) UNRELEASED; urgency=low
+pam (1.1.2-3) unstable; urgency=low
 
   [ Kees Cook ]
   * 027_pam_limits_better_init_allow_explicit_root: load rlimit defaults
@@ -14,7 +14,7 @@ pam (1.1.2-3) UNRELEASED; urgency=low
     - Catalan, thanks to Innocent De Marchi <tangram.peces@gmail.com>
       (closes: #622786)
 
- -- Kees Cook <kees@debian.org>  Thu, 31 Mar 2011 14:37:35 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 01 May 2011 01:49:11 -0700
 
 pam (1.1.2-2) unstable; urgency=low
 
