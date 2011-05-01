@@ -3,6 +3,7 @@ pam (1.1.2-3) UNRELEASED; urgency=low
   * Updated debconf translations:
     - Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
       (closes: #601197)
+    - Dutch, thanks to Eric Spreen <erispre@gmail.com> (closes: #605592)
 
  -- Steve Langasek <vorlon@debian.org>  Sat, 30 Apr 2011 23:24:03 -0700
 

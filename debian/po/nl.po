@@ -1,15 +1,17 @@
 # Debconf questions for the Linux-PAM package.
 # Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
 # This file is distributed under the same license as the pam package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Bart Cornelis <cobaco@skolelinux.no>, 2007.
+# Eric Spreen <erispre@gmail.com>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2010-09-05 23:50-0700\n"
-"PO-Revision-Date: 2007-10-26 19:55+0100\n"
-"Last-Translator: Bart Cornelis <cobaco@skolelinux.no>\n"
+"PO-Revision-Date: 2010-11-21 21:58+0100\n"
+"Last-Translator: Eric Spreen <erispre@gmail.com>\n"
 "Language-Team: debian-l10n-dutch <debian-l10n-dutch@lists.debian.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -86,7 +88,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM profiles to enable:"
-msgstr ""
+msgstr "PAM-profielen die ingeschakeld moeten worden:"
 
 #. Type: multiselect
 #. Description
@@ -97,6 +99,10 @@ msgid ""
 "allowing configuration of additional actions to take when starting user "
 "sessions."
 msgstr ""
+"Pluggable Authentication Modules (PAM) bepalen hoe authenticatie, "
+"autorisatie en wachtwoordverandering worden behandeld op het systeem. Ook "
+"staat het het instellen van overige acties die moeten worden ondernomen bij "
+"het starten van gebruikerssessies toe."
 
 #. Type: multiselect
 #. Description
@@ -106,12 +112,15 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
+"Sommige PAM-modulepakketten leveren profielen die kunnen worden gebruikt om "
+"automatisch het gedrag van alle programma's die PAM gebruiken aan te passen. "
+"Geeft u alstublieft aan welk van deze instellingen u wilt gebruiken."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Incompatible PAM profiles selected."
-msgstr ""
+msgstr "Strijdige PAM-profielen geselecteerd."
 
 #. Type: error
 #. Description
@@ -119,19 +128,19 @@ msgstr ""
 #. PAM profile names.
 #: ../libpam-runtime.templates:2001
 msgid "The following PAM profiles cannot be used together:"
-msgstr ""
+msgstr "De volgende PAM-profielen kunnen niet samen worden gebruikt:"
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:2001
 msgid "Please select a different set of modules to enable."
-msgstr ""
+msgstr "Selecteer een andere set modules om in te schakelen."
 
 #. Type: boolean
 #. Description
 #: ../libpam-runtime.templates:3001
 msgid "Override local changes to /etc/pam.d/common-*?"
-msgstr ""
+msgstr "Wilt u de locale veranderingen aan /etc/pam.d/common-* overschrijven?"
 
 #. Type: boolean
 #. Description
@@ -143,12 +152,17 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
+"Een of meer van de bestanden /etc/pam.d/common-{auth,account,password,"
+"session} zijn lokaal aangepast. Geef aan of deze lokale veranderingen moeten "
+"worden overschreven, door de door het systeem geleverde configuratie te "
+"gebruiken. Als u dit weigert, zult u de configuratie van de authenticatie "
+"van uw systeem met de hand moeten onderhouden."
 
 #. Type: error
 #. Description
 #: ../libpam-runtime.templates:4001
 msgid "No PAM profiles have been selected."
-msgstr ""
+msgstr "Er zijn geen PAM-profielen gelecteerd."
 
 #. Type: error
 #. Description
@@ -158,12 +172,16 @@ msgid ""
 "all users access without authenticating, and is not allowed.  Please select "
 "at least one PAM profile from the available list."
 msgstr ""
+"Er zijn geen PAM-profielen geselecteerd om gebruikt te worden op dit "
+"systeem. Dit zou alle gebruikers toegang geven zonder authenticatie, hetgeen "
+"niet is toegestaan. Selecteer minstens een PAM-profiel van de beschikbare "
+"lijst."
 
 #. Type: error
 #. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
-msgstr ""
+msgstr "xscreensaver en xlockmore moeten worden herstart voor u kunt upgraden"
 
 #. Type: error
 #. Description
@@ -176,3 +194,10 @@ msgid ""
 "stopped before continuing this upgrade, to avoid locking your users out of "
 "their current sessions."
 msgstr ""
+"Er zijn een of meer draaiende instanties van xscreensaver of xlockmore "
+"gedecteerd op dit systeem. Wegens strijdige veranderingen in bibliotheken "
+"zal de upgrade van het pakket libpam-modules een systeem veroorzaken waarin "
+"u zich niet zult kunnen authenticeren tegenover deze programma's. U dient "
+"ervoor te zorgen dat deze programma's worden herstart of gestopt voordat u "
+"verder gaat met deze upgrade, om te voorkomen dat gebruikers worden "
+"uitgesloten van hun huidige sessies."
