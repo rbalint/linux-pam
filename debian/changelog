@@ -1,7 +1,7 @@
 pam (1.1.2-3) UNRELEASED; urgency=low
 
   [ Kees Cook ]
-  * debian/patches-applied/parse-kernel-rlimits.patch: load rlimit defaults
+  * 027_pam_limits_better_init_allow_explicit_root: load rlimit defaults
     from the kernel (via /proc/1/limits), instead of continuing to hardcode
     the settings internally. Fall back to internal defaults when the kernel
     rlimits are not found.  Closes: #620302. (LP: #746655, #391761)

@@ -21,4 +21,3 @@ update-motd
 fix-man-crud
 sys-types-include.patch
 no_PATH_MAX_on_hurd
-parse-kernel-rlimits.patch
