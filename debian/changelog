@@ -1,12 +1,18 @@
 pam (1.1.2-3) UNRELEASED; urgency=low
 
+  [ Kees Cook ]
+  * debian/patches-applied/parse-kernel-rlimits.patch: load rlimit defaults
+    from the kernel (via /proc/1/limits), instead of continuing to hardcode
+    the settings internally. Fall back to internal defaults when the kernel
+    rlimits are not found.  Closes: #620302. (LP: #746655, #391761)
+
   * Updated debconf translations:
     - Vietnamese, thanks to Clytie Siddall <clytie@riverland.net.au>
       (closes: #601197)
     - Dutch, thanks to Eric Spreen <erispre@gmail.com> (closes: #605592)
     - Danish, thanks to Joe Dalton <joedalton2@yahoo.dk> (closes: #606739)
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 30 Apr 2011 23:24:03 -0700
+ -- Kees Cook <kees@debian.org>  Thu, 31 Mar 2011 14:37:35 -0700
 
 pam (1.1.2-2) unstable; urgency=low
 
