@@ -10,6 +10,8 @@ pam (1.1.3-1) UNRELEASED; urgency=low
   * debian/patches-applied/027_pam_limits_better_init_allow_explicit_root:
     set a better default RLIMIT_MEMLOCK value for BSD kernels.  Thanks to
     Petr Salinger for the fix.  Closes: #602902.
+  * bump the minimum version check in maintainer scripts for the restart
+    handling.
 
  -- Steve Langasek <vorlon@debian.org>  Tue, 31 May 2011 21:37:42 -0700
 
