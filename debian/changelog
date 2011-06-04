@@ -3,6 +3,8 @@ pam (1.1.3-1) UNRELEASED; urgency=low
   * New upstream release.
     - Fixes CVE-2010-3853, executing namespace.init with an insecure
       environment set by the caller.  Closes: #608273.
+    - Fixes CVE-2010-3316 CVE-2010-3430 CVE-2010-3431 CVE-2010-3435.
+      Closes: #599832.
   * Port hurd_no_setfsuid patch to new pam_modutil_{drop,restore}_priv
     interface; now possibly upstreamable
 
