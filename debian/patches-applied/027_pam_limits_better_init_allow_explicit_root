@@ -19,16 +19,20 @@ Bug-Ubuntu: https://launchpad.net/bugs/746655
 Bug-Debian: http://bugs.debian.org/63230
 Bug-Debian: http://bugs.debian.org/620302
 Forwarded: https://fedorahosted.org/pipermail/pam-developers/2011-March/000017.html
-Index: pam.debian/modules/pam_limits/pam_limits.c
+Index: pam.deb/modules/pam_limits/pam_limits.c
 ===================================================================
---- pam.debian.orig/modules/pam_limits/pam_limits.c
-+++ pam.debian/modules/pam_limits/pam_limits.c
-@@ -45,15 +45,20 @@
+--- pam.deb.orig/modules/pam_limits/pam_limits.c
++++ pam.deb/modules/pam_limits/pam_limits.c
+@@ -45,15 +45,24 @@
  #include <libaudit.h>
  #endif
  
 +#ifndef MLOCK_LIMIT
++#ifdef __FreeBSD_kernel__
++#define MLOCK_LIMIT RLIM_INFINITY
++#else
 +#define MLOCK_LIMIT (64*1024)
++#endif
 +#endif
 +
  /* Module defines */
@@ -47,7 +51,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
  
  static const char *limits_def_names[] = {
         "USER",
-@@ -61,6 +66,7 @@
+@@ -61,6 +70,7 @@
         "ALLGROUP",
         "ALL",
         "DEFAULT",
@@ -55,7 +59,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
         "NONE",
         NULL
  };
-@@ -74,6 +80,7 @@
+@@ -74,6 +84,7 @@
  
  /* internal data */
  struct pam_limit_s {
@@ -63,7 +67,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
      int login_limit;     /* the max logins limit */
      int login_limit_def; /* which entry set the login limit */
      int flag_numsyslogins; /* whether to limit logins only for a
-@@ -291,13 +298,154 @@
+@@ -291,13 +302,154 @@
      return 0;
  }
  
@@ -219,7 +223,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
      for(i = 0; i < RLIM_NLIMITS; i++) {
  	int r = getrlimit(i, &pl->limits[i].limit);
  	if (r == -1) {
-@@ -312,6 +460,71 @@
+@@ -312,6 +464,71 @@
  	}
      }
  
@@ -291,7 +295,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
      errno = 0;
      pl->priority = getpriority (PRIO_PROCESS, 0);
      if (pl->priority == -1 && errno != 0)
-@@ -591,7 +804,7 @@
+@@ -591,7 +808,7 @@
  
              if (strcmp(uname, domain) == 0) /* this user have a limit */
                  process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
@@ -300,7 +304,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -600,7 +813,7 @@
+@@ -600,7 +817,7 @@
                  if (pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1))
                      process_limit(pamh, LIMITS_DEF_GROUP, ltype, item, value, ctrl,
  				  pl);
@@ -309,7 +313,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -614,7 +827,7 @@
+@@ -614,7 +831,7 @@
                      process_limit(pamh, LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
  				  pl);
  		}
@@ -318,7 +322,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
                  process_limit(pamh, LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -649,6 +862,12 @@
+@@ -649,6 +866,12 @@
      int status;
      int retval = LIMITED_OK;
  
@@ -331,7 +335,7 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
        int res;
  
-@@ -743,12 +962,14 @@
+@@ -743,12 +966,14 @@
          return PAM_USER_UNKNOWN;
      }
  
@@ -347,10 +351,10 @@ Index: pam.debian/modules/pam_limits/pam_limits.c
      retval = parse_config_file(pamh, pwd->pw_name, ctrl, pl);
      if (retval == PAM_IGNORE) {
  	D(("the configuration file ('%s') has an applicable '<domain> -' entry", CONF_FILE));
-Index: pam.debian/modules/pam_limits/limits.conf
+Index: pam.deb/modules/pam_limits/limits.conf
 ===================================================================
---- pam.debian.orig/modules/pam_limits/limits.conf
-+++ pam.debian/modules/pam_limits/limits.conf
+--- pam.deb.orig/modules/pam_limits/limits.conf
++++ pam.deb/modules/pam_limits/limits.conf
 @@ -11,6 +11,9 @@
  #        - the wildcard *, for default entry
  #        - the wildcard %, can be also used with %group syntax,
@@ -369,10 +373,10 @@ Index: pam.debian/modules/pam_limits/limits.conf
  #*               hard    rss             10000
  #@student        hard    nproc           20
  #@faculty        soft    nproc           20
-Index: pam.debian/modules/pam_limits/limits.conf.5.xml
+Index: pam.deb/modules/pam_limits/limits.conf.5.xml
 ===================================================================
---- pam.debian.orig/modules/pam_limits/limits.conf.5.xml
-+++ pam.debian/modules/pam_limits/limits.conf.5.xml
+--- pam.deb.orig/modules/pam_limits/limits.conf.5.xml
++++ pam.deb/modules/pam_limits/limits.conf.5.xml
 @@ -57,6 +57,11 @@
                </para>
              </listitem>
@@ -393,10 +397,10 @@ Index: pam.debian/modules/pam_limits/limits.conf.5.xml
  *               hard    rss             10000
  @student        hard    nproc           20
  @faculty        soft    nproc           20
-Index: pam.debian/modules/pam_limits/limits.conf.5
+Index: pam.deb/modules/pam_limits/limits.conf.5
 ===================================================================
---- pam.debian.orig/modules/pam_limits/limits.conf.5
-+++ pam.debian/modules/pam_limits/limits.conf.5
+--- pam.deb.orig/modules/pam_limits/limits.conf.5
++++ pam.deb/modules/pam_limits/limits.conf.5
 @@ -93,6 +93,11 @@
  \fI%group\fR
  syntax\&.
@@ -417,10 +421,10 @@ Index: pam.debian/modules/pam_limits/limits.conf.5
  *               hard    rss             10000
  @student        hard    nproc           20
  @faculty        soft    nproc           20
-Index: pam.debian/modules/pam_limits/README
+Index: pam.deb/modules/pam_limits/README
 ===================================================================
---- pam.debian.orig/modules/pam_limits/README
-+++ pam.debian/modules/pam_limits/README
+--- pam.deb.orig/modules/pam_limits/README
++++ pam.deb/modules/pam_limits/README
 @@ -55,6 +55,7 @@
  limits.conf.
  
