@@ -2,301 +2,74 @@ On systems without setfsuid(), use setreuid() instead.
 
 Authors: Steve Langasek <vorlon@debian.org>
 
-Upstream status: superseded by pam_modutil_set_euid proposal
+Upstream status: to be forwarded, now that pam_modutil_{drop,regain}_priv
+ are implemented
 
-Index: pam.debian/modules/pam_xauth/pam_xauth.c
+Index: pam.deb/libpam/pam_modutil_priv.c
 ===================================================================
---- pam.debian.orig/modules/pam_xauth/pam_xauth.c
-+++ pam.debian/modules/pam_xauth/pam_xauth.c
-@@ -35,7 +35,9 @@
- 
- #include "config.h"
- #include <sys/types.h>
+--- pam.deb.orig/libpam/pam_modutil_priv.c
++++ pam.deb/libpam/pam_modutil_priv.c
+@@ -14,7 +14,9 @@
+ #include <syslog.h>
+ #include <pwd.h>
+ #include <grp.h>
 +#ifdef HAVE_SYS_FSUID_H
  #include <sys/fsuid.h>
 +#endif /* HAVE_SYS_FSUID_H */
- #include <sys/wait.h>
- #include <errno.h>
- #include <fnmatch.h>
-@@ -235,6 +237,9 @@
- 	FILE *fp;
- 	int i, save_errno;
- 	uid_t euid;
-+#ifndef HAVE_SYS_FSUID_H
-+	uid_t uid;
-+#endif
- 	/* Check this user's <sense> file. */
- 	pwd = pam_modutil_getpwnam(pamh, this_user);
- 	if (pwd == NULL) {
-@@ -251,10 +256,35 @@
- 		return PAM_SESSION_ERR;
- 	}
- 	euid = geteuid();
+ 
+ /*
+  * Two setfsuid() calls in a row are necessary to check
+@@ -22,17 +24,53 @@
+  */
+ static int change_uid(uid_t uid, uid_t *save)
+ {
 +#ifdef HAVE_SYS_FSUID_H
- 	setfsuid(pwd->pw_uid);
+ 	uid_t tmp = setfsuid(uid);
+ 	if (save)
+ 		*save = tmp;
+ 	return (uid_t) setfsuid(uid) == uid ? 0 : -1;
 +#else
-+	uid = getuid();
-+	if (uid == pwd->pw_uid)
++	uid_t euid = geteuid();
++	uid_t ruid = getuid();
++	if (save)
++		*save = ruid;
++	if (ruid == uid && uid != 0)
 +		setreuid(euid, uid);
 +	else {
 +		setreuid(0, -1);
 +		if (setreuid(-1, uid) == -1) {
 +			setreuid(-1, 0);
 +			setreuid(0, -1);
-+			if (setreuid(-1, pwd->pw_uid))
-+				return PAM_CRED_INSUFFICIENT;
++			if (setreuid(-1, uid))
++				return -1;
 +		}
 +	}
 +#endif
- 	fp = fopen(path, "r");
- 	save_errno = errno;
+ }
+ static int change_gid(gid_t gid, gid_t *save)
+ {
 +#ifdef HAVE_SYS_FSUID_H
- 	setfsuid(euid);
+ 	gid_t tmp = setfsgid(gid);
+ 	if (save)
+ 		*save = tmp;
+ 	return (gid_t) setfsgid(gid) == gid ? 0 : -1;
 +#else
-+	if (uid == pwd->pw_uid)
-+		setreuid(uid, euid);
++	gid_t egid = getegid();
++	gid_t rgid = getgid();
++	if (save)
++		*save = rgid;
++	if (rgid == gid)
++		setregid(egid, gid);
 +	else {
-+		if (setreuid(-1, 0) != -1)
-+			setreuid(uid, -1);
-+		setreuid(-1, euid);
-+	}
-+#endif
- 	if (fp != NULL) {
- 		char buf[LINE_MAX], *tmp;
- 		/* Scan the file for a list of specs of users to "trust". */
-@@ -325,6 +355,9 @@
- 	int fd, i, debug = 0;
- 	int retval = PAM_SUCCESS;
- 	uid_t systemuser = 499, targetuser = 0, euid;
-+#ifndef HAVE_SYS_FSUID_H
-+	uid_t uid;
-+#endif
- 
- 	/* Parse arguments.  We don't understand many, so no sense in breaking
- 	 * this into a separate function. */
-@@ -573,7 +606,22 @@
- 
- 		/* Generate a new file to hold the data. */
- 		euid = geteuid();
-+#ifdef HAVE_SYS_FSUID_H
- 		setfsuid(tpwd->pw_uid);
-+#else
-+		uid = getuid();
-+		if (uid == tpwd->pw_uid)
-+			setreuid(euid, uid);
-+		else {
-+			setreuid(0, -1);
-+			if (setreuid(-1, uid) == -1) {
-+				setreuid(-1, 0);
-+				setreuid(0, -1);
-+				if (setreuid(-1, tpwd->pw_uid))
-+					return PAM_CRED_INSUFFICIENT;
-+			}
++		setregid(0, -1);
++		if (setregid(-1, gid) == -1) {
++			setregid(-1, 0);
++			setregid(0, -1);
++			if (setregid(-1, gid))
++				return -1;
 +		}
-+#endif
- 
- #ifdef WITH_SELINUX
- 		if (is_selinux_enabled() > 0) {
-@@ -603,7 +651,17 @@
- 		save_errno = errno;
- #endif
- 
-+#ifdef HAVE_SYS_FSUID_H
- 		setfsuid(euid);
-+#else
-+		if (uid == tpwd->pw_uid)
-+			setreuid(uid, euid);
-+		else {
-+			if (setreuid(-1, 0) == -1)
-+				setreuid(uid, -1);
-+			setreuid(-1, euid);
-+		}
-+#endif
- 		if (fd == -1) {
- 			errno = save_errno;
- 			pam_syslog(pamh, LOG_ERR,
-@@ -614,10 +672,35 @@
- 		}
- 		/* Set permissions on the new file and dispose of the
- 		 * descriptor. */
-+#ifdef HAVE_SYS_FSUID_H
- 		setfsuid(tpwd->pw_uid);
-+#else
-+		uid = getuid();
-+		if (uid == tpwd->pw_uid)
-+			setreuid(euid, uid);
-+		else {
-+			setreuid(0, -1);
-+			if (setreuid(-1, uid) == -1) {
-+				setreuid(-1, 0);
-+				setreuid(0, -1);
-+				if (setreuid(-1, tpwd->pw_uid))
-+					return PAM_CRED_INSUFFICIENT;
-+			}
-+		}
-+#endif
- 		if (fchown(fd, tpwd->pw_uid, tpwd->pw_gid) < 0)
- 		  pam_syslog (pamh, LOG_ERR, "fchown: %m");
-+#ifdef HAVE_SYS_FSUID_H
- 		setfsuid(euid);
-+#else
-+		if (uid == tpwd->pw_uid)
-+			setreuid(uid, euid);
-+		else {
-+			if (setreuid(-1, 0) == -1)
-+				setreuid(uid, -1);
-+			setreuid(-1, euid);
-+		}
-+#endif
- 		close(fd);
- 
- 		/* Get a copy of the filename to save as a data item for
-@@ -718,6 +801,9 @@
- 	struct passwd *tpwd;
- 	uid_t unlinkuid, euid;
- 	unlinkuid = euid = geteuid ();
-+#ifndef HAVE_SYS_FSUID_H
-+	uid_t uid;
-+#endif
- 
- 	if (pam_get_user(pamh, &user, NULL) != PAM_SUCCESS)
- 		pam_syslog(pamh, LOG_ERR, "error determining target user's name");
-@@ -759,9 +845,34 @@
- 				       (char*)cookiefile);
- 			}
- 			/* NFS with root_squash requires non-root user */
-+#ifdef HAVE_SYS_FSUID_H
- 			setfsuid (unlinkuid);
-+#else
-+			uid = getuid();
-+			if (uid == unlinkuid)
-+				setreuid(euid, uid);
-+			else {
-+				setreuid(0, -1);
-+				if (setreuid(-1, uid) == -1) {
-+					setreuid(-1, 0);
-+					setreuid(0, -1);
-+					if (setreuid(-1, unlinkuid))
-+						return PAM_CRED_INSUFFICIENT;
-+				}
-+			}
-+#endif
- 			unlink((char*)cookiefile);
-+#ifdef HAVE_SYS_FSUID_H
- 			setfsuid (euid);
-+#else
-+			if (uid == unlinkuid)
-+				setreuid(uid, euid);
-+			else {
-+				if (setreuid(-1, 0) == -1)
-+					setreuid(uid, -1);
-+				setreuid(-1, euid);
-+			}
-+#endif
- 			*((char*)cookiefile) = '\0';
- 		}
- 	}
-Index: pam.debian/modules/pam_env/pam_env.c
-===================================================================
---- pam.debian.orig/modules/pam_env/pam_env.c
-+++ pam.debian/modules/pam_env/pam_env.c
-@@ -23,7 +23,9 @@
- #include <string.h>
- #include <syslog.h>
- #include <sys/stat.h>
-+#ifdef HAVE_SYS_FSUID_H
- #include <sys/fsuid.h>
-+#endif
- #include <sys/types.h>
- #include <unistd.h>
- 
-@@ -792,9 +794,37 @@
- 	}
-       if (stat(envpath, &statbuf) == 0) {
- 	uid_t euid = geteuid();
-+
-+#ifdef HAVE_SYS_FSUID_H
-         setfsuid (user_entry->pw_uid);
-+#else
-+	uid_t uid = getuid();
-+	if (uid == user_entry->pw_uid)
-+	  setreuid(euid, uid);
-+	else {
-+	  setreuid(0, -1);
-+	  if (setreuid(-1, uid) == -1) {
-+	    setreuid(-1, 0);
-+	    setreuid(0, -1);
-+	    setreuid(-1, user_entry->pw_uid);
-+	    /* If this fails we didn't have root privs anyway, so we fall
-+	       through; not the safest, but no different from what we do in
-+	       the setfsuid() case. */
-+	  }
 +	}
 +#endif
-         retval = _parse_config_file(pamh, envpath);
-+#ifdef HAVE_SYS_FSUID_H
- 	setfsuid (euid);
-+#else
-+	if (uid == user_entry->pw_uid)
-+	  setreuid(uid, euid);
-+	else {
-+	  if (setreuid(-1, 0) == 0)
-+	    setreuid(uid, -1);
-+	  setreuid(-1, euid);
-+	}
-+#endif
-         if (retval == PAM_IGNORE)
-           retval = PAM_SUCCESS;
-       }
-Index: pam.debian/modules/pam_mail/pam_mail.c
-===================================================================
---- pam.debian.orig/modules/pam_mail/pam_mail.c
-+++ pam.debian/modules/pam_mail/pam_mail.c
-@@ -17,7 +17,9 @@
- #include <syslog.h>
- #include <sys/stat.h>
- #include <sys/types.h>
-+#ifdef HAVE_SYS_FSUID_H
- #include <sys/fsuid.h>
-+#endif
- #include <unistd.h>
- #include <dirent.h>
- #include <errno.h>
-@@ -446,9 +448,37 @@
- 	|| (!est && (ctrl & PAM_LOGOUT_TOO))) {
-         uid_t euid = geteuid();
+ }
  
-+#ifdef HAVE_SYS_FSUID_H
-         setfsuid (pwd->pw_uid);
-+#else
-+	uid_t uid = getuid();
-+
-+	if (uid == pwd->pw_uid)
-+	  setreuid(euid, uid);
-+	else {
-+	  setreuid(0, -1);
-+	  if (setreuid(-1, uid) == -1) {
-+	    setreuid(-1, 0);
-+	    setreuid(0, -1);
-+	    setreuid(-1, pwd->pw_uid);
-+	    /* If this fails we didn't have root privs anyway, so we fall
-+	       through; not the safest, but no different from what we do in
-+	       the setfsuid() case. */
-+	  }
-+	}
-+#endif
- 	type = get_mail_status(pamh, ctrl, folder);
-+#ifdef HAVE_SYS_FSUID_H
- 	setfsuid (euid);
-+#else
-+	if (uid == pwd->pw_uid)
-+	  setreuid(uid, euid);
-+	else {
-+	  if (setreuid(-1, 0) == 0)
-+	    setreuid(uid, -1);
-+	  setreuid(-1, euid);
-+	}
-+#endif
- 
- 	if (type != 0) {
- 	    retval = report_mail(pamh, ctrl, type, folder);
+ static int cleanup(struct pam_modutil_privs *p)
