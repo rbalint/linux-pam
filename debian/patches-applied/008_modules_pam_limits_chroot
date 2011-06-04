@@ -99,15 +99,15 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  .\"     Title: limits.conf
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 05/31/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "LIMITS\&.CONF" "5" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "LIMITS\&.CONF" "5" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "LIMITS\&.CONF" "5" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "LIMITS\&.CONF" "5" "05/31/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff

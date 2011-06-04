@@ -14,15 +14,15 @@ Index: pam.deb/doc/man/PAM.8
  .\"     Title: pam
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM" "8" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM" "7" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM" "7" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -266,8 +266,8 @@ Index: pam.deb/doc/man/PAM.8
 Index: pam.deb/doc/man/pam.8
 ===================================================================
 --- pam.deb.orig/doc/man/pam.8
-+++ /dev/null
-@@ -1,1 +1,1 @@
++++ pam.deb/doc/man/pam.8
+@@ -1 +1 @@
 -.so man8/PAM.8
 +.so man7/PAM.7
 Index: pam.deb/doc/man/pam.8.xml
@@ -301,15 +301,15 @@ Index: pam.deb/modules/pam_access/access.conf.5
  .\"     Title: access.conf
  .\"    Author: [see the "AUTHORS" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "ACCESS\&.CONF" "5" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "ACCESS\&.CONF" "5" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "ACCESS\&.CONF" "5" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "ACCESS\&.CONF" "5" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -542,15 +542,15 @@ Index: pam.deb/modules/pam_env/pam_env.conf.5
  .\"     Title: pam_env.conf
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ENV\&.CONF" "5" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_ENV\&.CONF" "5" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_ENV\&.CONF" "5" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_ENV\&.CONF" "5" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -877,15 +877,15 @@ Index: pam.deb/modules/pam_group/group.conf.5
  .\"     Title: group.conf
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 08/04/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "GROUP\&.CONF" "5" "08/04/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "GROUP\&.CONF" "5" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "GROUP\&.CONF" "5" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "GROUP\&.CONF" "5" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -1232,15 +1232,15 @@ Index: pam.deb/modules/pam_namespace/namespace.conf.5
  .\"     Title: namespace.conf
  .\"    Author: [see the "AUTHORS" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "NAMESPACE\&.CONF" "5" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "NAMESPACE\&.CONF" "5" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "NAMESPACE\&.CONF" "5" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "NAMESPACE\&.CONF" "5" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -1537,15 +1537,15 @@ Index: pam.deb/modules/pam_time/time.conf.5
  .\"     Title: time.conf
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "TIME\&.CONF" "5" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "TIME\&.CONF" "5" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "TIME\&.CONF" "5" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "TIME\&.CONF" "5" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -1829,15 +1829,15 @@ Index: pam.deb/modules/pam_access/pam_access.8
  .\"     Title: pam_access
  .\"    Author: [see the "AUTHORS" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ACCESS" "8" "07/08/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_ACCESS" "8" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_ACCESS" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_ACCESS" "8" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -2089,15 +2089,15 @@ Index: pam.deb/modules/pam_cracklib/pam_cracklib.8
  .\"     Title: pam_cracklib
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_CRACKLIB" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_CRACKLIB" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_CRACKLIB" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_CRACKLIB" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -2409,15 +2409,15 @@ Index: pam.deb/modules/pam_debug/pam_debug.8
  .\"     Title: pam_debug
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_DEBUG" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_DEBUG" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_DEBUG" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_DEBUG" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -2652,15 +2652,15 @@ Index: pam.deb/modules/pam_deny/pam_deny.8
  .\"     Title: pam_deny
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_DENY" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_DENY" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_DENY" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_DENY" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -2899,15 +2899,15 @@ Index: pam.deb/modules/pam_echo/pam_echo.8
  .\"     Title: pam_echo
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ECHO" "8" "07/08/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_ECHO" "8" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_ECHO" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_ECHO" "8" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -3147,15 +3147,15 @@ Index: pam.deb/modules/pam_env/pam_env.8
  .\"     Title: pam_env
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ENV" "8" "07/08/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_ENV" "8" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_ENV" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_ENV" "8" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -3344,7 +3344,7 @@ Index: pam.deb/modules/pam_env/pam_env.8
  by default)\&. You can change the default file to parse, with the
  \fIenvfile\fR
  flag and turn it on or off by setting the
-@@ -196,7 +55,7 @@
+@@ -198,7 +57,7 @@
  \fBconffile=\fR\fB\fI/path/to/pam_env\&.conf\fR\fR
  .RS 4
  Indicate an alternative
@@ -3353,7 +3353,7 @@ Index: pam.deb/modules/pam_env/pam_env.8
  style configuration file to override the default\&. This can be useful when different services need different environments\&.
  .RE
  .PP
-@@ -209,7 +68,7 @@
+@@ -211,7 +70,7 @@
  \fBenvfile=\fR\fB\fI/path/to/environment\fR\fR
  .RS 4
  Indicate an alternative
@@ -3362,7 +3362,7 @@ Index: pam.deb/modules/pam_env/pam_env.8
  file to override the default\&. This can be useful when different services need different environments\&.
  .RE
  .PP
-@@ -221,7 +80,7 @@
+@@ -223,7 +82,7 @@
  \fBuser_envfile=\fR\fB\fIfilename\fR\fR
  .RS 4
  Indicate an alternative
@@ -3371,7 +3371,7 @@ Index: pam.deb/modules/pam_env/pam_env.8
  file to override the default\&. This can be useful when different services need different environments\&. The filename is relative to the user home directory\&.
  .RE
  .PP
-@@ -259,17 +118,17 @@
+@@ -261,17 +120,17 @@
  .RE
  .SH "FILES"
  .PP
@@ -3392,7 +3392,7 @@ Index: pam.deb/modules/pam_env/pam_env.8
  .RS 4
  User specific environment file
  .RE
-@@ -278,7 +137,7 @@
+@@ -280,7 +139,7 @@
  
  \fBpam_env.conf\fR(5),
  \fBpam.d\fR(5),
@@ -3405,7 +3405,7 @@ Index: pam.deb/modules/pam_env/pam_env.8.xml
 ===================================================================
 --- pam.deb.orig/modules/pam_env/pam_env.8.xml
 +++ pam.deb/modules/pam_env/pam_env.8.xml
-@@ -231,7 +231,7 @@
+@@ -235,7 +235,7 @@
          <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
        </citerefentry>,
        <citerefentry>
@@ -3423,15 +3423,15 @@ Index: pam.deb/modules/pam_exec/pam_exec.8
  .\"     Title: pam_exec
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_EXEC" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_EXEC" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_EXEC" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_EXEC" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -3611,7 +3611,7 @@ Index: pam.deb/modules/pam_exec/pam_exec.8
  \fBpam_getenvlist\fR(3)
  In addition, the following PAM items are exported as environment variables:
  \fIPAM_RHOST\fR,
-@@ -210,7 +69,7 @@
+@@ -212,7 +71,7 @@
  \fBlog=\fR\fB\fIfile\fR\fR
  .RS 4
  The output of the command is appended to
@@ -3620,7 +3620,7 @@ Index: pam.deb/modules/pam_exec/pam_exec.8
  .RE
  .PP
  \fBquiet\fR
-@@ -256,30 +115,16 @@
+@@ -258,30 +117,16 @@
  .SH "EXAMPLES"
  .PP
  Add the following line to
@@ -3652,7 +3652,7 @@ Index: pam.deb/modules/pam_exec/pam_exec.8
  .if n \{\
  .RE
  .\}
-@@ -289,15 +134,9 @@
+@@ -291,15 +136,9 @@
  .if n \{\
  .RS 4
  .\}
@@ -3668,7 +3668,7 @@ Index: pam.deb/modules/pam_exec/pam_exec.8
  .if n \{\
  .RE
  .\}
-@@ -308,7 +147,7 @@
+@@ -310,7 +149,7 @@
  
  \fBpam.conf\fR(5),
  \fBpam.d\fR(5),
@@ -3681,7 +3681,7 @@ Index: pam.deb/modules/pam_exec/pam_exec.8.xml
 ===================================================================
 --- pam.deb.orig/modules/pam_exec/pam_exec.8.xml
 +++ pam.deb/modules/pam_exec/pam_exec.8.xml
-@@ -223,7 +223,7 @@
+@@ -228,7 +228,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
        </citerefentry>,
        <citerefentry>
@@ -3699,15 +3699,15 @@ Index: pam.deb/modules/pam_faildelay/pam_faildelay.8
  .\"     Title: pam_faildelay
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_FAILDELAY" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_FAILDELAY" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_FAILDELAY" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_FAILDELAY" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -3946,15 +3946,15 @@ Index: pam.deb/modules/pam_filter/pam_filter.8
  .\"     Title: pam_filter
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_FILTER" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_FILTER" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_FILTER" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_FILTER" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -4209,15 +4209,15 @@ Index: pam.deb/modules/pam_ftp/pam_ftp.8
  .\"     Title: pam_ftp
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_FTP" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_FTP" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_FTP" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_FTP" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -4469,15 +4469,15 @@ Index: pam.deb/modules/pam_group/pam_group.8
  .\"     Title: pam_group
  .\"    Author: [see the "AUTHORS" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_GROUP" "8" "07/08/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_GROUP" "8" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_GROUP" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_GROUP" "8" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -4715,15 +4715,15 @@ Index: pam.deb/modules/pam_issue/pam_issue.8
  .\"     Title: pam_issue
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ISSUE" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_ISSUE" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_ISSUE" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_ISSUE" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -4973,15 +4973,15 @@ Index: pam.deb/modules/pam_keyinit/pam_keyinit.8
  .\"     Title: pam_keyinit
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_KEYINIT" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_KEYINIT" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_KEYINIT" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_KEYINIT" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -5232,15 +5232,15 @@ Index: pam.deb/modules/pam_lastlog/pam_lastlog.8
  .\"     Title: pam_lastlog
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_LASTLOG" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_LASTLOG" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_LASTLOG" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_LASTLOG" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -5539,15 +5539,15 @@ Index: pam.deb/modules/pam_limits/pam_limits.8
  .\"     Title: pam_limits
  .\"    Author: [see the "AUTHORS" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_LIMITS" "8" "07/08/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_LIMITS" "8" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_LIMITS" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_LIMITS" "8" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -5808,15 +5808,15 @@ Index: pam.deb/modules/pam_listfile/pam_listfile.8
  .\"     Title: pam_listfile
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_LISTFILE" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_LISTFILE" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_LISTFILE" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_LISTFILE" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -6126,15 +6126,15 @@ Index: pam.deb/modules/pam_localuser/pam_localuser.8
  .\"     Title: pam_localuser
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_LOCALUSER" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_LOCALUSER" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_LOCALUSER" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_LOCALUSER" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -6396,15 +6396,15 @@ Index: pam.deb/modules/pam_loginuid/pam_loginuid.8
  .\"     Title: pam_loginuid
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_LOGINUID" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_LOGINUID" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_LOGINUID" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_LOGINUID" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -6640,15 +6640,15 @@ Index: pam.deb/modules/pam_mail/pam_mail.8
  .\"     Title: pam_mail
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_MAIL" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_MAIL" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_MAIL" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_MAIL" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -6941,15 +6941,15 @@ Index: pam.deb/modules/pam_mkhomedir/pam_mkhomedir.8
  .\"     Title: pam_mkhomedir
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_MKHOMEDIR" "8" "07/08/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_MKHOMEDIR" "8" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_MKHOMEDIR" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_MKHOMEDIR" "8" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -7218,15 +7218,15 @@ Index: pam.deb/modules/pam_motd/pam_motd.8
  .\"     Title: pam_motd
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_MOTD" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_MOTD" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_MOTD" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_MOTD" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -7476,15 +7476,15 @@ Index: pam.deb/modules/pam_namespace/pam_namespace.8
  .\"     Title: pam_namespace
  .\"    Author: [see the "AUTHORS" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_NAMESPACE" "8" "07/08/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_NAMESPACE" "8" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_NAMESPACE" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_NAMESPACE" "8" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -7756,15 +7756,15 @@ Index: pam.deb/modules/pam_nologin/pam_nologin.8
  .\"     Title: pam_nologin
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 08/30/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_NOLOGIN" "8" "08/30/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_NOLOGIN" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_NOLOGIN" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_NOLOGIN" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -8028,15 +8028,15 @@ Index: pam.deb/modules/pam_permit/pam_permit.8
  .\"     Title: pam_permit
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_PERMIT" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_PERMIT" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_PERMIT" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_PERMIT" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -8275,15 +8275,15 @@ Index: pam.deb/modules/pam_rhosts/pam_rhosts.8
  .\"     Title: pam_rhosts
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_RHOSTS" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_RHOSTS" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_RHOSTS" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_RHOSTS" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -8566,15 +8566,15 @@ Index: pam.deb/modules/pam_rootok/pam_rootok.8
  .\"     Title: pam_rootok
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ROOTOK" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_ROOTOK" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_ROOTOK" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_ROOTOK" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -8813,15 +8813,15 @@ Index: pam.deb/modules/pam_securetty/pam_securetty.8
  .\"     Title: pam_securetty
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_SECURETTY" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_SECURETTY" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_SECURETTY" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_SECURETTY" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -9591,15 +9591,15 @@ Index: pam.deb/modules/pam_shells/pam_shells.8
  .\"     Title: pam_shells
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_SHELLS" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_SHELLS" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_SHELLS" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_SHELLS" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -9847,15 +9847,15 @@ Index: pam.deb/modules/pam_succeed_if/pam_succeed_if.8
  .\"     Title: pam_succeed_if
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM
  .\"    Source: Linux-PAM
  .\"  Language: English
  .\"
--.TH "PAM_SUCCEED_IF" "8" "07/08/2010" "Linux-PAM" "Linux\-PAM"
-+.TH "PAM_SUCCEED_IF" "8" "08/31/2010" "Linux-PAM" "Linux\-PAM"
+-.TH "PAM_SUCCEED_IF" "8" "10/27/2010" "Linux-PAM" "Linux\-PAM"
++.TH "PAM_SUCCEED_IF" "8" "06/04/2011" "Linux-PAM" "Linux\-PAM"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -10141,15 +10141,15 @@ Index: pam.deb/modules/pam_tally/pam_tally.8
  .\"     Title: pam_tally
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 08/09/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_TALLY" "8" "08/09/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_TALLY" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_TALLY" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_TALLY" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -10503,15 +10503,15 @@ Index: pam.deb/modules/pam_time/pam_time.8
  .\"     Title: pam_time
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_TIME" "8" "07/08/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_TIME" "8" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_TIME" "8" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_TIME" "8" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -10761,15 +10761,15 @@ Index: pam.deb/modules/pam_umask/pam_umask.8
  .\"     Title: pam_umask
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_UMASK" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_UMASK" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_UMASK" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_UMASK" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -11058,15 +11058,15 @@ Index: pam.deb/doc/man/misc_conv.3
  .\"     Title: misc_conv
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "MISC_CONV" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "MISC_CONV" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "MISC_CONV" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "MISC_CONV" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -11281,15 +11281,15 @@ Index: pam.deb/doc/man/pam_acct_mgmt.3
  .\"     Title: pam_acct_mgmt
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ACCT_MGMT" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_ACCT_MGMT" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_ACCT_MGMT" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_ACCT_MGMT" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -11501,15 +11501,15 @@ Index: pam.deb/doc/man/pam_authenticate.3
  .\"     Title: pam_authenticate
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_AUTHENTICATE" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_AUTHENTICATE" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_AUTHENTICATE" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_AUTHENTICATE" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -11721,15 +11721,15 @@ Index: pam.deb/doc/man/pam_chauthtok.3
  .\"     Title: pam_chauthtok
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_CHAUTHTOK" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_CHAUTHTOK" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_CHAUTHTOK" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_CHAUTHTOK" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -11950,15 +11950,15 @@ Index: pam.deb/doc/man/pam_conv.3
  .\"     Title: pam_conv
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_CONV" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_CONV" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_CONV" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_CONV" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -12230,15 +12230,15 @@ Index: pam.deb/doc/man/pam_error.3
  .\"     Title: pam_error
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ERROR" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_ERROR" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_ERROR" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_ERROR" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -12457,15 +12457,15 @@ Index: pam.deb/doc/man/pam_getenv.3
  .\"     Title: pam_getenv
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_GETENV" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_GETENV" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_GETENV" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_GETENV" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -12677,15 +12677,15 @@ Index: pam.deb/doc/man/pam_getenvlist.3
  .\"     Title: pam_getenvlist
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_GETENVLIST" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_GETENVLIST" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_GETENVLIST" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_GETENVLIST" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -12909,15 +12909,15 @@ Index: pam.deb/doc/man/pam_info.3
  .\"     Title: pam_info
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_INFO" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_INFO" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_INFO" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_INFO" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -13136,15 +13136,15 @@ Index: pam.deb/doc/man/pam_misc_drop_env.3
  .\"     Title: pam_misc_drop_env
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_MISC_DROP_ENV" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_MISC_DROP_ENV" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_MISC_DROP_ENV" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_MISC_DROP_ENV" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -13359,15 +13359,15 @@ Index: pam.deb/doc/man/pam_misc_paste_env.3
  .\"     Title: pam_misc_paste_env
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_MISC_PASTE_ENV" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_MISC_PASTE_ENV" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_MISC_PASTE_ENV" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_MISC_PASTE_ENV" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -13582,15 +13582,15 @@ Index: pam.deb/doc/man/pam_misc_setenv.3
  .\"     Title: pam_misc_setenv
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_MISC_SETENV" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_MISC_SETENV" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_MISC_SETENV" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_MISC_SETENV" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -13813,15 +13813,15 @@ Index: pam.deb/doc/man/pam_prompt.3
  .\"     Title: pam_prompt
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_PROMPT" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_PROMPT" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_PROMPT" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_PROMPT" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -14040,15 +14040,15 @@ Index: pam.deb/doc/man/pam_putenv.3
  .\"     Title: pam_putenv
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_PUTENV" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_PUTENV" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_PUTENV" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_PUTENV" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -14269,15 +14269,15 @@ Index: pam.deb/doc/man/pam_strerror.3
  .\"     Title: pam_strerror
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_STRERROR" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_STRERROR" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_STRERROR" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_STRERROR" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -14489,15 +14489,15 @@ Index: pam.deb/doc/man/pam_syslog.3
  .\"     Title: pam_syslog
  .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 04/01/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_SYSLOG" "3" "04/01/2010" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_SYSLOG" "3" "08/31/2010" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_SYSLOG" "3" "10/27/2010" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_SYSLOG" "3" "06/04/2011" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -14726,15 +14726,15 @@ Index: pam.deb/modules/pam_userdb/pam_userdb.8
  .\"     Title: pam_userdb
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_USERDB" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_USERDB" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_USERDB" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_USERDB" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -14991,15 +14991,15 @@ Index: pam.deb/modules/pam_warn/pam_warn.8
  .\"     Title: pam_warn
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_WARN" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_WARN" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_WARN" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_WARN" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
@@ -15264,15 +15264,15 @@ Index: pam.deb/modules/pam_xauth/pam_xauth.8
  .\"     Title: pam_xauth
  .\"    Author: [see the "AUTHOR" section]
 -.\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
--.\"      Date: 07/08/2010
+-.\"      Date: 10/27/2010
 +.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-+.\"      Date: 08/31/2010
++.\"      Date: 06/04/2011
  .\"    Manual: Linux-PAM Manual
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_XAUTH" "8" "07/08/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_XAUTH" "8" "08/31/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_XAUTH" "8" "10/27/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_XAUTH" "8" "06/04/2011" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
 -.\" * (re)Define some macros
 +.\" * Define some portability stuff
