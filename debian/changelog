@@ -1,3 +1,11 @@
+pam (1.1.3-2) UNRELEASED; urgency=low
+
+  * debian/patches-applied/027_pam_limits_better_init_allow_explicit_root:
+    - only report about unknown kernel rlimits when "debug" is set
+      (Closes: 625226, LP: #794531).
+
+ -- Kees Cook <kees@debian.org>  Wed, 08 Jun 2011 15:02:47 -0700
+
 pam (1.1.3-1) unstable; urgency=low
 
   * New upstream release.

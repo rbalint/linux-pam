@@ -19,10 +19,10 @@ Bug-Ubuntu: https://launchpad.net/bugs/746655
 Bug-Debian: http://bugs.debian.org/63230
 Bug-Debian: http://bugs.debian.org/620302
 Forwarded: https://fedorahosted.org/pipermail/pam-developers/2011-March/000017.html
-Index: pam.deb/modules/pam_limits/pam_limits.c
+Index: pam-debian/modules/pam_limits/pam_limits.c
 ===================================================================
---- pam.deb.orig/modules/pam_limits/pam_limits.c
-+++ pam.deb/modules/pam_limits/pam_limits.c
+--- pam-debian.orig/modules/pam_limits/pam_limits.c	2011-06-08 15:00:12.826832292 -0700
++++ pam-debian/modules/pam_limits/pam_limits.c	2011-06-08 15:02:31.668716317 -0700
 @@ -45,15 +45,24 @@
  #include <libaudit.h>
  #endif
@@ -67,7 +67,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      int login_limit;     /* the max logins limit */
      int login_limit_def; /* which entry set the login limit */
      int flag_numsyslogins; /* whether to limit logins only for a
-@@ -291,13 +302,154 @@
+@@ -291,13 +302,155 @@
      return 0;
  }
  
@@ -193,7 +193,8 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
 +
 +        i = str2rlimit(name);
 +        if (i < 0 || i >= RLIM_NLIMITS) {
-+            pam_syslog(pamh, LOG_DEBUG, "Unknown kernel rlimit '%s' ignored", name);
++            if (ctrl & PAM_DEBUG_ARG)
++                pam_syslog(pamh, LOG_DEBUG, "Unknown kernel rlimit '%s' ignored", name);
 +            continue;
 +        }
 +        pl->limits[i].limit.rlim_cur = str2rlim_t(soft);
@@ -223,7 +224,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      for(i = 0; i < RLIM_NLIMITS; i++) {
  	int r = getrlimit(i, &pl->limits[i].limit);
  	if (r == -1) {
-@@ -312,6 +464,71 @@
+@@ -312,6 +465,71 @@
  	}
      }
  
@@ -295,7 +296,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      errno = 0;
      pl->priority = getpriority (PRIO_PROCESS, 0);
      if (pl->priority == -1 && errno != 0)
-@@ -591,7 +808,7 @@
+@@ -591,7 +809,7 @@
  
              if (strcmp(uname, domain) == 0) /* this user have a limit */
                  process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
@@ -304,7 +305,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -600,7 +817,7 @@
+@@ -600,7 +818,7 @@
                  if (pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1))
                      process_limit(pamh, LIMITS_DEF_GROUP, ltype, item, value, ctrl,
  				  pl);
@@ -313,7 +314,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  		    if (ctrl & PAM_DEBUG_ARG) {
  			pam_syslog(pamh, LOG_DEBUG,
  				   "checking if %s is in group %s",
-@@ -614,7 +831,7 @@
+@@ -614,7 +832,7 @@
                      process_limit(pamh, LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
  				  pl);
  		}
@@ -322,7 +323,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
                  process_limit(pamh, LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -649,6 +866,12 @@
+@@ -649,6 +867,12 @@
      int status;
      int retval = LIMITED_OK;
  
@@ -335,7 +336,7 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
        int res;
  
-@@ -743,12 +966,14 @@
+@@ -743,12 +967,14 @@
          return PAM_USER_UNKNOWN;
      }
  
@@ -351,10 +352,10 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
      retval = parse_config_file(pamh, pwd->pw_name, ctrl, pl);
      if (retval == PAM_IGNORE) {
  	D(("the configuration file ('%s') has an applicable '<domain> -' entry", CONF_FILE));
-Index: pam.deb/modules/pam_limits/limits.conf
+Index: pam-debian/modules/pam_limits/limits.conf
 ===================================================================
---- pam.deb.orig/modules/pam_limits/limits.conf
-+++ pam.deb/modules/pam_limits/limits.conf
+--- pam-debian.orig/modules/pam_limits/limits.conf	2011-06-08 15:00:12.836832427 -0700
++++ pam-debian/modules/pam_limits/limits.conf	2011-06-08 15:00:15.716871508 -0700
 @@ -11,6 +11,9 @@
  #        - the wildcard *, for default entry
  #        - the wildcard %, can be also used with %group syntax,
@@ -373,10 +374,10 @@ Index: pam.deb/modules/pam_limits/limits.conf
  #*               hard    rss             10000
  #@student        hard    nproc           20
  #@faculty        soft    nproc           20
-Index: pam.deb/modules/pam_limits/limits.conf.5.xml
+Index: pam-debian/modules/pam_limits/limits.conf.5.xml
 ===================================================================
---- pam.deb.orig/modules/pam_limits/limits.conf.5.xml
-+++ pam.deb/modules/pam_limits/limits.conf.5.xml
+--- pam-debian.orig/modules/pam_limits/limits.conf.5.xml	2011-06-08 15:00:12.836832427 -0700
++++ pam-debian/modules/pam_limits/limits.conf.5.xml	2011-06-08 15:00:15.716871508 -0700
 @@ -57,6 +57,11 @@
                </para>
              </listitem>
@@ -397,10 +398,10 @@ Index: pam.deb/modules/pam_limits/limits.conf.5.xml
  *               hard    rss             10000
  @student        hard    nproc           20
  @faculty        soft    nproc           20
-Index: pam.deb/modules/pam_limits/limits.conf.5
+Index: pam-debian/modules/pam_limits/limits.conf.5
 ===================================================================
---- pam.deb.orig/modules/pam_limits/limits.conf.5
-+++ pam.deb/modules/pam_limits/limits.conf.5
+--- pam-debian.orig/modules/pam_limits/limits.conf.5	2011-06-08 15:00:12.836832427 -0700
++++ pam-debian/modules/pam_limits/limits.conf.5	2011-06-08 15:00:15.716871508 -0700
 @@ -93,6 +93,11 @@
  \fI%group\fR
  syntax\&.
@@ -421,10 +422,10 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  *               hard    rss             10000
  @student        hard    nproc           20
  @faculty        soft    nproc           20
-Index: pam.deb/modules/pam_limits/README
+Index: pam-debian/modules/pam_limits/README
 ===================================================================
---- pam.deb.orig/modules/pam_limits/README
-+++ pam.deb/modules/pam_limits/README
+--- pam-debian.orig/modules/pam_limits/README	2011-06-08 14:59:29.746247674 -0700
++++ pam-debian/modules/pam_limits/README	2011-06-08 15:00:15.716871508 -0700
 @@ -55,6 +55,7 @@
  limits.conf.
  
