@@ -9,7 +9,7 @@ else
 CFLAGS += -O0
 endif
 
-DEB_HOST_GNU_TYPE	:= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_HOST_MULTIARCH	:= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 LC_COLLATE=C
 export LC_COLLATE
@@ -24,7 +24,7 @@ dl = $(d)/local
 
 override_dh_auto_configure:
 	dh_auto_configure -- --enable-static --enable-shared \
-		--libdir=/lib/$(DEB_HOST_GNU_TYPE) --sbindir=/sbin \
+		--libdir=/lib/$(DEB_HOST_MULTIARCH) --sbindir=/sbin \
 		--enable-isadir=/lib/security --disable-audit \
 		CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
 
@@ -51,7 +51,7 @@ override_dh_installman:
 # dh_link doesn't do wildcards, so we can't auto-link to the right per-arch
 # directory
 override_dh_link:
-	sed -e"s,^/lib,/lib/$(DEB_HOST_GNU_TYPE)," $(d)/libpam0g-dev.links.in > $(d)/libpam0g-dev.links
+	sed -e"s,^/lib,/lib/$(DEB_HOST_MULTIARCH)," $(d)/libpam0g-dev.links.in > $(d)/libpam0g-dev.links
 	dh_link
 
 # using perms that differ from upstream (sgid instead of suid) /and/ that
