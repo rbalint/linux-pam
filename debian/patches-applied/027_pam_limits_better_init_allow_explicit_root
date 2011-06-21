@@ -21,8 +21,8 @@ Bug-Debian: http://bugs.debian.org/620302
 Forwarded: https://fedorahosted.org/pipermail/pam-developers/2011-March/000017.html
 Index: pam-debian/modules/pam_limits/pam_limits.c
 ===================================================================
---- pam-debian.orig/modules/pam_limits/pam_limits.c	2011-06-08 15:00:12.826832292 -0700
-+++ pam-debian/modules/pam_limits/pam_limits.c	2011-06-08 15:02:31.668716317 -0700
+--- pam-debian.orig/modules/pam_limits/pam_limits.c
++++ pam-debian/modules/pam_limits/pam_limits.c
 @@ -45,15 +45,24 @@
  #include <libaudit.h>
  #endif
@@ -323,20 +323,7 @@ Index: pam-debian/modules/pam_limits/pam_limits.c
                  process_limit(pamh, LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
  			      pl);
  	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
-@@ -649,6 +867,12 @@
-     int status;
-     int retval = LIMITED_OK;
- 
-+    if (uid == 0) {
-+        /* do not impose +ve priority limits on the superuser */
-+        if (pl->priority > 0)
-+            pl->priority = 0;
-+    }
-+
-     for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
-       int res;
- 
-@@ -743,12 +967,14 @@
+@@ -743,12 +961,14 @@
          return PAM_USER_UNKNOWN;
      }
  
@@ -354,8 +341,8 @@ Index: pam-debian/modules/pam_limits/pam_limits.c
  	D(("the configuration file ('%s') has an applicable '<domain> -' entry", CONF_FILE));
 Index: pam-debian/modules/pam_limits/limits.conf
 ===================================================================
---- pam-debian.orig/modules/pam_limits/limits.conf	2011-06-08 15:00:12.836832427 -0700
-+++ pam-debian/modules/pam_limits/limits.conf	2011-06-08 15:00:15.716871508 -0700
+--- pam-debian.orig/modules/pam_limits/limits.conf
++++ pam-debian/modules/pam_limits/limits.conf
 @@ -11,6 +11,9 @@
  #        - the wildcard *, for default entry
  #        - the wildcard %, can be also used with %group syntax,
@@ -376,8 +363,8 @@ Index: pam-debian/modules/pam_limits/limits.conf
  #@faculty        soft    nproc           20
 Index: pam-debian/modules/pam_limits/limits.conf.5.xml
 ===================================================================
---- pam-debian.orig/modules/pam_limits/limits.conf.5.xml	2011-06-08 15:00:12.836832427 -0700
-+++ pam-debian/modules/pam_limits/limits.conf.5.xml	2011-06-08 15:00:15.716871508 -0700
+--- pam-debian.orig/modules/pam_limits/limits.conf.5.xml
++++ pam-debian/modules/pam_limits/limits.conf.5.xml
 @@ -57,6 +57,11 @@
                </para>
              </listitem>
@@ -400,8 +387,8 @@ Index: pam-debian/modules/pam_limits/limits.conf.5.xml
  @faculty        soft    nproc           20
 Index: pam-debian/modules/pam_limits/limits.conf.5
 ===================================================================
---- pam-debian.orig/modules/pam_limits/limits.conf.5	2011-06-08 15:00:12.836832427 -0700
-+++ pam-debian/modules/pam_limits/limits.conf.5	2011-06-08 15:00:15.716871508 -0700
+--- pam-debian.orig/modules/pam_limits/limits.conf.5
++++ pam-debian/modules/pam_limits/limits.conf.5
 @@ -93,6 +93,11 @@
  \fI%group\fR
  syntax\&.
@@ -424,8 +411,8 @@ Index: pam-debian/modules/pam_limits/limits.conf.5
  @faculty        soft    nproc           20
 Index: pam-debian/modules/pam_limits/README
 ===================================================================
---- pam-debian.orig/modules/pam_limits/README	2011-06-08 14:59:29.746247674 -0700
-+++ pam-debian/modules/pam_limits/README	2011-06-08 15:00:15.716871508 -0700
+--- pam-debian.orig/modules/pam_limits/README
++++ pam-debian/modules/pam_limits/README
 @@ -55,6 +55,7 @@
  limits.conf.
  

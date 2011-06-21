@@ -7,6 +7,10 @@ pam (1.1.3-2) UNRELEASED; urgency=low
 
   [ Steve Langasek ]
   * Build for multiarch.  Closes: #463420.
+  * debian/patches-applied/027_pam_limits_better_init_allow_explicit_root:
+    don't reset the process niceness for root; since it's root, they can
+    still renice to a lower nice level if they need to and changing the
+    nice level by default is unexpected behavior.  Closes: #594377.
 
  -- Kees Cook <kees@debian.org>  Wed, 08 Jun 2011 15:02:47 -0700
 
