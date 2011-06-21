@@ -141,7 +141,7 @@ Index: pam-debian/modules/pam_limits/pam_limits.c
 +        item = line + pos + 1; \
 +}
 +
-+static void parse_kernel_limits(pam_handle_t *pamh, struct pam_limit_s *pl)
++static void parse_kernel_limits(pam_handle_t *pamh, struct pam_limit_s *pl, int ctrl)
 +{
 +    int i, maxlen = 0;
 +    FILE *limitsfile;
@@ -205,7 +205,7 @@ Index: pam-debian/modules/pam_limits/pam_limits.c
 +    fclose(limitsfile);
 +}
 +
-+static int init_limits(pam_handle_t *pamh, struct pam_limit_s *pl)
++static int init_limits(pam_handle_t *pamh, struct pam_limit_s *pl, int ctrl)
  {
      int i;
      int retval = PAM_SUCCESS;
@@ -229,7 +229,7 @@ Index: pam-debian/modules/pam_limits/pam_limits.c
      }
  
 +#ifdef __linux__
-+    parse_kernel_limits(pamh, pl);
++    parse_kernel_limits(pamh, pl, ctrl);
 +#endif
 +
 +    for(i = 0; i < RLIM_NLIMITS; i++) {
@@ -328,7 +328,7 @@ Index: pam-debian/modules/pam_limits/pam_limits.c
      }
  
 -    retval = init_limits(pl);
-+    retval = init_limits(pamh, pl);
++    retval = init_limits(pamh, pl, ctrl);
      if (retval != PAM_SUCCESS) {
          pam_syslog(pamh, LOG_WARNING, "cannot initialize");
          return PAM_ABORT;
