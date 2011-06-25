@@ -68,6 +68,7 @@ installed_services() {
 	    -e's/\bheartbeat-2\b/heartbeat/g' \
 	    -e's/\bhylafax-server\b/hylafax/g' \
 	    -e's/\bpartimage-server\b/partimaged/g' \
+	    -e's/\bpostgresql-common\b/postgresql/g' \
 	    -e's/\bsasl2-bin\b/saslauthd/g' \
     )
 
@@ -98,7 +99,7 @@ then
 	    check="$check kannel linesrv linesrv-mysql lsh-server"
 	    check="$check muddleftpd netatalk nuauth partimage-server"
 	    check="$check perdition pgpool popa3d"
-	    check="$check postgresql-8.2 postgresql-8.3 proftpd pure-ftpd"
+	    check="$check postgresql-common proftpd pure-ftpd"
 	    check="$check pure-ftpd-ldap pure-ftpd-mysql"
 	    check="$check pure-ftpd-postgresql racoon samba sasl2-bin"
 	    check="$check sfs-server solid-pop3d squid squid3 tac-plus"
