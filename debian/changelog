@@ -1,10 +1,14 @@
-pam (1.1.3-2ubuntu1) UNRELEASED; urgency=low
+pam (1.1.3-3) UNRELEASED; urgency=low
 
   * Look for /etc/init.d/postgresql, not /etc/init.d/postgresql-8.{2,3},
     for service restarts; the latter are obsolete since squeeze.
     Closes: #631511.
+  * Move debian/libpam0g-dev.install to debian/libpam0g-dev.install.in
+    and substitute the multiarch path at build time, so our .a files go to
+    the multiarch dir instead of to /usr/lib.  Thanks to Riku Voipio for
+    pointing out the bug.
 
- -- Steve Langasek <steve.langasek@ubuntu.com>  Sat, 25 Jun 2011 12:04:24 -0500
+ -- Steve Langasek <vorlon@debian.org>  Fri, 01 Jul 2011 01:42:19 -0700
 
 pam (1.1.3-2) unstable; urgency=low
 
