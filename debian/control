@@ -20,13 +20,12 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Pre-Depends: ${misc:Pre-Depends}
 Suggests: libpam-doc
 Description: Pluggable Authentication Modules library
- Contains the C shared library for Linux-PAM, a suite of shared
- libraries that enable the local system administrator to choose how
- applications authenticate users.  In other words, without rewriting
- or recompiling a PAM-aware application, it is possible to switch
- between the authentication mechanism(s) it uses.  One may entirely
- upgrade the local authentication system without touching the
- applications themselves.
+ Contains the shared library for Linux-PAM, a library that enables the
+ local system administrator to choose how applications authenticate users.
+ In other words, without rewriting or recompiling a PAM-aware application,
+ it is possible to switch between the authentication mechanism(s) it uses.
+ One may entirely upgrade the local authentication system without touching
+ the applications themselves.
 
 Package: libpam-modules
 Section: admin
@@ -40,7 +39,7 @@ Replaces: libpam0g-util, libpam-umask
 Provides: libpam-motd, libpam-mkhomedir, libpam-umask
 Description: Pluggable Authentication Modules for PAM
  This package completes the set of modules for PAM. It includes the
-  pam_unix_*.so module as well as some specialty modules.
+  pam_unix.so module as well as some specialty modules.
 
 Package: libpam-modules-bin
 Section: admin
@@ -74,10 +73,9 @@ Multi-Arch: same
 Depends: ${misc:Depends}, libpam0g (= ${binary:Version}), libc6-dev|libc-dev
 Provides: libpam-dev
 Description: Development files for PAM
- Contains C header files and development shared libraries for libpam, the
- pluggable authentication modules, a suite of shared libraries that enable
- the local system administrator to choose how applications authenticate
- users.
+ Contains C header files and development libraries for libpam, the Pluggable
+ Authentication Modules, a library that enables the local system
+ administrator to choose how applications authenticate users.
  .
  PAM decouples applications from the authentication mechanism, making it
  possible to upgrade the authentication system without recompiling or
@@ -101,7 +99,6 @@ Priority: optional
 Architecture: all
 Depends: ${misc:Depends}
 Description: Documentation of PAM
- Contains documentation (in HTML, ASCII, and PostScript format) for
- libpam, the Pluggable Authentication Modules library, a suite of shared
- libraries that enable the local system administrator to choose how
- applications authenticate users.
+ Contains documentation (in HTML, ASCII, and PostScript format) for libpam,
+ the Pluggable Authentication Modules library, a library that enables the
+ local system administrator to choose how applications authenticate users.

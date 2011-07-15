@@ -7,6 +7,10 @@ pam (1.1.3-3) UNRELEASED; urgency=low
     and substitute the multiarch path at build time, so our .a files go to
     the multiarch dir instead of to /usr/lib.  Thanks to Riku Voipio for
     pointing out the bug.
+  * debian/control: adjust the package descriptions, as the current ones
+    use some awkward language that's gone unnoticed for a long time.  Thanks
+    to Martin Eberhard Schauer <Martin.E.Schauer@gmx.de> for pointing this
+    out.  Closes: #633863.
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 01 Jul 2011 01:42:19 -0700
 
