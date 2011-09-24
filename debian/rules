@@ -1,13 +1,8 @@
 #!/usr/bin/make -f
 
-LDFLAGS	:= -Wl,-z,defs
-CFLAGS	:= -g $(shell getconf LFS_CFLAGS)
-
-ifeq (,$(findstring noopt, ${DEB_BUILD_OPTIONS}))
-CFLAGS += -O2
-else
-CFLAGS += -O0
-endif
+DEB_LDFLAGS_MAINT_APPEND := -Wl,-z,defs
+DEB_CFLAGS_MAINT_APPEND  := $(shell getconf LFS_CFLAGS)
+export DEB_LDFLAGS_MAINT_APPEND DEB_CFLAGS_MAINT_APPEND
 
 DEB_HOST_MULTIARCH	:= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
@@ -25,8 +20,7 @@ dl = $(d)/local
 override_dh_auto_configure:
 	dh_auto_configure -- --enable-static --enable-shared \
 		--libdir=/lib/$(DEB_HOST_MULTIARCH) --sbindir=/sbin \
-		--enable-isadir=/lib/security --disable-audit \
-		CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
+		--enable-isadir=/lib/security --disable-audit
 
 # make sure the SAG, MWG, ADG are readable with a browser.
 override_dh_compress:
