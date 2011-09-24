@@ -14,6 +14,8 @@ pam (1.1.3-3) UNRELEASED; urgency=low
   * Build-depend on debhelper 8.9.4 and bump debian/compat to 9 for
     dpkg-buildflags integration, and drop manual setting of -g -O options in
     CFLAGS now that we can let dh do it for us
+  * Don't set --sbindir when calling configure; upstream takes care of this
+    for us
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 01 Jul 2011 01:42:19 -0700
 
