@@ -46,7 +46,7 @@ override_dh_installman:
 # dh_link doesn't do wildcards, so we can't auto-link to the right per-arch
 # directory
 override_dh_link:
-	sed -e"s,^/lib,/lib/$(DEB_HOST_MULTIARCH)," $(d)/libpam0g-dev.links.in > $(d)/libpam0g-dev.links
+	sed -e"s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g" $(d)/libpam0g-dev.links.in > $(d)/libpam0g-dev.links
 	dh_link
 
 # using perms that differ from upstream (sgid instead of suid) /and/ that

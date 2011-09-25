@@ -1,3 +1,12 @@
+pam (1.1.3-4) UNRELEASED; urgency=low
+
+  * Make sure shared library links are also installed to the multiarch
+    directory, not just the .a files; otherwise the static libs get found
+    first by the linker.  Thanks to Russ Allbery for catching this.
+    Closes: #642952.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 25 Sep 2011 15:10:02 -0700
+
 pam (1.1.3-3) unstable; urgency=low
 
   * Look for /etc/init.d/postgresql, not /etc/init.d/postgresql-8.{2,3},
