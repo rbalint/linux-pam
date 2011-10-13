@@ -7,10 +7,10 @@ Authors: Steve Langasek <vorlon@debian.org>,
 
 Upstream status: to be submitted
 
-Index: pam.deb/modules/pam_unix/unix_chkpwd.c
+Index: pam-debian/modules/pam_unix/unix_chkpwd.c
 ===================================================================
---- pam.deb.orig/modules/pam_unix/unix_chkpwd.c
-+++ pam.deb/modules/pam_unix/unix_chkpwd.c
+--- pam-debian.orig/modules/pam_unix/unix_chkpwd.c	2011-10-10 16:22:06.270705822 -0700
++++ pam-debian/modules/pam_unix/unix_chkpwd.c	2011-10-10 16:24:06.080224301 -0700
 @@ -137,9 +137,10 @@
  	  /* if the caller specifies the username, verify that user
  	     matches it */
@@ -19,7 +19,7 @@ Index: pam.deb/modules/pam_unix/unix_chkpwd.c
  	    user = argv[1];
  	    /* no match -> permanently change to the real user and proceed */
 -	    if (setuid(getuid()) != 0)
-+	    if (setregid(gid, gid) != 0 || setuid(getuid()) != 0)
++	    if (setresgid(gid, gid, gid) != 0 || setuid(getuid()) != 0)
  		return PAM_AUTH_ERR;
  	  }
  	}
