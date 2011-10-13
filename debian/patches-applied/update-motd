@@ -6,10 +6,10 @@ Authors: Dustin Kirkland <kirkland@canonical.com>
 
 Upstream status: not yet submitted
 
-Index: pam-1.0.1/modules/pam_motd/pam_motd.c
+Index: pam-debian/modules/pam_motd/pam_motd.c
 ===================================================================
---- pam-1.0.1.orig/modules/pam_motd/pam_motd.c
-+++ pam-1.0.1/modules/pam_motd/pam_motd.c
+--- pam-debian.orig/modules/pam_motd/pam_motd.c	2011-10-10 16:21:50.998512220 -0700
++++ pam-debian/modules/pam_motd/pam_motd.c	2011-10-13 11:35:02.921398033 -0700
 @@ -48,14 +48,38 @@
  
  static char default_motd[] = DEFAULT_MOTD;
@@ -80,7 +80,7 @@ Index: pam-1.0.1/modules/pam_motd/pam_motd.c
 +       Otherwise, the admin can force a static MOTD by breaking that symlink
 +       and publishing into an /etc/motd text file. */
 +    if ((stat("/etc/update-motd.d", &st) == 0) && S_ISDIR(st.st_mode)) {
-+	if (!system("run-parts --lsbsysinit /etc/update-motd.d > /var/run/motd.new"))
++	if (!system("/usr/bin/env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin run-parts --lsbsysinit /etc/update-motd.d > /var/run/motd.new"))
 +	    rename("/var/run/motd.new", "/var/run/motd");
      }
  
