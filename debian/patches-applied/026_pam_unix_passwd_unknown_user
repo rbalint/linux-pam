@@ -1,4 +1,5 @@
-Patch from Martin Schwenke <martin@meltin.net>
+Description: distinguish between password manipulation failure and missing user.
+Author: Martin Schwenke <martin@meltin.net>
 
 Index: pam.deb/modules/pam_unix/passverify.c
 ===================================================================

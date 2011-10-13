@@ -1,3 +1,6 @@
+Description: extract the securetty logic for use with the "nullok_secure" option
+ introduced in the "055_pam_unix_nullok_secure" patch.
+
 Index: pam.deb/modules/pam_securetty/pam_securetty.c
 ===================================================================
 --- pam.deb.orig/modules/pam_securetty/pam_securetty.c
