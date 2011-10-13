@@ -5,10 +5,10 @@ Authors: Steve Langasek <vorlon@debian.org>
 Upstream status: to be forwarded, now that pam_modutil_{drop,regain}_priv
  are implemented
 
-Index: pam.deb/libpam/pam_modutil_priv.c
+Index: pam-debian/libpam/pam_modutil_priv.c
 ===================================================================
---- pam.deb.orig/libpam/pam_modutil_priv.c
-+++ pam.deb/libpam/pam_modutil_priv.c
+--- pam-debian.orig/libpam/pam_modutil_priv.c	2011-10-10 16:21:57.858599186 -0700
++++ pam-debian/libpam/pam_modutil_priv.c	2011-10-10 17:31:02.805686298 -0700
 @@ -14,7 +14,9 @@
  #include <syslog.h>
  #include <pwd.h>
@@ -19,7 +19,7 @@ Index: pam.deb/libpam/pam_modutil_priv.c
  
  /*
   * Two setfsuid() calls in a row are necessary to check
-@@ -22,17 +24,53 @@
+@@ -22,17 +24,61 @@
   */
  static int change_uid(uid_t uid, uid_t *save)
  {
@@ -34,12 +34,16 @@ Index: pam.deb/libpam/pam_modutil_priv.c
 +	if (save)
 +		*save = ruid;
 +	if (ruid == uid && uid != 0)
-+		setreuid(euid, uid);
++		if (setreuid(euid, uid))
++			return -1;
 +	else {
-+		setreuid(0, -1);
-+		if (setreuid(-1, uid) == -1) {
-+			setreuid(-1, 0);
-+			setreuid(0, -1);
++		if (setreuid(0, -1))
++			return -1;
++		if (setreuid(-1, uid)) {
++			if (setreuid(-1, 0))
++				return -1;
++			if (setreuid(0, -1))
++				return -1;
 +			if (setreuid(-1, uid))
 +				return -1;
 +		}
@@ -59,12 +63,16 @@ Index: pam.deb/libpam/pam_modutil_priv.c
 +	if (save)
 +		*save = rgid;
 +	if (rgid == gid)
-+		setregid(egid, gid);
++		if (setregid(egid, gid))
++			return -1;
 +	else {
-+		setregid(0, -1);
-+		if (setregid(-1, gid) == -1) {
-+			setregid(-1, 0);
-+			setregid(0, -1);
++		if (setregid(0, -1))
++			return -1;
++		if (setregid(-1, gid)) {
++			if (setregid(-1, 0))
++				return -1;
++			if (setregid(0, -1))
++				return -1;
 +			if (setregid(-1, gid))
 +				return -1;
 +		}
