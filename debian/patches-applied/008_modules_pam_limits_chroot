@@ -1,7 +1,7 @@
-Index: pam.deb/modules/pam_limits/pam_limits.c
+Index: pam-debian/modules/pam_limits/pam_limits.c
 ===================================================================
---- pam.deb.orig/modules/pam_limits/pam_limits.c
-+++ pam.deb/modules/pam_limits/pam_limits.c
+--- pam-debian.orig/modules/pam_limits/pam_limits.c	2011-10-10 16:22:04.834687620 -0700
++++ pam-debian/modules/pam_limits/pam_limits.c	2011-10-10 16:35:22.120782459 -0700
 @@ -79,6 +79,7 @@
      int flag_numsyslogins; /* whether to limit logins only for a
  			      specific user or to count all logins */
@@ -48,18 +48,20 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
  #ifdef __USE_FILE_OFFSET64
  		rlimit_value = strtoull (lim_value, &endptr, 10);
  #else
-@@ -487,7 +493,9 @@
+@@ -487,7 +493,11 @@
  #endif
      }
  
 -    if ( (limit_item != LIMIT_LOGIN)
-+    if (limit_item == LIMIT_CHROOT)
-+	strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir));
++    if (limit_item == LIMIT_CHROOT) {
++	strncpy(pl->chroot_dir, value_orig, sizeof(pl->chroot_dir)-1);
++        pl->chroot_dir[sizeof(pl->chroot_dir)-1]='\0';
++    }
 +    else if ( (limit_item != LIMIT_LOGIN)
  	 && (limit_item != LIMIT_NUMSYSLOGINS)
  	 && (limit_item != LIMIT_PRI) ) {
          if (limit_type & LIMIT_SOFT) {
-@@ -689,6 +697,13 @@
+@@ -689,6 +699,15 @@
          retval |= LOGIN_ERR;
      }
  
@@ -67,16 +69,18 @@ Index: pam.deb/modules/pam_limits/pam_limits.c
 +	i = chdir(pl->chroot_dir);
 +	if (i == 0)
 +	    i = chroot(pl->chroot_dir);
++	if (i == 0)
++	    i = chdir("/");
 +	if (i != 0)
 +	    retval = LIMIT_ERR;
 +    }
      return retval;
  }
  
-Index: pam.deb/modules/pam_limits/limits.conf.5.xml
+Index: pam-debian/modules/pam_limits/limits.conf.5.xml
 ===================================================================
---- pam.deb.orig/modules/pam_limits/limits.conf.5.xml
-+++ pam.deb/modules/pam_limits/limits.conf.5.xml
+--- pam-debian.orig/modules/pam_limits/limits.conf.5.xml	2011-10-10 16:22:04.782686961 -0700
++++ pam-debian/modules/pam_limits/limits.conf.5.xml	2011-10-10 16:25:59.789664947 -0700
 @@ -224,6 +224,12 @@
                    (Linux 2.6.12 and higher)</para>
                </listitem>
@@ -90,10 +94,10 @@ Index: pam.deb/modules/pam_limits/limits.conf.5.xml
            </variablelist>
          </listitem>
        </varlistentry>
-Index: pam.deb/modules/pam_limits/limits.conf.5
+Index: pam-debian/modules/pam_limits/limits.conf.5
 ===================================================================
---- pam.deb.orig/modules/pam_limits/limits.conf.5
-+++ pam.deb/modules/pam_limits/limits.conf.5
+--- pam-debian.orig/modules/pam_limits/limits.conf.5	2011-10-10 16:22:04.770686808 -0700
++++ pam-debian/modules/pam_limits/limits.conf.5	2011-10-10 16:25:59.789664947 -0700
 @@ -1,161 +1,22 @@
 +'\" t
  .\"     Title: limits.conf
@@ -339,10 +343,10 @@ Index: pam.deb/modules/pam_limits/limits.conf.5
  .if n \{\
  .RE
  .\}
-Index: pam.deb/modules/pam_limits/limits.conf
+Index: pam-debian/modules/pam_limits/limits.conf
 ===================================================================
---- pam.deb.orig/modules/pam_limits/limits.conf
-+++ pam.deb/modules/pam_limits/limits.conf
+--- pam-debian.orig/modules/pam_limits/limits.conf	2011-10-10 16:22:04.806687265 -0700
++++ pam-debian/modules/pam_limits/limits.conf	2011-10-10 16:25:59.789664947 -0700
 @@ -35,6 +35,7 @@
  #        - msgqueue - max memory used by POSIX message queues (bytes)
  #        - nice - max nice priority allowed to raise to values: [-20, 19]
