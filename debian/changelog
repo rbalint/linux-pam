@@ -9,6 +9,9 @@ pam (1.1.3-6) UNRELEASED; urgency=low
     force a kdm restart on ABI bump.  Which is good, since restarting kdm
     now seems to also log users out of running sessions, which we rather
     want to avoid.  Closes: #632673, LP: #744944.
+  * debian/patches-applied/update-motd: set a sane umask before calling
+    run-parts, and restore the old mask afterwards, so /run/motd gets
+    consistent permissions.  LP: #871943.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 30 Oct 2011 06:53:29 -0700
 
