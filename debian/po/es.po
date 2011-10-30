@@ -35,7 +35,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.79-4\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2011-10-30 14:31-0400\n"
+"POT-Creation-Date: 2011-10-30 15:05-0400\n"
 "PO-Revision-Date: 2010-08-08 01:40+0200\n"
 "Last-Translator: Javier Fernandez-Sanguino <jfs@debian.org>\n"
 "Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
@@ -133,15 +133,21 @@ msgid ""
 "asked questions on each library upgrade."
 msgstr ""
 
-#. Type: multiselect
+#. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
+msgid "PAM configuration"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libpam-runtime.templates:2001
 msgid "PAM profiles to enable:"
 msgstr "Perfiles PAM a habilitar:"
 
 #. Type: multiselect
 #. Description
-#: ../libpam-runtime.templates:1001
+#: ../libpam-runtime.templates:2001
 msgid ""
 "Pluggable Authentication Modules (PAM) determine how authentication, "
 "authorization, and password changing are handled on the system, as well as "
@@ -156,7 +162,7 @@ msgstr ""
 
 #. Type: multiselect
 #. Description
-#: ../libpam-runtime.templates:1001
+#: ../libpam-runtime.templates:2001
 msgid ""
 "Some PAM module packages provide profiles that can be used to automatically "
 "adjust the behavior of all PAM-using applications on the system.  Please "
@@ -169,7 +175,7 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../libpam-runtime.templates:2001
+#: ../libpam-runtime.templates:3001
 msgid "Incompatible PAM profiles selected."
 msgstr "Se han seleccionado perfiles PAM incompatibles."
 
@@ -177,7 +183,7 @@ msgstr "Se han seleccionado perfiles PAM incompatibles."
 #. Description
 #. This paragraph is followed by a (currently) non-translatable list of
 #. PAM profile names.
-#: ../libpam-runtime.templates:2001
+#: ../libpam-runtime.templates:3001
 msgid "The following PAM profiles cannot be used together:"
 msgstr ""
 "No pueden utilizarse conjuntamente los perfiles de PAM indicados a "
@@ -185,20 +191,20 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../libpam-runtime.templates:2001
+#: ../libpam-runtime.templates:3001
 msgid "Please select a different set of modules to enable."
 msgstr "Seleccione un conjunto distinto de módulos a activar."
 
 #. Type: boolean
 #. Description
-#: ../libpam-runtime.templates:3001
+#: ../libpam-runtime.templates:4001
 msgid "Override local changes to /etc/pam.d/common-*?"
 msgstr ""
 "¿Desea sobreescribir los cambios locales realizados a «/etc/pam.d/common-*»?"
 
 #. Type: boolean
 #. Description
-#: ../libpam-runtime.templates:3001
+#: ../libpam-runtime.templates:4001
 msgid ""
 "One or more of the files /etc/pam.d/common-{auth,account,password,session} "
 "have been locally modified.  Please indicate whether these local changes "
@@ -214,13 +220,13 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../libpam-runtime.templates:4001
+#: ../libpam-runtime.templates:5001
 msgid "No PAM profiles have been selected."
 msgstr "No ha seleccionado ningún perfil PAM."
 
 #. Type: error
 #. Description
-#: ../libpam-runtime.templates:4001
+#: ../libpam-runtime.templates:5001
 msgid ""
 "No PAM profiles have been selected for use on this system.  This would grant "
 "all users access without authenticating, and is not allowed.  Please select "

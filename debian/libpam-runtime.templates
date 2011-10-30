@@ -1,3 +1,7 @@
+Template: libpam-runtime/title
+Type: title
+_Description: PAM configuration
+
 Template: libpam-runtime/profiles
 Type: multiselect
 Choices: ${profiles}

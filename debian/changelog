@@ -19,6 +19,9 @@ pam (1.1.3-6) UNRELEASED; urgency=low
     libraries/restart-without-asking, that allows admins to accept the
     service restarts once for all so that they don't have to repeatedly
     say "ok".  LP: #745004.
+  * debian/libpam-runtime.templates, debian/local/pam-auth-update: add a
+    new 'title' template, so pam-auth-update doesn't give a blank title
+    when called outside of a maintainer script.  LP: #882794.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 30 Oct 2011 06:53:29 -0700
 
