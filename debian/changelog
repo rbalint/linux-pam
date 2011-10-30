@@ -12,6 +12,9 @@ pam (1.1.3-6) UNRELEASED; urgency=low
   * debian/patches-applied/update-motd: set a sane umask before calling
     run-parts, and restore the old mask afterwards, so /run/motd gets
     consistent permissions.  LP: #871943.
+  * debian/patches-applied/update-motd: new module option for pam_motd,
+    'noupdate', which suppresses the call to run-parts /etc/update-motd.d.
+    LP: #805423.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 30 Oct 2011 06:53:29 -0700
 
