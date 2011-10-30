@@ -1,3 +1,12 @@
+pam (1.1.3-6) UNRELEASED; urgency=low
+
+  * debian/patches-applied/hurd_no_setfsuid: we don't want to check all
+    setre*id() calls; we know that there are situations where some of these
+    may fail but we don't care.  As long as the last setre*id() call in each
+    set succeeds, that's the state we mean to be in.
+
+ -- Steve Langasek <vorlon@debian.org>  Sun, 30 Oct 2011 06:53:29 -0700
+
 pam (1.1.3-5) unstable; urgency=low
 
   [ Kees Cook ]
