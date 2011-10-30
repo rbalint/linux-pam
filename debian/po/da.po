@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2010-09-05 23:50-0700\n"
+"POT-Creation-Date: 2011-03-29 13:01-0700\n"
 "PO-Revision-Date: 2010-10-19 19:21+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
@@ -45,16 +45,17 @@ msgstr "Visningshåndtering skal genstartes manuelt"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
+#, fuzzy
 msgid ""
-"The kdm, wdm, and xdm display managers require a restart for the new version "
-"of libpam, but there are X login sessions active on your system that would "
-"be terminated by this restart.  You will therefore need to restart these "
+"The wdm and xdm display managers require a restart for the new version of "
+"libpam, but there are X login sessions active on your system that would be "
+"terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
-"kdm-, wdm-, og xdm-visningshåndteringerne kræver en genstart for den nye "
-"version af libpam, men der er X-logindsessioner, som er aktive på dit system "
-"og som vil blive afsluttet af denne genstart. Du skal derfor manuelt "
-"genstarte disse tjenester, før yderligere X-logind'er vil være mulige."
+"wdm- og xdm-visningshåndteringerne kræver en genstart for den nye version af "
+"libpam, men der er X-logindsessioner, som er aktive på dit system og som vil "
+"blive afsluttet af denne genstart. Du skal derfor manuelt genstarte disse "
+"tjenester, før yderligere X-logind'er vil være mulige."
 
 #. Type: error
 #. Description

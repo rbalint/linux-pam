@@ -4,6 +4,11 @@ pam (1.1.3-6) UNRELEASED; urgency=low
     setre*id() calls; we know that there are situations where some of these
     may fail but we don't care.  As long as the last setre*id() call in each
     set succeeds, that's the state we mean to be in.
+  * debian/libpam0g.postinst: according to Kubuntu developers, kdm no longer
+    keeps libpam loaded persistently at runtime, so it's not necessary to
+    force a kdm restart on ABI bump.  Which is good, since restarting kdm
+    now seems to also log users out of running sessions, which we rather
+    want to avoid.  Closes: #632673, LP: #744944.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 30 Oct 2011 06:53:29 -0700
 

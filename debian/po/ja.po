@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 1.1.1-6\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2010-09-05 23:50-0700\n"
+"POT-Creation-Date: 2011-03-29 13:01-0700\n"
 "PO-Revision-Date: 2010-10-15 09:22+0900\n"
 "Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
@@ -45,10 +45,16 @@ msgstr "ディスプレイマネージャは手動で再起動されなければ
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
+#, fuzzy
+#| msgid ""
+#| "The kdm, wdm, and xdm display managers require a restart for the new "
+#| "version of libpam, but there are X login sessions active on your system "
+#| "that would be terminated by this restart.  You will therefore need to "
+#| "restart these services by hand before further X logins will be possible."
 msgid ""
-"The kdm, wdm, and xdm display managers require a restart for the new version "
-"of libpam, but there are X login sessions active on your system that would "
-"be terminated by this restart.  You will therefore need to restart these "
+"The wdm and xdm display managers require a restart for the new version of "
+"libpam, but there are X login sessions active on your system that would be "
+"terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
 "kdm、wdm、xdm といったディスプレイマネージャは libpam の新しいバージョンのた"

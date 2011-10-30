@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2009-08-18 18:30-0700\n"
-"PO-Revision-Date: 2010-03-30 02:31+0100\n"
+"POT-Creation-Date: 2011-03-29 13:01-0700\n"
+"PO-Revision-Date: 2011-03-29 13:01-0700\n"
 "Last-Translator: Martin Bagge <brother@bsnet.se>\n"
 "Language-Team: Swedish <debian-l10n-swedish@lists.debian.org>\n"
 "Language: sv\n"
@@ -48,14 +48,15 @@ msgstr "Skärmhanterare måste startas om manuellt"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
+#, fuzzy
 msgid ""
-"The kdm, wdm, and xdm display managers require a restart for the new version "
-"of libpam, but there are X login sessions active on your system that would "
-"be terminated by this restart.  You will therefore need to restart these "
+"The wdm and xdm display managers require a restart for the new version of "
+"libpam, but there are X login sessions active on your system that would be "
+"terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
-"Skärmhanterarna kdm, wdm och xdm måste startas om för den nya versionen av "
-"libpam men det finns X-inloggningssessioner som skulle avslutas av en sådan "
+"Skärmhanterarna wdm och xdm måste startas om för den nya versionen av libpam "
+"men det finns X-inloggningssessioner som skulle avslutas av en sådan "
 "omstart. Du behöver därför starta om dessa tjänster manuellt innan "
 "ytterligare X-inloggningar är möjliga."
 
@@ -178,48 +179,6 @@ msgstr ""
 
 #. Type: error
 #. Description
-#: ../libpam-runtime.templates:5001
-msgid "Your system allowed access without a password!"
-msgstr "Ditt system tillät anslutningar utan lösenord!"
-
-#. Type: error
-#. Description
-#: ../libpam-runtime.templates:5001
-msgid ""
-"A bug in a previous version of libpam-runtime resulted in no PAM profiles "
-"being selected for use on this system.  As a result, access was allowed for "
-"a time to all accounts on your system, with or without a correct password. "
-"Especially if this system can be accessed from the Internet, it is likely "
-"that it has been compromised.  Unless you are familiar with recovering from "
-"security failures, viruses, and malicious software, you should re-install "
-"this system from scratch or obtain the services of a skilled system "
-"administrator.  For more information, see:"
-msgstr ""
-"Ett fel i en tidigare version av libpam-runtime innebar att inga PAM-"
-"profiler användes på systemet. Detta betydde i sin tur att alla konton på "
-"systemet kunde använda skal, med eller utan ett korrekt lösenord. Om detta "
-"system är åtkomligt via nätet är det mycket troligt att det kan ha "
-"infiltrerats. Om du inte är säker på hur du ska återställa eventuella fel på "
-"grund av intrång, virus eller skadlig programvara bör du installera om "
-"systemet från grunden eller inhämta hjälp av en erfaren systemadministratör. "
-"Läs mer om detta på:"
-
-#. Type: error
-#. Description
-#: ../libpam-runtime.templates:5001
-msgid ""
-"The bug that allowed this wrong configuration is fixed in the current "
-"version of libpam-runtime, and your configuration has now been corrected. We "
-"apologize that previous versions of libpam-runtime did not detect and "
-"prevent this situation."
-msgstr ""
-"Felet som orsakade dessa problem är åtgärdat i och med den aktuella "
-"versionen av libpam-runtime och dina inställningar ha korrigerats. Vi ber om "
-"ursäkt för att tidigare versioner av libpam-runtime inte upptäckte och "
-"förhindrade att dessa fel uppstod."
-
-#. Type: error
-#. Description
 #: ../libpam-modules.templates:1001
 msgid "xscreensaver and xlockmore must be restarted before upgrading"
 msgstr ""
@@ -243,3 +202,36 @@ msgstr ""
 "program. Programmen behöver startas om eller allra helst stängas av helt "
 "före uppgraderingen, resultatet kan annars innebära att du inte kan komma åt "
 "dina aktiva sessioner på systemet."
+
+#~ msgid "Your system allowed access without a password!"
+#~ msgstr "Ditt system tillät anslutningar utan lösenord!"
+
+#~ msgid ""
+#~ "A bug in a previous version of libpam-runtime resulted in no PAM profiles "
+#~ "being selected for use on this system.  As a result, access was allowed "
+#~ "for a time to all accounts on your system, with or without a correct "
+#~ "password. Especially if this system can be accessed from the Internet, it "
+#~ "is likely that it has been compromised.  Unless you are familiar with "
+#~ "recovering from security failures, viruses, and malicious software, you "
+#~ "should re-install this system from scratch or obtain the services of a "
+#~ "skilled system administrator.  For more information, see:"
+#~ msgstr ""
+#~ "Ett fel i en tidigare version av libpam-runtime innebar att inga PAM-"
+#~ "profiler användes på systemet. Detta betydde i sin tur att alla konton på "
+#~ "systemet kunde använda skal, med eller utan ett korrekt lösenord. Om "
+#~ "detta system är åtkomligt via nätet är det mycket troligt att det kan ha "
+#~ "infiltrerats. Om du inte är säker på hur du ska återställa eventuella fel "
+#~ "på grund av intrång, virus eller skadlig programvara bör du installera om "
+#~ "systemet från grunden eller inhämta hjälp av en erfaren "
+#~ "systemadministratör. Läs mer om detta på:"
+
+#~ msgid ""
+#~ "The bug that allowed this wrong configuration is fixed in the current "
+#~ "version of libpam-runtime, and your configuration has now been corrected. "
+#~ "We apologize that previous versions of libpam-runtime did not detect and "
+#~ "prevent this situation."
+#~ msgstr ""
+#~ "Felet som orsakade dessa problem är åtgärdat i och med den aktuella "
+#~ "versionen av libpam-runtime och dina inställningar ha korrigerats. Vi ber "
+#~ "om ursäkt för att tidigare versioner av libpam-runtime inte upptäckte och "
+#~ "förhindrade att dessa fel uppstod."
