@@ -24,3 +24,15 @@ _Description: Failure restarting some services for PAM upgrade
  .
  You will need to start these manually by running
  '/etc/init.d/<service> start'.
+
+Template: libraries/restart-without-asking
+Type: boolean
+Default: false
+_Description: Restart services during package upgrades without asking?
+ There are services installed on your system which need to be restarted
+ when certain libraries, such as libpam, libc, and libssl, are upgraded.
+ Since these restarts may cause interruptions of service for the system,
+ you will normally be prompted on each upgrade for the list of services
+ you wish to restart.  You can choose this option to avoid being prompted;
+ instead, all necessary restarts will be done for you automatically so you
+ can avoid being asked questions on each library upgrade.

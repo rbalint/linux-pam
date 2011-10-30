@@ -15,6 +15,10 @@ pam (1.1.3-6) UNRELEASED; urgency=low
   * debian/patches-applied/update-motd: new module option for pam_motd,
     'noupdate', which suppresses the call to run-parts /etc/update-motd.d.
     LP: #805423.
+  * debian/libpam0g.templates, debian/libpam0g.postinst: add a new question,
+    libraries/restart-without-asking, that allows admins to accept the
+    service restarts once for all so that they don't have to repeatedly
+    say "ok".  LP: #745004.
 
  -- Steve Langasek <vorlon@debian.org>  Sun, 30 Oct 2011 06:53:29 -0700
 

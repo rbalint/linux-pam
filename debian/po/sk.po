@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
-"POT-Creation-Date: 2011-03-29 13:01-0700\n"
+"POT-Creation-Date: 2011-10-30 14:31-0400\n"
 "PO-Revision-Date: 2011-03-29 13:01-0700\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -45,15 +45,15 @@ msgstr "Správcu obrazovky je potrebné reštartovať ručne"
 #. Description
 #: ../libpam0g.templates:2001
 msgid ""
-"The wdm and xdm display managers require a restart for the new version "
-"of libpam, but there are X login sessions active on your system that would "
-"be terminated by this restart.  You will therefore need to restart these "
+"The wdm and xdm display managers require a restart for the new version of "
+"libpam, but there are X login sessions active on your system that would be "
+"terminated by this restart.  You will therefore need to restart these "
 "services by hand before further X logins will be possible."
 msgstr ""
-"Správcovia obrazovky wdm a xdm vyžadujú reštart kvôli novej verzii "
-"libpam, ale na vašom systéme sú aktívne prihlasovacie relácie X, ktoré by "
-"tento reštart ukončil. Preto tieto služby budete musieť reštartovať ručne "
-"predtým, než bude možné uskutočniť ďalšie prihlásenie k X."
+"Správcovia obrazovky wdm a xdm vyžadujú reštart kvôli novej verzii libpam, "
+"ale na vašom systéme sú aktívne prihlasovacie relácie X, ktoré by tento "
+"reštart ukončil. Preto tieto služby budete musieť reštartovať ručne predtým, "
+"než bude možné uskutočniť ďalšie prihlásenie k X."
 
 #. Type: error
 #. Description
@@ -77,6 +77,25 @@ msgid ""
 "start'."
 msgstr ""
 "Budete ich musieť reštartovať ručne spustením „/etc/init.d/<service> start”."
+
+#. Type: boolean
+#. Description
+#: ../libpam0g.templates:4001
+msgid "Restart services during package upgrades without asking?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libpam0g.templates:4001
+msgid ""
+"There are services installed on your system which need to be restarted when "
+"certain libraries, such as libpam, libc, and libssl, are upgraded. Since "
+"these restarts may cause interruptions of service for the system, you will "
+"normally be prompted on each upgrade for the list of services you wish to "
+"restart.  You can choose this option to avoid being prompted; instead, all "
+"necessary restarts will be done for you automatically so you can avoid being "
+"asked questions on each library upgrade."
+msgstr ""
 
 #. Type: multiselect
 #. Description
