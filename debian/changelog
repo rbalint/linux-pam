@@ -1,4 +1,4 @@
-pam (1.1.3-6) UNRELEASED; urgency=low
+pam (1.1.3-6) unstable; urgency=low
 
   * debian/patches-applied/hurd_no_setfsuid: we don't want to check all
     setre*id() calls; we know that there are situations where some of these
@@ -23,7 +23,7 @@ pam (1.1.3-6) UNRELEASED; urgency=low
     new 'title' template, so pam-auth-update doesn't give a blank title
     when called outside of a maintainer script.  LP: #882794.
 
- -- Steve Langasek <vorlon@debian.org>  Sun, 30 Oct 2011 06:53:29 -0700
+ -- Steve Langasek <vorlon@debian.org>  Sun, 06 Nov 2011 19:43:14 -0800
 
 pam (1.1.3-5) unstable; urgency=low
 
