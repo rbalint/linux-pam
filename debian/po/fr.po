@@ -1,18 +1,18 @@
 # Translation of pam to French
 # Copyright (C) 2007 Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>
-# Copyright (C) 2009 Jean-Baka Domelevo Entfellner <domelevo@gmail.com>
+# Copyright (C) 2009, 2001 Jean-Baka Domelevo Entfellner <domelevo@gmail.com>
 # This file is distributed under the same license as the pam package.
 # Translators:
 # Cyril Brulebois <cyril.brulebois@enst-bretagne.fr>, 2007
-# Jean-Baka Domelevo Entfellner <domelevo@gmail.com>, 2009
+# Jean-Baka Domelevo Entfellner <domelevo@gmail.com>, 2009, 2011
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam\n"
+"Project-Id-Version: pam 1.1.3-6\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2011-10-30 15:05-0400\n"
-"PO-Revision-Date: 2011-03-29 13:01-0700\n"
-"Last-Translator: Jean-Baka Domelevo-Entfellner <domelevo@gmail.com>\n"
+"PO-Revision-Date: 2011-11-11 20:19+0100\n"
+"Last-Translator: Jean-Baka Domelevo Entfellner <domelevo@gmail.com>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:4001
 msgid "Restart services during package upgrades without asking?"
-msgstr ""
+msgstr "Redémarrer les services automatiquement lors des mises à jour ?"
 
 #. Type: boolean
 #. Description
@@ -106,12 +106,20 @@ msgid ""
 "necessary restarts will be done for you automatically so you can avoid being "
 "asked questions on each library upgrade."
 msgstr ""
+"Certains services installés sur le système demandent à être redémarrés "
+"lors de la mise à jour de certaines bibliothèques (par exemple libpam, libc "
+"ou encore libssl). Puisque de tels redémarrages peuvent causer des "
+"interruptions de service, une confirmation est habituellement demandée lors "
+"de chaque mise à jour, en présentant la liste des services à redémarrer. "
+"Vous pouvez sélectionner cette option pour éviter ces demandes interactives "
+"de confirmation. Tous les redémarrages nécessaires seront alors effectués "
+"automatiquement lors de chaque mise à jour de bibliothèque."
 
 #. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM configuration"
-msgstr ""
+msgstr "Configuration de PAM"
 
 #. Type: multiselect
 #. Description
@@ -141,7 +149,7 @@ msgid ""
 "adjust the behavior of all PAM-using applications on the system.  Please "
 "indicate which of these behaviors you wish to enable."
 msgstr ""
-"Certains paquets de modules PAM fournissent des profils, lesquels peuvent "
+"Certains paquets de modules PAM fournissent des profils qui peuvent "
 "être utilisés pour ajuster automatiquement le comportement de toutes les "
 "applications utilisant PAM qui sont présentes sur le système."
 
@@ -181,7 +189,7 @@ msgid ""
 "decline this option, you will need to manage your system's authentication "
 "configuration by hand."
 msgstr ""
-"L'un au moins des fichiers /etc/pam.d/common-{auth,account,password,session} "
+"Au moins un des fichiers /etc/pam.d/common-{auth,account,password,session} "
 "a été modifié localement. Veuillez indiquer s'il faut abandonner ces "
 "changements locaux et revenir à la configuration standard du système. Dans "
 "le cas contraire, vous devrez configurer vous-même le système "
@@ -229,4 +237,4 @@ msgstr ""
 "bibliothèques, la mise à niveau du paquet libpam-modules entrainera "
 "l'impossibilité de s'authentifier. Avant de poursuivre la mise à niveau, ces "
 "programmes doivent être redémarrés ou arrêtés pour éviter que des "
-"utilisateurs ne puissent plus accéder à leurs sessions."
+"utilisateurs ne puissent plus accéder à leur session."
