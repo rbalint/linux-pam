@@ -1,23 +1,22 @@
-# Debconf questions for the Linux-PAM package.
+# Dutch translation of pam debconf templates.
 # Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
 # This file is distributed under the same license as the pam package.
-#
 # Bart Cornelis <cobaco@skolelinux.no>, 2007.
 # Eric Spreen <erispre@gmail.com>, 2010.
+# Jeroen Schot <schot@a-eskwadraat.nl>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam\n"
+"Project-Id-Version: pam 1.1.3-6\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2011-10-30 15:05-0400\n"
-"PO-Revision-Date: 2010-11-21 21:58+0100\n"
-"Last-Translator: Eric Spreen <erispre@gmail.com>\n"
-"Language-Team: debian-l10n-dutch <debian-l10n-dutch@lists.debian.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2011-11-25 16:33+0100\n"
+"Last-Translator: Jeroen Schot <schot@a-eskwadraat.nl>\n"
+"Language-Team: Debian l10n Dutch <debian-l10n-dutch@lists.debian.org>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Dutch\n"
 
 #. Type: string
 #. Description
@@ -88,7 +87,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:4001
 msgid "Restart services during package upgrades without asking?"
-msgstr ""
+msgstr "Diensten zonder vragen herstarten bij het opwaarderen van pakketten?"
 
 #. Type: boolean
 #. Description
@@ -102,12 +101,20 @@ msgid ""
 "necessary restarts will be done for you automatically so you can avoid being "
 "asked questions on each library upgrade."
 msgstr ""
+"Er zijn diensten op uw systeem geïnstalleerd die moeten worden herstart "
+"wanneer bepaalde bibliotheken, zoals libpam, libc en libssl, worden "
+"opgewaardeerd. Omdat deze herstarts dienstonderbrekingen op uw systeem "
+"kunnen veroorzaken wordt u normaal gesproken bij elke opwaardering gevraagd "
+"welke diensten u wilt herstarten. Als u voor deze optie kiest wordt dit niet "
+"meer aan u gevraagd. In plaats daarvan worden alle noodzakelijke herstarts "
+"automatisch gedaan zodat u geen vragen krijgt bij elke opwaardering van een "
+"bibliotheek."
 
 #. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM configuration"
-msgstr ""
+msgstr "PAM-configuratie"
 
 #. Type: multiselect
 #. Description
@@ -187,7 +194,7 @@ msgstr ""
 #. Description
 #: ../libpam-runtime.templates:5001
 msgid "No PAM profiles have been selected."
-msgstr "Er zijn geen PAM-profielen gelecteerd."
+msgstr "Er zijn geen PAM-profielen geselecteerd."
 
 #. Type: error
 #. Description
@@ -220,7 +227,7 @@ msgid ""
 "their current sessions."
 msgstr ""
 "Er zijn een of meer draaiende instanties van xscreensaver of xlockmore "
-"gedecteerd op dit systeem. Wegens strijdige veranderingen in bibliotheken "
+"gedetecteerd op dit systeem. Wegens strijdige veranderingen in bibliotheken "
 "zal de upgrade van het pakket libpam-modules een systeem veroorzaken waarin "
 "u zich niet zult kunnen authenticeren tegenover deze programma's. U dient "
 "ervoor te zorgen dat deze programma's worden herstart of gestopt voordat u "
