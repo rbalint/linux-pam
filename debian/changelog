@@ -7,6 +7,8 @@ pam (1.1.3-7) UNRELEASED; urgency=low
     - Dutch, thanks to Jeroen Schot <schot@A-Eskwadraat.nl>
       (closes: #650755)
     - Russian, thanks to Yuri Kozlov <yuray@komyakino.ru> (closes: #650867)
+    - Portuguese, thanks to Pedro Ribeiro <p.m42.ribeiro@gmail.com>
+      (closes: #652493)
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 14 Nov 2011 20:06:19 -0800
 
