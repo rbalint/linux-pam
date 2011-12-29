@@ -1,14 +1,14 @@
 # German translation of pam debconf templates
-# Copyright (C) 2007, 2008 Steve Langasek <vorlon@debian.org>
-# Copyright (C) 2007, 2009 Sven Joachim <svenjoac@gmx.de>.
+# Copyright (C) 2007, 2009, 2011 Sven Joachim <svenjoac@gmx.de>.
+# Copyright (C) Helge Kreutzmann <debian@helgefjell.de>, 2011.
 # This file is distributed under the same license as the pam package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pam 1.1.0-1\n"
+"Project-Id-Version: pam 1.1.3-6\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2011-10-30 15:05-0400\n"
-"PO-Revision-Date: 2011-03-29 13:01-0700\n"
+"PO-Revision-Date: 2011-12-26 19:53+0100\n"
 "Last-Translator: Sven Joachim <svenjoac@gmx.de>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -86,7 +86,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:4001
 msgid "Restart services during package upgrades without asking?"
-msgstr ""
+msgstr "Dienste bei Paket-Upgrades ohne Rückfrage neu starten?"
 
 #. Type: boolean
 #. Description
@@ -100,12 +100,20 @@ msgid ""
 "necessary restarts will be done for you automatically so you can avoid being "
 "asked questions on each library upgrade."
 msgstr ""
+"Auf Ihrem System sind Dienste installiert, die beim Upgrade bestimmter "
+"Bibliotheken, wie Libpam, Libc und Libssl, neu gestartet werden müssen. Da "
+"diese Neustarts zu Unterbrechungen der Dienste für dieses System führen "
+"können, werden Sie normalerweise bei jedem Upgrade über die Liste der neu zu "
+"startenden Dienste befragt. Sie können diese Option wählen, um diese Abfrage "
+"zu vermeiden; stattdessen werden alle notwendigen Dienste-Neustarts für Sie "
+"automatisch vorgenommen und die Beantwortung von Fragen bei jedem Upgrade "
+"von Bibliotheken vermieden."
 
 #. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM configuration"
-msgstr ""
+msgstr "PAM-Konfiguration"
 
 #. Type: multiselect
 #. Description
