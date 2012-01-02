@@ -7,7 +7,7 @@
 #       Javier Fernández-Sanguino , 2007
 # - Updates:
 #    Steve Langasek, 2008
-#    Javier Fernández-Sanguino, 2009
+#    Javier Fernández-Sanguino, 2009, 2012
 #
 #  Traductores, si no conoce el formato PO, merece la pena leer la 
 #  documentación de gettext, especialmente las secciones dedicadas a este
@@ -36,17 +36,18 @@ msgstr ""
 "Project-Id-Version: pam 0.79-4\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2011-10-30 15:05-0400\n"
-"PO-Revision-Date: 2010-08-08 01:40+0200\n"
+"PO-Revision-Date: 2012-01-02 01:41+0100\n"
 "Last-Translator: Javier Fernandez-Sanguino <jfs@debian.org>\n"
 "Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
-"Language: \n"
+"Language: Spanish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-POFile-SpellExtra: kdm gnome xscreensaver xdm xlockmore wdm start init\n"
 "X-POFile-SpellExtra: screensaver PAM libpam corríjala account vd runtime\n"
 "X-POFile-SpellExtra: Authentication auth Pluggable session insertables\n"
-"X-POFile-SpellExtra: password pam common\n"
+"X-POFile-SpellExtra: password pam common libc sobreescribir sobreescriban\n"
+"X-POFile-SpellExtra: reinicios libssl\n"
 
 #. Type: string
 #. Description
@@ -119,6 +120,7 @@ msgstr ""
 #: ../libpam0g.templates:4001
 msgid "Restart services during package upgrades without asking?"
 msgstr ""
+"¿Reiniciar servicios durante la actualización de paquetes sin preguntar?"
 
 #. Type: boolean
 #. Description
@@ -132,12 +134,19 @@ msgid ""
 "necessary restarts will be done for you automatically so you can avoid being "
 "asked questions on each library upgrade."
 msgstr ""
+"Su sistema tiene servicios instalados que deben reiniciarse cuando se "
+"actualicen ciertas librerías, como «libpam», «libc» o «libssl». Generalmente "
+"se le preguntará en cada actualización la lista de servicios que desea "
+"reiniciar dado que estos reinicios generalmente provocarán una interrupción "
+"del servicio. Puede seleccionar esta opción para que no se le pregunte. En "
+"lugar de hacerse estas preguntas, se reiniciarán de forma automática los "
+"servicios en cada actualización de librerías."
 
 #. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM configuration"
-msgstr ""
+msgstr "Configuración de PAM"
 
 #. Type: multiselect
 #. Description
