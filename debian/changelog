@@ -12,6 +12,7 @@ pam (1.1.3-7) UNRELEASED; urgency=low
     - German, thanks to Sven Joachim <svenjoac@gmx.de> (closes: #653407)
     - Spanish, thanks to Javier Fernandez-Sanguino Peña <jfs@debian.org>
       (closes: #654043)
+    - Bulgarian, thanks to Damyan Ivanov <dmn@debian.org> (closes: #656518)
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 14 Nov 2011 20:06:19 -0800
 

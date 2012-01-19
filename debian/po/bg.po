@@ -1,21 +1,22 @@
 # translation of bg.po to Bulgarian
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# Damyan Ivanov <dmn@debian.org>, 2007, 2009, 2012.
 #
-# Damyan Ivanov <dmn@debian.org>, 2007, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: bg\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2011-10-30 15:05-0400\n"
-"PO-Revision-Date: 2011-03-29 13:01-0700\n"
+"PO-Revision-Date: 2012-01-19 22:36+0200\n"
 "Last-Translator: Damyan Ivanov <dmn@debian.org>\n"
-"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"Language-Team: Български <dict@fsa-bg.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #. Type: string
 #. Description
@@ -81,7 +82,7 @@ msgstr "Ще трябва сами да ги стартирате чрез „/e
 #. Description
 #: ../libpam0g.templates:4001
 msgid "Restart services during package upgrades without asking?"
-msgstr ""
+msgstr "Автоматично рестартиране на услугите при обновяване на пакета?"
 
 #. Type: boolean
 #. Description
@@ -95,12 +96,20 @@ msgid ""
 "necessary restarts will be done for you automatically so you can avoid being "
 "asked questions on each library upgrade."
 msgstr ""
+"Системата има инсталирани услуги, които трябва да се рестартират при "
+"обновяване на някои библиотеки като libpam, libc и libssl. Тъй като "
+"рестартирането може да предизвика прекъсване на съответната услуга, "
+"обикновено администраторите предпочитат да бъдат попитани кои услуги могат "
+"да бъдат рестартиране при всяко обновяване на библиотеките. Ако потвърдите, "
+"че не желаете да потвърждавате рестартирането, услугите ще бъдат "
+"рестартирани автоматично без излишни въпроси при обновяване на някоя от "
+"критичните библиотеки."
 
 #. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM configuration"
-msgstr ""
+msgstr "Настройване на PAM"
 
 #. Type: multiselect
 #. Description
