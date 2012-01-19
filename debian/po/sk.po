@@ -1,13 +1,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pam package.
-# Ivan Masár <helix84@centrum.sk>, 2008, 2009, 2010.
+# Ivan Masár <helix84@centrum.sk>, 2008, 2009, 2010, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2011-10-30 15:05-0400\n"
-"PO-Revision-Date: 2011-03-29 13:01-0700\n"
+"PO-Revision-Date: 2012-01-19 22:37+0100\n"
 "Last-Translator: Ivan Masár <helix84@centrum.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "Language: sk\n"
@@ -82,7 +82,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:4001
 msgid "Restart services during package upgrades without asking?"
-msgstr ""
+msgstr "Reštartovať služby počas aktualizácií balíka bez pýtania?"
 
 #. Type: boolean
 #. Description
@@ -96,12 +96,19 @@ msgid ""
 "necessary restarts will be done for you automatically so you can avoid being "
 "asked questions on each library upgrade."
 msgstr ""
+"Na vašom systéme bežia služby, ktoré ne potrebné reštartovať pri "
+"aktualizácii určitých knižníc ako libpam, libc a libssl. Pretože tieto "
+"reštarty môžu spôsobiť prerušenia služby systému, za bežných okolností "
+"budete vyzvaní pri každej aktualizácie so zoznamom služieb, ktoré chcete "
+"reštartovať. Túto voľbu môžete vybrať, ak nechcete byť vyzývaný, ale "
+"namiesto toho chcete, aby sa všetky potrebné reštarty vykonali automaticky "
+"za vás a tak sa vyhnúť kladeniu otázok pri každej aktualizácii knižnice."
 
 #. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM configuration"
-msgstr ""
+msgstr "Konfigurácia PAM"
 
 #. Type: multiselect
 #. Description
