@@ -14,6 +14,7 @@ pam (1.1.3-7) UNRELEASED; urgency=low
       (closes: #654043)
     - Bulgarian, thanks to Damyan Ivanov <dmn@debian.org> (closes: #656518)
     - Slovak, thanks to Ivan Masár <helix84@centrum.sk> (closes: #656521)
+    - Japanese, thanks to Kenshi Muto <kmuto@debian.org> (closes: #656834)
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 14 Nov 2011 20:06:19 -0800
 
