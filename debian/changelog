@@ -17,6 +17,8 @@ pam (1.1.3-7) UNRELEASED; urgency=low
     - Japanese, thanks to Kenshi Muto <kmuto@debian.org> (closes: #656834)
     - Polish, thanks to Michał Kułach <michalkulach@gmail.com>
       (closes: #657476)
+    - Catalan, thanks to Innocent De Marchi <tangram.peces@gmail.com>
+      (closes: #657489)
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 14 Nov 2011 20:06:19 -0800
 
