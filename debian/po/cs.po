@@ -1,14 +1,14 @@
 # Czech translation of pam debconf mesages.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the pam package.
-# Miroslav Kure <kurem@debian.cz>, 2007-2010.
+# Miroslav Kure <kurem@debian.cz>, 2007-2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pam\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2011-10-30 15:05-0400\n"
-"PO-Revision-Date: 2011-03-29 13:01-0700\n"
+"PO-Revision-Date: 2012-01-27 07:56+0100\n"
 "Last-Translator: Miroslav Kure <kurem@debian.cz>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
 "Language: cs\n"
@@ -84,7 +84,7 @@ msgstr ""
 #. Description
 #: ../libpam0g.templates:4001
 msgid "Restart services during package upgrades without asking?"
-msgstr ""
+msgstr "Restartovat služby při aktualizaci balíku bez ptaní?"
 
 #. Type: boolean
 #. Description
@@ -98,12 +98,18 @@ msgid ""
 "necessary restarts will be done for you automatically so you can avoid being "
 "asked questions on each library upgrade."
 msgstr ""
+"V systému jsou nainstalovány služby, které je nutno při aktualizaci "
+"určitých knihoven (libpam, libc nebo libssl) restartovat. Během restartu "
+"služeb jsou tyto po nějakou dobu nedostupné. Abychom předešli nechtěné "
+"nedostupnosti, je při každé aktualizaci nabídnut seznam služeb, které se "
+"mají restartovat. Povolíte-li tuto možnost, budou se všechny potřebné "
+"služby restartovat při aktualizaci knihoven automaticky bez ptaní."
 
 #. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM configuration"
-msgstr ""
+msgstr "Nastavení PAM"
 
 #. Type: multiselect
 #. Description
