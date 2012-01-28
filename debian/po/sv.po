@@ -2,15 +2,15 @@
 # Copyright (C) 2007 Steve Langasek <vorlon@debian.org>
 # This file is distributed under the same license as the pam package.
 #
-# Martin Bagge <brother@bsnet.se>, 2009, 2010
+# Martin Bagge <brother@bsnet.se>, 2009, 2010, 2011
 # Christer Andersson <klamm@comhem.se>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: pam 0.99.7.1-5\n"
 "Report-Msgid-Bugs-To: pam@packages.debian.org\n"
 "POT-Creation-Date: 2011-10-30 15:05-0400\n"
-"PO-Revision-Date: 2011-03-29 13:01-0700\n"
-"Last-Translator: Martin Bagge <brother@bsnet.se>\n"
+"PO-Revision-Date: 2011-12-06 21:31+0100\n"
+"Last-Translator: Martin Bagge / brother <brother@bsnet.se>\n"
 "Language-Team: Swedish <debian-l10n-swedish@lists.debian.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,6 @@ msgstr "Skärmhanterare måste startas om manuellt"
 #. Type: error
 #. Description
 #: ../libpam0g.templates:2001
-#, fuzzy
 msgid ""
 "The wdm and xdm display managers require a restart for the new version of "
 "libpam, but there are X login sessions active on your system that would be "
@@ -90,6 +89,7 @@ msgstr ""
 #: ../libpam0g.templates:4001
 msgid "Restart services during package upgrades without asking?"
 msgstr ""
+"Ska tjänster startas om vid paketuppgraderingar utan att först fråga om det?"
 
 #. Type: boolean
 #. Description
@@ -103,12 +103,19 @@ msgid ""
 "necessary restarts will be done for you automatically so you can avoid being "
 "asked questions on each library upgrade."
 msgstr ""
+"Det finns tjänster installerade på systemet som behöver startas om när vissa "
+"bibliotek (ex. libpam, libc och libc) uppdateras. Eftersom dessa omstarter "
+"kan innebära avbrott i tjänsterna på systemet kommer du vanligen att få en "
+"fråga för varje uppgradering med en lista över tjänster som ska startas om. "
+"Du kan välja detta alternativ för att undvika att frågan ställs. Istället "
+"kommer alla nödvändiga omstarter att skötas automatiskt och du undviker "
+"frågor vid varje biblioteksuppgradering."
 
 #. Type: title
 #. Description
 #: ../libpam-runtime.templates:1001
 msgid "PAM configuration"
-msgstr ""
+msgstr "PAM-inställningar"
 
 #. Type: multiselect
 #. Description
