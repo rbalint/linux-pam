@@ -14,6 +14,8 @@ pam (1.1.3-8) UNRELEASED; urgency=low
   * Ditch autoconf patch in favor of a build-dependency on dh-autoreconf,
     which will let us keep up-to-date with newer autotools.  In the present
     instance, this gets us aarch64 support.
+  * Install pam_timestamp_check - and while we're at it, move the manpage
+    to the correct binary package.  Closes: #648695.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 11 Feb 2013 19:00:19 -0800
 

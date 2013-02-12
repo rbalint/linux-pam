@@ -43,6 +43,7 @@ override_dh_installman:
 	dh_installman
 	rm -f $(d)/libpam-modules/usr/share/man/man5/pam.conf.5
 	rm -f $(d)/libpam-modules/usr/share/man/man8/pam_cracklib.8
+	rm -f $(d)/libpam-modules/usr/share/man/man8/pam_timestamp_check.8
 
 # dh_link doesn't do wildcards, so we can't auto-link to the right per-arch
 # directory
