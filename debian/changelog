@@ -1,4 +1,4 @@
-pam (1.1.3-9) UNRELEASED; urgency=low
+pam (1.1.3-9) unstable; urgency=low
 
   * Revert libaudit support for now, because libaudit isn't multiarched yet
     in unstable so this regresses cross-installability.  Reopens bug
@@ -8,7 +8,7 @@ pam (1.1.3-9) UNRELEASED; urgency=low
     'debconf-2.0'.  Thanks to Régis Boudin <regis@boudin.name> for the info.
     Closes: #677278.
 
- -- Steve Langasek <vorlon@debian.org>  Tue, 12 Feb 2013 15:01:08 -0800
+ -- Steve Langasek <vorlon@debian.org>  Tue, 12 Feb 2013 23:06:30 +0000
 
 pam (1.1.3-8) unstable; urgency=low
 
