@@ -15,7 +15,7 @@ d = $(CURDIR)/debian
 dl = $(d)/local
 
 %:
-	dh $@ --with quilt
+	dh $@ --with quilt,autoreconf
 
 override_dh_auto_configure:
 	dh_auto_configure -- --enable-static --enable-shared \

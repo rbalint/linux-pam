@@ -17,7 +17,6 @@ hurd_no_setfsuid
 055_pam_unix_nullok_secure
 cve-2011-4708.patch
 PAM-manpage-section 
-autoconf.patch 
 update-motd
 fix-man-crud
 sys-types-include.patch

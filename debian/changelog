@@ -11,6 +11,9 @@ pam (1.1.3-8) UNRELEASED; urgency=low
   * debian/patches-applied/glibc-2_16-compilation-fix.patch: fix missing
     include causing build failure with eglibc 2.16.  Thanks to Daniel
     Schepler <dschepler@gmail.com>.  Closes: #693450.
+  * Ditch autoconf patch in favor of a build-dependency on dh-autoreconf,
+    which will let us keep up-to-date with newer autotools.  In the present
+    instance, this gets us aarch64 support.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 11 Feb 2013 19:00:19 -0800
 
