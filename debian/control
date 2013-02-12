@@ -57,7 +57,7 @@ Section: admin
 Priority: required
 Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends}, debconf (>= 1.5.19), libpam-modules (>= 1.0.1-6)
+Depends: ${misc:Depends}, debconf (>= 1.5.19) | cdebconf, libpam-modules (>= 1.0.1-6)
 Replaces: libpam0g-util, libpam0g-dev
 Conflicts: libpam0g-util
 Description: Runtime support for the PAM library
