@@ -4,7 +4,7 @@ Priority: optional
 Uploaders: Sam Hartman <hartmans@debian.org>, Roger Leigh <rleigh@debian.org>
 Maintainer: Steve Langasek <vorlon@debian.org>
 Standards-Version: 3.9.1
-Build-Depends: libcrack2-dev (>= 2.8), bzip2, debhelper (>= 8.9.4), quilt (>= 0.48-1), flex, libdb-dev, libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64 !netbsd-i386], po-debconf, dh-autoreconf, autopoint, libaudit-dev
+Build-Depends: libcrack2-dev (>= 2.8), bzip2, debhelper (>= 8.9.4), quilt (>= 0.48-1), flex, libdb-dev, libselinux1-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64 !netbsd-i386], po-debconf, dh-autoreconf, autopoint
 Build-Depends-Indep: xsltproc, libxml2-utils, docbook-xml, docbook-xsl, w3m
 Build-Conflicts-Indep: fop
 Build-Conflicts: libdb4.2-dev, libxcrypt-dev
