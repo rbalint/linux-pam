@@ -20,8 +20,7 @@ dl = $(d)/local
 override_dh_auto_configure:
 	dh_auto_configure -- --enable-static --enable-shared \
 		--libdir=/lib/$(DEB_HOST_MULTIARCH) \
-		--enable-isadir=/lib/security --disable-audit \
-		--disable-regenerate-docu
+		--enable-isadir=/lib/security --disable-regenerate-docu
 
 # make sure the SAG, MWG, ADG are readable with a browser.
 override_dh_compress:

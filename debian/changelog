@@ -18,6 +18,11 @@ pam (1.1.3-8) UNRELEASED; urgency=low
     to the correct binary package.  Closes: #648695.
   * Update lintian overrides to suppress some noise about hardening and
     manpages.
+  * Enable audit support, by popular demand.  This should have no major
+    impact unless you're also running auditd; but I reserve the right to
+    disable this again in the event that this causes a performance hit or
+    breaks upgrades (since the dependency is pulled into libpam, not just
+    into pam_tty_audit).  Closes: #699159, LP: #937005.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 11 Feb 2013 19:00:19 -0800
 
