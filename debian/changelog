@@ -2,6 +2,8 @@ pam (1.1.3-10) UNRELEASED; urgency=low
 
   * Fix pam-auth-update handling of trailing blank lines in the fields of
     profiles.  LP: #1160288.
+  * Reintroduce libaudit support now that libaudit has been multiarched.
+    Closes: #699159.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 15 Apr 2013 12:09:09 -0700
 
