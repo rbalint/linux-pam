@@ -17,10 +17,16 @@ dl = $(d)/local
 %:
 	dh $@ --with quilt,autoreconf
 
+# avoid libaudit-dev when bootstrapping
+ifneq (,$(filter $(DEB_BUILD_PROFILE),stage1))
+  CONFIGURE_OPTS += --disable-audit
+endif  
+
 override_dh_auto_configure:
 	dh_auto_configure -- --enable-static --enable-shared \
 		--libdir=/lib/$(DEB_HOST_MULTIARCH) \
-		--enable-isadir=/lib/security --disable-regenerate-docu
+		--enable-isadir=/lib/security \
+		--disable-regenerate-docu $(CONFIGURE_OPTS)
 
 # make sure the SAG, MWG, ADG are readable with a browser.
 override_dh_compress:
