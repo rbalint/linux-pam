@@ -1,6 +1,7 @@
 pam (1.1.8-1) UNRELEASED; urgency=medium
 
   * New upstream release.
+    - includes upstream changes to pam_exec.  Closes: #670147.
     - 027_pam_limits_better_init_allow_explicit_root: support for reading
       /proc/1/limits is upstream, this patch now only handles the policy
       of resetting limits by default and not applying glob limits to root.
