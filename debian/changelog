@@ -1,11 +1,11 @@
-pam (1.1.5-1) UNRELEASED; urgency=medium
+pam (1.1.8-1) UNRELEASED; urgency=medium
 
   * New upstream release.
     - 027_pam_limits_better_init_allow_explicit_root: support for reading
       /proc/1/limits is upstream, this patch now only handles the policy
       of resetting limits by default and not applying glob limits to root.
-    - debian/patches/fix-manpage-crud: fix all the xsltproc breakage in a
-      single place, to keep the other patches clean.
+    - debian/patches/fix-manpage-crud: drop, manpages now being generated
+      upstream with a newer, fixed xsltproc.
     - debian/patches/pam_env-fix-overflow.patch, pam_env-fix-dos.patch:
       drop, included upstream.
 
