@@ -1,3 +1,16 @@
+pam (1.1.3-12) UNRELEASED; urgency=medium
+
+  * New upstream release.
+    - 027_pam_limits_better_init_allow_explicit_root: support for reading
+      /proc/1/limits is upstream, this patch now only handles the policy
+      of resetting limits by default and not applying glob limits to root.
+    - debian/patches/fix-manpage-crud: fix all the xsltproc breakage in a
+      single place, to keep the other patches clean.
+    - debian/patches/pam_env-fix-overflow.patch, pam_env-fix-dos.patch:
+      drop, included upstream.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 13 Jan 2014 22:40:56 -0800
+
 pam (1.1.3-11) unstable; urgency=low
 
   [ Wookey ]

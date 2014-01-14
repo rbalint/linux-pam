@@ -1,5 +1,6 @@
 pam_unix_fix_sgid_shadow_auth.patch
 pam_unix_dont_trust_chkpwd_caller.patch
+fix-man-crud
 007_modules_pam_unix
 008_modules_pam_limits_chroot
 021_nis_cleanup
@@ -18,11 +19,8 @@ hurd_no_setfsuid
 cve-2011-4708.patch
 PAM-manpage-section 
 update-motd
-fix-man-crud
 sys-types-include.patch
 no_PATH_MAX_on_hurd
 lib_security_multiarch_compat
-pam_env-fix-overflow.patch
-pam_env-fix-dos.patch
 glibc-2_16-compilation-fix.patch
 pam-loginuid-in-containers
