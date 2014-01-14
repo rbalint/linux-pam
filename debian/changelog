@@ -6,6 +6,8 @@ pam (1.1.8-1) UNRELEASED; urgency=medium
       Closes: #671740.
     - fixes handling of 'quiet' argument to pam_listfile, to match the
       documentation.  Closes: #592219.
+    - fixes handling of @users@@hosts netgroup syntax in access.conf.
+      Closes: #681223.
     - 027_pam_limits_better_init_allow_explicit_root: support for reading
       /proc/1/limits is upstream, this patch now only handles the policy
       of resetting limits by default and not applying glob limits to root.
