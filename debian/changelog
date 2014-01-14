@@ -8,6 +8,7 @@ pam (1.1.8-1) UNRELEASED; urgency=medium
       upstream with a newer, fixed xsltproc.
     - debian/patches/pam_env-fix-overflow.patch, pam_env-fix-dos.patch:
       drop, included upstream.
+  * Add build-dependency on pkg-config.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 13 Jan 2014 22:40:56 -0800
 
