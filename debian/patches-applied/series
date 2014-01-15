@@ -18,8 +18,6 @@ hurd_no_setfsuid
 cve-2011-4708.patch
 PAM-manpage-section 
 update-motd
-sys-types-include.patch
 no_PATH_MAX_on_hurd
 lib_security_multiarch_compat
-glibc-2_16-compilation-fix.patch
 pam-loginuid-in-containers

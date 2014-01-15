@@ -15,8 +15,9 @@ pam (1.1.8-1) UNRELEASED; urgency=medium
       of resetting limits by default and not applying glob limits to root.
     - debian/patches/fix-manpage-crud: drop, manpages now being generated
       upstream with a newer, fixed xsltproc.
-    - debian/patches/pam_env-fix-overflow.patch, pam_env-fix-dos.patch:
-      drop, included upstream.
+    - debian/patches/pam_env-fix-overflow.patch, pam_env-fix-dos.patch,
+      glibc-2_16-compilation-fix.patch, sys-types-include.patch: drop,
+      included upstream.
   * Add build-dependency on pkg-config.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 13 Jan 2014 22:40:56 -0800
