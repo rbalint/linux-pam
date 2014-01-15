@@ -23,6 +23,8 @@ pam (1.1.8-1) UNRELEASED; urgency=medium
     so that regenerating documentation doesn't cause build skew.
   * Drop the --disable-regenerate-docu argument, restoring the HTML manuals
     to the libpam-doc package.  Closes: #700485.
+  * No need to override dh_compress in debian/rules, it already handles .html
+    files correctly.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 13 Jan 2014 22:40:56 -0800
 

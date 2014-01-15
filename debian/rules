@@ -28,10 +28,6 @@ override_dh_auto_configure:
 		--enable-isadir=/lib/security \
 		$(CONFIGURE_OPTS)
 
-# make sure the SAG, MWG, ADG are readable with a browser.
-override_dh_compress:
-	dh_compress -Xhtml
-
 # .install files don't have "except for" handling, so we need to exclude
 # our module that doesn't match right here
 override_dh_install:
