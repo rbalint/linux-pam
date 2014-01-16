@@ -31,6 +31,21 @@ Index: pam.debian/doc/man/PAM.8
 ===================================================================
 --- pam.debian.orig/doc/man/PAM.8
 +++ pam.debian/doc/man/PAM.8
+@@ -2,12 +2,12 @@
+ .\"     Title: pam
+ .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
+ .\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+-.\"      Date: 09/19/2013
++.\"      Date: 01/16/2014
+ .\"    Manual: Linux-PAM Manual
+ .\"    Source: Linux-PAM Manual
+ .\"  Language: English
+ .\"
+-.TH "PAM" "8" "09/19/2013" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM" "7" "01/16/2014" "Linux-PAM Manual" "Linux-PAM Manual"
+ .\" -----------------------------------------------------------------
+ .\" * Define some portability stuff
+ .\" -----------------------------------------------------------------
 @@ -118,4 +118,4 @@
  \fBpam_authenticate\fR(3),
  \fBpam_sm_setcred\fR(3),
