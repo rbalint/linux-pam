@@ -25,6 +25,9 @@ pam (1.1.8-1) UNRELEASED; urgency=medium
     to the libpam-doc package.  Closes: #700485.
   * No need to override dh_compress in debian/rules, it already handles .html
     files correctly.
+  * debian/libpam-cracklib.prerm: use $DPKG_MAINTSCRIPT_PACKAGE_COUNT to avoid
+    prematurely removing the PAM config when the package is installed for
+    multiple architectures.  Closes: #647428.
 
  -- Steve Langasek <vorlon@debian.org>  Mon, 13 Jan 2014 22:40:56 -0800
 
