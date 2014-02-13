@@ -1,9 +1,9 @@
-pam (1.1.8-2) UNRELEASED; urgency=medium
+pam (1.1.8-2) unstable; urgency=medium
 
   * Mark the libaudit-dev build-dependency linux-any, since it's not
     available on non-Linux archs.  Closes: #737035.
 
- -- Steve Langasek <vorlon@debian.org>  Sat, 01 Feb 2014 15:08:20 +0000
+ -- Steve Langasek <vorlon@debian.org>  Thu, 13 Feb 2014 15:02:00 -0800
 
 pam (1.1.8-1) unstable; urgency=medium
 
