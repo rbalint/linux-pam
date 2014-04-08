@@ -3,6 +3,9 @@
 DEB_LDFLAGS_MAINT_APPEND := -Wl,-z,defs
 DEB_CFLAGS_MAINT_APPEND  := $(shell getconf LFS_CFLAGS)
 export DEB_LDFLAGS_MAINT_APPEND DEB_CFLAGS_MAINT_APPEND
+ifeq ($(shell dpkg-architecture -qDEB_BUILD_ARCH_OS),hurd)
+DEB_LDFLAGS_MAINT_APPEND += -lpthread
+endif
 
 DEB_HOST_MULTIARCH	:= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 

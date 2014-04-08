@@ -1,3 +1,12 @@
+pam (1.1.8-3) UNRELEASED; urgency=low
+
+  * debian/rules: On hurd, link libpam explicitly with -lpthread since glibc
+    will not dynamically switch between the libc stubs and the libpthread
+    implementations on this architecture.  Thanks to Samuel Thibault for the
+    patch.  Closes: #743891.
+
+ -- Steve Langasek <vorlon@debian.org>  Mon, 07 Apr 2014 17:48:00 -0700
+
 pam (1.1.8-2) unstable; urgency=medium
 
   * Mark the libaudit-dev build-dependency linux-any, since it's not
