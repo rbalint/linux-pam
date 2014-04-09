@@ -1,3 +1,10 @@
+pam (1.1.8-4) UNRELEASED; urgency=medium
+
+  * Updated Swedish translation to correct a typo, thanks to Anders Jonsson
+    and Martin Bagge.  Closes: #743875
+
+ -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
+
 pam (1.1.8-3) unstable; urgency=low
 
   * debian/rules: On hurd, link libpam explicitly with -lpthread since glibc
