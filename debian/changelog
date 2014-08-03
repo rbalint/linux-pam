@@ -2,6 +2,8 @@ pam (1.1.8-4) UNRELEASED; urgency=medium
 
   * Updated Swedish translation to correct a typo, thanks to Anders Jonsson
     and Martin Bagge.  Closes: #743875
+  * Updated Turkish translation, thanks to Mert Dirik <mertdirik@gmail.com>.
+    (closes: #756756)
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
 
