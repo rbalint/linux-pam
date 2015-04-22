@@ -4,6 +4,9 @@ pam (1.1.8-4) UNRELEASED; urgency=medium
     and Martin Bagge.  Closes: #743875
   * Updated Turkish translation, thanks to Mert Dirik <mertdirik@gmail.com>.
     (closes: #756756)
+  * d/applied-patches/pam-limits-nofile-fd-setsize-cap: cap the default
+    soft nofile limit read from pid 1 to FD_SETSIZE.  Thanks to Robie Basak
+    <robie.basak@ubuntu.com> for the patch.  Closes: #783105.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
 
