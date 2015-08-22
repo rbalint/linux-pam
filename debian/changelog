@@ -7,8 +7,19 @@ pam (1.1.8-4) UNRELEASED; urgency=medium
   * d/applied-patches/pam-limits-nofile-fd-setsize-cap: cap the default
     soft nofile limit read from pid 1 to FD_SETSIZE.  Thanks to Robie Basak
     <robie.basak@ubuntu.com> for the patch.  Closes: #783105.
+  * Acknowledge security NMU.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
+
+pam (1.1.8-3.1) unstable; urgency=high
+
+  * Non-maintainer upload by the Security Team.
+  * Fix CVE-2013-7041: case-insensitive comparison used for verifying
+    passwords in the pam_userdb module (closes: #731368).
+  * Fix CVE-2014-2583: multiple directory traversal issues in the
+    pam_timestamp module (closes: 757555)
+
+ -- Michael Gilbert <mgilbert@debian.org>  Sat, 09 Aug 2014 09:50:42 +0000
 
 pam (1.1.8-3) unstable; urgency=low
 
