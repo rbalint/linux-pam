@@ -8,6 +8,8 @@ pam (1.1.8-4) UNRELEASED; urgency=medium
     soft nofile limit read from pid 1 to FD_SETSIZE.  Thanks to Robie Basak
     <robie.basak@ubuntu.com> for the patch.  Closes: #783105.
   * Acknowledge security NMU.
+  * pam-auth-update: don't mishandle trailing whitespace in profiles.
+    LP: #1487103.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
 
