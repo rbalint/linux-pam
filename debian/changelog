@@ -1,3 +1,11 @@
+pam (1.1.8-3.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix CVE-2015-3238: DoS/user enumeration due to blocking pipe in pam_unix
+    module (Closes: #789986)
+
+ -- Tianon Gravi <tianon@debian.org>  Wed, 06 Jan 2016 15:53:31 -0800
+
 pam (1.1.8-3.1) unstable; urgency=high
 
   * Non-maintainer upload by the Security Team.
