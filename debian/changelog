@@ -1,3 +1,41 @@
+pam (1.1.8-3.3) unstable; urgency=low
+
+  * Non-maintainer upload.
+  [ Steve Langasek ]
+  * Updated Swedish translation to correct a typo, thanks to Anders Jonsson
+    and Martin Bagge.  Closes: #743875
+  * Updated Turkish translation, thanks to Mert Dirik <mertdirik@gmail.com>.
+    (closes: #756756)
+  * d/applied-patches/pam-limits-nofile-fd-setsize-cap: cap the default
+    soft nofile limit read from pid 1 to FD_SETSIZE.  Thanks to Robie Basak
+    <robie.basak@ubuntu.com> for the patch.  Closes: #783105.
+  * Acknowledge security NMU.
+  * pam-auth-update: don't mishandle trailing whitespace in profiles.
+    LP: #1487103.
+
+  [ Laurent Bigonville ]
+  * debian/control: Fix Vcs-* and Homepage fields (Closes: #752343)
+  * debian/watch: Update watch file and point it to http://www.linux-pam.org
+  * debian/patches-applied/pam_namespace_fix_bashism.patch: Fix bashism in
+    namespace.init script (Closes: #624842)
+  * debian/control: Build-depends against debhelper (>= 9) to match the
+    defined debhelper compatibility
+  * Rename the cve-2011-4708.patch to cve-2010-4708.patch to match reality,
+    thanks to Jakub Wilk <jwilk@debian.org> for noticing (Closes: #761594)
+  * debian/control: Bump Standards-Version to 3.9.8 (no further changes)
+  * debian/libpam-doc.doc-base.applications-guide: Fix spelling
+  * debian/libpam0g-dev.examples: Do not use shell brace expansion
+  * debian/patches-applied/pam-loginuid-in-containers: Updated with the version
+    from Ubuntu, this should fix logins in containers (Closes: #726661)
+  * debian/patches-applied/update-motd: Updated with the version from Ubuntu:
+    use /run/motd.dynamic instead of /var/run/motd, nothing in the archive
+    uses the later (Closes: #743286)
+  * debian/patches-applied/make_documentation_reproducible.patch: Make the
+    build reproducible, removes differences when building with different
+    locale values (Closes: #792127)
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 18 May 2016 02:04:29 +0200
+
 pam (1.1.8-3.2) unstable; urgency=medium
 
   * Non-maintainer upload.
