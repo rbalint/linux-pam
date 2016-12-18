@@ -1,3 +1,12 @@
+pam (1.1.8-3.4) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add libfl-dev to Build-Depends, fixing FTBFS.  Closes: #846459
+  * Move xsl stuff to Build-Depends from -Indep to fix misbuilt manpages.
+    Closes: #812566
+
+ -- Adam Borowski <kilobyte@angband.pl>  Sun, 18 Dec 2016 01:03:58 +0100
+
 pam (1.1.8-3.3) unstable; urgency=low
 
   * Non-maintainer upload.
