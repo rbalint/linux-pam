@@ -1,3 +1,12 @@
+pam (1.1.8-3.5) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Build-Depend on libfl-dev:native as well, for cross builds.
+    Re-closes: #846459
+  * Fix "Unescaped left brace in regex" with Perl 5.22. Closes: #810873
+
+ -- Adam Borowski <kilobyte@angband.pl>  Fri, 30 Dec 2016 14:37:29 +0100
+
 pam (1.1.8-3.4) unstable; urgency=medium
 
   * Non-maintainer upload.
