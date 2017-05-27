@@ -1,3 +1,14 @@
+pam (1.1.8-3.6) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * cve-2015-3238.patch: Add the changes in the generated pam_exec.8
+    and pam_unix.8 in addition to (and after) the changes to the
+    source .xml files. This avoids unwanted rebuilds that can cause
+    problems due to differing files on different architectures of
+    the Multi-Arch: same libpam-modules. (Closes: #851545)
+
+ -- Adrian Bunk <bunk@debian.org>  Sat, 27 May 2017 18:44:02 +0300
+
 pam (1.1.8-3.5) unstable; urgency=medium
 
   * Non-maintainer upload.
