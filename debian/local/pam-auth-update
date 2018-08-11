@@ -62,7 +62,7 @@ my %md5sums = (
 
 opendir(DIR, $inputdir) || die "could not open config directory: $!";
 while (my $profile = readdir(DIR)) {
-	next if ($profile eq '.' || $profile eq '..');
+	next if ($profile eq '.' || $profile eq '..' || $profile =~ m/~$/ || $profile =~ m/^#.+#$/);
 	%{$profiles{$profile}} = parse_pam_profile($inputdir . '/' . $profile);
 }
 closedir DIR;
@@ -126,7 +126,7 @@ if ($diff) {
 # find out what we've seen, so we can ignore those defaults
 my %seen;
 if (-e $savedir . '/seen') {
-	open(SEEN,$savedir . '/seen');
+	open(SEEN,$savedir . '/seen')  or die("open(${savedir}/seen) failed: $!");
 	while (<SEEN>) {
 		chomp;
 		$seen{$_} = 1;
@@ -229,11 +229,11 @@ do {
 # the decision has been made about what configs to use, so even if
 # something fails after this, we shouldn't go munging the default
 # options again.  Save the list of known configs to /var/lib/pam.
-open(SEEN,"> $savedir/seen");
+open(SEEN,"> $savedir/seen") or die("open(${savedir}/seen) failed: $!");
 for my $i (@sorted) {
 	print SEEN "$i\n";
 }
-close(SEEN);
+close(SEEN) or die("close(${savedir}/seen) failed: $!");
 
 # @enabled now contains our list of profiles to use for piecing together
 # a config
@@ -383,7 +383,7 @@ sub create_from_template
 		}
 	}
 	close(INPUT);
-	close(OUTPUT);
+	close(OUTPUT) or die("close($dest) failed: $!");
 
 	if ($state < 4) {
 		unlink($dest);
@@ -536,16 +536,19 @@ sub write_profiles
 			}
 		}
 
-		close(OUTPUT);
+		close(OUTPUT) or die("close($dest) failed: $!");
 
 		# then do the renames, back-to-back
 		# we have to use system because File::Copy is in
 		# perl-modules, not perl-base
-		if (-e "$target" && $force) {
-			system('cp','-f',$target,$target . '.pam-old');
+		if (-e $target && $force) {
+			system('cp','-f',$target,$target . '.pam-old') == 0
+                            or die("cp -f ${target} ${target}.pam.old failed");
 		}
-		rename($dest,$target);
-		rename("$savedir/$type.new","$savedir/$type");
+		rename($dest,$target)
+                    or die("rename($dest, $target) failed: $!");
+		rename("$savedir/${type}.new","$savedir/$type")
+                    or die("rename(${savedir}/${type}.new, ${savedir}/${type}) failed: $!");
 	}
 
 	# at the end of a successful write, reset the 'seen' flag and the

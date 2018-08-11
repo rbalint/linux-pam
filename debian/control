@@ -10,9 +10,9 @@ Build-Conflicts: libdb4.2-dev, libxcrypt-dev
 Vcs-Bzr: https://alioth.debian.org/scm/loggerhead/pkg-pam/debian/sid
 Vcs-Browser: https://alioth.debian.org/scm/loggerhead/pkg-pam/debian/sid/files
 Homepage: http://www.linux-pam.org/
+Rules-Requires-Root: binary-targets
 
 Package: libpam0g
-Priority: required
 Architecture: any
 Multi-Arch: same
 Replaces: libpam0g-util
