@@ -19,6 +19,8 @@ pam (1.3.1-1) UNRELEASED; urgency=medium
 
   [ Andreas Henriksson ]
   * Update debian/libpam0g.symbols
+  * debian/patches-applied/fix-autoreconf.patch: Do not override user
+    variables in Makefile.am
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 23 Jan 2019 14:44:20 +0000
 

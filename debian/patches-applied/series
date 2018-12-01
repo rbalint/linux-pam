@@ -22,3 +22,4 @@ update-motd
 no_PATH_MAX_on_hurd
 lib_security_multiarch_compat
 pam-limits-nofile-fd-setsize-cap
+fix-autoreconf.patch
