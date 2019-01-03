@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -5,8 +8,9 @@
 #include <sys/types.h>
 #include <security/pam_appl.h>
 
-static int test_conv(int num_msg, const struct pam_message **msgm,
-		     struct pam_response **response, void *appdata_ptr)
+static int
+test_conv (int num_msg UNUSED, const struct pam_message **msgm UNUSED,
+	   struct pam_response **response UNUSED, void *appdata_ptr UNUSED)
 {
     return 0;
 }
@@ -29,7 +33,7 @@ int main(void)
     if (pw) {
 	user = pw->pw_name;
     } else {
-	fprintf(stderr, "Invalid userid: %d\n", uid);
+	fprintf(stderr, "Invalid userid: %lu\n", (unsigned long) uid);
 	exit(1);
     }
 

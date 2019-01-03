@@ -1,7 +1,7 @@
 /* pam_end.c */
 
 /*
- * $Id: pam_end.c,v 1.3 2003/07/13 20:01:44 vorlon Exp $
+ * $Id: pam_end.c,v 1.4 2006/01/12 10:06:49 t8m Exp $
  */
 
 #include "pam_private.h"
@@ -20,6 +20,10 @@ int pam_end(pam_handle_t *pamh, int pam_status)
 	D(("called from module!?"));
 	return PAM_SYSTEM_ERR;
     }
+
+#ifdef HAVE_LIBAUDIT
+    _pam_audit_end(pamh, pam_status);
+#endif
 
     /* first liberate the modules (it is not inconcevible that the
        modules may need to use the service_name etc. to clean up) */

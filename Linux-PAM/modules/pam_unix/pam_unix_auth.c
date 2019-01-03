@@ -37,7 +37,7 @@
 
 /* #define DEBUG */
 
-#include <security/_pam_aconf.h>
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,6 +48,7 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <syslog.h>
 
 /* indicate the following groups are defined */
 
@@ -56,10 +57,7 @@
 #define _PAM_EXTERN_FUNCTIONS
 #include <security/_pam_macros.h>
 #include <security/pam_modules.h>
-
-#ifndef LINUX_PAM
-#include <security/pam_appl.h>
-#endif				/* LINUX_PAM */
+#include <security/pam_ext.h>
 
 #include "support.h"
 
@@ -95,7 +93,8 @@ do {								\
 } while (0)
 
 
-static void setcred_free (pam_handle_t * pamh, void *ptr, int err)
+static void
+setcred_free (pam_handle_t *pamh UNUSED, void *ptr, int err UNUSED)
 {
 	if (ptr)
 		free (ptr);
@@ -107,7 +106,8 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags
 {
 	unsigned int ctrl;
 	int retval, *ret_data = NULL;
-	const char *name, *p;
+	const char *name;
+	const void *p;
 
 	D(("called."));
 
@@ -124,12 +124,11 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags
 	if (retval == PAM_SUCCESS) {
 		/*
 		 * Various libraries at various times have had bugs related to
-		 * '+' or '-' as the first character of a user name. Don't take
-		 * any chances here. Require that the username starts with an
-		 * alphanumeric character.
+		 * '+' or '-' as the first character of a user name. Don't
+		 * allow this characters here.
 		 */
-		if (name == NULL || !isalnum(*name)) {
-			_log_err(LOG_ERR, pamh, "bad username [%s]", name);
+		if (name == NULL || name[0] == '-' || name[0] == '+') {
+			pam_syslog(pamh, LOG_ERR, "bad username [%s]", name);
 			retval = PAM_USER_UNKNOWN;
 			AUTH_RETURN;
 		}
@@ -157,12 +156,12 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags
 	}
 	/* get this user's authentication token */
 
-	retval = _unix_read_password(pamh, ctrl, NULL, "Password: ", NULL
+	retval = _unix_read_password(pamh, ctrl, NULL, _("Password: "), NULL
 				     ,_UNIX_AUTHTOK, &p);
 	if (retval != PAM_SUCCESS) {
 		if (retval != PAM_CONV_AGAIN) {
-			_log_err(LOG_CRIT, pamh, "auth could not identify password for [%s]"
-				 ,name);
+			pam_syslog(pamh, LOG_CRIT,
+			    "auth could not identify password for [%s]", name);
 		} else {
 			D(("conversation function is not ready yet"));
 			/*
@@ -193,11 +192,12 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags
  * warned you. -- AOY
  */
 
-PAM_EXTERN int pam_sm_setcred(pam_handle_t * pamh, int flags
-			      ,int argc, const char **argv)
+PAM_EXTERN int
+pam_sm_setcred (pam_handle_t *pamh, int flags UNUSED,
+		int argc UNUSED, const char **argv UNUSED)
 {
 	int retval;
-	int *pretval = NULL;
+	const void *pretval = NULL;
 
 	D(("called."));
 
@@ -206,9 +206,9 @@ PAM_EXTERN int pam_sm_setcred(pam_handle_t * pamh, int flags
 	D(("recovering return code from auth call"));
 	/* We will only find something here if UNIX_LIKE_AUTH is set --
 	   don't worry about an explicit check of argv. */
-	pam_get_data(pamh, "unix_setcred_return", (const void **) &pretval);
-	if(pretval) {
-		retval = *pretval;
+	if (pam_get_data(pamh, "unix_setcred_return", &pretval) == PAM_SUCCESS
+	    && pretval) {
+ 	        retval = *(const int *)pretval;
 		pam_set_data(pamh, "unix_setcred_return", NULL, NULL);
 		D(("recovered data indicates that old retval was %d", retval));
 	}

@@ -1,16 +1,11 @@
 /*
  * <security/pam_appl.h>
- * 
+ *
  * This header file collects definitions for the PAM API --- that is,
  * public interface between the PAM library and an application program
  * that wishes to use it.
  *
  * Note, the copyright information is at end of file.
- *
- * Created: 15-Jan-96 by TYT
- * Last modified: 1996/3/5 by AGM
- *
- * $Id: pam_appl.h,v 1.3 2000/11/19 23:54:02 agmorgan Exp $
  */
 
 #ifndef _SECURITY_PAM_APPL_H
@@ -19,40 +14,52 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
- 
+
 #include <security/_pam_types.h>      /* Linux-PAM common defined types */
 
 /* -------------- The Linux-PAM Framework layer API ------------- */
 
-extern int pam_start(const char *service_name, const char *user,
-		     const struct pam_conv *pam_conversation,
-		     pam_handle_t **pamh);
-extern int pam_end(pam_handle_t *pamh, int pam_status);
+extern int PAM_NONNULL((1,3,4))
+pam_start(const char *service_name, const char *user,
+	  const struct pam_conv *pam_conversation,
+	  pam_handle_t **pamh);
+
+extern int PAM_NONNULL((1))
+pam_end(pam_handle_t *pamh, int pam_status);
 
 /* Authentication API's */
 
-extern int pam_authenticate(pam_handle_t *pamh, int flags);
-extern int pam_setcred(pam_handle_t *pamh, int flags);
+extern int PAM_NONNULL((1))
+pam_authenticate(pam_handle_t *pamh, int flags);
+
+extern int PAM_NONNULL((1))
+pam_setcred(pam_handle_t *pamh, int flags);
 
 /* Account Management API's */
 
-extern int pam_acct_mgmt(pam_handle_t *pamh, int flags);
+extern int PAM_NONNULL((1))
+pam_acct_mgmt(pam_handle_t *pamh, int flags);
 
 /* Session Management API's */
 
-extern int pam_open_session(pam_handle_t *pamh, int flags);
-extern int pam_close_session(pam_handle_t *pamh, int flags);
+extern int PAM_NONNULL((1))
+pam_open_session(pam_handle_t *pamh, int flags);
+
+extern int PAM_NONNULL((1))
+pam_close_session(pam_handle_t *pamh, int flags);
 
 /* Password Management API's */
 
-extern int pam_chauthtok(pam_handle_t *pamh, int flags);
+extern int PAM_NONNULL((1))
+pam_chauthtok(pam_handle_t *pamh, int flags);
+
+
+/* take care of any compatibility issues */
+#include <security/_pam_compat.h>
 
 #ifdef __cplusplus
 }
 #endif
-
-/* take care of any compatibility issues */
-#include <security/_pam_compat.h>
 
 /*
  * Copyright Theodore Ts'o, 1996.  All rights reserved.
@@ -69,13 +76,13 @@ extern int pam_chauthtok(pam_handle_t *pamh, int flags);
  * 3. The name of the author may not be used to endorse or promote
  *    products derived from this software without specific prior
  *    written permission.
- * 
+ *
  * ALTERNATIVELY, this product may be distributed under the terms of
  * the GNU Public License, in which case the provisions of the GPL are
  * required INSTEAD OF the above restrictions.  (This clause is
  * necessary due to a potential bad interaction between the GPL and
  * the restrictions contained in a BSD-style copyright.)
- * 
+ *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE

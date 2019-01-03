@@ -13,11 +13,11 @@
  * See end for Copyright information
  */
 
-#if !(defined(linux))
+#if !defined(linux) && !defined(__linux)
 #error THIS CODE IS KNOWN TO WORK ONLY ON LINUX !!!
 #endif
 
-#include <security/_pam_aconf.h>
+#include "config.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -30,6 +30,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/resource.h>
+#include <limits.h>
 
 #include <utmp.h>
 #ifndef UT_USER  /* some systems have ut_name instead of ut_user */
@@ -60,6 +61,7 @@ static const char *limits_def_names[] = {
 };
 
 struct user_limits_struct {
+    int supported;
     int src_soft;
     int src_hard;
     struct rlimit limit;
@@ -72,7 +74,6 @@ struct pam_limit_s {
     int flag_numsyslogins; /* whether to limit logins only for a
 			      specific user or to count all logins */
     int priority;	 /* the priority to run user process with */
-    int supported[RLIM_NLIMITS];
     struct user_limits_struct limits[RLIM_NLIMITS];
     char conf_file[BUFSIZ];
     int utmp_after_pam_call;
@@ -91,19 +92,8 @@ struct pam_limit_s {
 
 #include <security/pam_modules.h>
 #include <security/_pam_macros.h>
-#include <security/_pam_modutil.h>
-
-/* logging */
-static void _pam_log(int err, const char *format, ...)
-{
-    va_list args;
-
-    va_start(args, format);
-    openlog("pam_limits", LOG_CONS|LOG_PID, LOG_AUTH);
-    vsyslog(err, format, args);
-    va_end(args);
-    closelog();
-}
+#include <security/pam_modutil.h>
+#include <security/pam_ext.h>
 
 /* argument parsing */
 
@@ -111,7 +101,9 @@ static void _pam_log(int err, const char *format, ...)
 #define PAM_DO_SETREUID     0x0002
 #define PAM_UTMP_EARLY      0x0004
 
-static int _pam_parse(int argc, const char **argv, struct pam_limit_s *pl)
+static int
+_pam_parse (const pam_handle_t *pamh, int argc, const char **argv,
+	    struct pam_limit_s *pl)
 {
     int ctrl=0;
 
@@ -129,7 +121,7 @@ static int _pam_parse(int argc, const char **argv, struct pam_limit_s *pl)
 	} else if (!strcmp(*argv,"utmp_early")) {
 	    ctrl |= PAM_UTMP_EARLY;
 	} else {
-	    _pam_log(LOG_ERR,"pam_parse: unknown option; %s",*argv);
+	    pam_syslog(pamh, LOG_ERR, "unknown option: %s", *argv);
 	}
     }
     pl->conf_file[sizeof(pl->conf_file) - 1] = '\0';
@@ -137,13 +129,6 @@ static int _pam_parse(int argc, const char **argv, struct pam_limit_s *pl)
     return ctrl;
 }
 
-
-/* limits stuff */
-#ifdef DEFAULT_CONF_FILE
-# define LIMITS_FILE DEFAULT_CONF_FILE
-#else
-# define LIMITS_FILE "/etc/security/limits.conf"
-#endif
 
 #define LIMITED_OK 0 /* limit setting appeared to work */
 #define LIMIT_ERR  1 /* error setting a limit */
@@ -155,17 +140,17 @@ check_logins (pam_handle_t *pamh, const char *name, int limit, int ctrl,
               struct pam_limit_s *pl)
 {
     struct utmp *ut;
-    unsigned int count;
+    int count;
 
     if (ctrl & PAM_DEBUG_ARG) {
-        _pam_log(LOG_DEBUG, "checking logins for '%s' (maximum of %d)\n",
-                 name, limit);
+        pam_syslog(pamh, LOG_DEBUG,
+		   "checking logins for '%s' (maximum of %d)", name, limit);
     }
 
     if (limit < 0)
         return 0; /* no limits imposed */
     if (limit == 0) /* maximum 0 logins ? */ {
-        _pam_log(LOG_WARNING, "No logins allowed for '%s'\n", name);
+        pam_syslog(pamh, LOG_WARNING, "No logins allowed for '%s'", name);
         return LOGIN_ERR;
     }
 
@@ -204,7 +189,7 @@ check_logins (pam_handle_t *pamh, const char *name, int limit, int ctrl,
                 continue;
 	    }
 	    if ((pl->login_limit_def == LIMITS_DEF_ALLGROUP)
-		&& !_pammodutil_user_in_group_nam_nam(pamh, ut->UT_USER, pl->login_group)) {
+		&& !pam_modutil_user_in_group_nam_nam(pamh, ut->UT_USER, pl->login_group)) {
                 continue;
 	    }
 	}
@@ -215,10 +200,10 @@ check_logins (pam_handle_t *pamh, const char *name, int limit, int ctrl,
     endutent();
     if (count > limit) {
 	if (name) {
-	    _pam_log(LOG_WARNING, "Too many logins (max %d) for %s",
-		     limit, name);
+	    pam_syslog(pamh, LOG_WARNING,
+		       "Too many logins (max %d) for %s", limit, name);
 	} else {
-	    _pam_log(LOG_WARNING, "Too many system logins (max %d)", limit);
+	    pam_syslog(pamh, LOG_WARNING, "Too many system logins (max %d)", limit);
 	}
         return LOGIN_ERR;
     }
@@ -235,39 +220,43 @@ static int init_limits(struct pam_limit_s *pl)
     for(i = 0; i < RLIM_NLIMITS; i++) {
 	int r = getrlimit(i, &pl->limits[i].limit);
 	if (r == -1) {
-	    if (errno == EINVAL) {
-		pl->supported[i] = 0;
-	    } else {
+	    pl->limits[i].supported = 0;
+	    if (errno != EINVAL) {
 		retval = !PAM_SUCCESS;
 	    }
 	} else {
-	    pl->supported[i] = 1;
+	    pl->limits[i].supported = 1;
 	    pl->limits[i].src_soft = LIMITS_DEF_NONE;
 	    pl->limits[i].src_hard = LIMITS_DEF_NONE;
 	}
     }
 
-    pl->priority = 0;
+    errno = 0;
+    pl->priority = getpriority (PRIO_PROCESS, 0);
+    if (pl->priority == -1 && errno != 0)
+      retval = !PAM_SUCCESS;
     pl->login_limit = -2;
     pl->login_limit_def = LIMITS_DEF_NONE;
 
     return retval;
 }
 
-static void process_limit(int source, const char *lim_type,
-			  const char *lim_item, const char *lim_value,
-			  int ctrl, struct pam_limit_s *pl)
+static void
+process_limit (const pam_handle_t *pamh, int source, const char *lim_type,
+	       const char *lim_item, const char *lim_value,
+	       int ctrl, struct pam_limit_s *pl)
 {
     int limit_item;
     int limit_type = 0;
-    long limit_value;
+    int int_value = 0;
+    rlim_t rlimit_value = 0;
     char *endptr;
     const char *value_orig = lim_value;
 
     if (ctrl & PAM_DEBUG_ARG)
-	 _pam_log(LOG_DEBUG, "%s: processing %s %s %s for %s\n",
-		  __FUNCTION__,lim_type,lim_item,lim_value,
-		  limits_def_names[source]);
+	 pam_syslog(pamh, LOG_DEBUG, "%s: processing %s %s %s for %s",
+		    __FUNCTION__, lim_type, lim_item, lim_value,
+		    limits_def_names[source]);
 
     if (strcmp(lim_item, "cpu") == 0)
         limit_item = RLIMIT_CPU;
@@ -301,6 +290,14 @@ static void process_limit(int source, const char *lim_type,
     else if (strcmp(lim_item, "msgqueue") == 0)
 	limit_item = RLIMIT_MSGQUEUE;
 #endif
+#ifdef RLIMIT_NICE
+    else if (strcmp(lim_item, "nice") == 0)
+	limit_item = RLIMIT_NICE;
+#endif
+#ifdef RLIMIT_RTPRIO
+    else if (strcmp(lim_item, "rtprio") == 0)
+	limit_item = RLIMIT_RTPRIO;
+#endif
     else if (strcmp(lim_item, "maxlogins") == 0) {
 	limit_item = LIMIT_LOGIN;
 	pl->flag_numsyslogins = 0;
@@ -310,7 +307,7 @@ static void process_limit(int source, const char *lim_type,
     } else if (strcmp(lim_item, "priority") == 0) {
 	limit_item = LIMIT_PRI;
     } else {
-        _pam_log(LOG_DEBUG,"unknown limit item '%s'", lim_item);
+        pam_syslog(pamh, LOG_DEBUG, "unknown limit item '%s'", lim_item);
         return;
     }
 
@@ -321,40 +318,61 @@ static void process_limit(int source, const char *lim_type,
     else if (strcmp(lim_type,"-")==0)
 	limit_type=LIMIT_SOFT | LIMIT_HARD;
     else if (limit_item != LIMIT_LOGIN && limit_item != LIMIT_NUMSYSLOGINS) {
-        _pam_log(LOG_DEBUG,"unknown limit type '%s'", lim_type);
+        pam_syslog(pamh, LOG_DEBUG, "unknown limit type '%s'", lim_type);
         return;
     }
-
-    limit_value = strtol (lim_value, &endptr, 10);
-
-    /* special case value when limiting logins */
-    if (limit_value == 0 && value_orig == endptr) { /* no chars read */
-        if (strcmp(lim_value,"-") != 0) {
-            _pam_log(LOG_DEBUG,"wrong limit value '%s'", lim_value);
+	if (limit_item != LIMIT_PRI
+#ifdef RLIMIT_NICE
+	    && limit_item != RLIMIT_NICE
+#endif
+	    && (strcmp(lim_value, "-1") == 0
+		|| strcmp(lim_value, "-") == 0 || strcmp(lim_value, "unlimited") == 0
+		|| strcmp(lim_value, "infinity") == 0)) {
+		int_value = -1;
+		rlimit_value = RLIM_INFINITY;
+	} else if (limit_item == LIMIT_PRI || limit_item == LIMIT_LOGIN ||
+#ifdef RLIMIT_NICE
+		limit_item == RLIMIT_NICE ||
+#endif
+		limit_item == LIMIT_NUMSYSLOGINS) {
+		long temp;
+		temp = strtol (lim_value, &endptr, 10);
+		temp = temp < INT_MAX ? temp : INT_MAX;
+		int_value = temp > INT_MIN ? temp : INT_MIN;
+		if (int_value == 0 && value_orig == endptr) {
+			pam_syslog(pamh, LOG_DEBUG,
+				   "wrong limit value '%s' for limit type '%s'",
+				   lim_value, lim_type);
             return;
-        } else
-            if (limit_item != LIMIT_LOGIN) {
-                if (ctrl & PAM_DEBUG_ARG)
-                    _pam_log(LOG_DEBUG,
-                            "'-' limit value valid for maxlogins type only");
-                return;
-            } else
-                limit_value = -1;
-    }
+		}
+	} else {
+#ifdef __USE_FILE_OFFSET64
+		rlimit_value = strtoull (lim_value, &endptr, 10);
+#else
+		rlimit_value = strtoul (lim_value, &endptr, 10);
+#endif
+		if (rlimit_value == 0 && value_orig == endptr) {
+			pam_syslog(pamh, LOG_DEBUG,
+				   "wrong limit value '%s' for limit type '%s'",
+				   lim_value, lim_type);
+			return;
+		}
+	}
 
     /* one more special case when limiting logins */
     if ((source == LIMITS_DEF_ALL || source == LIMITS_DEF_ALLGROUP)
 		&& (limit_item != LIMIT_LOGIN)) {
 	if (ctrl & PAM_DEBUG_ARG)
-	    _pam_log(LOG_DEBUG,
-			"'%%' domain valid for maxlogins type only");
+	    pam_syslog(pamh, LOG_DEBUG,
+		       "'%%' domain valid for maxlogins type only");
 	return;
     }
 
     switch(limit_item) {
         case RLIMIT_CPU:
-            limit_value *= 60;
-            break;
+         if (rlimit_value != RLIM_INFINITY)
+            rlimit_value *= 60;
+         break;
         case RLIMIT_FSIZE:
         case RLIMIT_DATA:
         case RLIMIT_STACK:
@@ -362,8 +380,16 @@ static void process_limit(int source, const char *lim_type,
         case RLIMIT_RSS:
         case RLIMIT_MEMLOCK:
         case RLIMIT_AS:
-            limit_value *= 1024;
-            break;
+         if (rlimit_value != RLIM_INFINITY)
+            rlimit_value *= 1024;
+    	 break;
+#ifdef RLIMIT_NICE
+	case RLIMIT_NICE:
+	 if (int_value > 19)
+	    int_value = 19;
+	 rlimit_value = 19 - int_value;
+#endif
+         break;
     }
 
     if ( (limit_item != LIMIT_LOGIN)
@@ -373,7 +399,7 @@ static void process_limit(int source, const char *lim_type,
 	    if (pl->limits[limit_item].src_soft < source) {
                 return;
 	    } else {
-                pl->limits[limit_item].limit.rlim_cur = limit_value;
+                pl->limits[limit_item].limit.rlim_cur = rlimit_value;
                 pl->limits[limit_item].src_soft = source;
             }
 	}
@@ -381,7 +407,7 @@ static void process_limit(int source, const char *lim_type,
 	    if (pl->limits[limit_item].src_hard < source) {
                 return;
             } else {
-                pl->limits[limit_item].limit.rlim_max = limit_value;
+                pl->limits[limit_item].limit.rlim_max = rlimit_value;
                 pl->limits[limit_item].src_hard = source;
             }
 	}
@@ -389,12 +415,12 @@ static void process_limit(int source, const char *lim_type,
 	/* recent kernels support negative priority limits (=raise priority) */
 
 	if (limit_item == LIMIT_PRI) {
-		pl->priority = limit_value;
+		pl->priority = int_value;
 	} else {
 	        if (pl->login_limit_def < source) {
 	            return;
 	        } else {
-	            pl->login_limit = limit_value;
+	            pl->login_limit = int_value;
 	            pl->login_limit_def = source;
         	}
 	}
@@ -411,10 +437,11 @@ static int parse_config_file(pam_handle_t *pamh, const char *uname, int ctrl,
 #define CONF_FILE (pl->conf_file[0])?pl->conf_file:LIMITS_FILE
     /* check for the LIMITS_FILE */
     if (ctrl & PAM_DEBUG_ARG)
-        _pam_log(LOG_DEBUG,"reading settings from '%s'", CONF_FILE);
+        pam_syslog(pamh, LOG_DEBUG, "reading settings from '%s'", CONF_FILE);
     fil = fopen(CONF_FILE, "r");
     if (fil == NULL) {
-        _pam_log (LOG_WARNING, "can not read settings from %s", CONF_FILE);
+        pam_syslog (pamh, LOG_WARNING,
+		    "cannot read settings from %s: %m", CONF_FILE);
         return PAM_SERVICE_ERR;
     }
 #undef CONF_FILE
@@ -427,7 +454,8 @@ static int parse_config_file(pam_handle_t *pamh, const char *uname, int ctrl,
         char ltype[LINE_LENGTH];
         char item[LINE_LENGTH];
         char value[LINE_LENGTH];
-        int i,j;
+        int i;
+        size_t j;
         char *tptr;
 
         tptr = buf;
@@ -460,8 +488,6 @@ static int parse_config_file(pam_handle_t *pamh, const char *uname, int ctrl,
 	D(("scanned line[%d]: domain[%s], ltype[%s], item[%s], value[%s]",
 	   i, domain, ltype, item, value));
 
-        for(j=0; j < strlen(domain); j++)
-            domain[j]=tolower(domain[j]);
         for(j=0; j < strlen(ltype); j++)
             ltype[j]=tolower(ltype[j]);
         for(j=0; j < strlen(item); j++)
@@ -471,48 +497,51 @@ static int parse_config_file(pam_handle_t *pamh, const char *uname, int ctrl,
 
         if (i == 4) { /* a complete line */
             if (strcmp(uname, domain) == 0) /* this user have a limit */
-                process_limit(LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
+                process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
             else if (domain[0]=='@') {
 		    if (ctrl & PAM_DEBUG_ARG) {
-			_pam_log(LOG_DEBUG, "checking if %s is in group %s",
-			 	uname, domain + 1);
+			pam_syslog(pamh, LOG_DEBUG,
+				   "checking if %s is in group %s",
+				   uname, domain + 1);
 		    }
-                if (_pammodutil_user_in_group_nam_nam(pamh, uname, domain+1))
-                    process_limit(LIMITS_DEF_GROUP, ltype, item, value, ctrl,
+                if (pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1))
+                    process_limit(pamh, LIMITS_DEF_GROUP, ltype, item, value, ctrl,
 				  pl);
             } else if (domain[0]=='%') {
 		    if (ctrl & PAM_DEBUG_ARG) {
-			_pam_log(LOG_DEBUG, "checking if %s is in group %s",
-			 	uname, domain + 1);
+			pam_syslog(pamh, LOG_DEBUG,
+				   "checking if %s is in group %s",
+				   uname, domain + 1);
 		    }
 		if (strcmp(domain,"%") == 0)
-		    process_limit(LIMITS_DEF_ALL, ltype, item, value, ctrl,
+		    process_limit(pamh, LIMITS_DEF_ALL, ltype, item, value, ctrl,
 				  pl);
-		else if (_pammodutil_user_in_group_nam_nam(pamh, uname, domain+1)) {
+		else if (pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1)) {
 		    strcpy(pl->login_group, domain+1);
-                    process_limit(LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
+                    process_limit(pamh, LIMITS_DEF_ALLGROUP, ltype, item, value, ctrl,
 				  pl);
 		}
             } else if (strcmp(domain, "*") == 0)
-                process_limit(LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
+                process_limit(pamh, LIMITS_DEF_DEFAULT, ltype, item, value, ctrl,
 			      pl);
 	} else if (i == 2 && ltype[0] == '-') { /* Probably a no-limit line */
 	    if (strcmp(uname, domain) == 0) {
 		if (ctrl & PAM_DEBUG_ARG) {
-		    _pam_log(LOG_DEBUG, "no limits for '%s'", uname);
+		    pam_syslog(pamh, LOG_DEBUG, "no limits for '%s'", uname);
 		}
 		fclose(fil);
 		return PAM_IGNORE;
-	    } else if (domain[0] == '@' && _pammodutil_user_in_group_nam_nam(pamh, uname, domain+1)) {
+	    } else if (domain[0] == '@' && pam_modutil_user_in_group_nam_nam(pamh, uname, domain+1)) {
 		if (ctrl & PAM_DEBUG_ARG) {
-		    _pam_log(LOG_DEBUG, "no limits for '%s' in group '%s'",
-			     uname, domain+1);
+		    pam_syslog(pamh, LOG_DEBUG,
+			       "no limits for '%s' in group '%s'",
+			       uname, domain+1);
 		}
 		fclose(fil);
 		return PAM_IGNORE;
 	    }
         } else {
-            _pam_log(LOG_DEBUG,"invalid line '%s' - skipped", buf);
+            pam_syslog(pamh, LOG_WARNING, "invalid line '%s' - skipped", buf);
 	}
     }
     fclose(fil);
@@ -527,24 +556,18 @@ static int setup_limits(pam_handle_t *pamh,
     int status;
     int retval = LIMITED_OK;
 
-    if (uid == 0) {
-	/* do not impose limits (+ve limits anyway) on the superuser */
-	if (pl->priority > 0) {
-	    if (ctrl & PAM_DEBUG_ARG) {
-		_pam_log(LOG_DEBUG, "user '%s' has UID 0 - no limits imposed",
-			 uname);
-	    }
-            pl->priority = 0;
-	}
-    }
-
     for (i=0, status=LIMITED_OK; i<RLIM_NLIMITS; i++) {
-        if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
-            pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
-	if (!pl->supported[i]) {
+	if (!pl->limits[i].supported) {
 	    /* skip it if its not known to the system */
 	    continue;
 	}
+	if (pl->limits[i].src_soft == LIMITS_DEF_NONE &&
+	    pl->limits[i].src_hard == LIMITS_DEF_NONE) {
+	    /* skip it if its not initialized */
+	    continue;
+	}
+        if (pl->limits[i].limit.rlim_cur > pl->limits[i].limit.rlim_max)
+            pl->limits[i].limit.rlim_cur = pl->limits[i].limit.rlim_max;
 	status |= setrlimit(i, &pl->limits[i].limit);
     }
 
@@ -571,8 +594,9 @@ static int setup_limits(pam_handle_t *pamh,
 }
 
 /* now the session stuff */
-PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
-                                   int argc, const char **argv)
+PAM_EXTERN int
+pam_sm_open_session (pam_handle_t *pamh, int flags UNUSED,
+		     int argc, const char **argv)
 {
     int retval;
     char *user_name;
@@ -584,25 +608,25 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
 
     memset(&pl, 0, sizeof(pl));
 
-    ctrl = _pam_parse(argc, argv, &pl);
+    ctrl = _pam_parse(pamh, argc, argv, &pl);
     retval = pam_get_item( pamh, PAM_USER, (void*) &user_name );
     if ( user_name == NULL || retval != PAM_SUCCESS ) {
-        _pam_log(LOG_CRIT, "open_session - error recovering username");
+        pam_syslog(pamh, LOG_CRIT, "open_session - error recovering username");
         return PAM_SESSION_ERR;
      }
 
-    pwd = getpwnam(user_name);
+    pwd = pam_modutil_getpwnam(pamh, user_name);
     if (!pwd) {
         if (ctrl & PAM_DEBUG_ARG)
-            _pam_log(LOG_WARNING, "open_session username '%s' does not exist",
-                                   user_name);
-        return PAM_SESSION_ERR;
+            pam_syslog(pamh, LOG_WARNING,
+		       "open_session username '%s' does not exist", user_name);
+        return PAM_USER_UNKNOWN;
     }
 
     retval = init_limits(&pl);
     if (retval != PAM_SUCCESS) {
-        _pam_log(LOG_WARNING, "cannot initialize");
-        return PAM_IGNORE;
+        pam_syslog(pamh, LOG_WARNING, "cannot initialize");
+        return PAM_ABORT;
     }
 
     retval = parse_config_file(pamh, pwd->pw_name, ctrl, &pl);
@@ -611,14 +635,16 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
 	return PAM_SUCCESS;
     }
     if (retval != PAM_SUCCESS) {
-        _pam_log(LOG_WARNING, "error parsing the configuration file");
-        return PAM_IGNORE;
+        pam_syslog(pamh, LOG_WARNING, "error parsing the configuration file");
+        return retval;
     }
 
     if (ctrl & PAM_DO_SETREUID) {
 	setreuid(pwd->pw_uid, -1);
     }
     retval = setup_limits(pamh, pwd->pw_name, pwd->pw_uid, ctrl, &pl);
+    if (retval & LOGIN_ERR)
+	pam_error(pamh, _("Too many logins for '%s'."), pwd->pw_name);
     if (retval != LIMITED_OK) {
         return PAM_PERM_DENIED;
     }
@@ -626,8 +652,9 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags,
     return PAM_SUCCESS;
 }
 
-PAM_EXTERN int pam_sm_close_session(pam_handle_t *pamh, int flags,
-                                    int argc, const char **argv)
+PAM_EXTERN int
+pam_sm_close_session (pam_handle_t *pamh UNUSED, int flags UNUSED,
+		      int argc UNUSED, const char **argv UNUSED)
 {
      /* nothing to do */
      return PAM_SUCCESS;

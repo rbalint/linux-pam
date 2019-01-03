@@ -1,7 +1,7 @@
 /* pam_item.c */
 
 /*
- * $Id: pam_item.c,v 1.5 2004/09/22 09:37:47 kukuk Exp $
+ * $Id: pam_item.c,v 1.13 2006/03/12 10:26:30 kukuk Exp $
  */
 
 #include "pam_private.h"
@@ -21,10 +21,6 @@
     }                                  \
 }
 
-/* handy version id */
-
-unsigned int __libpam_version = LIBPAM_VERSION;
-
 /* functions */
 
 int pam_set_item (pam_handle_t *pamh, int item_type, const void *item)
@@ -34,7 +30,7 @@ int pam_set_item (pam_handle_t *pamh, int item_type, const void *item)
     D(("called"));
 
     IF_NO_PAMH("pam_set_item", pamh, PAM_SYSTEM_ERR);
-    
+
     retval = PAM_SUCCESS;
 
     switch (item_type) {
@@ -54,10 +50,12 @@ int pam_set_item (pam_handle_t *pamh, int item_type, const void *item)
 
     case PAM_USER:
 	RESET(pamh->user, item);
+	pamh->former.fail_user = PAM_SUCCESS;
 	break;
 
     case PAM_USER_PROMPT:
 	RESET(pamh->prompt, item);
+	pamh->former.fail_user = PAM_SUCCESS;
 	break;
 
     case PAM_TTY:
@@ -115,22 +113,23 @@ int pam_set_item (pam_handle_t *pamh, int item_type, const void *item)
 
     case PAM_CONV:              /* want to change the conversation function */
 	if (item == NULL) {
-	    _pam_system_log(LOG_ERR,
-			    "pam_set_item: attempt to set conv() to NULL");
+	    pam_syslog(pamh, LOG_ERR,
+		       "pam_set_item: attempt to set conv() to NULL");
 	    retval = PAM_PERM_DENIED;
 	} else {
 	    struct pam_conv *tconv;
-	    
+
 	    if ((tconv=
 		 (struct pam_conv *) malloc(sizeof(struct pam_conv))
 		) == NULL) {
-		_pam_system_log(LOG_CRIT,
+		pam_syslog(pamh, LOG_CRIT,
 				"pam_set_item: malloc failed for pam_conv");
 		retval = PAM_BUF_ERR;
 	    } else {
 		memcpy(tconv, item, sizeof(struct pam_conv));
 		_pam_drop(pamh->pam_conversation);
 		pamh->pam_conversation = tconv;
+		pamh->former.fail_user = PAM_SUCCESS;
 	    }
 	}
         break;
@@ -154,7 +153,7 @@ int pam_get_item (const pam_handle_t *pamh, int item_type, const void **item)
     IF_NO_PAMH("pam_get_item", pamh, PAM_SYSTEM_ERR);
 
     if (item == NULL) {
-	_pam_system_log(LOG_ERR,
+	pam_syslog(pamh, LOG_ERR,
 			"pam_get_item: nowhere to place requested item");
 	return PAM_PERM_DENIED;
     }
@@ -224,7 +223,7 @@ int pam_get_item (const pam_handle_t *pamh, int item_type, const void **item)
     default:
 	retval = PAM_BAD_ITEM;
     }
-  
+
     return retval;
 }
 
@@ -240,16 +239,18 @@ int pam_get_user(pam_handle_t *pamh, const char **user, const char *prompt)
     struct pam_response *resp;
 
     D(("called."));
-    if (user == NULL) {  /* ensure that the module has supplied a destination */
-	_pam_system_log(LOG_ERR, "pam_get_user: nowhere to record username");
+
+    IF_NO_PAMH("pam_get_user", pamh, PAM_SYSTEM_ERR);
+
+    if (user == NULL) {
+        /* ensure that the module has supplied a destination */
+	pam_syslog(pamh, LOG_ERR, "pam_get_user: nowhere to record username");
 	return PAM_PERM_DENIED;
     } else
 	*user = NULL;
-    
-    IF_NO_PAMH("pam_get_user", pamh, PAM_SYSTEM_ERR);
 
     if (pamh->pam_conversation == NULL) {
-	_pam_system_log(LOG_ERR, "pam_get_user: no conv element in pamh");
+	pam_syslog(pamh, LOG_ERR, "pam_get_user: no conv element in pamh");
 	return PAM_SERVICE_ERR;
     }
 
@@ -258,21 +259,23 @@ int pam_get_user(pam_handle_t *pamh, const char **user, const char *prompt)
 	return PAM_SUCCESS;
     }
 
+    if (pamh->former.fail_user != PAM_SUCCESS)
+	return pamh->former.fail_user;
+
     /* will need a prompt */
-    use_prompt = prompt;
-    if (use_prompt == NULL) {
-	use_prompt = pamh->prompt;
-	if (use_prompt == NULL) {
-	    use_prompt = PAM_DEFAULT_PROMPT;
-	}
-    }
+    if (prompt != NULL)
+      use_prompt = prompt;
+    else if (pamh->prompt != NULL)
+      use_prompt = pamh->prompt;
+    else
+      use_prompt = _("login:");
 
     /* If we are resuming an old conversation, we verify that the prompt
        is the same.  Anything else is an error. */
     if (pamh->former.want_user) {
 	/* must have a prompt to resume with */
 	if (! pamh->former.prompt) {
-	    	    _pam_system_log(LOG_ERR,
+	    	    pam_syslog(pamh, LOG_ERR,
 				   "pam_get_user: failed to resume with prompt"
 			);
 	    return PAM_ABORT;
@@ -280,7 +283,7 @@ int pam_get_user(pam_handle_t *pamh, const char **user, const char *prompt)
 
 	/* must be the same prompt as last time */
 	if (strcmp(pamh->former.prompt, use_prompt)) {
-	    _pam_system_log(LOG_ERR,
+	    pam_syslog(pamh, LOG_ERR,
 			    "pam_get_user: resumed with different prompt");
 	    return PAM_ABORT;
 	}
@@ -312,6 +315,7 @@ int pam_get_user(pam_handle_t *pamh, const char **user, const char *prompt)
 	 */
 	D(("pam_get_user: no response provided"));
 	retval = PAM_CONV_ERR;
+	pamh->former.fail_user = retval;
     } else if (retval == PAM_SUCCESS) {            /* copy the username */
 	/*
 	 * now we set the PAM_USER item -- this was missing from pre.53
@@ -320,9 +324,13 @@ int pam_get_user(pam_handle_t *pamh, const char **user, const char *prompt)
 	 */
 	RESET(pamh->user, resp->resp);
 	*user = pamh->user;
-    }
+    } else
+	pamh->former.fail_user = retval;
 
     if (resp) {
+	if (retval != PAM_SUCCESS)
+	    pam_syslog(pamh, LOG_WARNING,
+		       "unexpected response from failed conversation function");
 	/*
 	 * note 'resp' is allocated by the application and is
          * correctly free()'d here

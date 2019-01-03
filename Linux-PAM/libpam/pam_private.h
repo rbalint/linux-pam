@@ -1,8 +1,6 @@
 /*
  * pam_private.h
  *
- * $Id: pam_private.h,v 1.6 2004/09/15 12:06:17 kukuk Exp $
- *
  * This is the Linux-PAM Library Private Header. It contains things
  * internal to the Linux-PAM library. Things not needed by either an
  * application or module.
@@ -16,13 +14,13 @@
 #ifndef _PAM_PRIVATE_H
 #define _PAM_PRIVATE_H
 
-#include <security/_pam_aconf.h>
+#include "config.h"
 
-/* this is not used at the moment --- AGM */
-#define LIBPAM_VERSION (LIBPAM_VERSION_MAJOR*0x100 + LIBPAM_VERSION_MINOR)
+#include <syslog.h>
 
 #include <security/pam_appl.h>
 #include <security/pam_modules.h>
+#include <security/pam_ext.h>
 
 /* the Linux-PAM configuration file */
 
@@ -55,6 +53,7 @@ struct handler {
     int argc;
     char **argv;
     struct handler *next;
+    char *mod_name;
 };
 
 struct loaded_module {
@@ -122,6 +121,7 @@ struct _pam_former_state {
     int status;            /* the status before returning incomplete */
 
 /* state info used by pam_get_user() function */
+    int fail_user;
     int want_user;
     char *prompt;          /* saved prompt information */
 
@@ -146,6 +146,12 @@ struct pam_handle {
     struct service handlers;
     struct _pam_former_state former;  /* library state - support for
 					 event driven applications */
+    const char *mod_name;	/* Name of the module currently executed */
+    int choice;			/* Which function we call from the module */
+
+#ifdef HAVE_LIBAUDIT
+    int audit_state;             /* keep track of reported audit messages */
+#endif
 };
 
 /* Values for select arg to _pam_dispatch() */
@@ -211,17 +217,23 @@ void _pam_start_timer(pam_handle_t *pamh);
 void _pam_await_timer(pam_handle_t *pamh, int status);
 
 typedef void (*voidfunc(void))(void);
-#ifdef PAM_STATIC
+typedef int (*servicefn)(pam_handle_t *, int, int, char **);
 
+#ifdef PAM_STATIC
 /* The next two in ../modules/_pam_static/pam_static.c */
 
 /* Return pointer to data structure used to define a static module */
-struct pam_module * _pam_open_static_handler(const char *path);
+struct pam_module * _pam_open_static_handler (pam_handle_t *pamh,
+					      const char *path);
 
 /* Return pointer to function requested from static module */
 
 voidfunc *_pam_get_static_sym(struct pam_module *mod, const char *symname);
-
+#else
+void *_pam_dlopen (const char *mod_path);
+servicefn _pam_dlsym (void *handle, const char *symbol);
+void _pam_dlclose (void *handle);
+const char *_pam_dlerror (void);
 #endif
 
 /* For now we just use a stack and linear search for module data. */
@@ -237,7 +249,6 @@ struct pam_data {
 
 void _pam_free_data(pam_handle_t *pamh, int status);
 
-int _pam_strCMP(const char *s, const char *t);
 char *_pam_StrTok(char *from, const char *format, char **next);
 
 char *_pam_strdup(const char *s);
@@ -250,14 +261,7 @@ void _pam_set_default_control(int *control_array, int default_action);
 
 void _pam_parse_control(int *control_array, char *tok);
 
-void _pam_system_log(int priority, const char *format,  ... )
-#ifdef __GNUC__
-	__attribute__ ((format (printf, 2, 3)));
-#else
-	;
-#endif
-
-#define _PAM_SYSTEM_LOG_PREFIX "PAM "
+#define _PAM_SYSTEM_LOG_PREFIX "PAM"
 
 /*
  * XXX - Take care with this. It could confuse the logic of a trailing
@@ -266,13 +270,9 @@ void _pam_system_log(int priority, const char *format,  ... )
 
 #define IF_NO_PAMH(X,pamh,ERR)                    \
 if ((pamh) == NULL) {                             \
-    _pam_system_log(LOG_ERR, X ": NULL pam handle passed"); \
+    syslog(LOG_ERR, _PAM_SYSTEM_LOG_PREFIX " " X ": NULL pam handle passed"); \
     return ERR;                                   \
 }
-
-/* Definition for the default username prompt used by pam_get_user() */
-
-#define PAM_DEFAULT_PROMPT "Please enter username: "
 
 /*
  * include some helpful macros
@@ -293,6 +293,11 @@ if ((pamh) == NULL) {                             \
 #define __PAM_TO_APP(pamh)    \
         do { (pamh)->caller_is = _PAM_CALLED_FROM_APP; } while (0)
 
+#ifdef HAVE_LIBAUDIT
+extern int _pam_auditlog(pam_handle_t *pamh, int action, int retval, int flags);
+extern int _pam_audit_end(pam_handle_t *pamh, int pam_status);
+#endif
+
 /*
  * Copyright (C) 1995 by Red Hat Software, Marc Ewing
  * Copyright (c) 1996-8,2001 by Andrew G. Morgan <morgan@kernel.org>
@@ -311,13 +316,13 @@ if ((pamh) == NULL) {                             \
  * 3. The name of the author may not be used to endorse or promote
  *    products derived from this software without specific prior
  *    written permission.
- * 
+ *
  * ALTERNATIVELY, this product may be distributed under the terms of
  * the GNU Public License, in which case the provisions of the GPL are
  * required INSTEAD OF the above restrictions.  (This clause is
  * necessary due to a potential bad interaction between the GPL and
  * the restrictions contained in a BSD-style copyright.)
- * 
+ *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE

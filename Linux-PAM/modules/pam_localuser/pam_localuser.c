@@ -33,7 +33,7 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "../../_pam_aconf.h"
+#include "config.h"
 
 #include <errno.h>
 #include <limits.h>
@@ -49,13 +49,15 @@
 
 #define PAM_SM_AUTH
 #define PAM_SM_ACCOUNT
-#include "../../libpam/include/security/pam_modules.h"
-#include "../../libpam/include/security/_pam_macros.h"
+#include <security/pam_modules.h>
+#include <security/_pam_macros.h>
+#include <security/pam_ext.h>
 
 #define MODULE_NAME "pam_localuser"
 
-PAM_EXTERN
-int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
+PAM_EXTERN int
+pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
+		     int argc, const char **argv)
 {
 	int i, ret = PAM_SUCCESS;
 	FILE *fp;
@@ -74,10 +76,9 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
 		if(strncmp("file=", argv[i], 5) == 0) {
 			filename = argv[i] + 5;
 			if(debug) {
-				openlog(MODULE_NAME, LOG_PID, LOG_AUTHPRIV);
-				syslog(LOG_DEBUG, "set filename to \"%s\"",
-				       filename);
-				closelog();
+				pam_syslog (pamh, LOG_DEBUG,
+					    "set filename to \"%s\"",
+				            filename);
 			}
 		}
 	}
@@ -85,25 +86,19 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
 	/* open the file */
 	fp = fopen(filename, "r");
 	if(fp == NULL) {
-		openlog(MODULE_NAME, LOG_PID, LOG_AUTHPRIV);
-		syslog(LOG_ERR, "error opening \"%s\": %s", filename,
-		       strerror(errno));
-		closelog();
+		pam_syslog (pamh, LOG_ERR, "error opening \"%s\": %m",
+			    filename);
 		return PAM_SYSTEM_ERR;
 	}
 
 	if(pam_get_user(pamh, &user, NULL) != PAM_SUCCESS) {
-		openlog(MODULE_NAME, LOG_PID, LOG_AUTHPRIV);
-		syslog(LOG_ERR, "user name not specified yet");
-		closelog();
+		pam_syslog (pamh, LOG_ERR, "user name not specified yet");
 		fclose(fp);
 		return PAM_SYSTEM_ERR;
 	}
 
 	if ((user == NULL) || (strlen(user) == 0)) {
-		openlog(MODULE_NAME, LOG_PID, LOG_AUTHPRIV);
-		syslog(LOG_ERR, "user name not valid");
-		closelog();
+		pam_syslog (pamh, LOG_ERR, "user name not valid");
 		fclose(fp);
 		return PAM_SYSTEM_ERR;
 	}
@@ -115,9 +110,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
 	i = strlen(name);
 	while(fgets(line, sizeof(line), fp) != NULL) {
 		if(debug) {
-			openlog(MODULE_NAME, LOG_PID, LOG_AUTHPRIV);
-			syslog(LOG_DEBUG, "checking \"%s\"", line);
-			closelog();
+			pam_syslog (pamh, LOG_DEBUG, "checking \"%s\"", line);
 		}
 		if(strncmp(name, line, i) == 0) {
 			ret = PAM_SUCCESS;
@@ -125,19 +118,41 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
 		}
 	}
 
-	/* okay, we're done */	
+	/* okay, we're done */
 	fclose(fp);
 	return ret;
 }
 
-PAM_EXTERN
-int pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv)
+PAM_EXTERN int
+pam_sm_setcred (pam_handle_t *pamh UNUSED, int flags UNUSED,
+		int argc UNUSED, const char **argv UNUSED)
 {
 	return PAM_SUCCESS;
 }
 
-PAM_EXTERN
-int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const char **argv)
+PAM_EXTERN int
+pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const char **argv)
+{
+	return pam_sm_authenticate(pamh, flags, argc, argv);
+}
+
+PAM_EXTERN int
+pam_sm_open_session (pam_handle_t *pamh, int flags,
+		     int argc, const char **argv)
+{
+	return pam_sm_authenticate(pamh, flags, argc, argv);
+}
+
+PAM_EXTERN int
+pam_sm_close_session (pam_handle_t *pamh, int flags,
+		      int argc, const char **argv)
+{
+	return pam_sm_authenticate(pamh, flags, argc, argv);
+}
+
+PAM_EXTERN int
+pam_sm_chauthtok (pam_handle_t *pamh, int flags,
+		  int argc, const char **argv)
 {
 	return pam_sm_authenticate(pamh, flags, argc, argv);
 }
@@ -151,9 +166,9 @@ struct pam_module _pam_localuser_modstruct = {
      pam_sm_authenticate,
      pam_sm_setcred,
      pam_sm_acct_mgmt,
-     NULL,
-     NULL,
-     NULL,
+     pam_sm_open_session,
+     pam_sm_close_session,
+     pam_sm_chauthtok
 };
 
 #endif

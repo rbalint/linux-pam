@@ -1,51 +1,36 @@
-.\" Hey Emacs! This file is -*- nroff -*- source.
-.\" ripped off from Rick Faith's getgroups man page
-.\" $Id: pam_strerror.3,v 1.1.1.1 2000/06/20 22:10:58 agmorgan Exp $
-.\" Copyright (c) Andrew G. Morgan 1996-7 <morgan@linux.kernel.org>
-.TH PAM_STRERROR 3 "1999 Oct 4" "Linux-PAM 0.70" "Programmers' Manual"
-.SH NAME
-
-pam_strerror \- return a textual description of a Linux-PAM error
-
-.SH SYNOPSIS
-.B #include <security/pam_appl.h>
-.br
-or,
-.br
-.B #include <security/pam_modules.h>
+.\"     Title: pam_strerror
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
+.\"      Date: 06/27/2006
+.\"    Manual: Linux\-PAM Manual
+.\"    Source: Linux\-PAM Manual
+.\"
+.TH "PAM_STRERROR" "3" "06/27/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+pam_strerror \- return string describing PAM error code
+.SH "SYNOPSIS"
 .sp
-.BI "const char * pam_strerror( pam_handle_t " "*pamh" ", int " pam_error ");"
-.sp 2
-.SH DESCRIPTION
-.B pam_strerror
-
-This function returns some text describing the
-.BR Linux-PAM
-error associated with the
-.B pam_error
-argument.
-
-.SH "RETURN VALUE"
-
-On success this function returns a description of the indicated
-error.  Should the function not recognize the error, ``Unknown
-Linux-PAM error'' is returned.
-
-.SH "CONFORMING TO"
-DCE-RFC 86.0, October 1995.
-
-.SH BUGS
-.sp 2
-This function should be internationalized.
-
+.ft B
+.nf
+#include <security/pam_appl.h>
+.fi
+.ft
+.HP 25
+.BI "const char *pam_strerror(pam_handle_t\ *" "pamh" ", int\ " "errnum" ");"
+.SH "DESCRIPTION"
+.PP
+The
+\fBpam_strerror\fR
+function returns a pointer to a string describing the error code passed in the argument
+\fIerrnum\fR, possibly using the LC_MESSAGES part of the current locale to select the appropriate language. This string must not be modified by the application. No library function will modify this string.
+.SH "RETURN VALUES"
+.PP
+This function returns always a pointer to a string.
 .SH "SEE ALSO"
+.PP
 
-.BR pam "(8). "
-
-Also, see the three
-.BR Linux-PAM
-Guides, for
-.BR "System administrators" ", "
-.BR "module developers" ", "
-and
-.BR "application developers" ". "
+\fBpam\fR(8)

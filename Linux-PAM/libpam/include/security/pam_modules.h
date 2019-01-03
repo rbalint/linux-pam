@@ -1,32 +1,34 @@
 /*
  * <security/pam_modules.h>
- * 
- * $Id: pam_modules.h,v 1.3 2001/02/05 06:50:41 agmorgan Exp $
  *
+ * This header file collects definitions for the PAM API --- that is,
+ * public interface between the PAM library and PAM modules.
+ *
+ * Note, the copyright information is at end of file.
  */
 
 #ifndef _SECURITY_PAM_MODULES_H
 #define _SECURITY_PAM_MODULES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <security/_pam_types.h>      /* Linux-PAM common defined types */
-
-/* these defines are used by pam_set_item() and pam_get_item() and are
- * in addition to those found in <security/_pam_types.h> */
-
-#define PAM_AUTHTOK     6	/* The authentication token (password) */
-#define PAM_OLDAUTHTOK  7	/* The old authentication token */
 
 /* -------------- The Linux-PAM Module PI ------------- */
 
-extern int pam_set_data(pam_handle_t *pamh, const char *module_data_name,
-			void *data,
-			void (*cleanup)(pam_handle_t *pamh, void *data,
-				       int error_status));
-extern int pam_get_data(const pam_handle_t *pamh,
-			const char *module_data_name, const void **data);
+extern int PAM_NONNULL((1,2))
+pam_set_data(pam_handle_t *pamh, const char *module_data_name, void *data,
+	     void (*cleanup)(pam_handle_t *pamh, void *data,
+			     int error_status));
 
-extern int pam_get_user(pam_handle_t *pamh, const char **user
-			, const char *prompt);
+extern int PAM_NONNULL((1,2,3))
+pam_get_data(const pam_handle_t *pamh, const char *module_data_name,
+	     const void **data);
+
+extern int PAM_NONNULL((1,2))
+pam_get_user(pam_handle_t *pamh, const char **user, const char *prompt);
 
 #ifdef PAM_STATIC
 
@@ -56,7 +58,7 @@ struct pam_module {
 #define PAM_EXTERN extern
 
 #endif /* PAM_STATIC */
-	
+
 /* Lots of files include pam_modules.h that don't need these
  * declared.  However, when they are declared static, they
  * need to be defined later.  So we have to protect C files
@@ -127,8 +129,13 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t *pamh, int flags,
 
 #define PAM_DATA_REPLACE   0x20000000     /* used when replacing a data item */
 
+
 /* take care of any compatibility issues */
 #include <security/_pam_compat.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 /* Copyright (C) Theodore Ts'o, 1996.
  * Copyright (C) Andrew Morgan, 1996-8.
@@ -146,13 +153,13 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t *pamh, int flags,
  * 3. The name of the author may not be used to endorse or promote
  *    products derived from this software without specific prior
  *    written permission.
- * 
+ *
  * ALTERNATIVELY, this product may be distributed under the terms of
  * the GNU General Public License, in which case the provisions of the
  * GNU GPL are required INSTEAD OF the above restrictions.  (This
  * clause is necessary due to a potential bad interaction between the
  * GNU GPL and the restrictions contained in a BSD-style copyright.)
- * 
+ *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -166,4 +173,3 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t *pamh, int flags,
  * OF THE POSSIBILITY OF SUCH DAMAGE.  */
 
 #endif /* _SECURITY_PAM_MODULES_H */
-

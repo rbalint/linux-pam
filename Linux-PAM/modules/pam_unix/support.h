@@ -1,5 +1,5 @@
 /*
- * $Id: support.h,v 1.8 2004/10/06 13:42:36 kukuk Exp $
+ * $Id: support.h,v 1.12 2005/09/26 14:27:09 t8m Exp $
  */
 
 #ifndef _PAM_UNIX_SUPPORT_H
@@ -110,7 +110,7 @@ static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
 /* UNIX__NULLOK */         {"nullok",          _ALL_ON_^(01000),           0},
 /* UNIX_DEBUG */           {"debug",           _ALL_ON_,              040000},
 /* UNIX_NODELAY */         {"nodelay",         _ALL_ON_,             0100000},
-/* UNIX_NIS */             {"nis",             _ALL_ON_^(010000),    0200000},
+/* UNIX_NIS */             {"nis",             _ALL_ON_,             0200000},
 /* UNIX_BIGCRYPT */        {"bigcrypt",        _ALL_ON_^(020000),    0400000},
 /* UNIX_LIKE_AUTH */       {"likeauth",        _ALL_ON_,            01000000},
 /* UNIX_REMEMBER_PASSWD */ {"remember=",       _ALL_ON_,            02000000},
@@ -129,7 +129,6 @@ static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
 	_pam_drop(xx);		\
 }
 
-extern void _log_err(int err, pam_handle_t *pamh, const char *format,...);
 extern int _make_remark(pam_handle_t * pamh, unsigned int ctrl
 		       ,int type, const char *text);
 extern int _set_ctrl(pam_handle_t * pamh, int flags, int *remember, int argc,
@@ -149,7 +148,8 @@ extern int _unix_read_password(pam_handle_t * pamh
 			,const char *prompt1
 			,const char *prompt2
 			,const char *data_name
-			,const char **pass);
+			,const void **pass);
 extern int _unix_shadowed(const struct passwd *pwd);
 
+extern struct spwd *_unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl, const char *user);
 #endif /* _PAM_UNIX_SUPPORT_H */

@@ -1,7 +1,7 @@
 /* pam_password.c - PAM Password Management */
 
 /*
- * $Id: pam_password.c,v 1.3 2003/07/13 20:01:44 vorlon Exp $
+ * $Id: pam_password.c,v 1.5 2006/07/24 15:47:40 kukuk Exp $
  */
 
 /* #define DEBUG */
@@ -51,6 +51,10 @@ int pam_chauthtok(pam_handle_t *pamh, int flags)
     } else {
 	D(("will resume when ready", retval));
     }
+
+#ifdef HAVE_LIBAUDIT
+    retval = _pam_auditlog(pamh, PAM_CHAUTHTOK, retval, flags);
+#endif
 
     return retval;
 }

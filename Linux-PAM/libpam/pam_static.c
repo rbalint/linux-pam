@@ -1,8 +1,7 @@
-/* pam_static.c -- static module loading helper functions */
-
-/* created by Michael K. Johnson, johnsonm@redhat.com
+/*
+ * pam_static.c -- static module loading helper functions
  *
- * $Id: pam_static.c,v 1.1.1.1 2000/06/20 22:11:21 agmorgan Exp $
+ * created by Michael K. Johnson, johnsonm@redhat.com
  */
 
 /* This whole file is only used for PAM_STATIC */
@@ -15,31 +14,15 @@
 
 #include "pam_private.h"
 
-/*
- * Need to include pointers to static modules; this was built by each
- * of the modules that register...
- */
-
-#include "../modules/_static_module_list"
-
-/*
- * and here is a structure that connects libpam to the above static
- * modules
- */
-
-static struct pam_module *static_modules[] = {
-
-#include "../modules/_static_module_entry"
-
-    NULL
-};
+#include "pam_static_modules.h"
 
 /*
  * and now for the functions
  */
 
 /* Return pointer to data structure used to define a static module */
-struct pam_module * _pam_open_static_handler(const char *path)
+struct pam_module *
+_pam_open_static_handler (pam_handle_t *pamh, const char *path)
 {
     int i;
     const char *clpath = path;
@@ -47,7 +30,7 @@ struct pam_module * _pam_open_static_handler(const char *path)
 
     if (strchr(clpath, '/')) {
         /* ignore path and leading "/" */
-	clpath = strrchr(lpath, '/') + 1;
+	clpath = strrchr(path, '/') + 1;
     }
     /* create copy to muck with (must free before return) */
     lpath = _pam_strdup(clpath);
@@ -68,8 +51,7 @@ struct pam_module * _pam_open_static_handler(const char *path)
     }
 
     if (static_modules[i] == NULL) {
-	_pam_system_log(NULL, NULL, LOG_ERR, "no static module named %s",
-			lpath);
+      pam_syslog (pamh, LOG_ERR, "no static module named %s", lpath);
     }
 
     free(lpath);
@@ -102,7 +84,11 @@ voidfunc *_pam_get_static_sym(struct pam_module *mod, const char *symname) {
     return ((voidfunc *)NULL);
 }
 
-#endif /* PAM_STATIC */
+#else /* ! PAM_STATIC */
+
+typedef int blarg;
+
+#endif /* ! PAM_STATIC */
 
 /*
  * Copyright (C) 1995 by Red Hat Software, Michael K. Johnson
@@ -120,13 +106,13 @@ voidfunc *_pam_get_static_sym(struct pam_module *mod, const char *symname) {
  * 3. The name of the author may not be used to endorse or promote
  *    products derived from this software without specific prior
  *    written permission.
- * 
+ *
  * ALTERNATIVELY, this product may be distributed under the terms of
  * the GNU Public License, in which case the provisions of the GPL are
  * required INSTEAD OF the above restrictions.  (This clause is
  * necessary due to a potential bad interaction between the GPL and
  * the restrictions contained in a BSD-style copyright.)
- * 
+ *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE

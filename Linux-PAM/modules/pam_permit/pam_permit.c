@@ -1,11 +1,13 @@
 /* pam_permit module */
 
 /*
- * $Id: pam_permit.c,v 1.3 2004/09/22 09:37:49 kukuk Exp $
+ * $Id: pam_permit.c,v 1.4 2005/09/17 08:50:29 t8m Exp $
  *
  * Written by Andrew Morgan <morgan@parc.power.net> 1996/3/11
  *
  */
+
+#include "config.h"
 
 #define DEFAULT_USER "nobody"
 
@@ -28,9 +30,9 @@
 
 /* --- authentication management functions --- */
 
-PAM_EXTERN
-int pam_sm_authenticate(pam_handle_t *pamh,int flags,int argc
-			,const char **argv)
+PAM_EXTERN int
+pam_sm_authenticate(pam_handle_t *pamh, int flags UNUSED,
+		    int argc UNUSED, const char **argv UNUSED)
 {
     int retval;
     const char *user=NULL;
@@ -54,43 +56,43 @@ int pam_sm_authenticate(pam_handle_t *pamh,int flags,int argc
     return PAM_SUCCESS;
 }
 
-PAM_EXTERN
-int pam_sm_setcred(pam_handle_t *pamh,int flags,int argc
-		   ,const char **argv)
+PAM_EXTERN int
+pam_sm_setcred(pam_handle_t *pamh UNUSED, int flags UNUSED,
+	       int argc UNUSED, const char **argv UNUSED)
 {
      return PAM_SUCCESS;
 }
 
 /* --- account management functions --- */
 
-PAM_EXTERN
-int pam_sm_acct_mgmt(pam_handle_t *pamh,int flags,int argc
-		     ,const char **argv)
+PAM_EXTERN int
+pam_sm_acct_mgmt(pam_handle_t *pamh UNUSED, int flags UNUSED,
+		 int argc UNUSED, const char **argv UNUSED)
 {
      return PAM_SUCCESS;
 }
 
 /* --- password management --- */
 
-PAM_EXTERN
-int pam_sm_chauthtok(pam_handle_t *pamh,int flags,int argc
-		     ,const char **argv)
+PAM_EXTERN int
+pam_sm_chauthtok(pam_handle_t *pamh UNUSED, int flags UNUSED,
+		 int argc UNUSED, const char **argv UNUSED)
 {
      return PAM_SUCCESS;
 }
 
 /* --- session management --- */
 
-PAM_EXTERN
-int pam_sm_open_session(pam_handle_t *pamh,int flags,int argc
-			,const char **argv)
+PAM_EXTERN int
+pam_sm_open_session(pam_handle_t *pamh UNUSED, int flags UNUSED,
+		    int argc UNUSED, const char **argv UNUSED)
 {
     return PAM_SUCCESS;
 }
 
-PAM_EXTERN
-int pam_sm_close_session(pam_handle_t *pamh,int flags,int argc
-			 ,const char **argv)
+PAM_EXTERN int
+pam_sm_close_session(pam_handle_t *pamh UNUSED, int flags UNUSED,
+		     int argc UNUSED, const char **argv UNUSED)
 {
      return PAM_SUCCESS;
 }

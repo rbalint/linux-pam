@@ -1,7 +1,7 @@
 /*
  * pam_auth.c -- PAM authentication
  *
- * $Id: pam_auth.c,v 1.5 2005/03/29 20:41:20 toady Exp $
+ * $Id: pam_auth.c,v 1.7 2006/07/24 15:47:40 kukuk Exp $
  *
  */
 
@@ -45,6 +45,10 @@ int pam_authenticate(pam_handle_t *pamh, int flags)
     prelude_send_alert(pamh, retval);
 #endif
 
+#ifdef HAVE_LIBAUDIT
+    retval = _pam_auditlog(pamh, PAM_AUTHENTICATE, retval, flags);
+#endif
+
     return retval;
 }
 
@@ -66,6 +70,10 @@ int pam_setcred(pam_handle_t *pamh, int flags)
     }
 
     retval = _pam_dispatch(pamh, flags, PAM_SETCRED);
+
+#ifdef HAVE_LIBAUDIT
+    retval = _pam_auditlog(pamh, PAM_SETCRED, retval, flags);
+#endif
 
     D(("pam_setcred exit"));
 

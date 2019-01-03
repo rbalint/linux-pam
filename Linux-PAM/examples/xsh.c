@@ -1,11 +1,7 @@
-/*
- * $Id: xsh.c,v 1.7 2004/09/24 09:18:21 kukuk Exp $
- */
-
 /* Andrew Morgan (morgan@kernel.org) -- an example application
  * that invokes a shell, based on blank.c */
 
-#include <security/_pam_aconf.h>
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +35,7 @@ static struct pam_conv conv = {
 int main(int argc, char **argv)
 {
      pam_handle_t *pamh=NULL;
-     const char *username=NULL;
+     const void *username=NULL;
      const char *service="xsh";
      int retcode;
 
@@ -137,13 +133,13 @@ int main(int argc, char **argv)
 	       break;
 	  }
 
-	  pam_get_item(pamh, PAM_USER, (const void **) &username);
+	  pam_get_item(pamh, PAM_USER, &username);
 	  fprintf(stderr,
 		  "The user [%s] has been authenticated and `logged in'\n",
-		  username);
+		  (const char *)username);
 
 	  /* this is always a really bad thing for security! */
-	  system("/bin/sh");
+	  retcode = system("/bin/sh");
 
 	  /* close a session for the user --- `0' could be PAM_SILENT
 	   * it is possible that this pam_close_call is in another program..
@@ -173,5 +169,5 @@ int main(int argc, char **argv)
      pamh = NULL;
      bail_out(pamh,1,retcode,"pam_end");
 
-     exit(0);
+     return (0);
 }

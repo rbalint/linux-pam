@@ -10,7 +10,7 @@
  * Slight modifications AGM. 1996/12/3
  */
 
-#define _GNU_SOURCE
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,26 +34,13 @@
 #define PAM_SM_ACCOUNT
 
 #include <security/pam_modules.h>
-#include <security/_pam_modutil.h>
-
-/* some syslogging */
-
-static void _pam_log(int err, const char *format, ...)
-{
-    va_list args;
-
-    va_start(args, format);
-    openlog("PAM-securetty", LOG_CONS|LOG_PID, LOG_AUTH);
-    vsyslog(err, format, args);
-    va_end(args);
-    closelog();
-}
-
-/* argument parsing */
+#include <security/pam_modutil.h>
+#include <security/pam_ext.h>
 
 #define PAM_DEBUG_ARG       0x0001
 
-static int _pam_parse(int argc, const char **argv)
+static int
+_pam_parse (const pam_handle_t *pamh, int argc, const char **argv)
 {
     int ctrl=0;
 
@@ -65,19 +52,21 @@ static int _pam_parse(int argc, const char **argv)
 	if (!strcmp(*argv,"debug"))
 	    ctrl |= PAM_DEBUG_ARG;
 	else {
-	    _pam_log(LOG_ERR,"pam_parse: unknown option; %s",*argv);
+	    pam_syslog(pamh, LOG_ERR, "unknown option: %s", *argv);
 	}
     }
 
     return ctrl;
 }
 
-static int securetty_perform_check(pam_handle_t *pamh, int flags, int ctrl,
-				   const char *function_name)
+static int
+securetty_perform_check (pam_handle_t *pamh, int ctrl,
+			 const char *function_name)
 {
     int retval = PAM_AUTH_ERR;
     const char *username;
-    char *uttyname;
+    const char *uttyname;
+    const void *void_uttyname;
     char ttyfileline[256];
     char ptname[256];
     struct stat ttyfileinfo;
@@ -86,32 +75,29 @@ static int securetty_perform_check(pam_handle_t *pamh, int flags, int ctrl,
 
     /* log a trail for debugging */
     if (ctrl & PAM_DEBUG_ARG) {
-	_pam_log(LOG_DEBUG, "pam_securetty called via %s function",
-		 function_name);
+        pam_syslog(pamh, LOG_DEBUG, "pam_securetty called via %s function",
+		   function_name);
     }
 
     retval = pam_get_user(pamh, &username, NULL);
     if (retval != PAM_SUCCESS || username == NULL) {
-	if (ctrl & PAM_DEBUG_ARG) {
-            _pam_log(LOG_WARNING, "cannot determine username");
-	}
+        pam_syslog(pamh, LOG_WARNING, "cannot determine username");
 	return (retval == PAM_CONV_AGAIN ? PAM_INCOMPLETE:PAM_SERVICE_ERR);
     }
 
-    user_pwd = _pammodutil_getpwnam(pamh, username);
+    user_pwd = pam_modutil_getpwnam(pamh, username);
     if (user_pwd == NULL) {
-	return PAM_IGNORE;
+	return PAM_USER_UNKNOWN;
     } else if (user_pwd->pw_uid != 0) { /* If the user is not root,
 					   securetty's does not apply
 					   to them */
 	return PAM_SUCCESS;
     }
 
-    retval = pam_get_item(pamh, PAM_TTY, (const void **)&uttyname);
+    retval = pam_get_item(pamh, PAM_TTY, &void_uttyname);
+    uttyname = void_uttyname;
     if (retval != PAM_SUCCESS || uttyname == NULL) {
-        if (ctrl & PAM_DEBUG_ARG) {
-            _pam_log(LOG_WARNING, "cannot determine user's tty");
-	}
+        pam_syslog (pamh, LOG_WARNING, "cannot determine user's tty");
 	return PAM_SERVICE_ERR;
     }
 
@@ -121,7 +107,7 @@ static int securetty_perform_check(pam_handle_t *pamh, int flags, int ctrl,
     }
 
     if (stat(SECURETTY_FILE, &ttyfileinfo)) {
-	_pam_log(LOG_NOTICE, "Couldn't open " SECURETTY_FILE);
+	pam_syslog(pamh, LOG_NOTICE, "Couldn't open %s: %m", SECURETTY_FILE);
 	return PAM_SUCCESS; /* for compatibility with old securetty handling,
 			       this needs to succeed.  But we still log the
 			       error. */
@@ -130,15 +116,15 @@ static int securetty_perform_check(pam_handle_t *pamh, int flags, int ctrl,
     if ((ttyfileinfo.st_mode & S_IWOTH) || !S_ISREG(ttyfileinfo.st_mode)) {
 	/* If the file is world writable or is not a
 	   normal file, return error */
-	_pam_log(LOG_ERR, SECURETTY_FILE
-		 " is either world writable or not a normal file");
+	pam_syslog(pamh, LOG_ERR,
+		   "%s is either world writable or not a normal file",
+		   SECURETTY_FILE);
 	return PAM_AUTH_ERR;
     }
 
     ttyfile = fopen(SECURETTY_FILE,"r");
     if (ttyfile == NULL) { /* Check that we opened it successfully */
-	_pam_log(LOG_ERR,
-		 "Error opening " SECURETTY_FILE);
+	pam_syslog(pamh, LOG_ERR, "Error opening %s: %m", SECURETTY_FILE);
 	return PAM_SERVICE_ERR;
     }
 
@@ -161,13 +147,13 @@ static int securetty_perform_check(pam_handle_t *pamh, int flags, int ctrl,
     fclose(ttyfile);
 
     if (retval) {
-	    _pam_log(LOG_WARNING, "access denied: tty '%s' is not secure !",
+	    pam_syslog(pamh, LOG_WARNING, "access denied: tty '%s' is not secure !",
 		     uttyname);
 
 	    retval = PAM_AUTH_ERR;
     } else {
 	if ((retval == PAM_SUCCESS) && (ctrl & PAM_DEBUG_ARG)) {
-	    _pam_log(LOG_DEBUG, "access allowed for '%s' on '%s'",
+	    pam_syslog(pamh, LOG_DEBUG, "access allowed for '%s' on '%s'",
 		     username, uttyname);
 	}
 	retval = PAM_SUCCESS;
@@ -180,36 +166,37 @@ static int securetty_perform_check(pam_handle_t *pamh, int flags, int ctrl,
 /* --- authentication management functions --- */
 
 PAM_EXTERN
-int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
+int pam_sm_authenticate(pam_handle_t *pamh, int flags UNUSED, int argc,
 			const char **argv)
 {
     int ctrl;
 
     /* parse the arguments */
-    ctrl = _pam_parse(argc, argv);
+    ctrl = _pam_parse (pamh, argc, argv);
 
-    return securetty_perform_check(pamh, flags, ctrl, __FUNCTION__);
+    return securetty_perform_check(pamh, ctrl, __FUNCTION__);
 }
 
-PAM_EXTERN
-int pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv)
+PAM_EXTERN int
+pam_sm_setcred (pam_handle_t *pamh UNUSED, int flags UNUSED,
+		int argc UNUSED, const char **argv UNUSED)
 {
     return PAM_SUCCESS;
 }
 
 /* --- account management functions --- */
 
-PAM_EXTERN
-int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc,
-		     const char **argv)
+PAM_EXTERN int
+pam_sm_acct_mgmt (pam_handle_t *pamh, int flags UNUSED,
+		  int argc, const char **argv)
 {
     int ctrl;
 
     /* parse the arguments */
-    ctrl = _pam_parse(argc, argv);
+    ctrl = _pam_parse (pamh, argc, argv);
 
     /* take the easy route */
-    return securetty_perform_check(pamh, flags, ctrl, __FUNCTION__);
+    return securetty_perform_check(pamh, ctrl, __FUNCTION__);
 }
 
 

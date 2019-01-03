@@ -23,220 +23,71 @@
 #define ANALYZER_MANUFACTURER "Sebastien Tricaud, http://www.kernel.org/pub/linux/libs/pam/"
 
 #define DEFAULT_ANALYZER_NAME "PAM"
-#define DEFAULT_ANALYZER_CONFIG LIBPRELUDE_CONFIG_PREFIX "/etc/prelude/default/idmef-client.conf"
 
-#define PAM_VERSION LIBPAM_VERSION_STRING
-
-static const char *pam_get_item_service(pam_handle_t *pamh);
-static const char *pam_get_item_user(pam_handle_t *pamh);
-static const char *pam_get_item_user_prompt(pam_handle_t *pamh);
-static const char *pam_get_item_tty(pam_handle_t *pamh);
-static const char *pam_get_item_ruser(pam_handle_t *pamh);
-static const char *pam_get_item_rhost(pam_handle_t *pamh);
-
-static int setup_analyzer(idmef_analyzer_t *analyzer);
-static void pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval);
-static int pam_alert_prelude_init(pam_handle_t *pamh, int authval);
-static int generate_additional_data(idmef_alert_t *alert, const char *meaning, const char *data);
-
-
-/*******************
- * some syslogging *
- *******************/
-static void 
-_pam_log(int err, const char *format, ...)
+static const char *
+pam_get_item_service(const pam_handle_t *pamh)
 {
-    va_list args;
-    va_start(args, format);
+        const void *service = NULL;
 
-#ifdef MAIN
-    vfprintf(stderr,format,args);
-    fprintf(stderr,"\n");
-#else
-    openlog("libpam", LOG_CONS|LOG_PID, LOG_AUTH);
-    vsyslog(err, format, args);
-    closelog();
-#endif
-    va_end(args);
+	pam_get_item(pamh, PAM_SERVICE, &service);
+
+        return service;
 }
 
 static const char *
-pam_get_item_service(pam_handle_t *pamh)
+pam_get_item_user(const pam_handle_t *pamh)
 {
-        const char *service = NULL;
+        const void *user = NULL;
 
-	pam_get_item(pamh, PAM_SERVICE, (const void **)&service);
+	pam_get_item(pamh, PAM_USER, &user);
 
-        return (const char *)service;
+        return user;
 }
 
 static const char *
-pam_get_item_user(pam_handle_t *pamh)
+pam_get_item_user_prompt(const pam_handle_t *pamh)
 {
-        const char *user = NULL;
+        const void *user_prompt = NULL;
 
-	pam_get_item(pamh, PAM_USER, (const void **)&user);
+	pam_get_item(pamh, PAM_USER_PROMPT, &user_prompt);
 
-        return (const char *)user;
+        return user_prompt;
 }
 
 static const char *
-pam_get_item_user_prompt(pam_handle_t *pamh)
+pam_get_item_tty(const pam_handle_t *pamh)
 {
-        const char *user_prompt = NULL;
+        const void *tty = NULL;
 
-	pam_get_item(pamh, PAM_USER_PROMPT, (const void **)&user_prompt);
+	pam_get_item(pamh, PAM_TTY, &tty);
 
-        return (const char *)user_prompt;
+        return tty;
 }
 
 static const char *
-pam_get_item_tty(pam_handle_t *pamh)
+pam_get_item_ruser(const pam_handle_t *pamh)
 {
-        const char *tty = NULL;
+        const void *ruser = NULL;
 
-	pam_get_item(pamh, PAM_TTY, (const void **)&tty);
+	pam_get_item(pamh, PAM_RUSER, &ruser);
 
-        return (const char *)tty;
+        return ruser;
 }
 
 static const char *
-pam_get_item_ruser(pam_handle_t *pamh)
+pam_get_item_rhost(const pam_handle_t *pamh)
 {
-        const char *ruser = NULL;
+        const void *rhost = NULL;
 
-	pam_get_item(pamh, PAM_RUSER, (const void **)&ruser);
+	pam_get_item(pamh, PAM_RHOST, &rhost);
 
-        return (const char *)ruser;
-}
-
-static const char *
-pam_get_item_rhost(pam_handle_t *pamh)
-{
-        const char *rhost = NULL;
-
-	pam_get_item(pamh, PAM_RHOST, (const void **)&rhost);
-
-        return (const char *)rhost;
-}
-
-/***************************************************************** 
- * Returns a string concerning the authentication value provided *
- *****************************************************************/
-static const char *
-pam_get_alert_description(int authval)
-{
-        const char *retstring = NULL;
-
-        switch(authval) {
-        case PAM_SUCCESS:
-                retstring = "Authentication success";
-                break;
-        case PAM_OPEN_ERR:
-                retstring = "dlopen() failure when dynamically loading a service module";
-                break;
-        case PAM_SYMBOL_ERR:
-                retstring = "Symbol not found";
-                break;
-        case PAM_SERVICE_ERR:
-                retstring = "Error in service module";
-                break;
-        case PAM_SYSTEM_ERR:
-                retstring = "System error";
-                break;
-        case PAM_BUF_ERR:
-		retstring = "Memory buffer error";
-                break;
-        case PAM_PERM_DENIED:
-                retstring = "Permission denied";
-                break;
-        case PAM_AUTH_ERR:
-		retstring = "Authentication failure";
-                break;
-        case PAM_CRED_INSUFFICIENT:
-                retstring = "Can not access authentication data due to insufficient credentials";
-                break;
-        case PAM_AUTHINFO_UNAVAIL:
-                retstring = "Underlying authentication service can not retrieve authenticaiton information";
-                break;
-        case PAM_USER_UNKNOWN:
-                retstring = "User not known to the underlying authentication module";
-                break;
-        case PAM_MAXTRIES:
-                retstring = "An authentication service has maintained a retry count which has been reached. No further retries should be attempted";
-                break;
-        case PAM_NEW_AUTHTOK_REQD:
-                retstring = "New authentication token required. This is normally returned if the machine security policies require that the password should be changed beccause the password is NULL or it has aged";
-                break;
-        case PAM_ACCT_EXPIRED:
-                retstring = "User account has expired";
-                break;
-        case PAM_SESSION_ERR:
-                retstring = "Can not make/remove an entry for the specified session";
-                break;
-        case PAM_CRED_UNAVAIL:
-                retstring = "Underlying authentication service can not retrieve user credentials unavailable";
-                break;
-        case PAM_CRED_EXPIRED:
-                retstring = "User credentials expired";
-                break;
-        case PAM_CRED_ERR:
-                retstring = "Failure setting user credentials";
-                break;
-        case PAM_NO_MODULE_DATA:
-                retstring = "No module specific data is present";
-                break;
-        case PAM_CONV_ERR:
-		retstring = "Conversation error";
-                break;
-        case PAM_AUTHTOK_ERR:
-                retstring = "Authentication token manipulation error";
-                break;
-        case PAM_AUTHTOK_RECOVER_ERR:
-                retstring = "Authentication information cannot be recovered";
-                break;
-        case PAM_AUTHTOK_LOCK_BUSY:
-                retstring = "Authentication token lock busy";
-                break;
-        case PAM_AUTHTOK_DISABLE_AGING:
-                retstring = "Authentication token aging disabled";
-                break;
-        case PAM_TRY_AGAIN:
-                retstring = "Preliminary check by password service";
-                break;
-        case PAM_IGNORE:
-                retstring = "Ignore underlying account module regardless of whether the control flag is required, optional, or sufficient";
-                break;
-        case PAM_ABORT:
-                retstring = "Critical error (?module fail now request)";
-                break;
-        case PAM_AUTHTOK_EXPIRED:
-                retstring = "User's authentication token has expired";
-                break;
-        case PAM_MODULE_UNKNOWN:
-                retstring = "Module is not known";
-                break;
-        case PAM_BAD_ITEM:
-                retstring = "Bad item passed to pam_*_item()";
-                break;
-        case PAM_CONV_AGAIN:
-                retstring = "Conversation function is event driven and data is not available yet";
-                break;
-        case PAM_INCOMPLETE:
-                retstring = "Please call this function again to complete authentication stack. Before calling again, verify that conversation is completed";
-                break;
-
-        default:
-                retstring = "Authentication Failure!. You should not see this message.";
-        }
-
-        return retstring;
-
+        return rhost;
 }
 
 /* Courteously stolen from prelude-lml */
 static int
-generate_additional_data(idmef_alert_t *alert, const char *meaning, const char *data)
+generate_additional_data(idmef_alert_t *alert, const char *meaning,
+			 const char *data)
 {
         int ret;
         prelude_string_t *str;
@@ -249,7 +100,7 @@ generate_additional_data(idmef_alert_t *alert, const char *meaning, const char *
         ret = idmef_additional_data_new_meaning(adata, &str);
         if ( ret < 0 )
                 return ret;
-        
+
         ret = prelude_string_set_ref(str, meaning);
         if ( ret < 0 )
                 return ret;
@@ -257,29 +108,12 @@ generate_additional_data(idmef_alert_t *alert, const char *meaning, const char *
         return idmef_additional_data_set_string_ref(adata, data);
 }
 
-extern void 
-prelude_send_alert(pam_handle_t *pamh, int authval)
-{
-
-        int ret;
-
-        prelude_log_set_flags(PRELUDE_LOG_FLAGS_SYSLOG);
-
-        ret = pam_alert_prelude_init(pamh, authval);
-        if ( ret < 0 )
-                _pam_log(LOG_WARNING, 
-                         "No prelude alert sent");
-
-	prelude_deinit();
-
-}
-
-static int 
-setup_analyzer(idmef_analyzer_t *analyzer)
+static int
+setup_analyzer(const pam_handle_t *pamh, idmef_analyzer_t *analyzer)
 {
         int ret;
         prelude_string_t *string;
-        
+
         ret = idmef_analyzer_new_model(analyzer, &string);
         if ( ret < 0 )
                 goto err;
@@ -300,19 +134,20 @@ setup_analyzer(idmef_analyzer_t *analyzer)
                 goto err;
         prelude_string_set_constant(string, PAM_VERSION);
 
-        
+
         return 0;
 
  err:
-        _pam_log(LOG_WARNING, 
-                        "%s: IDMEF error: %s.\n",
-                        prelude_strsource(ret), prelude_strerror(ret));
+        pam_syslog(pamh, LOG_WARNING,
+                   "%s: IDMEF error: %s.\n",
+                   prelude_strsource(ret), prelude_strerror(ret));
 
         return -1;
 }
 
-static void 
-pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
+static void
+pam_alert_prelude(const char *msg, void *data,
+		  pam_handle_t *pamh, int authval)
 {
         int ret;
         idmef_time_t *clienttime;
@@ -331,10 +166,10 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
         idmef_assessment_t *assessment;
         idmef_node_t *node;
 	idmef_analyzer_t *analyzer;
-	
+
 
         ret = idmef_message_new(&idmef);
-        if ( ret < 0 ) 
+        if ( ret < 0 )
                 goto err;
 
         ret = idmef_message_new_alert(idmef, &alert);
@@ -360,8 +195,8 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
                 goto err;
         idmef_alert_set_create_time(alert, clienttime);
 
-        idmef_alert_set_analyzer(alert, 
-                                 idmef_analyzer_ref(prelude_client_get_analyzer(client)), 
+        idmef_alert_set_analyzer(alert,
+                                 idmef_analyzer_ref(prelude_client_get_analyzer(client)),
                                  0);
 
         /**********
@@ -386,12 +221,12 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
 	        ret = prelude_string_new(&str);
                 if ( ret < 0 )
                         goto err;
-	
+
 	        ret = prelude_string_set_ref(str, pam_get_item_ruser(pamh));
                 if ( ret < 0 )
                         goto err;
 
-	        idmef_user_id_set_name(user_id, str); 
+	        idmef_user_id_set_name(user_id, str);
 	}
         /* END */
         /* BEGIN: Adds TTY infos */
@@ -439,7 +274,7 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
 		ret = prelude_string_set_ref(str, pam_get_item_service(pamh));
                 if ( ret < 0 )
                         goto err;
-        
+
 		idmef_process_set_name(process, str);
 	}
         /* END */
@@ -483,7 +318,7 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
                 if ( ret < 0 )
                         goto err;
 
-		idmef_user_id_set_name(user_id, str); 
+		idmef_user_id_set_name(user_id, str);
 	}
         /* END */
         /* BEGIN: Short description of the alert */
@@ -495,8 +330,8 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
         if ( ret < 0 )
                 goto err;
 
-        ret = prelude_string_set_ref(str, 
-                                     authval == PAM_SUCCESS ? 
+        ret = prelude_string_set_ref(str,
+                                     authval == PAM_SUCCESS ?
                                      "Authentication Success" : "Authentication Failure");
         if ( ret < 0 )
                 goto err;
@@ -516,8 +351,7 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
         if ( ret < 0 )
                 goto err;
 
-        ret = prelude_string_set_ref(str, 
-                                     pam_get_alert_description(authval));
+        ret = prelude_string_set_ref(str, pam_strerror (pamh, authval));
         if ( ret < 0 )
                 goto err;
 
@@ -525,7 +359,7 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
         /* END */
         /* BEGIN: Adding additional data */
 	if ( pam_get_item_user_prompt(pamh) ) {
-	        ret = generate_additional_data(alert, "Local User Prompt", 
+	        ret = generate_additional_data(alert, "Local User Prompt",
                                                pam_get_item_user_prompt(pamh));
                 if ( ret < 0 )
                         goto err;
@@ -533,16 +367,15 @@ pam_alert_prelude(const char *msg, void *data, pam_handle_t *pamh, int authval)
         /* END */
 
         prelude_client_send_idmef(client, idmef);
- 
+
         if ( idmef )
                 idmef_message_destroy(idmef);
 
 	return;
  err:
-        _pam_log(LOG_WARNING,
-                        "%s: IDMEF error: %s.\n",
-                        prelude_strsource(ret), prelude_strerror(ret));
-        
+        pam_syslog(pamh, LOG_WARNING, "%s: IDMEF error: %s.\n",
+                   prelude_strsource(ret), prelude_strerror(ret));
+
         if ( idmef )
                 idmef_message_destroy(idmef);
 
@@ -557,7 +390,7 @@ pam_alert_prelude_init(pam_handle_t *pamh, int authval)
 
         ret = prelude_init(NULL, NULL);
         if ( ret < 0 ) {
-                _pam_log(LOG_WARNING, 
+                pam_syslog(pamh, LOG_WARNING,
                          "%s: Unable to initialize the Prelude library: %s.\n",
                          prelude_strsource(ret), prelude_strerror(ret));
                 return -1;
@@ -565,7 +398,7 @@ pam_alert_prelude_init(pam_handle_t *pamh, int authval)
 
         ret = prelude_client_new(&client, DEFAULT_ANALYZER_NAME);
         if ( ! client ) {
-                _pam_log(LOG_WARNING, 
+                pam_syslog(pamh, LOG_WARNING,
                          "%s: Unable to create a prelude client object: %s.\n",
                          prelude_strsource(ret), prelude_strerror(ret));
 
@@ -573,9 +406,9 @@ pam_alert_prelude_init(pam_handle_t *pamh, int authval)
         }
 
 
-        ret = setup_analyzer(prelude_client_get_analyzer(client));
+        ret = setup_analyzer(pamh, prelude_client_get_analyzer(client));
         if ( ret < 0 ) {
-                _pam_log(LOG_WARNING,
+                pam_syslog(pamh, LOG_WARNING,
                          "%s: Unable to setup analyzer: %s\n",
                          prelude_strsource(ret), prelude_strerror(ret));
 
@@ -586,10 +419,10 @@ pam_alert_prelude_init(pam_handle_t *pamh, int authval)
 
         ret = prelude_client_start(client);
         if ( ret < 0 ) {
-                _pam_log(LOG_WARNING, 
+                pam_syslog(pamh, LOG_WARNING,
                          "%s: Unable to initialize prelude client: %s.\n",
                          prelude_strsource(ret), prelude_strerror(ret));
- 
+
 		prelude_client_destroy(client, PRELUDE_CLIENT_EXIT_STATUS_FAILURE);
 
                 return -1;
@@ -602,4 +435,20 @@ pam_alert_prelude_init(pam_handle_t *pamh, int authval)
         return 0;
 }
 
-#endif PRELUDE
+void
+prelude_send_alert(pam_handle_t *pamh, int authval)
+{
+
+        int ret;
+
+        prelude_log_set_flags(PRELUDE_LOG_FLAGS_SYSLOG);
+
+        ret = pam_alert_prelude_init(pamh, authval);
+        if ( ret < 0 )
+                pam_syslog(pamh, LOG_WARNING, "No prelude alert sent");
+
+	prelude_deinit();
+
+}
+
+#endif /* PRELUDE */

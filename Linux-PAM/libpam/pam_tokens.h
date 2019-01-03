@@ -1,7 +1,7 @@
 /*
  * pam_tokens.h
  *
- * $Id: pam_tokens.h,v 1.3 2001/01/22 06:07:29 agmorgan Exp $
+ * $Id: pam_tokens.h,v 1.4 2006/01/24 23:28:32 kukuk Exp $
  *
  * This is a Linux-PAM Library Private Header file. It contains tokens
  * that are used when we parse the configuration file(s).
@@ -17,6 +17,9 @@
 
 /* an array of actions */
 
+#ifndef LIBPAM_COMPILE
+static
+#endif
 const char * const _pam_token_actions[-_PAM_ACTION_UNDEF] = {
     "ignore",     /*  0 */
     "ok",         /* -1 */
@@ -28,6 +31,9 @@ const char * const _pam_token_actions[-_PAM_ACTION_UNDEF] = {
 
 /* an array of possible return values */
 
+#ifndef LIBPAM_COMPILE
+static
+#endif
 const char * const _pam_token_returns[_PAM_RETURN_VALUES+1] = {
     "success",           /* 0 */
     "open_err",          /* 1 */
@@ -41,7 +47,7 @@ const char * const _pam_token_returns[_PAM_RETURN_VALUES+1] = {
     "authinfo_unavail",  /* 9 */
     "user_unknown",      /* 10 */
     "maxtries",          /* 11 */
-    "new_authtok_reqd",		/* 12 */
+    "new_authtok_reqd",  /* 12 */
     "acct_expired",      /* 13 */
     "session_err",       /* 14 */
     "cred_unavail",      /* 15 */

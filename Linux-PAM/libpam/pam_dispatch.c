@@ -1,9 +1,8 @@
 /* pam_dispatch.c - handles module function dispatch */
 
 /*
- * Copyright (c) 1998 Andrew G. Morgan <morgan@kernel.org>
+ * Copyright (c) 1998, 2005 Andrew G. Morgan <morgan@kernel.org>
  *
- * $Id: pam_dispatch.c,v 1.7 2005/01/07 15:31:26 t8m Exp $
  */
 
 #include "pam_private.h"
@@ -40,11 +39,11 @@ static int _pam_dispatch_aux(pam_handle_t *pamh, int flags, struct handler *h,
     IF_NO_PAMH("_pam_dispatch_aux", pamh, PAM_SYSTEM_ERR);
 
     if (h == NULL) {
-	const char *service=NULL;
+        const void *service=NULL;
 
-	(void) pam_get_item(pamh, PAM_SERVICE, (const void **)&service);
-	_pam_system_log(LOG_ERR, "no modules loaded for `%s' service",
-			service ? service:"<unknown>" );
+	(void) pam_get_item(pamh, PAM_SERVICE, &service);
+	pam_syslog(pamh, LOG_ERR, "no modules loaded for `%s' service",
+		   service ? (const char *)service:"<unknown>" );
 	service = NULL;
 	return PAM_MUST_FAIL_CODE;
     }
@@ -80,7 +79,9 @@ static int _pam_dispatch_aux(pam_handle_t *pamh, int flags, struct handler *h,
 	    retval = PAM_MODULE_UNKNOWN;
 	} else {
 	    D(("passing control to module..."));
+	    pamh->mod_name=h->mod_name;
 	    retval = h->func(pamh, flags, h->argc, h->argv);
+	    pamh->mod_name=NULL;
 	    D(("module returned: %s", pam_strerror(pamh, retval)));
 	    if (h->must_fail) {
 		D(("module poorly listed in PAM config; forcing failure"));
@@ -207,7 +208,11 @@ static int _pam_dispatch_aux(pam_handle_t *pamh, int flags, struct handler *h,
 #endif /* PAM_FAIL_NOW_ON */
 	    if ( impression != _PAM_NEGATIVE ) {
 		impression = _PAM_NEGATIVE;
-		status = retval;
+	        /* Don't return with PAM_IGNORE as status */
+	        if ( retval == PAM_IGNORE )
+		    status = PAM_MUST_FAIL_CODE;
+		else
+		    status = retval;
 	    }
 	    if ( action == _PAM_ACTION_DIE ) {
 		goto decision_made;
@@ -237,7 +242,7 @@ static int _pam_dispatch_aux(pam_handle_t *pamh, int flags, struct handler *h,
                 	}
 		    }
 		}
-		
+
 		/* this means that we need to skip #action stacked modules */
 		do {
  		    h = h->next;
@@ -291,7 +296,7 @@ int _pam_dispatch(pam_handle_t *pamh, int flags, int choice)
     /* Load all modules, resolve all symbols */
 
     if ((retval = _pam_init_handlers(pamh)) != PAM_SUCCESS) {
-	_pam_system_log(LOG_ERR, "unable to dispatch function");
+	pam_syslog(pamh, LOG_ERR, "unable to dispatch function");
 	return retval;
     }
 
@@ -322,7 +327,7 @@ int _pam_dispatch(pam_handle_t *pamh, int flags, int choice)
 	}
 	break;
     default:
-	_pam_system_log(LOG_ERR, "undefined fn choice; %d", choice);
+	pam_syslog(pamh, LOG_ERR, "undefined fn choice; %d", choice);
 	return PAM_ABORT;
     }
 
@@ -353,7 +358,7 @@ int _pam_dispatch(pam_handle_t *pamh, int flags, int choice)
     /* Did a module return an "incomplete state" last time? */
     if (pamh->former.choice != PAM_NOT_STACKED) {
 	if (pamh->former.choice != choice) {
-	    _pam_system_log(LOG_ERR,
+	    pam_syslog(pamh, LOG_ERR,
 			    "application failed to re-exec stack [%d:%d]",
 			    pamh->former.choice, choice);
 	    return PAM_ABORT;
@@ -366,6 +371,7 @@ int _pam_dispatch(pam_handle_t *pamh, int flags, int choice)
     __PAM_TO_MODULE(pamh);
 
     /* call the list of module functions */
+    pamh->choice = choice;
     retval = _pam_dispatch_aux(pamh, flags, h, resumed, use_cached_chain);
     resumed = PAM_FALSE;
 
@@ -381,4 +387,3 @@ int _pam_dispatch(pam_handle_t *pamh, int flags, int choice)
 
     return retval;
 }
-

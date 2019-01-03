@@ -1,12 +1,10 @@
 /*
- * $Id: misc_conv.c,v 1.6 2004/09/22 12:51:20 kukuk Exp $
- *
  * A generic conversation function for text based applications
  *
  * Written by Andrew Morgan <morgan@linux.kernel.org>
  */
 
-#include <security/_pam_aconf.h>
+#include "config.h"
 
 #include <signal.h>
 #include <stdio.h>
@@ -32,8 +30,8 @@
 time_t pam_misc_conv_warn_time = 0;                  /* time when we warn */
 time_t pam_misc_conv_die_time  = 0;               /* time when we timeout */
 
-const char *pam_misc_conv_warn_line = "..\a.Time is running out...\n";
-const char *pam_misc_conv_die_line  = "..\a.Sorry, your time is up!\n";
+const char *pam_misc_conv_warn_line = N_("...Time is running out...\n");
+const char *pam_misc_conv_die_line  = N_("...Sorry, your time is up!\n");
 
 int pam_misc_conv_died=0;       /* application can probe this for timeout */
 
@@ -45,7 +43,7 @@ int pam_misc_conv_died=0;       /* application can probe this for timeout */
  * being used.
  */
 
-static void pam_misc_conv_delete_binary(void *appdata,
+static void pam_misc_conv_delete_binary(void *appdata UNUSED,
 					pamc_bp_t *delete_me)
 {
     PAM_BP_RENEW(delete_me, 0, 0);
@@ -67,7 +65,7 @@ static void reset_alarm(struct sigaction *o_ptr)
 }
 
 /* this is where we intercept the alarm signal */
-static void time_is_up(int ignore)
+static void time_is_up(int ignore UNUSED)
 {
     expired = 1;
 }
@@ -156,9 +154,9 @@ static int read_string(int echo, const char *prompt, char **retstr)
 	 * the conversation without giving PAM a chance to clean up.
 	 */
 
-	sigemptyset(&nset); 
-	sigaddset(&nset, SIGINT); 
-	sigaddset(&nset, SIGTSTP); 
+	sigemptyset(&nset);
+	sigaddset(&nset, SIGINT);
+	sigaddset(&nset, SIGTSTP);
 	(void) sigprocmask(SIG_BLOCK, &nset, &oset);
 
     } else if (!echo) {
@@ -170,17 +168,28 @@ static int read_string(int echo, const char *prompt, char **retstr)
 
     /* reading the line */
     while (delay >= 0) {
-
-	fprintf(stderr, "%s", prompt);
 	/* this may, or may not set echo off -- drop pending input */
 	if (have_term)
 	    (void) tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_tmp);
+
+	fprintf(stderr, "%s", prompt);
 
 	if ( delay > 0 && set_alarm(delay, &old_sig) ) {
 	    D(("<failed to set alarm>"));
 	    break;
 	} else {
-	    nc = read(STDIN_FILENO, line, INPUTSIZE-1);
+	    if (have_term)
+		nc = read(STDIN_FILENO, line, INPUTSIZE-1);
+	    else                             /* we must read one line only */
+    		for (nc = 0; nc < INPUTSIZE-1 && (nc?line[nc-1]:0) != '\n';
+		     nc++) {
+		    int rv;
+		    if ((rv=read(STDIN_FILENO, line+nc, 1)) != 1) {
+			if (rv < 0)
+			    nc = rv;
+			break;
+		    }
+		}
 	    if (have_term) {
 		(void) tcsetattr(STDIN_FILENO, TCSADRAIN, &term_before);
 		if (!echo || expired)             /* do we need a newline? */
@@ -217,7 +226,7 @@ static int read_string(int echo, const char *prompt, char **retstr)
 		goto cleanexit;                /* return malloc()ed "" */
 	    } else if (nc == -1) {
 		/* Don't loop forever if read() returns -1. */
-		D(("error reading input from the user: %s", strerror(errno)));
+		D(("error reading input from the user: %m"));
 		if (echo) {
 		    fprintf(stderr, "\n");
 		}
@@ -331,8 +340,8 @@ int misc_conv(int num_msg, const struct pam_message **msgm,
 	    break;
 	}
 	default:
-	    fprintf(stderr, "erroneous conversation (%d)\n"
-		    ,msgm[count]->msg_style);
+	    fprintf(stderr, _("erroneous conversation (%d)\n"),
+		   msgm[count]->msg_style);
 	    goto failed_conversation;
 	}
 
@@ -366,14 +375,16 @@ failed_conversation:
 		free(reply[count].resp);
 		break;
 	    case PAM_BINARY_PROMPT:
-		pam_binary_handler_free(appdata_ptr,
-					(pamc_bp_t *) &reply[count].resp);
+	      {
+		void *bt_ptr = reply[count].resp;
+		pam_binary_handler_free(appdata_ptr, bt_ptr);
 		break;
+	      }
 	    case PAM_ERROR_MSG:
 	    case PAM_TEXT_INFO:
 		/* should not actually be able to get here... */
 		free(reply[count].resp);
-	    }                                            
+	    }
 	    reply[count].resp = NULL;
 	}
 	/* forget reply too */
@@ -383,4 +394,3 @@ failed_conversation:
 
     return PAM_CONV_ERR;
 }
-
