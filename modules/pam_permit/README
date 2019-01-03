@@ -1,4 +1,0 @@
-# $Id$
-#
-
-this module always returns PAM_SUCCESS, it ignores all options.
