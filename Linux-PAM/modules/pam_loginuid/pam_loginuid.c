@@ -56,12 +56,11 @@ static int set_loginuid(pam_handle_t *pamh, uid_t uid)
 	count = snprintf(loginuid, sizeof(loginuid), "%d", uid);
 	fd = open("/proc/self/loginuid", O_NOFOLLOW|O_WRONLY|O_TRUNC);
 	if (fd < 0) {
-		int loglevel = LOG_DEBUG;
 		if (errno != ENOENT) {
 			rc = 1;
-			loglevel = LOG_ERR;
+			pam_syslog(pamh, LOG_ERR,
+				   "Cannot open /proc/self/loginuid: %m");
 		}
-		pam_syslog(pamh, loglevel, "set_loginuid failed opening loginuid");
 		return rc;
 	}
 	if (pam_modutil_write(fd, loginuid, count) != count)

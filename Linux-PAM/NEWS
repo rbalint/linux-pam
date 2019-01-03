@@ -1,6 +1,23 @@
 Linux-PAM NEWS -- history of user-visible changes.
 
 
+Release 0.99.8.1
+* Fix a regression in audit code introduced with last release
+* Fix compiling with --disable-nls
+
+Release 0.99.8.0
+
+* Add translations for ar, ca, da, ru, sv and zu.
+* Update hungarian translation.
+* Add support for limits.d directory to pam_limits.
+* Improve pam_namespace module tobe more useful
+  for MLS, fixed crash with bad config files.
+* Improve pam_selinux module to be more useful
+  for MLS.
+* Add minclass option to pam_cracklib
+* Add new group syntax to pam_access
+
+
 Release 0.99.7.1
 
 * Security fix for pam_unix.so (CVE-2007-0003).

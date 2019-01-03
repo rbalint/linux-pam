@@ -83,8 +83,7 @@ static struct pam_conv conv = {
 };
 
 
-/* Check that errors of optional modules are ignored and that
-   required modules after a sufficient one are not executed.  */
+/* Check that pam_cracklib does not seg.fault on empty passwords. */
 
 int
 main(int argc, char *argv[])
@@ -114,7 +113,7 @@ main(int argc, char *argv[])
       return 1;
     }
 
-  /* Try two, first input is NULL */
+  /* Try two, second input is NULL */
   retval = pam_chauthtok (pamh, 0);
   if (retval != PAM_AUTHTOK_RECOVERY_ERR)
     {
