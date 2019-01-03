@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.1.1 2002/09/15 20:09:04 hartmans Exp $
+# $Id: Makefile,v 1.4 2004/09/24 13:13:22 kukuk Exp $
 #
 #
 
@@ -18,7 +18,9 @@ CFLAGS += $(PIC) $(STATIC) $(MOREFLAGS) \
   -DLIBPAM_VERSION_MINOR=$(MINOR_REL)
 
 # all the object files we care about
-LIBOBJECTS = modutil_cleanup.o modutil_getpwnam.o modutil_getpwuid.o
+LIBOBJECTS = modutil_cleanup.o modutil_getpwnam.o modutil_getpwuid.o \
+	modutil_getspnam.o modutil_getgrnam.o modutil_getgrgid.o \
+	modutil_ingroup.o modutil_getlogin.o modutil_ioloop.o
 
 # static library name
 LIBSTATIC = $(LIBNAME).a

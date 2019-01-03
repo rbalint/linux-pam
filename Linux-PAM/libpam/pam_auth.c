@@ -1,14 +1,15 @@
 /*
  * pam_auth.c -- PAM authentication
  *
- * $Id: pam_auth.c,v 1.1.1.1 2001/04/29 04:17:04 hartmans Exp $
+ * $Id: pam_auth.c,v 1.5 2005/03/29 20:41:20 toady Exp $
  *
  */
 
+#include "pam_private.h"
+#include "pam_prelude.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "pam_private.h"
 
 int pam_authenticate(pam_handle_t *pamh, int flags)
 {
@@ -39,6 +40,10 @@ int pam_authenticate(pam_handle_t *pamh, int flags)
     } else {
 	D(("will resume when ready"));
     }
+
+#ifdef PRELUDE
+    prelude_send_alert(pamh, retval);
+#endif
 
     return retval;
 }

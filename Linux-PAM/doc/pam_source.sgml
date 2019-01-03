@@ -2,7 +2,7 @@
 
 <!--
 
- $Id: pam_source.sgml,v 1.1.1.2 2002/09/15 20:08:25 hartmans Exp $
+ $Id: pam_source.sgml,v 1.13 2004/09/28 13:48:46 kukuk Exp $
 
     Copyright (c) Andrew G. Morgan 1996-2002.  All rights reserved.
 
@@ -46,7 +46,7 @@ DAMAGE.
 
 <title>The Linux-PAM System Administrators' Guide
 <author>Andrew G. Morgan, <tt>morgan@kernel.org</tt>
-<date>DRAFT v0.76 2002/06/26
+<date>DRAFT v0.77 2002/07/10
 <abstract>
 This manual documents what a system-administrator needs to know about
 the <bf>Linux-PAM</bf> library. It covers the correct syntax of the
@@ -268,7 +268,7 @@ that this enables.
       be used, including RADIUS, NIS, NCP (which means that Novell
       password databases can be used).
 
-   o  pppd has a PAMified version (available from RedHat)  Now it is
+   o  pppd has a PAMified version (available from Red Hat)  Now it is
       possible to use a series of databases to authenticate ppp users.
       In addition to the normal Linux-based password databases (such
       as /etc/passwd and /etc/shadow), you can use PAM modules to 
@@ -437,8 +437,8 @@ with one of two syntaxes.
 The simpler (and historical) syntax for the control-flag is a single
 keyword defined to indicate the severity of concern associated with
 the success or failure of a specific module.  There are four such
-keywords: <tt/required/, <tt/requisite/, <tt/sufficient/ and
-<tt/optional/.
+keywords: <tt/required/, <tt/requisite/, <tt/sufficient/,
+<tt/optional/ and <tt/include/.
 
 <p>
 The Linux-PAM library interprets these keywords in the following
@@ -480,6 +480,12 @@ failures of previous or subsequent stacked modules this module will
 determine the nature of the response to the application.  One example
 of this latter case, is when the other modules return something like
 <tt/PAM_IGNORE/.
+
+<item> <tt/include/; this tells PAM to include all lines of given type
+from the configuration file specified as an argument to this control.
+The whole idea is to create few "systemwide" pam configs and include
+parts of them in application pam configs.
+
 
 </itemize>
 
@@ -1155,6 +1161,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 
 <p>
-<tt>$Id: pam_source.sgml,v 1.1.1.2 2002/09/15 20:08:25 hartmans Exp $</tt>
+<tt>$Id: pam_source.sgml,v 1.13 2004/09/28 13:48:46 kukuk Exp $</tt>
 
 </article>

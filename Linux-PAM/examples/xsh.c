@@ -1,17 +1,17 @@
 /*
- * $Id: xsh.c,v 1.1.1.2 2002/09/15 20:08:35 hartmans Exp $
+ * $Id: xsh.c,v 1.7 2004/09/24 09:18:21 kukuk Exp $
  */
 
 /* Andrew Morgan (morgan@kernel.org) -- an example application
  * that invokes a shell, based on blank.c */
+
+#include <security/_pam_aconf.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 
 #include <security/pam_appl.h>
 #include <security/pam_misc.h>
-
-#include <security/_pam_aconf.h>
 
 #include <pwd.h>
 #include <sys/types.h>
@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 	       fprintf(stderr,"%s: problem closing a session\n",argv[0]);
 	       break;
 	  }
-	  
+
 	  /* `0' could be as above */
 	  retcode = pam_setcred(pamh, PAM_DELETE_CRED);
 	  bail_out(pamh,0,retcode,"pam_setcred");

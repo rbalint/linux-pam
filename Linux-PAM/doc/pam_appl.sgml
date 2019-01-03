@@ -2,7 +2,7 @@
 
 <!--
 
- $Id: pam_appl.sgml,v 1.1.1.2 2002/09/15 20:08:24 hartmans Exp $
+ $Id: pam_appl.sgml,v 1.10 2004/09/22 09:37:47 kukuk Exp $
 
     Copyright (C) Andrew G. Morgan 1996-2001.  All rights reserved.
 
@@ -442,12 +442,7 @@ However, the application should expect one of the following errors:
 </descrip>
 
 <p>
-Note, in the case of an error, the contents of <tt/item/ is not
-modified - that is, it retains its pre-call value. One should take
-care to initialize this value prior to calling
-<tt/pam_get_item()/. Since, if its value - despite the
-<tt/pam_get_item()/ function failing - is to be used the consequences
-are undefined.
+In the case of an error, the contents of <tt/item/ is set to <tt/NULL/.
 
 <sect2>Understanding errors
 <label id="pam-strerror-section">
@@ -1664,7 +1659,7 @@ This document was written by Andrew G. Morgan
 <!-- insert credits here -->
 <!--
  an sgml list of people to credit for their contributions to Linux-PAM
- $Id: pam_appl.sgml,v 1.1.1.2 2002/09/15 20:08:24 hartmans Exp $
+ $Id: pam_appl.sgml,v 1.10 2004/09/22 09:37:47 kukuk Exp $
   -->
 Chris Adams,
 Peter Allgeyer,
@@ -1777,6 +1772,6 @@ USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGE.
 
 <p>
-<tt>$Id: pam_appl.sgml,v 1.1.1.2 2002/09/15 20:08:24 hartmans Exp $</tt>
+<tt>$Id: pam_appl.sgml,v 1.10 2004/09/22 09:37:47 kukuk Exp $</tt>
 
 </article>

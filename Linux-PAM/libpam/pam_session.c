@@ -1,12 +1,12 @@
 /* pam_session.c - PAM Session Management */
 
 /*
- * $Id: pam_session.c,v 1.1.1.1 2001/04/29 04:17:09 hartmans Exp $
+ * $Id: pam_session.c,v 1.4 2003/07/13 20:01:44 vorlon Exp $
  */
 
-#include <stdio.h>
-
 #include "pam_private.h"
+
+#include <stdio.h>
 
 int pam_open_session(pam_handle_t *pamh, int flags)
 {

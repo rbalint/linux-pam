@@ -1,7 +1,7 @@
 %{
 
 /*
- * $Id: pam_conv.y,v 1.1.1.2 2002/09/15 20:08:22 hartmans Exp $
+ * $Id: pam_conv.y,v 1.2 2002/05/29 06:35:46 agmorgan Exp $
  *
  * Copyright (c) Andrew G. Morgan 1997 <morgan@parc.power.net>
  *
@@ -10,7 +10,7 @@
  */
 
     const static char bisonid[]=
-	"$Id: pam_conv.y,v 1.1.1.2 2002/09/15 20:08:22 hartmans Exp $\n"
+	"$Id: pam_conv.y,v 1.2 2002/05/29 06:35:46 agmorgan Exp $\n"
 	"Copyright (c) Andrew G. Morgan 1997-8 <morgan@linux.kernel.org>\n";
 
 #include <string.h>

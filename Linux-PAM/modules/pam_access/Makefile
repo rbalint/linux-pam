@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1.1.1 2001/04/29 04:17:16 hartmans Exp $
+# $Id: Makefile,v 1.3 2003/07/13 18:41:04 vorlon Exp $
 #
 # This Makefile controls a build process of $(TITLE) module for
 # Linux-PAM. You should not modify this Makefile (unless you know
@@ -10,6 +10,9 @@ include ../../Make.Rules
 TITLE=pam_access
 LOCAL_CONFILE=./access.conf
 INSTALLED_CONFILE=$(SCONFIGD)/access.conf
+ifeq ($(HAVE_LIBNSL),yes)
+MODULE_SIMPLE_EXTRALIBS=-lnsl
+endif
 
 DEFS=-DDEFAULT_CONF_FILE=\"$(INSTALLED_CONFILE)\"
 CFLAGS += $(DEFS)

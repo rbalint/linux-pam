@@ -1,5 +1,5 @@
 ##
-## $Id: Makefile,v 1.1.1.2 2002/09/15 20:08:19 hartmans Exp $
+## $Id: Makefile,v 1.12 2004/10/14 14:47:53 kukuk Exp $
 ##
 
 ## Note, ideally I would prefer it if this top level makefile did
@@ -11,13 +11,15 @@
 
 DISTNAME=Linux-PAM
 
-ifeq ($(shell test \! -f Make.Rules || echo yes),yes)
-    include Make.Rules
-endif
+-include Make.Rules
 
-THINGSTOMAKE = modules libpam libpamc libpam_misc doc examples
+THINGSTOMAKE = libpam libpamc libpam_misc modules doc examples
 
 all: $(THINGSTOMAKE)
+
+ # Let's get a dynamic libpam.so first
+ bootstrap-libpam: _pam_aconf.h prep
+	$(MAKE) -C libpam bootstrap-libpam
 
 prep:
 	rm -f security
@@ -26,21 +28,20 @@ prep:
 clean:
 	if [ ! -f Make.Rules ]; then touch Make.Rules ; fi
 	for i in $(THINGSTOMAKE) ; do $(MAKE) -C $$i clean ; done
-	rm -f security *~ *.orig *.rej Make.Rules #*#
+	rm -f security *~ *.orig *.rej #*#
 
 distclean: clean
 	rm -f Make.Rules _pam_aconf.h
 	rm -f config.status config.cache config.log core
+	rm -rf autom4te.cache/
 
 maintainer-clean: distclean
 	@echo files should be ok for packaging now.
 
 # NB _pam_aconf.h.in changes will remake this too
 Make.Rules: configure Make.Rules.in _pam_aconf.h.in
-	@echo XXX - not sure how to preserve past configure options..
-	@echo XXX - so not attempting to. Feel free to run ./configure
-	@echo XXX - by hand, with the options you want.
-	./configure
+	./config.status --recheck
+	./config.status
 
 _pam_aconf.h: Make.Rules
 
@@ -52,12 +53,10 @@ configure: configure.in
 	@rm -f configure
 	@exit 1
 
-$(THINGSTOMAKE): _pam_aconf.h prep
+$(THINGSTOMAKE): _pam_aconf.h prep bootstrap-libpam
 	$(MAKE) -C $@ all
 
 install: _pam_aconf.h prep
-	$(MKDIR) $(FAKEROOT)$(INCLUDED)
-	$(INSTALL) -m 444 security/_pam_aconf.h $(FAKEROOT)$(INCLUDED)
 	for x in $(THINGSTOMAKE) ; do $(MAKE) -C $$x install ; done
 
 remove:
@@ -75,4 +74,3 @@ release:
 	cd .. ; tar zvfc $(DISTNAME)-$(MAJOR_REL).$(MINOR_REL).tar.gz \
 		--exclude CVS --exclude .cvsignore --exclude '.#*' \
 		$(DISTNAME)-$(MAJOR_REL).$(MINOR_REL)/*
-

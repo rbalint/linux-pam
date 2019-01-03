@@ -2,7 +2,7 @@
  * pam_second.c -- PAM secondary authentication
  * (based on XSSO draft spec of March 1997)
  *
- * $Id: pam_second.c,v 1.1.1.2 2002/09/15 20:08:39 hartmans Exp $
+ * $Id: pam_second.c,v 1.3 2001/09/19 06:18:46 agmorgan Exp $
  *
  */
 

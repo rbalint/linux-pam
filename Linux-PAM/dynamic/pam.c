@@ -1,5 +1,5 @@
 /*
- * $Id: pam.c,v 1.1.1.1 2002/09/15 20:08:35 hartmans Exp $
+ * $Id: pam.c,v 1.1 2001/12/09 22:51:12 agmorgan Exp $
  *
  * If you want to dynamically load libpam using dlopen() or something,
  * then dlopen( ' this shared object ' ); It takes care of exporting

@@ -53,6 +53,7 @@
 #define PAM_SM_ACCOUNT
 
 #include <security/pam_modules.h>
+#include <security/_pam_modutil.h>
 
 #ifndef LINUX_PAM
 #include <security/pam_appl.h>
@@ -89,7 +90,7 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t * pamh, int flags,
 		return PAM_USER_UNKNOWN;
 	}
 
-	pwent = getpwnam(uname);
+	pwent = _pammodutil_getpwnam(pamh, uname);
 	if (!pwent) {
 		_log_err(LOG_ALERT, pamh
 			 ,"could not identify user (from getpwnam(%s))"
@@ -113,7 +114,7 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t * pamh, int flags,
 					return PAM_CRED_INSUFFICIENT;
 			}
 		}
-		spent = getspnam( uname );
+		spent = _pammodutil_getspnam (pamh, uname);
 		if (save_uid == pwent->pw_uid)
 			setreuid( save_uid, save_euid );
 		else {
@@ -122,19 +123,21 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t * pamh, int flags,
 			setreuid( -1, save_euid );
 		}
 
-	} else if (!strcmp( pwent->pw_passwd, "x" )) {
-		spent = getspnam(uname);
-	} else {
+	} else if (_unix_shadowed (pwent))
+		spent = _pammodutil_getspnam (pamh, uname);
+	else
 		return PAM_SUCCESS;
-	}
+
+	if (!spent)
+		if (on(UNIX_BROKEN_SHADOW,ctrl))
+			return PAM_SUCCESS;
 
 	if (!spent)
 		return PAM_AUTHINFO_UNAVAIL;	/* Couldn't get username from shadow */
 
 	curdays = time(NULL) / (60 * 60 * 24);
 	D(("today is %d, last change %d", curdays, spent->sp_lstchg));
-	if ((curdays > spent->sp_expire) && (spent->sp_expire != -1)
-	    && (spent->sp_lstchg != 0)) {
+	if ((curdays > spent->sp_expire) && (spent->sp_expire != -1)) {
 		_log_err(LOG_NOTICE, pamh
 			 ,"account %s has expired (account expired)"
 			 ,uname);
@@ -143,18 +146,6 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t * pamh, int flags,
 		D(("account expired"));
 		return PAM_ACCT_EXPIRED;
 	}
-	if ((curdays > (spent->sp_lstchg + spent->sp_max + spent->sp_inact))
-	    && (spent->sp_max != -1) && (spent->sp_inact != -1)
-	    && (spent->sp_lstchg != 0)) {
-		_log_err(LOG_NOTICE, pamh
-		    ,"account %s has expired (failed to change password)"
-			 ,uname);
-		_make_remark(pamh, ctrl, PAM_ERROR_MSG,
-			    "Your account has expired; please contact your system administrator");
-		D(("account expired 2"));
-		return PAM_ACCT_EXPIRED;
-	}
-	D(("when was the last change"));
 	if (spent->sp_lstchg == 0) {
 		_log_err(LOG_NOTICE, pamh
 			 ,"expired password for user %s (root enforced)"
@@ -164,7 +155,25 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t * pamh, int flags,
 		D(("need a new password"));
 		return PAM_NEW_AUTHTOK_REQD;
 	}
-	if (((spent->sp_lstchg + spent->sp_max) < curdays) && (spent->sp_max != -1)) {
+	if (curdays < spent->sp_lstchg) {
+		_log_err(LOG_DEBUG, pamh
+			 ,"account %s has password changed in future"
+			 ,uname);
+		return PAM_SUCCESS;
+	}
+	if ((curdays - spent->sp_lstchg > spent->sp_max)
+	    && (curdays - spent->sp_lstchg > spent->sp_inact)
+	    && (curdays - spent->sp_lstchg > spent->sp_max + spent->sp_inact)
+	    && (spent->sp_max != -1) && (spent->sp_inact != -1)) {
+		_log_err(LOG_NOTICE, pamh
+		    ,"account %s has expired (failed to change password)"
+			 ,uname);
+		_make_remark(pamh, ctrl, PAM_ERROR_MSG,
+			    "Your account has expired; please contact your system administrator");
+		D(("account expired 2"));
+		return PAM_ACCT_EXPIRED;
+	}
+	if ((curdays - spent->sp_lstchg > spent->sp_max) && (spent->sp_max != -1)) {
 		_log_err(LOG_DEBUG, pamh
 			 ,"expired password for user %s (password aged)"
 			 ,uname);
@@ -173,7 +182,7 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t * pamh, int flags,
 		D(("need a new password 2"));
 		return PAM_NEW_AUTHTOK_REQD;
 	}
-	if ((curdays > (spent->sp_lstchg + spent->sp_max - spent->sp_warn))
+	if ((curdays - spent->sp_lstchg > spent->sp_max - spent->sp_warn)
 	    && (spent->sp_max != -1) && (spent->sp_warn != -1)) {
 		daysleft = (spent->sp_lstchg + spent->sp_max) - curdays;
 		_log_err(LOG_DEBUG, pamh

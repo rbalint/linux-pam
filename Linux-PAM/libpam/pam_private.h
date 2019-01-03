@@ -1,7 +1,7 @@
 /*
  * pam_private.h
  *
- * $Id: pam_private.h,v 1.1.1.2 2002/09/15 20:08:39 hartmans Exp $
+ * $Id: pam_private.h,v 1.6 2004/09/15 12:06:17 kukuk Exp $
  *
  * This is the Linux-PAM Library Private Header. It contains things
  * internal to the Linux-PAM library. Things not needed by either an
@@ -250,7 +250,13 @@ void _pam_set_default_control(int *control_array, int default_action);
 
 void _pam_parse_control(int *control_array, char *tok);
 
-void _pam_system_log(int priority, const char *format,  ... );
+void _pam_system_log(int priority, const char *format,  ... )
+#ifdef __GNUC__
+	__attribute__ ((format (printf, 2, 3)));
+#else
+	;
+#endif
+
 #define _PAM_SYSTEM_LOG_PREFIX "PAM "
 
 /*

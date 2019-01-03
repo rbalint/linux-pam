@@ -1,7 +1,7 @@
 /* pam_lastlog module */
 
 /*
- * $Id: pam_lastlog.c,v 1.1.1.2 2002/09/15 20:08:49 hartmans Exp $
+ * $Id: pam_lastlog.c,v 1.8 2004/09/24 13:13:20 kukuk Exp $
  *
  * Written by Andrew Morgan <morgan@linux.kernel.org> 1996/3/11
  *
@@ -79,6 +79,7 @@ struct lastlog {
 
 #include <security/pam_modules.h>
 #include <security/_pam_macros.h>
+#include <security/_pam_modutil.h>
 
 /* some syslogging */
 
@@ -149,7 +150,7 @@ static int converse(pam_handle_t *pamh, int ctrl, int nargs
     D(("begin to converse"));
 
     retval = pam_get_item( pamh, PAM_CONV, (const void **) &conv ) ; 
-    if ( retval == PAM_SUCCESS ) {
+    if ( retval == PAM_SUCCESS && conv) {
 
 	retval = conv->conv(nargs, ( const struct pam_message ** ) message
 			    , response, conv->appdata_ptr);
@@ -164,6 +165,8 @@ static int converse(pam_handle_t *pamh, int ctrl, int nargs
     } else {
 	_log_err(LOG_ERR, "couldn't obtain coversation function [%s]"
 		 , pam_strerror(pamh, retval));
+	if (retval == PAM_SUCCESS)
+		retval = PAM_BAD_ITEM; /* conv was NULL */
     }
 
     D(("ready to return from module conversation"));
@@ -235,8 +238,8 @@ static int last_login_date(pam_handle_t *pamh, int announce, uid_t uid)
 	    sleep(LASTLOG_IGNORE_LOCK_TIME);
 	}
 
-	win = ( read(last_fd, &last_login, sizeof(last_login))
-		== sizeof(last_login) );
+	win = (_pammodutil_read (last_fd, (char *) &last_login,
+				 sizeof(last_login)) == sizeof(last_login));
 
 	last_lock.l_type = F_UNLCK;
 	(void) fcntl(last_fd, F_SETLK, &last_lock);        /* unlock */
@@ -254,10 +257,12 @@ static int last_login_date(pam_handle_t *pamh, int announce, uid_t uid)
 
 	if (!(announce & LASTLOG_QUIET)) {
 	    if (last_login.ll_time) {
+		time_t ll_time;
 		char *the_time;
 		char *remark;
 
-		the_time = ctime(&last_login.ll_time);
+		ll_time = last_login.ll_time;
+		the_time = ctime(&ll_time);
 		the_time[-1+strlen(the_time)] = '\0';    /* delete '\n' */
 
 		remark = malloc(LASTLOG_MAXSIZE);
@@ -319,13 +324,15 @@ static int last_login_date(pam_handle_t *pamh, int announce, uid_t uid)
 
 	/* write latest value */
 	{
+	    time_t ll_time;
 	    const char *remote_host=NULL
 		, *terminal_line=DEFAULT_TERM;
 
 	    /* set this login date */
 	    D(("set the most recent login time"));
 
-	    (void) time(&last_login.ll_time);    /* set the time */
+	    (void) time(&ll_time);    /* set the time */
+            last_login.ll_time = ll_time;
 
 	    /* set the remote host */
 	    (void) pam_get_item(pamh, PAM_RHOST, (const void **)&remote_host);
@@ -372,7 +379,8 @@ static int last_login_date(pam_handle_t *pamh, int announce, uid_t uid)
 	    }
 
 	    D(("writing to the last_log file"));
-	    (void) write(last_fd, &last_login, sizeof(last_login));
+	    _pammodutil_write (last_fd, (char *) &last_login,
+			        sizeof (last_login));
 
 	    last_lock.l_type = F_UNLCK;
 	    (void) fcntl(last_fd, F_SETLK, &last_lock);        /* unlock */
@@ -417,7 +425,7 @@ int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc
 
     /* what uid? */
 
-    pwd = getpwnam(user);
+    pwd = _pammodutil_getpwnam (pamh, user);
     if (pwd == NULL) {
 	D(("couldn't identify user %s", user));
 	return PAM_CRED_INSUFFICIENT;

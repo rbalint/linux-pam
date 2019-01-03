@@ -1,5 +1,5 @@
 /*
- * $Id: pam_secret.c,v 1.1.1.1 2001/04/29 04:17:14 hartmans Exp $
+ * $Id: pam_secret.c,v 1.3 2004/09/14 14:22:39 kukuk Exp $
  *
  * Copyright (c) 1999 Andrew G. Morgan <morgan@linux.kernel.org>
  */
@@ -206,6 +206,7 @@ char *identify_secret(char *identity, const char *user)
     pwd = getpwnam(user);
     if ((pwd == NULL) || (pwd->pw_dir == NULL)) {
 	D(("user [%s] is not known", user));
+	return NULL;
     }
 
     length_id = strlen(pwd->pw_dir) + sizeof(SECRET_FILE_FORMAT);

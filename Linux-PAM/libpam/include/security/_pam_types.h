@@ -1,7 +1,7 @@
 /*
  * <security/_pam_types.h>
  *
- * $Id: _pam_types.h,v 1.1.1.1 2001/04/29 04:17:10 hartmans Exp $
+ * $Id: _pam_types.h,v 1.6 2005/03/16 00:06:01 toady Exp $
  *
  * This file defines all of the types common to the Linux-PAM library
  * applications and modules.
@@ -46,7 +46,7 @@ typedef struct pam_handle pam_handle_t;
 #define PAM_CRED_INSUFFICIENT 8	/* Can not access authentication data */
 				/* due to insufficient credentials */
 #define PAM_AUTHINFO_UNAVAIL 9	/* Underlying authentication service */
-				/* can not retrieve authenticaiton */
+				/* can not retrieve authentication */
 				/* information  */
 #define PAM_USER_UNKNOWN 10	/* User not known to the underlying */
 				/* authenticaiton module */
@@ -76,7 +76,7 @@ typedef struct pam_handle pam_handle_t;
 #define PAM_AUTHTOK_LOCK_BUSY 22   /* Authentication token lock busy */
 #define PAM_AUTHTOK_DISABLE_AGING 23 /* Authentication token aging disabled */
 #define PAM_TRY_AGAIN 24	/* Preliminary check by password service */
-#define PAM_IGNORE 25		/* Ingore underlying account module */
+#define PAM_IGNORE 25		/* Ignore underlying account module */
 				/* regardless of whether the control */
 				/* flag is required, optional, or sufficient */
 #define PAM_ABORT 26            /* Critical error (?module fail now request) */

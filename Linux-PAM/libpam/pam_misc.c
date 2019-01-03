@@ -1,8 +1,10 @@
 /* pam_misc.c -- This is random stuff */
 
 /*
- * $Id: pam_misc.c,v 1.1.1.2 2002/09/15 20:08:38 hartmans Exp $
+ * $Id: pam_misc.c,v 1.4 2003/07/13 20:01:44 vorlon Exp $
  */
+
+#include "pam_private.h"
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -10,8 +12,6 @@
 #include <string.h>
 #include <syslog.h>
 #include <ctype.h>
-
-#include "pam_private.h"
 
 /* caseless string comparison: POSIX does not define this.. */
 int _pam_strCMP(const char *s, const char *t)

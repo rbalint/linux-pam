@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: download-all,v 1.1.1.1 2001/04/29 04:17:16 hartmans Exp $
+# $Id: download-all,v 1.1.1.1 2000/06/20 22:11:29 agmorgan Exp $
 #
 cat <<EOT
 For a number of reasons it is not practical for Linux-PAM to be

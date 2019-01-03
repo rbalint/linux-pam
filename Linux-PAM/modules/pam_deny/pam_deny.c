@@ -1,7 +1,7 @@
 /* pam_permit module */
 
 /*
- * $Id: pam_deny.c,v 1.1.1.1 2001/04/29 04:17:18 hartmans Exp $
+ * $Id: pam_deny.c,v 1.2 2000/12/04 19:02:34 baggins Exp $
  *
  * Written by Andrew Morgan <morgan@parc.power.net> 1996/3/11
  *

@@ -3,17 +3,17 @@
 /* Creator Marc Ewing
  * Maintained by AGM
  *
- * $Id: pam_start.c,v 1.1.1.1 2001/04/29 04:17:09 hartmans Exp $
+ * $Id: pam_start.c,v 1.5 2004/09/14 13:48:41 kukuk Exp $
  *
  */
+
+#include "pam_private.h"
 
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <syslog.h>
-
-#include "pam_private.h"
 
 int pam_start (
     const char *service_name,
@@ -24,11 +24,21 @@ int pam_start (
     D(("called pam_start: [%s] [%s] [%p] [%p]"
        ,service_name, user, pam_conversation, pamh));
 
+    if (pamh == NULL) {
+	_pam_system_log(LOG_CRIT, "pam_start: invalid argument: pamh == NULL");
+	return (PAM_BUF_ERR);
+    }
+
     if ((*pamh = calloc(1, sizeof(**pamh))) == NULL) {
 	_pam_system_log(LOG_CRIT, "pam_start: calloc failed for *pamh");
 	return (PAM_BUF_ERR);
     }
 
+    /* All service names should be files below /etc/pam.d and nothing
+       else. Forbid paths. */
+    if (strrchr(service_name, '/') != NULL)
+	service_name = strrchr(service_name, '/') + 1;
+    
     /* Mark the caller as the application - permission to do certain
        things is limited to a module or an application */
 

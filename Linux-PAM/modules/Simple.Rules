@@ -1,4 +1,4 @@
-# $Id: Simple.Rules,v 1.1.1.2 2002/09/15 20:08:43 hartmans Exp $
+# $Id: Simple.Rules,v 1.7 2004/09/28 13:48:47 kukuk Exp $
 #
 # For simple modules with no significant dependencies, set $(TITLE)
 # and include this file.
@@ -13,13 +13,15 @@
 #   $(MODULE_SIMPLE_EXTRAFILES) - other files to build (no .c suffix)
 #
 
+-include ../Make.Rules
+
 LIBFILES = $(TITLE) $(MODULE_SIMPLE_EXTRAFILES)
 LIBSRC = $(addsuffix .c,$(LIBFILES))
 LIBOBJ = $(addsuffix .o,$(LIBFILES))
 LIBOBJD = $(addprefix dynamic/,$(LIBOBJ))
 LIBOBJS = $(addprefix static/,$(LIBOBJ))
 
-LINK_PAMMODUTILS = -L../pammodutil -lpammodutil
+LINK_PAMMODUTILS = -L../pammodutil -lpammodutil -L../../libpam -lpam
 INCLUDE_PAMMODUTILS = -I../pammodutil/include
 
 ifdef DYNAMIC
@@ -76,6 +78,18 @@ install: all
 	$(MKDIR) $(FAKEROOT)$(SECUREDIR)
 ifdef DYNAMIC
 	$(INSTALL) -m $(SHLIBMODE) $(LIBSHARED) $(FAKEROOT)$(SECUREDIR)
+endif
+ifdef MAN3
+	test -d $(FAKEROOT)$(mandir)/man3 || $(MKDIR) $(FAKEROOT)$(mandir)/man3
+	$(INSTALL) -m $(MANMODE) $(MAN3) $(FAKEROOT)$(mandir)/man3/
+endif
+ifdef MAN5
+	test -d $(FAKEROOT)$(mandir)/man5 || $(MKDIR) $(FAKEROOT)$(mandir)/man5
+	$(INSTALL) -m $(MANMODE) $(MAN5) $(FAKEROOT)$(mandir)/man5/
+endif
+ifdef MAN8
+	test -d $(FAKEROOT)$(mandir)/man8 || $(MKDIR) $(FAKEROOT)$(mandir)/man8
+	$(INSTALL) -m $(MANMODE) $(MAN8) $(FAKEROOT)$(mandir)/man8/
 endif
 	$(MODULE_SIMPLE_INSTALL)
 

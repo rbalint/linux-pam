@@ -1,5 +1,5 @@
 /*
- * $Id: pam_client.h,v 1.1.1.2 2002/09/15 20:08:42 hartmans Exp $
+ * $Id: pam_client.h,v 1.6 2001/09/19 06:18:46 agmorgan Exp $
  *
  * Copyright (c) 1999 Andrew G. Morgan <morgan@linux.kernel.org>
  *

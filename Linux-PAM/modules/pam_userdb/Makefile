@@ -3,7 +3,7 @@
 # Linux-PAM. You should not modify this Makefile (unless you know
 # what you are doing!).
 
-# $Id: Makefile,v 1.1.1.2 2002/09/15 20:09:02 hartmans Exp $
+# $Id: Makefile,v 1.6 2004/09/14 14:22:40 kukuk Exp $
 # Created by Cristian Gafton <gafton@redhat.com>
 
 include ../../Make.Rules
@@ -22,6 +22,10 @@ ifeq ($(HAVE_LIBDB),yes)
 else
  WHICH_DB=none
 endif
+endif
+
+ifeq ($(HAVE_LIBCRYPT),yes)
+  MODULE_SIMPLE_EXTRALIBS += -lcrypt
 endif
 
 ifeq ($(WHICH_DB),none)

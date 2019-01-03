@@ -1,6 +1,6 @@
-# $Date: 2001/04/29 04:17:19 $
-# $Author: hartmans $
-# $Id: pam_env.conf-example,v 1.1.1.1 2001/04/29 04:17:19 hartmans Exp $
+# $Date: 2004/11/16 14:27:41 $
+# $Author: toady $
+# $Id: pam_env.conf-example,v 1.2 2004/11/16 14:27:41 toady Exp $
 #
 # This is the configuration file for pam_env, a PAM module to load in 
 # a configurable list of environment variables for a 
@@ -43,6 +43,10 @@
 # be used in values using the @{string} syntax. Both the $ and @
 # characters can be backslash escaped to be used as literal values
 # values can be delimited with "", escaped " not supported.
+# Note that many environment variables that you would like to use
+# may not be set by the time the module is called.
+# For example, HOME is used below several times, but 
+# many PAM applications don't make it available by the time you need it.
 #
 #
 # First, some special variables

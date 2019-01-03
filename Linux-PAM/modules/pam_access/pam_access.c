@@ -5,23 +5,23 @@
  * (I took login_access from logdaemon-5.6 and converted it to PAM
  * using parts of pam_time code.)
  *
- ************************************************************************ 
+ ************************************************************************
  * Copyright message from logdaemon-5.6 (original file name DISCLAIMER)
- ************************************************************************ 
- * Copyright 1995 by Wietse Venema. All rights reserved. Individual files 
- * may be covered by other copyrights (as noted in the file itself.) 
- * 
- * This material was originally written and compiled by Wietse Venema at 
- * Eindhoven University of Technology, The Netherlands, in 1990, 1991, 
- * 1992, 1993, 1994 and 1995. 
- * 
- * Redistribution and use in source and binary forms are permitted 
- * provided that this entire copyright notice is duplicated in all such 
- * copies. 
- * 
- * This software is provided "as is" and without any expressed or implied 
- * warranties, including, without limitation, the implied warranties of 
- * merchantibility and fitness for any particular purpose. 
+ ************************************************************************
+ * Copyright 1995 by Wietse Venema. All rights reserved. Individual files
+ * may be covered by other copyrights (as noted in the file itself.)
+ *
+ * This material was originally written and compiled by Wietse Venema at
+ * Eindhoven University of Technology, The Netherlands, in 1990, 1991,
+ * 1992, 1993, 1994 and 1995.
+ *
+ * Redistribution and use in source and binary forms are permitted
+ * provided that this entire copyright notice is duplicated in all such
+ * copies.
+ *
+ * This software is provided "as is" and without any expressed or implied
+ * warranties, including, without limitation, the implied warranties of
+ * merchantibility and fitness for any particular purpose.
  *************************************************************************
  */
 
@@ -41,6 +41,7 @@
 #include <errno.h>
 #include <ctype.h>
 #include <sys/utsname.h>
+#include <rpcsvc/ypclnt.h>
 
 #ifndef BROKEN_NETWORK_MATCH
 # include <netdb.h>
@@ -58,8 +59,7 @@
 
 #include <security/_pam_macros.h>
 #include <security/pam_modules.h>
-
-int strcasecmp(const char *s1, const char *s2);
+#include <security/_pam_modutil.h>
 
 /* login_access.c from logdaemon-5.6 with several changes by A.Nogin: */
 
@@ -68,7 +68,7 @@ int strcasecmp(const char *s1, const char *s2);
   * control based on login names and on host (or domain) names, internet
   * addresses (or network numbers), or on terminal line names in case of
   * non-networked logins. Diagnostics are reported through syslog(3).
-  * 
+  *
   * Author: Wietse Venema, Eindhoven University of Technology, The Netherlands.
   */
 
@@ -140,26 +140,27 @@ static int parse_args(struct login_info *loginfo, int argc, const char **argv)
 			 , loginfo->service, 11 + argv[i]);
 		return 0;
 	    }
-	    
+
 	} else {
 	    _log_err("unrecognized option [%s]", argv[i]);
 	}
     }
-    
+
     return 1;  /* OK */
 }
 
-typedef int match_func (char *, struct login_info *); 
+typedef int match_func (pam_handle_t *, char *, struct login_info *);
 
-static int list_match (char *, struct login_info *,
-		             match_func *);
-static int user_match (char *, struct login_info *);
-static int from_match (char *, struct login_info *);
-static int string_match (char *, char *);
+static int list_match (pam_handle_t *, char *, struct login_info *,
+		       match_func *);
+static int user_match (pam_handle_t *, char *, struct login_info *);
+static int from_match (pam_handle_t *, char *, struct login_info *);
+static int string_match (pam_handle_t *, char *, char *);
 
 /* login_access - match username/group and host/tty with access control file */
 
-static int login_access(struct login_info *item)
+static int
+login_access (pam_handle_t *pamh, struct login_info *item)
 {
     FILE   *fp;
     char    line[BUFSIZ];
@@ -193,10 +194,11 @@ static int login_access(struct login_info *item)
 	    line[end] = 0;			/* strip trailing whitespace */
 	    if (line[0] == 0)			/* skip blank lines */
 		continue;
+
+	    /* Allow trailing: in last field fo froms */
 	    if (!(perm = strtok(line, fs))
 		|| !(users = strtok((char *) 0, fs))
-		|| !(froms = strtok((char *) 0, fs))
-		|| strtok((char *) 0, fs)) {
+  	        || !(froms = strtok((char *) 0, fs))) {
 		_log_err("%s: line %d: bad field count",
 			 item->config_file, lineno);
 		continue;
@@ -206,19 +208,21 @@ static int login_access(struct login_info *item)
 			 item->config_file, lineno);
 		continue;
 	    }
-	    match = (list_match(froms, item, from_match)
-		     && list_match(users, item, user_match));
+	    match = (list_match(pamh, froms, item, from_match)
+		     && list_match(pamh, users, item, user_match));
 	}
 	(void) fclose(fp);
     } else if (errno != ENOENT) {
 	_log_err("cannot open %s: %m", item->config_file);
+	return NO;
     }
     return (match == 0 || (line[0] == '+'));
 }
 
 /* list_match - match an item against a list of tokens with exceptions */
 
-static int list_match(char *list, struct login_info *item, match_func *match_fn)
+static int list_match(pam_handle_t *pamh,
+		      char *list, struct login_info *item, match_func *match_fn)
 {
     char   *tok;
     int     match = NO;
@@ -233,7 +237,7 @@ static int list_match(char *list, struct login_info *item, match_func *match_fn)
     for (tok = strtok(list, sep); tok != 0; tok = strtok((char *) 0, sep)) {
 	if (strcasecmp(tok, "EXCEPT") == 0)	/* EXCEPT: give up */
 	    break;
-	if ((match = (*match_fn) (tok, item)))	/* YES */
+	if ((match = (*match_fn) (pamh, tok, item)))	/* YES */
 	    break;
     }
     /* Process exceptions to matches. */
@@ -241,7 +245,7 @@ static int list_match(char *list, struct login_info *item, match_func *match_fn)
     if (match != NO) {
 	while ((tok = strtok((char *) 0, sep)) && strcasecmp(tok, "EXCEPT"))
 	     /* VOID */ ;
-	if (tok == 0 || list_match((char *) 0, item, match_fn) == NO)
+	if (tok == 0 || list_match(pamh, (char *) 0, item, match_fn) == NO)
 	    return (match);
     }
     return (NO);
@@ -253,35 +257,30 @@ static char * myhostname(void)
 {
     static char name[MAXHOSTNAMELEN + 1];
 
-    gethostname(name, MAXHOSTNAMELEN);
-    name[MAXHOSTNAMELEN] = 0;
-    return (name);
+    if (gethostname(name, MAXHOSTNAMELEN) == 0) {
+      name[MAXHOSTNAMELEN] = 0;
+      return (name);
+    }
+    return NULL;
 }
 
 /* netgroup_match - match group against machine or user */
 
 static int netgroup_match(char *group, char *machine, char *user)
 {
-#ifdef NIS
-    static char *mydomain = 0;
+    static char *mydomain = NULL;
 
     if (mydomain == 0)
 	yp_get_default_domain(&mydomain);
     return (innetgr(group, machine, user, mydomain));
-#else
-    _log_err("NIS netgroup support not configured");
-    return (NO);
-#endif
 }
 
 /* user_match - match a username against one token */
 
-static int user_match(char *tok, struct login_info *item)
+static int user_match(pam_handle_t *pamh, char *tok, struct login_info *item)
 {
     char   *string = item->user->pw_name;
     struct login_info fake_item;
-    struct group *group;
-    int     i;
     char   *at;
 
     /*
@@ -294,24 +293,24 @@ static int user_match(char *tok, struct login_info *item)
     if ((at = strchr(tok + 1, '@')) != 0) {	/* split user@host pattern */
 	*at = 0;
 	fake_item.from = myhostname();
-	return (user_match(tok, item) && from_match(at + 1, &fake_item));
-    } else if (tok[0] == '@') {			/* netgroup */
+	if (fake_item.from == NULL)
+	  return NO;
+	return (user_match (pamh, tok, item) && from_match (pamh, at + 1, &fake_item));
+    } else if (tok[0] == '@') /* netgroup */
 	return (netgroup_match(tok + 1, (char *) 0, string));
-    } else if (string_match(tok, string)) {	/* ALL or exact match */
-	return (YES);
-    } else if ((group = getgrnam(tok))) {	/* try group membership */
-	if (item->user->pw_gid == group->gr_gid)
-	    return (YES);
-	for (i = 0; group->gr_mem[i]; i++)
-	    if (strcasecmp(string, group->gr_mem[i]) == 0)
-		return (YES);
-    }
-    return (NO);
+    else if (string_match (pamh, tok, string)) /* ALL or exact match */
+	return YES;
+    else if (_pammodutil_user_in_group_nam_nam (pamh, item->user->pw_name, tok))
+      /* try group membership */
+      return YES;
+
+    return NO;
 }
 
 /* from_match - match a host or tty against a list of tokens */
 
-static int from_match(char *tok, struct login_info *item)
+static int
+from_match (pam_handle_t *pamh, char *tok, struct login_info *item)
 {
     char   *string = item->from;
     int     tok_len;
@@ -328,9 +327,9 @@ static int from_match(char *tok, struct login_info *item)
 
     if (tok[0] == '@') {			/* netgroup */
 	return (netgroup_match(tok + 1, string, (char *) 0));
-    } else if (string_match(tok, string)) {	/* ALL or exact match */
-	return (YES);
-    } else if (tok[0] == '.') {			/* domain: match last fields */
+    } else if (string_match (pamh, tok, string)) /* ALL or exact match */
+      return YES;
+    else if (tok[0] == '.') {			/* domain: match last fields */
 	if ((str_len = strlen(string)) > (tok_len = strlen(tok))
 	    && strcasecmp(tok, string + str_len - tok_len) == 0)
 	    return (YES);
@@ -374,7 +373,8 @@ static int from_match(char *tok, struct login_info *item)
 
 /* string_match - match a string against one token */
 
-static int string_match(char *tok, char *string)
+static int
+string_match (pam_handle_t *pamh, char *tok, char *string)
 {
 
     /*
@@ -388,14 +388,6 @@ static int string_match(char *tok, char *string)
 	return (YES);
     }
     return (NO);
-}
-
-/* end of login_access.c */
-
-int strcasecmp(const char *s1, const char *s2) 
-{
-    while ((toupper(*s1)==toupper(*s2)) && (*s1) && (*s2)) {s1++; s2++;}
-    return(toupper(*s1)-toupper(*s2));
 }
 
 /* --- public account management functions --- */
@@ -447,13 +439,15 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh,int flags,int argc
 	        return PAM_ABORT;
 	     }
         }
-        if (strncmp("/dev/",from,5) == 0) {          /* strip leading /dev/ */
-	    from += 5;
-        }
 
+	if (from[0] == '/') { 	/* full path */
+		from++;
+		from = strchr(from, '/');
+		from++;
+        }
     }
 
-    if ((user_pw=getpwnam(user))==NULL) return (PAM_USER_UNKNOWN);
+    if ((user_pw=_pammodutil_getpwnam(pamh, user))==NULL) return (PAM_USER_UNKNOWN);
 
     /*
      * Bundle up the arguments to avoid unnecessary clumsiness later on.
@@ -470,7 +464,7 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh,int flags,int argc
 	return PAM_ABORT;
     }
 
-    if (login_access(&loginfo)) {
+    if (login_access(pamh, &loginfo)) {
 	return (PAM_SUCCESS);
     } else {
 	_log_err("access denied for user `%s' from `%s'",user,from);
@@ -494,4 +488,3 @@ struct pam_module _pam_access_modstruct = {
     NULL
 };
 #endif
-

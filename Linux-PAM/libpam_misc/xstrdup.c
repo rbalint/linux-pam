@@ -1,4 +1,4 @@
-/* $Id: xstrdup.c,v 1.1.1.1 2001/04/29 04:17:12 hartmans Exp $ */
+/* $Id: xstrdup.c,v 1.1.1.1 2000/06/20 22:11:25 agmorgan Exp $ */
 
 #include <malloc.h>
 #include <string.h>

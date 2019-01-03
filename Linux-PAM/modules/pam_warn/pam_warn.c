@@ -1,7 +1,7 @@
 /* pam_warn module */
 
 /*
- * $Id: pam_warn.c,v 1.1.1.2 2002/09/15 20:09:04 hartmans Exp $
+ * $Id: pam_warn.c,v 1.2 2002/05/29 04:44:43 agmorgan Exp $
  *
  * Written by Andrew Morgan <morgan@linux.kernel.org> 1996/3/11
  */

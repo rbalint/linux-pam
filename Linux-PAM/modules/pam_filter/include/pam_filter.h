@@ -1,5 +1,5 @@
 /*
- * $Id: pam_filter.h,v 1.1.1.1 2001/04/29 04:17:20 hartmans Exp $
+ * $Id: pam_filter.h,v 1.1.1.1 2000/06/20 22:11:36 agmorgan Exp $
  *
  * this file is associated with the Linux-PAM filter module.
  * it was written by Andrew G. Morgan <morgan@linux.kernel.org>

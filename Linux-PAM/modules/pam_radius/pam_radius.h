@@ -1,5 +1,5 @@
 /*
- * $Id: pam_radius.h,v 1.1.1.1 2001/04/29 04:17:32 hartmans Exp $
+ * $Id: pam_radius.h,v 1.2 2000/11/19 23:54:05 agmorgan Exp $
  */
 
 #ifndef PAM_RADIUS_H

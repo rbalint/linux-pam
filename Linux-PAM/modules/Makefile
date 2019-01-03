@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1.1.2 2002/09/15 20:08:43 hartmans Exp $
+# $Id: Makefile,v 1.4 2004/09/28 13:48:47 kukuk Exp $
 #
 # Makefile
 #
@@ -8,7 +8,7 @@
 
 include ../Make.Rules
 
-MODDIRS=$(shell /bin/ls -d pam_*)
+MODDIRS=$(shell /bin/ls -d pam_*/Makefile | cut -f1 -d/)
 
 all:	
 	@echo building the static modutil library

@@ -1,13 +1,13 @@
 /* pam_data.c */
 
 /*
- * $Id: pam_data.c,v 1.1.1.1 2001/04/29 04:17:04 hartmans Exp $
+ * $Id: pam_data.c,v 1.3 2003/07/13 20:01:44 vorlon Exp $
  */
+
+#include "pam_private.h"
 
 #include <stdlib.h>
 #include <string.h>
-
-#include "pam_private.h"
 
 static struct pam_data *_pam_locate_data(const pam_handle_t *pamh,
 					 const char *name)

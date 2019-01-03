@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.1.1 2001/04/29 04:17:22 hartmans Exp $
+# $Id: Makefile,v 1.3 2001/02/10 22:33:10 agmorgan Exp $
 #
 # This Makefile controls a build process of $(TITLE) module for
 # Linux-PAM. You should not modify this Makefile (unless you know

@@ -1,5 +1,5 @@
 /*
- * $Id: help_env.c,v 1.1.1.1 2001/04/29 04:17:12 hartmans Exp $
+ * $Id: help_env.c,v 1.2 2000/12/04 19:02:34 baggins Exp $
  *
  * This file was written by Andrew G. Morgan <morgan@parc.power.net>
  *

@@ -1,7 +1,7 @@
 /* pam_strerror.c */
 
 /*
- * $Id: pam_strerror.c,v 1.1.1.2 2002/09/15 20:08:39 hartmans Exp $
+ * $Id: pam_strerror.c,v 1.4 2005/01/07 15:31:26 t8m Exp $
  */
 
 #include "pam_private.h"
@@ -48,7 +48,7 @@ const char *pam_strerror(pam_handle_t *pamh, int errnum)
     case PAM_USER_UNKNOWN:
 	return "User not known to the underlying authentication module";
     case PAM_MAXTRIES:
-	return "Have exhasted maximum number of retries for service.";
+	return "Have exhausted maximum number of retries for service.";
     case PAM_NEW_AUTHTOK_REQD:
 	return "Authentication token is no longer valid; new one required.";
     case PAM_ACCT_EXPIRED:
@@ -78,7 +78,7 @@ const char *pam_strerror(pam_handle_t *pamh, int errnum)
     case PAM_TRY_AGAIN:
 	return "Failed preliminary check by password service";
     case PAM_IGNORE:
-	return "Please ignore underlying account module";
+	return "The return value should be ignored by PAM dispatch";
     case PAM_MODULE_UNKNOWN:
 	return "Module is unknown";
     case PAM_AUTHTOK_EXPIRED:

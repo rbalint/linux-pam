@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1.1.1 2001/04/29 04:17:36 hartmans Exp $
+# $Id: Makefile,v 1.8 2004/11/08 08:58:37 kukuk Exp $
 #
 # This Makefile controls a build process of the pam_unix modules
 # for Linux-PAM. You should not modify this Makefile.
@@ -18,6 +18,19 @@ include ../../Make.Rules
 #USE_CRACKLIB=-D"USE_CRACKLIB"
 #endif
 
+ifeq ($(shell if [ -f /usr/lib/cracklib_dict.hwm ]; then echo yes ; fi),yes)
+ CRACKLIB_DICTPATH=/usr/lib/cracklib_dict
+else
+ CRACKLIB_DICTPATH=/usr/share/dict/cracklib_dict
+endif
+EXTRAS += -DCRACKLIB_DICTS=\"$(CRACKLIB_DICTPATH)\"
+
+ifeq ($(HAVE_LIBCRYPT),yes)
+  EXTRALS += -lcrypt
+endif
+ifeq ($(HAVE_LIBNSL),yes)
+  EXTRALS += -lnsl
+endif
 # do you want to use lckpwdf?
 ifeq ($(WITH_LCKPWDF),yes)
 USE_LCKPWDF=-D"USE_LCKPWDF"
@@ -37,12 +50,19 @@ endif
 
 CHKPWD=unix_chkpwd
 
+BIGCRYPT=bigcrypt
+
 EXTRAS += -DCHKPWD_HELPER=\"$(SUPLEMENTED)/$(CHKPWD)\"
+
+LINK_PAMMODUTILS = -L../pammodutil -lpammodutil
+INCLUDE_PAMMODUTILS = -I../pammodutil/include
 
 ########################################################################
 
-CFLAGS += $(USE_CRACKLIB) $(USE_LCKPWDF) $(NEED_LCKPWDF) $(EXTRAS)
-LDLIBS = $(EXTRALS)
+CFLAGS += $(USE_CRACKLIB) $(USE_LCKPWDF) $(NEED_LCKPWDF) $(EXTRAS) \
+	 $(INCLUDE_PAMMODUTILS)
+
+LDLIBS = $(EXTRALS) $(LINK_PAMMODUTILS)
 
 ifdef USE_CRACKLIB
 CRACKLIB = -lcrack
@@ -69,7 +89,8 @@ endif
 
 ########################### don't edit below #######################
 
-all: dirs info $(PLUS) $(LIBSHARED) $(LIBSTATIC) $(CHKPWD) register
+all: dirs info $(PLUS) $(LIBSHARED) $(LIBSTATIC) $(CHKPWD) $(BIGCRYPT) \
+	register
 
 dynamic/%.o : %.c
 	$(CC) $(CFLAGS) $(DYNAMIC) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
@@ -107,7 +128,7 @@ ifdef DYNAMIC
 $(LIBOBJD): $(LIBSRC)
 
 $(LIBSHARED):	$(LIBOBJD)
-	$(LD_D) -o $@ $(LIBOBJD) $(PLUS) $(CRACKLIB) $(LDLIBS) $(LIBNSL) $(LIBCRYPT)
+	$(LD_D) -o $@ $(LIBOBJD) $(PLUS) $(CRACKLIB) $(LDLIBS) $(LIBNSL) $(LIBCRYPT) $(NEED_LINK_LIB_C) -L../../libpam -lpam
 endif
 
 ifdef STATIC
@@ -120,7 +141,10 @@ endif
 $(CHKPWD): unix_chkpwd.o md5_good.o md5_broken.o \
 		md5_crypt_good.o md5_crypt_broken.o \
 		bigcrypt.o
-	$(CC) -o $(CHKPWD) $^ $(LDLIBS) $(LIBCRYPT)
+	$(CC) $(CFLAGS) -o $(CHKPWD) $^ $(LDLIBS) $(LIBCRYPT)
+
+$(BIGCRYPT): bigcrypt_main.o bigcrypt.o
+	$(CC) -o $(BIGCRYPT) $^ $(LDLIBS) $(LIBCRYPT)
 
 unix_chkpwd.o: unix_chkpwd.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c $< -o $@
@@ -158,7 +182,7 @@ remove:
 	rm -f $(FAKEROOT)$(SUPLEMENTED)/$(CHKPWD)
 
 clean:
-	rm -f $(LIBOBJD) $(LIBOBJS) $(CHKPWD) *.o *.so core
+	rm -f $(LIBOBJD) $(LIBOBJS) $(CHKPWD) $(BIGCRYPT) *.o *.so core
 	rm -f *~ *.a *.out *.bak
 	rm -rf dynamic static
 

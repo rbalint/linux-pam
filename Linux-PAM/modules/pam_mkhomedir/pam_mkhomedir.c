@@ -4,10 +4,10 @@
    when the session begins. This allows users to be present in central
    database (such as nis, kerb or ldap) without using a distributed
    file system or pre-creating a large number of directories.
-   
+
    Here is a sample /etc/pam.d/login file for Debian GNU/Linux
    2.1:
-   
+
    auth       requisite  pam_securetty.so
    auth       sufficient pam_ldap.so
    auth       required   pam_pwdb.so
@@ -19,11 +19,11 @@
    session    required   pam_mkhomedir.so skel=/etc/skel/ umask=0022
    session    required   pam_pwdb.so
    session    optional   pam_lastlog.so
-   password   required   pam_pwdb.so   
-   
+   password   required   pam_pwdb.so
+
    Released under the GNU LGPL version 2 or later
    Originally written by Jason Gunthorpe <jgg@debian.org> Feb 1999
-   Structure taken from pam_lastlogin by Andrew Morgan 
+   Structure taken from pam_lastlogin by Andrew Morgan
      <morgan@parc.power.net> 1996
  */
 
@@ -51,6 +51,8 @@
 
 #include <security/pam_modules.h>
 #include <security/_pam_macros.h>
+#include <security/_pam_modutil.h>
+
 
 /* argument parsing */
 #define MKHOMEDIR_DEBUG      020	/* keep quiet about things */
@@ -98,8 +100,8 @@ static int _pam_parse(int flags, int argc, const char **argv)
    return ctrl;
 }
 
-/* This common function is used to send a message to the applications 
-   conversion function. Our only use is to ask the application to print 
+/* This common function is used to send a message to the applications
+   conversion function. Our only use is to ask the application to print
    an informative message that we are creating a home directory */
 static int converse(pam_handle_t * pamh, int ctrl, int nargs
 		    ,struct pam_message **message
@@ -111,7 +113,7 @@ static int converse(pam_handle_t * pamh, int ctrl, int nargs
    D(("begin to converse"));
 
    retval = pam_get_item(pamh, PAM_CONV, (const void **) &conv);
-   if (retval == PAM_SUCCESS)
+   if (retval == PAM_SUCCESS && conv)
    {
 
       retval = conv->conv(nargs, (const struct pam_message **) message
@@ -130,6 +132,8 @@ static int converse(pam_handle_t * pamh, int ctrl, int nargs
    {
       _log_err(LOG_ERR, "couldn't obtain coversation function [%s]"
 	       ,pam_strerror(pamh, retval));
+     if (retval == PAM_SUCCESS)
+         retval = PAM_BAD_ITEM; /* conv was NULL */
    }
 
    D(("ready to return from module conversation"));
@@ -187,9 +191,9 @@ static int create_homedir(pam_handle_t * pamh, int ctrl,
    /* Create the new directory */
    if (mkdir(dest,0700) != 0)
    {
-      _log_err(LOG_DEBUG, "unable to create directory %s",source);
+      _log_err(LOG_DEBUG, "unable to create directory %s",dest);
       return PAM_PERM_DENIED;
-   }   
+   }
    if (chmod(dest,0777 & (~UMask)) != 0 ||
        chown(dest,pwd->pw_uid,pwd->pw_gid) != 0)
    {
@@ -212,12 +216,19 @@ static int create_homedir(pam_handle_t * pamh, int ctrl,
    }
 
    for (Dir = readdir(D); Dir != 0; Dir = readdir(D))
-   {  
+   {
       int SrcFd;
       int DestFd;
       int Res;
       struct stat St;
+#ifndef PATH_MAX
+      char *newsource = NULL, *newdest = NULL;
+      /* track length of buffers */
+      int nslen = 0, ndlen = 0;
+      int slen = strlen(source), dlen = strlen(dest);
+#else
       char newsource[PATH_MAX], newdest[PATH_MAX];
+#endif
 
       /* Skip some files.. */
       if (strcmp(Dir->d_name,".") == 0 ||
@@ -225,37 +236,124 @@ static int create_homedir(pam_handle_t * pamh, int ctrl,
 	 continue;
 
       /* Determine what kind of file it is. */
+#ifndef PATH_MAX
+      nslen = slen + strlen(Dir->d_name) + 2;
+
+      if (nslen <= 0)
+	      return PAM_BUF_ERR;
+
+      if ( (newsource = malloc(nslen)) == NULL ) 
+	      return PAM_BUF_ERR;
+
+      sprintf(newsource, "%s/%s", source, Dir->d_name);
+#else
       snprintf(newsource,sizeof(newsource),"%s/%s",source,Dir->d_name);
+#endif
+
       if (lstat(newsource,&St) != 0)
+#ifndef PATH_MAX
+      {
+	      free(newsource); 
+	      newsource = NULL;
          continue;
+      }
+#else
+         continue;
+#endif
+
 
       /* We'll need the new file's name. */
+#ifndef PATH_MAX
+	 ndlen = dlen + strlen(Dir->d_name)+2;
+
+         if (ndlen <= 0)
+                 return PAM_BUF_ERR;
+
+	 if ( (newdest = malloc(ndlen)) == NULL ) {
+		 free(newsource);
+		 return PAM_BUF_ERR;
+	 }
+	 
+	 sprintf(newdest, "%s/%s", dest, Dir->d_name);
+#else
       snprintf(newdest,sizeof(newdest),"%s/%s",dest,Dir->d_name);
+#endif
 
       /* If it's a directory, recurse. */
       if (S_ISDIR(St.st_mode))
       {
-         create_homedir(pamh, ctrl, pwd, newsource, newdest);
+         int retval = create_homedir(pamh, ctrl, pwd, newsource, newdest);
+
+#ifndef PATH_MAX
+	 free(newsource); newsource = NULL;
+	 free(newdest); newdest = NULL;
+#endif
+
+         if (retval != PAM_SUCCESS) {
+            closedir(D);
+            return retval;
+         }
          continue;
       }
 
       /* If it's a symlink, create a new link. */
       if (S_ISLNK(St.st_mode))
       {
+	 int pointedlen = 0;
+#ifndef PATH_MAX
+	 char *pointed = NULL;
+           {
+		   int size = 100;
+
+		   while (1) {
+			   pointed = (char *) malloc(size);
+			   if ( ! pointed ) {
+				   free(newsource);
+				   free(newdest);
+				   return PAM_BUF_ERR;
+			   }
+			   pointedlen = readlink (newsource, pointed, size);
+			   if ( pointedlen < 0 ) break;
+			   if ( pointedlen < size ) break;
+			   free (pointed);
+			   size *= 2;
+		   }
+	   }
+	   if ( pointedlen < 0 )
+		   free(pointed);
+	   else
+		   pointed[pointedlen] = 0;
+#else
          char pointed[PATH_MAX];
          memset(pointed, 0, sizeof(pointed));
-         if(readlink(newsource, pointed, sizeof(pointed) - 1) != -1)
-         {
+
+         pointedlen = readlink(newsource, pointed, sizeof(pointed) - 1);
+#endif
+
+	 if ( pointedlen >= 0 ) {
             if(symlink(pointed, newdest) == 0)
             {
                if (lchown(newdest,pwd->pw_uid,pwd->pw_gid) != 0)
                {
-                   _log_err(LOG_DEBUG, "unable to chang perms on link %s",
+                   closedir(D);
+                   _log_err(LOG_DEBUG, "unable to change perms on link %s",
                             newdest);
+#ifndef PATH_MAX
+		   free(pointed);
+		   free(newsource);
+		   free(newdest);
+#endif
                    return PAM_PERM_DENIED;
                }
             }
+#ifndef PATH_MAX
+	    free(pointed);
+#endif
          }
+#ifndef PATH_MAX
+	 free(newsource); newsource = NULL;
+	 free(newdest); newdest = NULL;
+#endif
          continue;
       }
 
@@ -263,13 +361,24 @@ static int create_homedir(pam_handle_t * pamh, int ctrl,
        * the new device node, FIFO, or whatever it is. */
       if (!S_ISREG(St.st_mode))
       {
+#ifndef PATH_MAX
+	 free(newsource); newsource = NULL;
+	 free(newdest); newdest = NULL;
+#endif
          continue;
       }
 
       /* Open the source file */
       if ((SrcFd = open(newsource,O_RDONLY)) < 0 || fstat(SrcFd,&St) != 0)
       {
+         closedir(D);
          _log_err(LOG_DEBUG, "unable to open src file %s",newsource);
+
+#ifndef PATH_MAX
+	 free(newsource); newsource = NULL;
+	 free(newdest); newdest = NULL;
+#endif
+
 	 return PAM_PERM_DENIED;
       }
       stat(newsource,&St);
@@ -278,7 +387,13 @@ static int create_homedir(pam_handle_t * pamh, int ctrl,
       if ((DestFd = open(newdest,O_WRONLY | O_TRUNC | O_CREAT,0600)) < 0)
       {
 	 close(SrcFd);
+	 closedir(D);
          _log_err(LOG_DEBUG, "unable to open dest file %s",newdest);
+
+#ifndef PATH_MAX
+	 free(newsource); newsource = NULL;
+	 free(newdest); newdest = NULL;
+#endif
 	 return PAM_PERM_DENIED;
       }
 
@@ -290,26 +405,55 @@ static int create_homedir(pam_handle_t * pamh, int ctrl,
       {
          close(SrcFd);
          close(DestFd);
+         closedir(D);
          _log_err(LOG_DEBUG, "unable to chang perms on copy %s",newdest);
+
+#ifndef PATH_MAX
+	 free(newsource); newsource = NULL;
+	 free(newdest); newdest = NULL;
+#endif
+
 	 return PAM_PERM_DENIED;
       }
 
       /* Copy the file */
       do
       {
-         Res = read(SrcFd,remark,sizeof(remark));
-	 if (Res < 0 || write(DestFd,remark,Res) != Res)
-	 {
-	    close(SrcFd);
-	    close(DestFd);
-	    _log_err(LOG_DEBUG, "unable to perform IO");
-	    return PAM_PERM_DENIED;
+	 Res = _pammodutil_read(SrcFd,remark,sizeof(remark));
+
+	 if (Res == 0)
+	     continue;
+
+	 if (Res > 0) {
+	     if (_pammodutil_write(DestFd,remark,Res) == Res)
+		continue;
 	 }
+
+	 /* If we get here, pammodutil_read returned a -1 or
+	    _pammodutil_write returned something unexpected. */
+	 close(SrcFd);
+	 close(DestFd);
+	 closedir(D);
+	 _log_err(LOG_DEBUG, "unable to perform IO");
+
+#ifndef PATH_MAX
+	 free(newsource); newsource = NULL;
+	 free(newdest); newdest = NULL;
+#endif
+
+	 return PAM_PERM_DENIED;
       }
       while (Res != 0);
       close(SrcFd);
       close(DestFd);
+
+#ifndef PATH_MAX
+	 free(newsource); newsource = NULL;
+	 free(newdest); newdest = NULL;
+#endif
+
    }
+   closedir(D);
 
    return PAM_SUCCESS;
 }
@@ -324,7 +468,7 @@ int pam_sm_open_session(pam_handle_t * pamh, int flags, int argc
    const char *user;
    const struct passwd *pwd;
    struct stat St;
-      
+
    /* Parse the flag values */
    ctrl = _pam_parse(flags, argc, argv);
 
@@ -337,7 +481,7 @@ int pam_sm_open_session(pam_handle_t * pamh, int flags, int argc
    }
 
    /* Get the password entry */
-   pwd = getpwnam(user);
+   pwd = _pammodutil_getpwnam (pamh, user);
    if (pwd == NULL)
    {
       D(("couldn't identify user %s", user));
@@ -353,7 +497,7 @@ int pam_sm_open_session(pam_handle_t * pamh, int flags, int argc
 }
 
 /* Ignore */
-PAM_EXTERN 
+PAM_EXTERN
 int pam_sm_close_session(pam_handle_t * pamh, int flags, int argc
 			 ,const char **argv)
 {

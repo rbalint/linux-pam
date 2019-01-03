@@ -1,5 +1,5 @@
 /*
- * $Id: pam_filter.c,v 1.1.1.2 2002/09/15 20:08:47 hartmans Exp $
+ * $Id: pam_filter.c,v 1.6 2004/11/16 14:27:41 toady Exp $
  *
  * written by Andrew Morgan <morgan@transmeta.com> with much help from
  * Richard Stevens' UNIX Network Programming book.
@@ -21,7 +21,7 @@
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
-#include <termio.h>
+#include <termios.h>
 
 #include <signal.h>
 
@@ -131,7 +131,7 @@ static int process_args(pam_handle_t *pamh
     } else {
 	char **levp;
 	const char *tmp;
-	int i,size;
+	int i,size, retval;
 
 	*filtername = *++argv;
 	if (ctrl & FILTER_DEBUG) {
@@ -150,7 +150,7 @@ static int process_args(pam_handle_t *pamh
 
 	/* the "ARGS" variable */
 
-#define ARGS_OFFSET    5                          /*  sizeof('ARGS=');  */
+#define ARGS_OFFSET    5                          /*  strlen('ARGS=');  */
 #define ARGS_NAME      "ARGS="
 
 	size += ARGS_OFFSET;
@@ -174,10 +174,18 @@ static int process_args(pam_handle_t *pamh
 
 	/* the "SERVICE" variable */
 
-#define SERVICE_OFFSET    8                    /*  sizeof('SERVICE=');  */
+#define SERVICE_OFFSET    8                    /*  strlen('SERVICE=');  */
 #define SERVICE_NAME      "SERVICE="
 
-	pam_get_item(pamh, PAM_SERVICE, (const void **)&tmp);
+	retval = pam_get_item(pamh, PAM_SERVICE, (const void **)&tmp);
+	if (retval != PAM_SUCCESS || tmp == NULL) {
+	    _pam_log(LOG_CRIT,"service name not found");
+	    if (levp) {
+		free(levp[0]);
+		free(levp);
+	    }
+	    return -1;
+	}
 	size = SERVICE_OFFSET+strlen(tmp);
 
 	levp[1] = (char *) malloc(size+1);
@@ -196,9 +204,10 @@ static int process_args(pam_handle_t *pamh
 
 	/* the "USER" variable */
 
-#define USER_OFFSET    5                          /*  sizeof('USER=');  */
+#define USER_OFFSET    5                          /*  strlen('USER=');  */
 #define USER_NAME      "USER="
 
+	tmp = NULL;
 	pam_get_user(pamh, &tmp, NULL);
 	if (tmp == NULL) {
 	    tmp = "<unknown>";
@@ -222,7 +231,7 @@ static int process_args(pam_handle_t *pamh
 
 	/* the "USER" variable */
 
-#define TYPE_OFFSET    5                          /*  sizeof('TYPE=');  */
+#define TYPE_OFFSET    5                          /*  strlen('TYPE=');  */
 #define TYPE_NAME      "TYPE="
 
 	size = TYPE_OFFSET+strlen(type);
@@ -278,7 +287,7 @@ static int set_filter(pam_handle_t *pamh, int flags, int ctrl
 {
     int status=-1;
     char terminal[TERMINAL_LEN];
-    struct termio stored_mode;           /* initial terminal mode settings */
+    struct termios stored_mode;           /* initial terminal mode settings */
     int fd[2], child=0, child2=0, aterminal;
 
     if (filtername == NULL || *filtername != '/') {
@@ -305,15 +314,15 @@ static int set_filter(pam_handle_t *pamh, int flags, int ctrl
 	/* set terminal into raw mode.. remember old mode so that we can
 	   revert to it after the child has quit. */
 
-	/* this is termio terminal handling... */
+	/* this is termios terminal handling... */
 
-	if (ioctl(STDIN_FILENO, TCGETA, (char *) &stored_mode ) < 0) {
+	if ( tcgetattr(STDIN_FILENO, &stored_mode) < 0 ) {
 	    /* in trouble, so close down */
 	    close(fd[0]);
 	    _pam_log(LOG_CRIT, "couldn't copy terminal mode");
 	    return PAM_ABORT;
 	} else {
-	    struct termio t_mode = stored_mode;
+	    struct termios t_mode = stored_mode;
 
 	    t_mode.c_iflag = 0;            /* no input control */
 	    t_mode.c_oflag &= ~OPOST;      /* no ouput post processing */
@@ -326,7 +335,7 @@ static int set_filter(pam_handle_t *pamh, int flags, int ctrl
 	    t_mode.c_cc[VMIN] = 1; /* number of chars to satisfy a read */
 	    t_mode.c_cc[VTIME] = 0;          /* 0/10th second for chars */
 
-	    if (ioctl(STDIN_FILENO, TCSETA, (char *) &t_mode) < 0) {
+	    if ( tcsetattr(STDIN_FILENO, TCSAFLUSH, &t_mode) < 0 ) {
 		close(fd[0]);
 		_pam_log(LOG_WARNING, "couldn't put terminal in RAW mode");
 		return PAM_ABORT;
@@ -356,7 +365,7 @@ static int set_filter(pam_handle_t *pamh, int flags, int ctrl
 
 	_pam_log(LOG_WARNING,"first fork failed");
 	if (aterminal) {
-	    (void) ioctl(STDIN_FILENO, TCSETA, (char *) &stored_mode);
+		(void) tcsetattr(STDIN_FILENO, TCSAFLUSH, &stored_mode);
 	}
 
 	return PAM_AUTH_ERR;
@@ -398,7 +407,7 @@ static int set_filter(pam_handle_t *pamh, int flags, int ctrl
 	    /* initialize the child's terminal to be the way the
 	       parent's was before we set it into RAW mode */
 
-	    if (ioctl(fd[1], TCSETA, (char *) &stored_mode) < 0) {
+	    if ( tcsetattr(fd[1], TCSANOW, &stored_mode) < 0 ) {
 		_pam_log(LOG_WARNING,"cannot set slave terminal mode; %s"
 			 ,terminal);
 		close(fd[1]);
@@ -572,7 +581,7 @@ static int set_filter(pam_handle_t *pamh, int flags, int ctrl
 
     if (aterminal) {
 	/* reset to initial terminal mode */
-	(void) ioctl(STDIN_FILENO, TCSETA, (char *) &stored_mode);
+	    (void) tcsetattr(STDIN_FILENO, TCSANOW, &stored_mode);
     }
 
     if (ctrl & FILTER_DEBUG) {

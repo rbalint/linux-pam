@@ -42,13 +42,17 @@
 
 #define USER_RHOSTS_FILE "/.rhosts"     /* prefixed by user's home dir */
 
-#ifdef linux
+#ifdef __linux__
 #include <endian.h>
 #endif
 
 #ifdef HAVE_SYS_FSUID_H
 #include <sys/fsuid.h>
 #endif /* HAVE_SYS_FSUID_H */
+
+#ifdef HAVE_NET_IF_H
+#include <sys/if.h>
+#endif
 
 #include <sys/types.h>
 #include <sys/uio.h>
@@ -74,19 +78,13 @@ int innetgr(const char *, const char *, const char *,const char *);
 #include <ctype.h>
 
 #include <net/if.h>
-#ifdef linux
-# include <linux/sockios.h>
-# ifndef __USE_MISC
-#  define __USE_MISC
-#  include <sys/fsuid.h>
-# endif /* __USE_MISC */
-#endif
 
 #include <pwd.h>
 #include <grp.h>
 #include <sys/file.h>
 #include <sys/signal.h>
 #include <sys/stat.h>
+#include <stdint.h>
 #include <syslog.h>
 #ifndef _PATH_HEQUIV
 #define _PATH_HEQUIV "/etc/hosts.equiv"
@@ -98,8 +96,17 @@ int innetgr(const char *, const char *, const char *,const char *);
 #include <security/_pam_macros.h>
 #include <security/_pam_modutil.h>
 
-/* to the best of my knowledge, all modern UNIX boxes have 32 bit integers */
+#ifdef _ISOC9X_SOURCE
+#include <inttypes.h>
+#define U32 uint32_t
+#else
+/* to the best of my knowledge, all modern UNIX boxes have 32 bits integers */
 #define U32 unsigned int
+#endif /* _ISOC9X_SOURCE */
+
+/* Use the C99 type; older platforms will need this to be typedef'ed
+   elsewhere */
+#define U32 uint32_t
 
 
 /*
@@ -183,7 +190,7 @@ static void set_option (struct _options *opts, const char *arg)
 	return;
     }
 
-    if (strcmp(arg, "superuser=") == 0) {
+    if (strncmp(arg, "superuser=", sizeof("superuser=")-1) == 0) {
 	opts->superuser = arg+sizeof("superuser=")-1;
 	return;
     }
@@ -298,7 +305,7 @@ __icheckhost (pam_handle_t *pamh, struct _options *opts, U32 raddr
     hp = gethostbyname(lhost);
     if (hp == NULL)
 	return (0);
-    
+
     /* Spin through ip addresses. */
     for (pp = hp->h_addr_list; *pp; ++pp)
 	if (!memcmp (&raddr, *pp, sizeof (U32)))
@@ -413,7 +420,7 @@ __ivaliduser (pam_handle_t *pamh, struct _options *opts,
 	    user = p;                   /* this is the user's name */
 	    while (*p && !isspace(*p))
 		++p;                    /* find end of user's name */
-	} else 
+	} else
 	    user = p;
 
 	*p = '\0';              /* <nul> terminate username (+host?) */
@@ -485,7 +492,7 @@ pam_iruserok(pam_handle_t *pamh,
 	    No hosts.equiv file on system.
 	} */
     }
-    
+
     if ( opts->opt_no_rhosts )
 	return 1;
 
@@ -495,10 +502,10 @@ pam_iruserok(pam_handle_t *pamh,
 
     pwd = _pammodutil_getpwnam(pamh, luser);
     if (pwd == NULL) {
-	/* 
+	/*
 	 * luser is assumed to be valid because of an earlier check for uid = 0
 	 * we don't log this error twice. However, this shouldn't happen !
-	 * --cristiang 
+	 * --cristiang
 	 */
 	return(1);
     }
@@ -520,7 +527,7 @@ pam_iruserok(pam_handle_t *pamh,
      */
 
     /* We are root, this will not fail */
-#ifdef linux
+#ifdef __linux__
     /* If we are on linux the better way is setfsuid */
     uid = setfsuid(pwd->pw_uid);
     hostf = fopen(pbuf, "r");
@@ -555,7 +562,7 @@ pam_iruserok(pam_handle_t *pamh,
 
 	/* private group caveat */
 	if (opts->opt_private_group) {
-	    struct group *grp = getgrgid(sbuf.st_gid);
+	    struct group *grp = _pammodutil_getgrgid(pamh, sbuf.st_gid);
 
 	    if (NULL == grp || NULL == grp->gr_name
 		|| strcmp(luser,grp->gr_name)) {
@@ -596,7 +603,7 @@ exit_function:
      * they are reset before we exit.
      */
 
-#ifdef linux
+#ifdef __linux__
     setfsuid(uid);
 #else
     (void)seteuid(uid);
@@ -657,9 +664,9 @@ pam_ruserok (pam_handle_t *pamh,
  */
 
 static int _pam_auth_rhosts (pam_handle_t *pamh,
-			     int flags, 
+			     int flags,
 			     int argc,
-			     const char **argv) 
+			     const char **argv)
 {
     int retval;
     const char *luser = NULL;
@@ -750,9 +757,9 @@ static int _pam_auth_rhosts (pam_handle_t *pamh,
 /* --- authentication management functions --- */
 
 PAM_EXTERN
-int pam_sm_authenticate (pam_handle_t *pamh, 
+int pam_sm_authenticate (pam_handle_t *pamh,
 			 int flags,
-			 int argc, 
+			 int argc,
 			 const char **argv)
 {
     int retval;

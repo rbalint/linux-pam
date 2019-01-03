@@ -2,7 +2,7 @@
 
 /* created by Michael K. Johnson, johnsonm@redhat.com
  *
- * $Id: pam_static.c,v 1.1.1.1 2001/04/29 04:17:10 hartmans Exp $
+ * $Id: pam_static.c,v 1.1.1.1 2000/06/20 22:11:21 agmorgan Exp $
  */
 
 /* This whole file is only used for PAM_STATIC */

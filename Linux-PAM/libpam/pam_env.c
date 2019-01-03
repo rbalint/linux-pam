@@ -7,16 +7,17 @@
  * This file was written from a "hint" provided by the people at SUN.
  * and the X/Open XSSO draft of March 1997.
  *
- * $Id: pam_env.c,v 1.1.1.1 2001/04/29 04:17:05 hartmans Exp $
+ * $Id: pam_env.c,v 1.5 2004/09/22 09:37:47 kukuk Exp $
  */
+
+#include "pam_private.h"
 
 #include <string.h>
 #include <stdlib.h>
+
 #ifdef sunos
 #define memmove(x,y,z) bcopy(y,x,z)
 #endif
-
-#include "pam_private.h"
 
 /* helper functions */
 
@@ -74,7 +75,7 @@ int _pam_make_env(pam_handle_t *pamh)
     /*
      * fill entries in pamh->env
      */
-    
+
     pamh->env->entries = PAM_ENV_CHUNK;
     pamh->env->requested = 1;
     pamh->env->list[0] = NULL;
@@ -222,7 +223,7 @@ int pam_putenv(pam_handle_t *pamh, const char *name_value)
 
 	    /* add a new NULL entry at end; increase counter */
 	    pamh->env->list[pamh->env->requested++] = NULL;
-	    
+
 	} else {                                /* replace old */
 	    D(("replacing item: %s\n          with: %s"
 	       , pamh->env->list[item], name_value));
@@ -343,6 +344,7 @@ static char **_copy_env(pam_handle_t *pamh)
 		_pam_overwrite(dump[i]);
 		_pam_drop(dump[i]);
 	    }
+	    _pam_drop(dump);
 	    return NULL;
 	}
     }

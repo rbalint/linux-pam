@@ -1,5 +1,5 @@
 /*
- * $Id: pam_pwdb.c,v 1.1.1.1 2001/04/29 04:17:28 hartmans Exp $
+ * $Id: pam_pwdb.c,v 1.3 2000/11/19 23:54:04 agmorgan Exp $
  *
  * This is the single file that will be compiled for pam_unix.
  * it includes each of the modules that have beed defined in the .-c
@@ -14,7 +14,7 @@
  */
 
 static const char rcsid[] =
-"$Id: pam_pwdb.c,v 1.1.1.1 2001/04/29 04:17:28 hartmans Exp $\n"
+"$Id: pam_pwdb.c,v 1.3 2000/11/19 23:54:04 agmorgan Exp $\n"
 " - PWDB Pluggable Authentication module. <morgan@linux.kernel.org>"
 ;
 

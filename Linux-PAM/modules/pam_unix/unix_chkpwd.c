@@ -1,5 +1,5 @@
 /*
- * $Id: unix_chkpwd.c,v 1.1.1.2 2002/09/15 20:09:02 hartmans Exp $
+ * $Id: unix_chkpwd.c,v 1.11 2004/11/16 14:27:42 toady Exp $
  *
  * This program is designed to run setuid(root) or with sufficient
  * privilege to read all of the unix password databases. It is designed
@@ -57,8 +57,31 @@ static void _log_err(int err, const char *format,...)
 	closelog();
 }
 
+static int _unix_shadowed(const struct passwd *pwd)
+{
+	char hashpass[1024];
+	if (pwd != NULL) {
+		if (strcmp(pwd->pw_passwd, "x") == 0) {
+			return 1;
+		}
+		if (strlen(pwd->pw_name) < sizeof(hashpass) - 2) {
+			strcpy(hashpass, "##");
+			strcpy(hashpass + 2, pwd->pw_name);
+			if (strcmp(pwd->pw_passwd, hashpass) == 0) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
 static void su_sighandler(int sig)
 {
+#ifndef SA_RESETHAND
+	/* emulate the behaviour of the SA_RESETHAND flag */
+	if ( sig == SIGILL || sig == SIGTRAP || sig == SIGBUS || sig = SIGSERV )
+		signal(sig, SIG_DFL);
+#endif
 	if (sig > 0) {
 		_log_err(LOG_NOTICE, "caught signal %d.", sig);
 		exit(sig);
@@ -74,7 +97,9 @@ static void setup_signals(void)
 	 */
 	(void) memset((void *) &action, 0, sizeof(action));
 	action.sa_handler = su_sighandler;
+#ifdef SA_RESETHAND
 	action.sa_flags = SA_RESETHAND;
+#endif
 	(void) sigaction(SIGILL, &action, NULL);
 	(void) sigaction(SIGTRAP, &action, NULL);
 	(void) sigaction(SIGBUS, &action, NULL);
@@ -87,20 +112,21 @@ static void setup_signals(void)
 	(void) sigaction(SIGQUIT, &action, NULL);
 }
 
-static int _unix_verify_password(const char *name, const char *p, int opt)
+static int _unix_verify_password(const char *name, const char *p, int nullok)
 {
 	struct passwd *pwd = NULL;
 	struct spwd *spwdent = NULL;
 	char *salt = NULL;
 	char *pp = NULL;
 	int retval = UNIX_FAILED;
+	int salt_len;
 
 	/* UNIX passwords area */
 	setpwent();
 	pwd = getpwnam(name);	/* Get password file entry... */
 	endpwent();
 	if (pwd != NULL) {
-		if (strcmp(pwd->pw_passwd, "x") == 0) {
+		if (_unix_shadowed(pwd)) {
 			/*
 			 * ...and shadow password file entry for this user,
 			 * if shadowing is enabled
@@ -133,8 +159,11 @@ static int _unix_verify_password(const char *name, const char *p, int opt)
 		return retval;
 	}
 
-	if (strlen(salt) == 0)
-		return (opt == 0) ? UNIX_FAILED : UNIX_PASSED;
+	salt_len = strlen(salt);
+	if (salt_len == 0)
+		return (nullok == 0) ? UNIX_FAILED : UNIX_PASSED;
+	else if (p == NULL || strlen(p) == 0)
+		return UNIX_FAILED;
 
 	/* the moment of truth -- do we agree with the password? */
 	retval = UNIX_FAILED;
@@ -147,6 +176,8 @@ static int _unix_verify_password(const char *name, const char *p, int opt)
 			if (strcmp(pp, salt) == 0)
 				retval = UNIX_PASSED;
 		}
+	} else if ((*salt == '*') || (salt_len < 13)) {
+	    retval = UNIX_FAILED;
 	} else {
 		pp = bigcrypt(p, salt);
 		/*
@@ -158,7 +189,7 @@ static int _unix_verify_password(const char *name, const char *p, int opt)
 		 * stored string with the subset of bigcrypt's result.
 		 * Bug 521314: the strncmp comparison is for legacy support.
 		 */
-		if (strncmp(pp, salt, strlen(salt)) == 0) {
+		if (strncmp(pp, salt, salt_len) == 0) {
 			retval = UNIX_PASSED;
 		}
 	}
@@ -197,7 +228,7 @@ int main(int argc, char *argv[])
 {
 	char pass[MAXPASS + 1];
 	char option[8];
-	int npass, opt;
+	int npass, nullok;
 	int force_failure = 0;
 	int retval = UNIX_FAILED;
 	char *user;
@@ -250,9 +281,9 @@ int main(int argc, char *argv[])
 	} else {
 		option[7] = '\0';
 		if (strncmp(option, "nullok", 8) == 0)
-			opt = 1;
+			nullok = 1;
 		else
-			opt = 0;
+			nullok = 0;
 	}
 
 	/* read the password from stdin (a pipe from the pam_unix module) */
@@ -271,13 +302,13 @@ int main(int argc, char *argv[])
 		if (npass == 0) {
 			/* the password is NULL */
 
-			retval = _unix_verify_password(user, NULL, opt);
+			retval = _unix_verify_password(user, NULL, nullok);
 
 		} else {
 			/* does pass agree with the official one? */
 
 			pass[npass] = '\0';	/* NUL terminate */
-			retval = _unix_verify_password(user, pass, opt);
+			retval = _unix_verify_password(user, pass, nullok);
 
 		}
 	}

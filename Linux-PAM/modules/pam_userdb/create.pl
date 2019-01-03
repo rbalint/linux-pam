@@ -2,12 +2,12 @@
 # this program creates a database in ARGV[1] from pairs given on 
 # stdandard input
 #
-# $Id: create.pl,v 1.1.1.1 2001/04/29 04:17:42 hartmans Exp $
+# $Id: create.pl,v 1.2 2004/09/28 13:48:47 kukuk Exp $
 
 use DB_File;
 
 my $database = $ARGV[0];
-die "Use: check,pl <database>\n" unless ($database);
+die "Use: create.pl <database>\n" unless ($database);
 print "Using database: $database\n";
 
 my %lusers = ();

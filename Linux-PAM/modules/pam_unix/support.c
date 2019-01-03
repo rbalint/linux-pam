@@ -1,5 +1,5 @@
 /* 
- * $Id: support.c,v 1.1.1.2 2002/09/15 20:09:02 hartmans Exp $
+ * $Id: support.c,v 1.25 2005/01/10 09:45:37 kukuk Exp $
  *
  * Copyright information at end of file.
  */
@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <string.h>
 #include <malloc.h>
 #include <pwd.h>
@@ -16,9 +17,13 @@
 #include <limits.h>
 #include <utmp.h>
 #include <errno.h>
+#include <signal.h>
+#include <ctype.h>
+#include <rpcsvc/ypclnt.h>
 
 #include <security/_pam_macros.h>
 #include <security/pam_modules.h>
+#include <security/_pam_modutil.h>
 
 #include "md5.h"
 #include "support.h"
@@ -106,36 +111,6 @@ int _make_remark(pam_handle_t * pamh, unsigned int ctrl
 	return retval;
 }
 
-  /*
-   * Beacause getlogin() is braindead and sometimes it just
-   * doesn't work, we reimplement it here.
-   */
-char *PAM_getlogin(void)
-{
-	struct utmp *ut, line;
-	char *curr_tty, *retval;
-	static char curr_user[sizeof(ut->ut_user) + 4];
-
-	retval = NULL;
-
-	curr_tty = ttyname(0);
-	if (curr_tty != NULL) {
-		D(("PAM_getlogin ttyname: %s", curr_tty));
-		curr_tty += 5;
-		setutent();
-		strncpy(line.ut_line, curr_tty, sizeof(line.ut_line));
-		if ((ut = getutline(&line)) != NULL) {
-			strncpy(curr_user, ut->ut_user, sizeof(ut->ut_user));
-			curr_user[sizeof(curr_user) - 1] = '\0';
-			retval = curr_user;
-		}
-		endutent();
-	}
-	D(("PAM_getlogin retval: %s", retval));
-
-	return retval;
-}
-
 /*
  * set the control flags for the UNIX module.
  */
@@ -162,10 +137,6 @@ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int argc,
 	if (flags & PAM_PRELIM_CHECK) {
 		D(("PRELIM_CHECK"));
 		set(UNIX__PRELIM, ctrl);
-	}
-	if (flags & PAM_DISALLOW_NULL_AUTHTOK) {
-		D(("DISALLOW_NULL_AUTHTOK"));
-		set(UNIX__NONULL, ctrl);
 	}
 	if (flags & PAM_SILENT) {
 		D(("SILENT"));
@@ -195,7 +166,7 @@ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int argc,
 			if (remember != NULL) {
 				if (j == UNIX_REMEMBER_PASSWD) {
 					*remember = strtol(*argv + 9, NULL, 10);
-					if ((*remember == LONG_MIN) || (*remember == LONG_MAX))
+					if ((*remember == INT_MIN) || (*remember == INT_MAX))
 						*remember = -1;
 					if (*remember > 400)
 						*remember = 400;
@@ -204,6 +175,11 @@ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int argc,
 		}
 
 		++argv;		/* step to next argument */
+	}
+
+	if (flags & PAM_DISALLOW_NULL_AUTHTOK) {
+		D(("DISALLOW_NULL_AUTHTOK"));
+		set(UNIX__NONULL, ctrl);
 	}
 
 	/* auditing is a more sensitive version of debug */
@@ -304,25 +280,178 @@ static void _cleanup_failures(pam_handle_t * pamh, void *fl, int err)
 }
 
 /*
+ * _unix_getpwnam() searches only /etc/passwd and NIS to find user information
+ */
+static void _unix_cleanup(pam_handle_t *pamh, void *data, int error_status)
+{
+	free(data);
+}
+
+int _unix_getpwnam(pam_handle_t *pamh, const char *name,
+		   int files, int nis, struct passwd **ret)
+{
+	FILE *passwd;
+	char buf[16384];
+	int matched = 0, buflen;
+	char *slogin, *spasswd, *suid, *sgid, *sgecos, *shome, *sshell, *p;
+
+	memset(buf, 0, sizeof(buf));
+
+	if (!matched && files) {
+		int userlen = strlen(name);
+		passwd = fopen("/etc/passwd", "r");
+		if (passwd != NULL) {
+			while (fgets(buf, sizeof(buf), passwd) != NULL) {
+				if ((buf[userlen] == ':') &&
+				    (strncmp(name, buf, userlen) == 0)) {
+					p = buf + strlen(buf) - 1;
+					while (isspace(*p) && (p >= buf)) {
+						*p-- = '\0';
+					}
+					matched = 1;
+					break;
+				}
+			}
+			fclose(passwd);
+		}
+	}
+
+	if (!matched && nis) {
+		char *userinfo = NULL, *domain = NULL;
+		int len = 0, i;
+		len = yp_get_default_domain(&domain);
+		if (len == YPERR_SUCCESS) {
+			len = yp_bind(domain);
+		}
+		if (len == YPERR_SUCCESS) {
+			i = yp_match(domain, "passwd.byname", name,
+				     strlen(name), &userinfo, &len);
+			yp_unbind(domain);
+			if ((i == YPERR_SUCCESS) && (len < sizeof(buf))) {
+				strncpy(buf, userinfo, sizeof(buf) - 1);
+				buf[sizeof(buf) - 1] = '\0';
+				matched = 1;
+			}
+		}
+	}
+
+	if (matched && (ret != NULL)) {
+		*ret = NULL;
+
+		slogin = buf;
+
+		spasswd = strchr(slogin, ':');
+		if (spasswd == NULL) {
+			return matched;
+		}
+		*spasswd++ = '\0';
+
+		suid = strchr(spasswd, ':');
+		if (suid == NULL) {
+			return matched;
+		}
+		*suid++ = '\0';
+
+		sgid = strchr(suid, ':');
+		if (sgid == NULL) {
+			return matched;
+		}
+		*sgid++ = '\0';
+
+		sgecos = strchr(sgid, ':');
+		if (sgecos == NULL) {
+			return matched;
+		}
+		*sgecos++ = '\0';
+
+		shome = strchr(sgecos, ':');
+		if (shome == NULL) {
+			return matched;
+		}
+		*shome++ = '\0';
+
+		sshell = strchr(shome, ':');
+		if (sshell == NULL) {
+			return matched;
+		}
+		*sshell++ = '\0';
+
+		buflen = sizeof(struct passwd) +
+			 strlen(slogin) + 1 +
+			 strlen(spasswd) + 1 +
+			 strlen(suid) + 1 +
+			 strlen(sgid) + 1 +
+			 strlen(sgecos) + 1 +
+			 strlen(shome) + 1 +
+			 strlen(sshell) + 1;
+		*ret = malloc(buflen);
+		if (*ret == NULL) {
+			return matched;
+		}
+		memset(*ret, '\0', buflen);
+
+		(*ret)->pw_uid = strtol(suid, &p, 10);
+		if ((strlen(sgid) == 0) || (*p != '\0')) {
+			free(*ret);
+			*ret = NULL;
+			return matched;
+		}
+
+		(*ret)->pw_gid = strtol(sgid, &p, 10);
+		if ((strlen(sgid) == 0) || (*p != '\0')) {
+			free(*ret);
+			*ret = NULL;
+			return matched;
+		}
+
+		p = ((char*)(*ret)) + sizeof(struct passwd);
+		(*ret)->pw_name = strcpy(p, slogin);
+		p += strlen(p) + 1;
+		(*ret)->pw_passwd = strcpy(p, spasswd);
+		p += strlen(p) + 1;
+		(*ret)->pw_gecos = strcpy(p, sgecos);
+		p += strlen(p) + 1;
+		(*ret)->pw_dir = strcpy(p, shome);
+		p += strlen(p) + 1;
+		(*ret)->pw_shell = strcpy(p, sshell);
+
+		snprintf(buf, sizeof(buf), "_pam_unix_getpwnam_%s", name);
+
+		if (pam_set_data(pamh, buf,
+				 *ret, _unix_cleanup) != PAM_SUCCESS) {
+			free(*ret);
+			*ret = NULL;
+		}
+	}
+
+	return matched;
+}
+
+/*
+ * _unix_comsefromsource() is a quick check to see if information about a given
+ * user comes from a particular source (just files and nis for now)
+ *
+ */
+int _unix_comesfromsource(pam_handle_t *pamh,
+			  const char *name, int files, int nis)
+{
+	return _unix_getpwnam(pamh, name, files, nis, NULL);
+}
+
+/*
  * _unix_blankpasswd() is a quick check for a blank password
  *
  * returns TRUE if user does not have a password
  * - to avoid prompting for one in such cases (CG)
  */
 
-int _unix_blankpasswd(unsigned int ctrl, const char *name)
+int
+_unix_blankpasswd (pam_handle_t *pamh, unsigned int ctrl, const char *name)
 {
 	struct passwd *pwd = NULL;
 	struct spwd *spwdent = NULL;
 	char *salt = NULL;
 	int retval;
-#if HAVE_GETPWNAM_R
-	char *buf = NULL;
-	int bufsize = 0;
-	struct passwd pwd_buf;
-
-	pwd = &pwd_buf;
-#endif
 
 	D(("called"));
 
@@ -338,23 +467,7 @@ int _unix_blankpasswd(unsigned int ctrl, const char *name)
 	/* UNIX passwords area */
 
 	/* Get password file entry... */
-#if HAVE_GETPWNAM_R
-	bufsize = 1024;
-	buf = malloc(bufsize);
-
-	if ((retval = getpwnam_r(name, pwd, buf, bufsize, &pwd))) {
-		pwd = NULL;
-	}
-	while (retval == ERANGE) {
-		bufsize += 1024;
-		buf = realloc(buf, bufsize);
-		if ((retval = getpwnam_r(name, pwd, buf, bufsize, &pwd))) {
-			pwd = NULL;
-		}
-	}
-#else
-	pwd = getpwnam(name);
-#endif
+	pwd = _pammodutil_getpwnam (pamh, name);
 
 	if (pwd != NULL) {
 		if (strcmp( pwd->pw_passwd, "*NP*" ) == 0)
@@ -372,28 +485,24 @@ int _unix_blankpasswd(unsigned int ctrl, const char *name)
 					setreuid( 0, -1 );
 					if(setreuid( -1, pwd->pw_uid ) == -1)
 						/* Will fail elsewhere. */
-#if HAVE_GETPWNAM_R
-						if (buf)
-							free(buf);
-#endif
 						return 0;
 				}
 			}
 	
-			spwdent = getspnam( name );
+			spwdent = _pammodutil_getspnam (pamh, name);
 			if (save_uid == pwd->pw_uid)
 				setreuid( save_uid, save_euid );
 			else {
 				if (setreuid( -1, 0 ) == -1)
-				setreuid( save_uid, -1 );
+					setreuid( save_uid, -1 );
 				setreuid( -1, save_euid );
 			}
-		} else if (strcmp(pwd->pw_passwd, "x") == 0) {
+		} else if (_unix_shadowed(pwd)) {
 			/*
 			 * ...and shadow password file entry for this user,
 			 * if shadowing is enabled
 			 */
-			spwdent = getspnam(name);
+			spwdent = _pammodutil_getspnam(pamh, name);
 		}
 		if (spwdent)
 			salt = x_strdup(spwdent->sp_pwdp);
@@ -415,11 +524,6 @@ int _unix_blankpasswd(unsigned int ctrl, const char *name)
 	if (salt)
 		_pam_delete(salt);
 
-#if HAVE_GETPWNAM_R
-	if (buf)
-		free(buf);
-#endif
-
 	return retval;
 }
 
@@ -434,12 +538,25 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 				   unsigned int ctrl, const char *user)
 {
     int retval, child, fds[2];
+    void (*sighandler)(int) = NULL;
 
     D(("called."));
     /* create a pipe for the password */
     if (pipe(fds) != 0) {
 	D(("could not make pipe"));
 	return PAM_AUTH_ERR;
+    }
+
+    if (off(UNIX_NOREAP, ctrl)) {
+	/*
+	 * This code arranges that the demise of the child does not cause
+	 * the application to receive a signal it is not expecting - which
+	 * may kill the application or worse.
+	 *
+	 * The "noreap" module argument is provided so that the admin can
+	 * override this behavior.
+	 */
+	sighandler = signal(SIGCHLD, SIG_DFL);
     }
 
     /* fork */
@@ -486,6 +603,10 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 	retval = PAM_AUTH_ERR;
     }
 
+    if (sighandler != NULL) {
+        (void) signal(SIGCHLD, sighandler);   /* restore old signal handler */
+    }
+
     D(("returning %d", retval));
     return retval;
 }
@@ -514,7 +635,7 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 	D(("locating user's record"));
 
 	/* UNIX passwords area */
-	pwd = getpwnam(name);	/* Get password file entry... */
+	pwd = _pammodutil_getpwnam (pamh, name);	/* Get password file entry... */
 
 	if (pwd != NULL) {
 		if (strcmp( pwd->pw_passwd, "*NP*" ) == 0)
@@ -535,7 +656,7 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 				}
 			}
 	
-			spwdent = getspnam( name );
+			spwdent = _pammodutil_getspnam (pamh, name);
 			if (save_uid == pwd->pw_uid)
 				setreuid( save_uid, save_euid );
 			else {
@@ -543,12 +664,12 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 				setreuid( save_uid, -1 );
 				setreuid( -1, save_euid );
 			}
-		} else if (strcmp(pwd->pw_passwd, "x") == 0) {
+		} else if (_unix_shadowed(pwd)) {
 			/*
 			 * ...and shadow password file entry for this user,
 			 * if shadowing is enabled
 			 */
-			spwdent = getspnam(name);
+			spwdent = _pammodutil_getspnam (pamh, name);
 		}
 		if (spwdent)
 			salt = x_strdup(spwdent->sp_pwdp);
@@ -565,7 +686,7 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 	}
 
 	retval = PAM_SUCCESS;
-	if (pwd == NULL || salt == NULL || !strcmp(salt, "x")) {
+	if (pwd == NULL || salt == NULL || !strcmp(salt, "x") || ((salt[0] == '#') && (salt[1] == '#') && !strcmp(salt + 2, name))) {
 		if (geteuid()) {
 			/* we are not root perhaps this is the reason? Run helper */
 			D(("running helper binary"));
@@ -577,6 +698,11 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 			}
 		} else {
 			D(("user's record unavailable"));
+			p = NULL;
+			if (pwd == NULL)
+				retval = PAM_USER_UNKNOWN;
+			else
+				retval = PAM_AUTHINFO_UNAVAIL;
 			if (on(UNIX_AUDIT, ctrl)) {
 				/* this might be a typo and the user has given a password
 				   instead of a username. Careful with this. */
@@ -584,54 +710,58 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 				         "check pass; user (%s) unknown", name);
 			} else {
 				name = NULL;
-				_log_err(LOG_ALERT, pamh,
-				         "check pass; user unknown");
+				if (on(UNIX_DEBUG, ctrl) || pwd == NULL) {
+				    _log_err(LOG_ALERT, pamh,
+				            "check pass; user unknown");
+				} else {
+				    /* don't log failure as another pam module can succeed */
+				    goto cleanup;
+				}
 			}
-			p = NULL;
-			retval = PAM_AUTHINFO_UNAVAIL;
 		}
 	} else {
-		if (!strlen(salt)) {
-			/* the stored password is NULL */
-			if (off(UNIX__NONULL, ctrl)) {	/* this means we've succeeded */
-				D(("user has empty password - access granted"));
-				retval = PAM_SUCCESS;
-			} else {
-				D(("user has empty password - access denied"));
-				retval = PAM_AUTH_ERR;
-			}
-		} else if (!p) {
-				retval = PAM_AUTH_ERR;
+	    int salt_len = strlen(salt);
+	    if (!salt_len) {
+		/* the stored password is NULL */
+		if (off(UNIX__NONULL, ctrl)) {/* this means we've succeeded */
+		    D(("user has empty password - access granted"));
+		    retval = PAM_SUCCESS;
 		} else {
-			if (!strncmp(salt, "$1$", 3)) {
-				pp = Goodcrypt_md5(p, salt);
-				if (strcmp(pp, salt) != 0) {
-					_pam_delete(pp);
-					pp = Brokencrypt_md5(p, salt);
-				}
-			} else {
-				pp = bigcrypt(p, salt);
-			}
-			p = NULL;		/* no longer needed here */
-
-			/* the moment of truth -- do we agree with the password? */
-			D(("comparing state of pp[%s] and salt[%s]", pp, salt));
-
-			/*
-			 * Note, we are comparing the bigcrypt of the password with
-			 * the contents of the password field. If the latter was
-			 * encrypted with regular crypt (and not bigcrypt) it will
-			 * have been truncated for storage relative to the output
-			 * of bigcrypt here. As such we need to compare only the
-			 * stored string with the subset of bigcrypt's result.
-			 * Bug 521314: The strncmp comparison is for legacy support.
-			 */
-			if (strncmp(pp, salt, strlen(salt)) == 0) {
-				retval = PAM_SUCCESS;
-			} else {
-				retval = PAM_AUTH_ERR;
-			}
+		    D(("user has empty password - access denied"));
+		    retval = PAM_AUTH_ERR;
 		}
+	    } else if (!p || (*salt == '*') || (salt_len < 13)) {
+		retval = PAM_AUTH_ERR;
+	    } else {
+		if (!strncmp(salt, "$1$", 3)) {
+		    pp = Goodcrypt_md5(p, salt);
+		    if (strcmp(pp, salt) != 0) {
+			_pam_delete(pp);
+			pp = Brokencrypt_md5(p, salt);
+		    }
+		} else {
+		    pp = bigcrypt(p, salt);
+		}
+		p = NULL;		/* no longer needed here */
+
+		/* the moment of truth -- do we agree with the password? */
+		D(("comparing state of pp[%s] and salt[%s]", pp, salt));
+
+		/*
+		 * Note, we are comparing the bigcrypt of the password with
+		 * the contents of the password field. If the latter was
+		 * encrypted with regular crypt (and not bigcrypt) it will
+		 * have been truncated for storage relative to the output
+		 * of bigcrypt here. As such we need to compare only the
+		 * stored string with the subset of bigcrypt's result.
+		 * Bug 521314: The strncmp comparison is for legacy support.
+		 */
+		if (strncmp(pp, salt, salt_len) == 0) {
+		    retval = PAM_SUCCESS;
+		} else {
+		    retval = PAM_AUTH_ERR;
+		}
+	    }
 	}
 
 	if (retval == PAM_SUCCESS) {
@@ -649,10 +779,17 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 
 			if (new != NULL) {
 
-				new->user = x_strdup(name ? name : "");
+			    const char *login_name;
+
+			    login_name = _pammodutil_getlogin(pamh);
+			    if (login_name == NULL) {
+				login_name = "";
+			    }
+
+			        new->user = x_strdup(name ? name : "");
 				new->uid = getuid();
 				new->euid = geteuid();
-				new->name = x_strdup(PAM_getlogin()? PAM_getlogin() : "");
+				new->name = x_strdup(login_name);
 
 				/* any previous failures for this user ? */
 				pam_get_data(pamh, data_name, (const void **) &old);
@@ -702,6 +839,7 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 		}
 	}
 
+cleanup:
 	if (data_name)
 		_pam_delete(data_name);
 	if (salt)
@@ -762,7 +900,7 @@ int _unix_read_password(pam_handle_t * pamh
 			return PAM_AUTHTOK_RECOVER_ERR;		/* didn't work */
 		} else if (on(UNIX_USE_AUTHTOK, ctrl)
 			   && off(UNIX__OLD_PASSWD, ctrl)) {
-			return PAM_AUTHTOK_RECOVER_ERR;
+			return PAM_AUTHTOK_ERR;
 		}
 	}
 	/*
@@ -882,6 +1020,21 @@ int _unix_read_password(pam_handle_t * pamh
 	}
 
 	return PAM_SUCCESS;
+}
+
+int _unix_shadowed(const struct passwd *pwd)
+{
+	if (pwd != NULL) {
+		if (strcmp(pwd->pw_passwd, "x") == 0) {
+			return 1;
+		}
+		if ((pwd->pw_passwd[0] == '#') &&
+		    (pwd->pw_passwd[1] == '#') &&
+		    (strcmp(pwd->pw_name, pwd->pw_passwd + 2) == 0)) {
+			return 1;
+		}
+	}
+	return 0;
 }
 
 /* ****************************************************************** *

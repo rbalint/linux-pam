@@ -1,7 +1,7 @@
 /* pam_permit module */
 
 /*
- * $Id: pam_debug.c,v 1.1.1.1 2002/09/15 20:08:45 hartmans Exp $
+ * $Id: pam_debug.c,v 1.2 2004/09/15 12:06:17 kukuk Exp $
  *
  * Written by Andrew Morgan <morgan@kernel.org> 2001/02/04
  *
@@ -102,7 +102,9 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc,
     }
     if (user == NULL || *user == '\0') {
 	D(("username not known"));
-	pam_set_item(pamh, PAM_USER, (const void *) DEFAULT_USER);
+	retval = pam_set_item(pamh, PAM_USER, (const void *) DEFAULT_USER);
+	if (retval != PAM_SUCCESS)
+	    return retval;
     }
     user = NULL;                                            /* clean up */
 

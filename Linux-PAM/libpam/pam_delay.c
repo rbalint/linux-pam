@@ -4,7 +4,7 @@
  * Copyright (c) Andrew G. Morgan <morgan@kernel.org> 1996-9
  * All rights reserved.
  *
- * $Id: pam_delay.c,v 1.1.1.2 2002/09/15 20:08:36 hartmans Exp $
+ * $Id: pam_delay.c,v 1.6 2003/07/13 20:01:44 vorlon Exp $
  *
  */
 
@@ -13,9 +13,9 @@
  * attempt to overcome authentication-time attacks in a simple manner.
  */
 
+#include "pam_private.h"
 #include <unistd.h>
 #include <time.h>
-#include "pam_private.h"
 
 /* **********************************************************************
  * initialize the time as unset, this is set on the return from the

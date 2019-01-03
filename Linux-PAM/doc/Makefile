@@ -1,5 +1,5 @@
 
-### $Id: Makefile,v 1.1.1.2 2002/09/15 20:08:24 hartmans Exp $
+### $Id: Makefile,v 1.10 2004/09/22 09:37:47 kukuk Exp $
 
 include ../Make.Rules
 
@@ -25,7 +25,7 @@ dummy:
 # can type make pdf in this directory and see what happens in the pdf
 # subdirectory.
 
-all: htmls texts postscript
+all: htmls texts postscript pdf
 
 htmls: $(HTMLS)
 
@@ -125,12 +125,12 @@ ifneq ($(PSER),)
 	for file in ps/*.ps; do \
 	  install -m 644 $$file $(FAKEROOT)$(DOCDIR)/ps  ; \
 	done
-	ifeq ($(HAVE_PS2PDF),yes)
-		mkdir -p $(FAKEROOT)$(DOCDIR)/pdf
-		for file in pdf/*.pdf; do \
-		  install -m 644 $$file $(FAKEROOT)$(DOCDIR)/pdf  ; \
-		done
-	endif
+ifeq ($(HAVE_PS2PDF),yes)
+	mkdir -p $(FAKEROOT)$(DOCDIR)/pdf
+	for file in pdf/*.pdf; do \
+	  install -m 644 $$file $(FAKEROOT)$(DOCDIR)/pdf  ; \
+	done
+endif
 endif
 ifeq ($(HAVE_SGML2HTML),yes)
 	mkdir -p $(FAKEROOT)$(DOCDIR)/html
@@ -152,7 +152,9 @@ spec: specs/draft-morgan-pam.raw
 	specs/formatter/padout < specs/draft-morgan-pam.raw > specs/draft-morgan-pam-current.txt
 
 releasedocs: all spec
-	tar zvfc Linux-PAM-$(MAJOR_REL).$(MINOR_REL)-docs.tar.gz --exclude CVS  html ps txts specs/draft-morgan-pam-current.txt
+	tar zvfc Linux-PAM-$(MAJOR_REL).$(MINOR_REL)-docs.tar.gz \
+	--exclude CVS --exclude .cvsignore --exclude '.#*' \
+	html ps txts specs/draft-morgan-pam-current.txt
 
 clean:
 	rm -f *~ *.bak

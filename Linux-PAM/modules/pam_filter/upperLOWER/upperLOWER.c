@@ -1,5 +1,5 @@
 /*
- * $Id: upperLOWER.c,v 1.1.1.2 2002/09/15 20:08:48 hartmans Exp $
+ * $Id: upperLOWER.c,v 1.5 2004/09/22 09:37:48 kukuk Exp $
  *
  * This is a sample filter program, for use with pam_filter (a module
  * provided with Linux-PAM). This filter simply transposes upper and
@@ -21,6 +21,9 @@
 #include <unistd.h>
 
 #include <security/pam_filter.h>
+#include <security/pam_modules.h>
+#include <security/_pam_macros.h>
+#include <security/_pam_modutil.h>
 
 /* ---------------------------------------------------------------- */
 
@@ -109,27 +112,27 @@ int main(int argc, char **argv)
 	  /* application errors */
 
 	  if ( FD_ISSET(APPERR_FILENO,&readers) ) {
-	       int got = read(APPERR_FILENO, buffer, BUFSIZ);
+	       int got = _pammodutil_read(APPERR_FILENO, buffer, BUFSIZ);
 	       if (got <= 0) {
 		    break;
 	       } else {
 		    /* translate to give to real terminal */
 		    if (before_user != NULL)
 			 before_user(buffer, got);
-		    if ( write(STDERR_FILENO, buffer, got) != got ) {
+		    if (_pammodutil_write(STDERR_FILENO, buffer, got) != got ) {
 			 log_this(LOG_WARNING,"couldn't write %d bytes?!",got);
 			 break;
 		    }
 	       }
 	  } else if ( FD_ISSET(APPOUT_FILENO,&readers) ) {    /* app output */
-	       int got = read(APPOUT_FILENO, buffer, BUFSIZ);
+	       int got = _pammodutil_read(APPOUT_FILENO, buffer, BUFSIZ);
 	       if (got <= 0) {
 		    break;
 	       } else {
 		    /* translate to give to real terminal */
 		    if (before_user != NULL)
 			 before_user(buffer, got);
-		    if ( write(STDOUT_FILENO, buffer, got) != got ) {
+		    if (_pammodutil_write(STDOUT_FILENO, buffer, got) != got ) {
 			 log_this(LOG_WARNING,"couldn't write %d bytes!?",got);
 			 break;
 		    }
@@ -137,7 +140,7 @@ int main(int argc, char **argv)
 	  }
 
 	  if ( FD_ISSET(STDIN_FILENO, &readers) ) {  /* user input */
-	       int got = read(STDIN_FILENO, buffer, BUFSIZ);
+	       int got = _pammodutil_read(STDIN_FILENO, buffer, BUFSIZ);
 	       if (got < 0) {
 		    log_this(LOG_WARNING,"user input junked");
 		    break;
@@ -145,7 +148,7 @@ int main(int argc, char **argv)
 		    /* translate to give to application */
 		    if (before_app != NULL)
 			 before_app(buffer, got);
-		    if ( write(APPIN_FILENO, buffer, got) != got ) {
+		    if (_pammodutil_write(APPIN_FILENO, buffer, got) != got ) {
 			 log_this(LOG_WARNING,"couldn't pass %d bytes!?",got);
 			 break;
 		    }

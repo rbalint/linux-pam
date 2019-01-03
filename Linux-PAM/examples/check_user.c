@@ -1,5 +1,5 @@
 /*
-  $Id: check_user.c,v 1.1.1.1 2001/04/29 04:17:04 hartmans Exp $
+  $Id: check_user.c,v 1.2 2000/12/04 19:02:33 baggins Exp $
   
   This program was contributed by Shane Watts <shane@icarus.bofh.asn.au>
   slight modifications by AGM.

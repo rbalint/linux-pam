@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.1.2 2002/09/15 20:08:40 hartmans Exp $
+# $Id: Makefile,v 1.9 2005/03/29 20:41:20 toady Exp $
 #
 
 # lots of debugging information goes to /tmp/pam-debug.log
@@ -11,6 +11,9 @@ ifeq ($(WITH_LIBDEBUG),yes)
  LIBNAME=libpam_miscd
 else
  LIBNAME=libpam_misc
+endif
+ifeq ($(WITH_PRELUDE),yes)
+ CFLAGS += -DPRELUDE -DLIBPRELUDE_CONFIG_PREFIX=\"`libprelude-config --prefix`\"
 endif
 VERSION=.$(MAJOR_REL)
 MODIFICATION=.$(MINOR_REL)
@@ -60,9 +63,9 @@ static/%.o : %.c
 $(LIBNAMED): $(DLIBOBJECTS)
 ifeq ($(DYNAMIC_LIBPAM),yes)
     ifeq ($(USESONAME),yes)
-	$(LD_L) $(SOSWITCH) $(LIBNAMEDNAME) -o $@ $(DLIBOBJECTS) $(MODULES) $(LINKLIBS)
+	$(LD_L) $(SOSWITCH)$(LIBNAMEDNAME) -o $@ $(DLIBOBJECTS) $(MODULES) $(LINKLIBS)
     else
-	$(LD_L) -o $@ $(DLIBOBJECTS) $(MODULES)
+	$(LD_L) -o $@ $(DLIBOBJECTS) $(MODULES) $(LINKLIBS)
     endif
     ifeq ($(NEEDSONAME),yes)
 	rm -f $(LIBNAMEDFULL)
@@ -74,8 +77,11 @@ endif
 
 $(LIBNAMEDSTATIC): $(SLIBOBJECTS)
 ifeq ($(STATIC_LIBPAM),yes)
+	$(AR) rcu $@ $(SLIBOBJECTS) $(MODULES)
+ifdef RANLIB
 	$(AR) rc $@ $(SLIBOBJECTS) $(MODULES)
 	$(RANLIB) $@
+endif
 endif
 
 install: all
@@ -84,7 +90,11 @@ install: all
 ifeq ($(DYNAMIC_LIBPAM),yes)
 	$(MKDIR) $(FAKEROOT)$(libdir)
 	$(INSTALL) -m $(SHLIBMODE) $(LIBNAMED) $(FAKEROOT)$(libdir)/$(LIBNAMEDFULL)
+ifndef FAKEROOT
 	$(LDCONFIG)
+else
+	$(LDCONFIG) -n $(FAKEROOT)$(libdir)
+endif
   ifneq ($(DYNTYPE),"sl")
 	( cd $(FAKEROOT)$(libdir) ; rm -f $(LIBNAMED) ; ln -s $(LIBNAMEDNAME) $(LIBNAMED) )
   endif
@@ -97,11 +107,14 @@ remove:
 	rm -f $(FAKEROOT)$(INCLUDED)/pam_misc.h
 	rm -f $(FAKEROOT)$(libdir)/$(LIBNAMEDFULL)
 	rm -f $(FAKEROOT)$(libdir)/$(LIBNAMED)
+ifndef FAKEROOT
 	$(LDCONFIG)
+endif
 	rm -f $(FAKEROOT)$(libdir)/$(LIBNAMEDSTATIC)
 
 clean:
 	rm -f a.out core *~ static/*.o dynamic/*.o
 	rm -f *.a *.out *.o *.so ./include/security/*~
+	rm -f *.orig $(LIBNAMEDNAME) $(LIBNAMEDFULL)
 	if [ -d dynamic ]; then rmdir dynamic ; fi
 	if [ -d static ]; then rmdir static ; fi

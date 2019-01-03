@@ -1,7 +1,7 @@
 /*
  * <security/pam_modules.h>
  * 
- * $Id: pam_modules.h,v 1.1.1.1 2001/04/29 04:17:11 hartmans Exp $
+ * $Id: pam_modules.h,v 1.3 2001/02/05 06:50:41 agmorgan Exp $
  *
  */
 

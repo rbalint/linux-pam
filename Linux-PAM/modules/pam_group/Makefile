@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1.1.1 2001/04/29 04:17:21 hartmans Exp $
+# $Id: Makefile,v 1.3 2003/11/27 07:49:46 kukuk Exp $
 #
 # This Makefile controls a build process of $(TITLE) module for
 # Linux-PAM. You should not modify this Makefile (unless you know
@@ -11,7 +11,7 @@ TITLE=pam_group
 LOCAL_CONFILE=./group.conf
 INSTALLED_CONFILE=$(SCONFIGD)/group.conf
 
-DEFS=-DDEFAULT_CONF_FILE=\"$(CONFILE)\"
+DEFS=-DDEFAULT_CONF_FILE=\"$(INSTALLED_CONFILE)\"
 CFLAGS += $(DEFS)
 
 MODULE_SIMPLE_INSTALL=bash -f ../install_conf "$(FAKEROOT)" "$(SCONFIGD)" "$(INSTALLED_CONFILE)" "$(TITLE)" "$(LOCAL_CONFILE)"

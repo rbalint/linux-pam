@@ -1,7 +1,7 @@
 /* pam_permit module */
 
 /*
- * $Id: pam_permit.c,v 1.1.1.1 2001/04/29 04:17:26 hartmans Exp $
+ * $Id: pam_permit.c,v 1.3 2004/09/22 09:37:49 kukuk Exp $
  *
  * Written by Andrew Morgan <morgan@parc.power.net> 1996/3/11
  *
@@ -45,7 +45,9 @@ int pam_sm_authenticate(pam_handle_t *pamh,int flags,int argc
     }
     if (user == NULL || *user == '\0') {
 	D(("username not known"));
-	pam_set_item(pamh, PAM_USER, (const void *) DEFAULT_USER);
+	retval = pam_set_item(pamh, PAM_USER, (const void *) DEFAULT_USER);
+	if (retval != PAM_SUCCESS)
+	    return PAM_USER_UNKNOWN;
     }
     user = NULL;                                            /* clean up */
 

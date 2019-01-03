@@ -2,7 +2,7 @@
 #define _PAM_COMPAT_H
 
 /*
- * $Id: _pam_compat.h,v 1.1.1.1 2001/04/29 04:17:10 hartmans Exp $
+ * $Id: _pam_compat.h,v 1.1.1.1 2000/06/20 22:11:21 agmorgan Exp $
  *
  * This file was contributed by Derrick J Brashear <shadow@dementia.org>
  * slight modification by Brad M. Garcia <bgarcia@fore.com>

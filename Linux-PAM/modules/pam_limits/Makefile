@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.1.1 2001/04/29 04:17:22 hartmans Exp $
+# $Id: Makefile,v 1.4 2004/09/28 13:48:47 kukuk Exp $
 #
 # This Makefile controls a build process of $(TITLE) module for
 # Linux-PAM. You should not modify this Makefile (unless you know
@@ -21,9 +21,15 @@ CFLAGS += $(DEFS)
 MODULE_SIMPLE_INSTALL=bash -f ../install_conf "$(FAKEROOT)" "$(SCONFIGD)" "$(INSTALLED_CONFILE)" "$(TITLE)" "$(LOCAL_CONFILE)"
 MODULE_SIMPLE_REMOVE=rm -f $(FAKEROOT)$(INSTALLED_CONFILE)
 MODULE_SIMPLE_CLEAN=rm -f ./.ignore_age
+ifeq ($(HAVE_LIBCAP),yes)
+MODULE_SIMPLE_EXTRALIBS=-lcap
+endif
 
 include ../Simple.Rules
 
+#else
+#include ../dont_makefile
+#endif
 else
 
 include ../dont_makefile

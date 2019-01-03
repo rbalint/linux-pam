@@ -1,15 +1,15 @@
 /* pam_password.c - PAM Password Management */
 
 /*
- * $Id: pam_password.c,v 1.1.1.1 2001/04/29 04:17:08 hartmans Exp $
+ * $Id: pam_password.c,v 1.3 2003/07/13 20:01:44 vorlon Exp $
  */
-
-#include <stdio.h>
-#include <stdlib.h>
 
 /* #define DEBUG */
 
 #include "pam_private.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 int pam_chauthtok(pam_handle_t *pamh, int flags)
 {

@@ -1,7 +1,7 @@
 
 #ifndef _PAM_USERSDB_H
 #define _PAM_USERSDB_H
-/* $Id: pam_userdb.h,v 1.1.1.1 2001/04/29 04:17:42 hartmans Exp $ */
+/* $Id: pam_userdb.h,v 1.2 2004/09/28 13:48:47 kukuk Exp $ */
    
 /* Header files */
 #include <security/pam_appl.h>
@@ -10,6 +10,9 @@
 #define PAM_DEBUG_ARG		0x0001
 #define PAM_ICASE_ARG		0x0002
 #define PAM_DUMP_ARG		0x0004
+#define PAM_USE_AUTHTOK_ARG	0x0008
+#define PAM_UNKNOWN_OK_ARG	0x0010
+#define PAM_KEY_ONLY_ARG	0x0020
 
 /* Useful macros */
 #define  x_strdup(s)  ( (s) ? strdup(s):NULL )

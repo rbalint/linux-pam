@@ -1,13 +1,13 @@
 /* pam_group module */
 
 /*
- * $Id: pam_group.c,v 1.1.1.2 2002/09/15 20:08:48 hartmans Exp $
+ * $Id: pam_group.c,v 1.7 2004/09/24 13:13:20 kukuk Exp $
  *
  * Written by Andrew Morgan <morgan@linux.kernel.org> 1996/7/6
  */
 
 const static char rcsid[] =
-"$Id: pam_group.c,v 1.1.1.2 2002/09/15 20:08:48 hartmans Exp $;\n"
+"$Id: pam_group.c,v 1.7 2004/09/24 13:13:20 kukuk Exp $;\n"
 "Version 0.5 for Linux-PAM\n"
 "Copyright (c) Andrew G. Morgan 1996 <morgan@linux.kernel.org>\n";
 
@@ -57,6 +57,7 @@ typedef enum { AND, OR } operator;
 
 #include <security/pam_modules.h>
 #include <security/_pam_macros.h>
+#include <security/_pam_modutil.h>
 
 /* --- static functions for checking whether the user should be let in --- */
 
@@ -79,6 +80,12 @@ static void shift_bytes(char *mem, int from, int by)
     }
 }
 
+/* This function should initially be called with buf = NULL. If
+ * an error occurs, the file descriptor is closed. Subsequent
+ * calls with a closed descriptor will cause buf to be deallocated.
+ * Therefore, always check buf after calling this to see if an error
+ * occurred.
+ */
 static int read_field(int fd, char **buf, int *from, int *to)
 {
     /* is buf set ? */
@@ -126,6 +133,7 @@ static int read_field(int fd, char **buf, int *from, int *to)
 	i = read(fd, *to + *buf, PAM_GROUP_BUFLEN - *to);
 	if (i < 0) {
 	    _log_err("error reading " PAM_GROUP_CONF);
+	    close(fd);
 	    return -1;
 	} else if (!i) {
 	    close(fd);
@@ -165,6 +173,7 @@ static int read_field(int fd, char **buf, int *from, int *to)
 		} else {
 		    _log_err("internal error in " __FILE__
 			     " at line %d", __LINE__ );
+	            close(fd);
 		    return -1;
 		}
 		break;
@@ -518,7 +527,7 @@ static int find_member(const char *string, int *at)
 #define GROUP_BLK 10
 #define blk_size(len) (((len-1 + GROUP_BLK)/GROUP_BLK)*GROUP_BLK)
 
-static int mkgrplist(char *buf, gid_t **list, int len)
+static int mkgrplist(pam_handle_t *pamh, char *buf, gid_t **list, int len)
 {
      int l,at=0;
      int blks;
@@ -581,7 +590,7 @@ static int mkgrplist(char *buf, gid_t **list, int len)
 	  {
 	      const struct group *grp;
 
-	      grp = getgrnam(buf+at);
+	      grp = _pammodutil_getgrnam(pamh, buf+at);
 	      if (grp == NULL) {
 		  _log_err("bad group: %s", buf+at);
 	      } else {
@@ -600,8 +609,8 @@ static int mkgrplist(char *buf, gid_t **list, int len)
 }
 
 
-static int check_account(const char *service, const char *tty
-     , const char *user)
+static int check_account(pam_handle_t *pamh, const char *service,
+			 const char *tty, const char *user)
 {
     int from=0,to=0,fd=-1;
     char *buffer=NULL;
@@ -700,7 +709,7 @@ static int check_account(const char *service, const char *tty
 
 	if (good) {
 	    D(("adding %s to gid list", buffer));
-	    good = mkgrplist(buffer, &grps, no_grps);
+	    good = mkgrplist(pamh, buffer, &grps, no_grps);
 	    if (good < 0) {
 		no_grps = 0;
 	    } else {
@@ -771,7 +780,7 @@ PAM_EXTERN int pam_sm_setcred(pam_handle_t *pamh, int flags
     /* only interested in establishing credentials */
 
     setting = flags;
-    if (!(setting & PAM_ESTABLISH_CRED)) {
+    if (!(setting & (PAM_ESTABLISH_CRED | PAM_REINITIALIZE_CRED))) {
 	D(("ignoring call - not for establishing credentials"));
 	return PAM_SUCCESS;            /* don't fail because of this */
     }
@@ -823,7 +832,7 @@ PAM_EXTERN int pam_sm_setcred(pam_handle_t *pamh, int flags
     /* We initialize the pwdb library and check the account */
     retval = pwdb_start();                             /* initialize */
     if (retval == PWDB_SUCCESS) {
-	retval = check_account(service,tty,user);      /* get groups */
+	retval = check_account(pamh, service,tty,user);      /* get groups */
 	(void) pwdb_end();                                /* tidy up */
     } else {
 	D(("failed to initialize pwdb; %s", pwdb_strerror(retval)));
@@ -832,7 +841,7 @@ PAM_EXTERN int pam_sm_setcred(pam_handle_t *pamh, int flags
     }
 
 #else /* WANT_PWDB */
-    retval = check_account(service,tty,user);          /* get groups */
+    retval = check_account(pamh,service,tty,user);          /* get groups */
 #endif /* WANT_PWDB */
 
     return retval;

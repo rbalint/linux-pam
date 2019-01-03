@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.1.2 2002/09/15 20:08:47 hartmans Exp $
+# $Id: Makefile,v 1.4 2004/09/22 09:37:47 kukuk Exp $
 #
 # This directory contains a pam_filter filter executable
 #
@@ -12,16 +12,19 @@ TITLE=upperLOWER
 
 #
 
-CFLAGS += -I../include
+CFLAGS += -I../include -I../../pammodutil/include
 
 OBJS = $(TITLE).o
+
+LIBS +=  $(GLIB_LIBS) -L../../pammodutil -lpammodutil
+LDFLAGS = $(LIBS)
 
 ####################### don't edit below #######################
 
 all: $(TITLE)
 
 $(TITLE): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TITLE) $(OBJS)
+	$(CC) $(CFLAGS) -o $(TITLE) $(OBJS) $(LDFLAGS)
 	$(STRIP) $(TITLE)
 
 install:

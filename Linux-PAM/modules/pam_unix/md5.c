@@ -1,5 +1,5 @@
 /*
- * $Id: md5.c,v 1.1.1.1 2001/04/29 04:17:37 hartmans Exp $
+ * $Id: md5.c,v 1.1.1.1 2000/06/20 22:12:03 agmorgan Exp $
  *
  * This code implements the MD5 message-digest algorithm.
  * The algorithm is due to Ron Rivest.  This code was

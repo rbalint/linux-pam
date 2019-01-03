@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.1.1.2 2002/09/15 20:08:58 hartmans Exp $
+# $Id: Makefile,v 1.5 2004/09/24 13:13:21 kukuk Exp $
 #
 # This Makefile controls a build process of $(TITLE) module and
 # application for Linux-PAM. You should not modify this Makefile
@@ -44,6 +44,12 @@ endif
 APPLICATION = $(TITLE)
 APPMODE = 755
 
+LINK_PAMMODUTILS = -L../pammodutil -lpammodutil -L../../libpam -lpam
+INCLUDE_PAMMODUTILS = -I../pammodutil/include
+
+LDFLAGS += $(LINK_PAMMODUTILS)
+CFLAGS += $(INCLUDE_PAMMODUTILS)
+
 ####################### don't edit below #######################
 
 all: dirs $(LIBSHARED) $(LIBSTATIC) register $(APPLICATION)
@@ -65,10 +71,10 @@ ifdef DYNAMIC
 $(LIBOBJD): $(LIBSRC)
 
 $(LIBSHARED):   $(LIBOBJD)
-	$(LD_D) -o $@ $(LIBOBJD)
+	$(LD_D) -o $@ $(LIBOBJD) $(LDFLAGS)
 
 $(APPLICATION): $(APPOBJD) $(TITLE).c
-	$(CC) $(CFLAGS) -o $@ $(APPOBJD) $(LOADLIBES)
+	$(CC) $(CFLAGS) -o $@ $(APPOBJD) $(LDFLAGS) $(LOADLIBES)
     
 endif
 
