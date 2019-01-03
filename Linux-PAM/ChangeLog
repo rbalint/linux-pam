@@ -1,3 +1,232 @@
+2007-07-18  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* release version 0.99.8.1
+
+	* libpam/pam_audit.c: Include unistd.h for getuid().
+	* libpam/Makefile.am: Bump version number.
+
+2007-07-12  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* libpam/pam_audit.c (_pam_audit_writelog): Don't return
+	error if application runs as normal user. Fixes regression
+	introduced with last change.
+
+2007-07-10  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* configure.in: Add --with-db-uniquename option to support
+	db libraries and functions with unique name extension.
+	Patch from Diego 'Flameeyes' Pettenò <flameeyes@gmail.com>.
+
+	* modules/pam_limits/pam_limits.c: Include locale.h.
+
+2007-07-06  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* release version 0.99.8.0
+
+	* configure.in: Check for audit_log_acct_message instead of
+	audit_log_user_message.
+	* libpam/pam_audit.c: Use audit_log_acct_message.
+	Based on patch from Mark J Cox <mjc@redhat.com>.
+	* libpam/Makefile.am: Bump version number of libpam.
+
+	* modules/pam_umask/pam_umask.c (set_umask): mode_t is 32bit,
+	not 64bit.
+
+	* xtests/tst-pam_limits1.c: Fix printf arguments.
+
+	* po/*.po: Merge po files with latest code changes.
+
+2007-06-26  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_limits/pam_limits.c (process_limit): Check upper and
+	lower limit of nice value, fix off-by-one in conversation to rlim_t.
+	* xtests/Makefile.am: Add new pam_limits test case.
+	* xtests/limits.conf: New, config file for test case.
+	* xtests/pam_limits1.c: New, test case for RLIMIT_NICE.
+	* xtests/pam_limits1.sh: Likewise.
+	* xtests/pam_limits1.pamd: Likewise.
+
+2007-06-25  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_access/pam_access.c (list_match): Use saveptr of strtok_r
+	result for recursive calls.
+	* xtests/Makefile.am: Add new pam_access test cases.
+	* xtests/pam_access1.c: New test case.
+	* xtests/pam_access2.c: Likewise.
+	* xtests/pam_access3.c: Likewise.
+	* xtests/pam_access4.c: Likewise.
+	* xtests/pam_access1.sh: Wrapper to create user accounts.
+	* xtests/pam_access2.sh: Likewise.
+	* xtests/pam_access3.sh: Likewise.
+	* xtests/pam_access4.sh: Likewise.
+	* xtests/pam_access1.pamd: PAM config file for pam_access tests.
+	* xtests/pam_access2.pamd: Likewise.
+	* xtests/pam_access3.pamd: Likewise.
+	* xtests/pam_access4.pamd: Likewise.
+	* xtests/access.conf: Config file for pam_access tests.
+	* xtests/run-tests.sh: Install access.conf into system.
+
+2007-06-22  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_loginuid/pam_loginuid.c (set_loginuid): Print
+	better error message if /proc/self/loginuid cannot be opened.
+
+	* modules/pam_limits/pam_limits.c (process_limit): Check for
+	variable overflow after multiplication [bnc#283001].
+
+	* modules/pam_access/pam_access.c: Add new syntax for groups
+	in access.conf to differentiate group names from account names.
+	Based on patch from Julien Lecomte <julien@famille-lecomte.net>,
+	solves feature request [#411390].
+	* modules/pam_access/access.conf: Add example for new group
+	syntax.
+	* modules/pam_access/access.conf.5.xml: Document new syntax.
+
+2007-06-20  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_cracklib/pam_cracklib.8.xml: Document new minclass
+	option.
+	* modules/pam_cracklib/pam_cracklib.c: Add support for minimum
+	character classes [#1688777]. Based on patch from Keith Schincke.
+
+	* xtests/tst-pam_cracklib2.c: New, test case for minclass option.
+	* xtests/tst-pam_cracklib2.pamd: New, PAM config file for test case.
+	* xtests/Makefile.am: Add new testcase.
+
+	* xtests/pam_cracklib.c: Fix comment what this application tests.
+
+	* configure.in: Use /lib64 on x86-64, ppc64, s390x, sparc64
+
+2007-06-15  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_selinux/pam_selinux.8.xml: Remove multiple option,
+	add select_context and use_current_range options.
+	* modules/pam_selinux/pam_selinux.c (send_audit_message): Added
+	function for auditing role/level changes.
+	(query_response): Add default response.
+	(select_context): Removed.
+	(manual_context): Query only role and level.
+	(mls_range_allowed): Added function for range check.
+	(config_context): Added function for role and level override.
+	(pam_sm_open_session): Remove multiple option, add select_context
+	and use_current_range_options. Use getseuserbyname to obtain
+	SELinux user and level. Audit role/level changes. Call setkeycreatecon
+	to assign key creation context. Don't fail on errors when SELinux
+	is not in enforcing mode.
+	* configure.in: Check for setkeycreatecon().
+
+	* modules/pam_namespace/README.xml: Avoid duplication of
+	documentation.
+	* modules/pam_namespace/namespace.conf: More real life example
+	from MLS support.
+	* modules/pam_namespace/namespace.conf.5.xml: Likewise plus
+	properly describe how instance directory names are formed.
+	* modules/pam_namespace/namespace.init: Preserve euid when
+	called from setuid apps (su, newrole).
+	* modules/pam_namespace/pam_namespace.8.xml: Added option
+	no_unmount_on_close.
+	* modules/pam_namespace/pam_namespace.c (process_line): Polyinst
+	methods are now user, level and context. Fix crash on unknown
+	override user in config file.
+	(ns_override): Add explicit uid parameter.
+	(form_context): Skip for user method. Implement level based
+	polyinstantiation.
+	(poly_name): Initialize contexts. Add level based polyinst,
+	remove 'both' metod. Use raw contexts for instance names,
+	truncate long instance names and add hash.
+	(ns_setup): Hashing moved to poly_name().
+	(setup_namespace): Handle correctly override users for
+	su (when unmnt_remnt is used).
+	(pam_sm_close_session): Added no_unmount_on_close option.
+	* modules/pam_namespace/pam_namespace.h: Added
+	no_unmount_on_close_option, level method, limit on instance
+	directory name length.
+
+2007-05-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* xtests/run-xtests.sh: Use SRCDIR to find PAM config files.
+	* xtests/Makefile.am: Call run-xtests.sh with srcdir as first
+	argument.
+	Based on patch by Bernard Leak <thisisnotapipe@hotmail.com>.
+
+2007-04-30  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_limits/limits.conf: Address space limit is KB.
+	* modules/pam_limits/limits.conf.5.xml: Likewise.
+	Reported by Thomas Vander Stichele <thomas@apestaart.org>.
+
+	* modules/pam_mail/pam_mail.c (_do_mail): Remove duplicate
+	check for PAM_SILENT and don't bail out if it is set [#1706247].
+
+2007-03-29  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_access/pam_access.c (login_access, list_match):
+	Replace strtok with strtok_r.
+	* modules/pam_cracklib/pam_cracklib.c (check_old_password):
+	Likewise.
+	* modules/pam_ftp/pam_ftp.c (lookup, pam_authenticate):
+	Likewise.
+	* modules/pam_unix/pam_unix_passwd.c (check_old_password,
+	save_old_password): Likewise.
+
+	* modules/pam_limits/Makefile.am: Define limits.d dir and install it.
+	* modules/pam_limits/pam_limits.8.xml: Describe limits.d parsing.
+	* modules/pam_limits/pam_limits.c (pam_limit_s): Make conf_file ptr.
+	(pam_parse): conf_file is now ptr.
+	(pam_sm_open_session): Add parsing files from limits.d subdir using
+	glob, change pl to pointer.
+
+2007-03-12  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* po/ar.po: New translation.
+	* po/ca.po: Likewise.
+	* po/da.po: Likewise.
+	* po/ru.po: Likewise.
+	* po/sv.po: Likewise.
+	* po/zu.po: Likewise.
+	* po/LINGUAS: Add ar, ca, da, ru, sv, zu
+
+	* po/hu.po: Update translation.
+
+2007-02-21  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_unix/unix_chkpwd.c (_unix_verify_password): Test for
+	allocation failure in bigcrypt().
+
+	* modules/pam_unix/pam_unix_passwd.c (pam_sm_chauthtok): Allow
+	modification of '*' password by root.
+
+2007-02-06  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_loginuid/pam_loginuid.c (set_loginuid): Remove
+	debug syslog message when loginuid doesn't exist.
+
+2007-02-01  Tomas Mraz  <t8m@centrum.cz>
+
+	* xtests/tst-pam_unix3.c: Fix typos in comments.
+
+	* modules/pam_unix/support.c (_unix_verify_password): Explicitly
+	disallow '!' in the beginning of password hash. Treat only
+	13 bytes password hash specifically. (Suggested by Solar Designer.)
+	Fix a warning and test for allocation failure.
+	* modules/pam_unix/unix_chkpwd.c (_unix_verify_password): Likewise.
+
+2007-01-31  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* xtests/Makefile.am: Add new pam_unix.so tests
+	* xtests/run-xtests.sh: Prefer shell scripts (wrapper)
+	over binaries.
+	* xtests/tst-pam_cracklib1.c: Fix typo.
+	* xtests/tst-pam_unix1.c: New, for sucurity fix.
+	* xtests/tst-pam_unix1.pamd: New.
+	* xtests/tst-pam_unix1.sh: New.
+	* xtests/tst-pam_unix2.c: New, for crypt checks.
+	* xtests/tst-pam_unix2.pamd: New.
+	* xtests/tst-pam_unix2.sh: New.
+	* xtests/tst-pam_unix3.c: New, for bigcrypt checks.
+	* xtests/tst-pam_unix3.pamd: New.
+	* xtests/tst-pam_unix3.sh: New.
+
 2007-01-23  Thorsten Kukuk  <kukuk@suse.de>
 
 	* release 0.99.7.1
@@ -5,7 +234,7 @@
 	* configure.in: Set version number to 0.99.7.1
 
 2007-01-23  Thorsten Kukuk  <kukuk@thukuk.de>
-	    Tomas Mraz  <t2m@centrum.cz>
+	    Tomas Mraz  <t8m@centrum.cz>
 
 	* modules/pam_unix/support.c (_unix_verify_password): Always
 	compare full encrypted passwords (CVE-2007-0003).
@@ -27,12 +256,12 @@
 	* Makefile.am (M4_FILES): Replace GNU make extension by listing
 	all m4 files.
 
-2007-07-17  Tomas Mraz  <t8m@centrum.cz>
+2007-01-17  Tomas Mraz  <t8m@centrum.cz>
 
 	* po/*.po: Updated strings to translate.
 	* po/Linux-PAM.pot: Likewise.
 
-2007-07-16  Thorsten Kukuk  <kukuk@thkukuk.de>
+2007-01-16  Thorsten Kukuk  <kukuk@thkukuk.de>
 
 	* doc/man/pam.conf-syntax.xml: Improve documentation about
 	sufficient keyword (Patch by Petteri Räty <betelgeuse@gentoo.org>)

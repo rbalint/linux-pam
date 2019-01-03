@@ -89,6 +89,9 @@ static const char *sep = ", \t";		/* list-element separator */
 #define YES             1
 #define NO              0
 
+/* Only allow group entries of the form "(xyz)" */
+static int only_new_group_syntax = NO;
+
  /*
   * A structure to bundle up all login-related information to keep the
   * functional interfaces as generic as possible.
@@ -136,6 +139,8 @@ parse_args(pam_handle_t *pamh, struct login_info *loginfo,
 
 	} else if (strcmp (argv[i], "debug") == 0) {
 	    pam_access_debug = YES;
+	} else if (strcmp (argv[i], "nodefgroup") == 0) {
+	    only_new_group_syntax = YES;
 	} else {
 	    pam_syslog(pamh, LOG_ERR, "unrecognized option [%s]", argv[i]);
 	}
@@ -151,6 +156,7 @@ typedef int match_func (pam_handle_t *, char *, struct login_info *);
 static int list_match (pam_handle_t *, char *, struct login_info *,
 		       match_func *);
 static int user_match (pam_handle_t *, char *, struct login_info *);
+static int group_match (pam_handle_t *, const char *, const char *);
 static int from_match (pam_handle_t *, char *, struct login_info *);
 static int string_match (pam_handle_t *, const char *, const char *);
 static int network_netmask_match (pam_handle_t *, const char *, const char *);
@@ -321,6 +327,7 @@ login_access (pam_handle_t *pamh, struct login_info *item)
     int     match = NO;
     int     end;
     int     lineno = 0;		/* for diagnostics */
+    char   *sptr;
 
     if (pam_access_debug)
       pam_syslog (pamh, LOG_DEBUG,
@@ -354,9 +361,9 @@ login_access (pam_handle_t *pamh, struct login_info *item)
 		continue;
 
 	    /* Allow field seperator in last field of froms */
-	    if (!(perm = strtok(line, fs))
-		|| !(users = strtok((char *) 0, fs))
-  	        || !(froms = strtok((char *) 0, "\n"))) {
+	    if (!(perm = strtok_r(line, fs, &sptr))
+		|| !(users = strtok_r(NULL, fs, &sptr))
+  	        || !(froms = strtok_r(NULL, "\n", &sptr))) {
 		pam_syslog(pamh, LOG_ERR, "%s: line %d: bad field count",
 			   item->config_file, lineno);
 		continue;
@@ -398,6 +405,11 @@ static int list_match(pam_handle_t *pamh,
 {
     char   *tok;
     int     match = NO;
+    char   *sptr;
+
+    if (pam_access_debug)
+      pam_syslog (pamh, LOG_DEBUG,
+		  "list_match: list=%s, item=%s", list, item->user->pw_name);
 
     /*
      * Process tokens one at a time. We have exhausted all possible matches
@@ -406,7 +418,8 @@ static int list_match(pam_handle_t *pamh,
      * the match is affected by any exceptions.
      */
 
-    for (tok = strtok(list, sep); tok != 0; tok = strtok((char *) 0, sep)) {
+    for (tok = strtok_r(list, sep, &sptr); tok != 0;
+	 tok = strtok_r(NULL, sep, &sptr)) {
 	if (strcasecmp(tok, "EXCEPT") == 0)	/* EXCEPT: give up */
 	    break;
 	if ((match = (*match_fn) (pamh, tok, item)))	/* YES */
@@ -415,9 +428,9 @@ static int list_match(pam_handle_t *pamh,
     /* Process exceptions to matches. */
 
     if (match != NO) {
-	while ((tok = strtok((char *) 0, sep)) && strcasecmp(tok, "EXCEPT"))
+	while ((tok = strtok_r(NULL, sep, &sptr)) && strcasecmp(tok, "EXCEPT"))
 	     /* VOID */ ;
-	if (tok == 0 || list_match(pamh, (char *) 0, item, match_fn) == NO)
+	if (tok == 0 || list_match(pamh, sptr, item, match_fn) == NO)
 	    return (match);
     }
     return (NO);
@@ -425,7 +438,7 @@ static int list_match(pam_handle_t *pamh,
 
 /* myhostname - figure out local machine name */
 
-static char * myhostname(void)
+static char *myhostname(void)
 {
     static char name[MAXHOSTNAMELEN + 1];
 
@@ -439,7 +452,7 @@ static char * myhostname(void)
 /* netgroup_match - match group against machine or user */
 
 static int
-netgroup_match (pam_handle_t *pamh, const char *group,
+netgroup_match (pam_handle_t *pamh, const char *netgroup,
 		const char *machine, const char *user)
 {
   char *mydomain = NULL;
@@ -448,11 +461,12 @@ netgroup_match (pam_handle_t *pamh, const char *group,
   yp_get_default_domain(&mydomain);
 
 
-  retval = innetgr (group, machine, user, mydomain);
+  retval = innetgr (netgroup, machine, user, mydomain);
   if (pam_access_debug == YES)
     pam_syslog (pamh, LOG_DEBUG,
-		"netgroup_match: %d (group=%s, machine=%s, user=%s, domain=%s)",
-		retval, group ? group : "NULL",  machine ? machine : "NULL",
+		"netgroup_match: %d (netgroup=%s, machine=%s, user=%s, domain=%s)",
+		retval, netgroup ? netgroup : "NULL",
+		machine ? machine : "NULL",
 		user ? user : "NULL", mydomain ? mydomain : "NULL");
   return retval;
 
@@ -487,14 +501,44 @@ user_match (pam_handle_t *pamh, char *tok, struct login_info *item)
 		from_match (pamh, at + 1, &fake_item));
     } else if (tok[0] == '@') /* netgroup */
       return (netgroup_match (pamh, tok + 1, (char *) 0, string));
+    else if (tok[0] == '(' && tok[strlen(tok) - 1] == ')')
+      return (group_match (pamh, tok, string));
     else if (string_match (pamh, tok, string)) /* ALL or exact match */
-	return YES;
-    else if (pam_modutil_user_in_group_nam_nam (pamh, item->user->pw_name, tok))
+      return YES;
+    else if (only_new_group_syntax == NO &&
+	     pam_modutil_user_in_group_nam_nam (pamh,
+						item->user->pw_name, tok))
       /* try group membership */
       return YES;
 
     return NO;
 }
+
+
+/* group_match - match a username against token named group */
+
+static int
+group_match (pam_handle_t *pamh, const char *tok, const char* usr)
+{
+    char grptok[BUFSIZ];
+
+    if (pam_access_debug)
+        pam_syslog (pamh, LOG_DEBUG,
+		    "group_match: grp=%s, user=%s", grptok, usr);
+
+    if (strlen(tok) < 3)
+        return NO;
+
+    /* token is recieved under the format '(...)' */
+    memset(grptok, 0, BUFSIZ);
+    strncpy(grptok, tok + 1, strlen(tok) - 2);
+
+    if (pam_modutil_user_in_group_nam_nam(pamh, usr, grptok))
+        return YES;
+
+  return NO;
+}
+
 
 /* from_match - match a host or tty against a list of tokens */
 
