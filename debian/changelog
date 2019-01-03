@@ -10,6 +10,9 @@ pam (1.1.8-4) UNRELEASED; urgency=medium
   * Acknowledge security NMU.
   * pam-auth-update: don't mishandle trailing whitespace in profiles.
     LP: #1487103.
+  * debian/control: update VCS headers to point to git (temporarily under
+    my personal salsa namespace, until I get around to restoring team
+    setup).
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
 
