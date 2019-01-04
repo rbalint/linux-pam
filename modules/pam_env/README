@@ -16,6 +16,9 @@ This module can also parse a file with simple KEY=VAL pairs on separate lines
 the envfile flag and turn it on or off by setting the readenv flag to 1 or 0
 respectively.
 
+Since setting of PAM environment variables can have side effects to other
+modules, this module should be the last one on the stack.
+
 OPTIONS
 
 conffile=/path/to/pam_env.conf

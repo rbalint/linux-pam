@@ -51,13 +51,13 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
 	$(top_srcdir)/m4/japhar_grep_cflags.m4 \
 	$(top_srcdir)/m4/jh_path_xml_catalog.m4 \
 	$(top_srcdir)/m4/ld-O1.m4 $(top_srcdir)/m4/ld-as-needed.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/libprelude.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/nls.m4 \
-	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/progtest.m4 \
-	$(top_srcdir)/configure.in
+	$(top_srcdir)/m4/ld-no-undefined.m4 $(top_srcdir)/m4/lib-ld.m4 \
+	$(top_srcdir)/m4/lib-link.m4 $(top_srcdir)/m4/lib-prefix.m4 \
+	$(top_srcdir)/m4/libprelude.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
+	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -85,7 +85,8 @@ am_libpam_la_OBJECTS = pam_account.lo pam_auth.lo pam_data.lo \
 	pam_modutil_getpwnam.lo pam_modutil_ioloop.lo \
 	pam_modutil_getgrgid.lo pam_modutil_getpwuid.lo \
 	pam_modutil_getgrnam.lo pam_modutil_getspnam.lo \
-	pam_modutil_getlogin.lo pam_modutil_ingroup.lo
+	pam_modutil_getlogin.lo pam_modutil_ingroup.lo \
+	pam_modutil_priv.lo
 libpam_la_OBJECTS = $(am_libpam_la_OBJECTS)
 libpam_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -117,6 +118,8 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BROWSER = @BROWSER@
+BUILD_CFLAGS = @BUILD_CFLAGS@
+BUILD_LDFLAGS = @BUILD_LDFLAGS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CC_FOR_BUILD = @CC_FOR_BUILD@
@@ -256,7 +259,9 @@ lt_ECHO = @lt_ECHO@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+pam_cv_ld_O1 = @pam_cv_ld_O1@
 pam_cv_ld_as_needed = @pam_cv_ld_as_needed@
+pam_cv_ld_no_undefined = @pam_cv_ld_no_undefined@
 pam_xauth_path = @pam_xauth_path@
 pdfdir = @pdfdir@
 prefix = @prefix@
@@ -283,7 +288,7 @@ include_HEADERS = include/security/_pam_compat.h \
 noinst_HEADERS = pam_prelude.h pam_private.h pam_tokens.h \
 		pam_modutil_private.h pam_static_modules.h
 
-libpam_la_LDFLAGS = -no-undefined -version-info 82:3:82 \
+libpam_la_LDFLAGS = -no-undefined -version-info 83:0:83 \
 	$(am__append_3)
 libpam_la_LIBADD = @LIBAUDIT@ $(LIBPRELUDE_LIBS) @LIBDL@ \
 	$(am__append_2)
@@ -296,7 +301,8 @@ libpam_la_SOURCES = pam_account.c pam_auth.c pam_data.c pam_delay.c \
 	pam_vprompt.c pam_syslog.c pam_dynamic.c pam_audit.c \
 	pam_modutil_cleanup.c pam_modutil_getpwnam.c pam_modutil_ioloop.c \
 	pam_modutil_getgrgid.c pam_modutil_getpwuid.c pam_modutil_getgrnam.c \
-	pam_modutil_getspnam.c pam_modutil_getlogin.c  pam_modutil_ingroup.c
+	pam_modutil_getspnam.c pam_modutil_getlogin.c pam_modutil_ingroup.c \
+	pam_modutil_priv.c
 
 all: all-am
 
@@ -389,6 +395,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_modutil_getspnam.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_modutil_ingroup.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_modutil_ioloop.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_modutil_priv.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_password.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_prelude.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam_session.Plo@am__quote@

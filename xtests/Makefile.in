@@ -17,7 +17,6 @@
 #
 # Copyright (c) 2006 Thorsten Kukuk <kukuk@suse.de>
 #
-
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -36,7 +35,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = $(am__EXEEXT_1)
+EXTRA_PROGRAMS = $(am__EXEEXT_1)
 subdir = xtests
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -45,13 +44,13 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/gettext.m4 \
 	$(top_srcdir)/m4/japhar_grep_cflags.m4 \
 	$(top_srcdir)/m4/jh_path_xml_catalog.m4 \
 	$(top_srcdir)/m4/ld-O1.m4 $(top_srcdir)/m4/ld-as-needed.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/libprelude.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/nls.m4 \
-	$(top_srcdir)/m4/po.m4 $(top_srcdir)/m4/progtest.m4 \
-	$(top_srcdir)/configure.in
+	$(top_srcdir)/m4/ld-no-undefined.m4 $(top_srcdir)/m4/lib-ld.m4 \
+	$(top_srcdir)/m4/lib-link.m4 $(top_srcdir)/m4/lib-prefix.m4 \
+	$(top_srcdir)/m4/libprelude.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/m4/nls.m4 $(top_srcdir)/m4/po.m4 \
+	$(top_srcdir)/m4/progtest.m4 $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -68,7 +67,6 @@ am__EXEEXT_1 = tst-pam_dispatch1$(EXEEXT) tst-pam_dispatch2$(EXEEXT) \
 	tst-pam_succeed_if1$(EXEEXT) tst-pam_group1$(EXEEXT) \
 	tst-pam_authfail$(EXEEXT) tst-pam_authsucceed$(EXEEXT) \
 	tst-pam_pwhistory1$(EXEEXT) tst-pam_time1$(EXEEXT)
-PROGRAMS = $(noinst_PROGRAMS)
 tst_pam_access1_SOURCES = tst-pam_access1.c
 tst_pam_access1_OBJECTS = tst-pam_access1.$(OBJEXT)
 tst_pam_access1_LDADD = $(LDADD)
@@ -174,6 +172,8 @@ AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BROWSER = @BROWSER@
+BUILD_CFLAGS = @BUILD_CFLAGS@
+BUILD_LDFLAGS = @BUILD_LDFLAGS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CC_FOR_BUILD = @CC_FOR_BUILD@
@@ -313,7 +313,9 @@ lt_ECHO = @lt_ECHO@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+pam_cv_ld_O1 = @pam_cv_ld_O1@
 pam_cv_ld_as_needed = @pam_cv_ld_as_needed@
+pam_cv_ld_no_undefined = @pam_cv_ld_no_undefined@
 pam_xauth_path = @pam_xauth_path@
 pdfdir = @pdfdir@
 prefix = @prefix@
@@ -333,7 +335,7 @@ AM_CFLAGS = -DLIBPAM_COMPILE -I$(top_srcdir)/libpam/include \
 AM_LDFLAGS = -L$(top_builddir)/libpam -lpam \
 	-L$(top_builddir)/libpam_misc -lpam_misc
 
-CLEANFILES = *~
+CLEANFILES = *~ $(XTESTS)
 EXTRA_DIST = run-xtests.sh tst-pam_dispatch1.pamd tst-pam_dispatch2.pamd \
 	tst-pam_dispatch3.pamd tst-pam_dispatch4.pamd \
 	tst-pam_dispatch5.pamd \
@@ -404,13 +406,6 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-
-clean-noinstPROGRAMS:
-	@list='$(noinst_PROGRAMS)'; for p in $$list; do \
-	  f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
-	  echo " rm -f $$p $$f"; \
-	  rm -f $$p $$f ; \
-	done
 tst-pam_access1$(EXEEXT): $(tst_pam_access1_OBJECTS) $(tst_pam_access1_DEPENDENCIES) 
 	@rm -f tst-pam_access1$(EXEEXT)
 	$(LINK) $(tst_pam_access1_OBJECTS) $(tst_pam_access1_LDADD) $(LIBS)
@@ -609,7 +604,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -638,8 +633,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-noinstPROGRAMS \
-	mostlyclean-am
+clean-am: clean-generic clean-libtool mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -698,17 +692,17 @@ uninstall-am:
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-noinstPROGRAMS ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am
+	clean-libtool ctags distclean distclean-compile \
+	distclean-generic distclean-libtool distclean-tags distdir dvi \
+	dvi-am html html-am info info-am install install-am \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags uninstall uninstall-am
 
 
 xtests: $(XTESTS) run-xtests.sh
