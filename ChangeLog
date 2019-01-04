@@ -1,26 +1,1116 @@
-2008-04-16  Thorsten Kukuk  <kukuk@thkukuk.de>
+2009-06-19  Thorsten Kukuk  <kukuk@thkukuk.de>
 
-	* release version 1.0.1
+	* release version 1.1.0
 
-	* configure.in: Bump version number
-	* libpam/Makefile.am: Bump version number
+2009-06-16  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* doc/sag/Linux-PAM_SAG.xml: Fix typos.
+	* doc/adg/Linux-PAM_ADG.xml: Likewise.
+	* doc/mwg/Linux-PAM_MWG.xml: Likewise.
+
+2009-06-08  Rajesh Ranjan <rajesh672@gmail.com>
+
+	* po/hi.po: Updated translations.
+
+2009-06-01  Jaswinder Singh <jsingh@redhat.com>
+
+	* po/pa.po: Updated translations.
+
+2009-06-01   Tomáš Mráz <t8m@centrum.cz>
+
+	* modules/pam_pwhistory/opasswd.c (save_old_password): Don't
+	call fclose() on NULL descriptor. Found by Steve Grubb.
+
+2009-06-01  Ville Skyttä <ville.skytta@iki.fi>
+
+	* modules/pam_limits/pam_limits.8.xml: Only *.conf
+	files are parsed. Spelling fixes.
+	* modules/pam_access/pam_access.8.xml: Spelling fixes.
+	* modules/pam_cracklib/pam_cracklib.8.xml: Likewise.
+	* modules/pam_echo/pam_echo.8.xml: Likewise.
+	* modules/pam_env/pam_env.8.xml: Likewise.
+	* modules/pam_exec/pam_exec.8.xml: Likewise.
+	* modules/pam_filter/pam_filter.8.xml: Likewise.
+	* modules/pam_ftp/pam_ftp.8.xml: Likewise.
+	* modules/pam_group/pam_group.8.xml: Likewise.
+	* modules/pam_issue/pam_issue.8.xml: Likewise.
+	* modules/pam_lastlog/pam_lastlog.8.xml: Likewise.
+	* modules/pam_listfile/pam_listfile.8.xml: Likewise.
+	* modules/pam_localuser/pam_localuser.8.xml: Likewise.
+	* modules/pam_loginuid/pam_loginuid.8.xml: Likewise.
+	* modules/pam_mkhomedir/pam_mkhomedir.8.xml: Likewise.
+	* modules/pam_motd/pam_motd.8.xml: Likewise.
+	* modules/pam_namespace/pam_namespace.8.xml: Likewise.
+	* modules/pam_pwhistory/pam_pwhistory.8.xml: Likewise.
+	* modules/pam_selinux/pam_selinux.8.xml: Likewise.
+	* modules/pam_succeed_if/pam_succeed_if.8.xml: Likewise.
+	* modules/pam_tally/pam_tally.8.xml: Likewise.
+	* modules/pam_tally2/pam_tally2.8.xml: Likewise.
+	* modules/pam_time/pam_time.8.xml: Likewise.
+	* modules/pam_timestamp/pam_timestamp.8.xml: Likewise.
+	* modules/pam_timestamp/pam_timestamp_check.8.xml: Likewise.
+	* modules/pam_tty_audit/pam_tty_audit.8.xml: Likewise.
+	* modules/pam_umask/pam_umask.8.xml: Likewise.
+	* modules/pam_unix/pam_unix.8.xml: Likewise.
+	* modules/pam_xauth/pam_xauth.8.xml: Likewise.
+
+2009-05-28  Jaswinder Singh <jsingh@redhat.com>
+
+	* po/pa.po: Updated translations.
+
+2009-05-21  Albert Carabasa Giribet <albertc@asic.udl.cat>
+
+	* po/ca.po: Updated translations.
+
+2009-05-11  Ani Peter <anipeter@fedoraproject.org>
+
+	* po/ml.po: Updated translations.
+
+2009-05-11  Charles-Antoine Couret <cacouret@wanadoo.fr>
+
+	* po/fr.po: Updated translations.
+
+2009-05-11  Tomáš Mráz <t8m@centrum.cz>
+
+	* modules/pam_unix/pam_unix_passwd.c (_unix_run_update_binary): Remove
+	unnecessary setuid() call.
+
+2009-05-05  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* release version 1.0.92
+	* libpamc/Makefile.am (libpamc_la_LDFLAGS): Increase revesion.
+	* configure.in: Increase version to 1.0.92.
+
+2009-04-20  Mario Santagiuliana <mario@marionline.it>
+
+	* po/it.po: Updated translations.
+
+2009-04-17  Fabian Affolter <fab@fedoraproject.org>
+
+	* po/de.po: Updated translations.
+
+2009-04-16  Tomáš Mráz <t8m@centrum.cz>
+
+	* modules/pam_succeed_if/pam_succeed_if.c (evaluate): Add user
+	parameter. Use user instead of pwd->pw_name in comparsions.
+	(pam_sm_authenticate): Pass the original user to evaluate().
+
+2009-04-14  Amitakhya Phukan <aphukan@fedoraproject.org>
+
+	* po/as.po: Updated translations.
+
+2009-04-14  Runa Bhattacharjee <runab@fedoraproject.org>
+
+	* po/bn_IN.po: Updated translations.
+
+2009-04-14  Sweta Kothari <swkothar@redhat.com>
+
+	* po/gu.po: Updated translations.
+
+2009-04-14  Sandeep Shedmake <sandeep.shedmake@gmail.com>
+
+	* po/mr.po: Updated translations.
+
+2009-04-14  Rui Gouveia <rui.gouveia@globaltek.pt>
+
+	* po/pt.po: Updated translations.
+
+2009-04-14  I. Felix <ifelix@redhat.com>
+
+	* po/ta.po: Updated translations.
+
+2009-04-14  Krishna Babu K <kkrothap@redhat.com>
+
+	* po/te.po: Updated translations.
+
+2009-04-09  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/yppasswd.h: Update license to GPLv2 or later
+	on request of Olaf Kirch (Author).
+	* modules/pam_unix/yppasswd_xdr.c: Likewise.
+
+2009-04-06  R.E. van der Luit <nippur@fedoraproject.org>
+
+	* po/nl.po: Updated translations.
+
+2009-04-06  Terry Chuang <tchuang@redhat.com>
+
+	* po/zh_TW.po: Updated translations.
+
+2009-04-03  Shankar Prasad <svenkate@redhat.com>
+
+	* po/kn.po: Updated translations.
+
+2009-04-03  Manoj Kumar Giri <mgiri@redhat.com>
+
+	* po/or.po: Updated translations.
+
+2009-04-03  Miloš Komarčević <kmilos@gmail.com>
+
+	* po/sr.po: Updated translations.
+	* po/sr@latin.po: Updated translations.
+
+2009-04-03  Leah Liu <lliu@redhat.com>
+
+	* po/zh_CN.po: Updated translations.
+
+2009-04-03  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* libpamc/pamc_load.c (__pamc_exec_agent): Replace call to exit(3)
+	in child process with call to _exit(2).
+	* modules/pam_mkhomedir/pam_mkhomedir.c (create_homedir): Likewise.
+	* modules/pam_unix/pam_unix_acct.c (_unix_run_verify_binary):
+	Likewise.
+	* modules/pam_unix/pam_unix_passwd.c (_unix_run_update_binary):
+	Likewise.
+	* modules/pam_unix/support.c (_unix_run_helper_binary): Likewise.
+	* modules/pam_xauth/pam_xauth.c (run_coprocess): Likewise.
+	* modules/pam_exec/pam_exec.c (call_exec): Replace all calls to
+	exit(3) in child process with calls to _exit(2).
+	* modules/pam_filter/pam_filter.c (set_filter): Likewise.
+	* modules/pam_namespace/pam_namespace.c (inst_init,
+	cleanup_tmpdirs): Likewise.
+
+2009-03-27  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/support.c (_unix_run_helper_binary): Don't
+	ignore return value of write().
+
+	* libpamc/include/security/pam_client.h (PAM_BP_ASSERT): Honour
+	NDEBUG.
+	* modules/pam_timestamp/pam_timestamp.c: don't ignore return
+	values of lchown and fchown.
+
+2009-03-25  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_mkhomedir/pam_mkhomedir.c: Make option handling
+	reentrant (#2487654)
+	(_pam_parse): Fix umask option.
+
+	* modules/pam_unix/passverify.c: Fix typo.
+
+	* modules/pam_issue/pam_issue.c: Fix compiler warning.
+	* modules/pam_ftp/pam_ftp.c: Likewise.
+
+2009-03-25  Pavol Šimo <palo.simo@gmail.com>
+
+	* po/sk.po: Updated translations.
+
+2009-03-24  Sulyok Péter <peti@sulyok.hu>
+
+	* po/hu.po: Updated translations.
+
+2009-03-24  Domingo Becker <domingobecker@gmail.com>
+
+	* po/es.po: Updated translations.
+
+2009-03-24  Diego Búrigo Zacarão <diegobz@projetofedora.org>
+
+	* po/pt_BR.po: Updated translations.
+
+2009-03-24  Piotr Drąg <piotrdrag@gmail.com>
+
+	* po/pl.po: Updated translations.
+
+2009-03-24  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_unix/passverify.c(save_old_password): Call fflush() and
+	fsync().
+	(unix_update_passwd, unix_update_shadow): Likewise.
+	* modules/pam_pwhistory/opasswd.c(save_old_password): Likewise.
+
+	* po/cs.po: Updated translations.
+
+2009-03-09  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+        * release version 1.0.91
+
+        * libpam/Makefile.am (libpam_la_LDFLAGS): Bump version number.
+        * xtests/Makefile.am: Add tst-pam_unix4.pamd, tst-pam_unix4.sh
+	and time.conf.
+
+2009-03-03  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* tests/tst-pam_mkargv.c (main): Fix for non-64bit architectures.
+
+2009-03-03  Tomas Mraz <t8m@centrum.cz>
+
+        * modules/pam_unix/pam_unix_acct.c(_unix_run_verify_binary): Test
+        for abnormal exit of the helper binary.
+        * modules/pam_unix/pam_unix_passwd.c(_unix_run_update_binary): Likewise.
+        * modules/pam_unix/support.c(_unix_run_helper_binary): Likewise.
+	* modules/pam_mkhomedir/pam_mkhomedir.c(create_homedir): Likewise.
+
+2009-02-27  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_mkhomedir/pam_mkhomedir.c(create_homedir): Replace
+	signal() with sigaction().
+	* modules/pam_namespace/pam_namespace.c(inst_init, cleanup_tmpdirs):
+	Likewise.
+	* modules/pam_unix/pam_unix_acct.c(_unix_run_verify_binary): Likewise.
+	* modules/pam_unix/pam_unix_passwd.c(_unix_run_update_binary):
+	Likewise.
+	* modules/pam_unix/passverify.c(su_sighandler): Likewise.
+	* modules/pam_unix/support.c(_unix_run_helper_binary): Likewise.
+
+	* modules/pam_tally2/Makefile.am: Link the pam_tally2 app to libpam
+	for auxiliary functions.
+	* modules/pam_tally2/pam_tally2.8.xml: Drop non-existing no_reset
+	option.	Document new serialize option.
+	* modules/pam_tally2/pam_tally2.c: Add support for the new serialize
+	option.
+	(_cleanup, tally_set_data, tally_get_data): Add tally file handle to
+	tally PAM data. Needed for fcntl() locking.
+	(get_tally): Use low level file access instead of stdio buffered FILE.
+	If serialize option is used lock the tally file access.
+	(set_tally, tally_bump, tally_reset): Use low level file access instead
+	of stdio buffered FILE. Close the file handle only when it is not owned
+	by PAM data.
+	(pam_sm_authenticate, pam_sm_setcred, pam_sm_acct_mgmt): Pass the tally
+	file handle to tally_set_data(). Get it from tally_get_data().
+	(main): Use low level file access instead of stdio buffered FILE.
+
+2009-02-26  Tomas Mraz <t8m@centrum.cz>
+
+	* xtests/Makefile.am: Add tst-pam_unix4.
+	* xtests/tst-pam_unix4.c: New test for password change
+        and shadow min days limit.
+	* xtests/tst-pam_unix4.pamd: Likewise.
+	* xtests/tst-pam_unix4.sh: Likewise.
+
+	* modules/pam_unix/pam_unix_acct.c (pam_sm_acct_mgmt): Ignore
+        PAM_AUTHTOK_ERR on shadow verification.
+	* modules/pam_unix/passverify.c (check_shadow_expiry): Return
+        PAM_AUTHTOK_ERR if sp_min limit for password change is defied.
+
+2009-02-26  Timur Birsh <taem@linukz.org>
+
+	* po/LINGUAS: New Kazakh translation.
+	* po/kk.po: New Kazakh translation.
+
+2009-02-25  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* libpam/pam_misc.c (_pam_StrTok): Use unsigned char
+	instead of int. Reported by Marcus Granado.
+	* tests/Makefile.am (TESTS): Add tst-pam_mkargv.
+	* tests/tst-pam_mkargv.c (main): Test case for
+	_pam_mkargv.
+
+	* po/de.po: Update fuzzy translations.
+
+2009-02-25  Tomas Mraz <t8m@centrum.cz>
+
+	* xtests/access.conf: Add a line for name resolution test case.
+	* xtests/tst-pam_access4.c (main): Set PAM_RHOST for testing the LOCAL
+        keyword. Add a test case for name resolution.
+
+	* modules/pam_access/pam_access.c (from_match): Move name resolution
+	to network_netmask_match().
+        (network_netmask_match): Do a name resolution of the origin only if
+        matching against a real network/netmask.
+
+2009-02-25  Fabian Affolter <fabian@bernewireless.net>
+
+	* po/de.po: Updated translations.
+
+2009-02-25  Taylon Silmer Lacerda Silva <taylonsilva@gmail.com>
+
+	* po/pt_BR.po: Updated translations.
+
+2009-02-25  Domingo Becker <domingobecker@gmail.com>
+
+	* po/es.po: Updated translations.
+
+2009-02-20  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_limits/limits.conf.5.xml: Document that the kernel
+	can refuse values out of range for the local system.
+	* modules/pam_limits/pam_limits.c (setup_limits): Log if setrlimit
+	fails.
+
+2009-02-18  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* libpam/pam_password.c (pam_chauthtok): Make sure applications
+	don't set internal flags.
+
+2009-02-17  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* doc/man/pam_sm_chauthtok.3.xml: Document that sufficient
+	can break the PRELIM_CHECK chain.
+
+	* libpam/pam_dispatch.c: Don't freeze chain for chauthtok
+	[bugzilla.novell.com#470337]
+
+2009-02-11  Daniel Nylander <po@danielnylander.se>
+
+	* po/sv.po: Updated translations.
+
+2009-01-29  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* doc/man/pam_sm_setcred.3.xml: Document PAM_ESTABLISH_CRED.
+
+2009-01-19  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_mkhomedir/Makefile.am: Add mkhomedir_helper.
+	* modules/pam_mkhomedir/mkhomedir_helper.8.xml: New file. Manual page
+	for mkhomedir_helper.
+	* modules/pam_mkhomedir/mkhomedir_helper.c: New file. Source
+	for mkhomedir_helper. Most of the code moved from pam_mkhomedir.c.
+	* modules/pam_mkhomedir/pam_mkhomedir.c (_pam_parse): Do not convert umask
+	to integer.
+	(rec_mkdir): Moved to mkhomedir_helper.c.
+	(create_homedir): Just exec the helper.
+	(pam_sm_open_session): Improve logging.
+
+2009-01-19  Daniel Cabrera <h.daniel.cabrera@gmail.com>
+
+	* po/es.po: Updated translations.
+
+2009-01-14  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* po/de.po: Updated translations.
+
+2009-01-07  Piotr Drąg <piotrdrag@gmail.com>
+
+	* po/pl.po: Updated translations.
+
+2008-12-23  Piotr Drąg <piotrdrag@gmail.com>
+
+	* po/pl.po: Updated translations.
+
+2008-12-18  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_pwhistory/pam_pwhistory.c (parse_option): Rename
+	type= option to authtok_type= (because of pam_get_authtok).
+	* modules/pam_pwhistory/pam_pwhistory.8.xml: Likewise.
+
+2008-12-17  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_tty_audit/pam_tty_audit.c (pam_sm_open_session): Do
+	not abort on unknown option. Avoid double free of old_status.
+	(pam_sm_close_session): Use LOG_DEBUG for restored status message.
+
+	* configure.in: Test for getseuser().
+	* modules/pam_selinux/pam_selinux.c (pam_sm_open_session): Call getseuser()
+	instead of getseuserbyname() if the function is available.
+
+2008-12-12  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* release version 1.0.90
+
+	* libpam_misc/Makefile.am: Increase version number of shared library.
+	* libpamc/Makefile.am: Likewise.
+
+2008-12-12  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_tally2/pam_tally2.c (get_tally): Test for EACCES
+	instead of EPERM.
+	* modules/pam_tally2/pam_tally2.8.xml: Fix documentation.
+
+2008-12-10  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* doc/man/pam_item_types_ext.inc.xml: Document PAM_AUTHTOK_TYPE.
+	* libpam/pam_end.c (pam_end): Free authtok_type.
+	* tests/tst-pam_get_item.c: Add PAM_AUTHTOK_TYPE
+	as test case.
+	* tests/tst-pam_set_item.c: Likewise.
+	* libpam/pam_start.c (pam_start): Initialize xdisplay,
+	xauth and authtok_type.
+	* libpam/pam_get_authtok.c (pam_get_authtok): Rename "type"
+	to "authtok_type".
+	* modules/pam_cracklib/pam_cracklib.8.xml: Replace "type=" with
+	"authtok_type=".
+	* doc/man/pam_get_authtok.3.xml: Document authtok_type argument.
+	* modules/pam_cracklib/pam_cracklib.c (pam_sm_chauthtok): Set
+	type= argument as PAM_AUTHTOK_TYPE item.
+	* libpam/pam_get_authtok.c (pam_get_authtok): If no type
+	argument given, use PAM_AUTHTOK_TYPE item.
+	* libpam/pam_item.c (pam_get_item): Fetch PAM_AUTHTOK_TYPE item.
+	(pam_set_item): Store PAM_AUTHTOK_TYPE item.
+	* libpam/pam_private.h: Add authtok_type to pam_handle.
+	* libpam/include/security/_pam_types.h (PAM_AUTHTOK_TYPE): New.
+
+2008-12-03  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_access/access.conf.5.xml: Replace
+	2001:4ca0 with 2001:db8:: [bug#2356400].
+
+	* doc/man/Makefile.am: Add pam_get_authtok.3.xml.
+	* doc/man/pam_get_authtok.3.xml: New.
+	* libpam/Makefile.am: Add pam_get_authtok.c.
+	* libpam/libpam.map: Export pam_get_authtok.
+	* libpam/pam_get_authtok.c: New.
+	* libpam/pam_private.h: Add mod_argc and mod_argv to pam_handle.
+	* libpam_include/security/pam_ext.h: Add pam_get_authtok
+	prototype.
+	* modules/pam_cracklib/pam_cracklib.c: Use pam_get_authtok.
+	* modules/pam_pwhistory/pam_pwhistory.c: Likewise.
+	* po/POTFILES.in: Add libpam/pam_get_authtok.c.
+	* xtests/tst-pam_cracklib1.c: Adjust error codes.
+
+	* modules/pam_timestamp/Makefile.am: Remove hmactest.c from
+	EXTRA_DIST.
+
+	* po/*.po: Regenerated.
+
+2008-12-02  Michael Calmer  <mc@suse.de>
+
+	* modules/pam_limits/limits.conf.5.xml: Document valid values
+	for limits (bnc#448314).
+
+2008-12-02  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_env/pam_env.c: Add support for user specific
+	environment file. Based on a patch from Ubuntu.
+	* modules/pam_env/pam_env.8.xml: Document new options.
+
+2008-12-02  Olivier Fourdan <ofourdan@redhat.com>
+
+	* modules/pam_filter/pam_filter.c (master): Use /dev/ptmx
+	instead of the old BSD pseudoterminal API.
+	(set_filter): Call grantpt(), unlockpt() and ptsname(). Do not
+	close pseudoterminal handle in filter child.
+	* modules/pam_filter/upperLOWER/upperLOWER.c (main): Use
+	regular read() instead of pam_modutil_read() to allow for
+	short reads.
+
+2008-12-02  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_timestamp/Makefile.am: Add hmacfile to tests.
+	* modules/pam_timestamp/hmacfile.c: Do not try the short key
+	testvector.
+
+2008-12-01  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_unix/support.h: Fix masks for cipher algorithm
+	flags.
+
+2008-12-01  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/pam_unix.8.xml: Document blowfish option.
+
+	* configure.in: Check for crypt_gensalt_rn.
+	* modules/pam_unix/pam_unix_passwd.c: Pass pamh to
+	create_password_hash function.
+	* modules/pam_unix/passverify.c (create_password_hash): Add
+	blowfish support.
+	* modules/pam_unix/passverify.h: Adjust create_password_hash
+	prototype.
+	* modules/pam_unix/support.c: Add support for blowfish option.
+	* modules/pam_unix/support.h: Add defines for blowfish option.
+	Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>
+
+2008-12-01  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_access/pam_access.8.xml: Fix description of nodefgroup
+	option.
+
+	* modules/pam_group/pam_group.c (is_same): Fix check for correct
+	string length.
+
+2008-11-29  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* configure.in: Check for xcrypt.h, fix typo in libaudit check.
+	* modules/pam_cracklib/pam_cracklib.c: Include xcrypt.h if
+	available.
+	* modules/pam_unix/bigcrypt.c: Likewise.
+	* modules/pam_unix/passverify.c: Likewise.
+	* modules/pam_userdb/pam_userdb.c: Likewise.
+	Jozsef Kadlecsik <kadlec@blackhole.kfki.hu>
+
+	* doc/man/pam_getenv.3.xml: Document that application should
+	not free return value.
+
+	* doc/man/pam.3.xml: Add Note about thread-safeness of libpam
+	functions.
+
+2008-11-28  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_unix/unix_update.c (set_password): Allow root to change
+	passwords without verification of the old ones.
+
+	* modules/pam_tally2/pam_tally2.c (tally_check): Fix info format
+	to be the same as in pam_tally.
+
+	* configure.in: Add modules/pam_timestamp/Makefile.
+	* doc/sag/Linux-PAM_SAG.xml: Include pam_timestamp.xml.
+	* doc/sag/pam_timestamp.xml: New.
+	* libpam/pam_static_modules.h: Add pam_timestamp static struct.
+	* modules/Makefile.am: Add pam_timestamp directory.
+	* modules/pam_timestamp/Makefile.am: New.
+	* modules/pam_timestamp/README.xml: New.
+	* modules/pam_timestamp/hmacsha1.h: New.
+	* modules/pam_timestamp/sha1.h: New.
+	* modules/pam_timestamp/pam_timestamp.8.xml: New.
+	* modules/pam_timestamp/pam_timestamp_check.8.xml: New.
+	* modules/pam_timestamp/pam_timestamp.c: New.
+	* modules/pam_timestamp/pam_timestamp_check.c: New.
+	* modules/pam_timestamp/hmacfile.c: New.
+	* modules/pam_timestamp/hmacsha1.c: New.
+	* modules/pam_timestamp/sha1.c: New.
+	* modules/pam_timestamp/tst-pam_timestamp: New.
+	* po/POTFILES.in: Add pam_timestamp sources.
+	* po/*.po: Regenerate.
+	* po/cs.po: Updated translations.
+
+2008-11-25  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_pwhistory/opasswd.c (save_old_password): Fix typo.
+
+	* modules/pam_time/pam_time.c (is_same): Fix check
+	of correct string length (debian bug #326407).
+
+2008-11-24  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* xtests/Makefile.am: Add pam_time1 tests.
+	* xtests/tst-pam_time1.c: New test case.
+	* xtests/tst-pam_time1.pamd: New.
+	* xtests/time.conf: New.
+	* xtests/run-xtests.sh: Copy time.conf.
+
+2008-11-24  Tomas Mraz <t8m@centrum.cz>
+
+	* libpam/pam_handlers.c (_pam_parse_conf_file): '-' at
+	beginning of type token marks silent module.
+	(_pam_load_module): Add handler_type parameter. Do not log
+	module load error if module is silent.
+	(_pam_add_handler): Pass handler_type to _pam_load_module().
+	* libpam/pam_private.h: Add PAM_HT_SILENT_MODULE.
+	* doc/man/pam.conf-syntax.xml: Document the '-' at beginning
+	of type.
+
+	* modules/pam_cracklib/pam_cracklib.c (pam_sm_chauthtok): Fix leaks
+	in error path.
+	* modules/pam_env/pam_env.c (_parse_env_file): Remove superfluous
+	condition.
+	* modules/pam_group/pam_group.c (check_account): Fix leak
+	in error path.
+	* modules/pam_listfile/pam_listfile.c (pam_sm_authenticate): Fix leak
+	in error path.
+	* modules/pam_securetty/pam_securetty.c (securetty_perform_check): Remove
+	superfluous condition.
+	* modules/pam_stress/pam_stress.c (stress_get_password,pam_sm_authenticate):
+	Remove superfluous conditions.
+	(pam_sm_chauthtok): Fix mistaken && for &.
+	* modules/pam_unix/pam_unix_auth.c (pam_sm_authenticate): Remove
+	superfluous condition.
+	All the problems fixed in this commit were found by Steve Grubb.
+
+2008-11-20  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_sepermit/pam_sepermit.c (sepermit_match): Do not
+	call sepermit_lock() if sense is deny. Do not crash on NULL seuser
+	match.
+	(pam_sm_authenticate): Try to call getseuserbyname() even if
+	SELinux is disabled.
+
+2008-11-19  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_xauth/pam_xauth.c (pam_sm_open_session):
+	Preserve XAUTHLOCALHOSTNAME environment variable.
+
+	* modules/pam_pwhistory/pam_pwhistory.c (pam_sm_chauthtok): Finish
+	implementation of type=STRING option.
+
+	* modules/pam_pwhistory/pam_pwhistory.8.xml: Document
+	"type=STRING" option.
+
+2008-10-27  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* doc/man/pam_setcred.3.xml: Document when credentials
+	should be deleted.
+	* po/ja.po: Fix syntax error.
+	* po/de.po: Update translations.
+	* po/*.po: Regenerate with pam_tally2 added.
+
+2008-10-23  Taylon Silmer Lacerda Silva <taylonsilva@gmail.com>
+
+	* po/pt_BR.po: Updated translations.
+
+2008-10-23  Krishna Babu K <kkrothap@redhat.com>
+
+	* po/LINGUAS: New language.
+	* po/te.po: New translation to Telugu.
+
+2008-10-23  Manoj Kumar Giri <mgiri@redhat.com>
+
+	* po/or.po: Updated translations.
+
+2008-10-21  Amitakhya Phukan <aphukan@redhat.com>
+
+	* po/as.po: Updated translations.
+
+2008-10-21  Ondrej Sulek <feonsu@gmail.com>
+
+	* po/sk.po: Updated translations.
+
+2008-10-21  Terry Chuang <tchuang@redhat.com>
+
+	* po/zh_TW.po: Updated translations.
+
+2008-10-21  Kiyoto Hashida <khashida@redhat.com>
+
+	* po/ja.po: Updated translations.
+
+2008-10-21  Francesco Valente <fvalen@redhat.com>
+
+	* po/it.po: Updated translations.
+
+2008-10-21  Peter van Egdom <p.van.egdom@gmail.com>
+
+	* po/nl.po: Updated translations.
+
+2008-10-20  Ani Peter <apeter@redhat.com>
+
+	* po/ml.po: Updated translations.
+
+2008-10-20  Pablo Martin-Gomez <pablo.martin-gomez@laposte.net>
+
+	* po/fr.po: Updated translations.
+
+2008-10-20  Runa Bhattacharjee <runab@redhat.com>
+
+	* po/bn_IN.po: Updated translations.
+
+2008-10-20  Shankar Prasad <svenkate@redhat.com>
+
+	* po/kn.po: Updated translations.
+
+2008-10-20  Leah Liu <lliu@redhat.com>
+
+	* po/zh_CN.po: Updated translations.
+
+2008-10-20  Ondrej Sulek <feonsu@gmail.com>
+
+	* po/LINGUAS: New language.
+	* po/sk.po: New translation to Slovak.
+
+2008-10-17  Tomas Mraz <t8m@centrum.cz>
+
+	* configure.in: Add modules/pam_tally2/Makefile.
+	* doc/sag/Linux-PAM_SAG.xml: Include pam_tally2.xml.
+	* doc/sag/pam_tally2.xml: New.
+	* libpam/pam_static_modules.h: Add pam_tally2 static struct.
+	* modules/Makefile.am: Add pam_tally2 directory.
+	* modules/pam_tally2/Makefile.am: New.
+	* modules/pam_tally2/README.xml: New.
+	* modules/pam_tally2/tallylog.h: New.
+	* modules/pam_tally2/pam_tally2.8.xml: New.
+	* modules/pam_tally2/pam_tally2.c: New.
+	* modules/pam_tally2/pam_tally2_app.c: New.
+	* modules/pam_tally2/tst-pam_tally2: New.
+	* po/POTFILES.in: Add pam_tally2 sources.
+
+2008-10-17  Xavier Queralt Mateu <xqueralt@gmail.com>
+
+	* po/ca.po: Updated translations.
+
+2008-10-15  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_keyinit/pam_keyinit.c (kill_keyrings): Save the old
+	euid to suid to be able to restore it.
+
+2008-10-15  Piotr Drąg <piotrdrag@gmail.com>
+
+	* po/pl.po: Updated translations.
+
+2008-10-13  Tomas Mraz <t8m@centrum.cz>
+
+	* po/LINGUAS: New languages.
+	* po/cs.po: Updated translations.
+
+2008-10-13  Amitakhya Phukan <aphukan@redhat.com>
+
+	* po/as.po: Updated translations.
+
+2008-10-13  Shankar Prasad <svenkate@redhat.com>
+
+	* po/kn.po: Updated translations.
+
+2008-10-13  Sandeep Sheshrao Shedmake <sshedmak@redhat.com>
+
+	* po/mr.po: New translation to Marathi.
+
+2008-10-13  Runa Bhattacharjee <runab@redhat.com>
+
+	* po/bn_IN.po: Updated translations.
+
+2008-10-13  Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>
+
+	* po/ms.po: New translation to Malay.
+
+2008-10-10  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_cracklib/pam_cracklib.c (_pam_unix_approve_pass):
+	Remove check for re-used passwords.
+	* modules/pam_cracklib/pam_cracklib.8.xml: Remove documentation
+	of re-used password check.
+
+	* configure.in: add modules/pam_pwhistory/Makefile.
+	* doc/sag/Linux-PAM_SAG.xml: Include pam_pwhistory.xml.
+	* doc/sag/pam_pwhistory.xml: New.
+	* libpam/pam_static_modules.h: Add pam_pwhistory data.
+	* modules/Makefile.am: Add pam_pwhistory directory.
+	* modules/pam_pwhistory/Makefile.am: New.
+	* modules/pam_pwhistory/README.xml: New.
+	* modules/pam_pwhistory/opasswd.c: New.
+	* modules/pam_pwhistory/opasswd.h: New.
+	* modules/pam_pwhistory/pam_pwhistory.8.xml: New.
+	* modules/pam_pwhistory/pam_pwhistory.c: New.
+	* modules/pam_pwhistory/tst-pam_pwhistory: New.
+	* xtests/Makefile.am: New.
+	* xtests/run-xtests.sh: New.
+	* xtests/tst-pam_pwhistory1.c: New.
+	* xtests/tst-pam_pwhistory1.pamd: New.
+	* xtests/tst-pam_pwhistory1.sh: New.
+	* po/POTFILES.in: Add modules/pam_pwhistory/.
+	* po/de.po: Update translations.
+
+2008-10-02  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* po/de.po: Update translations.
+
+2008-09-30  Manoj Kumar Giri <mgiri@redhat.com>
+
+	* po/or.po: Updated translations.
+
+2008-09-30  Taylon Silmer Lacerda Silva <taylonsilva@gmail.com>
+
+	* po/pt_BR.po: Updated translations.
+
+2008-09-30  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_lastlog/pam_lastlog.8.xml: Document new options
+	noupdate and showfailed.
+	* modules/pam_lastlog/pam_lastlog.c(pam_parse): Recognize the new
+	options.
+	(last_login_read): New output parameter lltime. Do not display
+	the last login message if it would be empty.
+	(last_login_date): New output parameter lltime. Do not write the
+	last login info when LASTLOG_UPDATE is not set.
+	(last_login_failed): New function to display the last bad login
+	attempt from btmp.
+	(pam_sm_open_session): Obtain lltime from last_login_date() and
+	call last_login_failed() when appropriate.
+
+	* po/Linux-pam.pot: Updated strings to translate.
+	* po/*.po: Likewise.
+
+2008-09-29  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_echo/pam_echo.8.xml: Fix format error.
+
+2008-09-25  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_tally/pam_tally.c(get_tally): Fix syslog message.
+	(tally_check): Open faillog read only. Close file descriptor.
+	Fix typos in messages.
+
+2008-09-25  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_mail/pam_mail.c (report_mail): Fix logic of
+	"quiet" option (Patch from Andreas Henriksson <andreas@fatal.se>)
+
+	* modules/pam_mail/pam_mail.8.xml: Fix typo.
+
+2008-09-23  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_limits/limits.conf.5.xml: Comment that rss limit is
+	ignored.
+
+2008-09-19  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_cracklib/pam_cracklib.8.xml: Fix description
+	of the palindrome test. Document new options maxrepeat and
+	reject_username.
+	* modules/pam_cracklib/pam_cracklib.c(_pam_parse): Parse
+	the maxrepeat and reject_username options.
+	(password_check): Call the new tests usercheck() and
+	consecutive().
+	(_pam_unix_approve_pass): Pass user name to the password_check().
+
+2008-09-16  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_cracklib/pam_cracklib.8.xml: Fix typo.
+
+	* modules/pam_unix/pam_unix.8.xml: Fix typo.
+
+2008-09-03  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_exec/pam_exec.c: Expose authtok if requested,
+	provide environment variable containing service type.
+	* modules/pam_exec/pam_exec.8.xml: Document new option.
+
+2008-08-29  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_loginuid/pam_loginuid.c(set_loginuid): Uids
+	are unsigned.
+
+2008-08-18  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* Makefile.am (M4_FILES): Adjust list.
+
+	* modules/pam_access/pam_access.8.xml: Fix module service
+	vs. module type.
+	* modules/pam_cracklib/pam_cracklib.8.xml: Likewise.
+	* modules/pam_debug/pam_debug.8.xml: Likewise.
+	* modules/pam_deny/pam_deny.8.xml: Likewise.
+	* modules/pam_echo/pam_echo.8.xml: Likewise.
+	* modules/pam_env/pam_env.8.xml: Likewise.
+	* modules/pam_exec/pam_exec.8.xml: Likewise.
+	* modules/pam_faildelay/pam_faildelay.8.xml: Likewise.
+	* modules/pam_filter/pam_filter.8.xml: Likewise.
+	* modules/pam_ftp/pam_ftp.8.xml: Likewise.
+	* modules/pam_group/pam_group.8.xml: Likewise.
+	* modules/pam_issue/pam_issue.8.xml: Likewise.
+	* modules/pam_keyinit/pam_keyinit.8.xml: Likewise.
+	* modules/pam_lastlog/pam_lastlog.8.xml: Likewise.
+	* modules/pam_limits/pam_limits.8.xml: Likewise.
+	* modules/pam_listfile/pam_listfile.8.xml: Likewise.
+	* modules/pam_localuser/pam_localuser.8.xml: Likewise.
+	* modules/pam_loginuid/pam_loginuid.8.xml: Likewise.
+	* modules/pam_mail/pam_mail.8.xml: Likewise.
+	* modules/pam_mkhomedir/pam_mkhomedir.8.xml: Likewise.
+	* modules/pam_motd/pam_motd.8.xml: Likewise.
+	* modules/pam_namespace/pam_namespace.8.xml: Likewise.
+	* modules/pam_nologin/pam_nologin.8.xml: Likewise.
+	* modules/pam_permit/pam_permit.8.xml: Likewise.
+	* modules/pam_rhosts/pam_rhosts.8.xml: Likewise.
+	* modules/pam_rootok/pam_rootok.8.xml: Likewise.
+	* modules/pam_securetty/pam_securetty.8.xml: Likewise.
+	* modules/pam_selinux/pam_selinux.8.xml: Likewise.
+	* modules/pam_sepermit/pam_sepermit.8.xml: Likewise.
+	* modules/pam_shells/pam_shells.8.xml: Likewise.
+	* modules/pam_succeed_if/pam_succeed_if.8.xml: Likewise.
+	* modules/pam_tally/pam_tally.8.xml: Likewise.
+	* modules/pam_time/pam_time.8.xml: Likewise.
+	* modules/pam_tty_audit/pam_tty_audit.8.xml: Likewise.
+	* modules/pam_umask/pam_umask.8.xml: Likewise.
+	* modules/pam_unix/pam_unix.8.xml: Likewise.
+	* modules/pam_userdb/pam_userdb.8.xml: Likewise.
+	* modules/pam_warn/pam_warn.8.xml: Likewise.
+	* modules/pam_wheel/pam_wheel.8.xml: Likewise.
+	* modules/pam_xauth/pam_xauth.8.xml: Likewise.
+
+2008-08-01  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* configure.in: Add version for gettext, add search path
+	for m4 directory, fix handling of --disable-* options.
+	Patches from Diego Pettenò <flameeyes@gmail.com>.
+
+	* configure.in: Run autoupdate on it.
+
+	* acincludde.m4: Rename to ...
+	* m4/jh_path_xml_catalog.m4: ... this.
+
+	* m4/*.m4: Remove all autoconf m4 files.
+
+2008-07-29  Steve Langasek <vorlon@debian.org>
+
+	* modules/pam_cracklib/pam_cracklib.8.xml: correct a typo,
+	"Only he" -> "Only the"
+
+2008-07-28  Steve Langasek <vorlon@debian.org>
+
+	* libpamc/test/regress/test.libpamc.c: use standard u_int8_t
+	type instead of __u8, as elsewhere.
+	Patch from Roger Leigh <rleigh@debian.org>.
+	* modules/pam_unix/passverify.c: make save_old_password()
+	thread-safe by using pam_modutil_getpwnam() instead of getpwnam()
+	* modules/pam_unix/passverify.c, modules/pam_unix/passverify.h,
+	modules/pam_unix/pam_unix_passwd.c: add pamh argument to
+	save_old_password()
+
+2008-07-27  Steve Langasek <vorlon@debian.org>
+
+	* modules/pam_*/pam_*.8.xml: fix up the references to pam.d,
+	which is in manpage section 5, not 8.
+	* modules/pam_env/environment, modules/pam_env/pam_env.8.xml:
+	spelling fix, seperate -> separate
+
+2008-07-26  Steve Langasek <vorlon@debian.org>
+
+	* modules/pam_env/pam_env.c: Fix module to skip over
+	non-alphanumeric variable names, and to handle the case when
+	asked to delete a non-existent variable.
+
+2008-07-13  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_mail/pam_mail.8.xml: Module supports session and
+	not account service (#1980773).
+
+2008-07-11  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_unix/pam_unix_acct.c (_unix_run_verify_binary): Do
+	not close the pipe descriptor in borderline case (#2009766).
+	* modules/pam_unix/pam_unix_passwd.c (_unix_run_update_binary):
+	Likewise.
+	* modules/pam_unix/support.c (_unix_run_helper_binary): Likewise.
+	* modules/pam_unix/support.h: Define upper limit of fds we will
+	attempt to close.
+
+	* modules/pam_selinux/pam_selinux.c (config_context): Do not
+	ask for the level if use_current_range is set.
+	(context_from_env): New function to obtain the context from
+	PAM environment variables.
+	(pam_sm_open_session): Call context_from_env() if env_params option
+	is present. use_current_range now modifies behavior of the
+	context_from_env and config_context options.
+	* modules/pam_selinux/pam_selinux.8.xml: Describe the env_params
+	option. Adjust description of use_current_range option.
+
+2008-07-09  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_exec/pam_exec.c (call_exec): Move all variable
+	declaration to begin of a block (#1976310).
+
+	* xtests/tst-pam_group1.c (run_test): Move no_grps declaration
+	to begin of function (#1976310).
+
+	* modules/pam_securetty/pam_securetty.8.xml: Replace
+	PAM_IGNORE with PAM_USER_UNKNOWN (#1994330).
+
+	* modules/pam_tally/pam_tally.c: Add support for silent and
+	no_log_info options.
+	* modules/pam_tally/pam_tally.8.xml: Document silent and
+	no_log_info options.
+
+2008-07-08  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/passverify.c (verify_pwd_hash): Adjust debug
+	statement.
+
+2008-06-22  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/unix_chkpwd.c (main): Fix compiling without
+	audit support.
+
+	* modules/pam_cracklib/pam_cracklib.8.xml: Fix typo in ucredit
+	description (reported by Wayne Pollock <pollock@acm.org>)
+
+2008-06-19  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_succeed_if/pam_succeed_if.c (pam_sm_authenticate):
+	Detect configuration errors. Fail on incomplete condition.
+
+2008-05-20  Tomas Mraz <t8m@centrum.cz>
+
+	* configure.in: Work correctly with autoconf-2.62.
+
+2008-05-19  Tomas Mraz <t8m@centrum.cz>
+
+	* doc/man/pam_getenv.3.xml: Correct the pam_getenv documentation.
+
+	* doc/man/pam_prompt.3.xml: Add missing description.
+
+2008-05-14  Kjartan Maraas <kmaraas@gnome.org>
+
+	* po/nb.po: Updated translation.
+
+2008-05-14  Sulyok Péter <peti@sulyok.hu>
+
+	* po/hu.po: Updated translation.
+
+2008-05-14  Tomas Mraz <t8m@centrum.cz>
+
+	* libpam/pam_modutil_getgrgid.c: Replace hardcoded constant with
+	define PWD_LENGTH_SHIFT.
+	* libpam/pam_modutil_getgrnam.c: Likewise.
+	* libpam/pam_modutil_getpwnam.c: Likewise.
+	* libpam/pam_modutil_getpwuid.c: Likewise.
+	* libpam/pam_modutil_getspnam.c: Likewise.
+	* libpam/pam_modutil_private.h: Adjust values for PWD_ constants.
+
+	* modules/pam_unix/pam_unix_passwd.c(pam_sm_chauthtok): Unset authtok
+	item when password is not approved.
+	* modules/pam_unix/support.c(_unix_read_password): UNIX_USE_FIRST_PASS
+	is always set when UNIX_AUTHTOK	is set, change order of conditions.
+
+2008-05-02  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_selinux/pam_selinux.c(query_response): Add handling
+	for NULL response.
+	(manual_context): Handle failed query_response() properly. Rename
+	variable responses to response which is more correct name.
+	(config_context): Likewise.
+	(pam_sm_open_session): Do not base decision on whether there is a tty.
+
+2008-04-22  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_selinux/pam_selinux.c(pam_sm_close_sesion): Fix
+	regression from the change from 2008-03-20. setexeccon() must be
+	called also with NULL prev_context.
+
+2008-04-21  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_access/access.conf.5.xml: Document changed behavior
+	of LOCAL keyword.
+	* modules/pam_access/pam_access.c: Add from_remote_host to
+	struct login_info to change behavior of LOCAL keyword: if
+	PAM_RHOST is not set, LOCAL will be true.
+
+2008-04-18  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_namespace/pam_namespace.c: New functions
+	unprotect_dirs(), cleanup_protect_data(), protect_mount(),
+	protect_dir() to protect directory by bind mount.
+	(cleanup_data): Renamed to cleanup_polydir_data().
+	(parse_create_params): Allow missing specification of mode
+	or owner.
+	(check_inst_parent): Call protect_dir() on the instance parent
+	directory. The directory is created when it doesn't exist.
+	(create_polydir): Protect and make the polydir by protect_dir(),
+	remove potential races.
+	(create_dirs): Renamed to create_instance(), remove call to
+	inst_init().
+	(ns_setup): Call protect_dir() on the polydir if it already exists.
+	Call inst_init() after the polydir is mounted.
+	(setup_namespace): Set the namespace protect data to be cleaned up
+	on pam_close_session()/pam_end().
+	(pam_sm_open_session): Initialize the protect_dirs.
+	(pam_sm_close_session): Cleanup namespace protect data.
+	* modules/pam_namespace/pam_namespace.h: Define struct for the
+	stack of protected dirs.
+	* modules/pam_namespace/pam_namespace.8.xml: Document when the
+	instance init script is called.
+	* modules/pam_namespace/namespace.conf.5.xml: Likewise.
+
+2008-04-17  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_access/pam_access.c(myhostname): Removed function.
+	(user_match): Supply hostname of the machine to the netgroup_match().
+	Use hostname from the loginfo instead of calling myhostname().
+	(pam_sm_authenticate): Call gethostname() to fill hostname in the
+	loginfo.
+
+	* modules/pam_sepermit/pam_sepermit.c(sepermit_match): Do not try
+	to lock if euid != 0.
+
+2008-04-16  Tomas Mraz <t8m@centrum.cz>
+
+	* modules/pam_unix/Makefile.am: Link unix_chkpwd with libaudit.
+	* modules/pam_unix/unix_chkpwd.c(_audit_log): New function for audit.
+	(main): Call _audit_log() when appropriate.
+
+	* modules/pam_cracklib/pam_cracklib.c(_pam_parse): Recognize also
+	try_first_pass and use_first_pass options.
+	(pam_sm_chauthtok): Implement the new options.
 
 2008-04-08  Tomas Mraz <t8m@centrum.cz>
 
-	* libpam/pam_item.c (TRY_SET): Do not set when destination
-	is identical to source.
-	(pam_set_item): Do not overwrite destination when it
-	is identical to source.
+	* modules/pam_xauth/pam_xauth.c(run_coprocess): Avoid multiple
+	calls to sysconf() (based on patch by Sami Farin).
+
+        * libpam/pam_item.c (TRY_SET): Do not set when destination
+        is identical to source.
+        (pam_set_item): Do not overwrite destination when it
+        is identical to source.
 
 2008-04-07  Miloš Komarčević <kmilos@gmail.com>
 
 	* po/sr.po: New file with translation.
 	* po/sr@latin.po: Likewise.
 	* po/LINGUAS: Add sr and sr@latin.
-
-2008-03-25  Leah Liu <lliu@redhat.com>
-
-	* po/zh_CN.po: Updated translation.
 
 2008-04-03  Thorsten Kukuk  <kukuk@thkukuk.de>
 
@@ -46,7 +1136,7 @@
 	* modules/pam_namespace/pam_namespace.c(poly_name): Switch to USER
 	method only when appropriate.
 	(setup_namespace): Do not umount when not mounted with RUSER.
-	
+
 	* modules/pam_selinux/pam_selinux.c(pam_sm_close_session): Call
 	freecontext() after the context is logged not before.
 
@@ -1513,7 +2603,7 @@
 	libdb available.
 	* tests/tst-dlopen.c: Include config.h.
 
-2006-07-03  Dan Yefimov  <dan@D00M.lightwave.net.ru>
+2006-07-03  Dan Yefimov
 
 	* configure.in: Fixed have_key_syscalls test.
 

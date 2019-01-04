@@ -18,7 +18,7 @@ debug
 
 silent
 
-    Don't inform the user about any previous login, just upate the /var/log/
+    Don't inform the user about any previous login, just update the /var/log/
     lastlog file.
 
 never
@@ -42,6 +42,15 @@ nohost
 nowtmp
 
     Don't update the wtmp entry.
+
+noupdate
+
+    Don't update any file.
+
+showfailed
+
+    Display number of failed login attempts and the date of the last failed
+    attempt from btmp. The date is not displayed when nodate is specified.
 
 EXAMPLES
 

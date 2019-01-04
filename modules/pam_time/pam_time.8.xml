@@ -49,7 +49,7 @@
     </para>
     <para>
       If Linux PAM is compiled with audit support the module will report
-      when it denies access. 
+      when it denies access.
     </para>
   </refsect1>
 
@@ -63,7 +63,7 @@
         </term>
         <listitem>
           <para>
-            Some debug informations are printed with
+            Some debug information is printed with
             <citerefentry><refentrytitle>syslog</refentrytitle><manvolnum>3</manvolnum></citerefentry>.
           </para>
         </listitem>
@@ -83,10 +83,10 @@
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_time-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_time-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      Only the <option>account</option> service is supported.
+      Only the <option>account</option> type is provided.
     </para>
   </refsect1>
 
@@ -166,7 +166,7 @@ login  account  required  pam_time.so
         <refentrytitle>time.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
         <refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

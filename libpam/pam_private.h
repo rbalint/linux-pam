@@ -60,6 +60,7 @@ struct handler {
 #define PAM_HT_MODULE       0
 #define PAM_HT_MUST_FAIL    1
 #define PAM_HT_SUBSTACK     2
+#define PAM_HT_SILENT_MODULE 3
 
 struct loaded_module {
     char *name;
@@ -153,6 +154,7 @@ struct pam_handle {
     char *ruser;
     char *tty;
     char *xdisplay;
+    char *authtok_type;          /* PAM_AUTHTOK_TYPE */
     struct pam_data *data;
     struct pam_environ *env;      /* structure to maintain environment list */
     struct _pam_fail_delay fail_delay;   /* helper function for easy delays */
@@ -161,6 +163,8 @@ struct pam_handle {
     struct _pam_former_state former;  /* library state - support for
 					 event driven applications */
     const char *mod_name;	/* Name of the module currently executed */
+    int mod_argc;               /* Number of module arguments */
+    char **mod_argv;            /* module arguments */
     int choice;			/* Which function we call from the module */
 
 #ifdef HAVE_LIBAUDIT

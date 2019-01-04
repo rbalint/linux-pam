@@ -109,16 +109,8 @@ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *rounds,
 						*remember = 400;
 				}
 			}
-			if (rounds != NULL) {
-				if (j == UNIX_ALGO_ROUNDS) {
-					*rounds = strtol(*argv + 7, NULL, 10);
-					if ((*rounds < 1000) || (*rounds == INT_MAX))
-						/* don't care about bogus values */
-						unset(UNIX_ALGO_ROUNDS, ctrl);
-					if (*rounds >= 10000000)
-						*rounds = 9999999;
-				}
-			}
+			if (rounds != NULL && j == UNIX_ALGO_ROUNDS)
+				*rounds = strtol(*argv + 7, NULL, 10);
 		}
 
 		++argv;		/* step to next argument */
@@ -127,6 +119,26 @@ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *rounds,
 	if (flags & PAM_DISALLOW_NULL_AUTHTOK) {
 		D(("DISALLOW_NULL_AUTHTOK"));
 		set(UNIX__NONULL, ctrl);
+	}
+
+	/* Set default rounds for blowfish */
+	if (on(UNIX_BLOWFISH_PASS, ctrl) && off(UNIX_ALGO_ROUNDS, ctrl)) {
+		*rounds = 5;
+		set(UNIX_ALGO_ROUNDS, ctrl);
+	}
+
+	/* Enforce sane "rounds" values */
+	if (on(UNIX_ALGO_ROUNDS, ctrl)) {
+		if (on(UNIX_BLOWFISH_PASS, ctrl)) {
+			if (*rounds < 4 || *rounds > 31)
+				*rounds = 5;
+		} else if (on(UNIX_SHA256_PASS, ctrl) || on(UNIX_SHA512_PASS, ctrl)) {
+			if ((*rounds < 1000) || (*rounds == INT_MAX))
+				/* don't care about bogus values */
+				unset(UNIX_ALGO_ROUNDS, ctrl);
+			if (*rounds >= 10000000)
+				*rounds = 9999999;
+		}
 	}
 
 	/* auditing is a more sensitive version of debug */
@@ -396,7 +408,7 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 				   unsigned int ctrl, const char *user)
 {
     int retval, child, fds[2];
-    void (*sighandler)(int) = NULL;
+    struct sigaction newsa, oldsa;
 
     D(("called."));
     /* create a pipe for the password */
@@ -414,7 +426,9 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 	 * The "noreap" module argument is provided so that the admin can
 	 * override this behavior.
 	 */
-	sighandler = signal(SIGCHLD, SIG_DFL);
+        memset(&newsa, '\0', sizeof(newsa));
+	newsa.sa_handler = SIG_DFL;
+	sigaction(SIGCHLD, &newsa, &oldsa);
     }
 
     /* fork */
@@ -427,14 +441,14 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 
 	/* XXX - should really tidy up PAM here too */
 
-	close(0); close(1);
 	/* reopen stdin as pipe */
-	close(fds[1]);
 	dup2(fds[0], STDIN_FILENO);
 
 	if (getrlimit(RLIMIT_NOFILE,&rlim)==0) {
-	  for (i=2; i < (int)rlim.rlim_max; i++) {
-		if (fds[0] != i)
+          if (rlim.rlim_max >= MAX_FD_NO)
+                rlim.rlim_max = MAX_FD_NO;
+	  for (i=0; i < (int)rlim.rlim_max; i++) {
+		if (i != STDIN_FILENO)
 	  	   close(i);
 	  }
 	}
@@ -458,22 +472,33 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 
 	/* should not get here: exit with error */
 	D(("helper binary is not available"));
-	exit(PAM_AUTHINFO_UNAVAIL);
+	_exit(PAM_AUTHINFO_UNAVAIL);
     } else if (child > 0) {
 	/* wait for child */
 	/* if the stored password is NULL */
         int rc=0;
 	if (passwd != NULL) {            /* send the password to the child */
-	    write(fds[1], passwd, strlen(passwd)+1);
+	    if (write(fds[1], passwd, strlen(passwd)+1) == -1) {
+	      pam_syslog (pamh, LOG_ERR, "Cannot send password to helper: %m");
+	      close(fds[1]);
+	      retval = PAM_AUTH_ERR;
+	    }
 	    passwd = NULL;
-	} else {
-	    write(fds[1], "", 1);                        /* blank password */
+	} else {                         /* blank password */
+	    if (write(fds[1], "", 1) == -1) {
+	      pam_syslog (pamh, LOG_ERR, "Cannot send password to helper: %m");
+	      close(fds[1]);
+	      retval = PAM_AUTH_ERR;
+	    }
 	}
 	close(fds[0]);       /* close here to avoid possible SIGPIPE above */
 	close(fds[1]);
 	rc=waitpid(child, &retval, 0);  /* wait for helper to complete */
 	if (rc<0) {
 	  pam_syslog(pamh, LOG_ERR, "unix_chkpwd waitpid returned %d: %m", rc);
+	  retval = PAM_AUTH_ERR;
+	} else if (!WIFEXITED(retval)) {
+	  pam_syslog(pamh, LOG_ERR, "unix_chkpwd abnormal exit: %d", retval);
 	  retval = PAM_AUTH_ERR;
 	} else {
 	  retval = WEXITSTATUS(retval);
@@ -485,8 +510,8 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 	retval = PAM_AUTH_ERR;
     }
 
-    if (sighandler != SIG_ERR) {
-        (void) signal(SIGCHLD, sighandler);   /* restore old signal handler */
+    if (off(UNIX_NOREAP, ctrl)) {
+        sigaction(SIGCHLD, &oldsa, NULL);   /* restore old signal handler */
     }
 
     D(("returning %d", retval));
@@ -743,11 +768,11 @@ int _unix_read_password(pam_handle_t * pamh
 			return retval;
 		} else if (*pass != NULL) {	/* we have a password! */
 			return PAM_SUCCESS;
-		} else if (on(UNIX_USE_FIRST_PASS, ctrl)) {
-			return PAM_AUTHTOK_RECOVERY_ERR;	  /* didn't work */
 		} else if (on(UNIX_USE_AUTHTOK, ctrl)
 			   && off(UNIX__OLD_PASSWD, ctrl)) {
 			return PAM_AUTHTOK_ERR;
+		} else if (on(UNIX_USE_FIRST_PASS, ctrl)) {
+			return PAM_AUTHTOK_RECOVERY_ERR;	  /* didn't work */
 		}
 	}
 	/*
@@ -854,7 +879,7 @@ int _unix_read_password(pam_handle_t * pamh
 }
 
 /* ****************************************************************** *
- * Copyright (c) Jan Rêkorajski 1999.
+ * Copyright (c) Jan RÃªkorajski 1999.
  * Copyright (c) Andrew G. Morgan 1996-8.
  * Copyright (c) Alex O. Yuriev, 1996.
  * Copyright (c) Cristian Gafton 1996.

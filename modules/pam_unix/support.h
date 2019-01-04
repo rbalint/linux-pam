@@ -1,5 +1,5 @@
 /*
- * $Id: support.h,v 1.14 2008/01/23 15:35:13 t8m Exp $
+ * $Id: support.h,v 1.17 2008/12/01 15:10:22 t8m Exp $
  */
 
 #ifndef _PAM_UNIX_SUPPORT_H
@@ -88,9 +88,9 @@ typedef struct {
 #define UNIX_SHA512_PASS         24	/* new password hashes will use SHA512 */
 #define UNIX_ALGO_ROUNDS         25	/* optional number of rounds for new 
 					   password hash algorithms */
+#define UNIX_BLOWFISH_PASS       26	/* new password hashes will use blowfish */
 /* -------------- */
-#define UNIX_CTRLS_              26	/* number of ctrl arguments defined */
-
+#define UNIX_CTRLS_              27	/* number of ctrl arguments defined */
 
 static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
 {
@@ -110,23 +110,25 @@ static const UNIX_Ctrls unix_args[UNIX_CTRLS_] =
 /* UNIX__QUIET */          {NULL,              _ALL_ON_,               02000},
 /* UNIX_USE_AUTHTOK */     {"use_authtok",     _ALL_ON_,               04000},
 /* UNIX_SHADOW */          {"shadow",          _ALL_ON_,              010000},
-/* UNIX_MD5_PASS */        {"md5",             _ALL_ON_^(0400000),    020000},
+/* UNIX_MD5_PASS */        {"md5",            _ALL_ON_^(0260420000),  020000},
 /* UNIX__NULLOK */         {"nullok",          _ALL_ON_^(01000),           0},
 /* UNIX_DEBUG */           {"debug",           _ALL_ON_,              040000},
 /* UNIX_NODELAY */         {"nodelay",         _ALL_ON_,             0100000},
 /* UNIX_NIS */             {"nis",             _ALL_ON_,             0200000},
-/* UNIX_BIGCRYPT */        {"bigcrypt",        _ALL_ON_^(020000),    0400000},
+/* UNIX_BIGCRYPT */        {"bigcrypt",       _ALL_ON_^(0260420000), 0400000},
 /* UNIX_LIKE_AUTH */       {"likeauth",        _ALL_ON_,            01000000},
 /* UNIX_REMEMBER_PASSWD */ {"remember=",       _ALL_ON_,            02000000},
 /* UNIX_NOREAP */          {"noreap",          _ALL_ON_,            04000000},
 /* UNIX_BROKEN_SHADOW */   {"broken_shadow",   _ALL_ON_,           010000000},
-/* UNIX_SHA256_PASS */     {"sha256",        _ALL_ON_^(040420000), 020000000},
-/* UNIX_SHA512_PASS */     {"sha512",        _ALL_ON_^(020420000), 040000000},
+/* UNIX_SHA256_PASS */     {"sha256",       _ALL_ON_^(0260420000), 020000000},
+/* UNIX_SHA512_PASS */     {"sha512",       _ALL_ON_^(0260420000), 040000000},
 /* UNIX_ALGO_ROUNDS */     {"rounds=",         _ALL_ON_,          0100000000},
+/* UNIX_BLOWFISH_PASS */   {"blowfish",    _ALL_ON_^(0260420000), 0200000000},
 };
 
 #define UNIX_DEFAULTS  (unix_args[UNIX__NONULL].flag)
 
+#define MAX_FD_NO 2000000
 
 /* use this to free strings. ESPECIALLY password strings */
 

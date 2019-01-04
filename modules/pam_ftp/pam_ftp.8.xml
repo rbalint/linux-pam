@@ -105,10 +105,10 @@
     </para>
   </refsect1>
 
-  <refsect1 id="pam_ftp-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_ftp-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      Only the <option>auth</option> service is supported.
+      Only the <option>auth</option> module type is provided.
     </para>
   </refsect1>
 
@@ -121,7 +121,7 @@
           <term>PAM_SUCCESS</term>
           <listitem>
             <para>
-              The authentication was successfull.
+              The authentication was successful.
             </para>
           </listitem>
         </varlistentry>
@@ -165,7 +165,7 @@ auth    required    pam_listfile.so \
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

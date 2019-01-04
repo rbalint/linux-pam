@@ -188,11 +188,11 @@
     </para>
   </refsect1>
 
-  <refsect1 id="pam_filter-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_filter-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      The services <option>auth</option>, <option>account</option>,
-      <option>password</option> and <option>session</option> are supported.
+      All module types (<option>auth</option>, <option>account</option>,
+      <option>password</option> and <option>session</option>) are provided.
     </para>
   </refsect1>
 
@@ -205,7 +205,7 @@
           <term>PAM_SUCCESS</term>
           <listitem>
             <para>
-              The new filter was set successfull.
+              The new filter was set successfully.
             </para>
           </listitem>
         </varlistentry>
@@ -243,7 +243,7 @@
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

@@ -47,7 +47,7 @@
 	    For each user matching one of comma-separated glob
 	    <option><replaceable>patterns</replaceable></option>, disable
 	    TTY auditing.  This overrides any previous <option>enable</option>
-	    option matchin the same user name on the command line.
+	    option matching the same user name on the command line.
           </para>
         </listitem>
       </varlistentry>
@@ -80,10 +80,10 @@
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_tty_audit-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_tty_audit-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      Only the <emphasis remap='B'>session</emphasis> service is supported.
+      Only the <emphasis remap='B'>session</emphasis> type is supported.
     </para>
   </refsect1>
 

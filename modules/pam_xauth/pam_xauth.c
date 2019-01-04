@@ -118,6 +118,7 @@ run_coprocess(const char *input, char **output,
 		size_t j;
 		char *args[10];
 		const char *tmp;
+		int maxopened;
 		/* Drop privileges. */
 		setgid(gid);
 		setgroups(0, NULL);
@@ -129,7 +130,8 @@ run_coprocess(const char *input, char **output,
 		 * descriptors. */
 		dup2(ipipe[0], STDIN_FILENO);
 		dup2(opipe[1], STDOUT_FILENO);
-		for (i = 0; i < sysconf(_SC_OPEN_MAX); i++) {
+		maxopened = (int)sysconf(_SC_OPEN_MAX);
+		for (i = 0; i < maxopened; i++) {
 			if ((i != STDIN_FILENO) && (i != STDOUT_FILENO)) {
 				close(i);
 			}
@@ -147,7 +149,7 @@ run_coprocess(const char *input, char **output,
 		/* Run the command. */
 		execv(command, args);
 		/* Never reached. */
-		exit(1);
+		_exit(1);
 	}
 
 	/* We're the parent, so close the other ends of the pipes. */
@@ -278,7 +280,7 @@ check_acl(pam_handle_t *pamh,
 			return noent_code;
 		default:
 			if (debug) {
-				pam_syslog(pamh, LOG_ERR,
+				pam_syslog(pamh, LOG_DEBUG,
 					   "error opening %s: %m", path);
 			}
 			return PAM_PERM_DENIED;
@@ -291,7 +293,8 @@ pam_sm_open_session (pam_handle_t *pamh, int flags UNUSED,
 		     int argc, const char **argv)
 {
 	char *cookiefile = NULL, *xauthority = NULL,
-	     *cookie = NULL, *display = NULL, *tmp = NULL;
+	     *cookie = NULL, *display = NULL, *tmp = NULL,
+	     *xauthlocalhostname = NULL;
 	const char *user, *xauth = NULL;
 	struct passwd *tpwd, *rpwd;
 	int fd, i, debug = 0;
@@ -586,14 +589,30 @@ pam_sm_open_session (pam_handle_t *pamh, int flags UNUSED,
 
 		  if (asprintf(&d, "DISPLAY=%s", display) < 0)
 		    {
-		      pam_syslog(pamh, LOG_DEBUG, "out of memory");
+		      pam_syslog(pamh, LOG_ERR, "out of memory");
 		      cookiefile = NULL;
 		      retval = PAM_SESSION_ERR;
 		      goto cleanup;
 		    }
 
 		  if (pam_putenv (pamh, d) != PAM_SUCCESS)
-		    pam_syslog (pamh, LOG_DEBUG,
+		    pam_syslog (pamh, LOG_ERR,
+				"can't set environment variable '%s'", d);
+		  free (d);
+		}
+
+		/* set XAUTHLOCALHOSTNAME to make sure that su - work under gnome */
+		if ((xauthlocalhostname = getenv("XAUTHLOCALHOSTNAME")) != NULL) {
+		  char *d;
+
+		  if (asprintf(&d, "XAUTHLOCALHOSTNAME=%s", xauthlocalhostname) < 0) {
+		    pam_syslog(pamh, LOG_ERR, "out of memory");
+		    retval = PAM_SESSION_ERR;
+		    goto cleanup;
+		  }
+
+		  if (pam_putenv (pamh, d) != PAM_SUCCESS)
+		    pam_syslog (pamh, LOG_ERR,
 				"can't set environment variable '%s'", d);
 		  free (d);
 		}

@@ -139,7 +139,7 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
     const char *fromwhat, const char *towhat, int remember)
 {
     int retval, child, fds[2];
-    void (*sighandler)(int) = NULL;
+    struct sigaction newsa, oldsa;
 
     D(("called."));
     /* create a pipe for the password */
@@ -157,13 +157,15 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 	 * The "noreap" module argument is provided so that the admin can
 	 * override this behavior.
 	 */
-	sighandler = signal(SIGCHLD, SIG_DFL);
+        memset(&newsa, '\0', sizeof(newsa));
+        newsa.sa_handler = SIG_DFL;
+        sigaction(SIGCHLD, &newsa, &oldsa);
     }
 
     /* fork */
     child = fork();
     if (child == 0) {
-        size_t i=0;
+        int i=0;
         struct rlimit rlim;
 	static char *envp[] = { NULL };
 	char *args[] = { NULL, NULL, NULL, NULL, NULL, NULL };
@@ -171,23 +173,17 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 
 	/* XXX - should really tidy up PAM here too */
 
-	close(0); close(1);
 	/* reopen stdin as pipe */
-	close(fds[1]);
 	dup2(fds[0], STDIN_FILENO);
 
 	if (getrlimit(RLIMIT_NOFILE,&rlim)==0) {
-	  for (i=2; i < rlim.rlim_max; i++) {
-	    if ((unsigned int)fds[0] != i)
+	  if (rlim.rlim_max >= MAX_FD_NO)
+	    rlim.rlim_max = MAX_FD_NO;
+	  for (i=0; i < (int)rlim.rlim_max; i++) {
+	    if (i != STDIN_FILENO)
 	  	   close(i);
 	  }
 	}
-
-        if (SELINUX_ENABLED && geteuid() == 0) {
-          /* must set the real uid to 0 so the helper will not error
-             out if pam is called from setuid binary (su, sudo...) */
-          setuid(0);
-        }
 
 	/* exec binary helper */
 	args[0] = x_strdup(UPDATE_HELPER);
@@ -205,7 +201,7 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 
 	/* should not get here: exit with error */
 	D(("helper binary is not available"));
-	exit(PAM_AUTHINFO_UNAVAIL);
+	_exit(PAM_AUTHINFO_UNAVAIL);
     } else if (child > 0) {
 	/* wait for child */
 	/* if the stored password is NULL */
@@ -225,8 +221,11 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 	rc=waitpid(child, &retval, 0);  /* wait for helper to complete */
 	if (rc<0) {
 	  pam_syslog(pamh, LOG_ERR, "unix_update waitpid failed: %m");
-	  retval = PAM_AUTH_ERR;
-	} else {
+	  retval = PAM_AUTHTOK_ERR;
+	} else if (!WIFEXITED(retval)) {
+          pam_syslog(pamh, LOG_ERR, "unix_update abnormal exit: %d", retval);
+          retval = PAM_AUTHTOK_ERR;
+        } else {
 	  retval = WEXITSTATUS(retval);
 	}
     } else {
@@ -236,8 +235,8 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 	retval = PAM_AUTH_ERR;
     }
 
-    if (sighandler != SIG_ERR) {
-        (void) signal(SIGCHLD, sighandler);   /* restore old signal handler */
+    if (off(UNIX_NOREAP, ctrl)) {
+        sigaction(SIGCHLD, &oldsa, NULL);   /* restore old signal handler */
     }
 
     return retval;
@@ -378,7 +377,7 @@ static int _do_setpass(pam_handle_t* pamh, const char *forwho,
 			  return _unix_run_update_binary(pamh, ctrl, forwho, fromwhat, towhat, remember);
 #endif
 		/* first, save old password */
-		if (save_old_password(forwho, fromwhat, remember)) {
+		if (save_old_password(pamh, forwho, fromwhat, remember)) {
 			retval = PAM_AUTHTOK_ERR;
 			goto done;
 		}
@@ -699,6 +698,10 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t * pamh, int flags,
 				pass_new = NULL;
 			}
 			retval = _pam_unix_approve_pass(pamh, ctrl, pass_old, pass_new);
+			
+			if (retval != PAM_SUCCESS && off(UNIX_NOT_SET_PASS, ctrl)) {
+				pam_set_item(pamh, PAM_AUTHTOK, NULL);
+			}
 		}
 
 		if (retval != PAM_SUCCESS) {
@@ -745,7 +748,7 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t * pamh, int flags,
 		 * First we encrypt the new password.
 		 */
 
-		tpass = create_password_hash(pass_new, ctrl, rounds);
+		tpass = create_password_hash(pamh, pass_new, ctrl, rounds);
 		if (tpass == NULL) {
 			pam_syslog(pamh, LOG_CRIT,
 				"out of memory for password");

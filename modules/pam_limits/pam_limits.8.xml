@@ -50,11 +50,11 @@
     </para>
     <para>
       By default limits are taken from the <filename>/etc/security/limits.conf</filename>
-      config file. Then individual files from the <filename>/etc/security/limits.d/</filename>
+      config file. Then individual *.conf files from the <filename>/etc/security/limits.d/</filename>
       directory are read. The files are parsed one after another in the order of "C" locale.
       The effect of the individual files is the same as if all the files were
       concatenated together in the order of parsing.
-      If a config file is explicitely specified with a module option then the
+      If a config file is explicitly specified with a module option then the
       files in the above directory are not parsed.
     </para>
     <para>
@@ -132,10 +132,10 @@
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_limits-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_limits-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      Only the <option>session</option> service is supported.
+      Only the <option>session</option> module type is provided.
     </para>
   </refsect1>
 
@@ -175,7 +175,7 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term>PAM_SESSEION_ERR</term>
+        <term>PAM_SESSION_ERR</term>
         <listitem>
            <para>
              Error recovering account name.
@@ -239,7 +239,7 @@ session  required  pam_limits.so
         <refentrytitle>limits.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-        <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+        <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
         <refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

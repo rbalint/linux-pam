@@ -1,8 +1,65 @@
 Linux-PAM NEWS -- history of user-visible changes.
 
+
+Release 1.1.0
+
+* Update translations
+* Documentation updates and fixes
+
+Release 1.0.92
+
+* Update translations
+* pam_succeed_if: Use provided username
+* pam_mkhomedir: Fix handling of options
+
+Release 1.0.91
+
+* Fixed CVE-2009-0579 (minimum days limit on password change is ignored).
+* Fix libpam internal config/argument parser
+* Add optional file locking to pam_tally2
+* Update translations
+* pam_access improvements
+* Changes in the behavior of the password stack. Results of PRELIM_CHECK
+  are not used for the final run.
+
+Release 1.0.90
+
+* Supply hostname of the machine to netgroup match call in pam_access
+* Make pam_namespace to work safe on child directories of parent directories
+  owned by users
+* Redefine LOCAL keyword of pam_access configuration file
+* Add support for try_first_pass and use_first_pass to pam_cracklib
+* Print informative messages for rejected login and add silent and
+  no_log_info options to pam_tally
+* Add support for passing PAM_AUTHTOK to stdin of helpers from pam_exec
+* New password quality tests in pam_cracklib
+* New options for pam_lastlog to show last failed login attempt and
+  to disable lastlog update
+* New pam_pwhistory module to store last used passwords
+* New pam_tally2 module similar to pam_tally with wordsize independent
+  tally data format
+* Make libpam not log missing module if its type is prepended with '-'
+* New pam_timestamp module for authentication based on recent successful
+  login.
+* Add blowfish support to pam_unix.
+* Add support for user specific environment file to pam_env.
+* Add pam_get_authtok to libpam as Linux-PAM extension.
+* Rename type option of pam_cracklib to authtok_type.
+
+Release 1.0.3
+
+* Small bug fix release
+
+
+Release 1.0.2
+
+* Regression fixed in pam_selinux
+* Problem with big UIDs fixed in pam_loginuid
+
+
 Release 1.0.1
 
-* Regression fixed in pam_set_item().
+* Regression fixed in pam_set_item()
 
 
 Release 1.0.0

@@ -250,7 +250,7 @@ evaluate_notinnetgr(const char *host, const char *user, const char *group)
 static int
 evaluate(pam_handle_t *pamh, int debug,
 	 const char *left, const char *qual, const char *right,
-	 struct passwd *pwd)
+	 struct passwd *pwd, const char *user)
 {
 	char buf[LINE_MAX] = "";
 	const char *attribute = left;
@@ -258,7 +258,7 @@ evaluate(pam_handle_t *pamh, int debug,
 	if ((strcasecmp(left, "login") == 0) ||
 	    (strcasecmp(left, "name") == 0) ||
 	    (strcasecmp(left, "user") == 0)) {
-		snprintf(buf, sizeof(buf), "%s", pwd->pw_name);
+		snprintf(buf, sizeof(buf), "%s", user);
 		left = buf;
 	}
 	if (strcasecmp(left, "uid") == 0) {
@@ -350,25 +350,25 @@ evaluate(pam_handle_t *pamh, int debug,
 	}
 	/* User is in this group. */
 	if (strcasecmp(qual, "ingroup") == 0) {
-		return evaluate_ingroup(pamh, pwd->pw_name, right);
+		return evaluate_ingroup(pamh, user, right);
 	}
 	/* User is not in this group. */
 	if (strcasecmp(qual, "notingroup") == 0) {
-		return evaluate_notingroup(pamh, pwd->pw_name, right);
+		return evaluate_notingroup(pamh, user, right);
 	}
 	/* (Rhost, user) is in this netgroup. */
 	if (strcasecmp(qual, "innetgr") == 0) {
 		const void *rhost;
 		if (pam_get_item(pamh, PAM_RHOST, &rhost) != PAM_SUCCESS)
 			rhost = NULL;
-		return evaluate_innetgr(rhost, pwd->pw_name, right);
+		return evaluate_innetgr(rhost, user, right);
 	}
 	/* (Rhost, user) is not in this group. */
 	if (strcasecmp(qual, "notinnetgr") == 0) {
 		const void *rhost;
 		if (pam_get_item(pamh, PAM_RHOST, &rhost) != PAM_SUCCESS)
 			rhost = NULL;
-		return evaluate_notinnetgr(rhost, pwd->pw_name, right);
+		return evaluate_notinnetgr(rhost, user, right);
 	}
 	/* Fail closed. */
 	return PAM_SERVICE_ERR;
@@ -443,19 +443,48 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 	}
 
 	/* Walk the argument list. */
-	i = count = 0;
+	count = 0;
 	left = qual = right = NULL;
-	while (i <= argc) {
-		if ((left != NULL) && (qual != NULL) && (right != NULL)) {
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "debug") == 0) {
+			continue;
+		}
+		if (strcmp(argv[i], "use_uid") == 0) {
+			continue;
+		}
+		if (strcmp(argv[i], "quiet") == 0) {
+			continue;
+		}
+		if (strcmp(argv[i], "quiet_fail") == 0) {
+			continue;
+		}
+		if (strcmp(argv[i], "quiet_success") == 0) {
+			continue;
+		}
+		if (left == NULL) {
+			left = argv[i];
+			continue;
+		}
+		if (qual == NULL) {
+			qual = argv[i];
+			continue;
+		}
+		if (right == NULL) {
+			right = argv[i];
+			if (right == NULL)
+				continue;
+
+			count++;
 			ret = evaluate(pamh, debug,
 				       left, qual, right,
-				       pwd);
+				       pwd, user);
 			if (ret != PAM_SUCCESS) {
 				if(!quiet_fail)
 					pam_syslog(pamh, LOG_INFO,
 						   "requirement \"%s %s %s\" "
 						   "not met by user \"%s\"",
 						   left, qual, right, user);
+				left = qual = right = NULL;
 				break;
 			}
 			else
@@ -465,43 +494,17 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 						   "was met by user \"%s\"",
 						   left, qual, right, user);
 			left = qual = right = NULL;
-		}
-		if ((i < argc) && (strcmp(argv[i], "debug") == 0)) {
-			i++;
 			continue;
 		}
-		if ((i < argc) && (strcmp(argv[i], "use_uid") == 0)) {
-			i++;
-			continue;
-		}
-		if ((i < argc) && (strcmp(argv[i], "quiet") == 0)) {
-			i++;
-			continue;
-		}
-		if ((i < argc) && (strcmp(argv[i], "quiet_fail") == 0)) {
-			i++;
-			continue;
-		}
-		if ((i < argc) && (strcmp(argv[i], "quiet_success") == 0)) {
-			i++;
-			continue;
-		}
-		if ((i < argc) && (left == NULL)) {
-			left = argv[i++];
-			count++;
-			continue;
-		}
-		if ((i < argc) && (qual == NULL)) {
-			qual = argv[i++];
-			count++;
-			continue;
-		}
-		if ((i < argc) && (right == NULL)) {
-			right = argv[i++];
-			count++;
-			continue;
-		}
-		i++;
+	}
+
+	if (left || qual || right) {
+		ret = PAM_SERVICE_ERR;
+		pam_syslog(pamh, LOG_CRIT,
+			"incomplete condition detected");
+	} else if (count == 0) {
+		pam_syslog(pamh, LOG_INFO,
+			"no condition detected; module succeeded");
 	}
 
 	return ret;

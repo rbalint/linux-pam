@@ -8,14 +8,14 @@ The pam_xauth PAM module is designed to forward xauth keys (sometimes referred
 to as "cookies") between users.
 
 Without pam_xauth, when xauth is enabled and a user uses the su(1) command to
-assume another user's priviledges, that user is no longer able to access the
+assume another user's privileges, that user is no longer able to access the
 original user's X display because the new user does not have the key needed to
 access the display. pam_xauth solves the problem by forwarding the key from the
 user running su (the source user) to the user whose identity the source user is
 assuming (the target user) when the session is created, and destroying the key
 when the session is torn down.
 
-This means, for example, that when you run su(1) from an xterm sesssion, you
+This means, for example, that when you run su(1) from an xterm session, you
 will be able to run X programs without explicitly dealing with the xauth(1)
 xauth command or ~/.Xauthority files.
 

@@ -61,6 +61,7 @@ extern struct pam_module _pam_namespace_modstruct;
 #endif
 extern struct pam_module _pam_nologin_modstruct;
 extern struct pam_module _pam_permit_modstruct;
+extern struct pam_module _pam_pwhistory_modstruct;
 extern struct pam_module _pam_rhosts_modstruct;
 extern struct pam_module _pam_rhosts_auth_modstruct;
 extern struct pam_module _pam_rootok_modstruct;
@@ -73,7 +74,9 @@ extern struct pam_module _pam_shells_modstruct;
 extern struct pam_module _pam_stress_modstruct;
 extern struct pam_module _pam_succeed_if_modstruct;
 extern struct pam_module _pam_tally_modstruct;
+extern struct pam_module _pam_tally2_modstruct;
 extern struct pam_module _pam_time_modstruct;
+extern struct pam_module _pam_timestamp_modstruct;
 #ifdef HAVE_AUDIT_TTY_STATUS
 extern struct pam_module _pam_tty_audit_modstruct;
 #endif
@@ -119,6 +122,7 @@ static struct pam_module *static_modules[] = {
 #endif
   &_pam_nologin_modstruct,
   &_pam_permit_modstruct,
+  &_pam_pwhistory_modstruct,
   &_pam_rhosts_modstruct,
   &_pam_rhosts_auth_modstruct,
   &_pam_rootok_modstruct,
@@ -131,7 +135,9 @@ static struct pam_module *static_modules[] = {
   &_pam_stress_modstruct,
   &_pam_succeed_if_modstruct,
   &_pam_tally_modstruct,
+  &_pam_tally2_modstruct,
   &_pam_time_modstruct,
+  &_pam_timestamp_modstruct,
 #ifdef HAVE_AUDIT_TTY_STATUS
   &_pam_tty_audit_modstruct,
 #endif

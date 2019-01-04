@@ -65,7 +65,7 @@ int _unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl,
 	const char *user, int *daysleft)
 {
   int retval=0, child, fds[2];
-  void (*sighandler)(int) = NULL;
+  struct sigaction newsa, oldsa;
   D(("running verify_binary"));
 
   /* create a pipe for the messages */
@@ -85,27 +85,29 @@ int _unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl,
      * The "noreap" module argument is provided so that the admin can
      * override this behavior.
      */
-    sighandler = signal(SIGCHLD, SIG_DFL);
+     memset(&newsa, '\0', sizeof(newsa));
+     newsa.sa_handler = SIG_DFL;
+     sigaction(SIGCHLD, &newsa, &oldsa);
   }
 
   /* fork */
   child = fork();
   if (child == 0) {
-    size_t i=0;
+    int i=0;
     struct rlimit rlim;
     static char *envp[] = { NULL };
     char *args[] = { NULL, NULL, NULL, NULL };
 
-    close(0); close(1);
-    /* reopen stdin as pipe */
-    close(fds[0]);
+    /* reopen stdout as pipe */
     dup2(fds[1], STDOUT_FILENO);
 
     /* XXX - should really tidy up PAM here too */
 
     if (getrlimit(RLIMIT_NOFILE,&rlim)==0) {
-      for (i=2; i < rlim.rlim_max; i++) {
-	if ((unsigned int)fds[1] != i) {
+      if (rlim.rlim_max >= MAX_FD_NO)
+        rlim.rlim_max = MAX_FD_NO;
+      for (i=0; i < (int)rlim.rlim_max; i++) {
+	if (i != STDOUT_FILENO) {
 	  close(i);
 	}
       }
@@ -126,10 +128,10 @@ int _unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl,
 
     pam_syslog(pamh, LOG_ERR, "helper binary execve failed: %m");
     /* should not get here: exit with error */
-    close (fds[1]);
     D(("helper binary is not available"));
     printf("-1\n");
-    exit(PAM_AUTHINFO_UNAVAIL);
+    fflush(stdout);
+    _exit(PAM_AUTHINFO_UNAVAIL);
   } else {
     close(fds[1]);
     if (child > 0) {
@@ -139,6 +141,9 @@ int _unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl,
       if (rc<0) {
 	pam_syslog(pamh, LOG_ERR, "unix_chkpwd waitpid returned %d: %m", rc);
 	retval = PAM_AUTH_ERR;
+      } else if (!WIFEXITED(retval)) {
+        pam_syslog(pamh, LOG_ERR, "unix_chkpwd abnormal exit: %d", retval);
+        retval = PAM_AUTH_ERR;
       } else {
 	retval = WEXITSTATUS(retval);
         rc = pam_modutil_read(fds[0], buf, sizeof(buf) - 1);
@@ -159,9 +164,11 @@ int _unix_run_verify_binary(pam_handle_t *pamh, unsigned int ctrl,
     }
     close(fds[0]);
   }
-  if (sighandler != SIG_ERR) {
-    (void) signal(SIGCHLD, sighandler);   /* restore old signal handler */
+
+  if (off(UNIX_NOREAP, ctrl)) {
+        sigaction(SIGCHLD, &oldsa, NULL);   /* restore old signal handler */
   }
+
   D(("Returning %d",retval));
   return retval;
 }
@@ -250,6 +257,9 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t * pamh, int flags,
 		_make_remark(pamh, ctrl, PAM_ERROR_MSG,
 			_("Your account has expired; please contact your system administrator"));
 		break;
+	case PAM_AUTHTOK_ERR:
+		retval = PAM_SUCCESS;
+		/* fallthrough */
 	case PAM_SUCCESS:
 		if (daysleft >= 0) {
 			pam_syslog(pamh, LOG_DEBUG,

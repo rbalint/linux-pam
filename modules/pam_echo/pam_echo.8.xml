@@ -41,7 +41,7 @@
         </listitem>
       </varlistentry>
       <varlistentry>
-        <term><emphasis remap='B'>%h</emphasis></term>
+        <term><emphasis>%h</emphasis></term>
         <listitem>
           <para>The name of the local host.</para>
         </listitem>
@@ -96,10 +96,12 @@
     </variablelist>
   </refsect1>
 
-  <refsect1 id="pam_echo-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_echo-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      All services are supported.
+      All module types (<option>auth</option>, <option>account</option>,
+      <option>password</option> and <option>session</option>) are provided.
+
     </para>
   </refsect1>
 
@@ -139,7 +141,7 @@
     <title>EXAMPLES</title>
     <para>
       For an example of the use of this module, we show how it may be
-      used to print informations about good passwords:
+      used to print information about good passwords:
       <programlisting>
 password optional pam_echo.so file=/usr/share/doc/good-password.txt
 password required pam_unix.so
@@ -154,7 +156,7 @@ password required pam_unix.so
       <refentrytitle>pam.conf</refentrytitle><manvolnum>8</manvolnum>
     </citerefentry>,
     <citerefentry>
-      <refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+      <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
     </citerefentry>,
     <citerefentry>
       <refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

@@ -331,10 +331,10 @@ is_same (const pam_handle_t *pamh UNUSED,
      }
 
      /* Ok, we know that b is a substring from A and does not contain
-	wildcards, but now the length of both strings must be the same,
-	too. */
-     if (strlen (a) != strlen(b))
-       return FALSE;
+        wildcards, but now the length of both strings must be the same,
+        too. In this case it means, a[i] has to be the end of the string. */
+     if (a[i] != '\0')
+          return FALSE;
 
      return ( !len );
 }
@@ -603,7 +603,7 @@ static int check_account(pam_handle_t *pamh, const char *service,
 	if (getgroups(no_grps, grps) < 0) {
 	    D(("getgroups call failed"));
 	    no_grps = 0;
-	    grps = NULL;
+	    _pam_drop(grps);
 	}
 #ifdef DEBUG
 	{

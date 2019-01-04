@@ -141,10 +141,10 @@
     </para>
   </refsect1>
 
-  <refsect1 id="pam_umask-services">
-    <title>MODULE SERVICES PROVIDED</title>
+  <refsect1 id="pam_umask-types">
+    <title>MODULE TYPES PROVIDED</title>
     <para>
-      Only the <option>session</option> service is supported.
+      Only the <option>session</option> type is provided.
     </para>
   </refsect1>
 
@@ -157,7 +157,7 @@
           <term>PAM_SUCCESS</term>
           <listitem>
             <para>
-              The new umask was set successfull.
+              The new umask was set successfully.
             </para>
           </listitem>
         </varlistentry>
@@ -202,7 +202,7 @@
 	<refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
-	<refentrytitle>pam.d</refentrytitle><manvolnum>8</manvolnum>
+	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
       </citerefentry>,
       <citerefentry>
 	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>

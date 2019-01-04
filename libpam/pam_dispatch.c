@@ -87,7 +87,7 @@ static int _pam_dispatch_aux(pam_handle_t *pamh, int flags, struct handler *h,
 	}
 
 	/* remember state if we are entering a substack */
-	if (prev_level < stack_level) { 
+	if (prev_level < stack_level) {
 	    substates[stack_level].impression = impression;
 	    substates[stack_level].status = status;
 	}
@@ -105,8 +105,12 @@ static int _pam_dispatch_aux(pam_handle_t *pamh, int flags, struct handler *h,
 	} else {
 	    D(("passing control to module..."));
 	    pamh->mod_name=h->mod_name;
+	    pamh->mod_argc = h->argc;
+	    pamh->mod_argv = h->argv;
 	    retval = h->func(pamh, flags, h->argc, h->argv);
 	    pamh->mod_name=NULL;
+	    pamh->mod_argc = 0;
+	    pamh->mod_argv = NULL;
 	    D(("module returned: %s", pam_strerror(pamh, retval)));
 	}
 
@@ -128,11 +132,10 @@ static int _pam_dispatch_aux(pam_handle_t *pamh, int flags, struct handler *h,
 	}
 
 	/*
-	 * use_cached_chain is how we ensure that the setcred/close_session
-	 * and chauthtok(2) modules are called in the same order as they did
-	 * when they were invoked as auth/open_session/chauthtok(1). This
-	 * feature was added in 0.75 to make the behavior of pam_setcred
-	 * sane. It was debugged by release 0.76.
+	 * use_cached_chain is how we ensure that the setcred and
+         * close_session modules are called in the same order as they did
+	 * when they were invoked as auth/open_session. This feature was
+	 * added in 0.75 to make the behavior of pam_setcred sane.
 	 */
 	if (use_cached_chain != _PAM_PLEASE_FREEZE) {
 
@@ -286,7 +289,7 @@ static int _pam_dispatch_aux(pam_handle_t *pamh, int flags, struct handler *h,
 	    }
 	}
 	continue;
-	
+
 decision_made:     /* by getting  here we have made a decision */
 	while (h->next != NULL && h->next->stack_level >= stack_level) {
 	    h = h->next;
@@ -354,9 +357,6 @@ int _pam_dispatch(pam_handle_t *pamh, int flags, int choice)
 	break;
     case PAM_CHAUTHTOK:
 	h = pamh->handlers.conf.chauthtok;
-	if (flags & PAM_UPDATE_AUTHTOK) {
-	    use_cached_chain = _PAM_MUST_BE_FROZEN;
-	}
 	break;
     default:
 	pam_syslog(pamh, LOG_ERR, "undefined fn choice; %d", choice);

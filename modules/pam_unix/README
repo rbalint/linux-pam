@@ -83,7 +83,7 @@ use_authtok
 
     When password changing enforce the module to set the new password to the
     one provided by a previously stacked password module (this is used in the
-    example of the stacking of the pam_cracklib module documented above).
+    example of the stacking of the pam_cracklib module documented below).
 
 not_set_pass
 
@@ -117,24 +117,30 @@ bigcrypt
 sha256
 
     When a user changes their password next, encrypt it with the SHA256
-    algorithm. If the SHA256 algorithm is not known to the libcrypt, fall back
-    to MD5.
+    algorithm. If the SHA256 algorithm is not known to the crypt(3) function,
+    fall back to MD5.
 
 sha512
 
     When a user changes their password next, encrypt it with the SHA512
-    algorithm. If the SHA512 algorithm is not known to the libcrypt, fall back
-    to MD5.
+    algorithm. If the SHA512 algorithm is not known to the crypt(3) function,
+    fall back to MD5.
+
+blowfish
+
+    When a user changes their password next, encrypt it with the blowfish
+    algorithm. If the SHA512 algorithm is not known to the crypt(3) function,
+    fall back to MD5.
 
 rounds=n
 
-    Set the optional number of rounds of the SHA256 and SHA512 password hashing
-    algorithms to n.
+    Set the optional number of rounds of the SHA256, SHA512 and blowfish
+    password hashing algorithms to n.
 
 broken_shadow
 
-    Ignore errors reading shadow inforation for users in the account management
-    module.
+    Ignore errors reading shadow information for users in the account
+    management module.
 
 Invalid arguments are logged with syslog(3).
 

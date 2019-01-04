@@ -46,7 +46,7 @@ sense=[allow|deny]
 file=/path/filename
 
     File containing one item per line. The file needs to be a plain file and
-    not world writeable.
+    not world writable.
 
 onerr=[succeed|fail]
 

@@ -22,6 +22,7 @@
    password   required   pam_unix.so
 
    Released under the GNU LGPL version 2 or later
+   Copyright (c) Red Hat, Inc. 2009
    Originally written by Jason Gunthorpe <jgg@debian.org> Feb 1999
    Structure taken from pam_lastlogin by Andrew Morgan
      <morgan@parc.power.net> 1996
@@ -29,18 +30,19 @@
 
 #include "config.h"
 
-#include <stdarg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <pwd.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <dirent.h>
 #include <syslog.h>
+#include <signal.h>
 
 /*
  * here, we make a definition for the externally accessible function
@@ -56,395 +58,133 @@
 #include <security/pam_modutil.h>
 #include <security/pam_ext.h>
 
+#define MAX_FD_NO 10000
 
 /* argument parsing */
 #define MKHOMEDIR_DEBUG      020	/* be verbose about things */
 #define MKHOMEDIR_QUIET      040	/* keep quiet about things */
 
-static unsigned int UMask = 0022;
-static char SkelDir[BUFSIZ] = "/etc/skel"; /* THIS MODULE IS NOT THREAD SAFE */
+struct options_t {
+  int ctrl;
+  const char *umask;
+  const char *skeldir;
+};
+typedef struct options_t options_t;
 
-static int
-_pam_parse (const pam_handle_t *pamh, int flags, int argc, const char **argv)
+static void
+_pam_parse (const pam_handle_t *pamh, int flags, int argc, const char **argv,
+	    options_t *opt)
 {
-   int ctrl = 0;
+   opt->ctrl = 0;
+   opt->umask = "0022";
+   opt->skeldir = "/etc/skel";
 
    /* does the appliction require quiet? */
    if ((flags & PAM_SILENT) == PAM_SILENT)
-      ctrl |= MKHOMEDIR_QUIET;
+      opt->ctrl |= MKHOMEDIR_QUIET;
 
    /* step through arguments */
    for (; argc-- > 0; ++argv)
    {
       if (!strcmp(*argv, "silent")) {
-	 ctrl |= MKHOMEDIR_QUIET;
+	 opt->ctrl |= MKHOMEDIR_QUIET;
       } else if (!strcmp(*argv, "debug")) {
-         ctrl |= MKHOMEDIR_DEBUG;
+         opt->ctrl |= MKHOMEDIR_DEBUG;
       } else if (!strncmp(*argv,"umask=",6)) {
-	 UMask = strtol(*argv+6,0,0);
+	 opt->umask = *argv+6;
       } else if (!strncmp(*argv,"skel=",5)) {
-	 strncpy(SkelDir,*argv+5,sizeof(SkelDir));
-	 SkelDir[sizeof(SkelDir)-1] = '\0';
+	 opt->skeldir = *argv+5;
       } else {
 	 pam_syslog(pamh, LOG_ERR, "unknown option: %s", *argv);
       }
    }
-
-   D(("ctrl = %o", ctrl));
-   return ctrl;
-}
-
-static int
-rec_mkdir (const char *dir, mode_t mode)
-{
-  char *cp;
-  char *parent = strdup (dir);
-
-  if (parent == NULL)
-    return 1;
-
-  cp = strrchr (parent, '/');
-
-  if (cp != NULL && cp != parent)
-    {
-      struct stat st;
-
-      *cp++ = '\0';
-      if (stat (parent, &st) == -1 && errno == ENOENT)
-        if (rec_mkdir (parent, mode) != 0)
-	  {
-	    free (parent);
-	    return 1;
-	  }
-    }
-
-  free (parent);
-
-  if (mkdir (dir, mode) != 0 && errno != EEXIST)
-    return 1;
-
-  return 0;
 }
 
 /* Do the actual work of creating a home dir */
 static int
-create_homedir (pam_handle_t * pamh, int ctrl,
-		const struct passwd *pwd,
-		const char *source, const char *dest)
+create_homedir (pam_handle_t *pamh, options_t *opt,
+		const struct passwd *pwd)
 {
-   char remark[BUFSIZ];
-   DIR *D;
-   struct dirent *Dir;
-   int retval = PAM_AUTH_ERR;
+   int retval, child;
+   struct sigaction newsa, oldsa;
 
    /* Mention what is happening, if the notification fails that is OK */
-   if ((ctrl & MKHOMEDIR_QUIET) != MKHOMEDIR_QUIET)
-      pam_info(pamh, _("Creating directory '%s'."), dest);
+   if (!(opt->ctrl & MKHOMEDIR_QUIET))
+      pam_info(pamh, _("Creating directory '%s'."), pwd->pw_dir);
 
-   /* Create the new directory */
-   if (rec_mkdir (dest,0755) != 0)
-   {
-      pam_error(pamh, _("Unable to create directory %s: %m"), dest);
-      pam_syslog(pamh, LOG_ERR, "unable to create directory %s: %m", dest);
-      return PAM_PERM_DENIED;
+
+   D(("called."));
+
+   /*
+    * This code arranges that the demise of the child does not cause
+    * the application to receive a signal it is not expecting - which
+    * may kill the application or worse.
+    */
+   memset(&newsa, '\0', sizeof(newsa));
+   newsa.sa_handler = SIG_DFL;
+   sigaction(SIGCHLD, &newsa, &oldsa);
+
+   if (opt->ctrl & MKHOMEDIR_DEBUG) {
+        pam_syslog(pamh, LOG_DEBUG, "Executing mkhomedir_helper.");
    }
 
-   /* See if we need to copy the skel dir over. */
-   if ((source == NULL) || (strlen(source) == 0))
-   {
-     retval = PAM_SUCCESS;
-     goto go_out;
+   /* fork */
+   child = fork();
+   if (child == 0) {
+        int i;
+        struct rlimit rlim;
+	static char *envp[] = { NULL };
+	char *args[] = { NULL, NULL, NULL, NULL, NULL };
+
+	if (getrlimit(RLIMIT_NOFILE, &rlim)==0) {
+          if (rlim.rlim_max >= MAX_FD_NO)
+                rlim.rlim_max = MAX_FD_NO;
+	  for (i=0; i < (int)rlim.rlim_max; i++) {
+	  	close(i);
+	  }
+	}
+
+	/* exec the mkhomedir helper */
+	args[0] = x_strdup(MKHOMEDIR_HELPER);
+	args[1] = pwd->pw_name;
+	args[2] = x_strdup(opt->umask);
+	args[3] = x_strdup(opt->skeldir);
+
+	execve(MKHOMEDIR_HELPER, args, envp);
+
+	/* should not get here: exit with error */
+	D(("helper binary is not available"));
+	_exit(PAM_SYSTEM_ERR);
+   } else if (child > 0) {
+	int rc;
+	while ((rc=waitpid(child, &retval, 0)) < 0 && errno == EINTR);
+	if (rc < 0) {
+	  pam_syslog(pamh, LOG_ERR, "waitpid failed: %m");
+	  retval = PAM_SYSTEM_ERR;
+	} else if (!WIFEXITED(retval)) {
+          pam_syslog(pamh, LOG_ERR, "mkhomedir_helper abnormal exit: %d", retval);
+          retval = PAM_SYSTEM_ERR;
+        } else {
+	  retval = WEXITSTATUS(retval);
+	}
+   } else {
+	D(("fork failed"));
+	pam_syslog(pamh, LOG_ERR, "fork failed: %m");
+	retval = PAM_SYSTEM_ERR;
    }
 
-   /* Scan the directory */
-   D = opendir (source);
-   if (D == 0)
-   {
-      pam_syslog(pamh, LOG_DEBUG, "unable to read directory %s: %m", source);
-      retval = PAM_PERM_DENIED;
-      goto go_out;
+   sigaction(SIGCHLD, &oldsa, NULL);   /* restore old signal handler */
+
+   if (opt->ctrl & MKHOMEDIR_DEBUG) {
+        pam_syslog(pamh, LOG_DEBUG, "mkhomedir_helper returned %d", retval);
    }
 
-   for (Dir = readdir(D); Dir != 0; Dir = readdir(D))
-   {
-      int SrcFd;
-      int DestFd;
-      int Res;
-      struct stat St;
-#ifndef PATH_MAX
-      char *newsource = NULL, *newdest = NULL;
-      /* track length of buffers */
-      int nslen = 0, ndlen = 0;
-      int slen = strlen(source), dlen = strlen(dest);
-#else
-      char newsource[PATH_MAX], newdest[PATH_MAX];
-#endif
-
-      /* Skip some files.. */
-      if (strcmp(Dir->d_name,".") == 0 ||
-	  strcmp(Dir->d_name,"..") == 0)
-	 continue;
-
-      /* Determine what kind of file it is. */
-#ifndef PATH_MAX
-      nslen = slen + strlen(Dir->d_name) + 2;
-
-      if (nslen <= 0)
-	{
-	  retval = PAM_BUF_ERR;
-	  goto go_out;
-	}
-
-      if ((newsource = malloc (nslen)) == NULL)
-	{
-	  retval = PAM_BUF_ERR;
-	  goto go_out;
-	}
-
-      sprintf(newsource, "%s/%s", source, Dir->d_name);
-#else
-      snprintf(newsource,sizeof(newsource),"%s/%s",source,Dir->d_name);
-#endif
-
-      if (lstat(newsource,&St) != 0)
-#ifndef PATH_MAX
-      {
-	      free(newsource);
-	      newsource = NULL;
-         continue;
-      }
-#else
-      continue;
-#endif
-
-
-      /* We'll need the new file's name. */
-#ifndef PATH_MAX
-      ndlen = dlen + strlen(Dir->d_name)+2;
-
-      if (ndlen <= 0)
-	{
-	  retval = PAM_BUF_ERR;
-	  goto go_out;
-	}
-
-      if ((newdest = malloc(ndlen)) == NULL)
-	{
-	  free (newsource);
-	  retval = PAM_BUF_ERR;
-	  goto go_out;
-	}
-
-      sprintf (newdest, "%s/%s", dest, Dir->d_name);
-#else
-      snprintf (newdest,sizeof (newdest),"%s/%s",dest,Dir->d_name);
-#endif
-
-      /* If it's a directory, recurse. */
-      if (S_ISDIR(St.st_mode))
-      {
-        retval = create_homedir (pamh, ctrl, pwd, newsource, newdest);
-
-#ifndef PATH_MAX
-	 free(newsource); newsource = NULL;
-	 free(newdest); newdest = NULL;
-#endif
-
-         if (retval != PAM_SUCCESS)
-	   {
-	     closedir(D);
-	     goto go_out;
-	   }
-         continue;
-      }
-
-      /* If it's a symlink, create a new link. */
-      if (S_ISLNK(St.st_mode))
-      {
-	 int pointedlen = 0;
-#ifndef PATH_MAX
-	 char *pointed = NULL;
-           {
-		   int size = 100;
-
-		   while (1) {
-			   pointed = (char *) malloc(size);
-			   if ( ! pointed ) {
-				   free(newsource);
-				   free(newdest);
-				   return PAM_BUF_ERR;
-			   }
-			   pointedlen = readlink (newsource, pointed, size);
-			   if ( pointedlen < 0 ) break;
-			   if ( pointedlen < size ) break;
-			   free (pointed);
-			   size *= 2;
-		   }
-	   }
-	   if ( pointedlen < 0 )
-		   free(pointed);
-	   else
-		   pointed[pointedlen] = 0;
-#else
-         char pointed[PATH_MAX];
-         memset(pointed, 0, sizeof(pointed));
-
-         pointedlen = readlink(newsource, pointed, sizeof(pointed) - 1);
-#endif
-
-	 if ( pointedlen >= 0 ) {
-            if(symlink(pointed, newdest) == 0)
-            {
-               if (lchown(newdest,pwd->pw_uid,pwd->pw_gid) != 0)
-               {
-                   pam_syslog(pamh, LOG_DEBUG,
-			      "unable to change perms on link %s: %m", newdest);
-                   closedir(D);
-#ifndef PATH_MAX
-		   free(pointed);
-		   free(newsource);
-		   free(newdest);
-#endif
-                   return PAM_PERM_DENIED;
-               }
-            }
-#ifndef PATH_MAX
-	    free(pointed);
-#endif
-         }
-#ifndef PATH_MAX
-	 free(newsource); newsource = NULL;
-	 free(newdest); newdest = NULL;
-#endif
-         continue;
-      }
-
-      /* If it's not a regular file, it's probably not a good idea to create
-       * the new device node, FIFO, or whatever it is. */
-      if (!S_ISREG(St.st_mode))
-      {
-#ifndef PATH_MAX
-	 free(newsource); newsource = NULL;
-	 free(newdest); newdest = NULL;
-#endif
-         continue;
-      }
-
-      /* Open the source file */
-      if ((SrcFd = open(newsource,O_RDONLY)) < 0 || fstat(SrcFd,&St) != 0)
-      {
-         pam_syslog(pamh, LOG_DEBUG,
-		    "unable to open src file %s: %m", newsource);
-         closedir(D);
-
-#ifndef PATH_MAX
-	 free(newsource); newsource = NULL;
-	 free(newdest); newdest = NULL;
-#endif
-
-	 return PAM_PERM_DENIED;
-      }
-      if (stat(newsource,&St) != 0)
-	{
-	  pam_syslog(pamh, LOG_DEBUG, "unable to stat src file %s: %m",
-		     newsource);
-	  close(SrcFd);
-	  closedir(D);
-
-#ifndef PATH_MAX
-	  free(newsource); newsource = NULL;
-	  free(newdest); newdest = NULL;
-#endif
-
-	  return PAM_PERM_DENIED;
-	}
-
-      /* Open the dest file */
-      if ((DestFd = open(newdest,O_WRONLY | O_TRUNC | O_CREAT,0600)) < 0)
-      {
-         pam_syslog(pamh, LOG_DEBUG,
-		    "unable to open dest file %s: %m", newdest);
-	 close(SrcFd);
-	 closedir(D);
-
-#ifndef PATH_MAX
-	 free(newsource); newsource = NULL;
-	 free(newdest); newdest = NULL;
-#endif
-	 return PAM_PERM_DENIED;
-      }
-
-      /* Set the proper ownership and permissions for the module. We make
-       	 the file a+w and then mask it with the set mask. This preseves
-       	 execute bits */
-      if (fchmod(DestFd,(St.st_mode | 0222) & (~UMask)) != 0 ||
-	  fchown(DestFd,pwd->pw_uid,pwd->pw_gid) != 0)
-      {
-         pam_syslog(pamh, LOG_DEBUG,
-		    "unable to change perms on copy %s: %m", newdest);
-         close(SrcFd);
-         close(DestFd);
-         closedir(D);
-
-#ifndef PATH_MAX
-	 free(newsource); newsource = NULL;
-	 free(newdest); newdest = NULL;
-#endif
-
-	 return PAM_PERM_DENIED;
-      }
-
-      /* Copy the file */
-      do
-      {
-	 Res = pam_modutil_read(SrcFd,remark,sizeof(remark));
-
-	 if (Res == 0)
-	     continue;
-
-	 if (Res > 0) {
-	     if (pam_modutil_write(DestFd,remark,Res) == Res)
-		continue;
-	 }
-
-	 /* If we get here, pam_modutil_read returned a -1 or
-	    pam_modutil_write returned something unexpected. */
-	 pam_syslog(pamh, LOG_DEBUG, "unable to perform IO: %m");
-	 close(SrcFd);
-	 close(DestFd);
-	 closedir(D);
-
-#ifndef PATH_MAX
-	 free(newsource); newsource = NULL;
-	 free(newdest); newdest = NULL;
-#endif
-
-	 return PAM_PERM_DENIED;
-      }
-      while (Res != 0);
-      close(SrcFd);
-      close(DestFd);
-
-#ifndef PATH_MAX
-	 free(newsource); newsource = NULL;
-	 free(newdest); newdest = NULL;
-#endif
-
-   }
-   closedir(D);
-
-   retval = PAM_SUCCESS;
-
- go_out:
-
-   if (chmod(dest,0777 & (~UMask)) != 0 ||
-       chown(dest,pwd->pw_uid,pwd->pw_gid) != 0)
-   {
-      pam_syslog(pamh, LOG_DEBUG,
-		 "unable to change perms on directory %s: %m", dest);
-      return PAM_PERM_DENIED;
+   if (retval != PAM_SUCCESS && !(opt->ctrl & MKHOMEDIR_QUIET)) {
+	pam_error(pamh, _("Unable to create and initialize directory '%s'."),
+	    pwd->pw_dir);
    }
 
+   D(("returning %d", retval));
    return retval;
 }
 
@@ -454,19 +194,20 @@ PAM_EXTERN int
 pam_sm_open_session (pam_handle_t *pamh, int flags, int argc,
 		     const char **argv)
 {
-   int retval, ctrl;
+   int retval;
+   options_t opt;
    const void *user;
    const struct passwd *pwd;
    struct stat St;
 
    /* Parse the flag values */
-   ctrl = _pam_parse(pamh, flags, argc, argv);
+   _pam_parse(pamh, flags, argc, argv, &opt);
 
    /* Determine the user name so we can get the home directory */
    retval = pam_get_item(pamh, PAM_USER, &user);
    if (retval != PAM_SUCCESS || user == NULL || *(const char *)user == '\0')
    {
-      pam_syslog(pamh, LOG_NOTICE, "user unknown");
+      pam_syslog(pamh, LOG_NOTICE, "Cannot obtain the user name.");
       return PAM_USER_UNKNOWN;
    }
 
@@ -474,16 +215,22 @@ pam_sm_open_session (pam_handle_t *pamh, int flags, int argc,
    pwd = pam_modutil_getpwnam (pamh, user);
    if (pwd == NULL)
    {
+      pam_syslog(pamh, LOG_NOTICE, "User unknown.");
       D(("couldn't identify user %s", user));
       return PAM_CRED_INSUFFICIENT;
    }
 
    /* Stat the home directory, if something exists then we assume it is
       correct and return a success*/
-   if (stat(pwd->pw_dir,&St) == 0)
+   if (stat(pwd->pw_dir, &St) == 0) {
+      if (opt.ctrl & MKHOMEDIR_DEBUG) {
+          pam_syslog(pamh, LOG_DEBUG, "Home directory %s already exists.",
+              pwd->pw_dir);
+      }
       return PAM_SUCCESS;
+   }
 
-   return create_homedir(pamh,ctrl,pwd,SkelDir,pwd->pw_dir);
+   return create_homedir(pamh, &opt, pwd);
 }
 
 /* Ignore */
