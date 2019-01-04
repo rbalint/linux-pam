@@ -1,22 +1,22 @@
 .\"     Title: pam_open_session
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/27/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 02/04/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_OPEN_SESSION" "3" "06/27/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_OPEN_SESSION" "3" "02/04/2008" "Linux-PAM Manual" "Linux-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_open_session \- start PAM session management
+pam_open_session - start PAM session management
 .SH "SYNOPSIS"
 .sp
 .ft B
 .nf
-#include <security/pam_appl.h>
+#include <security/pam_appl\.h>
 .fi
 .ft
 .HP 21
@@ -25,29 +25,39 @@ pam_open_session \- start PAM session management
 .PP
 The
 \fBpam_open_session\fR
-function sets up a user session for a previously successful authenticated user. The session should later be terminated with a call to
-\fBpam_close_session\fR(3).
+function sets up a user session for a previously successful authenticated user\. The session should later be terminated with a call to
+\fBpam_close_session\fR(3)\.
 .PP
 It should be noted that the effective uid,
-\fBgeteuid\fR(2). of the application should be of sufficient privilege to perform such tasks as creating or mounting the user's home directory for example.
+\fBgeteuid\fR(2)\. of the application should be of sufficient privilege to perform such tasks as creating or mounting the user\'s home directory for example\.
 .PP
 The flags argument is the binary or of zero or more of the following values:
-.TP 3n
+.PP
 PAM_SILENT
-Do not emit any messages.
+.RS 4
+Do not emit any messages\.
+.RE
 .SH "RETURN VALUES"
-.TP 3n
+.PP
 PAM_ABORT
-General failure.
-.TP 3n
+.RS 4
+General failure\.
+.RE
+.PP
 PAM_BUF_ERR
-Memory buffer error.
-.TP 3n
+.RS 4
+Memory buffer error\.
+.RE
+.PP
 PAM_SESSION_ERR
-Session failure.
-.TP 3n
+.RS 4
+Session failure\.
+.RE
+.PP
 PAM_SUCCESS
-Session was successful created.
+.RS 4
+Session was successful created\.
+.RE
 .SH "SEE ALSO"
 .PP
 

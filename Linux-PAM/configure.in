@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(conf/pam_conv1/pam_conv_y.y)
-AM_INIT_AUTOMAKE("Linux-PAM", 0.99.9.0)
+AM_INIT_AUTOMAKE("Linux-PAM", 0.99.10.0)
 AC_PREREQ([2.60])
 AM_CONFIG_HEADER(config.h)
 AC_CANONICAL_HOST
@@ -45,6 +45,13 @@ dnl Add security to include directory
 	then
 		includedir="${prefix}/include/security"
 	fi
+
+dnl Add /var directory
+        if test ${localstatedir} = '${prefix}/var'
+        then
+                localstatedir="/var"
+        fi
+
 fi
 
 dnl
@@ -331,20 +338,40 @@ AC_ARG_ENABLE([audit],
         WITH_LIBAUDIT=$enableval, WITH_LIBAUDIT=yes)
 if test x"$WITH_LIBAUDIT" != xno ; then
         AC_CHECK_HEADER([libaudit.h],
-              [AC_CHECK_LIB(audit, audit_log_acct_message, LIBAUDIT=-laudit, LIBAUDIT="")]
+              [AC_CHECK_LIB(audit, audit_log_acct_message, LIBAUDIT=-laudit, LIBAUDIT="")
+	       AC_CHECK_TYPE([struct audit_tty_status],
+		             [HAVE_AUDIT_TTY_STATUS=yes],
+			     [HAVE_AUDIT_TTY_STATUS=""],
+			     [#include <libaudit.h>])]
         )
         if test ! -z "$LIBAUDIT" -a "ac_cv_header_libaudit_h" != "no" ; then
-            AC_DEFINE([HAVE_LIBAUDIT], 1, [Defined if audit support should be compiled in])
+            AC_DEFINE([HAVE_LIBAUDIT], 1, [Define to 1 if audit support should be compiled in.])
+        fi
+        if test ! -z "$HAVE_AUDIT_TTY_STATUS" ; then
+            AC_DEFINE([HAVE_AUDIT_TTY_STATUS], 1, [Define to 1 if struct audit_tty_status exists.])
         fi
 else
 	LIBAUDIT=""
 fi
 AC_SUBST(LIBAUDIT)
+AM_CONDITIONAL([HAVE_AUDIT_TTY_STATUS],
+	       [test "x$HAVE_AUDIT_TTY_STATUS" = xyes])
 
 BACKUP_LIBS=$LIBS
 AC_SEARCH_LIBS([crypt],[xcrypt crypt], LIBCRYPT="-l$ac_lib", LIBCRYPT="")
+AC_CHECK_FUNCS(crypt_r)
 LIBS=$BACKUP_LIBS
 AC_SUBST(LIBCRYPT)
+
+AC_ARG_WITH([randomdev], AC_HELP_STRING([--with-randomdev=(<path>|yes|no)], [use specified random device instead of /dev/urandom or 'no' to disable]), opt_randomdev=$withval)
+if test "$opt_randomdev" = yes -o -z "$opt_randomdev"; then
+       opt_randomdev="/dev/urandom"
+elif test "$opt_randomdev" = no; then
+       opt_randomdev=
+fi
+if test -n "$opt_randomdev"; then
+       AC_DEFINE_UNQUOTED(PAM_PATH_RANDOMDEV, "$opt_randomdev", [Random device path.])
+fi
 
 dnl check for libdb or libndbm as fallback. Some libndbm compat
 dnl libraries are unuseable, so try libdb first.
@@ -373,6 +400,7 @@ AC_SUBST(LIBDB)
 AM_CONDITIONAL([HAVE_LIBDB], [test ! -z "$LIBDB"])
 
 AC_CHECK_LIB([nsl],[yp_get_default_domain], LIBNSL="-lnsl", LIBNSL="")
+BACKUP_LIBS=$LIBS
 LIBS="$LIBS $LIBNSL"
 AC_CHECK_FUNCS(yp_get_default_domain)
 LIBS=$BACKUP_LIBS
@@ -390,6 +418,10 @@ AC_SUBST(LIBSELINUX)
 AM_CONDITIONAL([HAVE_LIBSELINUX], [test ! -z "$LIBSELINUX"])
 if test ! -z "$LIBSELINUX" ; then
     AC_DEFINE([WITH_SELINUX], 1, [Defined if SE Linux support is compiled in])
+    BACKUP_LIBS=$LIBS
+    LIBS="$LIBS $LIBSELINUX"
+    AC_CHECK_FUNCS(setkeycreatecon)
+    LIBS=$BACKUP_LIBS
 fi
 
 dnl Checks for header files.
@@ -422,7 +454,7 @@ AC_CHECK_FUNCS(fseeko gethostname gettimeofday lckpwdf mkdir select)
 AC_CHECK_FUNCS(strcspn strdup strspn strstr strtol uname)
 AC_CHECK_FUNCS(getpwnam_r getpwuid_r getgrnam_r getgrgid_r getspnam_r)
 AC_CHECK_FUNCS(getgrouplist getline getdelim)
-AC_CHECK_FUNCS(inet_ntop inet_pton ruserok_af setkeycreatecon)
+AC_CHECK_FUNCS(inet_ntop inet_pton ruserok_af)
 
 AC_CHECK_FUNCS(unshare, [UNSHARE=yes], [UNSHARE=no])
 AM_CONDITIONAL([HAVE_UNSHARE], [test "$UNSHARE" = yes])
@@ -511,9 +543,11 @@ AC_OUTPUT(Makefile libpam/Makefile libpamc/Makefile libpamc/test/Makefile \
 	modules/pam_rhosts/Makefile \
 	modules/pam_rootok/Makefile modules/pam_exec/Makefile \
 	modules/pam_securetty/Makefile modules/pam_selinux/Makefile \
+	modules/pam_sepermit/Makefile \
 	modules/pam_shells/Makefile modules/pam_stress/Makefile \
 	modules/pam_succeed_if/Makefile modules/pam_tally/Makefile \
-	modules/pam_time/Makefile modules/pam_umask/Makefile \
+	modules/pam_time/Makefile modules/pam_tty_audit/Makefile \
+	modules/pam_umask/Makefile \
 	modules/pam_unix/Makefile modules/pam_userdb/Makefile \
 	modules/pam_warn/Makefile modules/pam_wheel/Makefile \
 	modules/pam_xauth/Makefile doc/Makefile doc/specs/Makefile \

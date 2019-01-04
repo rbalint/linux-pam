@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Linux-PAM\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/projects/pam\n"
-"POT-Creation-Date: 2007-10-01 12:19+0200\n"
-"PO-Revision-Date: 2007-01-17 11:54+0100\n"
+"POT-Creation-Date: 2008-02-04 16:29+0100\n"
+"PO-Revision-Date: 2007-10-01 15:54+0100\n"
 "Last-Translator: Tomas Mraz <t8m@centrum.cz>\n"
 "Language-Team: cs_CZ <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "...Čas vypršel!\n"
 msgid "erroneous conversation (%d)\n"
 msgstr "nesprávná konverzace (%d)\n"
 
-#: libpam/pam_item.c:271
+#: libpam/pam_item.c:298
 msgid "login:"
 msgstr "login:"
 
@@ -206,19 +206,19 @@ msgstr "je posunuté"
 
 #: modules/pam_cracklib/pam_cracklib.c:460
 msgid "not enough character classes"
-msgstr ""
+msgstr "nemá dostatek různých druhů znaků"
 
 #: modules/pam_cracklib/pam_cracklib.c:498
 msgid "has been already used"
 msgstr "již bylo použito"
 
 #: modules/pam_cracklib/pam_cracklib.c:526
-#: modules/pam_unix/pam_unix_passwd.c:977
+#: modules/pam_unix/pam_unix_passwd.c:456
 msgid "No password supplied"
 msgstr "Nezadáno heslo"
 
 #: modules/pam_cracklib/pam_cracklib.c:526
-#: modules/pam_unix/pam_unix_passwd.c:977
+#: modules/pam_unix/pam_unix_passwd.c:456
 msgid "Password unchanged"
 msgstr "Heslo nebylo změněno"
 
@@ -228,17 +228,17 @@ msgstr "Heslo nebylo změněno"
 msgid "BAD PASSWORD: %s"
 msgstr "ŠPATNÉ HESLO: %s"
 
-#: modules/pam_exec/pam_exec.c:118
+#: modules/pam_exec/pam_exec.c:134
 #, c-format
 msgid "%s failed: exit code %d"
 msgstr "%s selhal: návratový kód %d"
 
-#: modules/pam_exec/pam_exec.c:126
+#: modules/pam_exec/pam_exec.c:143
 #, c-format
 msgid "%s failed: caught signal %d%s"
 msgstr "%s selhal: dostal signál %d%s"
 
-#: modules/pam_exec/pam_exec.c:134
+#: modules/pam_exec/pam_exec.c:152
 #, c-format
 msgid "%s failed: unknown status 0x%x"
 msgstr "%s selhal: neznámý kód stavu 0x%x"
@@ -270,7 +270,7 @@ msgstr "Poslední přihlášení:%s%s%s"
 msgid "Welcome to your new account!"
 msgstr "Vítejte na vašem novém účtu!"
 
-#: modules/pam_limits/pam_limits.c:698
+#: modules/pam_limits/pam_limits.c:712
 #, c-format
 msgid "Too many logins for '%s'."
 msgstr "Příliš mnoho přihlášení pro '%s'."
@@ -339,51 +339,47 @@ msgid "Error sending audit message."
 msgstr ""
 
 #: modules/pam_selinux/pam_selinux.c:164
-#, fuzzy
 msgid "Would you like to enter a security context? [N] "
-msgstr "Chcete zadat bezpečnostní kontext? [y]"
+msgstr "Chcete zadat bezpečnostní kontext? [N] "
 
 #: modules/pam_selinux/pam_selinux.c:181 modules/pam_selinux/pam_selinux.c:265
-#, fuzzy
 msgid "role:"
-msgstr "role: "
+msgstr "role:"
 
 #: modules/pam_selinux/pam_selinux.c:193 modules/pam_selinux/pam_selinux.c:282
-#, fuzzy
 msgid "level:"
-msgstr "úroveň: "
+msgstr "úroveň:"
 
 #: modules/pam_selinux/pam_selinux.c:206 modules/pam_selinux/pam_selinux.c:313
 msgid "Not a valid security context"
 msgstr "Neplatný bezpečnostní kontext"
 
 #: modules/pam_selinux/pam_selinux.c:251
-#, fuzzy, c-format
+#, c-format
 msgid "Default Security Context %s\n"
-msgstr "Bezpečnostní kontext %s přidělen"
+msgstr "Výchozí bezpečnostní kontext %s\n"
 
 #: modules/pam_selinux/pam_selinux.c:255
-#, fuzzy
 msgid "Would you like to enter a different role or level?"
-msgstr "Chcete zadat bezpečnostní kontext? [y]"
+msgstr "Chcete zadat jinou roli nebo úroveň?"
 
 #: modules/pam_selinux/pam_selinux.c:269
 #, c-format
 msgid "No default type for role %s\n"
-msgstr ""
+msgstr "Chybí výchozí typ pro roli %s\n"
 
 #: modules/pam_selinux/pam_selinux.c:512
 msgid "Out of memory"
-msgstr ""
+msgstr "Nedostatek paměti"
 
 #: modules/pam_selinux/pam_selinux.c:520 modules/pam_selinux/pam_selinux.c:522
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to get valid context for %s"
-msgstr "Nezdařilo se vytvořit adresář %s: %m"
+msgstr "Nezdařilo se najít platný bezpečnostní kontext pro %s"
 
 #: modules/pam_selinux/pam_selinux.c:578
 msgid "Requested MLS level not in permitted range"
-msgstr ""
+msgstr "Požadovaná úroveň MLS není v povoleném rozsahu"
 
 #: modules/pam_selinux/pam_selinux.c:628
 #, c-format
@@ -391,9 +387,9 @@ msgid "Security Context %s Assigned"
 msgstr "Bezpečnostní kontext %s přidělen"
 
 #: modules/pam_selinux/pam_selinux.c:649
-#, fuzzy, c-format
+#, c-format
 msgid "Key Creation Context %s Assigned"
-msgstr "Bezpečnostní kontext %s přidělen"
+msgstr "Bezpečnostní kontext pro vytváření klíčů %s přidělen"
 
 #: modules/pam_selinux/pam_selinux_check.c:99
 #, c-format
@@ -427,33 +423,33 @@ msgstr "Opakujte nové STRESS heslo: "
 msgid "Verification mis-typed; password unchanged"
 msgstr "Chybné potvrzení. Heslo nezměněno"
 
-#: modules/pam_tally/pam_tally.c:741
+#: modules/pam_tally/pam_tally.c:746
 msgid "Authentication error"
 msgstr "Chyba autentizace"
 
-#: modules/pam_tally/pam_tally.c:742
+#: modules/pam_tally/pam_tally.c:747
 msgid "Service error"
 msgstr "Chyba služby"
 
-#: modules/pam_tally/pam_tally.c:743
+#: modules/pam_tally/pam_tally.c:748
 msgid "Unknown user"
 msgstr "Neznámý uživatel"
 
-#: modules/pam_tally/pam_tally.c:744
+#: modules/pam_tally/pam_tally.c:749
 msgid "Unknown error"
 msgstr "Neznámá chyba"
 
-#: modules/pam_tally/pam_tally.c:760
+#: modules/pam_tally/pam_tally.c:765
 #, c-format
 msgid "%s: Bad number given to --reset=\n"
 msgstr "%s: Zadána špatná hodnota --reset=\n"
 
-#: modules/pam_tally/pam_tally.c:764
+#: modules/pam_tally/pam_tally.c:769
 #, c-format
 msgid "%s: Unrecognised option %s\n"
 msgstr "%s: Neznámá volba %s\n"
 
-#: modules/pam_tally/pam_tally.c:776
+#: modules/pam_tally/pam_tally.c:781
 #, c-format
 msgid ""
 "%s: [--file rooted-filename] [--user username] [--reset[=n]] [--quiet]\n"
@@ -461,24 +457,24 @@ msgstr ""
 "%s: [--file jmeno_souboru] [--user uzivatelske_jmeno] [--reset[=n]] [--"
 "quiet]\n"
 
-#: modules/pam_tally/pam_tally.c:850
+#: modules/pam_tally/pam_tally.c:855
 #, c-format
 msgid "%s: Can't reset all users to non-zero\n"
 msgstr "%s: Nelze resetovat všechny uživatele nenulově\n"
 
-#: modules/pam_unix/pam_unix_acct.c:274 modules/pam_unix/pam_unix_acct.c:301
+#: modules/pam_unix/pam_unix_acct.c:229 modules/pam_unix/pam_unix_acct.c:251
 msgid "Your account has expired; please contact your system administrator"
 msgstr "Váš účet vypršel; kontaktujte prosím svého správce systému"
 
-#: modules/pam_unix/pam_unix_acct.c:283
+#: modules/pam_unix/pam_unix_acct.c:237
 msgid "You are required to change your password immediately (root enforced)"
 msgstr "Musíte okamžitě změnit své heslo (vynuceno rootem)"
 
-#: modules/pam_unix/pam_unix_acct.c:310
+#: modules/pam_unix/pam_unix_acct.c:243
 msgid "You are required to change your password immediately (password aged)"
 msgstr "Musíte okamžitě změnit své heslo (heslo vypršelo)"
 
-#: modules/pam_unix/pam_unix_acct.c:323 modules/pam_unix/pam_unix_acct.c:330
+#: modules/pam_unix/pam_unix_acct.c:261 modules/pam_unix/pam_unix_acct.c:268
 #, c-format
 msgid "Warning: your password will expire in %d day"
 msgid_plural "Warning: your password will expire in %d days"
@@ -486,9 +482,8 @@ msgstr[0] "Varování: Vaše heslo vyprší za %d den"
 msgstr[1] "Varování: Vaše heslo vyprší za %d dny"
 msgstr[2] "Varování: Vaše heslo vyprší za %d dní"
 
-#. TRANSLATORS: only used if dngettext is not support
-#. ed
-#: modules/pam_unix/pam_unix_acct.c:336
+#. TRANSLATORS: only used if dngettext is not supported
+#: modules/pam_unix/pam_unix_acct.c:273
 #, c-format
 msgid "Warning: your password will expire in %d days"
 msgstr "Varování: Počet dní do vypršení hesla: %d"
@@ -497,44 +492,35 @@ msgstr "Varování: Počet dní do vypršení hesla: %d"
 msgid "Password: "
 msgstr "Heslo: "
 
-#: modules/pam_unix/pam_unix_passwd.c:821
+#: modules/pam_unix/pam_unix_passwd.c:366
 msgid "NIS password could not be changed."
 msgstr "NIS heslo se nepodařilo změnit."
 
-#: modules/pam_unix/pam_unix_passwd.c:998
+#: modules/pam_unix/pam_unix_passwd.c:477
 msgid "You must choose a longer password"
 msgstr "Musíte zvolit delší heslo"
 
-#: modules/pam_unix/pam_unix_passwd.c:1003
+#: modules/pam_unix/pam_unix_passwd.c:482
 msgid "Password has been already used. Choose another."
 msgstr "Heslo již bylo použito. Zvolte jiné."
 
-#: modules/pam_unix/pam_unix_passwd.c:1103
+#: modules/pam_unix/pam_unix_passwd.c:583
 #, c-format
 msgid "Changing password for %s."
 msgstr "Změna hesla pro %s."
 
-#: modules/pam_unix/pam_unix_passwd.c:1114
+#: modules/pam_unix/pam_unix_passwd.c:594
 msgid "(current) UNIX password: "
 msgstr "(současné) UNIX heslo: "
 
-#: modules/pam_unix/pam_unix_passwd.c:1149
+#: modules/pam_unix/pam_unix_passwd.c:629
 msgid "You must wait longer to change your password"
 msgstr "Na změnu svého hesla musíte počkat déle"
 
-#: modules/pam_unix/pam_unix_passwd.c:1209
+#: modules/pam_unix/pam_unix_passwd.c:689
 msgid "Enter new UNIX password: "
 msgstr "Zadejte nové UNIX heslo: "
 
-#: modules/pam_unix/pam_unix_passwd.c:1210
+#: modules/pam_unix/pam_unix_passwd.c:690
 msgid "Retype new UNIX password: "
 msgstr "Opakujte nové UNIX heslo: "
-
-#~ msgid "Do you want to choose a different one? [n]"
-#~ msgstr "Chcete zvolit jiný? [n]"
-
-#~ msgid "Enter number of choice: "
-#~ msgstr "Zadejte číslo volby: "
-
-#~ msgid "type: "
-#~ msgstr "typ: "

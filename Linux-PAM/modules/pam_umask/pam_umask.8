@@ -1,86 +1,106 @@
 .\"     Title: pam_umask
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 08/06/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 01/08/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_UMASK" "8" "08/06/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_UMASK" "8" "01/08/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_umask \- PAM module to set the file mode creation mask
+pam_umask - PAM module to set the file mode creation mask
 .SH "SYNOPSIS"
 .HP 13
-\fBpam_umask.so\fR [debug] [silent] [usergroups] [umask=\fImask\fR]
+\fBpam_umask\.so\fR [debug] [silent] [usergroups] [umask=\fImask\fR]
 .SH "DESCRIPTION"
 .PP
-pam_umask is a PAM module to set the file mode creation mask of the current environment. The umask affects the default permissions assigned to newly created files.
+pam_umask is a PAM module to set the file mode creation mask of the current environment\. The umask affects the default permissions assigned to newly created files\.
 .PP
 The PAM module tries to get the umask value from the following places in the following order:
-.TP 3n
-\(bu
-umask= argument
-.TP 3n
-\(bu
-umask= entry of the users GECOS field
-.TP 3n
-\(bu
-pri= entry of the users GECOS field
-.TP 3n
-\(bu
-ulimit= entry of the users GECOS field
-.TP 3n
-\(bu
-UMASK= entry from /etc/default/login
-.TP 3n
-\(bu
-UMASK entry from /etc/login.defs
+.sp
+.RS 4
+\h'-04'\(bu\h'+03'umask= argument
+.RE
+.sp
+.RS 4
+\h'-04'\(bu\h'+03'umask= entry of the users GECOS field
+.RE
+.sp
+.RS 4
+\h'-04'\(bu\h'+03'pri= entry of the users GECOS field
+.RE
+.sp
+.RS 4
+\h'-04'\(bu\h'+03'ulimit= entry of the users GECOS field
+.RE
+.sp
+.RS 4
+\h'-04'\(bu\h'+03'UMASK= entry from /etc/default/login
+.RE
+.sp
+.RS 4
+\h'-04'\(bu\h'+03'UMASK entry from /etc/login\.defs
+.RE
 .sp
 .RE
 .SH "OPTIONS"
 .PP
-.TP 3n
+.PP
 \fBdebug\fR
-Print debug information.
-.TP 3n
+.RS 4
+Print debug information\.
+.RE
+.PP
 \fBsilent\fR
-Don't print informative messages.
-.TP 3n
+.RS 4
+Don\'t print informative messages\.
+.RE
+.PP
 \fBusergroups\fR
-If the user is not root, and the user ID is equal to the group ID, and the username is the same as primary group name, the umask group bits are set to be the same as owner bits (examples: 022 \-> 002, 077 \-> 007).
-.TP 3n
+.RS 4
+If the user is not root, and the user ID is equal to the group ID, and the username is the same as primary group name, the umask group bits are set to be the same as owner bits (examples: 022 \-> 002, 077 \-> 007)\.
+.RE
+.PP
 \fBumask=\fR\fB\fImask\fR\fR
-Sets the calling process's file mode creation mask (umask) to
+.RS 4
+Sets the calling process\'s file mode creation mask (umask) to
 \fBmask\fR
-& 0777. The value is interpreted as Octal.
+& 0777\. The value is interpreted as Octal\.
+.RE
 .SH "MODULE SERVICES PROVIDED"
 .PP
 Only the
 \fBsession\fR
-service is supported.
+service is supported\.
 .SH "RETURN VALUES"
 .PP
-.TP 3n
+.PP
 PAM_SUCCESS
-The new umask was set successfull.
-.TP 3n
+.RS 4
+The new umask was set successfull\.
+.RE
+.PP
 PAM_SERVICE_ERR
-No username was given.
-.TP 3n
+.RS 4
+No username was given\.
+.RE
+.PP
 PAM_USER_UNKNOWN
-User not known.
+.RS 4
+User not known\.
+.RE
 .SH "EXAMPLES"
 .PP
 Add the following line to
-\fI/etc/pam.d/login\fR
+\fI/etc/pam\.d/login\fR
 to set the user specific umask at login:
 .sp
-.RS 3n
+.RS 4
 .nf
-        session optional pam_umask.so umask=0022
+        session optional pam_umask\.so umask=0022
       
 .fi
 .RE
@@ -93,4 +113,4 @@ to set the user specific umask at login:
 \fBpam\fR(8)
 .SH "AUTHOR"
 .PP
-pam_umask was written by Thorsten Kukuk <kukuk@thkukuk.de>.
+pam_umask was written by Thorsten Kukuk <kukuk@thkukuk\.de>\.

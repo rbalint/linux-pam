@@ -44,7 +44,7 @@
 #define _PAM_INVALID_RETVAL  -1    /* default value for cached_retval */
 
 struct handler {
-    int must_fail;
+    int handler_type;
     int (*func)(pam_handle_t *pamh, int flags, int argc, char **argv);
     int actions[_PAM_RETURN_VALUES];
     /* set by authenticate, open_session, chauthtok(1st)
@@ -54,7 +54,12 @@ struct handler {
     char **argv;
     struct handler *next;
     char *mod_name;
+    int stack_level;
 };
+
+#define PAM_HT_MODULE       0
+#define PAM_HT_MUST_FAIL    1
+#define PAM_HT_SUBSTACK     2
 
 struct loaded_module {
     char *name;
@@ -76,7 +81,7 @@ struct handlers {
 };
 
 struct service {
-    struct loaded_module *module; /* Only used for dynamic loading */
+    struct loaded_module *module; /* Array of modules */
     int modules_allocated;
     int modules_used;
     int handlers_loaded;
@@ -111,6 +116,12 @@ struct _pam_fail_delay {
     const void *delay_fn_ptr;
 };
 
+/* initial state in substack */
+struct _pam_substack_state {
+    int impression;
+    int status;
+};
+
 struct _pam_former_state {
 /* this is known and set by _pam_dispatch() */
     int choice;            /* which flavor of module function did we call? */
@@ -119,6 +130,7 @@ struct _pam_former_state {
     int depth;             /* how deep in the stack were we? */
     int impression;        /* the impression at that time */
     int status;            /* the status before returning incomplete */
+    struct _pam_substack_state *substates; /* array of initial substack states */
 
 /* state info used by pam_get_user() function */
     int fail_user;
@@ -140,9 +152,11 @@ struct pam_handle {
     char *rhost;
     char *ruser;
     char *tty;
+    char *xdisplay;
     struct pam_data *data;
     struct pam_environ *env;      /* structure to maintain environment list */
     struct _pam_fail_delay fail_delay;   /* helper function for easy delays */
+    struct pam_xauth_data xauth;        /* auth info for X display */
     struct service handlers;
     struct _pam_former_state former;  /* library state - support for
 					 event driven applications */
@@ -174,6 +188,8 @@ struct pam_handle {
  * need to change pam_tokens.h */
 #define _PAM_ACTION_UNDEF      -6   /* this is treated as an error
 				       ( = _PAM_ACTION_BAD) */
+
+#define PAM_SUBSTACK_MAX_LEVEL 16   /* maximum level of substacks */
 
 /* character tables for parsing config files */
 extern const char * const _pam_token_actions[-_PAM_ACTION_UNDEF];
@@ -252,6 +268,8 @@ void _pam_free_data(pam_handle_t *pamh, int status);
 char *_pam_StrTok(char *from, const char *format, char **next);
 
 char *_pam_strdup(const char *s);
+
+char *_pam_memdup(const char *s, int len);
 
 int _pam_mkargv(char *s, char ***argv, int *argc);
 

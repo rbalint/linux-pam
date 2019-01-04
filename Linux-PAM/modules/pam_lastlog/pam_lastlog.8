@@ -1,85 +1,107 @@
 .\"     Title: pam_lastlog
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/09/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 01/08/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_LASTLOG" "8" "06/09/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_LASTLOG" "8" "01/08/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_lastlog \- PAM module to display date of last login
+pam_lastlog - PAM module to display date of last login
 .SH "SYNOPSIS"
 .HP 15
-\fBpam_lastlog.so\fR [debug] [silent] [never] [nodate] [nohost] [noterm] [nowtmp]
+\fBpam_lastlog\.so\fR [debug] [silent] [never] [nodate] [nohost] [noterm] [nowtmp]
 .SH "DESCRIPTION"
 .PP
-pam_lastlog is a PAM module to display a line of information about the last login of the user. In addition, the module maintains the
+pam_lastlog is a PAM module to display a line of information about the last login of the user\. In addition, the module maintains the
 \fI/var/log/lastlog\fR
-file.
+file\.
 .PP
-Some applications may perform this function themselves. In such cases, this module is not necessary.
+Some applications may perform this function themselves\. In such cases, this module is not necessary\.
 .SH "OPTIONS"
-.TP 3n
+.PP
 \fBdebug\fR
-Print debug information.
-.TP 3n
+.RS 4
+Print debug information\.
+.RE
+.PP
 \fBsilent\fR
-Don't inform the user about any previous login, just upate the
+.RS 4
+Don\'t inform the user about any previous login, just upate the
 \fI/var/log/lastlog\fR
-file.
-.TP 3n
+file\.
+.RE
+.PP
 \fBnever\fR
+.RS 4
 If the
 \fI/var/log/lastlog\fR
-file does not contain any old entries for the user, indicate that the user has never previously logged in with a welcome message.
-.TP 3n
+file does not contain any old entries for the user, indicate that the user has never previously logged in with a welcome message\.
+.RE
+.PP
 \fBnodate\fR
-Don't display the date of the last login.
-.TP 3n
+.RS 4
+Don\'t display the date of the last login\.
+.RE
+.PP
 \fBnoterm\fR
-Don't display the terminal name on which the last login was attempted.
-.TP 3n
+.RS 4
+Don\'t display the terminal name on which the last login was attempted\.
+.RE
+.PP
 \fBnohost\fR
-Don't indicate from which host the last login was attempted.
-.TP 3n
+.RS 4
+Don\'t indicate from which host the last login was attempted\.
+.RE
+.PP
 \fBnowtmp\fR
-Don't update the wtmp entry.
+.RS 4
+Don\'t update the wtmp entry\.
+.RE
 .SH "MODULE SERVICES PROVIDED"
 .PP
 Only the
 \fBsession\fR
-service is supported.
+service is supported\.
 .SH "RETURN VALUES"
 .PP
-.TP 3n
+.PP
 PAM_SUCCESS
-Everything was successfull.
-.TP 3n
+.RS 4
+Everything was successfull\.
+.RE
+.PP
 PAM_SERVICE_ERR
-Internal service module error.
-.TP 3n
+.RS 4
+Internal service module error\.
+.RE
+.PP
 PAM_USER_UNKNOWN
-User not known.
+.RS 4
+User not known\.
+.RE
 .SH "EXAMPLES"
 .PP
 Add the following line to
-\fI/etc/pam.d/login\fR
+\fI/etc/pam\.d/login\fR
 to display the last login time of an user:
 .sp
-.RS 3n
+.RS 4
 .nf
-    session  required  pam_lastlog.so nowtmp
+    session  required  pam_lastlog\.so nowtmp
       
 .fi
 .RE
 .SH "FILES"
-.TP 3n
+.PP
 \fI/var/log/lastlog\fR
+.RS 4
 Lastlog logging file
+.RE
 .SH "SEE ALSO"
 .PP
 
@@ -88,4 +110,4 @@ Lastlog logging file
 \fBpam\fR(8)
 .SH "AUTHOR"
 .PP
-pam_lastlog was written by Andrew G. Morgan <morgan@kernel.org>.
+pam_lastlog was written by Andrew G\. Morgan <morgan@kernel\.org>\.

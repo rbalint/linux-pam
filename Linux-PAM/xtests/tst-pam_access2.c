@@ -45,6 +45,7 @@
 #endif
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <security/pam_appl.h>
 
@@ -87,7 +88,7 @@ int
 main(int argc, char *argv[])
 {
   pam_handle_t *pamh = NULL;
-  const char *user="tstpamaccess";
+  const char *user="tstpamaccess2";
   int retval;
   int debug = 0;
 

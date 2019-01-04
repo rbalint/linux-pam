@@ -26,9 +26,8 @@
 #include <security/pam_ext.h>
 #include <security/pam_modutil.h>
 
-#include "md5.h"
 #include "support.h"
-#include "bigcrypt.h"
+#include "passverify.h"
 #ifdef WITH_SELINUX
 #include <selinux/selinux.h>
 #define SELINUX_ENABLED is_selinux_enabled()>0
@@ -53,8 +52,8 @@ int _make_remark(pam_handle_t * pamh, unsigned int ctrl,
  * set the control flags for the UNIX module.
  */
 
-int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int argc,
-              const char **argv)
+int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int *rounds,
+	      int argc, const char **argv)
 {
 	unsigned int ctrl;
 
@@ -108,6 +107,16 @@ int _set_ctrl(pam_handle_t *pamh, int flags, int *remember, int argc,
 						*remember = -1;
 					if (*remember > 400)
 						*remember = 400;
+				}
+			}
+			if (rounds != NULL) {
+				if (j == UNIX_ALGO_ROUNDS) {
+					*rounds = strtol(*argv + 7, NULL, 10);
+					if ((*rounds < 1000) || (*rounds == INT_MAX))
+						/* don't care about bogus values */
+						unset(UNIX_ALGO_ROUNDS, ctrl);
+					if (*rounds >= 10000000)
+						*rounds = 9999999;
 				}
 			}
 		}
@@ -377,95 +386,6 @@ int _unix_comesfromsource(pam_handle_t *pamh,
 }
 
 /*
- * _unix_blankpasswd() is a quick check for a blank password
- *
- * returns TRUE if user does not have a password
- * - to avoid prompting for one in such cases (CG)
- */
-
-int
-_unix_blankpasswd (pam_handle_t *pamh, unsigned int ctrl, const char *name)
-{
-	struct passwd *pwd = NULL;
-	struct spwd *spwdent = NULL;
-	char *salt = NULL;
-	int retval;
-
-	D(("called"));
-
-	/*
-	 * This function does not have to be too smart if something goes
-	 * wrong, return FALSE and let this case to be treated somewhere
-	 * else (CG)
-	 */
-
-	if (on(UNIX__NONULL, ctrl))
-		return 0;	/* will fail but don't let on yet */
-
-	/* UNIX passwords area */
-
-	/* Get password file entry... */
-	pwd = pam_modutil_getpwnam (pamh, name);
-
-	if (pwd != NULL) {
-		if (strcmp( pwd->pw_passwd, "*NP*" ) == 0)
-		{ /* NIS+ */
-			uid_t save_euid, save_uid;
-
-			save_euid = geteuid();
-			save_uid = getuid();
-			if (save_uid == pwd->pw_uid)
-				setreuid( save_euid, save_uid );
-			else  {
-				setreuid( 0, -1 );
-				if (setreuid( -1, pwd->pw_uid ) == -1) {
-					setreuid( -1, 0 );
-					setreuid( 0, -1 );
-					if(setreuid( -1, pwd->pw_uid ) == -1)
-						/* Will fail elsewhere. */
-						return 0;
-				}
-			}
-
-			spwdent = pam_modutil_getspnam (pamh, name);
-			if (save_uid == pwd->pw_uid)
-				setreuid( save_uid, save_euid );
-			else {
-				if (setreuid( -1, 0 ) == -1)
-					setreuid( save_uid, -1 );
-				setreuid( -1, save_euid );
-			}
-		} else if (_unix_shadowed(pwd)) {
-			/*
-			 * ...and shadow password file entry for this user,
-			 * if shadowing is enabled
-			 */
-			spwdent = pam_modutil_getspnam(pamh, name);
-		}
-		if (spwdent)
-			salt = x_strdup(spwdent->sp_pwdp);
-		else
-			salt = x_strdup(pwd->pw_passwd);
-	}
-	/* Does this user have a password? */
-	if (salt == NULL) {
-		retval = 0;
-	} else {
-		if (strlen(salt) == 0)
-			retval = 1;
-		else
-			retval = 0;
-	}
-
-	/* tidy up */
-
-	if (salt)
-		_pam_delete(salt);
-
-	return retval;
-}
-
-/*
  * verify the password of a user
  */
 
@@ -519,7 +439,7 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
 	  }
 	}
 
-	if (SELINUX_ENABLED && geteuid() == 0) {
+	if (geteuid() == 0) {
           /* must set the real uid to 0 so the helper will not error
 	     out if pam is called from setuid binary (su, sudo...) */
 	  setuid(0);
@@ -573,13 +493,66 @@ static int _unix_run_helper_binary(pam_handle_t *pamh, const char *passwd,
     return retval;
 }
 
+/*
+ * _unix_blankpasswd() is a quick check for a blank password
+ *
+ * returns TRUE if user does not have a password
+ * - to avoid prompting for one in such cases (CG)
+ */
+
+int
+_unix_blankpasswd (pam_handle_t *pamh, unsigned int ctrl, const char *name)
+{
+	struct passwd *pwd = NULL;
+	char *salt = NULL;
+	int retval;
+
+	D(("called"));
+
+	/*
+	 * This function does not have to be too smart if something goes
+	 * wrong, return FALSE and let this case to be treated somewhere
+	 * else (CG)
+	 */
+
+	if (on(UNIX__NONULL, ctrl))
+		return 0;	/* will fail but don't let on yet */
+
+	/* UNIX passwords area */
+
+	retval = get_pwd_hash(pamh, name, &pwd, &salt);
+
+	if (retval == PAM_UNIX_RUN_HELPER) {
+		/* salt will not be set here so we can return immediately */
+		if (_unix_run_helper_binary(pamh, NULL, ctrl, name) == PAM_SUCCESS)
+			return 1;
+		else
+			return 0;
+	}
+
+	/* Does this user have a password? */
+	if (salt == NULL) {
+		retval = 0;
+	} else {
+		if (strlen(salt) == 0)
+			retval = 1;
+		else
+			retval = 0;
+	}
+
+	/* tidy up */
+
+	if (salt)
+		_pam_delete(salt);
+
+	return retval;
+}
+
 int _unix_verify_password(pam_handle_t * pamh, const char *name
 			  ,const char *p, unsigned int ctrl)
 {
 	struct passwd *pwd = NULL;
-	struct spwd *spwdent = NULL;
 	char *salt = NULL;
-	char *pp = NULL;
 	char *data_name;
 	int retval;
 
@@ -597,48 +570,7 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 
 	D(("locating user's record"));
 
-	/* UNIX passwords area */
-	pwd = pam_modutil_getpwnam (pamh, name);	/* Get password file entry... */
-
-	if (pwd != NULL) {
-		if (strcmp( pwd->pw_passwd, "*NP*" ) == 0)
-		{ /* NIS+ */
-			uid_t save_euid, save_uid;
-
-			save_euid = geteuid();
-			save_uid = getuid();
-			if (save_uid == pwd->pw_uid)
-				setreuid( save_euid, save_uid );
-			else  {
-				setreuid( 0, -1 );
-				if (setreuid( -1, pwd->pw_uid ) == -1) {
-					setreuid( -1, 0 );
-					setreuid( 0, -1 );
-					if(setreuid( -1, pwd->pw_uid ) == -1)
-						return PAM_CRED_INSUFFICIENT;
-				}
-			}
-
-			spwdent = pam_modutil_getspnam (pamh, name);
-			if (save_uid == pwd->pw_uid)
-				setreuid( save_uid, save_euid );
-			else {
-				if (setreuid( -1, 0 ) == -1)
-				setreuid( save_uid, -1 );
-				setreuid( -1, save_euid );
-			}
-		} else if (_unix_shadowed(pwd)) {
-			/*
-			 * ...and shadow password file entry for this user,
-			 * if shadowing is enabled
-			 */
-			spwdent = pam_modutil_getspnam (pamh, name);
-		}
-		if (spwdent)
-			salt = x_strdup(spwdent->sp_pwdp);
-		else
-			salt = x_strdup(pwd->pw_passwd);
-	}
+	retval = get_pwd_hash(pamh, name, &pwd, &salt);
 
 	data_name = (char *) malloc(sizeof(FAIL_PREFIX) + strlen(name));
 	if (data_name == NULL) {
@@ -648,20 +580,13 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 		strcpy(data_name + sizeof(FAIL_PREFIX) - 1, name);
 	}
 
-	retval = PAM_SUCCESS;
-	if (pwd == NULL || salt == NULL || !strcmp(salt, "x") || ((salt[0] == '#') && (salt[1] == '#') && !strcmp(salt + 2, name))) {
-
-		if (pwd != NULL && (geteuid() || SELINUX_ENABLED)) {
-			/* we are not root perhaps this is the reason? Run helper */
+	if (retval != PAM_SUCCESS) {
+		if (retval == PAM_UNIX_RUN_HELPER) {
 			D(("running helper binary"));
 			retval = _unix_run_helper_binary(pamh, p, ctrl, name);
 		} else {
 			D(("user's record unavailable"));
 			p = NULL;
-			if (pwd == NULL)
-				retval = PAM_USER_UNKNOWN;
-			else
-				retval = PAM_AUTHINFO_UNAVAIL;
 			if (on(UNIX_AUDIT, ctrl)) {
 				/* this might be a typo and the user has given a password
 				   instead of a username. Careful with this. */
@@ -679,48 +604,7 @@ int _unix_verify_password(pam_handle_t * pamh, const char *name
 			}
 		}
 	} else {
-	    size_t salt_len = strlen(salt);
-	    if (!salt_len) {
-		/* the stored password is NULL */
-		if (off(UNIX__NONULL, ctrl)) {/* this means we've succeeded */
-		    D(("user has empty password - access granted"));
-		    retval = PAM_SUCCESS;
-		} else {
-		    D(("user has empty password - access denied"));
-		    retval = PAM_AUTH_ERR;
-		}
-	    } else if (!p || *salt == '*' || *salt == '!') {
-		retval = PAM_AUTH_ERR;
-	    } else {
-		if (!strncmp(salt, "$1$", 3)) {
-		    pp = Goodcrypt_md5(p, salt);
-		    if (pp && strcmp(pp, salt) != 0) {
-			_pam_delete(pp);
-			pp = Brokencrypt_md5(p, salt);
-		    }
-		} else if (*salt != '$' && salt_len >= 13) {
-		    pp = bigcrypt(p, salt);
-		    if (pp && salt_len == 13 && strlen(pp) > salt_len) {
-			_pam_overwrite(pp + salt_len);
-		    }
-		} else {
-                    /*
-		     * Ok, we don't know the crypt algorithm, but maybe
-		     * libcrypt nows about it? We should try it.
-		     */
-		    pp = x_strdup (crypt(p, salt));
-		}
-		p = NULL;		/* no longer needed here */
-
-		/* the moment of truth -- do we agree with the password? */
-		D(("comparing state of pp[%s] and salt[%s]", pp, salt));
-
-		if (pp && strcmp(pp, salt) == 0) {
-		    retval = PAM_SUCCESS;
-		} else {
-		    retval = PAM_AUTH_ERR;
-		}
-	    }
+		retval = verify_pwd_hash(p, salt, off(UNIX__NONULL, ctrl));
 	}
 
 	if (retval == PAM_SUCCESS) {
@@ -809,8 +693,6 @@ cleanup:
 		_pam_delete(data_name);
 	if (salt)
 		_pam_delete(salt);
-	if (pp)
-		_pam_delete(pp);
 
 	D(("done [%d].", retval));
 
@@ -971,26 +853,12 @@ int _unix_read_password(pam_handle_t * pamh
 	return PAM_SUCCESS;
 }
 
-int _unix_shadowed(const struct passwd *pwd)
-{
-	if (pwd != NULL) {
-		if (strcmp(pwd->pw_passwd, "x") == 0) {
-			return 1;
-		}
-		if ((pwd->pw_passwd[0] == '#') &&
-		    (pwd->pw_passwd[1] == '#') &&
-		    (strcmp(pwd->pw_name, pwd->pw_passwd + 2) == 0)) {
-			return 1;
-		}
-	}
-	return 0;
-}
-
 /* ****************************************************************** *
  * Copyright (c) Jan Rêkorajski 1999.
  * Copyright (c) Andrew G. Morgan 1996-8.
  * Copyright (c) Alex O. Yuriev, 1996.
  * Copyright (c) Cristian Gafton 1996.
+ * Copyright (c) Red Hat, Inc. 2007.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions

@@ -1,5 +1,5 @@
 /*
- * $Id: pam_unix_sess.c,v 1.9 2006/06/17 16:44:58 kukuk Exp $
+ * $Id: pam_unix_sess.c,v 1.10 2008/01/23 15:35:13 t8m Exp $
  *
  * Copyright Alexander O. Yuriev, 1996.  All rights reserved.
  * Copyright Jan Rêkorajski, 1999.  All rights reserved.
@@ -73,7 +73,7 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t * pamh, int flags,
 
 	D(("called."));
 
-	ctrl = _set_ctrl(pamh, flags, NULL, argc, argv);
+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
 
 	retval = pam_get_item(pamh, PAM_USER, (void *) &user_name);
 	if (user_name == NULL || *user_name == '\0' || retval != PAM_SUCCESS) {
@@ -107,7 +107,7 @@ PAM_EXTERN int pam_sm_close_session(pam_handle_t * pamh, int flags,
 
 	D(("called."));
 
-	ctrl = _set_ctrl(pamh, flags, NULL, argc, argv);
+	ctrl = _set_ctrl(pamh, flags, NULL, NULL, argc, argv);
 
 	retval = pam_get_item(pamh, PAM_USER, (void *) &user_name);
 	if (user_name == NULL || *user_name == '\0' || retval != PAM_SUCCESS) {

@@ -1,17 +1,17 @@
 .\"     Title: pam_sm_setcred
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/27/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 02/04/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_SM_SETCRED" "3" "06/27/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_SM_SETCRED" "3" "02/04/2008" "Linux-PAM Manual" "Linux-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_sm_setcred \- PAM service function to alter credentials
+pam_sm_setcred - PAM service function to alter credentials
 .SH "SYNOPSIS"
 .sp
 .ft B
@@ -22,7 +22,7 @@ pam_sm_setcred \- PAM service function to alter credentials
 .sp
 .ft B
 .nf
-#include <security/pam_modules.h>
+#include <security/pam_modules\.h>
 .fi
 .ft
 .HP 30
@@ -31,59 +31,77 @@ pam_sm_setcred \- PAM service function to alter credentials
 .PP
 The
 \fBpam_sm_setcred\fR
-function is the service module's implementation of the
+function is the service module\'s implementation of the
 \fBpam_setcred\fR(3)
-interface.
+interface\.
 .PP
-This function performs the task of altering the credentials of the user with respect to the corresponding authorization scheme. Generally, an authentication module may have access to more information about a user than their authentication token. This function is used to make such information available to the application. It should only be called
+This function performs the task of altering the credentials of the user with respect to the corresponding authorization scheme\. Generally, an authentication module may have access to more information about a user than their authentication token\. This function is used to make such information available to the application\. It should only be called
 \fIafter\fR
-the user has been authenticated but before a session has been established.
+the user has been authenticated but before a session has been established\.
 .PP
-Valid flags, which may be logically OR'd with
+Valid flags, which may be logically OR\'d with
 \fIPAM_SILENT\fR, are:
-.TP 3n
+.PP
 PAM_SILENT
-Do not emit any messages.
-.TP 3n
+.RS 4
+Do not emit any messages\.
+.RE
+.PP
 PAM_DELETE_CRED
-Delete the credentials associated with the authentication service.
-.TP 3n
+.RS 4
+Delete the credentials associated with the authentication service\.
+.RE
+.PP
 PAM_REINITIALIZE_CRED
-Reinitialize the user credentials.
-.TP 3n
+.RS 4
+Reinitialize the user credentials\.
+.RE
+.PP
 PAM_REFRESH_CRED
-Extend the lifetime of the user credentials.
+.RS 4
+Extend the lifetime of the user credentials\.
+.RE
 .PP
 The way the
 \fBauth\fR
 stack is navigated in order to evaluate the
 \fBpam_setcred\fR() function call, independent of the
 \fBpam_sm_setcred\fR() return codes, is exactly the same way that it was navigated when evaluating the
-\fBpam_authenticate\fR() library call. Typically, if a stack entry was ignored in evaluating
+\fBpam_authenticate\fR() library call\. Typically, if a stack entry was ignored in evaluating
 \fBpam_authenticate\fR(), it will be ignored when libpam evaluates the
-\fBpam_setcred\fR() function call. Otherwise, the return codes from each module specific
+\fBpam_setcred\fR() function call\. Otherwise, the return codes from each module specific
 \fBpam_sm_setcred\fR() call are treated as
-\fBrequired\fR.
+\fBrequired\fR\.
 .SH "RETURN VALUES"
-.TP 3n
+.PP
 PAM_CRED_UNAVAIL
-This module cannot retrieve the user's credentials.
-.TP 3n
+.RS 4
+This module cannot retrieve the user\'s credentials\.
+.RE
+.PP
 PAM_CRED_EXPIRED
-The user's credentials have expired.
-.TP 3n
+.RS 4
+The user\'s credentials have expired\.
+.RE
+.PP
 PAM_CRED_ERR
-This module was unable to set the credentials of the user.
-.TP 3n
+.RS 4
+This module was unable to set the credentials of the user\.
+.RE
+.PP
 PAM_SUCCESS
-The user credential was successfully set.
-.TP 3n
+.RS 4
+The user credential was successfully set\.
+.RE
+.PP
 PAM_USER_UNKNOWN
-The user is not known to this authentication module.
+.RS 4
+The user is not known to this authentication module\.
+.RE
 .PP
 These, non\-\fIPAM_SUCCESS\fR, return values will typically lead to the credential stack
-\fIfailing\fR. The first such error will dominate in the return value of
-\fBpam_setcred\fR().
+\fIfailing\fR\. The first such error will dominate in the return value of
+\fBpam_setcred\fR()\.
 .SH "SEE ALSO"
 .PP
 

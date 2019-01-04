@@ -1,22 +1,22 @@
 .\"     Title: pam_end
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/27/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 02/04/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_END" "3" "06/27/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_END" "3" "02/04/2008" "Linux-PAM Manual" "Linux-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_end \- termination of PAM transaction
+pam_end - termination of PAM transaction
 .SH "SYNOPSIS"
 .sp
 .ft B
 .nf
-#include <security/pam_appl.h>
+#include <security/pam_appl\.h>
 .fi
 .ft
 .HP 12
@@ -25,13 +25,13 @@ pam_end \- termination of PAM transaction
 .PP
 The
 \fBpam_end\fR
-function terminates the PAM transaction and is the last function an application should call in the PAM context. Upon return the handle
+function terminates the PAM transaction and is the last function an application should call in the PAM context\. Upon return the handle
 \fIpamh\fR
-is no longer valid and all memory associated with it will be invalid.
+is no longer valid and all memory associated with it will be invalid\.
 .PP
 The
 \fIpam_status\fR
-argument should be set to the value returned to the application by the last PAM library call.
+argument should be set to the value returned to the application by the last PAM library call\.
 .PP
 The value taken by
 \fIpam_status\fR
@@ -40,26 +40,30 @@ is used as an argument to the module specific callback function,
 (See
 \fBpam_set_data\fR(3)
 and
-\fBpam_get_data\fR(3)). In this way the module can be given notification of the pass/fail nature of the tear\-down process, and perform any last minute tasks that are appropriate to the module before it is unlinked. This argument can be logically OR'd with
+\fBpam_get_data\fR(3))\. In this way the module can be given notification of the pass/fail nature of the tear\-down process, and perform any last minute tasks that are appropriate to the module before it is unlinked\. This argument can be logically OR\'d with
 \fIPAM_DATA_SILENT\fR
-to indicate to indicate that the module should not treat the call too seriously. It is generally used to indicate that the current closing of the library is in a
-\fBfork\fR(2)ed process, and that the parent will take care of cleaning up things that exist outside of the current process space (files etc.).
+to indicate to indicate that the module should not treat the call too seriously\. It is generally used to indicate that the current closing of the library is in a
+\fBfork\fR(2)ed process, and that the parent will take care of cleaning up things that exist outside of the current process space (files etc\.)\.
 .PP
 This function
-\fIfree\fR's all memory for items associated with the
+\fIfree\fR\'s all memory for items associated with the
 \fBpam_set_item\fR(3)
 and
 \fBpam_get_item\fR(3)
-functions. Pointers associated with such objects are not valid anymore after
+functions\. Pointers associated with such objects are not valid anymore after
 \fBpam_end\fR
-was called.
+was called\.
 .SH "RETURN VALUES"
-.TP 3n
+.PP
 PAM_SUCCESS
-Transaction was successful terminated.
-.TP 3n
+.RS 4
+Transaction was successful terminated\.
+.RE
+.PP
 PAM_SYSTEM_ERR
-System error, for example a NULL pointer was submitted as PAM handle or the function was called by a module.
+.RS 4
+System error, for example a NULL pointer was submitted as PAM handle or the function was called by a module\.
+.RE
 .SH "SEE ALSO"
 .PP
 

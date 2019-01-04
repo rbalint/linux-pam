@@ -1,35 +1,55 @@
 .\"     Title: pam_exec
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/09/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 02/04/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_EXEC" "8" "06/09/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_EXEC" "8" "02/04/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_exec \- PAM module which calls an external command
+pam_exec - PAM module which calls an external command
 .SH "SYNOPSIS"
 .HP 12
-\fBpam_exec.so\fR [debug] [seteuid] [log=\fIfile\fR] \fIcommand\fR [\fI...\fR]
+\fBpam_exec\.so\fR [debug] [seteuid] [quiet] [log=\fIfile\fR] \fIcommand\fR [\fI\.\.\.\fR]
 .SH "DESCRIPTION"
 .PP
-pam_exec is a PAM module that can be used to run an external command.
+pam_exec is a PAM module that can be used to run an external command\.
+.PP
+The child\'s environment is set to the current PAM environment list, as returned by
+\fBpam_getenvlist\fR(3)
+In addition, the following PAM items are exported as environment variables:
+\fIPAM_RHOST\fR,
+\fIPAM_RUSER\fR,
+\fIPAM_SERVICE\fR,
+\fIPAM_TTY\fR, and
+\fIPAM_USER\fR\.
 .SH "OPTIONS"
 .PP
-.TP 3n
+.PP
 \fBdebug\fR
-Print debug information.
-.TP 3n
+.RS 4
+Print debug information\.
+.RE
+.PP
 \fBlog=\fR\fB\fIfile\fR\fR
+.RS 4
 The output of the command is appended to
 \fIfile\fR
-.TP 3n
+.RE
+.PP
+\fBquiet\fR
+.RS 4
+Per default pam_exec\.so will echo the exit status of the external command if it fails\. Specifying this option will suppress the message\.
+.RE
+.PP
 \fBseteuid\fR
-Per default pam_exec.so will execute the external command with the real user ID of the calling process. Specifying this option means the command is run with the effective user ID.
+.RS 4
+Per default pam_exec\.so will execute the external command with the real user ID of the calling process\. Specifying this option means the command is run with the effective user ID\.
+.RE
 .SH "MODULE SERVICES PROVIDED"
 .PP
 The services
@@ -38,45 +58,53 @@ The services
 \fBpassword\fR
 and
 \fBsession\fR
-are supported.
+are supported\.
 .SH "RETURN VALUES"
 .PP
-.TP 3n
+.PP
 PAM_SUCCESS
-The external command runs successfull.
-.TP 3n
+.RS 4
+The external command runs successfull\.
+.RE
+.PP
 PAM_SERVICE_ERR
-No argument or a wrong number of arguments were given.
-.TP 3n
+.RS 4
+No argument or a wrong number of arguments were given\.
+.RE
+.PP
 PAM_SYSTEM_ERR
-A system error occured or the command to execute failed.
-.TP 3n
+.RS 4
+A system error occured or the command to execute failed\.
+.RE
+.PP
 PAM_IGNORE
+.RS 4
 
 \fBpam_setcred\fR
-was called, which does not execute the command.
+was called, which does not execute the command\.
+.RE
 .SH "EXAMPLES"
 .PP
 Add the following line to
-\fI/etc/pam.d/passwd\fR
+\fI/etc/pam\.d/passwd\fR
 to rebuild the NIS database after each local password change:
 .sp
-.RS 3n
+.RS 4
 .nf
-        passwd optional pam_exec.so seteuid make \-C /var/yp
+        passwd optional pam_exec\.so seteuid make \-C /var/yp
       
 .fi
 .RE
 .sp
 This will execute the command
 .sp
-.RS 3n
+.RS 4
 .nf
 make \-C /var/yp
 .fi
 .RE
 .sp
-with effective user ID.
+with effective user ID\.
 .SH "SEE ALSO"
 .PP
 
@@ -85,4 +113,4 @@ with effective user ID.
 \fBpam\fR(8)
 .SH "AUTHOR"
 .PP
-pam_exec was written by Thorsten Kukuk <kukuk@thkukuk.de>.
+pam_exec was written by Thorsten Kukuk <kukuk@thkukuk\.de>\.

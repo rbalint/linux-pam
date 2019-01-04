@@ -1,0 +1,110 @@
+.\"     Title: pam_sepermit
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 02/04/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
+.\"
+.TH "PAM_SEPERMIT" "8" "02/04/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+pam_sepermit - PAM module to allow/deny login depending on SELinux enforcement state
+.SH "SYNOPSIS"
+.HP 16
+\fBpam_sepermit\.so\fR [debug] [conf=\fI/path/to/config/file\fR]
+.SH "DESCRIPTION"
+.PP
+The pam_sepermit module allows or denies login depending on SELinux enforcement state\.
+.PP
+When the user which is logging in matches an entry in the config file he is allowed access only when the SELinux is in enforcing mode\. Otherwise he is denied access\. For users not matching any entry in the config file the pam_sepermit module returns PAM_IGNORE return value\.
+.PP
+The config file contains a simple list of user names one per line\. If the
+\fIname\fR
+is prefixed with
+\fI@\fR
+character it means that all users in the group
+\fIname\fR
+match\. If it is prefixed with a
+\fI%\fR
+character the SELinux user is used to match against the
+\fIname\fR
+instead of the account name\. Note that when SELinux is disabled the SELinux user assigned to the account cannot be determined\. This means that such entries are never matched when SELinux is disabled and pam_sepermit will return PAM_IGNORE\.
+.PP
+Each user name in the configuration file can have optional arguments separated by
+\fI:\fR
+character\. The only currently recognized argument is
+\fIexclusive\fR\. The pam_sepermit module will allow only single concurrent user session for the user with this argument specified and it will attempt to kill all processes of the user after logout\.
+.SH "OPTIONS"
+.PP
+\fBdebug\fR
+.RS 4
+Turns on debugging via
+\fBsyslog\fR(3)\.
+.RE
+.PP
+\fBconf=\fR\fB\fI/path/to/config/file\fR\fR
+.RS 4
+Path to alternative config file overriding the default\.
+.RE
+.SH "MODULE SERVICES PROVIDED"
+.PP
+Only the
+\fBauth\fR
+and
+\fBaccount\fR
+services are supported\.
+.SH "RETURN VALUES"
+.PP
+PAM_AUTH_ERR
+.RS 4
+SELinux is disabled or in the permissive mode and the user matches\.
+.RE
+.PP
+PAM_SUCCESS
+.RS 4
+SELinux is in the enforcing mode and the user matches\.
+.RE
+.PP
+PAM_IGNORE
+.RS 4
+The user does not match any entry in the config file\.
+.RE
+.PP
+PAM_USER_UNKNOWN
+.RS 4
+The module was unable to determine the user\'s name\.
+.RE
+.PP
+PAM_SERVICE_ERR
+.RS 4
+Error during reading or parsing the config file\.
+.RE
+.SH "FILES"
+.PP
+\fI/etc/security/sepermit\.conf\fR
+.RS 4
+Default configuration file
+.RE
+.SH "EXAMPLES"
+.sp
+.RS 4
+.nf
+auth     [success=done ignore=ignore default=bad] pam_sepermit\.so
+auth     required  pam_unix\.so
+account  required  pam_unix\.so
+session  required  pam_permit\.so
+    
+.fi
+.RE
+.SH "SEE ALSO"
+.PP
+
+\fBpam.conf\fR(5),
+\fBpam.d\fR(8),
+\fBpam\fR(8)
+.SH "AUTHOR"
+.PP
+pam_sepermit was written by Tomas Mraz <tmraz@redhat\.com>\.

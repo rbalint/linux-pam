@@ -1,66 +1,72 @@
 .\"     Title: pam_rootok
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/23/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 01/08/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_ROOTOK" "8" "06/23/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_ROOTOK" "8" "01/08/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_rootok \- Gain only root access
+pam_rootok - Gain only root access
 .SH "SYNOPSIS"
 .HP 14
-\fBpam_rootok.so\fR [debug]
+\fBpam_rootok\.so\fR [debug]
 .SH "DESCRIPTION"
 .PP
 pam_rootok is a PAM module that authenticates the user if their
 \fIUID\fR
 is
-\fI0\fR. Applications that are created setuid\-root generally retain the
+\fI0\fR\. Applications that are created setuid\-root generally retain the
 \fIUID\fR
-of the user but run with the authority of an enhanced effective\-UID. It is the real
+of the user but run with the authority of an enhanced effective\-UID\. It is the real
 \fIUID\fR
-that is checked.
+that is checked\.
 .SH "OPTIONS"
-.TP 3n
+.PP
 \fBdebug\fR
-Print debug information.
+.RS 4
+Print debug information\.
+.RE
 .SH "MODULE SERVICES PROVIDED"
 .PP
 Only the
 \fBauth\fR
-service is supported.
+service is supported\.
 .SH "RETURN VALUES"
-.TP 3n
+.PP
 PAM_SUCCESS
+.RS 4
 The
 \fIUID\fR
 is
-\fI0\fR.
-.TP 3n
+\fI0\fR\.
+.RE
+.PP
 PAM_AUTH_ERR
+.RS 4
 The
 \fIUID\fR
 is
 \fBnot\fR
-\fI0\fR.
+\fI0\fR\.
+.RE
 .SH "EXAMPLES"
 .PP
 In the case of the
 \fBsu\fR(1)
-application the historical usage is to permit the superuser to adopt the identity of a lesser user without the use of a password. To obtain this behavior with PAM the following pair of lines are needed for the corresponding entry in the
-\fI/etc/pam.d/su\fR
+application the historical usage is to permit the superuser to adopt the identity of a lesser user without the use of a password\. To obtain this behavior with PAM the following pair of lines are needed for the corresponding entry in the
+\fI/etc/pam\.d/su\fR
 configuration file:
 .sp
-.RS 3n
+.RS 4
 .nf
-# su authentication. Root is granted access by default.
-auth  sufficient   pam_rootok.so
-auth  required     pam_unix.so
+# su authentication\. Root is granted access by default\.
+auth  sufficient   pam_rootok\.so
+auth  required     pam_unix\.so
       
 .fi
 .RE
@@ -74,4 +80,4 @@ auth  required     pam_unix.so
 \fBpam\fR(8)
 .SH "AUTHOR"
 .PP
-pam_rootok was written by Andrew G. Morgan, <morgan@kernel.org>.
+pam_rootok was written by Andrew G\. Morgan, <morgan@kernel\.org>\.
