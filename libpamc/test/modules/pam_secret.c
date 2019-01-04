@@ -1,5 +1,5 @@
 /*
- * $Id: pam_secret.c,v 1.3 2004/09/14 14:22:39 kukuk Exp $
+ * $Id: pam_secret.c,v 1.4 2009/12/08 14:41:41 kukuk Exp $
  *
  * Copyright (c) 1999 Andrew G. Morgan <morgan@linux.kernel.org>
  */
@@ -8,8 +8,6 @@
  * WARNING: AS WRITTEN THIS CODE IS NOT SECURE. THE MD5 IMPLEMENTATION
  *          NEEDS TO BE INTEGRATED MORE NATIVELY.
  */
-
-/* #define DEBUG */
 
 #include <fcntl.h>
 #include <pwd.h>
@@ -178,7 +176,7 @@ static int converse(pam_handle_t *pamh, struct ps_state_s *new)
 	}
     }
 
-#ifdef DEBUG
+#ifdef PAM_DEBUG
     if (retval == PAM_SUCCESS) {
 	D(("reply has length=%d and control=%u",
 	   PAM_BP_LENGTH(new->current_reply),

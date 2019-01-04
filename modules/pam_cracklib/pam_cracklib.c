@@ -545,7 +545,7 @@ static int _pam_unix_approve_pass(pam_handle_t *pamh,
                                   const char *pass_new)
 {
     const char *msg = NULL;
-    const void *user;
+    const char *user;
     int retval;
 
     if (pass_new == NULL || (pass_old && !strcmp(pass_old,pass_new))) {
@@ -556,7 +556,7 @@ static int _pam_unix_approve_pass(pam_handle_t *pamh,
         return PAM_AUTHTOK_ERR;
     }
 
-    retval = pam_get_item(pamh, PAM_USER, &user);
+    retval = pam_get_user(pamh, &user, NULL);
     if (retval != PAM_SUCCESS || user == NULL) {
 	if (ctrl & PAM_DEBUG_ARG)
 		pam_syslog(pamh,LOG_ERR,"Can not get username");
@@ -639,9 +639,9 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t *pamh, int flags,
 	   * set PAM_AUTHTOK and return
 	   */
 
-	  retval = pam_get_authtok (pamh, PAM_AUTHTOK, &newtoken, NULL);
+	  retval = pam_get_authtok_noverify (pamh, &newtoken, NULL);
 	  if (retval != PAM_SUCCESS) {
-	    pam_syslog(pamh, LOG_ERR, "pam_get_authtok returned error: %s",
+	    pam_syslog(pamh, LOG_ERR, "pam_get_authtok_noverify returned error: %s",
 		       pam_strerror (pamh, retval));
 	    continue;
 	  } else if (newtoken == NULL) {      /* user aborted password change, quit */
@@ -658,6 +658,7 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t *pamh, int flags,
 	    pam_error (pamh, _("BAD PASSWORD: %s"), crack_msg);
 	    if (getuid() || (flags & PAM_CHANGE_EXPIRED_AUTHTOK))
 	      {
+		pam_set_item (pamh, PAM_AUTHTOK, NULL);
 		retval = PAM_AUTHTOK_ERR;
 		continue;
 	      }
@@ -670,10 +671,22 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t *pamh, int flags,
 	  if (retval != PAM_SUCCESS) {
 	    if (getuid() || (flags & PAM_CHANGE_EXPIRED_AUTHTOK))
 	      {
+		pam_set_item(pamh, PAM_AUTHTOK, NULL);
 		retval = PAM_AUTHTOK_ERR;
 		continue;
 	      }
 	  }
+
+	  retval = pam_get_authtok_verify (pamh, &newtoken, NULL);
+	  if (retval != PAM_SUCCESS) {
+	    pam_syslog(pamh, LOG_ERR, "pam_get_authtok_verify returned error: %s",
+		       pam_strerror (pamh, retval));
+	    pam_set_item(pamh, PAM_AUTHTOK, NULL);
+	    continue;
+	  } else if (newtoken == NULL) {      /* user aborted password change, quit */
+	    return PAM_AUTHTOK_ERR;
+	  }
+
 	  return PAM_SUCCESS;
         }
 

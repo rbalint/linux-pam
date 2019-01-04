@@ -3,9 +3,6 @@
 /* Define if building universal (internal helper macro) */
 #undef AC_APPLE_UNIVERSAL_BUILD
 
-/* lots of stuff gets written to /var/run/pam-debug.log */
-#undef DEBUG
-
 /* Define to 1 if translation of program messages to the user's native
    language is requested. */
 #undef ENABLE_NLS
@@ -28,8 +25,8 @@
 /* Define to 1 if you have the <crack.h> header file. */
 #undef HAVE_CRACK_H
 
-/* Define to 1 if you have the `crypt_gensalt_rn' function. */
-#undef HAVE_CRYPT_GENSALT_RN
+/* Define to 1 if you have the `crypt_gensalt_r' function. */
+#undef HAVE_CRYPT_GENSALT_R
 
 /* Define to 1 if you have the <crypt.h> header file. */
 #undef HAVE_CRYPT_H
@@ -65,6 +62,9 @@
 
 /* Define to 1 if you have the `getdelim' function. */
 #undef HAVE_GETDELIM
+
+/* Define to 1 if you have the `getdomainname' function. */
+#undef HAVE_GETDOMAINNAME
 
 /* Define to 1 if you have the `getgrgid_r' function. */
 #undef HAVE_GETGRGID_R
@@ -111,6 +111,9 @@
 /* Define to 1 if you have the <inittypes.h> header file. */
 #undef HAVE_INITTYPES_H
 
+/* Define to 1 if you have the `innetgr' function. */
+#undef HAVE_INNETGR
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
@@ -152,6 +155,12 @@
 
 /* Define to 1 if you have the <paths.h> header file. */
 #undef HAVE_PATHS_H
+
+/* Define to 1 if you have the <rpcsvc/ypclnt.h> header file. */
+#undef HAVE_RPCSVC_YPCLNT_H
+
+/* Define to 1 if you have the <rpcsvc/yp_prot.h> header file. */
+#undef HAVE_RPCSVC_YP_PROT_H
 
 /* Define to 1 if you have the `ruserok_af' function. */
 #undef HAVE_RUSEROK_AF
@@ -245,8 +254,23 @@
 /* Define to 1 if you have the <xcrypt.h> header file. */
 #undef HAVE_XCRYPT_H
 
+/* Define to 1 if you have the `yperr_string' function. */
+#undef HAVE_YPERR_STRING
+
+/* Define to 1 if you have the `yp_bind' function. */
+#undef HAVE_YP_BIND
+
 /* Define to 1 if you have the `yp_get_default_domain' function. */
 #undef HAVE_YP_GET_DEFAULT_DOMAIN
+
+/* Define to 1 if you have the `yp_master' function. */
+#undef HAVE_YP_MASTER
+
+/* Define to 1 if you have the `yp_match' function. */
+#undef HAVE_YP_MATCH
+
+/* Define to 1 if you have the `yp_unbind' function. */
+#undef HAVE_YP_UNBIND
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
@@ -272,6 +296,9 @@
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
+
+/* lots of stuff gets written to /var/run/pam-debug.log */
+#undef PAM_DEBUG
 
 /* libpam should observe a global authentication lock */
 #undef PAM_LOCKING

@@ -1,7 +1,7 @@
 /*
  * Main coding by Elliot Lee <sopwith@redhat.com>, Red Hat Software.
  * Copyright (C) 1996.
- * Copyright (c) Jan Rêkorajski, 1999.
+ * Copyright (c) Jan RÃªkorajski, 1999.
  * Copyright (c) Red Hat, Inc., 2007, 2008.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,17 +55,16 @@
 #include <sys/time.h>
 #include <sys/stat.h>
 #include <rpc/rpc.h>
+#ifdef HAVE_RPCSVC_YP_PROT_H
 #include <rpcsvc/yp_prot.h>
+#endif
+#ifdef HAVE_RPCSVC_YPCLNT_H
 #include <rpcsvc/ypclnt.h>
+#endif
 
 #include <signal.h>
 #include <errno.h>
 #include <sys/wait.h>
-#ifdef WITH_SELINUX
-static int selinux_enabled=-1;
-#include <selinux/selinux.h>
-#define SELINUX_ENABLED (selinux_enabled!=-1 ? selinux_enabled : (selinux_enabled=is_selinux_enabled()>0))
-#endif
 
 #include <security/_pam_macros.h>
 
@@ -103,17 +102,34 @@ extern int getrpcport(const char *host, unsigned long prognum,
 
 #define MAX_PASSWD_TRIES	3
 
-static char *getNISserver(pam_handle_t *pamh)
+static char *getNISserver(pam_handle_t *pamh, unsigned int ctrl)
 {
+#if (defined(HAVE_YP_GET_DEFAULT_DOMAIN) || defined(HAVE_GETDOMAINNAME)) && defined(HAVE_YP_MASTER)
 	char *master;
 	char *domainname;
 	int port, err;
 
+#ifdef HAVE_YP_GET_DEFAULT_DOMAIN
 	if ((err = yp_get_default_domain(&domainname)) != 0) {
 		pam_syslog(pamh, LOG_WARNING, "can't get local yp domain: %s",
 			 yperr_string(err));
 		return NULL;
 	}
+#elif defined(HAVE_GETDOMAINNAME)
+	char domainname_res[256];
+
+	if (getdomainname (domainname_res, sizeof (domainname_res)) == 0)
+	  {
+	    if (strcmp (domainname_res, "(none)") == 0)
+	      {
+		/* If domainname is not set, some systems will return "(none)" */
+		domainname_res[0] = '\0';
+	      }
+	    domainname = domainname_res;
+	  }
+	else domainname = NULL;
+#endif
+
 	if ((err = yp_master(domainname, "passwd.byname", &master)) != 0) {
 		pam_syslog(pamh, LOG_WARNING, "can't find the master ypserver: %s",
 			 yperr_string(err));
@@ -130,7 +146,18 @@ static char *getNISserver(pam_handle_t *pamh)
 		         "yppasswd daemon running on illegal port");
 		return NULL;
 	}
+	if (on(UNIX_DEBUG, ctrl)) {
+	  pam_syslog(pamh, LOG_DEBUG, "Use NIS server on %s with port %d",
+		     master, port);
+	}
 	return master;
+#else
+	if (on(UNIX_DEBUG, ctrl)) {
+	  pam_syslog(pamh, LOG_DEBUG, "getNISserver: No NIS support available");
+	}
+
+	return NULL;
+#endif
 }
 
 #ifdef WITH_SELINUX
@@ -196,7 +223,7 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 
         snprintf(buffer, sizeof(buffer), "%d", remember);
         args[4] = x_strdup(buffer);
-	
+
 	execve(UPDATE_HELPER, args, envp);
 
 	/* should not get here: exit with error */
@@ -299,7 +326,7 @@ static int _do_setpass(pam_handle_t* pamh, const char *forwho,
 	}
 
 	if (on(UNIX_NIS, ctrl) && _unix_comesfromsource(pamh, forwho, 0, 1)) {
-	    if ((master=getNISserver(pamh)) != NULL) {
+	  if ((master=getNISserver(pamh, ctrl)) != NULL) {
 		struct timeval timeout;
 		struct yppasswd yppwd;
 		CLIENT *clnt;
@@ -358,7 +385,7 @@ static int _do_setpass(pam_handle_t* pamh, const char *forwho,
 				_("NIS password could not be changed."));
 			retval = PAM_TRY_AGAIN;
 		}
-#ifdef DEBUG
+#ifdef PAM_DEBUG
 		sleep(5);
 #endif
 	    } else {
@@ -698,7 +725,7 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t * pamh, int flags,
 				pass_new = NULL;
 			}
 			retval = _pam_unix_approve_pass(pamh, ctrl, pass_old, pass_new);
-			
+
 			if (retval != PAM_SUCCESS && off(UNIX_NOT_SET_PASS, ctrl)) {
 				pam_set_item(pamh, PAM_AUTHTOK, NULL);
 			}

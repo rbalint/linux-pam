@@ -1,3 +1,238 @@
+2009-12-16  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.1.1
+	
+	* NEWS: Adjust for 1.1.1
+	* configure.in: Likewise.
+	* doc/adg/Linux-PAM_ADG.xml: Likewise.
+	* doc/mwg/Linux-PAM_MWG.xml: Likewise.
+	* doc/sag/Linux-PAM_SAG.xml: Likewise.
+	* po/*.po: Regenerated.
+
+2009-12-08  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* configure.in: Rename DEBUG to PAM_DEBUG.
+	* libpam/pam_env.c: Likewise
+	* libpam/pam_handlers.c: Likewise
+	* libpam/pam_miscc.c: Likewise
+	* libpam/pam_password.c: Likewise
+	* libpam/include/security/_pam_macros.h: Likewise
+	* libpamc/test/modules/pam_secret.c: Likewise
+	* modules/pam_group/pam_group.c: Likewise
+	* modules/pam_listfile/pam_listfile.c: Likewise
+	* modules/pam_unix/pam_unix_auth.c: Likewise
+	* modules/pam_unix/pam_unix_passwd.c: Likewise
+
+2009-12-08  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_unix/passverify.c(unix_update_shadow): Create a shadow
+	entry if not present in the file.
+
+	* modules/pam_listfile/pam_listfile.c(pam_sm_authenticate): Remove
+	unused function and variable.
+
+2009-11-19  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_sepermit/pam_sepermit.c(sepermit_match): Return
+	PAM_AUTH_ERR from the module if sepermit_lock() fails.
+
+2009-11-18  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_access/pam_access.c(user_match): Revert the netgroup
+	match to the original behavior, add new syntax for adding the local
+	hostname.
+	* modules/pam_access/access.conf.5.xml: Document the new syntax
+	for adding the local hostname to the netgroup match.
+
+2009-11-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* doc/man/pam_get_authtok.3.xml: Document pam_get_authtok_noverify
+	and pam_get_authtok_verify.
+
+	* libpam/Makefile.am (libpam_la_LDFLAGS): Bump revesion of libpam.
+
+	* libpam/pam_get_authtok.c (pam_get_authtok_internal): Renamed
+	from pam_get_authtok, add flags argument, always check return
+	values.
+
+	* modules/pam_cracklib/pam_cracklib.c (pam_sm_chauthtok): Use
+	pam_get_authtok_noverify and pam_get_authtok_verify.
+
+	* libpam/include/security/pam_ext.h: Add prototypes for
+	pam_get_authtok_noverify and pam_get_authtok_verify.
+
+	* libpam/libpam.map: Add new pam_get_authtok_* functions.
+
+2009-11-02  Ani Peter <anipeter@fedoraproject.org>
+
+	* po/ml.po: Updated translations.
+
+2009-11-02  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_sepermit/Makefile.am: Add sepermit.conf(5) manual page.
+	* modules/pam_sepermit/pam_sepermit.8.xml: Add reference to
+	sepermit.conf(5). Drop some redundant text.
+	* modules/pam_sepermit/sepermit.conf.5.xml: New file.
+
+	* modules/pam_sepermit/pam_sepermit.c(sepermit_match): Implement the ignore
+	option in sepermit.conf.
+
+2009-10-29  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_xauth/Makefile.am: Link with libselinux.
+	* modules/pam_xauth/pam_xauth.c(pam_sm_open_session): Call
+	setfscreatecon() if selinux is enabled to create the .xauth file
+	with the right label. Original idea by Dan Walsh.
+
+2009-10-08  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_tty_audit/pam_tty_audit.8.xml: Add notice about aureport
+	add SEE ALSO section.
+
+2009-10-06  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_listfile/pam_listfile.c(pam_sm_authenticate): Just
+	call pam_modutil_user_in_group_nam_nam() instead of reimplementation
+	of group matching.
+
+2009-10-05  Kris Thomsen  <lakristho@gmail.com>
+
+	* po/da.po: Updated translations.
+
+2009-09-29  Piotr Drąg  <piotrdrag@gmail.com>
+
+	* po/pl.po: Updated translations.
+
+2009-09-21  Yulia Poyarkova  <yulia.poyarkova@redhat.com>
+
+	* po/ru.po: Updated translations.
+
+2009-09-17  Kiyoto Hashida  <khashida@redhat.com>
+
+	* po/ja.po: Updated translations.
+
+2009-09-17  Eunju Kim  <eukim@redhat.com>
+
+	* po/ko.po: Updated translations.
+
+2009-09-17  Yulia Poyarkova  <yulia.poyarkova@redhat.com>
+
+	* po/ru.po: Updated translations.
+
+2009-09-10  Steve Langasek  <vorlon@debian.org>
+
+	* modules/pam_securetty/pam_securetty.c: pam_securetty should not
+	return PAM_USER_UNKNOWN when the tty is secure, regardless of what
+	was entered as a username.
+	Patch from Nicolas François <nicolas.francois@centraliens.net>.
+
+2009-08-31  Steve Langasek  <vorlon@debian.org>
+
+	* modules/pam_namespace/namespace.init: make this portable to POSIX
+	awk, instead of using GNU awk extensions.
+
+2009-08-25  Steve Langasek  <vorlon@debian.org>
+
+	* modules/pam_sepermit/pam_sepermit.8.xml: fix up one reference
+	to pam.d(8) left behind because I've forgotten how CVS works
+	* po/es.po: fix missing whitespace in password prompts.
+
+2009-08-24  Steve Langasek  <vorlon@debian.org>
+
+	* doc/pam_get_authtok.3.xml: grammar fix.
+	* doc/adg/Linux-PAM-ADG.xml: Likewise.
+	* doc/mwg/Linux-PAM_MWG.xml: Likewise.
+	* doc/man/pam_setcred.3.xml: fix a typo.
+
+2009-07-21  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_cracklib/pam_cracklib.c (pam_sm_chauthtok): Delete
+	new token if it does not match strength criteria.
+
+2009-06-29  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/yppasswd_xdr.c: Remove unnecessary header files.
+
+	* modules/pam_unix/support.c (_unix_getpwnam): Only compile in NIS
+	support if all necessary functions exist.
+
+	* modules/pam_unix/pam_unix_passwd.c (getNISserver): Add debug
+	option, handle correct if OS has no NIS support.
+
+	* modules/pam_access/pam_access.c (netgroup_match): Check if
+	yp_get_default_domain and innetgr are available at compile time.
+
+	* configure.in: Check for functions: innetgr, getdomainname
+	check for headers: rpcsvc/ypclnt.h, rpcsvc/yp_prot.h.
+
+2009-06-29  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/pam_unix.8.xml: Fix blowfish description.
+	Reported by Diego E. “Flameeyes” Pettenò.
+
+2009-06-26  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_namespace/Makefile.am: Fix make maintainer-clean,
+	fix docu dependencies.
+
+	* modules/pam_xauth/Makefile.am: Fix make maintainer-clean.
+	* modules/pam_access/Makefile.am: Likewise.
+	* modules/pam_debug/Makefile.am: Likewise.
+	* modules/pam_deny/Makefile.am: Likewise.
+	* modules/pam_echo/Makefile.am: Likewise.
+	* modules/pam_env/Makefile.am: Likewise.
+	* modules/pam_faildelay/Makefile.am: Likewise.
+	* modules/pam_ftp/Makefile.am: Likewise.
+	* modules/pam_group/Makefile.am: Likewise.
+	* modules/pam_issue/Makefile.am: Likewise.
+	* modules/pam_keyinit/Makefile.am: Likewise.
+	* modules/pam_lastlog/Makefile.am: Likewise.
+	* modules/pam_limits/Makefile.am: Likewise.
+	* modules/pam_listfile/Makefile.am: Likewise.
+	* modules/pam_localuser/Makefile.am: Likewise.
+	* modules/pam_loginuid/Makefile.am: Likewise.
+	* modules/pam_mail/Makefile.am: Likewise.
+	* modules/pam_mkhomedir/Makefile.am: Likewise.
+	* modules/pam_motd/Makefile.am: Likewise.
+	* modules/pam_nologin/Makefile.am: Likewise.
+	* modules/pam_pwhistory/Makefile.am: Likewise.
+	* modules/pam_rhosts/Makefile.am: Likewise.
+	* modules/pam_rootok/Makefile.am: Likewise.
+	* modules/pam_securetty/Makefile.am: Likewise.
+	* modules/pam_shells/Makefile.am: Likewise.
+	* modules/pam_succeed_if/Makefile.am: Likewise.
+	* modules/pam_tally2/Makefile.am: Likewise.
+	* modules/pam_tally/Makefile.am: Likewise.
+	* modules/pam_time/Makefile.am: Likewise.
+	* modules/pam_timestamp/Makefile.am: Likewise.
+	* modules/pam_tty_audit/Makefile.am: Likewise.
+	* modules/pam_umask/Makefile.am: Likewise.
+	* modules/pam_unix/Makefile.am: Likewise.
+	* modules/pam_warn/Makefile.am: Likewise.
+	* modules/pam_wheel/Makefile.am: Likewise.
+	* modules/pam_filter/Makefile.am: Likewise.
+
+	* configure.in: Make regeneration of docu configureable,
+	rename enable_man to enable_docu.
+
+	* modules/pam_env/pam_env.c (_pam_parse): Fix typo in debug
+	code.
+
+	* modules/pam_cracklib/Makefile.am: Don't install docu if
+	module is disabled for building.
+	* modules/pam_userdb/Makefile.am: Likewise.
+
+	* modules/pam_unix/pam_unix_passwd.c: Remove dead SELinux
+	code.
+
+	* modules/pam_lastlog/pam_lastlog.c (last_login_failed): Fix
+	usage of wrong variable [bug#2809661].
+
+2009-06-25  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* configure.in: Rename crypt_gensalt_rn to crypt_gensalt_r
+	* modules/pam_unix/passverify.c: Likewise.
+
 2009-06-19  Thorsten Kukuk  <kukuk@thkukuk.de>
 
 	* release version 1.1.0
