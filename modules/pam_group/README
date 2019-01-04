@@ -43,3 +43,9 @@ xsh; tty* ;sword;!Wk0900-1800;games, sound
 xsh; tty* ;*;Al0900-1800;floppy
 
 
+Any member of the group 'admin' running 'xsh' on tty*, is granted access (at
+any time) to the group 'plugdev'
+
+xsh; tty* ;%admin;Al0000-2400;plugdev
+
+

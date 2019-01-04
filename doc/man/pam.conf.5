@@ -1,12 +1,12 @@
 .\"     Title: pam.conf
 .\"    Author: [FIXME: author] [see http://docbook.sf.net/el/author]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 03/02/2009
+.\"      Date: 04/12/2010
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "PAM\&.CONF" "5" "03/02/2009" "Linux-PAM Manual" "Linux-PAM Manual"
+.TH "PAM\&.CONF" "5" "04/12/2010" "Linux-PAM Manual" "Linux-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -378,10 +378,7 @@ The last of these,
 \fIvalueN\fR\'s not mentioned explicitly\&. Note, the full list of PAM errors is available in
 \FC/usr/include/security/_pam_types\&.h\F[]\&. The
 \fIactionN\fR
-can be: an unsigned integer,
-\fIn\fR, signifying an action of \'jump over the next
-\fIn\fR
-modules in the stack\'; or take one of the following forms:
+can take one of the following forms:
 .PP
 ignore
 .RS 4
@@ -407,6 +404,11 @@ this tells PAM that the administrator thinks this return code should contribute 
 done
 .RS 4
 equivalent to ok with the side effect of terminating the module stack and PAM immediately returning to the application\&.
+.RE
+.PP
+N (an unsigned integer)
+.RS 4
+equivalent to ok with the side effect of jumping over the next N modules in the stack\&. Note that N equal to 0 is not allowed (and it would be identical to ok in such case)\&.
 .RE
 .PP
 reset

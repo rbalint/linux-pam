@@ -1,13 +1,16 @@
 #
-# Copyright (c) 2005, 2006, 2009 Thorsten Kukuk <kukuk@suse.de>
+# Copyright (c) 2005, 2006, 2009, 2010 Thorsten Kukuk <kukuk@suse.de>
 #
 
 CLEANFILES = *~
 MAINTAINERCLEANFILES = $(MANS) README
 
-EXTRA_DIST = README $(MANS) $(XMLS)
+EXTRA_DIST = README pam_tty_audit.8 $(XMLS) tst-pam_tty_audit
 
-man_MANS = pam_tty_audit.8
+if HAVE_AUDIT_TTY_STATUS
+  TESTS = tst-pam_tty_audit
+  man_MANS = pam_tty_audit.8
+endif
 XMLS = README.xml pam_tty_audit.8.xml
 
 securelibdir = $(SECUREDIR)

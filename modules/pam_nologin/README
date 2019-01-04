@@ -5,15 +5,15 @@ pam_nologin — Prevent non-root users from login
 DESCRIPTION
 
 pam_nologin is a PAM module that prevents users from logging into the system
-when /etc/nologin exists. The contents of the /etc/nologin file are displayed
-to the user. The pam_nologin module has no effect on the root user's ability to
-log in.
+when /var/run/nologin or /etc/nologinexists. The contents of the file are
+displayed to the user. The pam_nologin module has no effect on the root user's
+ability to log in.
 
 OPTIONS
 
 file=/path/nologin
 
-    Use this file instead the default /etc/nologin.
+    Use this file instead the default /var/run/nologin or /etc/nologin.
 
 successok
 

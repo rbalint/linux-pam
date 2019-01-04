@@ -142,6 +142,11 @@ broken_shadow
     Ignore errors reading shadow information for users in the account
     management module.
 
+minlen=n
+
+    Set a minimum password length of n characters. The max. for DES crypt based
+    passwords are 8 characters.
+
 Invalid arguments are logged with syslog(3).
 
 EXAMPLES

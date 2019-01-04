@@ -1,12 +1,12 @@
 .\"     Title: pam_nologin
 .\"    Author: [see the "AUTHOR" section]
 .\" Generator: DocBook XSL Stylesheets v1.74.0 <http://docbook.sf.net/>
-.\"      Date: 03/02/2009
+.\"      Date: 08/30/2010
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "PAM_NOLOGIN" "8" "03/02/2009" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_NOLOGIN" "8" "08/30/2010" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * (re)Define some macros
 .\" -----------------------------------------------------------------
@@ -176,15 +176,16 @@ pam_nologin \- Prevent non\-root users from login
 .SH "DESCRIPTION"
 .PP
 pam_nologin is a PAM module that prevents users from logging into the system when
-\FC/etc/nologin\F[]
-exists\&. The contents of the
-\FC/etc/nologin\F[]
-file are displayed to the user\&. The pam_nologin module has no effect on the root user\'s ability to log in\&.
+\FC/var/run/nologin\F[]
+or
+\FC/etc/nologin\F[]exists\&. The contents of the file are displayed to the user\&. The pam_nologin module has no effect on the root user\'s ability to log in\&.
 .SH "OPTIONS"
 .PP
 \fBfile=\fR\fB\fI/path/nologin\fR\fR
 .RS 4
 Use this file instead the default
+\FC/var/run/nologin\F[]
+or
 \FC/etc/nologin\F[]\&.
 .RE
 .PP
@@ -220,9 +221,7 @@ This is the default return value\&.
 .PP
 PAM_SUCCESS
 .RS 4
-Success: either the user is root or the
-\FC/etc/nologin\F[]
-file does not exist\&.
+Success: either the user is root or the nologin file does not exist\&.
 .RE
 .PP
 PAM_USER_UNKNOWN
