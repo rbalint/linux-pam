@@ -52,6 +52,9 @@
       <arg choice="opt">
         use_default_context
       </arg>
+      <arg choice="opt">
+        mount_private
+      </arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -230,6 +233,24 @@
 	    the SELinux context with setexeccon call. The module will use
 	    the default SELinux context of the user for the level and context
 	    polyinstantiation.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>mount_private</option>
+        </term>
+        <listitem>
+          <para>
+	    This option can be used on systems where the / mount point or
+	    its submounts are made shared (for example with a
+	    <command>mount --make-rshared /</command> command).
+	    The module will make the polyinstantiated directory mount points
+	    private. Normally the pam_namespace will try to detect the
+	    shared / mount point and make the polyinstantiated directories
+	    private automatically. This option has to be used just when
+	    only a subtree is shared and / is not.
           </para>
         </listitem>
       </varlistentry>
