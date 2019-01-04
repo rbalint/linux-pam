@@ -1,0 +1,535 @@
+# translation of Linux-PAM to Dutch
+# This file is distributed under the same license as the Linux-PAM package.
+# Copyright (C) 2005, 2006, 2008 Free Software Foundation, Inc.
+#
+# Rinse de Vries <rinsedevries@kde.nl>, 2005, 2006.
+# R.F. Pels <ruurd@tiscali.nl>, 2005.
+# Peter van Egdom <p.van.egdom@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: Linux-PAM\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/projects/pam\n"
+"POT-Creation-Date: 2008-04-16 11:18+0200\n"
+"PO-Revision-Date: 2008-02-22 23:33+0100\n"
+"Last-Translator: Peter van Egdom <p.van.egdom@gmail.com>\n"
+"Language-Team: Dutch <fedora-trans-list@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: libpam_misc/misc_conv.c:33
+msgid "...Time is running out...\n"
+msgstr "...De tijd raakt op...\n"
+
+#: libpam_misc/misc_conv.c:34
+msgid "...Sorry, your time is up!\n"
+msgstr "...Sorry, uw tijd is verlopen!\n"
+
+#: libpam_misc/misc_conv.c:342
+#, c-format
+msgid "erroneous conversation (%d)\n"
+msgstr "foute conversatie (%d)\n"
+
+#: libpam/pam_item.c:302
+msgid "login:"
+msgstr "gebruikersnaam:"
+
+#: libpam/pam_strerror.c:40
+msgid "Success"
+msgstr "Succes"
+
+#: libpam/pam_strerror.c:42
+msgid "Critical error - immediate abort"
+msgstr "Kritieke fout - onmiddellijk gestopt"
+
+#: libpam/pam_strerror.c:44
+msgid "Failed to load module"
+msgstr "Laden van module is mislukt"
+
+#: libpam/pam_strerror.c:46
+msgid "Symbol not found"
+msgstr "Symbool niet gevonden"
+
+#: libpam/pam_strerror.c:48
+msgid "Error in service module"
+msgstr "Fout in servicemodule"
+
+#: libpam/pam_strerror.c:50
+msgid "System error"
+msgstr "Systeemfout"
+
+#: libpam/pam_strerror.c:52
+msgid "Memory buffer error"
+msgstr "Fout in geheugenbuffer"
+
+#: libpam/pam_strerror.c:54
+msgid "Permission denied"
+msgstr "Toegang geweigerd"
+
+#: libpam/pam_strerror.c:56
+msgid "Authentication failure"
+msgstr "Authenticatiefout"
+
+#: libpam/pam_strerror.c:58
+msgid "Insufficient credentials to access authentication data"
+msgstr "Onvoldoende credenties om authenticatiegegevens te benaderen"
+
+#: libpam/pam_strerror.c:60
+msgid "Authentication service cannot retrieve authentication info"
+msgstr "Authenticatiedienst kan geen authenticatie-informatie ophalen"
+
+#: libpam/pam_strerror.c:62
+msgid "User not known to the underlying authentication module"
+msgstr "Gebruiker onbekend bij de onderliggende authenticatiemodule"
+
+#: libpam/pam_strerror.c:64
+msgid "Have exhausted maximum number of retries for service"
+msgstr "Maximum aantal herhalingen voor de dienst overschreden"
+
+#: libpam/pam_strerror.c:66
+msgid "Authentication token is no longer valid; new one required"
+msgstr "Authenticatietoken is niet langer geldig; nieuwe is vereist"
+
+#: libpam/pam_strerror.c:68
+msgid "User account has expired"
+msgstr "Gebruikersaccount is verlopen"
+
+#: libpam/pam_strerror.c:70
+msgid "Cannot make/remove an entry for the specified session"
+msgstr "Kan een item niet aanmaken/verwijderen voor de opgegeven sessie"
+
+#: libpam/pam_strerror.c:72
+msgid "Authentication service cannot retrieve user credentials"
+msgstr "Authenticatiedienst kan geen gebruikerscredenties ophalen"
+
+#: libpam/pam_strerror.c:74
+msgid "User credentials expired"
+msgstr "Gebruikerscredenties verlopen"
+
+#: libpam/pam_strerror.c:76
+msgid "Failure setting user credentials"
+msgstr "Fout tijdens het instellen van gebruikerscredenties"
+
+#: libpam/pam_strerror.c:78
+msgid "No module specific data is present"
+msgstr "Geen modulespecifieke gegevens aanwezig"
+
+#: libpam/pam_strerror.c:80
+msgid "Bad item passed to pam_*_item()"
+msgstr "Onjuist item doorgegeven aan pam_*_item()"
+
+#: libpam/pam_strerror.c:82
+msgid "Conversation error"
+msgstr "Conversatiefout"
+
+#: libpam/pam_strerror.c:84
+msgid "Authentication token manipulation error"
+msgstr "Fout bij manipulatie van authenticatietoken"
+
+#: libpam/pam_strerror.c:86
+msgid "Authentication information cannot be recovered"
+msgstr "Authenticatie-informatie kan niet worden hersteld"
+
+#: libpam/pam_strerror.c:88
+msgid "Authentication token lock busy"
+msgstr "Vergrendeling van authenticatietoken is bezet"
+
+#: libpam/pam_strerror.c:90
+msgid "Authentication token aging disabled"
+msgstr "Verouderen van authenticatietokens is uitgeschakeld"
+
+#: libpam/pam_strerror.c:92
+msgid "Failed preliminary check by password service"
+msgstr "Voorlopige controle door de wachtwoorddienst is mislukt"
+
+#: libpam/pam_strerror.c:94
+msgid "The return value should be ignored by PAM dispatch"
+msgstr "De terugkeerwaarde moet worden genegeerd door PAM-verdeler"
+
+#: libpam/pam_strerror.c:96
+msgid "Module is unknown"
+msgstr "Module is onbekend"
+
+#: libpam/pam_strerror.c:98
+msgid "Authentication token expired"
+msgstr "Authenticatietoken is verlopen"
+
+#: libpam/pam_strerror.c:100
+msgid "Conversation is waiting for event"
+msgstr "Conversatie wacht op een gebeurtenis"
+
+#: libpam/pam_strerror.c:102
+msgid "Application needs to call libpam again"
+msgstr "Toepassing dient libpam nogmaals aan te roepen"
+
+#: libpam/pam_strerror.c:105
+msgid "Unknown PAM error"
+msgstr "Onbekende PAM-fout"
+
+#: modules/pam_cracklib/pam_cracklib.c:64
+#, c-format
+msgid "New %s%spassword: "
+msgstr "Nieuw %s%swachtwoord: "
+
+#: modules/pam_cracklib/pam_cracklib.c:66
+#, c-format
+msgid "Retype new %s%spassword: "
+msgstr "Nieuw %s%swachtwoord herhalen: "
+
+#: modules/pam_cracklib/pam_cracklib.c:67
+msgid "Sorry, passwords do not match."
+msgstr "Sorry, wachtwoorden komen niet overeen."
+
+#: modules/pam_cracklib/pam_cracklib.c:432
+msgid "is the same as the old one"
+msgstr "is hetzelfde als het oude wachtwoord"
+
+#: modules/pam_cracklib/pam_cracklib.c:445
+msgid "is a palindrome"
+msgstr "is een palindroom"
+
+#: modules/pam_cracklib/pam_cracklib.c:448
+msgid "case changes only"
+msgstr "alleen veranderingen aan hoofd/kleine letters"
+
+#: modules/pam_cracklib/pam_cracklib.c:451
+msgid "is too similar to the old one"
+msgstr "lijkt te veel op het oude wachtwoord"
+
+#: modules/pam_cracklib/pam_cracklib.c:454
+msgid "is too simple"
+msgstr "is te eenvoudig"
+
+#: modules/pam_cracklib/pam_cracklib.c:457
+msgid "is rotated"
+msgstr "is omgedraaid"
+
+#: modules/pam_cracklib/pam_cracklib.c:460
+msgid "not enough character classes"
+msgstr ""
+
+#: modules/pam_cracklib/pam_cracklib.c:498
+msgid "has been already used"
+msgstr "is al gebruikt"
+
+#: modules/pam_cracklib/pam_cracklib.c:526
+#: modules/pam_unix/pam_unix_passwd.c:449
+msgid "No password supplied"
+msgstr "Geen wachtwoord opgegeven"
+
+#: modules/pam_cracklib/pam_cracklib.c:526
+#: modules/pam_unix/pam_unix_passwd.c:449
+msgid "Password unchanged"
+msgstr "Wachtwoord is niet gewijzigd"
+
+#: modules/pam_cracklib/pam_cracklib.c:549
+#: modules/pam_cracklib/pam_cracklib.c:672
+#, c-format
+msgid "BAD PASSWORD: %s"
+msgstr "SLECHT WACHTWOORD: %s"
+
+#: modules/pam_exec/pam_exec.c:134
+#, c-format
+msgid "%s failed: exit code %d"
+msgstr "%s is mislukt: foutcode %d"
+
+#: modules/pam_exec/pam_exec.c:143
+#, c-format
+msgid "%s failed: caught signal %d%s"
+msgstr "%s is mislukt: ontving signaal %d%s"
+
+#: modules/pam_exec/pam_exec.c:152
+#, c-format
+msgid "%s failed: unknown status 0x%x"
+msgstr "%s is mislukt: onbekende status 0x%x"
+
+#. TRANSLATORS: "strftime options for date of last login"
+#: modules/pam_lastlog/pam_lastlog.c:190
+msgid " %a %b %e %H:%M:%S %Z %Y"
+msgstr " %a %b %e %H:%M:%S %Z %Y"
+
+#. TRANSLATORS: " from <host>"
+#: modules/pam_lastlog/pam_lastlog.c:199
+#, c-format
+msgid " from %.*s"
+msgstr " van %.*s"
+
+#. TRANSLATORS: " on <terminal>"
+#: modules/pam_lastlog/pam_lastlog.c:211
+#, c-format
+msgid " on %.*s"
+msgstr " op %.*s"
+
+#. TRANSLATORS: "Last login: <date> from <host> on <terminal>"
+#: modules/pam_lastlog/pam_lastlog.c:220
+#, c-format
+msgid "Last login:%s%s%s"
+msgstr "Laatste keer aangemeld:%s%s%s"
+
+#: modules/pam_lastlog/pam_lastlog.c:226
+msgid "Welcome to your new account!"
+msgstr "Welkom bij uw nieuwe account!"
+
+#: modules/pam_limits/pam_limits.c:712
+#, c-format
+msgid "Too many logins for '%s'."
+msgstr "Te vaak aangemeld met '%s'."
+
+#: modules/pam_mail/pam_mail.c:313
+msgid "No mail."
+msgstr "Geen e-mail."
+
+#: modules/pam_mail/pam_mail.c:316
+msgid "You have new mail."
+msgstr "U hebt nieuwe e-mail."
+
+#: modules/pam_mail/pam_mail.c:319
+msgid "You have old mail."
+msgstr "U hebt oude e-mail."
+
+#: modules/pam_mail/pam_mail.c:323
+msgid "You have mail."
+msgstr "U hebt e-mail."
+
+#: modules/pam_mail/pam_mail.c:330
+#, c-format
+msgid "You have no mail in folder %s."
+msgstr "U hebt geen e-mail in map %s."
+
+#: modules/pam_mail/pam_mail.c:334
+#, c-format
+msgid "You have new mail in folder %s."
+msgstr "U hebt nieuwe e-mail in map %s."
+
+#: modules/pam_mail/pam_mail.c:338
+#, c-format
+msgid "You have old mail in folder %s."
+msgstr "U hebt oude e-mail in map %s."
+
+#: modules/pam_mail/pam_mail.c:343
+#, c-format
+msgid "You have mail in folder %s."
+msgstr "U hebt e-mail in map %s."
+
+#: modules/pam_mkhomedir/pam_mkhomedir.c:142
+#, c-format
+msgid "Creating directory '%s'."
+msgstr "Aanmaken van map '%s'."
+
+#: modules/pam_mkhomedir/pam_mkhomedir.c:147
+#, c-format
+msgid "Unable to create directory %s: %m"
+msgstr "Niet in staat om map %s aan te maken: %m"
+
+#: modules/pam_selinux/pam_selinux.c:164
+msgid "Would you like to enter a security context? [N] "
+msgstr "Wilt u een beveiligingscontext invoeren? [N] "
+
+#: modules/pam_selinux/pam_selinux.c:181 modules/pam_selinux/pam_selinux.c:265
+msgid "role:"
+msgstr "rol:"
+
+#: modules/pam_selinux/pam_selinux.c:193 modules/pam_selinux/pam_selinux.c:282
+msgid "level:"
+msgstr "niveau:"
+
+#: modules/pam_selinux/pam_selinux.c:206 modules/pam_selinux/pam_selinux.c:313
+msgid "Not a valid security context"
+msgstr "Geen geldige beveiligingscontext"
+
+#: modules/pam_selinux/pam_selinux.c:251
+#, c-format
+msgid "Default Security Context %s\n"
+msgstr "Standaard beveiligingscontext %s\n"
+
+#: modules/pam_selinux/pam_selinux.c:255
+msgid "Would you like to enter a different role or level?"
+msgstr "Wilt u een andere rol of een ander niveau invoeren?"
+
+#: modules/pam_selinux/pam_selinux.c:269
+#, c-format
+msgid "No default type for role %s\n"
+msgstr "Geen standaardtype voor rol %s\n"
+
+#: modules/pam_selinux/pam_selinux.c:522
+#, c-format
+msgid "Unable to get valid context for %s"
+msgstr "Niet in staat om geldige context voor %s te verkrijgen"
+
+#: modules/pam_selinux/pam_selinux.c:578
+msgid "Requested MLS level not in permitted range"
+msgstr "Aangevraagd MLS-niveau niet in toegestaan bereik"
+
+#: modules/pam_selinux/pam_selinux.c:628
+#, c-format
+msgid "Security Context %s Assigned"
+msgstr "Beveilgingscontext %s toegewezen"
+
+#: modules/pam_selinux/pam_selinux.c:649
+#, c-format
+msgid "Key Creation Context %s Assigned"
+msgstr "Sleutel aanmaakcontext %s toegewezen"
+
+#: modules/pam_selinux/pam_selinux_check.c:99
+#, c-format
+msgid "failed to initialize PAM\n"
+msgstr "Initialiseren van PAM is mislukt\n"
+
+#: modules/pam_selinux/pam_selinux_check.c:105
+#, c-format
+msgid "failed to pam_set_item()\n"
+msgstr "pam_set_item() is mislukt\n"
+
+#: modules/pam_selinux/pam_selinux_check.c:133
+#, c-format
+msgid "login: failure forking: %m"
+msgstr "login: beginnen van nieuw proces mislukt: %m"
+
+#: modules/pam_stress/pam_stress.c:476
+#, c-format
+msgid "Changing STRESS password for %s."
+msgstr "Veranderen van STRESS-wachtwoord voor %s."
+
+#: modules/pam_stress/pam_stress.c:490
+msgid "Enter new STRESS password: "
+msgstr "Nieuw STRESS-wachtwoord invoeren: "
+
+#: modules/pam_stress/pam_stress.c:493
+msgid "Retype new STRESS password: "
+msgstr "Nieuw STRESS-wachtwoord herhalen: "
+
+#: modules/pam_stress/pam_stress.c:522
+msgid "Verification mis-typed; password unchanged"
+msgstr "Verificatie onjuist getypt; wachtwoord blijft ongewijzigd"
+
+#: modules/pam_tally/pam_tally.c:746
+msgid "Authentication error"
+msgstr "Authenticatiefout"
+
+#: modules/pam_tally/pam_tally.c:747
+msgid "Service error"
+msgstr "Servicefout"
+
+#: modules/pam_tally/pam_tally.c:748
+msgid "Unknown user"
+msgstr "Onbekende gebruiker"
+
+#: modules/pam_tally/pam_tally.c:749
+msgid "Unknown error"
+msgstr "Onbekende fout"
+
+#: modules/pam_tally/pam_tally.c:765
+#, c-format
+msgid "%s: Bad number given to --reset=\n"
+msgstr "%s: Onjuist getal gegeven aan --reset=\n"
+
+#: modules/pam_tally/pam_tally.c:769
+#, c-format
+msgid "%s: Unrecognised option %s\n"
+msgstr "%s: niet-herkende optie %s\n"
+
+#: modules/pam_tally/pam_tally.c:781
+#, c-format
+msgid ""
+"%s: [--file rooted-filename] [--user username] [--reset[=n]] [--quiet]\n"
+msgstr ""
+"%s [--file rooted-bestandsnaam] [--user gebruikersnaam] [--reset[=n]] [--"
+"quiet]\n"
+
+#: modules/pam_tally/pam_tally.c:855
+#, c-format
+msgid "%s: Can't reset all users to non-zero\n"
+msgstr "%s: kan niet alle gebruikers terugzetten naar non-zero\n"
+
+#: modules/pam_unix/pam_unix_acct.c:229 modules/pam_unix/pam_unix_acct.c:251
+msgid "Your account has expired; please contact your system administrator"
+msgstr "Uw account is verlopen; neem contact op met uw systeembeheerder"
+
+#: modules/pam_unix/pam_unix_acct.c:237
+msgid "You are required to change your password immediately (root enforced)"
+msgstr ""
+"U dient onmiddellijk uw wachtwoord te wijzigen (op last van systeembeheerder)"
+
+#: modules/pam_unix/pam_unix_acct.c:243
+msgid "You are required to change your password immediately (password aged)"
+msgstr ""
+"U dient onmiddellijk uw wachtwoord te wijzigen (wachtwoord is verouderd)"
+
+#: modules/pam_unix/pam_unix_acct.c:261 modules/pam_unix/pam_unix_acct.c:268
+#, c-format
+msgid "Warning: your password will expire in %d day"
+msgid_plural "Warning: your password will expire in %d days"
+msgstr[0] "Waarschuwing: uw wachtwoord zal over %d dag verlopen"
+msgstr[1] "Waarschuwing: uw wachtwoord zal over %d dagen verlopen"
+
+#. TRANSLATORS: only used if dngettext is not supported
+#: modules/pam_unix/pam_unix_acct.c:273
+#, c-format
+msgid "Warning: your password will expire in %d days"
+msgstr "Waarschuwing: uw wachtwoord zal over %d dagen verlopen"
+
+#: modules/pam_unix/pam_unix_auth.c:159 modules/pam_userdb/pam_userdb.c:61
+msgid "Password: "
+msgstr "Wachtwoord: "
+
+#: modules/pam_unix/pam_unix_passwd.c:359
+msgid "NIS password could not be changed."
+msgstr "NIS-wachtwoord kon niet worden gewijzigd."
+
+#: modules/pam_unix/pam_unix_passwd.c:466
+msgid "You must choose a longer password"
+msgstr "U moet een langer wachtwoord kiezen"
+
+#: modules/pam_unix/pam_unix_passwd.c:470
+msgid "Password has been already used. Choose another."
+msgstr "Wachtwoord is al gebruikt. Kies een ander wachtwoord."
+
+#: modules/pam_unix/pam_unix_passwd.c:571
+#, c-format
+msgid "Changing password for %s."
+msgstr "Veranderen van wachtwoord voor %s."
+
+#: modules/pam_unix/pam_unix_passwd.c:582
+msgid "(current) UNIX password: "
+msgstr "(huidig) UNIX-wachtwoord: "
+
+#: modules/pam_unix/pam_unix_passwd.c:617
+msgid "You must wait longer to change your password"
+msgstr "U moet langer wachten om uw wachtwoord te wijzigen"
+
+#: modules/pam_unix/pam_unix_passwd.c:677
+msgid "Enter new UNIX password: "
+msgstr "Nieuw UNIX-wachtwoord invoeren: "
+
+#: modules/pam_unix/pam_unix_passwd.c:678
+msgid "Retype new UNIX password: "
+msgstr "Nieuw UNIX-wachtwoord herhalen: "
+
+#~ msgid "Error connecting to audit system."
+#~ msgstr "Fout bij verbinden met het auditsysteem."
+
+#~ msgid "Error translating default context."
+#~ msgstr "Fout bij vertalen van standaardcontext."
+
+#~ msgid "Error translating selected context."
+#~ msgstr "Fout bij vertalen van geselecteerde context."
+
+#~ msgid "Error sending audit message."
+#~ msgstr "Fout bij versturen van auditmelding."
+
+#~ msgid "Out of memory"
+#~ msgstr "Onvoldoende geheugen"
+
+#~ msgid "Do you want to choose a different one? [n]"
+#~ msgstr "Wilt u een andere kiezen? [n]"
+
+#~ msgid "Enter number of choice: "
+#~ msgstr "Voer het gekozen getal in: "
+
+#~ msgid "type: "
+#~ msgstr "type: "
+
+#~ msgid "dlopen() failure"
+#~ msgstr "dlopen() failure"
