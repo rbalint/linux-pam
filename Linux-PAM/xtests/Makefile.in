@@ -60,7 +60,8 @@ am__EXEEXT_1 = tst-pam_dispatch1$(EXEEXT) tst-pam_dispatch2$(EXEEXT) \
 	tst-pam_unix1$(EXEEXT) tst-pam_unix2$(EXEEXT) \
 	tst-pam_unix3$(EXEEXT) tst-pam_access1$(EXEEXT) \
 	tst-pam_access2$(EXEEXT) tst-pam_access3$(EXEEXT) \
-	tst-pam_access4$(EXEEXT) tst-pam_limits1$(EXEEXT)
+	tst-pam_access4$(EXEEXT) tst-pam_limits1$(EXEEXT) \
+	tst-pam_succeed_if1$(EXEEXT) tst-pam_group1$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 tst_pam_access1_SOURCES = tst-pam_access1.c
 tst_pam_access1_OBJECTS = tst-pam_access1.$(OBJEXT)
@@ -92,9 +93,15 @@ tst_pam_dispatch3_LDADD = $(LDADD)
 tst_pam_dispatch4_SOURCES = tst-pam_dispatch4.c
 tst_pam_dispatch4_OBJECTS = tst-pam_dispatch4.$(OBJEXT)
 tst_pam_dispatch4_LDADD = $(LDADD)
+tst_pam_group1_SOURCES = tst-pam_group1.c
+tst_pam_group1_OBJECTS = tst-pam_group1.$(OBJEXT)
+tst_pam_group1_LDADD = $(LDADD)
 tst_pam_limits1_SOURCES = tst-pam_limits1.c
 tst_pam_limits1_OBJECTS = tst-pam_limits1.$(OBJEXT)
 tst_pam_limits1_LDADD = $(LDADD)
+tst_pam_succeed_if1_SOURCES = tst-pam_succeed_if1.c
+tst_pam_succeed_if1_OBJECTS = tst-pam_succeed_if1.$(OBJEXT)
+tst_pam_succeed_if1_LDADD = $(LDADD)
 tst_pam_unix1_SOURCES = tst-pam_unix1.c
 tst_pam_unix1_OBJECTS = tst-pam_unix1.$(OBJEXT)
 tst_pam_unix1_LDADD = $(LDADD)
@@ -119,13 +126,15 @@ LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 SOURCES = tst-pam_access1.c tst-pam_access2.c tst-pam_access3.c \
 	tst-pam_access4.c tst-pam_cracklib1.c tst-pam_cracklib2.c \
 	tst-pam_dispatch1.c tst-pam_dispatch2.c tst-pam_dispatch3.c \
-	tst-pam_dispatch4.c tst-pam_limits1.c tst-pam_unix1.c \
-	tst-pam_unix2.c tst-pam_unix3.c
+	tst-pam_dispatch4.c tst-pam_group1.c tst-pam_limits1.c \
+	tst-pam_succeed_if1.c tst-pam_unix1.c tst-pam_unix2.c \
+	tst-pam_unix3.c
 DIST_SOURCES = tst-pam_access1.c tst-pam_access2.c tst-pam_access3.c \
 	tst-pam_access4.c tst-pam_cracklib1.c tst-pam_cracklib2.c \
 	tst-pam_dispatch1.c tst-pam_dispatch2.c tst-pam_dispatch3.c \
-	tst-pam_dispatch4.c tst-pam_limits1.c tst-pam_unix1.c \
-	tst-pam_unix2.c tst-pam_unix3.c
+	tst-pam_dispatch4.c tst-pam_group1.c tst-pam_limits1.c \
+	tst-pam_succeed_if1.c tst-pam_unix1.c tst-pam_unix2.c \
+	tst-pam_unix3.c
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -216,6 +225,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -301,13 +311,16 @@ EXTRA_DIST = run-xtests.sh tst-pam_dispatch1.pamd tst-pam_dispatch2.pamd \
 	tst-pam_access2.pamd tst-pam_access2.sh \
 	tst-pam_access3.pamd tst-pam_access3.sh \
 	tst-pam_access4.pamd tst-pam_access4.sh \
-	limits.conf tst-pam_limits1.pamd tst-pam_limits1.sh
+	limits.conf tst-pam_limits1.pamd tst-pam_limits1.sh \
+	tst-pam_succeed_if1.pamd tst-pam_succeed_if1.sh \
+	group.conf tst-pam_group1.pamd tst-pam_group1.sh
 
 XTESTS = tst-pam_dispatch1 tst-pam_dispatch2 tst-pam_dispatch3 \
 	tst-pam_dispatch4 tst-pam_cracklib1 tst-pam_cracklib2 \
 	tst-pam_unix1 tst-pam_unix2 tst-pam_unix3 \
 	tst-pam_access1 tst-pam_access2 tst-pam_access3 \
-	tst-pam_access4 tst-pam_limits1
+	tst-pam_access4 tst-pam_limits1 tst-pam_succeed_if1 \
+	tst-pam_group1
 
 all: all-am
 
@@ -379,9 +392,15 @@ tst-pam_dispatch3$(EXEEXT): $(tst_pam_dispatch3_OBJECTS) $(tst_pam_dispatch3_DEP
 tst-pam_dispatch4$(EXEEXT): $(tst_pam_dispatch4_OBJECTS) $(tst_pam_dispatch4_DEPENDENCIES) 
 	@rm -f tst-pam_dispatch4$(EXEEXT)
 	$(LINK) $(tst_pam_dispatch4_OBJECTS) $(tst_pam_dispatch4_LDADD) $(LIBS)
+tst-pam_group1$(EXEEXT): $(tst_pam_group1_OBJECTS) $(tst_pam_group1_DEPENDENCIES) 
+	@rm -f tst-pam_group1$(EXEEXT)
+	$(LINK) $(tst_pam_group1_OBJECTS) $(tst_pam_group1_LDADD) $(LIBS)
 tst-pam_limits1$(EXEEXT): $(tst_pam_limits1_OBJECTS) $(tst_pam_limits1_DEPENDENCIES) 
 	@rm -f tst-pam_limits1$(EXEEXT)
 	$(LINK) $(tst_pam_limits1_OBJECTS) $(tst_pam_limits1_LDADD) $(LIBS)
+tst-pam_succeed_if1$(EXEEXT): $(tst_pam_succeed_if1_OBJECTS) $(tst_pam_succeed_if1_DEPENDENCIES) 
+	@rm -f tst-pam_succeed_if1$(EXEEXT)
+	$(LINK) $(tst_pam_succeed_if1_OBJECTS) $(tst_pam_succeed_if1_LDADD) $(LIBS)
 tst-pam_unix1$(EXEEXT): $(tst_pam_unix1_OBJECTS) $(tst_pam_unix1_DEPENDENCIES) 
 	@rm -f tst-pam_unix1$(EXEEXT)
 	$(LINK) $(tst_pam_unix1_OBJECTS) $(tst_pam_unix1_LDADD) $(LIBS)
@@ -408,7 +427,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_dispatch2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_dispatch3.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_dispatch4.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_group1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_limits1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_succeed_if1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_unix1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_unix2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_unix3.Po@am__quote@

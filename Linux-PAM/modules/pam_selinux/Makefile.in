@@ -38,9 +38,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@HAVE_VERSIONING_TRUE@am__append_1 = -avoid-version -module \
-@HAVE_VERSIONING_TRUE@	-Wl,--version-script=$(srcdir)/../modules.map
-
+@HAVE_VERSIONING_TRUE@am__append_1 = -Wl,--version-script=$(srcdir)/../modules.map
 @HAVE_LIBSELINUX_TRUE@noinst_PROGRAMS = pam_selinux_check$(EXEEXT)
 subdir = modules/pam_selinux
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -68,7 +66,7 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(securelibdir)" "$(DESTDIR)$(man8dir)"
 securelibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(securelib_LTLIBRARIES)
-pam_selinux_la_LIBADD =
+pam_selinux_la_DEPENDENCIES =
 pam_selinux_la_SOURCES = pam_selinux.c
 pam_selinux_la_OBJECTS = pam_selinux.lo
 pam_selinux_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -190,6 +188,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -271,11 +270,13 @@ secureconfdir = $(SCONFIGDIR)
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include \
 	-I$(top_srcdir)/libpam_misc/include
 
-AM_LDFLAGS = -no-undefined \
-	-L$(top_builddir)/libpam -lpam @LIBSELINUX@
+pam_selinux_check_LDFLAGS = $(AM_LDFLAGS) \
+	-L$(top_builddir)/libpam -lpam \
+	-L$(top_builddir)/libpam_misc -lpam_misc
 
-pam_selinux_check_LDFLAGS = $(AM_LDFLAGS) -L$(top_builddir)/libpam_misc -lpam_misc
-pam_selinux_la_LDFLAGS = $(AM_LDFLAGS) $(am__append_1)
+pam_selinux_la_LIBADD = -L$(top_builddir)/libpam -lpam @LIBSELINUX@
+pam_selinux_la_LDFLAGS = -no-undefined -avoid-version -module \
+	$(am__append_1)
 @HAVE_LIBSELINUX_TRUE@securelib_LTLIBRARIES = pam_selinux.la
 @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README pam_selinux.8
 all: all-am

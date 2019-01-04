@@ -14,7 +14,7 @@
  */
 
 #if !defined(linux) && !defined(__linux)
-#error THIS CODE IS KNOWN TO WORK ONLY ON LINUX !!!
+#warning THIS CODE IS KNOWN TO WORK ONLY ON LINUX !!!
 #endif
 
 #include "config.h"
@@ -281,8 +281,10 @@ process_limit (const pam_handle_t *pamh, int source, const char *lim_type,
 	limit_item = RLIMIT_NOFILE;
     else if (strcmp(lim_item, "memlock") == 0)
 	limit_item = RLIMIT_MEMLOCK;
+#ifdef RLIMIT_AS
     else if (strcmp(lim_item, "as") == 0)
 	limit_item = RLIMIT_AS;
+#endif /*RLIMIT_AS*/
 #ifdef RLIMIT_LOCKS
     else if (strcmp(lim_item, "locks") == 0)
 	limit_item = RLIMIT_LOCKS;
@@ -389,7 +391,9 @@ process_limit (const pam_handle_t *pamh, int source, const char *lim_type,
         case RLIMIT_CORE:
         case RLIMIT_RSS:
         case RLIMIT_MEMLOCK:
+#ifdef RLIMIT_AS
         case RLIMIT_AS:
+#endif
          if (rlimit_value != RLIM_INFINITY)
 	   {
 	     if (rlimit_value >= RLIM_INFINITY/1024)
@@ -461,8 +465,6 @@ static int parse_config_file(pam_handle_t *pamh, const char *uname, int ctrl,
         return PAM_SERVICE_ERR;
     }
 
-    /* init things */
-    memset(buf, 0, sizeof(buf));
     /* start the show */
     while (fgets(buf, LINE_LENGTH, fil) != NULL) {
         char domain[LINE_LENGTH];
@@ -471,46 +473,40 @@ static int parse_config_file(pam_handle_t *pamh, const char *uname, int ctrl,
         char value[LINE_LENGTH];
         int i;
         size_t j;
-        char *tptr;
+        char *tptr,*line;
 
-        tptr = buf;
+        line = buf;
         /* skip the leading white space */
-        while (*tptr && isspace(*tptr))
-            tptr++;
-        strncpy(buf, tptr, sizeof(buf)-1);
-	buf[sizeof(buf)-1] = '\0';
+        while (*line && isspace(*line))
+            line++;
 
         /* Rip off the comments */
-        tptr = strchr(buf,'#');
+        tptr = strchr(line,'#');
         if (tptr)
             *tptr = '\0';
         /* Rip off the newline char */
-        tptr = strchr(buf,'\n');
+        tptr = strchr(line,'\n');
         if (tptr)
             *tptr = '\0';
         /* Anything left ? */
-        if (!strlen(buf)) {
-            memset(buf, 0, sizeof(buf));
+        if (!strlen(line))
             continue;
-        }
 
-        memset(domain, 0, sizeof(domain));
-        memset(ltype, 0, sizeof(ltype));
-        memset(item, 0, sizeof(item));
-        memset(value, 0, sizeof(value));
+	domain[0] = ltype[0] = item[0] = value[0] = '\0';
 
-        i = sscanf(buf,"%s%s%s%s", domain, ltype, item, value);
+	i = sscanf(line,"%s%s%s%s", domain, ltype, item, value);
 	D(("scanned line[%d]: domain[%s], ltype[%s], item[%s], value[%s]",
 	   i, domain, ltype, item, value));
 
         for(j=0; j < strlen(ltype); j++)
             ltype[j]=tolower(ltype[j]);
-        for(j=0; j < strlen(item); j++)
-            item[j]=tolower(item[j]);
-        for(j=0; j < strlen(value); j++)
-            value[j]=tolower(value[j]);
 
         if (i == 4) { /* a complete line */
+	    for(j=0; j < strlen(item); j++)
+		item[j]=tolower(item[j]);
+	    for(j=0; j < strlen(value); j++)
+		value[j]=tolower(value[j]);
+
             if (strcmp(uname, domain) == 0) /* this user have a limit */
                 process_limit(pamh, LIMITS_DEF_USER, ltype, item, value, ctrl, pl);
             else if (domain[0]=='@') {
@@ -556,7 +552,7 @@ static int parse_config_file(pam_handle_t *pamh, const char *uname, int ctrl,
 		return PAM_IGNORE;
 	    }
         } else {
-            pam_syslog(pamh, LOG_WARNING, "invalid line '%s' - skipped", buf);
+            pam_syslog(pamh, LOG_WARNING, "invalid line '%s' - skipped", line);
 	}
     }
     fclose(fil);

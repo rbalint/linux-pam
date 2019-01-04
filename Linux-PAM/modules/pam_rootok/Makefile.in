@@ -65,7 +65,7 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(securelibdir)" "$(DESTDIR)$(man8dir)"
 securelibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(securelib_LTLIBRARIES)
-pam_rootok_la_LIBADD =
+pam_rootok_la_DEPENDENCIES =
 pam_rootok_la_SOURCES = pam_rootok.c
 pam_rootok_la_OBJECTS = pam_rootok.lo
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -176,6 +176,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -254,9 +255,9 @@ securelibdir = $(SECUREDIR)
 secureconfdir = $(SCONFIGDIR)
 AM_CFLAGS = -I$(top_srcdir)/libpam/include \
 	-I$(top_srcdir)/libpamc/include $(am__append_1)
-AM_LDFLAGS = -no-undefined -avoid-version -module \
-	-L$(top_builddir)/libpam -lpam @LIBSELINUX@ $(am__append_2)
+AM_LDFLAGS = -no-undefined -avoid-version -module $(am__append_2)
 securelib_LTLIBRARIES = pam_rootok.la
+pam_rootok_la_LIBADD = -L$(top_builddir)/libpam -lpam @LIBSELINUX@
 @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README
 all: all-am
 

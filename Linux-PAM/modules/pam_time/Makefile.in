@@ -65,7 +65,7 @@ am__installdirs = "$(DESTDIR)$(securelibdir)" "$(DESTDIR)$(man5dir)" \
 	"$(DESTDIR)$(man8dir)" "$(DESTDIR)$(secureconfdir)"
 securelibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(securelib_LTLIBRARIES)
-pam_time_la_LIBADD =
+pam_time_la_DEPENDENCIES =
 pam_time_la_SOURCES = pam_time.c
 pam_time_la_OBJECTS = pam_time.lo
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -178,6 +178,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -257,8 +258,8 @@ secureconfdir = $(SCONFIGDIR)
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include \
 	-DPAM_TIME_CONF=\"$(SCONFIGDIR)/time.conf\"
 
-AM_LDFLAGS = -no-undefined -avoid-version -module \
-	-L$(top_builddir)/libpam -lpam $(am__append_1)
+AM_LDFLAGS = -no-undefined -avoid-version -module $(am__append_1)
+pam_time_la_LIBADD = -L$(top_builddir)/libpam -lpam
 securelib_LTLIBRARIES = pam_time.la
 secureconf_DATA = time.conf
 @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README

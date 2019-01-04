@@ -69,7 +69,9 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libpam_la_LIBADD =
+am__DEPENDENCIES_1 =
+@STATIC_MODULES_TRUE@am__DEPENDENCIES_2 = `ls ../modules/pam_*/*.lo`
+libpam_la_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2)
 am_libpam_la_OBJECTS = pam_account.lo pam_auth.lo pam_data.lo \
 	pam_delay.lo pam_dispatch.lo pam_end.lo pam_env.lo \
 	pam_handlers.lo pam_item.lo pam_misc.lo pam_password.lo \
@@ -190,6 +192,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -272,8 +275,10 @@ include_HEADERS = include/security/_pam_compat.h \
 noinst_HEADERS = pam_prelude.h pam_private.h pam_tokens.h \
 		pam_modutil_private.h pam_static_modules.h
 
-libpam_la_LDFLAGS = -no-undefined -version-info 81:8:81 @LIBAUDIT@ \
-	$(LIBPRELUDE_LIBS) @LIBDL@ $(am__append_2) $(am__append_3)
+libpam_la_LDFLAGS = -no-undefined -version-info 81:9:81 \
+	$(am__append_3)
+libpam_la_LIBADD = @LIBAUDIT@ $(LIBPRELUDE_LIBS) @LIBDL@ \
+	$(am__append_2)
 lib_LTLIBRARIES = libpam.la
 libpam_la_SOURCES = pam_account.c pam_auth.c pam_data.c pam_delay.c \
 	pam_dispatch.c pam_end.c pam_env.c pam_handlers.c pam_item.c \

@@ -177,6 +177,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -252,7 +253,7 @@ include_HEADERS = include/security/pam_misc.h
 AM_CFLAGS = -I$(top_srcdir)/libpam/include \
 	-I$(top_srcdir)/libpamc/include -I$(srcdir)/include
 
-libpam_misc_la_LDFLAGS = -no-undefined -version-info 81:2:81 \
+libpam_misc_la_LDFLAGS = -no-undefined -version-info 81:3:81 \
 	$(am__append_1)
 libpam_misc_la_LIBADD = $(top_builddir)/libpam/libpam.la
 lib_LTLIBRARIES = libpam_misc.la
