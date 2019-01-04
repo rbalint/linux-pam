@@ -63,7 +63,7 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(securelibdir)"
 securelibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(securelib_LTLIBRARIES)
-pam_stress_la_LIBADD =
+pam_stress_la_DEPENDENCIES =
 pam_stress_la_SOURCES = pam_stress.c
 pam_stress_la_OBJECTS = pam_stress.lo
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -170,6 +170,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -245,9 +246,9 @@ TESTS = tst-pam_stress
 securelibdir = $(SECUREDIR)
 secureconfdir = $(SCONFIGDIR)
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include
-AM_LDFLAGS = -no-undefined -avoid-version -module \
-	-L$(top_builddir)/libpam -lpam $(am__append_1)
+AM_LDFLAGS = -no-undefined -avoid-version -module $(am__append_1)
 securelib_LTLIBRARIES = pam_stress.la
+pam_stress_la_LIBADD = -L$(top_builddir)/libpam -lpam
 all: all-am
 
 .SUFFIXES:

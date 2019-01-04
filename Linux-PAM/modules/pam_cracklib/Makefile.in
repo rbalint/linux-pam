@@ -176,6 +176,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -252,11 +253,12 @@ XMLS = README.xml pam_cracklib.8.xml
 securelibdir = $(SECUREDIR)
 secureconfdir = $(SCONFIGDIR)
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include
-AM_LDFLAGS = -no-undefined -avoid-version -module \
-	-L$(top_builddir)/libpam -lpam $(am__append_1)
+AM_LDFLAGS = -no-undefined -avoid-version -module $(am__append_1)
 @HAVE_LIBCRACK_TRUE@securelib_LTLIBRARIES = pam_cracklib.la
 @HAVE_LIBCRACK_TRUE@TESTS = tst-pam_cracklib
-pam_cracklib_la_LIBADD = @LIBCRACK@ @LIBCRYPT@
+pam_cracklib_la_LIBADD = -L$(top_builddir)/libpam -lpam \
+	@LIBCRACK@ @LIBCRYPT@
+
 @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README
 all: all-am
 

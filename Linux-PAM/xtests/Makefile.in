@@ -56,11 +56,31 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 am__EXEEXT_1 = tst-pam_dispatch1$(EXEEXT) tst-pam_dispatch2$(EXEEXT) \
 	tst-pam_dispatch3$(EXEEXT) tst-pam_dispatch4$(EXEEXT) \
-	tst-pam_cracklib1$(EXEEXT)
+	tst-pam_cracklib1$(EXEEXT) tst-pam_cracklib2$(EXEEXT) \
+	tst-pam_unix1$(EXEEXT) tst-pam_unix2$(EXEEXT) \
+	tst-pam_unix3$(EXEEXT) tst-pam_access1$(EXEEXT) \
+	tst-pam_access2$(EXEEXT) tst-pam_access3$(EXEEXT) \
+	tst-pam_access4$(EXEEXT) tst-pam_limits1$(EXEEXT) \
+	tst-pam_succeed_if1$(EXEEXT) tst-pam_group1$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
+tst_pam_access1_SOURCES = tst-pam_access1.c
+tst_pam_access1_OBJECTS = tst-pam_access1.$(OBJEXT)
+tst_pam_access1_LDADD = $(LDADD)
+tst_pam_access2_SOURCES = tst-pam_access2.c
+tst_pam_access2_OBJECTS = tst-pam_access2.$(OBJEXT)
+tst_pam_access2_LDADD = $(LDADD)
+tst_pam_access3_SOURCES = tst-pam_access3.c
+tst_pam_access3_OBJECTS = tst-pam_access3.$(OBJEXT)
+tst_pam_access3_LDADD = $(LDADD)
+tst_pam_access4_SOURCES = tst-pam_access4.c
+tst_pam_access4_OBJECTS = tst-pam_access4.$(OBJEXT)
+tst_pam_access4_LDADD = $(LDADD)
 tst_pam_cracklib1_SOURCES = tst-pam_cracklib1.c
 tst_pam_cracklib1_OBJECTS = tst-pam_cracklib1.$(OBJEXT)
 tst_pam_cracklib1_LDADD = $(LDADD)
+tst_pam_cracklib2_SOURCES = tst-pam_cracklib2.c
+tst_pam_cracklib2_OBJECTS = tst-pam_cracklib2.$(OBJEXT)
+tst_pam_cracklib2_LDADD = $(LDADD)
 tst_pam_dispatch1_SOURCES = tst-pam_dispatch1.c
 tst_pam_dispatch1_OBJECTS = tst-pam_dispatch1.$(OBJEXT)
 tst_pam_dispatch1_LDADD = $(LDADD)
@@ -73,6 +93,24 @@ tst_pam_dispatch3_LDADD = $(LDADD)
 tst_pam_dispatch4_SOURCES = tst-pam_dispatch4.c
 tst_pam_dispatch4_OBJECTS = tst-pam_dispatch4.$(OBJEXT)
 tst_pam_dispatch4_LDADD = $(LDADD)
+tst_pam_group1_SOURCES = tst-pam_group1.c
+tst_pam_group1_OBJECTS = tst-pam_group1.$(OBJEXT)
+tst_pam_group1_LDADD = $(LDADD)
+tst_pam_limits1_SOURCES = tst-pam_limits1.c
+tst_pam_limits1_OBJECTS = tst-pam_limits1.$(OBJEXT)
+tst_pam_limits1_LDADD = $(LDADD)
+tst_pam_succeed_if1_SOURCES = tst-pam_succeed_if1.c
+tst_pam_succeed_if1_OBJECTS = tst-pam_succeed_if1.$(OBJEXT)
+tst_pam_succeed_if1_LDADD = $(LDADD)
+tst_pam_unix1_SOURCES = tst-pam_unix1.c
+tst_pam_unix1_OBJECTS = tst-pam_unix1.$(OBJEXT)
+tst_pam_unix1_LDADD = $(LDADD)
+tst_pam_unix2_SOURCES = tst-pam_unix2.c
+tst_pam_unix2_OBJECTS = tst-pam_unix2.$(OBJEXT)
+tst_pam_unix2_LDADD = $(LDADD)
+tst_pam_unix3_SOURCES = tst-pam_unix3.c
+tst_pam_unix3_OBJECTS = tst-pam_unix3.$(OBJEXT)
+tst_pam_unix3_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -85,10 +123,18 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = tst-pam_cracklib1.c tst-pam_dispatch1.c tst-pam_dispatch2.c \
-	tst-pam_dispatch3.c tst-pam_dispatch4.c
-DIST_SOURCES = tst-pam_cracklib1.c tst-pam_dispatch1.c \
-	tst-pam_dispatch2.c tst-pam_dispatch3.c tst-pam_dispatch4.c
+SOURCES = tst-pam_access1.c tst-pam_access2.c tst-pam_access3.c \
+	tst-pam_access4.c tst-pam_cracklib1.c tst-pam_cracklib2.c \
+	tst-pam_dispatch1.c tst-pam_dispatch2.c tst-pam_dispatch3.c \
+	tst-pam_dispatch4.c tst-pam_group1.c tst-pam_limits1.c \
+	tst-pam_succeed_if1.c tst-pam_unix1.c tst-pam_unix2.c \
+	tst-pam_unix3.c
+DIST_SOURCES = tst-pam_access1.c tst-pam_access2.c tst-pam_access3.c \
+	tst-pam_access4.c tst-pam_cracklib1.c tst-pam_cracklib2.c \
+	tst-pam_dispatch1.c tst-pam_dispatch2.c tst-pam_dispatch3.c \
+	tst-pam_dispatch4.c tst-pam_group1.c tst-pam_limits1.c \
+	tst-pam_succeed_if1.c tst-pam_unix1.c tst-pam_unix2.c \
+	tst-pam_unix3.c
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -179,6 +225,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -257,10 +304,23 @@ AM_LDFLAGS = -L$(top_builddir)/libpam -lpam \
 CLEANFILES = *~
 EXTRA_DIST = run-xtests.sh tst-pam_dispatch1.pamd tst-pam_dispatch2.pamd \
 	tst-pam_dispatch3.pamd tst-pam_dispatch4.pamd \
-	tst-pam_cracklib1.pamd
+	tst-pam_cracklib1.pamd tst-pam_cracklib2.pamd \
+	tst-pam_unix1.pamd tst-pam_unix2.pamd tst-pam_unix3.pamd \
+	tst-pam_unix1.sh tst-pam_unix2.sh tst-pam_unix3.sh \
+	access.conf tst-pam_access1.pamd tst-pam_access1.sh \
+	tst-pam_access2.pamd tst-pam_access2.sh \
+	tst-pam_access3.pamd tst-pam_access3.sh \
+	tst-pam_access4.pamd tst-pam_access4.sh \
+	limits.conf tst-pam_limits1.pamd tst-pam_limits1.sh \
+	tst-pam_succeed_if1.pamd tst-pam_succeed_if1.sh \
+	group.conf tst-pam_group1.pamd tst-pam_group1.sh
 
 XTESTS = tst-pam_dispatch1 tst-pam_dispatch2 tst-pam_dispatch3 \
-	tst-pam_dispatch4 tst-pam_cracklib1
+	tst-pam_dispatch4 tst-pam_cracklib1 tst-pam_cracklib2 \
+	tst-pam_unix1 tst-pam_unix2 tst-pam_unix3 \
+	tst-pam_access1 tst-pam_access2 tst-pam_access3 \
+	tst-pam_access4 tst-pam_limits1 tst-pam_succeed_if1 \
+	tst-pam_group1
 
 all: all-am
 
@@ -302,9 +362,24 @@ clean-noinstPROGRAMS:
 	  echo " rm -f $$p $$f"; \
 	  rm -f $$p $$f ; \
 	done
+tst-pam_access1$(EXEEXT): $(tst_pam_access1_OBJECTS) $(tst_pam_access1_DEPENDENCIES) 
+	@rm -f tst-pam_access1$(EXEEXT)
+	$(LINK) $(tst_pam_access1_OBJECTS) $(tst_pam_access1_LDADD) $(LIBS)
+tst-pam_access2$(EXEEXT): $(tst_pam_access2_OBJECTS) $(tst_pam_access2_DEPENDENCIES) 
+	@rm -f tst-pam_access2$(EXEEXT)
+	$(LINK) $(tst_pam_access2_OBJECTS) $(tst_pam_access2_LDADD) $(LIBS)
+tst-pam_access3$(EXEEXT): $(tst_pam_access3_OBJECTS) $(tst_pam_access3_DEPENDENCIES) 
+	@rm -f tst-pam_access3$(EXEEXT)
+	$(LINK) $(tst_pam_access3_OBJECTS) $(tst_pam_access3_LDADD) $(LIBS)
+tst-pam_access4$(EXEEXT): $(tst_pam_access4_OBJECTS) $(tst_pam_access4_DEPENDENCIES) 
+	@rm -f tst-pam_access4$(EXEEXT)
+	$(LINK) $(tst_pam_access4_OBJECTS) $(tst_pam_access4_LDADD) $(LIBS)
 tst-pam_cracklib1$(EXEEXT): $(tst_pam_cracklib1_OBJECTS) $(tst_pam_cracklib1_DEPENDENCIES) 
 	@rm -f tst-pam_cracklib1$(EXEEXT)
 	$(LINK) $(tst_pam_cracklib1_OBJECTS) $(tst_pam_cracklib1_LDADD) $(LIBS)
+tst-pam_cracklib2$(EXEEXT): $(tst_pam_cracklib2_OBJECTS) $(tst_pam_cracklib2_DEPENDENCIES) 
+	@rm -f tst-pam_cracklib2$(EXEEXT)
+	$(LINK) $(tst_pam_cracklib2_OBJECTS) $(tst_pam_cracklib2_LDADD) $(LIBS)
 tst-pam_dispatch1$(EXEEXT): $(tst_pam_dispatch1_OBJECTS) $(tst_pam_dispatch1_DEPENDENCIES) 
 	@rm -f tst-pam_dispatch1$(EXEEXT)
 	$(LINK) $(tst_pam_dispatch1_OBJECTS) $(tst_pam_dispatch1_LDADD) $(LIBS)
@@ -317,6 +392,24 @@ tst-pam_dispatch3$(EXEEXT): $(tst_pam_dispatch3_OBJECTS) $(tst_pam_dispatch3_DEP
 tst-pam_dispatch4$(EXEEXT): $(tst_pam_dispatch4_OBJECTS) $(tst_pam_dispatch4_DEPENDENCIES) 
 	@rm -f tst-pam_dispatch4$(EXEEXT)
 	$(LINK) $(tst_pam_dispatch4_OBJECTS) $(tst_pam_dispatch4_LDADD) $(LIBS)
+tst-pam_group1$(EXEEXT): $(tst_pam_group1_OBJECTS) $(tst_pam_group1_DEPENDENCIES) 
+	@rm -f tst-pam_group1$(EXEEXT)
+	$(LINK) $(tst_pam_group1_OBJECTS) $(tst_pam_group1_LDADD) $(LIBS)
+tst-pam_limits1$(EXEEXT): $(tst_pam_limits1_OBJECTS) $(tst_pam_limits1_DEPENDENCIES) 
+	@rm -f tst-pam_limits1$(EXEEXT)
+	$(LINK) $(tst_pam_limits1_OBJECTS) $(tst_pam_limits1_LDADD) $(LIBS)
+tst-pam_succeed_if1$(EXEEXT): $(tst_pam_succeed_if1_OBJECTS) $(tst_pam_succeed_if1_DEPENDENCIES) 
+	@rm -f tst-pam_succeed_if1$(EXEEXT)
+	$(LINK) $(tst_pam_succeed_if1_OBJECTS) $(tst_pam_succeed_if1_LDADD) $(LIBS)
+tst-pam_unix1$(EXEEXT): $(tst_pam_unix1_OBJECTS) $(tst_pam_unix1_DEPENDENCIES) 
+	@rm -f tst-pam_unix1$(EXEEXT)
+	$(LINK) $(tst_pam_unix1_OBJECTS) $(tst_pam_unix1_LDADD) $(LIBS)
+tst-pam_unix2$(EXEEXT): $(tst_pam_unix2_OBJECTS) $(tst_pam_unix2_DEPENDENCIES) 
+	@rm -f tst-pam_unix2$(EXEEXT)
+	$(LINK) $(tst_pam_unix2_OBJECTS) $(tst_pam_unix2_LDADD) $(LIBS)
+tst-pam_unix3$(EXEEXT): $(tst_pam_unix3_OBJECTS) $(tst_pam_unix3_DEPENDENCIES) 
+	@rm -f tst-pam_unix3$(EXEEXT)
+	$(LINK) $(tst_pam_unix3_OBJECTS) $(tst_pam_unix3_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -324,11 +417,22 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_access1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_access2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_access3.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_access4.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_cracklib1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_cracklib2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_dispatch1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_dispatch2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_dispatch3.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_dispatch4.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_group1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_limits1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_succeed_if1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_unix1.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_unix2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tst-pam_unix3.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -536,7 +640,7 @@ uninstall-am:
 
 
 xtests: $(XTESTS) run-xtests.sh
-	$(srcdir)/run-xtests.sh
+	"$(srcdir)"/run-xtests.sh "$(srcdir)" ${XTESTS}
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

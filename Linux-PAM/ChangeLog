@@ -1,3 +1,213 @@
+2007-10-09  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* release version 0.99.9.0
+
+	* configure.in: Increase vesion number.
+
+	* libpam/Makefile.am: Increase release number.
+	* libpam_misc/Makefile.am: Increase release number.
+
+	* po/*.po: Regenerate.
+
+2007-10-08  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_time/pam_time.c (is_same): Length of strings without
+	wildcard needs to be the same.
+	* modules/pam_group/pam_group.c (is_same): Likewise.
+
+2007-10-01  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* xtests/tst-pam_group1.c: New test case for user compare in pam_group.
+	* xtests/tst-pam_group1.sh: Script to run test case.
+	* xtests/tst-pam_group1.pamd: Config for test case.
+	* xtests/Makefile.am: Add tst-pam_group1 test case.
+	* xtests/run-xtests.sh: Save/restore group.conf.
+	* xtests/group.conf: New.
+
+	* modules/pam_xauth/pam_xauth.c (pam_sm_open_session): Don't
+	free arguments used for putenv().
+
+	* doc/man/pam_putenv.3.xml: Document that application has to free
+	the memory.
+
+2007-09-27  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_succeed_if/pam_succeed_if.c (evaluate_inlist): Fix in
+	operator rhbz #295151.
+	* modules/pam_namespace/pam_namespace.c (poly_name): Do not try to
+	get context when SELinux is disabled.
+
+2007-09-27  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* xtests/tst-pam_succeed_if1.c: New test case for
+	https://bugzilla.redhat.com/show_bug.cgi?id=295151
+	* xtests/tst-pam_succeed_if1.sh: Script to run test case.
+	* xtests/tst-pam_succeed_if1.pamd: Config for test case.
+	* xtests/Makefile.am: Add tst-pam_succeed_if1 test case.
+
+	* xtests/run-xtests.sh: Add support to skip tests.
+	* xtests/tst-pam_limits1.c: Skip test if RLIMIT_NICE is not
+	defined.
+
+2007-09-03  Steve Langasek  <vorlon@debian.org>
+
+	* modules/pam_limits/pam_limits.c: remove a number of unnecessary
+	string manipulations, including a strncpy() that was acting on
+	overlapping memory.
+
+	* libpam_misc/misc_conv.c: don't block SIGINT in misc_conv; it's
+	perfectly valid to allow the user to interrupt at a prompt.  If
+	an application wants prompts to not be interruptable, the
+	application should take responsibility for blocking SIGINT.
+
+2007-09-02  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* examples/Makefile.am: Fix usage of LIBADD, LDADD and LDFLAGS.
+	* libpam/Makefile.am: Likewise.
+	* modules/pam_access/Makefile.am: Likewise.
+	* modules/pam_cracklib/Makefile.am: Likewise.
+	* modules/pam_debug/Makefile.am: Likewise.
+	* modules/pam_deny/Makefile.am: Likewise.
+	* modules/pam_echo/Makefile.am: Likewise.
+	* modules/pam_env/Makefile.am: Likewise.
+	* modules/pam_exec/Makefile.am: Likewise.
+	* modules/pam_faildelay/Makefile.am: Likewise.
+	* modules/pam_filter/Makefile.am: Likewise.
+	* modules/pam_filter/upperLOWER/Makefile.am: Likewise.
+	* modules/pam_ftp/Makefile.am: Likewise.
+	* modules/pam_group/Makefile.am: Likewise.
+	* modules/pam_issue/Makefile.am: Likewise.
+	* modules/pam_keyinit/Makefile.am: Likewise.
+	* modules/pam_lastlog/Makefile.am: Likewise.
+	* modules/pam_limits/Makefile.am: Likewise.
+	* modules/pam_listfile/Makefile.am: Likewise.
+	* modules/pam_localuser/Makefile.am: Likewise.
+	* modules/pam_loginuid/Makefile.am: Likewise.
+	* modules/pam_mail/Makefile.am: Likewise.
+	* modules/pam_mkhomedir/Makefile.am: Likewise.
+	* modules/pam_motd/Makefile.am: Likewise.
+	* modules/pam_namespace/Makefile.am: Likewise.
+	* modules/pam_nologin/Makefile.am: Likewise.
+	* modules/pam_permit/Makefile.am: Likewise.
+	* modules/pam_rhosts/Makefile.am: Likewise.
+	* modules/pam_rootok/Makefile.am: Likewise.
+	* modules/pam_securetty/Makefile.am: Likewise.
+	* modules/pam_selinux/Makefile.am: Likewise.
+	* modules/pam_shells/Makefile.am: Likewise.
+	* modules/pam_stress/Makefile.am: Likewise.
+	* modules/pam_succeed_if/Makefile.am: Likewise.
+	* modules/pam_tally/Makefile.am: Likewise.
+	* modules/pam_time/Makefile.am: Likewise.
+	* modules/pam_umask/Makefile.am: Likewise.
+	* modules/pam_unix/Makefile.am: Likewise.
+	* tests/Makefile.am: Likewise.
+
+2007-08-31  Steve Langasek  <vorlon@debian.org>
+
+	* modules/pam_group/group.conf: don't use "games" as an example
+	group, on some distros this is a pre-existing group that it would
+	be a security hole to give users access to.
+
+2007-08-30  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_limits/limits.conf.5.xml: Document that maxlogins
+	is ignored for users with UID 0.
+
+2007-08-30  Steve Langasek  <vorlon@debian.org>
+
+	* modules/pam_unix/support.c, modules/pam_unix/unix_chkpwd.c:
+	A wrong username doesn't need to be logged at LOG_ALERT;
+	LOG_WARNING should be sufficient.
+	Patch from Sam Hartman <hartmans@debian.org>.
+
+	* modules/pam_cracklib/pam_cracklib.c:
+	s/CRACKLIB_DICT/CRACKLIB_DICTS/, for consistency with existing
+	#define in pam_unix
+
+2007-08-29  Steve Langasek  <vorlon@debian.org>
+
+	* libpam/pam_modutil_getgrgid.c, libpam/pam_modutil_getgrnam.c,
+	libpam/pam_modutil_getpwnam.c, libpam/pam_modutil_getpwuid.c,
+	libpam/pam_modutil_getspnam.c: don't use pthread mutexes in libpam
+	unnecessarily; this avoids linking problems on non-Linux
+	platforms.
+
+	* modules/pam_listfile/pam_listfile.c, modules/pam_listfile/README,
+	modules/pam_listfile/pam_listfile.8,
+	modules/pam_listfile/pam_listfile.8.xml: add a 'quiet' option to
+	avoid logging errors any time a user is refused service by this
+	module.
+
+2007-08-29  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_rhosts/pam_rhosts_auth.c: buflen needs to be size_t.
+	(__icheckhost): Cast to int32_t to fix limited range error.
+
+	* modules/pam_cracklib/pam_cracklib.c: Mark cracklib_dictpath
+	as const.
+
+2007-08-29  Steve Langasek <vorlon@debian.org>
+
+	* modules/pam_rhosts/pam_rhosts_auth.c: getline returns -1 at
+	EOF, not 0.  Check accordingly to fix an infinite loop.  Thanks
+	to Stephan Springl <springl-rhosts@bfw-online.de> for catching
+	this.
+
+2007-08-28  Steve Langasek <vorlon@debian.org>
+
+	* configure.in: call AC_CHECK_HEADERS instead of AC_CHECK_HEADER
+	for crack.h, so we get a HAVE_CRACK_H define.
+	* modules/pam_cracklib/pam_cracklib.c: don't copy around the
+	cracklib dictpath into a fixed-width buffer, when we can just
+	point at the existing strings; and allow users to override the
+	default cracklib path with -DCRACKLIB_DICT, required for
+	compatibility with cracklib 2.7.
+
+2007-08-27  Steve Langasek <vorlon@debian.org>
+
+	* modules/pam_limits/pam_limits.c: when building on non-Linux
+	systems, give a warning only, not an error; no one seems to
+	remember why this error was here in the first place, but leave
+	something in that might still grab the attention of non-Linux
+	users.
+	Patch from Michal Suchanek <hramrach_l@centrum.cz>.
+	* configure.in, modules/pam_rhosts/pam_rhosts_auth.c: check for
+	the presence of net/if.h before using, required for Hurd
+	compatibility.
+	Patch from Igor Khavkine <i_khavki@alcor.concordia.ca>.
+	* modules/pam_limits/pam_limits.c: conditionalize the use of
+	RLIMIT_AS, which is not present on the Hurd.
+	Patch from Igor Khavkine <i_khavki@alcor.concordia.ca>.
+	* modules/pam_rhosts/pam_rhosts_auth.c: use getline() instead of
+	a static buffer when available; fixes the build on systems
+	without MAXHOSTNAMELEN (i.e., the Hurd).
+	* modules/pam_xauth/pam_xauth.c: make sure PATH_MAX is defined
+	before using it.
+
+2007-08-26  Andrew Morgan  <morgan@kernel.org>
+
+	* doc/man/pam.conf-syntax.xml
+	Minor fixes: '\[' -> '\]'.
+
+2007-08-25  Steve Langasek  <vorlon@debian.org>
+
+	* doc/man/pam.conf-syntax.xml, doc/man/pam.conf.5:
+	Document "new" control options conv_again and incomplete, supported
+	in pam.d's extended syntax.
+	Patch from Ben Collins <bcollins@debian.org>.
+
+2007-08-15  Tomas Mraz  <t8m@centrum.cz>
+
+	* modules/pam_access/pam_access.c (list_match): Add explicit
+	sptr argument for strtok_r, otherwise the code is not portable.
+
+2007-08-13  Olivier Blin <blino@mandriva.com>
+
+	* doc/man/pam.3.xml: Fix typo.
+	* doc/man/pam.3: Likewise.
+	* doc/man/pam_end.3.xml: Likewise.
+	* doc/man/pam_end.3: Likewise.
+
 2007-07-18  Thorsten Kukuk  <kukuk@thkukuk.de>
 
 	* release version 0.99.8.1

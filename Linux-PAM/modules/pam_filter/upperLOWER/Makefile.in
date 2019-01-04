@@ -60,6 +60,7 @@ PROGRAMS = $(securelibfilter_PROGRAMS)
 upperLOWER_SOURCES = upperLOWER.c
 upperLOWER_OBJECTS = upperLOWER.$(OBJEXT)
 upperLOWER_LDADD = $(LDADD)
+upperLOWER_DEPENDENCIES =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -164,6 +165,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -238,7 +240,8 @@ securelibfilterdir = $(SECUREDIR)/pam_filter
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include \
 	-I$(srcdir)/.. @PIE_CFLAGS@
 
-AM_LDFLAGS = @PIE_LDFLAGS@ -L$(top_builddir)/libpam -lpam
+AM_LDFLAGS = @PIE_LDFLAGS@
+LDADD = -L$(top_builddir)/libpam -lpam
 all: all-am
 
 .SUFFIXES:

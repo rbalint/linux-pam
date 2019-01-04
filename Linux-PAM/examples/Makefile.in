@@ -59,15 +59,19 @@ PROGRAMS = $(noinst_PROGRAMS)
 blank_SOURCES = blank.c
 blank_OBJECTS = blank.$(OBJEXT)
 blank_LDADD = $(LDADD)
+blank_DEPENDENCIES =
 check_user_SOURCES = check_user.c
 check_user_OBJECTS = check_user.$(OBJEXT)
 check_user_LDADD = $(LDADD)
+check_user_DEPENDENCIES =
 vpass_SOURCES = vpass.c
 vpass_OBJECTS = vpass.$(OBJEXT)
 vpass_LDADD = $(LDADD)
+vpass_DEPENDENCIES =
 xsh_SOURCES = xsh.c
 xsh_OBJECTS = xsh.$(OBJEXT)
 xsh_LDADD = $(LDADD)
+xsh_DEPENDENCIES =
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -172,6 +176,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -246,7 +251,7 @@ EXTRA_DIST = README
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include \
 	-I$(top_srcdir)/libpam_misc/include
 
-AM_LDFLAGS = -L$(top_builddir)/libpam -lpam \
+LDADD = -L$(top_builddir)/libpam -lpam \
 	-L$(top_builddir)/libpam_misc -lpam_misc
 
 all: all-am

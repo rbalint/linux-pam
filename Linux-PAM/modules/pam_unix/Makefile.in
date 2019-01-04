@@ -72,7 +72,7 @@ am__installdirs = "$(DESTDIR)$(securelibdir)" "$(DESTDIR)$(sbindir)" \
 	"$(DESTDIR)$(man8dir)"
 securelibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(securelib_LTLIBRARIES)
-pam_unix_la_LIBADD =
+pam_unix_la_DEPENDENCIES =
 am_pam_unix_la_OBJECTS = bigcrypt.lo pam_unix_acct.lo pam_unix_auth.lo \
 	pam_unix_passwd.lo pam_unix_sess.lo support.lo yppasswd_xdr.lo \
 	md5_good.lo md5_broken.lo
@@ -85,16 +85,16 @@ PROGRAMS = $(noinst_PROGRAMS) $(sbin_PROGRAMS)
 am_bigcrypt_OBJECTS = bigcrypt-bigcrypt.$(OBJEXT) \
 	bigcrypt-bigcrypt_main.$(OBJEXT)
 bigcrypt_OBJECTS = $(am_bigcrypt_OBJECTS)
-bigcrypt_LDADD = $(LDADD)
+bigcrypt_DEPENDENCIES =
 bigcrypt_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(bigcrypt_CFLAGS) $(CFLAGS) \
-	$(bigcrypt_LDFLAGS) $(LDFLAGS) -o $@
+	--mode=link $(CCLD) $(bigcrypt_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 am_unix_chkpwd_OBJECTS = unix_chkpwd-unix_chkpwd.$(OBJEXT) \
 	unix_chkpwd-md5_good.$(OBJEXT) \
 	unix_chkpwd-md5_broken.$(OBJEXT) \
 	unix_chkpwd-bigcrypt.$(OBJEXT)
 unix_chkpwd_OBJECTS = $(am_unix_chkpwd_OBJECTS)
-unix_chkpwd_LDADD = $(LDADD)
+unix_chkpwd_DEPENDENCIES =
 unix_chkpwd_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(unix_chkpwd_CFLAGS) \
 	$(CFLAGS) $(unix_chkpwd_LDFLAGS) $(LDFLAGS) -o $@
@@ -209,6 +209,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -291,9 +292,11 @@ AM_CFLAGS = -I$(top_srcdir)/libpam/include \
 	-I$(top_srcdir)/libpamc/include \
 	-DCHKPWD_HELPER=\"$(sbindir)/unix_chkpwd\" $(am__append_1) \
 	$(am__append_2)
-pam_unix_la_LDFLAGS = -no-undefined -avoid-version -module @LIBCRACK@ \
-	@LIBNSL@ -L$(top_builddir)/libpam -lpam @LIBCRYPT@ \
-	@LIBSELINUX@ $(am__append_3)
+pam_unix_la_LDFLAGS = -no-undefined -avoid-version -module \
+	$(am__append_3)
+pam_unix_la_LIBADD = @LIBCRACK@ @LIBNSL@ -L$(top_builddir)/libpam -lpam \
+	@LIBCRYPT@ @LIBSELINUX@
+
 securelib_LTLIBRARIES = pam_unix.la
 noinst_HEADERS = md5.h support.h yppasswd.h bigcrypt.h
 pam_unix_la_SOURCES = bigcrypt.c pam_unix_acct.c \
@@ -302,12 +305,11 @@ pam_unix_la_SOURCES = bigcrypt.c pam_unix_acct.c \
 
 bigcrypt_SOURCES = bigcrypt.c bigcrypt_main.c
 bigcrypt_CFLAGS = $(AM_CFLAGS)
-bigcrypt_LDFLAGS = @LIBCRYPT@
+bigcrypt_LDADD = @LIBCRYPT@
 unix_chkpwd_SOURCES = unix_chkpwd.c md5_good.c md5_broken.c bigcrypt.c
 unix_chkpwd_CFLAGS = $(AM_CFLAGS) @PIE_CFLAGS@
-unix_chkpwd_LDFLAGS = @PIE_LDFLAGS@ -L$(top_builddir)/libpam -lpam \
-	@LIBCRYPT@ @LIBSELINUX@
-
+unix_chkpwd_LDFLAGS = @PIE_LDFLAGS@ 
+unix_chkpwd_LDADD = -L$(top_builddir)/libpam -lpam @LIBCRYPT@ @LIBSELINUX@
 @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README
 all: all-am
 

@@ -64,7 +64,7 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(securelibdir)" "$(DESTDIR)$(man8dir)"
 securelibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(securelib_LTLIBRARIES)
-pam_localuser_la_LIBADD =
+pam_localuser_la_DEPENDENCIES =
 pam_localuser_la_SOURCES = pam_localuser.c
 pam_localuser_la_OBJECTS = pam_localuser.lo
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -175,6 +175,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -252,9 +253,9 @@ XMLS = README.xml pam_localuser.8.xml
 securelibdir = $(SECUREDIR)
 secureconfdir = $(SCONFIGDIR)
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include
-AM_LDFLAGS = -no-undefined -avoid-version -module \
-	-L$(top_builddir)/libpam -lpam $(am__append_1)
+AM_LDFLAGS = -no-undefined -avoid-version -module $(am__append_1)
 securelib_LTLIBRARIES = pam_localuser.la
+pam_localuser_la_LIBADD = -L$(top_builddir)/libpam -lpam
 @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README
 all: all-am
 

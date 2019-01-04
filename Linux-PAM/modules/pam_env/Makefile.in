@@ -66,7 +66,7 @@ am__installdirs = "$(DESTDIR)$(securelibdir)" "$(DESTDIR)$(man5dir)" \
 	"$(DESTDIR)$(sysconfdir)"
 securelibLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(securelib_LTLIBRARIES)
-pam_env_la_LIBADD =
+pam_env_la_DEPENDENCIES =
 pam_env_la_SOURCES = pam_env.c
 pam_env_la_OBJECTS = pam_env.lo
 DEFAULT_INCLUDES = -I. -I$(top_builddir)@am__isrc@
@@ -180,6 +180,7 @@ POSUB = @POSUB@
 RANLIB = @RANLIB@
 SCONFIGDIR = @SCONFIGDIR@
 SECUREDIR = @SECUREDIR@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -258,9 +259,9 @@ secureconfdir = $(SCONFIGDIR)
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include \
 	-DDEFAULT_CONF_FILE=\"$(SCONFIGDIR)/pam_env.conf\"
 
-AM_LDFLAGS = -no-undefined -avoid-version -module \
-	-L$(top_builddir)/libpam -lpam $(am__append_1)
+AM_LDFLAGS = -no-undefined -avoid-version -module $(am__append_1)
 securelib_LTLIBRARIES = pam_env.la
+pam_env_la_LIBADD = -L$(top_builddir)/libpam -lpam
 secureconf_DATA = pam_env.conf
 sysconf_DATA = environment
 @ENABLE_REGENERATE_MAN_TRUE@noinst_DATA = README
