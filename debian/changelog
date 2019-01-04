@@ -7,6 +7,13 @@ pam (0.99.9.0-1) UNRELEASED; urgency=low
     - new minclass option introduced for pam_cracklib.  Closes: #454237.
     - use --disable-audit, to avoid libaudit being linked in
       accidentally
+  * Drop patches 006_docs_cleanup, 015_hurd_portability,
+    019_pam_listfile_quiet, 024_debian_cracklib_dict_path, 038_support_hurd,
+    043_pam_unix_unknown_user_not_alert, 046_pam_group_example,
+    no_pthread_mutexes, limits_wrong_strncpy, and
+    misc_conv_allow_sigint.patch, which have been merged upstream.
+  * Patch 022_pam_unix_group_time_miscfixes: partially merged upstream;
+    now is really just "pam_group_miscfixes".
   * Use a pristine upstream tarball instead of repacking; requires various
     changes to debian/rules and debhelper files.
   * Replace the Vcs-Svn field with a Vcs-Bzr field; jumping ship from svn,
