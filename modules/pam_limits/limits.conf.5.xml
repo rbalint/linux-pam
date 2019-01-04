@@ -18,6 +18,14 @@
   <refsect1 id='limits.conf-description'>
     <title>DESCRIPTION</title>
     <para>
+      The <emphasis>pam_limits.so</emphasis> module applies ulimit limits,
+      nice priority and number of simultaneous login sessions limit to user
+      login sessions. This description of the configuration file syntax
+      applies to the <filename>/etc/security/limits.conf</filename> file and
+      <filename>*.conf</filename> files in the
+      <filename>/etc/security/limits.d</filename> directory.
+    </para>
+    <para>
       The syntax of the lines is as follows:
     </para>
     <para>
@@ -282,6 +290,9 @@
       Also, please note that all limit settings are set
       <emphasis>per login</emphasis>. They are not global, nor are they
       permanent; existing only for the duration of the session.
+      One exception is the <emphasis>maxlogin</emphasis> option, this one
+      is system wide. But there is a race, concurrent logins at the same
+      time will not always be detect as such but only counted as one.
     </para>
     <para>
       In the <emphasis>limits</emphasis> configuration file, the

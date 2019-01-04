@@ -1,5 +1,5 @@
 /*
- * $Id: pam_filter.c,v 1.14 2009/04/03 00:36:25 ldv Exp $
+ * $Id$
  *
  * written by Andrew Morgan <morgan@transmeta.com> with much help from
  * Richard Stevens' UNIX Network Programming book.

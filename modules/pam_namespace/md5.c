@@ -1,5 +1,5 @@
 /*
- * $Id: md5.c,v 1.1 2006/06/27 13:07:43 t8m Exp $
+ * $Id$
  *
  * This code implements the MD5 message-digest algorithm.
  * The algorithm is due to Ron Rivest.  This code was
@@ -107,7 +107,7 @@ void MD5Name(MD5Update)(struct MD5Context *ctx, unsigned const char *buf, unsign
 }
 
 /*
- * Final wrapup - pad to 64-byte boundary with the bit pattern 
+ * Final wrapup - pad to 64-byte boundary with the bit pattern
  * 1 0* (64-bit count of bits processed, MSB-first)
  */
 void MD5Name(MD5Final)(unsigned char digest[16], struct MD5Context *ctx)
@@ -142,8 +142,7 @@ void MD5Name(MD5Final)(unsigned char digest[16], struct MD5Context *ctx)
 	byteReverse(ctx->in, 14);
 
 	/* Append length in bits and transform */
-	((uint32 *) ctx->in)[14] = ctx->bits[0];
-	((uint32 *) ctx->in)[15] = ctx->bits[1];
+	memcpy((uint32 *)ctx->in + 14, ctx->bits, 2*sizeof(uint32));
 
 	MD5Name(MD5Transform)(ctx->buf, (uint32 *) ctx->in);
 	byteReverse((unsigned char *) ctx->buf, 4);

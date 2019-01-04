@@ -58,12 +58,17 @@
 #include <signal.h>
 #include <errno.h>
 #include <sys/wait.h>
+#include <sys/resource.h>
 
 #include <security/_pam_macros.h>
 
 /* indicate the following groups are defined */
 
-#define PAM_SM_PASSWORD
+#ifdef PAM_STATIC
+# include "pam_unix_static.h"
+#else
+# define PAM_SM_PASSWORD
+#endif
 
 #include <security/pam_modules.h>
 #include <security/pam_ext.h>
@@ -212,7 +217,7 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 	    rlim.rlim_max = MAX_FD_NO;
 	  for (i=0; i < (int)rlim.rlim_max; i++) {
 	    if (i != STDIN_FILENO)
-	  	   close(i);
+		close(i);
 	  }
 	}
 
@@ -249,7 +254,8 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
 
 	close(fds[0]);       /* close here to avoid possible SIGPIPE above */
 	close(fds[1]);
-	rc=waitpid(child, &retval, 0);  /* wait for helper to complete */
+	/* wait for helper to complete: */
+	while ((rc=waitpid(child, &retval, 0)) < 0 && errno == EINTR);
 	if (rc<0) {
 	  pam_syslog(pamh, LOG_ERR, "unix_update waitpid failed: %m");
 	  retval = PAM_AUTHTOK_ERR;
@@ -262,7 +268,7 @@ static int _unix_run_update_binary(pam_handle_t *pamh, unsigned int ctrl, const 
     } else {
 	D(("fork failed"));
 	close(fds[0]);
- 	close(fds[1]);
+	close(fds[1]);
 	retval = PAM_AUTH_ERR;
     }
 
@@ -280,13 +286,15 @@ static int check_old_password(const char *forwho, const char *newpass)
 	char *s_luser, *s_uid, *s_npas, *s_pas;
 	int retval = PAM_SUCCESS;
 	FILE *opwfile;
+	size_t len = strlen(forwho);
 
 	opwfile = fopen(OLD_PASSWORDS_FILE, "r");
 	if (opwfile == NULL)
 		return PAM_ABORT;
 
 	while (fgets(buf, 16380, opwfile)) {
-		if (!strncmp(buf, forwho, strlen(forwho))) {
+		if (!strncmp(buf, forwho, len) && (buf[len] == ':' ||
+			buf[len] == ',')) {
 			char *sptr;
 			buf[strlen(buf) - 1] = '\0';
 			s_luser = strtok_r(buf, ":,", &sptr);
@@ -521,9 +529,8 @@ static int _pam_unix_approve_pass(pam_handle_t * pamh
 	return retval;
 }
 
-
-PAM_EXTERN int pam_sm_chauthtok(pam_handle_t * pamh, int flags,
-				int argc, const char **argv)
+int
+pam_sm_chauthtok(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
 	unsigned int ctrl, lctrl;
 	int retval;
@@ -795,7 +802,7 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t * pamh, int flags,
 		tpass = create_password_hash(pamh, pass_new, ctrl, rounds);
 		if (tpass == NULL) {
 			pam_syslog(pamh, LOG_CRIT,
-				"out of memory for password");
+				"crypt() failure or out of memory for password");
 			pass_new = pass_old = NULL;	/* tidy up */
 			unlock_pwdf();
 			return PAM_BUF_ERR;
@@ -821,17 +828,3 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t * pamh, int flags,
 
 	return retval;
 }
-
-
-/* static module data */
-#ifdef PAM_STATIC
-struct pam_module _pam_unix_passwd_modstruct = {
-    "pam_unix_passwd",
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    pam_sm_chauthtok,
-};
-#endif
