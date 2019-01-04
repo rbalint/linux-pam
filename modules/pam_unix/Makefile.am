@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2005, 2006, 2009 Thorsten Kukuk <kukuk@suse.de>
+# Copyright (c) 2005, 2006, 2009, 2011 Thorsten Kukuk <kukuk@suse.de>
 #
 
 CLEANFILES = *~
@@ -18,7 +18,8 @@ secureconfdir = $(SCONFIGDIR)
 
 AM_CFLAGS = -I$(top_srcdir)/libpam/include -I$(top_srcdir)/libpamc/include \
 	-DCHKPWD_HELPER=\"$(sbindir)/unix_chkpwd\" \
-	-DUPDATE_HELPER=\"$(sbindir)/unix_update\"
+	-DUPDATE_HELPER=\"$(sbindir)/unix_update\" \
+	$(NIS_CFLAGS)
 
 if HAVE_LIBSELINUX
   AM_CFLAGS += -D"WITH_SELINUX"
@@ -28,8 +29,8 @@ pam_unix_la_LDFLAGS = -no-undefined -avoid-version -module
 if HAVE_VERSIONING
   pam_unix_la_LDFLAGS += -Wl,--version-script=$(srcdir)/../modules.map
 endif
-pam_unix_la_LIBADD = @LIBNSL@ -L$(top_builddir)/libpam -lpam \
-	@LIBCRYPT@ @LIBSELINUX@
+pam_unix_la_LIBADD = -L$(top_builddir)/libpam -lpam \
+	@LIBCRYPT@ @LIBSELINUX@ $(NIS_LIBS)
 
 securelib_LTLIBRARIES = pam_unix.la
 

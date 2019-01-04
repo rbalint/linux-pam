@@ -61,9 +61,11 @@ static void add_polydir_entry(struct instance_data *idata,
 
 static void del_polydir(struct polydir_s *poly)
 {
-	free(poly->uid);
-	free(poly->init_script);
-	free(poly);
+	if (poly) {
+		free(poly->uid);
+		free(poly->init_script);
+		free(poly);
+	}
 }
 
 /*
@@ -307,10 +309,6 @@ static int process_line(char *line, const char *home, const char *rhome,
     const char *rvar_values[] = {rhome, idata->ruser};
     int len;
 
-    poly = calloc(1, sizeof(*poly));
-    if (poly == NULL)
-    	goto erralloc;
-
     /*
      * skip the leading white space
      */
@@ -336,6 +334,10 @@ static int process_line(char *line, const char *home, const char *rhome,
      */
     if (line[0] == 0)
         return 0;
+
+    poly = calloc(1, sizeof(*poly));
+    if (poly == NULL)
+    	goto erralloc;
 
     /*
      * Initialize and scan the five strings from the line from the
@@ -1001,7 +1003,7 @@ static int protect_mount(int dfd, const char *path, struct instance_data *idata)
 	return 0;
 }
 
-static int protect_dir(const char *path, mode_t mode, int do_mkdir,
+static int protect_dir(const char *path, mode_t mode, int do_mkdir, int always,
 	struct instance_data *idata)
 {
 	char *p = strdup(path);
@@ -1080,7 +1082,7 @@ static int protect_dir(const char *path, mode_t mode, int do_mkdir,
 		}
 	}
 
-	if (flags & O_NOFOLLOW) { 
+	if ((flags & O_NOFOLLOW) || always) { 
 		/* we are inside user-owned dir - protect */
 		if (protect_mount(rv, p, idata) == -1) {
 			save_errno = errno;
@@ -1093,7 +1095,7 @@ static int protect_dir(const char *path, mode_t mode, int do_mkdir,
 error:
 	save_errno = errno;
 	free(p);
-	if (dfd != AT_FDCWD)
+	if (dfd != AT_FDCWD && dfd >= 0)
 		close(dfd);
 	errno = save_errno;
 
@@ -1122,7 +1124,7 @@ static int check_inst_parent(char *ipath, struct instance_data *idata)
 	if (trailing_slash)
 		*trailing_slash = '\0';
 
-	dfd = protect_dir(inst_parent, 0, 1, idata);
+	dfd = protect_dir(inst_parent, 0, 1, 0, idata);
 
 	if (dfd == -1 || fstat(dfd, &instpbuf) < 0) {
 		pam_syslog(idata->pamh, LOG_ERR,
@@ -1257,7 +1259,7 @@ static int create_polydir(struct polydir_s *polyptr,
     }
 #endif
 
-    rc = protect_dir(dir, mode, 1, idata);
+    rc = protect_dir(dir, mode, 1, idata->flags & PAMNS_MOUNT_PRIVATE, idata);
     if (rc == -1) {
             pam_syslog(idata->pamh, LOG_ERR,
                        "Error creating directory %s: %m", dir);
@@ -1445,7 +1447,7 @@ static int ns_setup(struct polydir_s *polyptr,
         pam_syslog(idata->pamh, LOG_DEBUG,
                "Set namespace for directory %s", polyptr->dir);
 
-    retval = protect_dir(polyptr->dir, 0, 0, idata);
+    retval = protect_dir(polyptr->dir, 0, 0, idata->flags & PAMNS_MOUNT_PRIVATE, idata);
 
     if (retval < 0 && errno != ENOENT) {
 	pam_syslog(idata->pamh, LOG_ERR, "Polydir %s access error: %m",
@@ -1453,8 +1455,9 @@ static int ns_setup(struct polydir_s *polyptr,
 	return PAM_SESSION_ERR;    
     }
 
-    if (retval < 0 && (polyptr->flags & POLYDIR_CREATE)) {
-	if (create_polydir(polyptr, idata) != PAM_SUCCESS)
+    if (retval < 0) {
+ 	if ((polyptr->flags & POLYDIR_CREATE) &&
+		create_polydir(polyptr, idata) != PAM_SUCCESS)
 		return PAM_SESSION_ERR;
     } else {
     	close(retval);
@@ -1529,6 +1532,22 @@ static int ns_setup(struct polydir_s *polyptr,
 
     if (retval != PAM_SUCCESS) {
         goto error_out;
+    }
+
+    if (idata->flags & PAMNS_MOUNT_PRIVATE) {
+        /*
+         * Make the polyinstantiated dir private mount. This depends
+         * on making the dir a mount point in the protect_dir call.
+         */
+        if (mount(polyptr->dir, polyptr->dir, NULL, MS_PRIVATE|MS_REC, NULL) < 0) {
+            pam_syslog(idata->pamh, LOG_ERR, "Error making %s a private mount, %m",
+                       polyptr->dir);
+            goto error_out;
+        }
+        if (idata->flags & PAMNS_DEBUG)
+            pam_syslog(idata->pamh, LOG_DEBUG,
+                      "Polyinstantiated directory %s made as private mount", polyptr->dir);
+
     }
 
     /*
@@ -1871,6 +1890,53 @@ static int ctxt_based_inst_needed(void)
 }
 #endif
 
+static int root_shared(void)
+{
+    FILE *f;
+    char *line = NULL;
+    size_t n = 0;
+    int rv = 0;
+
+    f = fopen("/proc/self/mountinfo", "r");
+
+    if (f == NULL)
+        return 0;
+
+    while(getline(&line, &n, f) != -1) {
+        char *l;
+        char *sptr;
+        int i;
+
+        l = line;
+        sptr = NULL;
+        for (i = 0; i < 7; i++) {
+             char *tok;
+
+             tok = strtok_r(l, " ", &sptr);
+             l = NULL;
+             if (tok == NULL)
+                 /* next mountinfo line */
+                 break;
+
+             if (i == 4 && strcmp(tok, "/") != 0)
+                 /* next mountinfo line */
+                 break;
+
+             if (i == 6) {
+                if (strncmp(tok, "shared:", 7) == 0)
+                 /* there might be more / mounts, the last one counts */
+                    rv = 1;
+                else
+                    rv = 0;
+             }
+        }
+    }
+
+    free(line);
+    fclose(f);
+
+    return rv;
+}
 
 static int get_user_data(struct instance_data *idata)
 {
@@ -1961,12 +2027,15 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags UNUSED,
             idata.flags |= PAMNS_USE_DEFAULT_CONTEXT;
             idata.flags |= PAMNS_CTXT_BASED_INST;
         }
+        if (strcmp(argv[i], "mount_private") == 0) {
+            idata.flags |= PAMNS_MOUNT_PRIVATE;
+        }
         if (strcmp(argv[i], "unmnt_remnt") == 0)
             unmnt = UNMNT_REMNT;
         if (strcmp(argv[i], "unmnt_only") == 0)
             unmnt = UNMNT_ONLY;
 	if (strcmp(argv[i], "require_selinux") == 0) {
-		if (~(idata.flags & PAMNS_SELINUX_ENABLED)) {
+		if (!(idata.flags & PAMNS_SELINUX_ENABLED)) {
         		pam_syslog(idata.pamh, LOG_ERR,
 		    "selinux_required option given and selinux is disabled");
 			return PAM_SESSION_ERR;
@@ -1979,6 +2048,10 @@ PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags UNUSED,
     retval = get_user_data(&idata);
     if (retval != PAM_SUCCESS)
     	return retval;
+
+    if (root_shared()) {
+	idata.flags |= PAMNS_MOUNT_PRIVATE;
+    }
 
     /*
      * Parse namespace configuration file which lists directories to
