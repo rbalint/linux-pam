@@ -34,6 +34,12 @@
 /* Define to 1 if you have the `crypt_r' function. */
 #undef HAVE_CRYPT_R
 
+/* Define to 1 if you have the `dbm_store' function. */
+#undef HAVE_DBM_STORE
+
+/* Define to 1 if you have the `db_create' function. */
+#undef HAVE_DB_CREATE
+
 /* Define to 1 if you have the <db.h> header file. */
 #undef HAVE_DB_H
 

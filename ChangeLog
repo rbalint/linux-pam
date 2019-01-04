@@ -1,3 +1,122 @@
+2010-10-28  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* release version 1.1.3
+
+	* configure.in: Increase version to 1.1.3
+
+	* NEWS: document visible changes
+
+	* libpam/Makefile.am (libpam_la_LDFLAGS): Bump version number.
+
+2010-10-27  Thorsten Kukuk <kukuk@thkukuk.de>
+
+	* doc/adg/Makefile.am: Use UTF-8 for html docu.
+	* doc/mwg/Makefile.am: Likewise.
+	* doc/sag/Makefile.am: Likewise.
+
+2010-10-22  Tomas Mraz  <tm@t8m.info>
+
+	* modules/pam_namespace/pam_namespace.c (inst_init): Use execle()
+	to execute the init script with clean environment. (CVE-2010-3853)
+	(cleanup_tmpdirs): Likewise for executing rm.
+
+2010-10-21  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* modules/pam_mkhomedir/mkhomedir_helper.c (rec_mkdir): Remove.
+	(create_homedir): Use mkdir() instead of rec_mkdir().
+	(make_parent_dirs): New function.
+	(main): Use make_parent_dirs() to create parent directories only
+	for the home directory itself.
+
+2010-10-21  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_unix/support.c (_unix_getpwnam): Don't allocate
+	unneeded buffer for uid/gid [sf#3059572].
+
+2010-10-20  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* doc/man/pam_get_authtok.3.xml: Fix xml code.
+
+	* doc/man/Makefile.am: Fix build dependencys of pam_get_authtok.3.
+
+	* xtests/Makefile.am: Only build xtests if we run xtests.
+	* configure.in: Check for libdb with symbol versions, too.
+	Patch from Diego Elio Pettenò.
+
+	* modules/pam_mkhomedir/mkhomedir_helper.c (rec_mkdir): Create
+	parent directories always with mode 0755.
+	(create_homedir): Create main directory with mode 0700 at first.
+
+2010-10-19  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* modules/pam_selinux/Makefile.am (pam_selinux_la_LIBADD): Add
+	@LIBAUDIT@.
+
+	* m4/ld-O1.m4 (PAM_LD_O1): Fix typo.
+
+	* m4/ld-no-undefined.m4: New file.
+	* configure.in: Use PAM_LD_NO_UNDEFINED.
+	* Makefile.am (M4_FILES): Add m4/ld-no-undefined.m4.
+
+	* modules/pam_selinux/pam_selinux.c (verbose_message): Remove.
+	(pam_sm_open_session): Call send_text() instead of verbose_message().
+
+2010-10-19  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_env/pam_env.8.xml: Document side effects of
+	environment variables in the stack.
+	* modules/pam_exec/pam_exec.8.xml: Document that user can
+	have controll over the environment.
+
+2010-10-07  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* modules/pam_selinux/pam_selinux.c (verbose_message): Fix format
+	string.
+
+2010-10-04  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* libpam/pam_modutil_priv.c: New file.
+	* libpam/Makefile.am (libpam_la_SOURCES): Add it.
+	* libpam/include/security/pam_modutil.h (struct pam_modutil_privs,
+	PAM_MODUTIL_DEF_PRIVS, pam_modutil_drop_priv,
+	pam_modutil_regain_priv): New declarations.
+	* libpam/libpam.map (LIBPAM_MODUTIL_1.1.3): New interface.
+	* modules/pam_env/pam_env.c (handle_env): Use new pam_modutil interface.
+	* modules/pam_mail/pam_mail.c (_do_mail): Likewise.
+	* modules/pam_xauth/pam_xauth.c (check_acl, pam_sm_open_session,
+	pam_sm_close_session): Likewise.
+	(pam_sm_open_session): Remove redundant fchown call.
+	Fixes CVE-2010-3430, CVE-2010-3431.
+
+2010-10-01  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* configure.in: Extend cross compiling check.
+	* doc/specs/Makefile.am: Set CFLAGS and LDFLAGS to BUILD_CFLAGS
+	and BUILD_LDFLAGS.
+	Bug #3078936 / gentoo #339174
+
+2010-09-30  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* modules/pam_xauth/pam_xauth.c (pam_sm_close_session): Warn if
+	unlink() fails.
+
+2010-09-27  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* modules/pam_xauth/pam_xauth.c (pam_sm_close_session): Return
+	PAM_SUCCESS immediately if no cookie file is defined.  Return
+	PAM_SESSION_ERR if cookie file is defined but target uid cannot be
+	determined.  Do not modify cookiefile string returned by pam_get_data.
+
+	* modules/pam_xauth/pam_xauth.c (check_acl): Ensure that the given
+	access control file is a regular file.
+
+2010-09-16  Dmitry V. Levin  <ldv@altlinux.org>
+
+	* modules/pam_env/pam_env.c (handle_env): Use setfsuid() return code.
+	* modules/pam_mail/pam_mail.c (_do_mail): Likewise.
+	* modules/pam_xauth/pam_xauth.c (check_acl, pam_sm_open_session,
+	pam_sm_close_session): Likewise.
+
 2010-08-31  Thorsten Kukuk  <kukuk@thkukuk.de>
 
 	* release version 1.1.2

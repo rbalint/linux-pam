@@ -850,7 +850,11 @@ PIE_CFLAGS
 libc_cv_fpie
 HAVE_VERSIONING_FALSE
 HAVE_VERSIONING_TRUE
+BUILD_LDFLAGS
+BUILD_CFLAGS
 CC_FOR_BUILD
+pam_cv_ld_O1
+pam_cv_ld_no_undefined
 pam_cv_ld_as_needed
 OTOOL64
 OTOOL
@@ -2502,7 +2506,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE="Linux-PAM"
- VERSION=1.1.2
+ VERSION=1.1.3
 
 
 cat >>confdefs.h <<_ACEOF
@@ -6537,13 +6541,13 @@ if test "${lt_cv_nm_interface+set}" = set; then
 else
   lt_cv_nm_interface="BSD nm"
   echo "int some_variable = 0;" > conftest.$ac_ext
-  (eval echo "\"\$as_me:6540: $ac_compile\"" >&5)
+  (eval echo "\"\$as_me:6544: $ac_compile\"" >&5)
   (eval "$ac_compile" 2>conftest.err)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:6543: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
+  (eval echo "\"\$as_me:6547: $NM \\\"conftest.$ac_objext\\\"\"" >&5)
   (eval "$NM \"conftest.$ac_objext\"" 2>conftest.err > conftest.out)
   cat conftest.err >&5
-  (eval echo "\"\$as_me:6546: output\"" >&5)
+  (eval echo "\"\$as_me:6550: output\"" >&5)
   cat conftest.out >&5
   if $GREP 'External.*some_variable' conftest.out > /dev/null; then
     lt_cv_nm_interface="MS dumpbin"
@@ -7737,7 +7741,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 7740 "configure"' > conftest.$ac_ext
+  echo '#line 7744 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -9046,11 +9050,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9049: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9053: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9053: \$? = $ac_status" >&5
+   echo "$as_me:9057: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -9385,11 +9389,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9388: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9392: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:9392: \$? = $ac_status" >&5
+   echo "$as_me:9396: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -9490,11 +9494,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9493: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9497: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9497: \$? = $ac_status" >&5
+   echo "$as_me:9501: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9545,11 +9549,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:9548: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:9552: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:9552: \$? = $ac_status" >&5
+   echo "$as_me:9556: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -12345,7 +12349,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 12348 "configure"
+#line 12352 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12441,7 +12445,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 12444 "configure"
+#line 12448 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12830,6 +12834,36 @@ $as_echo "$pam_cv_ld_as_needed" >&6; }
 
 
 
+    { $as_echo "$as_me:$LINENO: checking whether ld supports --no-undefined" >&5
+$as_echo_n "checking whether ld supports --no-undefined... " >&6; }
+if test "${pam_cv_ld_no_undefined+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+       cat > conftest.c <<EOF
+int main (void) { return 0; }
+EOF
+     if { ac_try='${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS
+                                 -o conftest.o conftest.c
+                                 -Wl,--no-undefined 1>&5'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }
+  then
+    pam_cv_ld_no_undefined=yes
+    LDFLAGS="$LDFLAGS -Wl,--no-undefined"
+  else
+    pam_cv_ld_no_undefined=no
+  fi
+  rm -f conftest*
+fi
+{ $as_echo "$as_me:$LINENO: result: $pam_cv_ld_no_undefined" >&5
+$as_echo "$pam_cv_ld_no_undefined" >&6; }
+
+
+
+
     { $as_echo "$as_me:$LINENO: checking whether ld supports -O1" >&5
 $as_echo_n "checking whether ld supports -O1... " >&6; }
 if test "${pam_cv_ld_O1+set}" = set; then
@@ -12859,53 +12893,6 @@ $as_echo "$pam_cv_ld_O1" >&6; }
 
 
 
-
-if test x"$cross_compiling" = xyes; then
-	for ac_prog in gcc cc
-do
-  # Extract the first word of "$ac_prog", so it can be a program name with args.
-set dummy $ac_prog; ac_word=$2
-{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if test "${ac_cv_prog_CC_FOR_BUILD+set}" = set; then
-  $as_echo_n "(cached) " >&6
-else
-  if test -n "$CC_FOR_BUILD"; then
-  ac_cv_prog_CC_FOR_BUILD="$CC_FOR_BUILD" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_CC_FOR_BUILD="$ac_prog"
-    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-IFS=$as_save_IFS
-
-fi
-fi
-CC_FOR_BUILD=$ac_cv_prog_CC_FOR_BUILD
-if test -n "$CC_FOR_BUILD"; then
-  { $as_echo "$as_me:$LINENO: result: $CC_FOR_BUILD" >&5
-$as_echo "$CC_FOR_BUILD" >&6; }
-else
-  { $as_echo "$as_me:$LINENO: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-  test -n "$CC_FOR_BUILD" && break
-done
-
-else
-	CC_FOR_BUILD="$CC"
-fi
 
 # Check whether --enable-largefile was given.
 if test "${enable_largefile+set}" = set; then
@@ -13316,6 +13303,78 @@ esac
 
   done
 fi
+
+if test "x${CC_FOR_BUILD+set}" != "xset" ; then
+  if test "x$cross_compiling" = "xyes" ; then
+    for ac_prog in gcc cc
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if test "${ac_cv_prog_CC_FOR_BUILD+set}" = set; then
+  $as_echo_n "(cached) " >&6
+else
+  if test -n "$CC_FOR_BUILD"; then
+  ac_cv_prog_CC_FOR_BUILD="$CC_FOR_BUILD" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_prog_CC_FOR_BUILD="$ac_prog"
+    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+fi
+fi
+CC_FOR_BUILD=$ac_cv_prog_CC_FOR_BUILD
+if test -n "$CC_FOR_BUILD"; then
+  { $as_echo "$as_me:$LINENO: result: $CC_FOR_BUILD" >&5
+$as_echo "$CC_FOR_BUILD" >&6; }
+else
+  { $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+  test -n "$CC_FOR_BUILD" && break
+done
+
+  else
+    CC_FOR_BUILD=${CC}
+  fi
+fi
+{ $as_echo "$as_me:$LINENO: checking for CC_FOR_BUILD" >&5
+$as_echo_n "checking for CC_FOR_BUILD... " >&6; }
+{ $as_echo "$as_me:$LINENO: result: $CC_FOR_BUILD" >&5
+$as_echo "$CC_FOR_BUILD" >&6; }
+
+
+if test "x${BUILD_CFLAGS+set}" != "xset" ; then
+  if test "x$cross_compiling" = "xyes" ; then
+    BUILD_CFLAGS=
+  else
+    BUILD_CFLAGS=${CFLAGS}
+  fi
+fi
+
+
+if test "x${BUILD_LDFLAGS+set}" != "xset" ; then
+  if test "x$cross_compiling" = "xyes" ; then
+    BUILD_LDFLAGS=
+  else
+    BUILD_LDFLAGS=${LDFLAGS}
+  fi
+fi
+
 
 
 { $as_echo "$as_me:$LINENO: checking for __attribute__" >&5
@@ -15227,20 +15286,42 @@ fi
 
 if test x"$WITH_DB" != xno ; then
         if test x"$WITH_DB" = xyes -o x"$WITH_DB" = xdb ; then
-              as_ac_Lib=`$as_echo "ac_cv_lib_db$with_db_uniquename''_db_create$with_db_uniquename" | $as_tr_sh`
-{ $as_echo "$as_me:$LINENO: checking for db_create$with_db_uniquename in -ldb$with_db_uniquename" >&5
-$as_echo_n "checking for db_create$with_db_uniquename in -ldb$with_db_uniquename... " >&6; }
-if { as_var=$as_ac_Lib; eval "test \"\${$as_var+set}\" = set"; }; then
+              old_libs=$LIBS
+              LIBS="$LIBS -ldb$with_db_uniquename"
+
+
+
+
+for ac_func in db_create$with_db_uniquename db_create dbm_store$with_db_uniquename dbm_store
+do
+as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
+{ $as_echo "$as_me:$LINENO: checking for $ac_func" >&5
+$as_echo_n "checking for $ac_func... " >&6; }
+if { as_var=$as_ac_var; eval "test \"\${$as_var+set}\" = set"; }; then
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-ldb$with_db_uniquename  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
+  cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
 _ACEOF
 cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
+/* Define $ac_func to an innocuous variant, in case <limits.h> declares $ac_func.
+   For example, HP-UX 11i <limits.h> declares gettimeofday.  */
+#define $ac_func innocuous_$ac_func
+
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char $ac_func (); below.
+    Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
+    <limits.h> exists even on freestanding compilers.  */
+
+#ifdef __STDC__
+# include <limits.h>
+#else
+# include <assert.h>
+#endif
+
+#undef $ac_func
 
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
@@ -15248,11 +15329,18 @@ cat >>conftest.$ac_ext <<_ACEOF
 #ifdef __cplusplus
 extern "C"
 #endif
-char db_create$with_db_uniquename ();
+char $ac_func ();
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined __stub_$ac_func || defined __stub___$ac_func
+choke me
+#endif
+
 int
 main ()
 {
-return db_create$with_db_uniquename ();
+return $ac_func ();
   ;
   return 0;
 }
@@ -15278,109 +15366,33 @@ $as_echo "$ac_try_echo") >&5
 	 test "$cross_compiling" = yes ||
 	 $as_test_x conftest$ac_exeext
        }; then
-  eval "$as_ac_Lib=yes"
+  eval "$as_ac_var=yes"
 else
   $as_echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-	eval "$as_ac_Lib=no"
+	eval "$as_ac_var=no"
 fi
 
 rm -rf conftest.dSYM
 rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
       conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
 fi
-ac_res=`eval 'as_val=${'$as_ac_Lib'}
+ac_res=`eval 'as_val=${'$as_ac_var'}
 		 $as_echo "$as_val"'`
 	       { $as_echo "$as_me:$LINENO: result: $ac_res" >&5
 $as_echo "$ac_res" >&6; }
-as_val=`eval 'as_val=${'$as_ac_Lib'}
+as_val=`eval 'as_val=${'$as_ac_var'}
 		 $as_echo "$as_val"'`
    if test "x$as_val" = x""yes; then
-  LIBDB="-ldb$with_db_uniquename"
-else
-  LIBDB=""
-fi
-
-              if test -z "$LIBDB" ; then
-                  as_ac_Lib=`$as_echo "ac_cv_lib_db$with_db_uniquename''_dbm_store$with_db_uniquename" | $as_tr_sh`
-{ $as_echo "$as_me:$LINENO: checking for dbm_store$with_db_uniquename in -ldb$with_db_uniquename" >&5
-$as_echo_n "checking for dbm_store$with_db_uniquename in -ldb$with_db_uniquename... " >&6; }
-if { as_var=$as_ac_Lib; eval "test \"\${$as_var+set}\" = set"; }; then
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-ldb$with_db_uniquename  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
+  cat >>confdefs.h <<_ACEOF
+#define `$as_echo "HAVE_$ac_func" | $as_tr_cpp` 1
 _ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char dbm_store$with_db_uniquename ();
-int
-main ()
-{
-return dbm_store$with_db_uniquename ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
-esac
-eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
-$as_echo "$ac_try_echo") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext && {
-	 test "$cross_compiling" = yes ||
-	 $as_test_x conftest$ac_exeext
-       }; then
-  eval "$as_ac_Lib=yes"
-else
-  $as_echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	eval "$as_ac_Lib=no"
+ LIBDB="-ldb$with_db_uniquename"; break
 fi
+done
 
-rm -rf conftest.dSYM
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-ac_res=`eval 'as_val=${'$as_ac_Lib'}
-		 $as_echo "$as_val"'`
-	       { $as_echo "$as_me:$LINENO: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-as_val=`eval 'as_val=${'$as_ac_Lib'}
-		 $as_echo "$as_val"'`
-   if test "x$as_val" = x""yes; then
-  LIBDB="-ldb$with_db_uniquename"
-else
-  LIBDB=""
-fi
-
-              fi
+              LIBS=$old_libs
         fi
         if test -z "$LIBDB" ; then
             { $as_echo "$as_me:$LINENO: checking for dbm_store in -lndbm" >&5
