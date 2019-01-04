@@ -46,8 +46,7 @@ static struct pam_conv conv = {
 };
 
 
-/* Check that errors of optional modules are ignored and that
-   required modules after a sufficient one are not executed.  */
+/* Check that jumps are processed correctly. */
 
 int
 main(int argc, char *argv[])
@@ -64,7 +63,7 @@ main(int argc, char *argv[])
   if (retval != PAM_SUCCESS)
     {
       if (debug)
-	fprintf (stderr, "test4: pam_start returned %d\n", retval);
+	fprintf (stderr, "pam_dispatch4: pam_start returned %d\n", retval);
       return 1;
     }
 
@@ -72,7 +71,7 @@ main(int argc, char *argv[])
   if (retval != PAM_SUCCESS)
     {
       if (debug)
-	fprintf (stderr, "test4: pam_authenticate returned %d\n", retval);
+	fprintf (stderr, "pam_dispatch4: pam_authenticate returned %d\n", retval);
       return 1;
     }
 
@@ -80,7 +79,7 @@ main(int argc, char *argv[])
   if (retval == PAM_SUCCESS)
     {
       if (debug)
-	fprintf (stderr, "test4: pam_authenticate returned %d\n", retval);
+	fprintf (stderr, "pam_dispatch4: pam_acct_mgmt returned %d\n", retval);
       return 1;
     }
 

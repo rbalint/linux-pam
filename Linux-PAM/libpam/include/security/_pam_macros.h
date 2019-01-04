@@ -25,6 +25,15 @@ do {                             \
                *__xx__++ = '\0'; \
 } while (0)
 
+#define _pam_overwrite_n(x,n)   \
+do {                             \
+     register char *__xx__;      \
+     register unsigned int __i__ = 0;    \
+     if ((__xx__=(x)))           \
+        for (;__i__<n; __i__++) \
+            __xx__[__i__] = 0; \
+} while (0)
+
 /*
  * Don't just free it, forget it too.
  */
@@ -85,7 +94,7 @@ static void _pam_output_debug_info(const char *file, const char *fn
 {
     FILE *logfile;
     int must_close = 1, fd;
-   
+
 #ifdef O_NOFOLLOW
     if ((fd = open(_PAM_LOGFILE, O_WRONLY|O_NOFOLLOW|O_APPEND)) != -1) {
 #else
@@ -111,7 +120,7 @@ static void _pam_output_debug(const char *format, ...)
     va_list args;
     FILE *logfile;
     int must_close = 1, fd;
-    
+
     va_start(args, format);
 
 #ifdef O_NOFOLLOW

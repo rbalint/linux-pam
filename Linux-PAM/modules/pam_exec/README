@@ -6,6 +6,11 @@ DESCRIPTION
 
 pam_exec is a PAM module that can be used to run an external command.
 
+The child's environment is set to the current PAM environment list, as returned
+by pam_getenvlist(3) In addition, the following PAM items are exported as
+environment variables: PAM_RHOST, PAM_RUSER, PAM_SERVICE, PAM_TTY, and PAM_USER
+.
+
 OPTIONS
 
 debug
@@ -15,6 +20,11 @@ debug
 log=file
 
     The output of the command is appended to file
+
+quiet
+
+    Per default pam_exec.so will echo the exit status of the external command
+    if it fails. Specifying this option will suppress the message.
 
 seteuid
 

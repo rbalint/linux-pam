@@ -3,7 +3,7 @@
 /* Creator Marc Ewing
  * Maintained by AGM
  *
- * $Id: pam_start.c,v 1.9 2006/07/24 15:47:40 kukuk Exp $
+ * $Id: pam_start.c,v 1.10 2007/10/19 17:06:30 t8m Exp $
  *
  */
 
@@ -88,6 +88,7 @@ int pam_start (
     (*pamh)->oldauthtok = NULL;
     (*pamh)->fail_delay.delay_fn_ptr = NULL;
     (*pamh)->former.choice = PAM_NOT_STACKED;
+    (*pamh)->former.substates = NULL;
 #ifdef HAVE_LIBAUDIT
     (*pamh)->audit_state = 0;
 #endif

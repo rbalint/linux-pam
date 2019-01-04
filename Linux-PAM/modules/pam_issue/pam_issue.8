@@ -1,94 +1,128 @@
 .\"     Title: pam_issue
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/17/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 01/08/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_ISSUE" "8" "06/17/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_ISSUE" "8" "01/08/2008" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_issue \- PAM module to add issue file to user prompt
+pam_issue - PAM module to add issue file to user prompt
 .SH "SYNOPSIS"
 .HP 13
-\fBpam_issue.so\fR [noesc] [issue=\fIissue\-file\-name\fR]
+\fBpam_issue\.so\fR [noesc] [issue=\fIissue\-file\-name\fR]
 .SH "DESCRIPTION"
 .PP
-pam_issue is a PAM module to prepend an issue file to the username prompt. It also by default parses escape codes in the issue file similar to some common getty's (using \\x format).
+pam_issue is a PAM module to prepend an issue file to the username prompt\. It also by default parses escape codes in the issue file similar to some common getty\'s (using \ex format)\.
 .PP
 Recognized escapes:
-.TP 3n
-\fB\\d\fR
+.PP
+\fB\ed\fR
+.RS 4
 current day
-.TP 3n
-\fB\\l\fR
+.RE
+.PP
+\fB\el\fR
+.RS 4
 name of this tty
-.TP 3n
-\fB\\m\fR
+.RE
+.PP
+\fB\em\fR
+.RS 4
 machine architecture (uname \-m)
-.TP 3n
-\fB\\n\fR
-machine's network node hostname (uname \-n)
-.TP 3n
-\fB\\o\fR
+.RE
+.PP
+\fB\en\fR
+.RS 4
+machine\'s network node hostname (uname \-n)
+.RE
+.PP
+\fB\eo\fR
+.RS 4
 domain name of this system
-.TP 3n
-\fB\\r\fR
+.RE
+.PP
+\fB\er\fR
+.RS 4
 release number of operating system (uname \-r)
-.TP 3n
-\fB\\t\fR
+.RE
+.PP
+\fB\et\fR
+.RS 4
 current time
-.TP 3n
-\fB\\s\fR
+.RE
+.PP
+\fB\es\fR
+.RS 4
 operating system name (uname \-s)
-.TP 3n
-\fB\\u\fR
+.RE
+.PP
+\fB\eu\fR
+.RS 4
 number of users currently logged in
-.TP 3n
-\fB\\U\fR
-same as \\u except it is suffixed with "user" or "users" (eg. "1 user" or "10 users")
-.TP 3n
-\fB\\v\fR
+.RE
+.PP
+\fB\eU\fR
+.RS 4
+same as \eu except it is suffixed with "user" or "users" (eg\. "1 user" or "10 users")
+.RE
+.PP
+\fB\ev\fR
+.RS 4
 operating system version and build date (uname \-v)
+.RE
 .SH "OPTIONS"
 .PP
-.TP 3n
+.PP
 \fBnoesc\fR
-Turns off escape code parsing.
-.TP 3n
+.RS 4
+Turns off escape code parsing\.
+.RE
+.PP
 \fBissue=\fR\fB\fIissue\-file\-name\fR\fR
-The file to output if not using the default.
+.RS 4
+The file to output if not using the default\.
+.RE
 .SH "MODULE SERVICES PROVIDED"
 .PP
 Only the
 \fBauth\fR
-service is supported.
+service is supported\.
 .SH "RETURN VALUES"
 .PP
-.TP 3n
+.PP
 PAM_BUF_ERR
-Memory buffer error.
-.TP 3n
+.RS 4
+Memory buffer error\.
+.RE
+.PP
 PAM_IGNORE
-The prompt was already changed.
-.TP 3n
+.RS 4
+The prompt was already changed\.
+.RE
+.PP
 PAM_SERVICE_ERR
-A service module error occured.
-.TP 3n
+.RS 4
+A service module error occured\.
+.RE
+.PP
 PAM_SUCCESS
-The new prompt was set successfull.
+.RS 4
+The new prompt was set successfull\.
+.RE
 .SH "EXAMPLES"
 .PP
 Add the following line to
-\fI/etc/pam.d/login\fR
+\fI/etc/pam\.d/login\fR
 to set the user specific issue at login:
 .sp
-.RS 3n
+.RS 4
 .nf
-        auth optional pam_issue.so issue=/etc/issue
+        auth optional pam_issue\.so issue=/etc/issue
       
 .fi
 .RE
@@ -101,4 +135,4 @@ to set the user specific issue at login:
 \fBpam\fR(8)
 .SH "AUTHOR"
 .PP
-pam_issue was written by Ben Collins <bcollins@debian.org>.
+pam_issue was written by Ben Collins <bcollins@debian\.org>\.

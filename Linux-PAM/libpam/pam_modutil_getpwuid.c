@@ -1,5 +1,5 @@
 /*
- * $Id: pam_modutil_getpwuid.c,v 1.1 2005/09/21 10:00:58 t8m Exp $
+ * $Id: pam_modutil_getpwuid.c,v 1.2 2007/08/30 04:00:39 vorlon Exp $
  *
  * This function provides a thread safer version of getpwuid() for use
  * with PAM modules that care about this sort of thing.

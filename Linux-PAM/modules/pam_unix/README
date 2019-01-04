@@ -114,6 +114,23 @@ bigcrypt
     When a user changes their password next, encrypt it with the DEC C2
     algorithm.
 
+sha256
+
+    When a user changes their password next, encrypt it with the SHA256
+    algorithm. If the SHA256 algorithm is not known to the libcrypt, fall back
+    to MD5.
+
+sha512
+
+    When a user changes their password next, encrypt it with the SHA512
+    algorithm. If the SHA512 algorithm is not known to the libcrypt, fall back
+    to MD5.
+
+rounds=n
+
+    Set the optional number of rounds of the SHA256 and SHA512 password hashing
+    algorithms to n.
+
 broken_shadow
 
     Ignore errors reading shadow inforation for users in the account management

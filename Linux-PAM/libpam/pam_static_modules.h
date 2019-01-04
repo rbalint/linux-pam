@@ -45,7 +45,9 @@ extern struct pam_module _pam_filter_modstruct;
 extern struct pam_module _pam_ftp_modstruct;
 extern struct pam_module _pam_group_modstruct;
 extern struct pam_module _pam_issue_modstruct;
+#ifdef HAVE_KEY_MANAGEMENT
 extern struct pam_module _pam_keyinit_modstruct;
+#endif
 extern struct pam_module _pam_lastlog_modstruct;
 extern struct pam_module _pam_limits_modstruct;
 extern struct pam_module _pam_listfile_modstruct;
@@ -55,7 +57,7 @@ extern struct pam_module _pam_mail_modstruct;
 extern struct pam_module _pam_mkhomedir_modstruct;
 extern struct pam_module _pam_motd_modstruct;
 #ifdef HAVE_UNSHARE
-extern struct pam_module _pam_namespace;
+extern struct pam_module _pam_namespace_modstruct;
 #endif
 extern struct pam_module _pam_nologin_modstruct;
 extern struct pam_module _pam_permit_modstruct;
@@ -65,12 +67,16 @@ extern struct pam_module _pam_rootok_modstruct;
 extern struct pam_module _pam_securetty_modstruct;
 #ifdef WITH_SELINUX
 extern struct pam_module _pam_selinux_modstruct;
+extern struct pam_module _pam_sepermit_modstruct;
 #endif
 extern struct pam_module _pam_shells_modstruct;
 extern struct pam_module _pam_stress_modstruct;
 extern struct pam_module _pam_succeed_if_modstruct;
 extern struct pam_module _pam_tally_modstruct;
 extern struct pam_module _pam_time_modstruct;
+#ifdef HAVE_AUDIT_TTY_STATUS
+extern struct pam_module _pam_tty_audit_modstruct;
+#endif
 extern struct pam_module _pam_umask_modstruct;
 extern struct pam_module _pam_unix_acct_modstruct;
 extern struct pam_module _pam_unix_auth_modstruct;
@@ -92,12 +98,14 @@ static struct pam_module *static_modules[] = {
   &_pam_echo_modstruct,
   &_pam_env_modstruct,
   &_pam_exec_modstruct,
-  &_pam_faildelay,
+  &_pam_faildelay_modstruct,
   &_pam_filter_modstruct,
   &_pam_ftp_modstruct,
   &_pam_group_modstruct,
   &_pam_issue_modstruct,
+#ifdef HAVE_KEY_MANAGEMENT
   &_pam_keyinit_modstruct,
+#endif
   &_pam_lastlog_modstruct,
   &_pam_limits_modstruct,
   &_pam_listfile_modstruct,
@@ -107,7 +115,7 @@ static struct pam_module *static_modules[] = {
   &_pam_mkhomedir_modstruct,
   &_pam_motd_modstruct,
 #ifdef HAVE_UNSHARE
-  &_pam_namespace,
+  &_pam_namespace_modstruct,
 #endif
   &_pam_nologin_modstruct,
   &_pam_permit_modstruct,
@@ -117,12 +125,16 @@ static struct pam_module *static_modules[] = {
   &_pam_securetty_modstruct,
 #ifdef WITH_SELINUX
   &_pam_selinux_modstruct,
+  &_pam_sepermit_modstruct,
 #endif
   &_pam_shells_modstruct,
   &_pam_stress_modstruct,
   &_pam_succeed_if_modstruct,
   &_pam_tally_modstruct,
   &_pam_time_modstruct,
+#ifdef HAVE_AUDIT_TTY_STATUS
+  &_pam_tty_audit_modstruct,
+#endif
   &_pam_umask_modstruct,
   &_pam_unix_acct_modstruct,
   &_pam_unix_auth_modstruct,

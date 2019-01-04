@@ -1,22 +1,22 @@
 .\"     Title: pam_get_data
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/27/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 02/04/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_GET_DATA" "3" "06/27/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_GET_DATA" "3" "02/04/2008" "Linux-PAM Manual" "Linux-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_get_data \- get module internal data
+pam_get_data - get module internal data
 .SH "SYNOPSIS"
 .sp
 .ft B
 .nf
-#include <security/pam_modules.h>
+#include <security/pam_modules\.h>
 .fi
 .ft
 .HP 17
@@ -25,7 +25,7 @@ pam_get_data \- get module internal data
 .PP
 This function together with the
 \fBpam_set_data\fR(3)
-function is useful to manage module\-specific data meaningful only to the calling PAM module.
+function is useful to manage module\-specific data meaningful only to the calling PAM module\.
 .PP
 The
 \fBpam_get_data\fR
@@ -33,25 +33,31 @@ function looks up the object associated with the (hopefully) unique string
 \fImodule_data_name\fR
 in the PAM context specified by the
 \fIpamh\fR
-argument. A successful call to
+argument\. A successful call to
 \fBpam_get_data\fR
 will result in
 \fIdata\fR
-pointing to the object. Note, this data is
+pointing to the object\. Note, this data is
 \fInot\fR
 a copy and should be treated as
 \fIconstant\fR
-by the module.
+by the module\.
 .SH "RETURN VALUES"
-.TP 3n
+.PP
 PAM_SUCCESS
-Data was successful retrieved.
-.TP 3n
+.RS 4
+Data was successful retrieved\.
+.RE
+.PP
 PAM_SYSTEM_ERR
-A NULL pointer was submitted as PAM handle or the function was called by an application.
-.TP 3n
+.RS 4
+A NULL pointer was submitted as PAM handle or the function was called by an application\.
+.RE
+.PP
 PAM_NO_MODULE_DATA
-Module data not found or there is an entry, but it has the value NULL.
+.RS 4
+Module data not found or there is an entry, but it has the value NULL\.
+.RE
 .SH "SEE ALSO"
 .PP
 

@@ -1,7 +1,7 @@
 /* pam_end.c */
 
 /*
- * $Id: pam_end.c,v 1.4 2006/01/12 10:06:49 t8m Exp $
+ * $Id: pam_end.c,v 1.7 2008/01/28 14:50:21 kukuk Exp $
  */
 
 #include "pam_private.h"
@@ -70,6 +70,17 @@ int pam_end(pam_handle_t *pamh, int pam_status)
 
     _pam_drop(pamh->pam_conversation);
     pamh->fail_delay.delay_fn_ptr = NULL;
+
+    _pam_drop(pamh->former.substates);
+
+    _pam_overwrite(pamh->xdisplay);
+    _pam_drop(pamh->xdisplay);
+
+    _pam_overwrite(pamh->xauth.name);
+    _pam_drop(pamh->xauth.name);
+    _pam_overwrite_n(pamh->xauth.data, (unsigned int)pamh->xauth.datalen);
+    _pam_drop(pamh->xauth.data);
+    _pam_overwrite_n((char *)&pamh->xauth, sizeof(pamh->xauth));
 
     /* and finally liberate the memory for the pam_handle structure */
 

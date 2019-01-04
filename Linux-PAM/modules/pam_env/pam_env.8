@@ -1,89 +1,109 @@
 .\"     Title: pam_env
 .\"    Author: 
-.\" Generator: DocBook XSL Stylesheets v1.70.1 <http://docbook.sf.net/>
-.\"      Date: 06/21/2006
-.\"    Manual: Linux\-PAM Manual
-.\"    Source: Linux\-PAM Manual
+.\" Generator: DocBook XSL Stylesheets v1.73.1 <http://docbook.sf.net/>
+.\"      Date: 01/08/2008
+.\"    Manual: Linux-PAM Manual
+.\"    Source: Linux-PAM Manual
 .\"
-.TH "PAM_ENV" "8" "06/21/2006" "Linux\-PAM Manual" "Linux\-PAM Manual"
+.TH "PAM_ENV" "8" "01/08/2008" "Linux-PAM Manual" "Linux-PAM Manual"
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
 .SH "NAME"
-pam_env \- PAM module to set/unset environment variables
+pam_env - PAM module to set/unset environment variables
 .SH "SYNOPSIS"
 .HP 11
-\fBpam_env.so\fR [debug] [conffile=\fIconf\-file\fR] [envfile=\fIenv\-file\fR] [readenv=\fI0|1\fR]
+\fBpam_env\.so\fR [debug] [conffile=\fIconf\-file\fR] [envfile=\fIenv\-file\fR] [readenv=\fI0|1\fR]
 .SH "DESCRIPTION"
 .PP
-The pam_env PAM module allows the (un)setting of environment variables. Supported is the use of previously set environment variables as well as
+The pam_env PAM module allows the (un)setting of environment variables\. Supported is the use of previously set environment variables as well as
 \fIPAM_ITEM\fRs such as
-\fIPAM_RHOST\fR.
+\fIPAM_RHOST\fR\.
 .PP
 By default rules for (un)setting of variables is taken from the config file
-\fI/etc/security/pam_env.conf\fR
-if no other file is specified.
+\fI/etc/security/pam_env\.conf\fR
+if no other file is specified\.
 .PP
 This module can also parse a file with simple
 \fIKEY=VAL\fR
 pairs on seperate lines (\fI/etc/environment\fR
-by default). You can change the default file to parse, with the
+by default)\. You can change the default file to parse, with the
 \fIenvfile\fR
 flag and turn it on or off by setting the
 \fIreadenv\fR
-flag to 1 or 0 respectively.
+flag to 1 or 0 respectively\.
 .SH "OPTIONS"
-.TP 3n
-\fBconffile=\fR\fB\fI/path/to/pam_env.conf\fR\fR
+.PP
+\fBconffile=\fR\fB\fI/path/to/pam_env\.conf\fR\fR
+.RS 4
 Indicate an alternative
-\fIpam_env.conf\fR
-style configuration file to override the default. This can be useful when different services need different environments.
-.TP 3n
+\fIpam_env\.conf\fR
+style configuration file to override the default\. This can be useful when different services need different environments\.
+.RE
+.PP
 \fBdebug\fR
+.RS 4
 A lot of debug informations are printed with
-\fBsyslog\fR(3).
-.TP 3n
+\fBsyslog\fR(3)\.
+.RE
+.PP
 \fBenvfile=\fR\fB\fI/path/to/environment\fR\fR
+.RS 4
 Indicate an alternative
 \fIenvironment\fR
-file to override the default. This can be useful when different services need different environments.
-.TP 3n
+file to override the default\. This can be useful when different services need different environments\.
+.RE
+.PP
 \fBreadenv=\fR\fB\fI0|1\fR\fR
-Turns on or off the reading of the file specified by envfile (0 is off, 1 is on). By default this option is on.
+.RS 4
+Turns on or off the reading of the file specified by envfile (0 is off, 1 is on)\. By default this option is on\.
+.RE
 .SH "MODULE SERVICES PROVIDED"
 .PP
 The
 \fBauth\fR
 and
 \fBsession\fR
-services are supported.
+services are supported\.
 .SH "RETURN VALUES"
-.TP 3n
+.PP
 PAM_ABORT
-Not all relevant data or options could be gotten.
-.TP 3n
+.RS 4
+Not all relevant data or options could be gotten\.
+.RE
+.PP
 PAM_BUF_ERR
-Memory buffer error.
-.TP 3n
+.RS 4
+Memory buffer error\.
+.RE
+.PP
 PAM_IGNORE
-No pam_env.conf and environment file was found.
-.TP 3n
+.RS 4
+No pam_env\.conf and environment file was found\.
+.RE
+.PP
 PAM_SUCCESS
-Environment variables were set.
+.RS 4
+Environment variables were set\.
+.RE
 .SH "FILES"
-.TP 3n
-\fI/etc/security/pam_env.conf\fR
+.PP
+\fI/etc/security/pam_env\.conf\fR
+.RS 4
 Default configuration file
-.TP 3n
+.RE
+.PP
 \fI/etc/environment\fR
+.RS 4
 Default environment file
+.RE
 .SH "SEE ALSO"
 .PP
 
 \fBpam_env.conf\fR(5),
 \fBpam.d\fR(8),
-\fBpam\fR(8).
+\fBpam\fR(8)\.
 .SH "AUTHOR"
 .PP
-pam_env was written by Dave Kinchlea <kinch@kinch.ark.com>.
+pam_env was written by Dave Kinchlea <kinch@kinch\.ark\.com>\.
