@@ -18,7 +18,7 @@
 #include <pwd.h>
 #include <grp.h>
 
-#ifdef DEBUG
+#ifdef PAM_DEBUG
 #include <assert.h>
 #endif
 
@@ -38,17 +38,6 @@
 #include <security/_pam_macros.h>
 #include <security/pam_modutil.h>
 #include <security/pam_ext.h>
-
-/* checks if a user is on a list of members */
-static int is_on_list(char * const *list, const char *member)
-{
-    while (*list) {
-        if (strcmp(*list, member) == 0)
-            return 1;
-        list++;
-    }
-    return 0;
-}
 
 /* --- authentication management functions (only) --- */
 
@@ -81,8 +70,6 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 
     /* Stuff for "extended" items */
     struct passwd *userinfo;
-    struct group *grpinfo;
-    char *itemlist[256]; /* Maximum of 256 items */
 
     apply_type=APPLY_TYPE_NULL;
     memset(apply_val,0,sizeof(apply_val));
@@ -212,23 +199,23 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 	    if(apply_type==APPLY_TYPE_USER) {
 		if(strcmp(user_name, apply_val)) {
 		    /* Does not apply to this user */
-#ifdef DEBUG
+#ifdef PAM_DEBUG
 		    pam_syslog(pamh,LOG_DEBUG,
 			      "don't apply: apply=%s, user=%s",
 			     apply_val,user_name);
-#endif /* DEBUG */
+#endif /* PAM_DEBUG */
 		    free(ifname);
 		    return PAM_IGNORE;
 		}
 	    } else if(apply_type==APPLY_TYPE_GROUP) {
 		if(!pam_modutil_user_in_group_nam_nam(pamh,user_name,apply_val)) {
 		    /* Not a member of apply= group */
-#ifdef DEBUG
+#ifdef PAM_DEBUG
 		    pam_syslog(pamh,LOG_DEBUG,
 
 			     "don't apply: %s not a member of group %s",
 			     user_name,apply_val);
-#endif /* DEBUG */
+#endif /* PAM_DEBUG */
 		    free(ifname);
 		    return PAM_IGNORE;
 		}
@@ -265,30 +252,7 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
     if(extitem) {
 	switch(extitem) {
 	    case EI_GROUP:
-		userinfo = pam_modutil_getpwnam(pamh, citemp);
-		if (userinfo == NULL) {
-		    pam_syslog(pamh,LOG_ERR, "getpwnam(%s) failed",
-			     citemp);
-		    free(ifname);
-		    return onerr;
-		}
-		grpinfo = pam_modutil_getgrgid(pamh, userinfo->pw_gid);
-		if (grpinfo == NULL) {
-		    pam_syslog(pamh,LOG_ERR, "getgrgid(%d) failed",
-			     (int)userinfo->pw_gid);
-		    free(ifname);
-		    return onerr;
-		}
-		itemlist[0] = x_strdup(grpinfo->gr_name);
-		setgrent();
-		for (i=1; (i < (int)(sizeof(itemlist)/sizeof(itemlist[0])-1)) &&
-			 (grpinfo = getgrent()); ) {
-		    if (is_on_list(grpinfo->gr_mem,citemp)) {
-			itemlist[i++] = x_strdup(grpinfo->gr_name);
-		    }
-                }
-		endgrent();
-		itemlist[i] = NULL;
+		/* Just ignore, call pam_modutil_in_group... later */
 		break;
 	    case EI_SHELL:
 		/* Assume that we have already gotten PAM_USER in
@@ -312,7 +276,7 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 		return onerr;
 	}
     }
-#ifdef DEBUG
+#ifdef PAM_DEBUG
     pam_syslog(pamh,LOG_INFO,
 
 	     "Got file = %s, item = %d, value = %s, sense = %d",
@@ -348,46 +312,38 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
     retval=PAM_AUTH_ERR;
     /* This loop assumes that PAM_SUCCESS == 0
        and PAM_AUTH_ERR != 0 */
-#ifdef DEBUG
+#ifdef PAM_DEBUG
     assert(PAM_SUCCESS == 0);
     assert(PAM_AUTH_ERR != 0);
 #endif
-    if(extitem == EI_GROUP) {
-	while((fgets(aline,sizeof(aline),inf) != NULL)
-	      && retval) {
-            if(strlen(aline) == 0)
-		continue;
-	    if(aline[strlen(aline) - 1] == '\n')
-		aline[strlen(aline) - 1] = '\0';
-	    for(i=0;itemlist[i];)
-		/* If any of the items match, strcmp() == 0, and we get out
-		   of this loop */
-		retval = (strcmp(aline,itemlist[i++]) && retval);
+    while((fgets(aline,sizeof(aline),inf) != NULL)
+	  && retval) {
+	char *a = aline;
+
+	if(strlen(aline) == 0)
+	    continue;
+	if(aline[strlen(aline) - 1] == '\n')
+	    aline[strlen(aline) - 1] = '\0';
+	if(strlen(aline) == 0)
+	    continue;
+	if(aline[strlen(aline) - 1] == '\r')
+	    aline[strlen(aline) - 1] = '\0';
+	if(citem == PAM_TTY) {
+	    if(strncmp(a, "/dev/", 5) == 0)
+		a += 5;
 	}
-	for(i=0;itemlist[i];)
-	    free(itemlist[i++]);
-    } else {
-	while((fgets(aline,sizeof(aline),inf) != NULL)
-	      && retval) {
-            char *a = aline;
-            if(strlen(aline) == 0)
-		continue;
-	    if(aline[strlen(aline) - 1] == '\n')
-		aline[strlen(aline) - 1] = '\0';
-            if(strlen(aline) == 0)
-		continue;
-	    if(aline[strlen(aline) - 1] == '\r')
-		aline[strlen(aline) - 1] = '\0';
-	    if(citem == PAM_TTY)
-	        if(strncmp(a, "/dev/", 5) == 0)
-	            a += 5;
-	    retval = strcmp(a,citemp);
+	if (extitem == EI_GROUP) {
+	    retval = !pam_modutil_user_in_group_nam_nam(pamh,
+		citemp, aline);
+	} else {
+	    retval = strcmp(a, citemp);
 	}
     }
+
     fclose(inf);
     free(ifname);
     if ((sense && retval) || (!sense && !retval)) {
-#ifdef DEBUG
+#ifdef PAM_DEBUG
 	pam_syslog(pamh,LOG_INFO,
 		 "Returning PAM_SUCCESS, retval = %d", retval);
 #endif
@@ -396,7 +352,7 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
     else {
 	const void *service;
 	const char *user_name;
-#ifdef DEBUG
+#ifdef PAM_DEBUG
 	pam_syslog(pamh,LOG_INFO,
 		 "Returning PAM_AUTH_ERR, retval = %d", retval);
 #endif

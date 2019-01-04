@@ -13,19 +13,15 @@ allowed access only when the SELinux is in enforcing mode. Otherwise he is
 denied access. For users not matching any entry in the config file the
 pam_sepermit module returns PAM_IGNORE return value.
 
-The config file contains a simple list of user names one per line. If the name
-is prefixed with @ character it means that all users in the group name match.
-If it is prefixed with a % character the SELinux user is used to match against
-the name instead of the account name. Note that when SELinux is disabled the
-SELinux user assigned to the account cannot be determined. This means that such
-entries are never matched when SELinux is disabled and pam_sepermit will return
-PAM_IGNORE.
+The config file contains a list of user names one per line with optional
+arguments. If the name is prefixed with @ character it means that all users in
+the group name match. If it is prefixed with a % character the SELinux user is
+used to match against the name instead of the account name. Note that when
+SELinux is disabled the SELinux user assigned to the account cannot be
+determined. This means that such entries are never matched when SELinux is
+disabled and pam_sepermit will return PAM_IGNORE.
 
-Each user name in the configuration file can have optional arguments separated
-by : character. The only currently recognized argument is exclusive. The
-pam_sepermit module will allow only single concurrent user session for the user
-with this argument specified and it will attempt to kill all processes of the
-user after logout.
+See sepermit.conf(5) for details.
 
 OPTIONS
 
@@ -47,5 +43,6 @@ session  required  pam_permit.so
 
 AUTHOR
 
-pam_sepermit was written by Tomas Mraz <tmraz@redhat.com>.
+pam_sepermit and this manual page were written by Tomas Mraz
+<tmraz@redhat.com>.
 

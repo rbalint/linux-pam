@@ -129,7 +129,7 @@ sha512
 blowfish
 
     When a user changes their password next, encrypt it with the blowfish
-    algorithm. If the SHA512 algorithm is not known to the crypt(3) function,
+    algorithm. If the blowfish algorithm is not known to the crypt(3) function,
     fall back to MD5.
 
 rounds=n
