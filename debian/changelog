@@ -7,6 +7,8 @@ pam (1.1.8-4) UNRELEASED; urgency=medium
     setup).
   * Actually remove Roger Leigh from uploaders (change not included in
     previous upload).  Thanks Roger for your contributions to Debian!
+  * Use DEB_BUILD_PROFILES instead of the obsolete DEB_BUILD_PROFILE.
+    Closes: #907492.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
 

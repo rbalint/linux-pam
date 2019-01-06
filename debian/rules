@@ -21,7 +21,7 @@ dl = $(d)/local
 	dh $@ --with quilt,autoreconf
 
 # avoid libaudit-dev when bootstrapping
-ifneq (,$(filter $(DEB_BUILD_PROFILE),stage1))
+ifneq (,$(filter stage1,$(DEB_BUILD_PROFILES)))
   CONFIGURE_OPTS += --disable-audit
 endif  
 
