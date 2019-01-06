@@ -5,6 +5,8 @@ pam (1.1.8-4) UNRELEASED; urgency=medium
   * debian/control: update VCS headers to point to git (temporarily under
     my personal salsa namespace, until I get around to restoring team
     setup).
+  * Actually remove Roger Leigh from uploaders (change not included in
+    previous upload).  Thanks Roger for your contributions to Debian!
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
 
