@@ -460,3 +460,71 @@ Index: pam.debian/modules/pam_unix/pam_unix.8
  .RE
  .PP
  Invalid arguments are logged with
+diff --git a/modules/pam_unix/README b/modules/pam_unix/README
+index 26c06e23..a1289409 100644
+--- a/modules/pam_unix/README
++++ b/modules/pam_unix/README
+@@ -12,9 +12,9 @@ shadow file as well if shadow is enabled.
+ The account component performs the task of establishing the status of the
+ user's account and password based on the following shadow elements: expire,
+ last_change, max_change, min_change, warn_change. In the case of the latter, it
+-may offer advice to the user on changing their password or, through the
++may offer advice to the user on changing their password or, through the 
+ PAM_AUTHTOKEN_REQD return, delay giving service to the user until they have
+-established a new password. The entries listed above are documented in the
++established a new password. The entries listed above are documented in the 
+ shadow(5) manual page. Should the user's record not contain one or more of
+ these entries, the corresponding shadow check is not performed.
+ 
+@@ -100,7 +100,7 @@ remember=n
+ 
+     The last n passwords for each user are saved in /etc/security/opasswd in
+     order to force password change history and keep the user from alternating
+-    between the same password too frequently. Instead of this option the
++    between the same password too frequently. Instead of this option the 
+     pam_pwhistory module should be used.
+ 
+ shadow
+@@ -146,8 +146,40 @@ broken_shadow
+ 
+ minlen=n
+ 
+-    Set a minimum password length of n characters. The max. for DES crypt based
+-    passwords are 8 characters.
++    Set a minimum password length of n characters. The default value is 6. The
++    maximum for DES crypt-based passwords is 8 characters.
++
++obscure
++
++    Enable some extra checks on password strength. These checks are based on
++    the "obscure" checks in the original shadow package. The behavior is
++    similar to the pam_cracklib module, but for non-dictionary-based checks.
++    The following checks are implemented:
++
++    Palindrome
++
++        Verifies that the new password is not a palindrome of (i.e., the
++        reverse of) the previous one.
++
++    Case Change Only
++
++        Verifies that the new password isn't the same as the old one with a
++        change of case.
++
++    Similar
++
++        Verifies that the new password isn't too much like the previous one.
++
++    Simple
++
++        Is the new password too simple? This is based on the length of the
++        password and the number of different types of characters (alpha,
++        numeric, etc.) used.
++
++    Rotated
++
++        Is the new password a rotated version of the old password? (E.g.,
++        "billy" and "illyb")
+ 
+ Invalid arguments are logged with syslog(3).
+ 
