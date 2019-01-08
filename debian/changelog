@@ -13,6 +13,8 @@ pam (1.1.8-4) UNRELEASED; urgency=medium
   * Use LC_ALL=C.UTF-8, not LC_ALL=C, when generating documentation.
   * Consistently include documentation changes in patches, for clean source
     package.
+  * debian/patches-applied/README-rebuild: rebuild README files with
+    current docs toolchain.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 09 Apr 2014 14:04:10 -0700
 

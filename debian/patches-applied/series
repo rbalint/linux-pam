@@ -1,5 +1,7 @@
 pam_unix_fix_sgid_shadow_auth.patch
 pam_unix_dont_trust_chkpwd_caller.patch
+make_documentation_reproducible.patch
+README-rebuild
 007_modules_pam_unix
 008_modules_pam_limits_chroot
 021_nis_cleanup
@@ -26,4 +28,3 @@ cve-2014-2583.patch
 cve-2015-3238.patch
 pam-limits-nofile-fd-setsize-cap
 pam_namespace_fix_bashism.patch
-make_documentation_reproducible.patch
