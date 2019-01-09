@@ -8,6 +8,9 @@ pam (1.0.1-6) UNRELEASED; urgency=low
     pass; this Linux-PAM deviation from the original PAM spec causes a
     number of problems, in particular causing wrong return values when
     using the refactored pam-auth-update stack.  LP: #303515, #305882.
+  * debian/local/pam-auth-update (et al): new interface for managing
+    /etc/pam.d/common-*, using drop-in config snippets provided by module
+    packages.
 
  -- Steve Langasek <vorlon@debian.org>  Fri, 27 Feb 2009 16:20:24 -0800
 

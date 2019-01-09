@@ -1,0 +1,25 @@
+-----------------------------------
+
+when calling the helper: call setuid(0) unconditionally?  (saves us a
+syscall)
+
+'nullok' is totally redundant in the passwd phase, and I never noticed
+this :(
+
+refactor passverify.c a bit more, helper_log_err() is used in places it 
+doesn't need to be
+
+longstanding goofiness (duplication) in the shadow verification code:
+
+        if ((curdays - spent->sp_lstchg > spent->sp_max)
+            && (curdays - spent->sp_lstchg > spent->sp_inact)
+            && (curdays - spent->sp_lstchg > spent->sp_max + spent->sp_inact)
+
+
+sepermit README.xml listed as 'entity pamaccess'?
+sepermit example is SHIT!
+
+go over all the XML and fix the English :P
+
+unix_update should eventually support suid root operation as well,
+maybe?
