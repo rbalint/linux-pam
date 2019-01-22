@@ -1,3 +1,17 @@
+pam (1.3.0-1) UNRELEASED; urgency=medium
+
+  * New upstream release.
+  * Refresh patches.
+  * Drop patches included or obsoleted upstream:
+    - debian/patches-applied/README-rebuild
+    - debian/patches-applied/pam-loginuid-in-containers
+    - debian/patches-applied/cve-2013-7041.patch
+    - debian/patches-applied/cve-2014-2583.patch
+    - debian/patches-applied/cve-2015-3238.patch
+    - debian/patches-applied/pam_namespace_fix_bashism.patch
+
+ -- Steve Langasek <vorlon@debian.org>  Wed, 23 Jan 2019 14:44:20 +0000
+
 pam (1.1.8-4) unstable; urgency=medium
 
   * Acknowledge various NMUs; thanks to the various folks who have helped
