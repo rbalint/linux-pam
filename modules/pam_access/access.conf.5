@@ -2,12 +2,12 @@
 .\"     Title: access.conf
 .\"    Author: [see the "AUTHORS" section]
 .\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
-.\"      Date: 09/19/2013
+.\"      Date: 04/01/2016
 .\"    Manual: Linux-PAM Manual
 .\"    Source: Linux-PAM Manual
 .\"  Language: English
 .\"
-.TH "ACCESS\&.CONF" "5" "09/19/2013" "Linux-PAM Manual" "Linux\-PAM Manual"
+.TH "ACCESS\&.CONF" "5" "04/01/2016" "Linux-PAM Manual" "Linux\-PAM Manual"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -35,15 +35,19 @@ The
 /etc/security/access\&.conf
 file specifies (\fIuser/group\fR,
 \fIhost\fR), (\fIuser/group\fR,
-\fInetwork/netmask\fR) or (\fIuser/group\fR,
-\fItty\fR) combinations for which a login will be either accepted or refused\&.
+\fInetwork/netmask\fR), (\fIuser/group\fR,
+\fItty\fR), (\fIuser/group\fR,
+\fIX\-$DISPLAY\-value\fR), or (\fIuser/group\fR,
+\fIpam\-service\-name\fR) combinations for which a login will be either accepted or refused\&.
 .PP
 When someone logs in, the file
 access\&.conf
 is scanned for the first entry that matches the (\fIuser/group\fR,
 \fIhost\fR) or (\fIuser/group\fR,
 \fInetwork/netmask\fR) combination, or, in case of non\-networked logins, the first entry that matches the (\fIuser/group\fR,
-\fItty\fR) combination\&. The permissions field of that table entry determines whether the login will be accepted or refused\&.
+\fItty\fR) combination, or in the case of non\-networked logins without a tty, the first entry that matches the (\fIuser/group\fR,
+\fIX\-$DISPLAY\-value\fR) or (\fIuser/group\fR,
+\fIpam\-service\-name/\fR) combination\&. The permissions field of that table entry determines whether the login will be accepted or refused\&.
 .PP
 Each line of the login access control table has three fields separated by a ":" character (colon):
 .PP
@@ -62,17 +66,31 @@ field, should be a list of one or more login names, group names, or
 .PP
 The third field, the
 \fIorigins\fR
-field, should be a list of one or more tty names (for non\-networked logins), host names, domain names (begin with "\&."), host addresses, internet network numbers (end with "\&."), internet network addresses with network mask (where network mask can be a decimal number or an internet address also),
+field, should be a list of one or more tty names (for non\-networked logins), X
+\fI$DISPLAY\fR
+values or PAM service names (for non\-networked logins without a tty), host names, domain names (begin with "\&."), host addresses, internet network numbers (end with "\&."), internet network addresses with network mask (where network mask can be a decimal number or an internet address also),
 \fIALL\fR
 (which always matches) or
-\fILOCAL\fR\&.
+\fILOCAL\fR\&. The
 \fILOCAL\fR
-keyword matches if and only if the
-\fIPAM_RHOST\fR
-is not set and <origin> field is thus set from
+keyword matches if and only if
+\fBpam_get_item\fR(3), when called with an
+\fIitem_type\fR
+of
+\fIPAM_RHOST\fR, returns
+NULL
+or an empty string (and therefore the
+\fIorigins\fR
+field is compared against the return value of
+\fBpam_get_item\fR(3)
+called with an
+\fIitem_type\fR
+of
 \fIPAM_TTY\fR
-or
-\fIPAM_SERVICE\fR"\&. If supported by the system you can use
+or, absent that,
+\fIPAM_SERVICE\fR)\&.
+.PP
+If supported by the system you can use
 \fI@netgroupname\fR
 in host or user patterns\&. The
 \fI@@netgroupname\fR

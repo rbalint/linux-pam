@@ -42,7 +42,7 @@ enabled, and audit TTY input even by other users unless auditing for these
 users is explicitly disabled. Therefore, it is recommended to use disable=* as
 the first option for most daemons using PAM.
 
-To view the data that was logged by the kernel to audit use the command
+To view the data that was logged by the kernel to audit use the command 
 aureport --tty.
 
 EXAMPLES

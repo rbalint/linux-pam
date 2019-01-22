@@ -44,9 +44,6 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <sys/socket.h>
-#ifdef HAVE_RPCSVC_YPCLNT_H
-#include <rpcsvc/ypclnt.h>
-#endif
 #ifdef HAVE_LIBAUDIT
 #include <libaudit.h>
 #endif
@@ -412,8 +409,8 @@ login_access (pam_handle_t *pamh, struct login_info *item)
 	return NO;
     }
 #ifdef HAVE_LIBAUDIT
-    if (!item->noaudit && line[0] == '-' && (match == YES || (match == ALL &&
-	nonall_match == YES))) {
+    if (!item->noaudit && (match == YES || (match == ALL &&
+	nonall_match == YES)) && line[0] == '-') {
 	pam_modutil_audit_write(pamh, AUDIT_ANOM_LOGIN_LOCATION,
 	    "pam_access", 0);
     }
@@ -470,8 +467,6 @@ netgroup_match (pam_handle_t *pamh, const char *netgroup,
 {
   int retval;
   char *mydomain = NULL;
-
-#if defined(HAVE_GETDOMAINNAME)
   char domainname_res[256];
 
   if (getdomainname (domainname_res, sizeof (domainname_res)) == 0)
@@ -481,9 +476,6 @@ netgroup_match (pam_handle_t *pamh, const char *netgroup,
           mydomain = domainname_res;
         }
     }
-#elif defined(HAVE_YP_GET_DEFAULT_DOMAIN)
-  yp_get_default_domain(&mydomain);
-#endif
 
 #ifdef HAVE_INNETGR
   retval = innetgr (netgroup, machine, user, mydomain);
@@ -573,7 +565,7 @@ group_match (pam_handle_t *pamh, const char *tok, const char* usr,
 
     if (debug)
         pam_syslog (pamh, LOG_DEBUG,
-		    "group_match: grp=%s, user=%s", grptok, usr);
+		    "group_match: grp=%s, user=%s", tok, usr);
 
     if (strlen(tok) < 3)
         return NO;
@@ -800,7 +792,7 @@ network_netmask_match (pam_handle_t *pamh,
 
 /* --- public PAM management functions --- */
 
-PAM_EXTERN int
+int
 pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 		     int argc, const char **argv)
 {
@@ -912,35 +904,35 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
     }
 }
 
-PAM_EXTERN int
+int
 pam_sm_setcred (pam_handle_t *pamh UNUSED, int flags UNUSED,
 		int argc UNUSED, const char **argv UNUSED)
 {
   return PAM_IGNORE;
 }
 
-PAM_EXTERN int
+int
 pam_sm_acct_mgmt (pam_handle_t *pamh, int flags,
 		  int argc, const char **argv)
 {
   return pam_sm_authenticate (pamh, flags, argc, argv);
 }
 
-PAM_EXTERN int
+int
 pam_sm_open_session(pam_handle_t *pamh, int flags,
 		    int argc, const char **argv)
 {
   return pam_sm_authenticate(pamh, flags, argc, argv);
 }
 
-PAM_EXTERN int
+int
 pam_sm_close_session(pam_handle_t *pamh, int flags,
 		     int argc, const char **argv)
 {
   return pam_sm_authenticate(pamh, flags, argc, argv);
 }
 
-PAM_EXTERN int
+int
 pam_sm_chauthtok(pam_handle_t *pamh, int flags,
 		 int argc, const char **argv)
 {
@@ -948,18 +940,3 @@ pam_sm_chauthtok(pam_handle_t *pamh, int flags,
 }
 
 /* end of module definition */
-
-#ifdef PAM_STATIC
-
-/* static module data */
-
-struct pam_module _pam_access_modstruct = {
-    "pam_access",
-    pam_sm_authenticate,
-    pam_sm_setcred,
-    pam_sm_acct_mgmt,
-    pam_sm_open_session,
-    pam_sm_close_session,
-    pam_sm_chauthtok
-};
-#endif
