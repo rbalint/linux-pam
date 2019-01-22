@@ -81,7 +81,7 @@ static int lookup(const char *name, const char *list, const char **_user)
 	char *list_copy, *x;
 	char *sptr = NULL;
 
-	list_copy = x_strdup(list);
+	list_copy = strdup(list);
 	x = list_copy;
 	while (list_copy && (l = strtok_r(x, ",", &sptr))) {
 	    x = NULL;
@@ -111,7 +111,7 @@ static int lookup(const char *name, const char *list, const char **_user)
 
 /* --- authentication management functions (only) --- */
 
-PAM_EXTERN int
+int
 pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
 		     int argc, const char **argv)
 {
@@ -210,28 +210,11 @@ pam_sm_authenticate (pam_handle_t *pamh, int flags UNUSED,
     }
 }
 
-PAM_EXTERN int
+int
 pam_sm_setcred (pam_handle_t *pamh UNUSED, int flags UNUSED,
 		int argc UNUSED, const char **argv UNUSED)
 {
      return PAM_IGNORE;
 }
-
-
-#ifdef PAM_STATIC
-
-/* static module data */
-
-struct pam_module _pam_ftp_modstruct = {
-     "pam_ftp",
-     pam_sm_authenticate,
-     pam_sm_setcred,
-     NULL,
-     NULL,
-     NULL,
-     NULL,
-};
-
-#endif
 
 /* end of module definition */

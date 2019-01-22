@@ -49,11 +49,7 @@
 
 /* indicate the following groups are defined */
 
-#ifdef PAM_STATIC
-# include "pam_unix_static.h"
-#else
-# define PAM_SM_SESSION
-#endif
+#define PAM_SM_SESSION
 
 #include <security/_pam_macros.h>
 #include <security/pam_modules.h>
@@ -96,8 +92,9 @@ pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv)
 	if (login_name == NULL) {
 	    login_name = "";
 	}
-	pam_syslog(pamh, LOG_INFO, "session opened for user %s by %s(uid=%lu)",
-		 user_name, login_name, (unsigned long)getuid());
+	if (off (UNIX_QUIET, ctrl))
+	  pam_syslog(pamh, LOG_INFO, "session opened for user %s by %s(uid=%lu)",
+		     user_name, login_name, (unsigned long)getuid());
 
 	return PAM_SUCCESS;
 }
@@ -126,8 +123,9 @@ pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv)
 		         "close_session - error recovering service");
 		return PAM_SESSION_ERR;
 	}
-	pam_syslog(pamh, LOG_INFO, "session closed for user %s",
-		user_name);
+	if (off (UNIX_QUIET, ctrl))
+	  pam_syslog(pamh, LOG_INFO, "session closed for user %s",
+		     user_name);
 
 	return PAM_SUCCESS;
 }

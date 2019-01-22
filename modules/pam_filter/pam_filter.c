@@ -341,6 +341,11 @@ set_filter (pam_handle_t *pamh, int flags UNUSED, int ctrl,
 	pam_syslog(pamh, LOG_WARNING, "first fork failed: %m");
 	if (aterminal) {
 		(void) tcsetattr(STDIN_FILENO, TCSAFLUSH, &stored_mode);
+		close(fd[0]);
+	} else {
+		/* Socket pair */
+		close(fd[0]);
+		close(fd[1]);
 	}
 
 	return PAM_AUTH_ERR;
@@ -658,23 +663,23 @@ static int need_a_filter(pam_handle_t *pamh
 
 /* ------------------ authentication ----------------- */
 
-PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh
-				   , int flags, int argc, const char **argv)
+int pam_sm_authenticate(pam_handle_t *pamh,
+			int flags, int argc, const char **argv)
 {
     return need_a_filter(pamh, flags, argc, argv
 			 , "authenticate", FILTER_RUN1);
 }
 
-PAM_EXTERN int pam_sm_setcred(pam_handle_t *pamh, int flags
-			      , int argc, const char **argv)
+int pam_sm_setcred(pam_handle_t *pamh, int flags,
+		   int argc, const char **argv)
 {
     return need_a_filter(pamh, flags, argc, argv, "setcred", FILTER_RUN2);
 }
 
 /* --------------- account management ---------------- */
 
-PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc,
-                              const char **argv)
+int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc,
+                     const char **argv)
 {
     return need_a_filter(pamh, flags, argc, argv
 			 , "setcred", FILTER_RUN1|FILTER_RUN2 );
@@ -682,15 +687,15 @@ PAM_EXTERN int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc,
 
 /* --------------- session management ---------------- */
 
-PAM_EXTERN int pam_sm_open_session(pam_handle_t *pamh, int flags
-				   , int argc, const char **argv)
+int pam_sm_open_session(pam_handle_t *pamh, int flags,
+			int argc, const char **argv)
 {
     return need_a_filter(pamh, flags, argc, argv
 			 , "open_session", FILTER_RUN1);
 }
 
-PAM_EXTERN int pam_sm_close_session(pam_handle_t *pamh, int flags
-			      , int argc, const char **argv)
+int pam_sm_close_session(pam_handle_t *pamh, int flags,
+                         int argc, const char **argv)
 {
     return need_a_filter(pamh, flags, argc, argv
 			 , "close_session", FILTER_RUN2);
@@ -699,8 +704,8 @@ PAM_EXTERN int pam_sm_close_session(pam_handle_t *pamh, int flags
 /* --------- updating authentication tokens --------- */
 
 
-PAM_EXTERN int pam_sm_chauthtok(pam_handle_t *pamh, int flags
-				, int argc, const char **argv)
+int pam_sm_chauthtok(pam_handle_t *pamh, int flags,
+		     int argc, const char **argv)
 {
     int runN;
 
@@ -715,19 +720,3 @@ PAM_EXTERN int pam_sm_chauthtok(pam_handle_t *pamh, int flags
 
     return need_a_filter(pamh, flags, argc, argv, "chauthtok", runN);
 }
-
-#ifdef PAM_STATIC
-
-/* ------------ stuff for static modules ------------ */
-
-struct pam_module _pam_filter_modstruct = {
-    "pam_filter",
-    pam_sm_authenticate,
-    pam_sm_setcred,
-    pam_sm_acct_mgmt,
-    pam_sm_open_session,
-    pam_sm_close_session,
-    pam_sm_chauthtok,
-};
-
-#endif

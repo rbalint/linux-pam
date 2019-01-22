@@ -6,14 +6,14 @@ DESCRIPTION
 
 The pam_access PAM module is mainly for access management. It provides
 logdaemon style login access control based on login names, host or domain
-names, internet addresses or network numbers, or on terminal line names in case
-of non-networked logins.
+names, internet addresses or network numbers, or on terminal line names, X
+$DISPLAY values, or PAM service names in case of non-networked logins.
 
 By default rules for access management are taken from config file /etc/security
 /access.conf if you don't specify another file.
 
 If Linux PAM is compiled with audit support the module will report when it
-denies access based on origin (host or tty).
+denies access based on origin (host, tty, etc.).
 
 OPTIONS
 
@@ -83,7 +83,7 @@ instead. The same meaning of 192.168.201. is 192.168.201.0/24 or 192.168.201.0/
 
 + : root : 192.168.201.
 
-User root should be able to have access from hosts foo1.bar.org and
+User root should be able to have access from hosts foo1.bar.org and 
 foo2.bar.org (uses string matching also).
 
 + : root : foo1.bar.org foo2.bar.org
