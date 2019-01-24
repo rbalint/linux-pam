@@ -11,6 +11,7 @@ pam (1.3.0-1) UNRELEASED; urgency=medium
     - debian/patches-applied/cve-2014-2583.patch
     - debian/patches-applied/cve-2015-3238.patch
     - debian/patches-applied/pam_namespace_fix_bashism.patch
+  * Drop unused lintian overrides.
 
  -- Steve Langasek <vorlon@debian.org>  Wed, 23 Jan 2019 14:44:20 +0000
 
