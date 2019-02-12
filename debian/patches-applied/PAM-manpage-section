@@ -1617,19 +1617,6 @@ Index: pam/modules/pam_env/pam_env.8
  .\" -----------------------------------------------------------------
  .\" * Define some portability stuff
  .\" -----------------------------------------------------------------
-Index: pam/modules/pam_pwhistory/pam_pwhistory.8
-===================================================================
---- pam.orig/modules/pam_pwhistory/pam_pwhistory.8
-+++ pam/modules/pam_pwhistory/pam_pwhistory.8
-@@ -156,7 +156,7 @@
- .PP
- \fBpam.conf\fR(5),
- \fBpam.d\fR(5),
--\fBpam\fR(8)\fBpam_get_authtok\fR(3)
-+\fBpam\fR(7)\fBpam_get_authtok\fR(3)
- .SH "AUTHOR"
- .PP
- pam_pwhistory was written by Thorsten Kukuk <kukuk@thkukuk\&.de>
 Index: pam/modules/pam_pwhistory/pam_pwhistory.8.xml
 ===================================================================
 --- pam.orig/modules/pam_pwhistory/pam_pwhistory.8.xml
@@ -1643,6 +1630,33 @@ Index: pam/modules/pam_pwhistory/pam_pwhistory.8.xml
        </citerefentry>
        <citerefentry>
  	<refentrytitle>pam_get_authtok</refentrytitle><manvolnum>3</manvolnum>
+Index: pam/modules/pam_pwhistory/pam_pwhistory.8
+===================================================================
+--- pam.orig/modules/pam_pwhistory/pam_pwhistory.8
++++ pam/modules/pam_pwhistory/pam_pwhistory.8
+@@ -156,7 +156,8 @@
+ .PP
+ \fBpam.conf\fR(5),
+ \fBpam.d\fR(5),
+-\fBpam\fR(8)\fBpam_get_authtok\fR(3)
++\fBpam\fR(7)
++\fBpam_get_authtok\fR(3)
+ .SH "AUTHOR"
+ .PP
+ pam_pwhistory was written by Thorsten Kukuk <kukuk@thkukuk\&.de>
+Index: pam/modules/pam_sepermit/sepermit.conf.5.xml
+===================================================================
+--- pam.orig/modules/pam_sepermit/sepermit.conf.5.xml
++++ pam/modules/pam_sepermit/sepermit.conf.5.xml
+@@ -96,7 +96,7 @@
+     <para>
+       <citerefentry><refentrytitle>pam_sepermit</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+       <citerefentry><refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+-      <citerefentry><refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
++      <citerefentry><refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum></citerefentry>,
+       <citerefentry><refentrytitle>selinux</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+     </para>
+   </refsect1>
 Index: pam/modules/pam_sepermit/sepermit.conf.5
 ===================================================================
 --- pam.orig/modules/pam_sepermit/sepermit.conf.5
@@ -1656,17 +1670,17 @@ Index: pam/modules/pam_sepermit/sepermit.conf.5
  \fBselinux\fR(8),
  .SH "AUTHOR"
  .PP
-Index: pam/modules/pam_sepermit/sepermit.conf.5.xml
+Index: pam/modules/pam_tally2/pam_tally2.8.xml
 ===================================================================
---- pam.orig/modules/pam_sepermit/sepermit.conf.5.xml
-+++ pam/modules/pam_sepermit/sepermit.conf.5.xml
-@@ -96,7 +96,7 @@
-     <para>
-       <citerefentry><refentrytitle>pam_sepermit</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-       <citerefentry><refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
--      <citerefentry><refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-+      <citerefentry><refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum></citerefentry>,
-       <citerefentry><refentrytitle>selinux</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+--- pam.orig/modules/pam_tally2/pam_tally2.8.xml
++++ pam/modules/pam_tally2/pam_tally2.8.xml
+@@ -435,7 +435,7 @@
+ 	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
+       </citerefentry>,
+       <citerefentry>
+-	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>
++	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
+       </citerefentry>
      </para>
    </refsect1>
 Index: pam/modules/pam_tally2/pam_tally2.8
@@ -1682,11 +1696,11 @@ Index: pam/modules/pam_tally2/pam_tally2.8
  .SH "AUTHOR"
  .PP
  pam_tally2 was written by Tim Baverstock and Tomas Mraz\&.
-Index: pam/modules/pam_tally2/pam_tally2.8.xml
+Index: pam/modules/pam_timestamp/pam_timestamp.8.xml
 ===================================================================
---- pam.orig/modules/pam_tally2/pam_tally2.8.xml
-+++ pam/modules/pam_tally2/pam_tally2.8.xml
-@@ -435,7 +435,7 @@
+--- pam.orig/modules/pam_timestamp/pam_timestamp.8.xml
++++ pam/modules/pam_timestamp/pam_timestamp.8.xml
+@@ -188,7 +188,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
        </citerefentry>,
        <citerefentry>
@@ -1708,11 +1722,11 @@ Index: pam/modules/pam_timestamp/pam_timestamp.8
  .SH "AUTHOR"
  .PP
  pam_timestamp was written by Nalin Dahyabhai\&.
-Index: pam/modules/pam_timestamp/pam_timestamp.8.xml
+Index: pam/modules/pam_timestamp/pam_timestamp_check.8.xml
 ===================================================================
---- pam.orig/modules/pam_timestamp/pam_timestamp.8.xml
-+++ pam/modules/pam_timestamp/pam_timestamp.8.xml
-@@ -188,7 +188,7 @@
+--- pam.orig/modules/pam_timestamp/pam_timestamp_check.8.xml
++++ pam/modules/pam_timestamp/pam_timestamp_check.8.xml
+@@ -192,7 +192,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
        </citerefentry>,
        <citerefentry>
@@ -1734,19 +1748,6 @@ Index: pam/modules/pam_timestamp/pam_timestamp_check.8
  .SH "AUTHOR"
  .PP
  pam_tally was written by Nalin Dahyabhai\&.
-Index: pam/modules/pam_timestamp/pam_timestamp_check.8.xml
-===================================================================
---- pam.orig/modules/pam_timestamp/pam_timestamp_check.8.xml
-+++ pam/modules/pam_timestamp/pam_timestamp_check.8.xml
-@@ -192,7 +192,7 @@
- 	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
-       </citerefentry>,
-       <citerefentry>
--	<refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum>
-+	<refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum>
-       </citerefentry>
-     </para>
-   </refsect1>
 Index: pam/modules/pam_tty_audit/pam_tty_audit.8.xml
 ===================================================================
 --- pam.orig/modules/pam_tty_audit/pam_tty_audit.8.xml
@@ -1773,19 +1774,6 @@ Index: pam/modules/pam_tty_audit/pam_tty_audit.8
  .SH "AUTHOR"
  .PP
  pam_tty_audit was written by Miloslav Trmač <mitr@redhat\&.com>\&. The log_passwd option was added by Richard Guy Briggs <rgb@redhat\&.com>\&.
-Index: pam/doc/man/pam_get_authtok.3
-===================================================================
---- pam.orig/doc/man/pam_get_authtok.3
-+++ pam/doc/man/pam_get_authtok.3
-@@ -161,7 +161,7 @@
- .RE
- .SH "SEE ALSO"
- .PP
--\fBpam\fR(8)
-+\fBpam\fR(7)
- .SH "STANDARDS"
- .PP
- The
 Index: pam/doc/man/pam_get_authtok.3.xml
 ===================================================================
 --- pam.orig/doc/man/pam_get_authtok.3.xml
@@ -1799,3 +1787,16 @@ Index: pam/doc/man/pam_get_authtok.3.xml
        </citerefentry>
      </para>
    </refsect1>
+Index: pam/doc/man/pam_get_authtok.3
+===================================================================
+--- pam.orig/doc/man/pam_get_authtok.3
++++ pam/doc/man/pam_get_authtok.3
+@@ -161,7 +161,7 @@
+ .RE
+ .SH "SEE ALSO"
+ .PP
+-\fBpam\fR(8)
++\fBpam\fR(7)
+ .SH "STANDARDS"
+ .PP
+ The
