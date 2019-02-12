@@ -15,6 +15,7 @@ pam (1.3.1-1) UNRELEASED; urgency=medium
   * Fix lintian warnings; thanks to Andreas Henriksson <andreas@fatal.se>
     and Florian Vessaz <florian@florv.ch>
   * Switch source package to 3.0 (quilt) to consume upstream .tar.xz.
+  * Update debian/watch.
 
   [ Andreas Henriksson ]
   * Update debian/libpam0g.symbols
