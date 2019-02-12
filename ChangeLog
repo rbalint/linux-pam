@@ -1,3 +1,260 @@
+2018-05-18  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	Release version 1.3.1.
+
+	Add xz compression.
+
+2018-05-16  Allison Karlitskaya  <allison.karlitskaya@redhat.com>
+
+	pam_motd: add support for a motd.d directory (#48)
+	Add a new feature to pam_motd to allow packages to install their own
+	message files in a "motd.d" directory, to be displayed after the primary
+	motd.
+	
+	Add an option motd_d= to specify the location of this directory.
+	
+	Modify the defaults, in the case where no options are given, to display
+	both /etc/motd and /etc/motd.d.
+	
+	Fixes #47
+	
+	 * modules/pam_motd/pam_motd.c: add support for motd.d
+	 * modules/pam_motd/pam_motd.8.xml: update the manpage
+
+2018-05-02  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_umask: Fix documentation to align with order of loading umask.
+	* modules/pam_umask/pam_umask.8.xml: Document the real order of loading
+	umask.
+
+2018-04-10  Joey Chagnon  <joeychagnon@users.noreply.github.com>
+
+	Fix missing word in documentation.
+	*  doc/man/pam_get_user.3.xml: Fix it.
+
+2017-11-10  Dmitry V. Levin  <ldv@altlinux.org>
+
+	pam_tally2 --reset: avoid creating a missing tallylog file.
+	There is no need for pam_tally2 in --reset=0 mode to create a missing
+	tallylog file because its absence has the same meaning as its existence
+	with the appropriate entry reset.
+
+	This was not a big deal until useradd(8) from shadow suite release 4.5
+	started to invoke /sbin/pam_tally2 --reset routinely regardless of PAM
+	configuration.
+
+	The positive effect of this change is noticeable when using tools like
+	cpio(1) that cannot archive huge sparse files efficiently.
+
+	* modules/pam_tally2/pam_tally2.c [MAIN] (main) <cline_user>: Stat
+	cline_filename when cline_reset == 0, exit early if the file is missing.
+
+2017-11-10  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_mkhomedir: Allow creating parent of homedir under /
+	* modules/pam_mkhomedir/mkhomedir_helper.c (make_parent_dirs): Do not
+	skip creating the directory if we are under /.
+
+2017-10-09  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_tty_audit: Fix regression introduced by adding the uid range support.
+	* modules/pam_tty_audit/pam_tty_audit.c (parse_uid_range): Fix constification and
+	remove unneeded code carried from pam_limits.
+	(pam_sm_open_session): When multiple enable/disable options are present do not
+	stop after first match.
+
+2017-09-06  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_access: Add note about spaces around ':' in access.conf(5)
+	* modules/pam_access/access.conf.5.xml: Add note about spaces around ':'
+
+	Workaround formatting problem in pam(8)
+	* doc/man/pam.8.xml: Workaround formatting problem.
+
+2017-07-12  Peter Urbanec  <peterurbanec@users.noreply.github.com>
+
+	pam_unix: Check return value of malloc used for setcred data (#24)
+	Check the return value of malloc and if it failed print debug info, send
+	a syslog message and return an error code.
+	
+	The test in AUTH_RETURN for ret_data not being NULL becomes redundant.
+
+2017-07-10  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_cracklib: Drop unused prompt macros.
+	* modules/pam_cracklib/pam_cracklib.c: Drop the unused macros.
+
+2017-06-28  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_tty_audit: Support matching users by uid range.
+	* modules/pam_tty_audit/pam_tty_audit.c (parse_uid_range): New function to
+	parse the uid range.
+	(pam_sm_open_session): Call parse_uid_range() and behave according to its result.
+	* modules/pam_tty_audit/pam_tty_audit.8.xml: Document the uid range matching.
+
+2017-05-31  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_access: support parsing files in /etc/security/access.d/*.conf.
+	* modules/pam_access/pam_access.c (login_access): Return NOMATCH if
+	there was no match in the parsed file.
+	(pam_sm_authenticate): Add glob() call to go through the ACCESS_CONF_GLOB
+	subdirectory and call login_access() on the individual files matched.
+	* modules/pam_access/pam_access.8.xml: Document the addition.
+	* modules/pam_access/Makefile.am: Add ACCESS_CONF_GLOB definition.
+
+2017-04-11  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_localuser: Correct the example in documentation.
+	* modules/pam_localuser/pam_localuser.8.xml: The example configuration
+	  does something different.
+
+	pam_localuser: Correct documentation of return value.
+	* modules/pam_localuser/pam_localuser.8.xml: The module returns
+	  PAM_PERM_DENIED when the user is not listed.
+
+2017-03-10  Saul Johnson  <saul.a.johnson@gmail.com>
+
+	Make maxclassrepeat=1 behavior consistent with docs (#9)
+	* modules/pam_cracklib/pam_cracklib.c (simple): Apply the maxclassrepeat when greater than 0.
+
+2017-02-09  Josef Moellers  <jmoellers@suse.de>
+
+	Properly test for strtol() failure to find any digits.
+	* modules/pam_access/pam_access.c (network_netmask_match): Test for endptr set
+	to beginning and not NULL.
+
+2017-01-19  Daniel Abrecht  <daniel.abrecht@hotmail.com>
+
+	pam_exec: fix a potential null pointer dereference.
+	Fix a null pointer dereference when pam_prompt returns PAM_SUCCESS
+	but the response is set to NULL.
+
+	* modules/pam_exec/pam_exec.c (call_exec): Do not invoke strndupa
+	with a null pointer.
+
+	Closes: https://github.com/linux-pam/linux-pam/pull/2
+
+2016-12-07  Antonio Ospite  <ao2@ao2.it>
+
+	Add missing comma in the limits.conf.5 manpage.
+	* modules/pam_limits/limits.conf.5.xml: add a missing comma
+
+2016-11-14  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	Regular links doesn't work with -no-numbering -no-references.
+	* configure.ac: Use elinks instead of links.
+
+2016-11-01  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_access: First check for the (group) match.
+	The (group) match is performed first to allow for groups
+	containing '@'.
+
+	* modules/pam_access/pam_access.c (user_match): First check for the (group) match.
+
+2016-10-17  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	pam_ftp: Properly use the first name from the supplied list.
+	* modules/pam_ftp/pam_ftp.c (lookup): Return first user from the list
+	of anonymous users if user name matches.
+	(pam_sm_authenticate): Free the returned value allocated in lookup().
+
+2016-09-12  Bartos-Elekes Zsolt  <muszi@kite.hu>
+
+	pam_issue: Fix no prompting in parse escape codes mode.
+	* modules/pam_issue/pam_issue.c (read_issue_quoted): Fix misplaced strcat().
+
+2016-06-30  Maxin B. John  <maxin.john@intel.com>
+
+	xtests: remove bash dependency.
+	There are no bash specific syntax in the xtest scripts. So, remove
+	the bash dependency.
+
+2016-06-30  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	Unification and cleanup of syslog log levels.
+	* libpam/pam_handlers.c: Make memory allocation failures LOG_CRIT.
+	* libpam/pam_modutil_priv.c: Make memory allocation failures LOG_CRIT.
+	* modules/pam_echo/pam_echo.c: Make memory allocation failures LOG_CRIT.
+	* modules/pam_env/pam_env.c: Make memory allocation failures LOG_CRIT.
+	* modules/pam_exec/pam_exec.c: Make memory allocation failures LOG_CRIT.
+	* modules/pam_filter/pam_filter.c: Make all non-memory call errors LOG_ERR.
+	* modules/pam_group/pam_group.c: Make memory allocation failures LOG_CRIT.
+	* modules/pam_issue/pam_issue.c: Make memory allocation failures LOG_CRIT.
+	* modules/pam_lastlog/pam_lastlog.c: The lastlog file creation is syslogged
+	  with LOG_NOTICE, memory allocation errors with LOG_CRIT, other errors
+	  with LOG_ERR.
+	* modules/pam_limits/pam_limits.c: User login limit messages are syslogged
+	  with LOG_NOTICE, stale utmp entry with LOG_INFO, non-memory errors with
+	  LOG_ERR.
+	* modules/pam_listfile/pam_listfile.c: Rejection of user is syslogged
+	  with LOG_NOTICE.
+	* modules/pam_namespace/pam_namespace.c: Make memory allocation failures
+	  LOG_CRIT.
+	* modules/pam_nologin/pam_nologin.c: Make memory allocation failures
+	  LOG_CRIT, other errors LOG_ERR.
+	* modules/pam_securetty/pam_securetty.c: Rejection of access is syslogged
+	  with LOG_NOTICE, non-memory errors with LOG_ERR.
+	* modules/pam_selinux/pam_selinux.c: Make memory allocation failures LOG_CRIT.
+	* modules/pam_succeed_if/pam_succeed_if.c: Make all non-memory call errors
+	  LOG_ERR.
+	* modules/pam_time/pam_time.c: Make memory allocation failures LOG_CRIT.
+	* modules/pam_timestamp/pam_timestamp.c: Make memory allocation failures
+	  LOG_CRIT.
+	* modules/pam_unix/pam_unix_acct.c: Make all non-memory call errors LOG_ERR.
+	* modules/pam_unix/pam_unix_passwd.c: Make memory allocation failures LOG_CRIT,
+	  other errors LOG_ERR.
+	* modules/pam_unix/pam_unix_sess.c: Make all non-memory call errors LOG_ERR.
+	* modules/pam_unix/passverify.c: Unknown user is syslogged with LOG_NOTICE.
+	* modules/pam_unix/support.c: Unknown user is syslogged with LOG_NOTICE and
+	  max retries ignorance by application likewise.
+	* modules/pam_unix/unix_chkpwd.c: Make all non-memory call errors LOG_ERR.
+	* modules/pam_userdb/pam_userdb.c: Password authentication error is syslogged
+	  with LOG_NOTICE.
+	* modules/pam_xauth/pam_xauth.c: Make memory allocation failures LOG_CRIT.
+
+2016-06-15  Dmitry V. Levin  <ldv@altlinux.org>
+
+	pam_timestamp: fix typo in strncmp usage.
+	Before this fix, a typo in check_login_time resulted to ruser and
+	struct utmp.ut_user being compared by the first character only,
+	which in turn could lead to a too low timestamp value being assigned
+	to oldest_login, effectively causing bypass of check_login_time.
+
+	* modules/pam_timestamp/pam_timestamp.c (check_login_time): Fix typo
+	in strncmp usage.
+
+	Patch-by: Anton V. Boyarshinov <boyarsh@altlinux.org>
+
+2016-05-30  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	Correct the examples in pam_fail_delay(3) man page.
+	doc/man/pam_fail_delay.3.xml: Correct the examples.
+
+2016-05-11  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	Remove spaces in examples for access.conf.
+	The spaces are ignored only with the default listsep. To remove confusion
+	if non-default listsep is used they are removed from the examples.
+
+	* modules/pam_access/access.conf: Remove all spaces around ':' in examples.
+	* modules/pam_access/access.conf.5.xml: Likewise.
+
+2016-05-05  Mike Frysinger  <vapier@gentoo.org>
+
+	build: avoid non-portable == with "test" (ticket #60)
+	POSIX says test only accepts =. Some shells (including bash) accept ==,
+	but we should still stick to = for portability.
+
+	* configure.ac: Replace == with = in "test" invocations.
+
+2016-04-28  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	Release version 1.3.0.
+	* NEWS: add changes for 1.3.0.
+	* configure.ac: bump version number.
+	* libpam/Makefile.am: bump revision of libpam.so version.
+
 2016-04-28  Tomas Mraz  <tmraz@fedoraproject.org>
 
 	Updated translations from Zanata.
