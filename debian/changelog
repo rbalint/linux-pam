@@ -7,6 +7,8 @@ pam (1.3.1-1) UNRELEASED; urgency=medium
       Closes: #762110.
     - Fix handling of rhost and tty fields in pam_succeed_if.
       Closes: #889910.
+    - Fix wrong documentation of pam_umask module behavior.
+      Closes: #825782.
   * Refresh patches.
   * Drop patches included or obsoleted upstream:
     - debian/patches-applied/README-rebuild
