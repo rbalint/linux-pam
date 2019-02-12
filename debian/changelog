@@ -1,4 +1,4 @@
-pam (1.3.1-1) UNRELEASED; urgency=medium
+pam (1.3.1-1) unstable; urgency=medium
 
   * New upstream release.  Closes: #821408.
     - Don't try to close an excessive number of fds when we have a high
@@ -28,7 +28,7 @@ pam (1.3.1-1) UNRELEASED; urgency=medium
   * debian/patches-applied/fix-autoreconf.patch: Do not override user
     variables in Makefile.am
 
- -- Steve Langasek <vorlon@debian.org>  Wed, 23 Jan 2019 14:44:20 +0000
+ -- Steve Langasek <vorlon@debian.org>  Tue, 12 Feb 2019 07:38:11 +0000
 
 pam (1.1.8-4) unstable; urgency=medium
 
