@@ -1747,19 +1747,6 @@ Index: pam/modules/pam_timestamp/pam_timestamp_check.8.xml
        </citerefentry>
      </para>
    </refsect1>
-Index: pam/modules/pam_tty_audit/pam_tty_audit.8
-===================================================================
---- pam.orig/modules/pam_tty_audit/pam_tty_audit.8
-+++ pam/modules/pam_tty_audit/pam_tty_audit.8
-@@ -125,7 +125,7 @@
- \fBaureport\fR(8),
- \fBpam.conf\fR(5),
- \fBpam.d\fR(5),
--\fBpam\fR(8)
-+\fBpam\fR(7)
- .SH "AUTHOR"
- .PP
- pam_tty_audit was written by Miloslav Trmač <mitr@redhat\&.com>\&. The log_passwd option was added by Richard Guy Briggs <rgb@redhat\&.com>\&.
 Index: pam/modules/pam_tty_audit/pam_tty_audit.8.xml
 ===================================================================
 --- pam.orig/modules/pam_tty_audit/pam_tty_audit.8.xml
@@ -1773,6 +1760,19 @@ Index: pam/modules/pam_tty_audit/pam_tty_audit.8.xml
        </citerefentry>
      </para>
    </refsect1>
+Index: pam/modules/pam_tty_audit/pam_tty_audit.8
+===================================================================
+--- pam.orig/modules/pam_tty_audit/pam_tty_audit.8
++++ pam/modules/pam_tty_audit/pam_tty_audit.8
+@@ -125,7 +125,7 @@
+ \fBaureport\fR(8),
+ \fBpam.conf\fR(5),
+ \fBpam.d\fR(5),
+-\fBpam\fR(8)
++\fBpam\fR(7)
+ .SH "AUTHOR"
+ .PP
+ pam_tty_audit was written by Miloslav Trmač <mitr@redhat\&.com>\&. The log_passwd option was added by Richard Guy Briggs <rgb@redhat\&.com>\&.
 Index: pam/doc/man/pam_get_authtok.3
 ===================================================================
 --- pam.orig/doc/man/pam_get_authtok.3
