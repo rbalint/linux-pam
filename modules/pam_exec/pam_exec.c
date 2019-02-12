@@ -177,9 +177,12 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
 		  return retval;
 		}
 
-	      pam_set_item (pamh, PAM_AUTHTOK, resp);
-	      authtok = strndupa (resp, PAM_MAX_RESP_SIZE);
-	      _pam_drop (resp);
+	      if (resp)
+		{
+		  pam_set_item (pamh, PAM_AUTHTOK, resp);
+		  authtok = strndupa (resp, PAM_MAX_RESP_SIZE);
+		  _pam_drop (resp);
+		}
 	    }
 	  else
 	    authtok = strndupa (void_pass, PAM_MAX_RESP_SIZE);
@@ -426,7 +429,7 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
       if (tmp == NULL)
       {
         free(envlist);
-        pam_syslog (pamh, LOG_ERR, "realloc environment failed: %m");
+        pam_syslog (pamh, LOG_CRIT, "realloc environment failed: %m");
         _exit (ENOMEM);
       }
       envlist = tmp;
@@ -439,7 +442,7 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
         if (asprintf(&envstr, "%s=%s", env_items[i].name, (const char *)item) < 0)
         {
           free(envlist);
-          pam_syslog (pamh, LOG_ERR, "prepare environment failed: %m");
+          pam_syslog (pamh, LOG_CRIT, "prepare environment failed: %m");
           _exit (ENOMEM);
         }
         envlist[envlen++] = envstr;
@@ -449,7 +452,7 @@ call_exec (const char *pam_type, pam_handle_t *pamh,
       if (asprintf(&envstr, "PAM_TYPE=%s", pam_type) < 0)
         {
           free(envlist);
-          pam_syslog (pamh, LOG_ERR, "prepare environment failed: %m");
+          pam_syslog (pamh, LOG_CRIT, "prepare environment failed: %m");
           _exit (ENOMEM);
         }
       envlist[envlen++] = envstr;

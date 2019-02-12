@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Linux-PAM\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/projects/pam\n"
-"POT-Creation-Date: 2016-04-28 13:27+0200\n"
+"POT-Creation-Date: 2018-05-18 12:58+0200\n"
 "PO-Revision-Date: 2013-04-15 04:49-0400\n"
 "Last-Translator: shanky <prasad.mvs@gmail.com>\n"
 "Language-Team: Kannada (http://www.transifex.com/projects/p/fedora/language/"
@@ -46,17 +46,17 @@ msgstr "ಗುಪ್ತಪದ: "
 msgid "Current %s%spassword: "
 msgstr "ಹೊಸ %s%sಗುಪ್ತಪದ: "
 
-#: libpam/pam_get_authtok.c:43 modules/pam_cracklib/pam_cracklib.c:68
+#: libpam/pam_get_authtok.c:43
 #, c-format
 msgid "New %s%spassword: "
 msgstr "ಹೊಸ %s%sಗುಪ್ತಪದ: "
 
-#: libpam/pam_get_authtok.c:45 modules/pam_cracklib/pam_cracklib.c:70
+#: libpam/pam_get_authtok.c:45
 #, c-format
 msgid "Retype new %s%spassword: "
 msgstr "ಹೊಸ %s%sಗುಪ್ತಪದವನ್ನು ಪುನರ್ ಟೈಪಿಸಿ: "
 
-#: libpam/pam_get_authtok.c:46 modules/pam_cracklib/pam_cracklib.c:71
+#: libpam/pam_get_authtok.c:46
 msgid "Sorry, passwords do not match."
 msgstr "ಕ್ಷಮಿಸಿ, ಗುಪ್ತಪದಗಳು ತಾಳೆಯಾಗುತ್ತಿಲ್ಲ."
 
@@ -205,79 +205,79 @@ msgstr "ಅನ್ವಯವು libpam ಅನ್ನು ಪುನಃ ಕರೆಯ�
 msgid "Unknown PAM error"
 msgstr "ಗೊತ್ತಿರದ PAM ದೋಷ"
 
-#: modules/pam_cracklib/pam_cracklib.c:618
+#: modules/pam_cracklib/pam_cracklib.c:612
 msgid "is the same as the old one"
 msgstr "ಇದು ಹಳೆಯದರ ಹಾಗೆಯೇ ಇದೆ"
 
-#: modules/pam_cracklib/pam_cracklib.c:624
-#: modules/pam_cracklib/pam_cracklib.c:628
-#: modules/pam_cracklib/pam_cracklib.c:638
+#: modules/pam_cracklib/pam_cracklib.c:618
+#: modules/pam_cracklib/pam_cracklib.c:622
+#: modules/pam_cracklib/pam_cracklib.c:632
 msgid "memory allocation error"
 msgstr "ಮೆಮೊರಿ ನಿಯೋಜನಾ ದೋಷ"
 
-#: modules/pam_cracklib/pam_cracklib.c:643
+#: modules/pam_cracklib/pam_cracklib.c:637
 msgid "is a palindrome"
 msgstr "ಇದು ಒಂದು ಸಮಾನ ಪೂರ್ವಾಪರವಾಗಿದೆ (palindrome)"
 
-#: modules/pam_cracklib/pam_cracklib.c:646
+#: modules/pam_cracklib/pam_cracklib.c:640
 msgid "case changes only"
 msgstr "ಕೇವಲ ಕೇಸ್ ಗಳ ಬದಲಾವಣೆಯಾಗಿದೆ ಅಷ್ಟೆ"
 
-#: modules/pam_cracklib/pam_cracklib.c:649
+#: modules/pam_cracklib/pam_cracklib.c:643
 msgid "is too similar to the old one"
 msgstr "ಇದು ಹಳೆಯದಕ್ಕೆ ಬಹಳಷ್ಟು ಹೋಲುತ್ತದೆ"
 
-#: modules/pam_cracklib/pam_cracklib.c:652
+#: modules/pam_cracklib/pam_cracklib.c:646
 msgid "is too simple"
 msgstr "ಇದು ಬಹಳ ಸರಳವಾಗಿದೆ"
 
-#: modules/pam_cracklib/pam_cracklib.c:655
+#: modules/pam_cracklib/pam_cracklib.c:649
 msgid "is rotated"
 msgstr "ಇದು ತಿರುಗಿಸಲಾಗಿದೆ"
 
-#: modules/pam_cracklib/pam_cracklib.c:658
+#: modules/pam_cracklib/pam_cracklib.c:652
 msgid "not enough character classes"
 msgstr "ಸಾಕಷ್ಟು ಕ್ಯಾರೆಕ್ಟರ್ ವರ್ಗಗಳು ಇಲ್ಲ"
 
-#: modules/pam_cracklib/pam_cracklib.c:661
+#: modules/pam_cracklib/pam_cracklib.c:655
 msgid "contains too many same characters consecutively"
 msgstr "ಇದು ಒಂದೇ ಬಗೆಯ ಬಹಳಷ್ಟು ಕ್ಯಾರೆಕ್ಟರುಗಳನ್ನು ಅನುಕ್ರಮವಾಗಿ ಹೊಂದಿದೆ"
 
-#: modules/pam_cracklib/pam_cracklib.c:664
+#: modules/pam_cracklib/pam_cracklib.c:658
 msgid "contains too long of a monotonic character sequence"
 msgstr "ಇದು ಒಂದೇ ಬಗೆಯ ಉದ್ದನೆಯ ಅಕ್ಷರಗಳ ಅನುಕ್ರಮವನ್ನು ಹೊಂದಿದೆ"
 
-#: modules/pam_cracklib/pam_cracklib.c:667
+#: modules/pam_cracklib/pam_cracklib.c:661
 msgid "contains the user name in some form"
 msgstr "ಇದು ಯಾವುದೊ ಒಂದು ಬಗೆಯಲ್ಲಿ ಬಳಕೆದಾರ ಹೆಸರನ್ನು ಒಳಗೊಂಡಿದೆ"
 
-#: modules/pam_cracklib/pam_cracklib.c:701
+#: modules/pam_cracklib/pam_cracklib.c:695
 #: modules/pam_unix/pam_unix_passwd.c:568
 msgid "No password supplied"
 msgstr "ಯಾವುದೇ ಗುಪ್ತಪದ ನೀಡಲಾಗಿಲ್ಲ"
 
-#: modules/pam_cracklib/pam_cracklib.c:701
+#: modules/pam_cracklib/pam_cracklib.c:695
 #: modules/pam_unix/pam_unix_passwd.c:568
 msgid "Password unchanged"
 msgstr "ಗುಪ್ತಪದ ಬದಲಾಗಿಲ್ಲ"
 
-#: modules/pam_cracklib/pam_cracklib.c:721
-#: modules/pam_cracklib/pam_cracklib.c:803
+#: modules/pam_cracklib/pam_cracklib.c:715
+#: modules/pam_cracklib/pam_cracklib.c:797
 #, c-format
 msgid "BAD PASSWORD: %s"
 msgstr "ಕೆಟ್ಟ ಗುಪ್ತಪದ: %s"
 
-#: modules/pam_exec/pam_exec.c:273
+#: modules/pam_exec/pam_exec.c:276
 #, c-format
 msgid "%s failed: exit code %d"
 msgstr "%s ವಿಫಲಗೊಂಡಿದೆ: ನಿರ್ಗಮಿಸಲು ಸಂಜ್ಞೆ %d "
 
-#: modules/pam_exec/pam_exec.c:282
+#: modules/pam_exec/pam_exec.c:285
 #, c-format
 msgid "%s failed: caught signal %d%s"
 msgstr "%s ವಿಫಲಗೊಂಡಿದೆ: ಹಿಡಿಯಲಾದ ಸೂಚನೆ %d%s"
 
-#: modules/pam_exec/pam_exec.c:291
+#: modules/pam_exec/pam_exec.c:294
 #, c-format
 msgid "%s failed: unknown status 0x%x"
 msgstr "%s ವಿಫಲಗೊಂಡಿದೆ: ಗೊತ್ತಿರದ ಸ್ಥಿತಿ 0x%x"
@@ -504,7 +504,7 @@ msgid ""
 msgstr ""
 "%s: [--file rooted-filename] [--user username] [--reset[=n]] [--quiet]\n"
 
-#: modules/pam_tally/pam_tally.c:859 modules/pam_tally2/pam_tally2.c:1016
+#: modules/pam_tally/pam_tally.c:859 modules/pam_tally2/pam_tally2.c:1028
 #, c-format
 msgid "%s: Can't reset all users to non-zero\n"
 msgstr "%s: ಎಲ್ಲಾ ಬಳಕೆದಾರರನ್ನು ಶೂನ್ಯವಲ್ಲದುದಕ್ಕೆ ಪುನರ್ ಸಂಯೋಜಿಸಲು ಆಗುವುದಿಲ್ಲ\n"

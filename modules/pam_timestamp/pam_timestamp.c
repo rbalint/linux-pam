@@ -211,7 +211,7 @@ check_login_time(const char *ruser, time_t timestamp)
 		if (ut->ut_type != USER_PROCESS) {
 			continue;
 		}
-		if (strncmp(ruser, ut->ut_user, sizeof(ut->ut_user) != 0)) {
+		if (strncmp(ruser, ut->ut_user, sizeof(ut->ut_user)) != 0) {
 			continue;
 		}
 		if (oldest_login == 0 || oldest_login > ut->ut_tv.tv_sec) {
@@ -608,7 +608,7 @@ pam_sm_open_session(pam_handle_t *pamh, int flags UNUSED, int argc, const char *
 	/* Generate the message. */
 	text = malloc(strlen(path) + 1 + sizeof(now) + hmac_sha1_size());
 	if (text == NULL) {
-		pam_syslog(pamh, LOG_ERR, "unable to allocate memory: %m");
+		pam_syslog(pamh, LOG_CRIT, "unable to allocate memory: %m");
 		return PAM_SESSION_ERR;
 	}
 	p = text;
