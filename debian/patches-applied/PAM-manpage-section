@@ -18,7 +18,7 @@ Index: pam/doc/man/pam.8.xml
      <refmiscinfo class='setdesc'>Linux-PAM Manual</refmiscinfo>
    </refmeta>
  
-@@ -197,7 +197,7 @@
+@@ -196,7 +196,7 @@
          <refentrytitle>pam_strerror</refentrytitle><manvolnum>3</manvolnum>
        </citerefentry>,
        <citerefentry>
@@ -35,8 +35,8 @@ Index: pam/doc/man/PAM.8
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM" "8" "04/01/2016" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM" "7" "04/01/2016" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM" "8" "05/18/2018" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM" "7" "05/18/2018" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
  .\" * Define some portability stuff
  .\" -----------------------------------------------------------------
@@ -50,7 +50,7 @@ Index: pam/modules/pam_access/access.conf.5.xml
 ===================================================================
 --- pam.orig/modules/pam_access/access.conf.5.xml
 +++ pam/modules/pam_access/access.conf.5.xml
-@@ -215,7 +215,7 @@
+@@ -227,7 +227,7 @@
      <para>
        <citerefentry><refentrytitle>pam_access</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
        <citerefentry><refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
@@ -63,7 +63,7 @@ Index: pam/modules/pam_access/access.conf.5
 ===================================================================
 --- pam.orig/modules/pam_access/access.conf.5
 +++ pam/modules/pam_access/access.conf.5
-@@ -199,7 +199,7 @@
+@@ -204,7 +204,7 @@
  .PP
  \fBpam_access\fR(8),
  \fBpam.d\fR(5),
@@ -134,7 +134,7 @@ Index: pam/modules/pam_limits/limits.conf.5.xml
        <citerefentry><refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
 -      <citerefentry><refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
 +      <citerefentry><refentrytitle>pam</refentrytitle><manvolnum>7</manvolnum></citerefentry>,
-       <citerefentry><refentrytitle>getrlimit</refentrytitle><manvolnum>2</manvolnum></citerefentry>
+       <citerefentry><refentrytitle>getrlimit</refentrytitle><manvolnum>2</manvolnum></citerefentry>,
        <citerefentry><refentrytitle>getrlimit</refentrytitle><manvolnum>3p</manvolnum></citerefentry>
      </para>
 Index: pam/modules/pam_limits/limits.conf.5
@@ -147,9 +147,9 @@ Index: pam/modules/pam_limits/limits.conf.5
  \fBpam.d\fR(5),
 -\fBpam\fR(8),
 +\fBpam\fR(7),
- \fBgetrlimit\fR(2)\fBgetrlimit\fR(3p)
+ \fBgetrlimit\fR(2),
+ \fBgetrlimit\fR(3p)
  .SH "AUTHOR"
- .PP
 Index: pam/modules/pam_namespace/namespace.conf.5.xml
 ===================================================================
 --- pam.orig/modules/pam_namespace/namespace.conf.5.xml
@@ -206,7 +206,7 @@ Index: pam/modules/pam_access/pam_access.8.xml
 ===================================================================
 --- pam.orig/modules/pam_access/pam_access.8.xml
 +++ pam/modules/pam_access/pam_access.8.xml
-@@ -238,7 +238,7 @@
+@@ -246,7 +246,7 @@
          <refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
        </citerefentry>,
        <citerefentry>
@@ -219,7 +219,7 @@ Index: pam/modules/pam_access/pam_access.8
 ===================================================================
 --- pam.orig/modules/pam_access/pam_access.8
 +++ pam/modules/pam_access/pam_access.8
-@@ -127,7 +127,7 @@
+@@ -133,7 +133,7 @@
  .PP
  \fBaccess.conf\fR(5),
  \fBpam.d\fR(5),
@@ -713,7 +713,7 @@ Index: pam/modules/pam_motd/pam_motd.8.xml
 ===================================================================
 --- pam.orig/modules/pam_motd/pam_motd.8.xml
 +++ pam/modules/pam_motd/pam_motd.8.xml
-@@ -99,7 +99,7 @@
+@@ -129,7 +129,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
        </citerefentry>,
        <citerefentry>
@@ -726,7 +726,7 @@ Index: pam/modules/pam_motd/pam_motd.8
 ===================================================================
 --- pam.orig/modules/pam_motd/pam_motd.8
 +++ pam/modules/pam_motd/pam_motd.8
-@@ -78,7 +78,7 @@
+@@ -122,7 +122,7 @@
  \fBmotd\fR(5),
  \fBpam.conf\fR(5),
  \fBpam.d\fR(5),
@@ -912,8 +912,8 @@ Index: pam/modules/pam_selinux/pam_selinux.8
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_SELINUX" "8" "04/01/2016" "Linux-PAM Manual" "Linux\-PAM Manual"
-+.TH "PAM_SELINUX" "7" "04/01/2016" "Linux-PAM Manual" "Linux\-PAM Manual"
+-.TH "PAM_SELINUX" "8" "05/18/2017" "Linux-PAM Manual" "Linux\-PAM Manual"
++.TH "PAM_SELINUX" "7" "05/18/2017" "Linux-PAM Manual" "Linux\-PAM Manual"
  .\" -----------------------------------------------------------------
  .\" * Define some portability stuff
  .\" -----------------------------------------------------------------
@@ -1612,8 +1612,8 @@ Index: pam/modules/pam_env/pam_env.8
  .\"    Source: Linux-PAM Manual
  .\"  Language: English
  .\"
--.TH "PAM_ENV" "8" "04/01/2016" "Linux-PAM Manual" "Linux-PAM Manual"
-+.TH "PAM_ENV" "7" "04/01/2016" "Linux-PAM Manual" "Linux-PAM Manual"
+-.TH "PAM_ENV" "8" "05/18/2017" "Linux-PAM Manual" "Linux-PAM Manual"
++.TH "PAM_ENV" "7" "05/18/2017" "Linux-PAM Manual" "Linux-PAM Manual"
  .\" -----------------------------------------------------------------
  .\" * Define some portability stuff
  .\" -----------------------------------------------------------------
@@ -1751,7 +1751,7 @@ Index: pam/modules/pam_tty_audit/pam_tty_audit.8
 ===================================================================
 --- pam.orig/modules/pam_tty_audit/pam_tty_audit.8
 +++ pam/modules/pam_tty_audit/pam_tty_audit.8
-@@ -109,7 +109,7 @@
+@@ -125,7 +125,7 @@
  \fBaureport\fR(8),
  \fBpam.conf\fR(5),
  \fBpam.d\fR(5),
@@ -1764,7 +1764,7 @@ Index: pam/modules/pam_tty_audit/pam_tty_audit.8.xml
 ===================================================================
 --- pam.orig/modules/pam_tty_audit/pam_tty_audit.8.xml
 +++ pam/modules/pam_tty_audit/pam_tty_audit.8.xml
-@@ -164,7 +164,7 @@
+@@ -174,7 +174,7 @@
  	<refentrytitle>pam.d</refentrytitle><manvolnum>5</manvolnum>
        </citerefentry>,
        <citerefentry>
