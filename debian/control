@@ -67,7 +67,6 @@ Description: Runtime support for the PAM library
 
 Package: libpam0g-dev
 Section: libdevel
-Priority: optional
 Architecture: any
 Multi-Arch: same
 Depends: ${misc:Depends}, libpam0g (= ${binary:Version}), libc6-dev|libc-dev
@@ -83,7 +82,6 @@ Description: Development files for PAM
 
 Package: libpam-cracklib
 Section: admin
-Priority: optional
 Architecture: any
 Multi-Arch: same
 Replaces: libpam0g-cracklib, libpam-modules (<< 1.1.0-3)
@@ -95,7 +93,6 @@ Description: PAM module to enable cracklib support
 Package: libpam-doc
 Provides: pam-doc
 Section: doc
-Priority: optional
 Architecture: all
 Depends: ${misc:Depends}
 Description: Documentation of PAM
