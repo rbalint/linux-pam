@@ -69,6 +69,7 @@ installed_services() {
 	    -e's/\bhylafax-server\b/hylafax/g' \
 	    -e's/\bpartimage-server\b/partimaged/g' \
 	    -e's/\bpostgresql-common\b/postgresql/g' \
+	    -e's/\bsamba\b/smbd samba-ad-dc/g' \
 	    -e's/\bsasl2-bin\b/saslauthd/g' \
     )
 
