@@ -1,10 +1,10 @@
-Patch for Ubuntu bug #399071
-
 Provide a more dynamic MOTD, based on the short-lived update-motd project.
 
 Authors: Dustin Kirkland <kirkland@canonical.com>
 
-Upstream status: not yet submitted
+Last-Update: 2019-02-12
+Forwarded: no
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/399071
 
 Index: pam/modules/pam_motd/pam_motd.c
 ===================================================================
@@ -95,14 +95,14 @@ Index: pam/modules/pam_motd/README
 ===================================================================
 --- pam.orig/modules/pam_motd/README
 +++ pam/modules/pam_motd/README
-@@ -23,6 +23,10 @@
- contents of /etc/motd.d. Specifying either option (or both) will disable this
- default behavior.
+@@ -19,6 +19,10 @@
+     The /path/dirname.d directory is scanned and each file contained inside of
+     it is displayed.
  
 +noupdate
 +
 +    Don't run the scripts in /etc/update-motd.d to refresh the motd file.
 +
- EXAMPLES
- 
- The suggested usage for /etc/pam.d/login is:
+ When no options are given, the default is to display both /etc/motd and the
+ contents of /etc/motd.d. Specifying either option (or both) will disable this
+ default behavior.
