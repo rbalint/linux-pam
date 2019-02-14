@@ -106,7 +106,7 @@ then
 	    check="$check sfs-server solid-pop3d squid squid3 tac-plus"
 	    check="$check vsftpd wu-ftpd wzdftpd xrdp yardradius yaws"
 
-	    if [ -n "$(who | awk '$2 ~ /console/ && $NF ~ /:[0-9]/ { print $NF }
+	    if [ -z "$(who | awk '$2 ~ /console/ && $NF ~ /:[0-9]/ { print $NF }
                                   $2 ~ /:[0-9]/ { print $2 }')" ]
 	    then
 		check="$check wdm xdm"
